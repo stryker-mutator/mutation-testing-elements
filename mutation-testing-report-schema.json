@@ -1,0 +1,216 @@
+{
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "definitions": {},
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+      "name": {
+        "$id": "/properties/name",
+        "type": "string",
+        "title": "TODO",
+        "default": "",
+        "examples": [
+          "src"
+        ]
+      },
+      "path": {
+        "$id": "/properties/path",
+        "type": "string",
+        "title": "Absolute path to the mutated source code.",
+        "default": "",
+        "examples": [
+          "/usr/full/path/to/src"
+        ]
+      },
+      "totals": {
+        "$id": "/properties/totals",
+        "type": "object",
+        "properties": {
+          "any": {
+            "$id": "/properties/totals/properties/any",
+            "type": "integer",
+            "title": "Key value pairs with mutation information like: mutationsScore, killed, survived etc.",
+            "default": 0,
+            "examples": [
+              8
+            ]
+          }
+        }
+      },
+      "health": {
+        "$id": "/properties/health",
+        "type": "string",
+        "title": "Application status based on mutation score",
+        "default": "",
+        "examples": [
+          "ok", "warning", "danger"
+        ]
+      },
+      "childResults": {
+        "$id": "/properties/childResults",
+        "type": "array",
+        "items": {
+          "$id": "/properties/childResults/items",
+          "type": "object",
+          "properties": {
+            "name": {
+              "$id": "/properties/childResults/items/properties/name",
+              "type": "string",
+              "title": "Name of the mutated file",
+              "default": "",
+              "examples": [
+                "Example.cs"
+              ]
+            },
+            "path": {
+              "$id": "/properties/childResults/items/properties/path",
+              "type": "string",
+              "title": "Absolute path to the mutated file",
+              "default": "",
+              "examples": [
+                "/usr/full/path/to/src/Example.cs"
+              ]
+            },
+            "totals": {
+              "$id": "/properties/childResults/items/properties/totals",
+              "type": "object",
+              "properties": {
+                "detected": {
+                  "$id": "/properties/childResults/items/properties/totals/properties/detected",
+                  "type": "integer",
+                  "title": "Amount of detected mutations for this specific file",
+                  "default": 0,
+                  "examples": [
+                    10
+                  ]
+                },
+                "undetected": {
+                  "$id": "/properties/childResults/items/properties/totals/properties/undetected",
+                  "type": "integer",
+                  "title": "Amount of undetected mutations for this specific file",
+                  "default": 0,
+                  "examples": [
+                    2
+                  ]
+                },
+                "valid": {
+                  "$id": "/properties/childResults/items/properties/totals/properties/valid",
+                  "type": "integer",
+                  "title": "Amount of valid mutations for this specific file ??TODO more meaningfull description?",
+                  "default": 0,
+                  "examples": [
+                    3
+                  ]
+                },
+                "invalid": {
+                  "$id": "/properties/childResults/items/properties/totals/properties/invalid",
+                  "type": "integer",
+                  "title": "Amount of invalid mutations for this specific file ??TODO more meaningfull description?",
+                  "default": 0,
+                  "examples": [
+                    1
+                  ]
+                }
+              }
+            },
+            "health": {
+              "$id": "/properties/childResults/items/properties/health",
+              "type": "string",
+              "title": "Health for this specific class",
+              "default": "",
+              "examples": [
+                "danger"
+              ]
+            },
+            "language": {
+              "$id": "/properties/childResults/items/properties/language",
+              "type": "string",
+              "title": "The programming language that is used. Used for code highlighting, see https://highlightjs.org/static/demo/ ??? TODO can't this go the root? Can Stryker mutate ts and js at the same time? if not then we can just move it to the root layer.",
+              "default": "",
+              "examples": [
+                "cs"
+              ]
+            },
+            "source": {
+              "$id": "/properties/childResults/items/properties/source",
+              "type": "string",
+              "title": "The full source code of the mutated file, this is used for highlighting",
+              "default": "",
+              "examples": [
+                "using System; using....."
+              ]
+            },
+            "mutants": {
+              "$id": "/properties/childResults/items/properties/mutants",
+              "type": "array",
+              "items": {
+                "$id": "/properties/childResults/items/properties/mutants/items",
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "$id": "/properties/childResults/items/properties/mutants/items/properties/id",
+                    "type": "string",
+                    "title": "A unique id, can be used to correlate this mutant with other reports",
+                    "default": "",
+                    "examples": [
+                      "66bf5ebf-50a1-498b-94d9-0e10f87b45d7"
+                    ]
+                  },
+                  "mutatorName": {
+                    "$id": "/properties/childResults/items/properties/mutants/items/properties/mutatorName TODO: Think this is more of a mutatorCategory",
+                    "type": "string",
+                    "title": "The category of the mutation",
+                    "default": "",
+                    "examples": [
+                      "BinaryOperator", "BooleanSubstitutions", "LogicalOperator"
+                    ]
+                  },
+                  "replacement": {
+                    "$id": "/properties/childResults/items/properties/mutants/items/properties/replacement",
+                    "type": "string",
+                    "title": "The actual mutation that has been applied",
+                    "default": "",
+                    "examples": [
+                      "-"
+                    ]
+                  },
+                  "span": {
+                    "$id": "/properties/childResults/items/properties/mutants/items/properties/span",
+                    "type": "array",
+                    "items": {
+                      "$id": "/properties/childResults/items/properties/mutants/items/properties/span/items",
+                      "type": "integer",
+                      "title": "The span of the mutation. Start at position (inclusive), ends at position(exlusive)",
+                      "default": 0,
+                      "examples": [
+                        21,
+                        22
+                      ]
+                    }
+                  },
+                  "invalid": {
+                    "$id": "/properties/childResults/items/properties/mutants/items/properties/lineNumber",
+                    "type": "integer",
+                    "title": "The line number on which the mutation is applied",
+                    "default": 0,
+                    "examples": [
+                      10
+                    ]
+                  },
+                  "status": {
+                    "$id": "/properties/childResults/items/properties/mutants/items/properties/status",
+                    "type": "string",
+                    "title": "The result of the mutation",
+                    "default": "",
+                    "examples": [
+                      "Killed", "Survived", "NoCoverage", "CompileError", "RuntimeError", "Timeout"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
