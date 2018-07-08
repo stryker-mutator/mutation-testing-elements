@@ -7,7 +7,7 @@
       "name": {
         "$id": "/properties/name",
         "type": "string",
-        "title": "TODO",
+        "title": "Root of the directory result.",
         "default": "",
         "examples": [
           "src"
@@ -16,7 +16,7 @@
       "path": {
         "$id": "/properties/path",
         "type": "string",
-        "title": "Absolute path to the mutated source code.",
+        "title": "Absolute path to the source code.",
         "default": "",
         "examples": [
           "/usr/full/path/to/src"
@@ -26,10 +26,10 @@
         "$id": "/properties/totals",
         "type": "object",
         "properties": {
-          "any": {
-            "$id": "/properties/totals/properties/any",
+          "customColumn": {
+            "$id": "/properties/totals/properties/customColumn",
             "type": "integer",
-            "title": "Key value pairs with mutation information like: mutationsScore, killed, survived etc.",
+            "title": "Customn columns can be added as key value pairs. Such as mutationsScore, killed, survived etc.",
             "default": 0,
             "examples": [
               8
@@ -96,7 +96,7 @@
                 "valid": {
                   "$id": "/properties/childResults/items/properties/totals/properties/valid",
                   "type": "integer",
-                  "title": "Amount of valid mutations for this specific file ??TODO more meaningfull description?",
+                  "title": "Amount of valid mutations for this specific file.",
                   "default": 0,
                   "examples": [
                     3
@@ -105,7 +105,7 @@
                 "invalid": {
                   "$id": "/properties/childResults/items/properties/totals/properties/invalid",
                   "type": "integer",
-                  "title": "Amount of invalid mutations for this specific file ??TODO more meaningfull description?",
+                  "title": "Amount of invalid mutations for this specific file.",
                   "default": 0,
                   "examples": [
                     1
@@ -125,7 +125,7 @@
             "language": {
               "$id": "/properties/childResults/items/properties/language",
               "type": "string",
-              "title": "The programming language that is used. Used for code highlighting, see https://highlightjs.org/static/demo/ ??? TODO can't this go the root? Can Stryker mutate ts and js at the same time? if not then we can just move it to the root layer.",
+              "title": "The programming language that is used. Used for code highlighting, see https://highlightjs.org/static/demo/",
               "default": "",
               "examples": [
                 "cs"
@@ -157,7 +157,7 @@
                     ]
                   },
                   "mutatorName": {
-                    "$id": "/properties/childResults/items/properties/mutants/items/properties/mutatorName TODO: Think this is more of a mutatorCategory",
+                    "$id": "/properties/childResults/items/properties/mutants/items/properties/mutatorName",
                     "type": "string",
                     "title": "The category of the mutation",
                     "default": "",
@@ -187,15 +187,6 @@
                         22
                       ]
                     }
-                  },
-                  "invalid": {
-                    "$id": "/properties/childResults/items/properties/mutants/items/properties/lineNumber",
-                    "type": "integer",
-                    "title": "The line number on which the mutation is applied",
-                    "default": 0,
-                    "examples": [
-                      10
-                    ]
                   },
                   "status": {
                     "$id": "/properties/childResults/items/properties/mutants/items/properties/status",
