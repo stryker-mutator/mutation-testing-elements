@@ -1,0 +1,35 @@
+{  
+    "name": "src",
+    "path":  "/usr/full/path/to/src",
+    "totals": {
+       "choose": 8,
+       "custom": 1,
+       "columns": 1,
+       "here": 0,
+       "like": 2,
+       "mutation score": 80
+    },
+    "health": "ok",
+    "childResults": [
+        { 
+            "name": "src/Example.cs",
+            "path":  "/usr/full/path/to/src/Example.cs",
+            "totals": {
+               "detected": 1,
+               "undetected": 2,
+               "valid": 3,
+               "invalid": 1
+             },  
+            "health": "danger",
+            "language": "cs",
+            "source": "using System; using.....",
+            "mutants": [{
+                 "id": "321321", 
+                 "mutatorName": "BinaryMutator",
+                 "replacement": "-",
+                 "span": [21,22], 
+                 "status": "Killed"
+            }]
+        }    
+    ]
+}
