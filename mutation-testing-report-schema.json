@@ -63,7 +63,7 @@
     "childResults": {
       "$id": "/properties/childResults",
       "type": "array",
-      "minItems": 1,
+      "default": [],
       "items": {
         "$id": "/properties/childResults/items",
         "type": "object",
