@@ -1,6 +1,6 @@
 {
   "name": "mutation-testing-elements",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A suite of web components for a mutation testing report.",
   "main": "index.js",
   "scripts": {
