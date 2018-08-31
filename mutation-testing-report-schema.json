@@ -178,7 +178,7 @@
           "mutants": {
             "$id": "/properties/childResults/items/properties/mutants",
             "type": "array",
-            "minItems": 1,
+            "default": [],
             "items": {
               "$id": "/properties/childResults/items/properties/mutants/items",
               "type": "object",
