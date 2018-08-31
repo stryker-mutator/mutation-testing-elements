@@ -1,9 +1,8 @@
-var expect = require('chai').expect
+var expect = require('chai').expect;
 var Ajv = require('ajv');
-var schema = require('../mutation-testing-report-schema.json')
+var schema = require('../mutation-testing-report-schema.json');
 
 describe('JsonSchema', function () {
-
     var ajv = new Ajv().addSchema(schema, 'mutation-testing-report-schema');
 
     it('should return true when the given json file is valid based on the json schema', function () {
