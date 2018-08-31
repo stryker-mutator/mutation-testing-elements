@@ -1,6 +1,6 @@
 {
   "name": "mutation-testing-elements",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A suite of web components for a mutation testing report.",
   "main": "index.js",
   "scripts": {
@@ -10,8 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/stryker-mutator/mutation-testing-elements.git"
   },
-  "author": "",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/stryker-mutator/mutation-testing-elements/issues"
   },
