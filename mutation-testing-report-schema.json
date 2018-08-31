@@ -15,7 +15,6 @@
       "$id": "/properties/name",
       "type": "string",
       "title": "Root of the directory result.",
-      "default": "",
       "examples": [
         "src"
       ]
@@ -24,7 +23,6 @@
       "$id": "/properties/path",
       "type": "string",
       "title": "Absolute path to the source code.",
-      "default": "",
       "examples": [
         "/usr/full/path/to/src"
       ]
@@ -37,7 +35,6 @@
           "$id": "/properties/totals/properties/customColumn",
           "type": "integer",
           "title": "Customn columns can be added as key value pairs. Such as mutationsScore, killed, survived etc.",
-          "default": 0,
           "examples": [
             8
           ]
@@ -48,7 +45,6 @@
       "$id": "/properties/health",
       "type": "string",
       "title": "Application status based on mutation score",
-      "default": "",
       "enum": [
         "ok",
         "warning",
@@ -63,7 +59,6 @@
     "childResults": {
       "$id": "/properties/childResults",
       "type": "array",
-      "default": [],
       "items": {
         "$id": "/properties/childResults/items",
         "type": "object",
@@ -81,7 +76,6 @@
             "$id": "/properties/childResults/items/properties/name",
             "type": "string",
             "title": "Name of the mutated file",
-            "default": "",
             "examples": [
               "Example.cs"
             ]
@@ -90,7 +84,6 @@
             "$id": "/properties/childResults/items/properties/path",
             "type": "string",
             "title": "Absolute path to the mutated file",
-            "default": "",
             "examples": [
               "/usr/full/path/to/src/Example.cs"
             ]
@@ -109,7 +102,6 @@
                 "$id": "/properties/childResults/items/properties/totals/properties/detected",
                 "type": "integer",
                 "title": "Amount of detected mutations for this specific file",
-                "default": 0,
                 "examples": [
                   10
                 ]
@@ -118,7 +110,6 @@
                 "$id": "/properties/childResults/items/properties/totals/properties/undetected",
                 "type": "integer",
                 "title": "Amount of undetected mutations for this specific file",
-                "default": 0,
                 "examples": [
                   2
                 ]
@@ -127,7 +118,6 @@
                 "$id": "/properties/childResults/items/properties/totals/properties/valid",
                 "type": "integer",
                 "title": "Amount of valid mutations for this specific file.",
-                "default": 0,
                 "examples": [
                   3
                 ]
@@ -136,7 +126,6 @@
                 "$id": "/properties/childResults/items/properties/totals/properties/invalid",
                 "type": "integer",
                 "title": "Amount of invalid mutations for this specific file.",
-                "default": 0,
                 "examples": [
                   1
                 ]
@@ -152,7 +141,6 @@
               "warning",
               "danger"
             ],
-            "default": "",
             "examples": [
               "danger"
             ]
@@ -161,7 +149,6 @@
             "$id": "/properties/childResults/items/properties/language",
             "type": "string",
             "title": "The programming language that is used. Used for code highlighting, see https://highlightjs.org/static/demo/",
-            "default": "",
             "examples": [
               "cs"
             ]
@@ -170,7 +157,6 @@
             "$id": "/properties/childResults/items/properties/source",
             "type": "string",
             "title": "The full source code of the mutated file, this is used for highlighting",
-            "default": "",
             "examples": [
               "using System; using....."
             ]
@@ -178,7 +164,6 @@
           "mutants": {
             "$id": "/properties/childResults/items/properties/mutants",
             "type": "array",
-            "default": [],
             "items": {
               "$id": "/properties/childResults/items/properties/mutants/items",
               "type": "object",
@@ -194,7 +179,6 @@
                   "$id": "/properties/childResults/items/properties/mutants/items/properties/id",
                   "type": "string",
                   "title": "A unique id, can be used to correlate this mutant with other reports",
-                  "default": "",
                   "examples": [
                     "66bf5ebf-50a1-498b-94d9-0e10f87b45d7"
                   ]
@@ -203,7 +187,6 @@
                   "$id": "/properties/childResults/items/properties/mutants/items/properties/mutatorName",
                   "type": "string",
                   "title": "The category of the mutation",
-                  "default": "",
                   "examples": [
                     "BinaryOperator",
                     "BooleanSubstitutions",
@@ -214,7 +197,6 @@
                   "$id": "/properties/childResults/items/properties/mutants/items/properties/replacement",
                   "type": "string",
                   "title": "The actual mutation that has been applied",
-                  "default": "",
                   "examples": [
                     "-"
                   ]
@@ -228,7 +210,6 @@
                     "$id": "/properties/childResults/items/properties/mutants/items/properties/span/items",
                     "type": "integer",
                     "title": "The span of the mutation. Start at position (inclusive), ends at position(exlusive)",
-                    "default": 0,
                     "examples": [
                       21,
                       22
@@ -247,7 +228,6 @@
                     "RuntimeError",
                     "Timeout"
                   ],
-                  "default": "",
                   "examples": [
                     "Killed",
                     "Survived",
