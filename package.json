@@ -10,8 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/stryker-mutator/mutation-testing-elements.git"
   },
-  "author": "",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/stryker-mutator/mutation-testing-elements/issues"
   },
