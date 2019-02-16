@@ -1,0 +1,65 @@
+{
+  "name": "src",
+  "totals": {
+    "# Killed": 1,
+    "# Survived": 1,
+    "# Timeout": 0,
+    "# No coverage": 0,
+    "# Runtime errors": 0,
+    "# Transpile errors": 0,
+    "Total detected": 2,
+    "Total undetected": 0,
+    "Total mutants": 2
+  },
+  "mutationScore": 50,
+  "health": "warning",
+  "childResults": [
+    {
+      "name": "test.js",
+      "totals": {
+        "detected": 1,
+        "undetected": 2,
+        "valid": 3,
+        "invalid": 1
+      },
+      "mutationScore": 50,
+      "health": "warning",
+      "language": "javascript",
+      "source": "function add(a, b) {\n  return a + b;\n}",
+      "mutants": [
+        {
+          "id": "1",
+          "mutatorName": "Arithmetic Operator",
+          "replacement": "-",
+          "location": {
+            "start": {
+              "line": 2,
+              "column": 12
+            },
+            "end": {
+              "line": 2,
+              "column": 13
+            }
+          },
+          "status": "Survived"
+        },
+        {
+          "id": "2",
+          "mutatorName": "Block Statement",
+          "replacement": "{}",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 20
+            },
+            "end": {
+              "line": 3,
+              "column": 1
+            }
+          },
+          "status": "Killed"
+        }
+      ]
+    }
+  ]
+}

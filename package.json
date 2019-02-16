@@ -4,7 +4,8 @@
   "description": "A suite of web components for a mutation testing report.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "webpack-dev-server --open"
   },
   "repository": {
     "type": "git",
@@ -15,11 +16,20 @@
     "url": "https://github.com/stryker-mutator/mutation-testing-elements/issues"
   },
   "homepage": "https://github.com/stryker-mutator/mutation-testing-elements#readme",
-  "dependencies": {
-    "ajv": "^6.5.2"
-  },
   "devDependencies": {
+    "ajv": "^6.5.2",
+    "bootstrap": "^4.3.1",
     "chai": "^4.1.2",
-    "mocha": "^5.2.0"
+    "lit-element": "^2.0.1",
+    "mocha": "^5.2.0",
+    "ts-loader": "^5.3.3",
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.3",
+    "webpack": "^4.29.4",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.1.14"
+  },
+  "dependencies": {
+    "highlight.js": "^9.14.2"
   }
 }
