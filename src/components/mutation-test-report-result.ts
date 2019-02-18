@@ -1,5 +1,5 @@
 import { LitElement, html, property, customElement } from 'lit-element';
-import { MutationTestResult } from '../api';
+import { MutationTestResult } from '../../api';
 import { isFileResult } from '../helpers';
 import { bootstrap } from '../style';
 

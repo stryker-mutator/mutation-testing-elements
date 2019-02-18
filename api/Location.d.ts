@@ -1,9 +1,9 @@
-export interface Location {
+export declare interface Location {
   start: Position;
   end: Position;
 }
 
-export interface Position {
+export declare interface Position {
   line: number;
   column: number;
 }

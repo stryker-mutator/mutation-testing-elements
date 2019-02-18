@@ -1,8 +1,8 @@
 {
   "name": "mutation-testing-elements",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A suite of web components for a mutation testing report.",
-  "main": "index.js",
+  "main": "dist/mutation-test-elements.js",
   "scripts": {
     "test": "mocha",
     "start": "webpack-dev-server --open",
@@ -34,6 +34,7 @@
     "lit-element": "^2.0.1",
     "mocha": "^5.2.0",
     "rimraf": "^2.6.3",
+    "terser-webpack-plugin": "^1.2.2",
     "ts-loader": "^5.3.3",
     "tslint": "^5.12.1",
     "typescript": "^3.3.3",

@@ -1,6 +1,6 @@
-import { MutationTestResult } from './api/MutationTestResult';
-import { DirectoryResult } from './api/DirectoryResult';
-import { FileResult, MutantStatus } from './api';
+import { MutationTestResult } from '../api/MutationTestResult';
+import { DirectoryResult } from '../api/DirectoryResult';
+import { FileResult, MutantStatus } from '../api';
 
 export function isDirectoryResult(result: MutationTestResult | undefined): result is DirectoryResult {
   return Boolean(result && (result as DirectoryResult).childResults);

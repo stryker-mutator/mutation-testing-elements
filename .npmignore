@@ -1,4 +1,5 @@
 **/*
 !README.md
 !mutation-testing-report-schema.json
-!dist
+!dist/**/*
+!api/**/*

@@ -1,5 +1,5 @@
 import { LitElement, html, property, customElement, css, PropertyValues, unsafeCSS } from 'lit-element';
-import { FileResult, MutantStatus, MutantResult } from '../api';
+import { FileResult, MutantStatus, MutantResult } from '../../api';
 import hljs from 'highlight.js/lib/highlight';
 import javascript from 'highlight.js/lib/languages/javascript';
 import scala from 'highlight.js/lib/languages/scala';

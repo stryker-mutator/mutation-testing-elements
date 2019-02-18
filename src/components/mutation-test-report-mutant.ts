@@ -1,5 +1,5 @@
 import { customElement, LitElement, property, html, css } from 'lit-element';
-import { MutantResult, MutantStatus } from '../api';
+import { MutantStatus } from '../../api';
 import { getContextClassForStatus } from '../helpers';
 import { bootstrap } from '../style';
 

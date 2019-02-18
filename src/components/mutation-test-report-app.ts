@@ -1,5 +1,5 @@
 import { LitElement, html, property, customElement, css, unsafeCSS } from 'lit-element';
-import { MutationTestResult } from '../api';
+import { MutationTestResult } from '../../api';
 import { isDirectoryResult } from '../helpers';
 import { bootstrap } from '../style';
 
@@ -65,7 +65,20 @@ export class MutationTestReportAppComponent extends LitElement {
   }
 
   public static styles = [
-    bootstrap
+    bootstrap,
+    css`
+    :host {
+      line-height: 1.15;
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.5;
+      color: #212529;
+      text-align: left;
+      background-color: #fff;
+    }
+    `
   ];
 
   public render() {

@@ -1,5 +1,5 @@
 import { customElement, LitElement, property, PropertyValues, html, css } from 'lit-element';
-import { MutantResult, MutantStatus } from '../api';
+import { MutantResult, MutantStatus } from '../../api';
 import { bootstrap } from '../style';
 
 export interface MutantFilter {

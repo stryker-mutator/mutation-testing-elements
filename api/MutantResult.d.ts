@@ -1,6 +1,6 @@
 import { Location } from './Location';
 
-export interface MutantResult {
+export declare interface MutantResult {
   id: string;
   mutatorName: string;
   replacement: string;
@@ -8,7 +8,7 @@ export interface MutantResult {
   status: MutantStatus;
 }
 
-export const enum MutantStatus {
+export declare const enum MutantStatus {
   Killed = 'Killed',
   Survived = 'Survived',
   NoCoverage = 'NoCoverage',
