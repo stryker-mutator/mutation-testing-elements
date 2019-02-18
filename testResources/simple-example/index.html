@@ -2,23 +2,31 @@
 
 <head>
     <title>Simple example - Mutation test elements</title>
-    <link rel="stylesheet" href="/dist/css/bootstrap.min.css">
     <script src="/mutation-test-elements.js"></script>
+    <style>
+        html {
+            font-family: sans-serif;
+            line-height: 1.15;
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            text-align: left;
+            background-color: #fff;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="row">
-        <div class="col-md-12">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/">Test resources</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Simple example</li>
-                </ol>
-            </nav>
-            <hr>
-            <mutation-test-report-app src="mutation-report.json"></mutation-test-report-app>
-        </div>
-    </div>
+    <a href="/">Back</a></li>
+    <mutation-test-report-app src="mutation-report.json"></mutation-test-report-app>
 </body>
 
 </html>

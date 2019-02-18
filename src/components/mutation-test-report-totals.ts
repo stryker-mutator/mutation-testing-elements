@@ -1,6 +1,7 @@
 import { LitElement, html, property, customElement, css } from 'lit-element';
 import { MutationTestResult, MutationResultHealth } from '../api';
 import { isDirectoryResult } from '../helpers';
+import { bootstrap } from '../style';
 
 @customElement('mutation-test-report-totals')
 export class MutationTestReportTotalsComponent extends LitElement {
@@ -8,16 +9,19 @@ export class MutationTestReportTotalsComponent extends LitElement {
   public model!: MutationTestResult;
 
   @property()
-  private childResults: MutationTestResult[] = [];
-
-  public connectedCallback() {
-    super.connectedCallback();
+  private get childResults(): MutationTestResult[] {
     if (isDirectoryResult(this.model)) {
-      this.childResults = this.model.childResults;
+      return this.model.childResults;
+    } else {
+      return [];
     }
   }
 
-  public static styles = css`
+  public connectedCallback() {
+    super.connectedCallback();
+  }
+
+  public static styles = [css`
     th.rotate {
       /* Something you can count on */
       height: 50px;
@@ -39,11 +43,10 @@ export class MutationTestReportTotalsComponent extends LitElement {
     .table-no-top {
       border-width: 0;
     }
-  `;
+  `, bootstrap];
 
   public render() {
     return html`
-          <link rel="stylesheet" href="/dist/css/bootstrap.min.css">
           <table class='table table-sm table-hover table-bordered table-no-top'>
             ${this.renderHead()}
             ${this.renderBody()}
@@ -106,7 +109,7 @@ export class MutationTestReportTotalsComponent extends LitElement {
     switch (subject.health) {
       case MutationResultHealth.Danger:
         return 'danger';
-      case MutationResultHealth.Ok:
+      case MutationResultHealth.Good:
         return 'success';
       case MutationResultHealth.Warning:
         return 'warning';

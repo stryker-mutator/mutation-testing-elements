@@ -1,5 +1,10 @@
 declare module 'highlight.js/lib/highlight' {
+  interface HighlightResult {
+    relevance: number;
+    value: string;
+  }
   function registerLanguage(name: string, language: Language): void;
+  function highlight(language: string, code: string): HighlightResult;
   function highlightBlock(code: HTMLElement): void;
 }
 

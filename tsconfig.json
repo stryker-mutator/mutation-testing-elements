@@ -10,7 +10,8 @@
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
     "experimentalDecorators": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "outDir": "dist"
   },
   "include": [
     "src",

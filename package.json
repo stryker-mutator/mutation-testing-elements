@@ -5,7 +5,16 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "start": "webpack-dev-server --open"
+    "start": "webpack-dev-server --open",
+    "prebuild": "rimraf dist",
+    "build": "webpack --configFile webpack.config.js --mode production",
+    "pretest": "npm run build",
+    "preversion": "npm t",
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
+    "postversion": "npm publish && git push && git push --tags",
+    "release:patch": "npm version patch -m \"chore(release): %s\"",
+    "release:minor": "npm version minor -m \"chore(release): %s\"",
+    "release:major": "npm version major -m \"chore(release): %s\""
   },
   "repository": {
     "type": "git",
@@ -20,8 +29,11 @@
     "ajv": "^6.5.2",
     "bootstrap": "^4.3.1",
     "chai": "^4.1.2",
+    "conventional-changelog-cli": "^2.0.12",
+    "css-loader": "^2.1.0",
     "lit-element": "^2.0.1",
     "mocha": "^5.2.0",
+    "rimraf": "^2.6.3",
     "ts-loader": "^5.3.3",
     "tslint": "^5.12.1",
     "typescript": "^3.3.3",
@@ -30,6 +42,8 @@
     "webpack-dev-server": "^3.1.14"
   },
   "dependencies": {
-    "highlight.js": "^9.14.2"
+    "highlight.js": "^9.14.2",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0"
   }
 }

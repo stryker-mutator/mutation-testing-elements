@@ -34,7 +34,7 @@
         "customColumn": {
           "$id": "/properties/totals/properties/customColumn",
           "type": "integer",
-          "title": "Customn columns can be added as key value pairs. Such as mutationsScore, killed, survived etc.",
+          "title": "Custom columns can be added as key value pairs. Such as mutationsScore, killed, survived etc.",
           "examples": [
             8
           ]

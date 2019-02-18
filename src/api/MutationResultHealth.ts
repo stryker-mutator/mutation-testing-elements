@@ -1,5 +1,5 @@
-export enum MutationResultHealth {
-  Danger = 'danger',
-  Warning = 'warning',
-  Ok = 'ok'
+export const enum MutationResultHealth {
+  Danger = 'Danger',
+  Warning = 'Warning',
+  Good = 'Good'
 }

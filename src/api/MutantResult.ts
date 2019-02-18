@@ -9,10 +9,10 @@ export interface MutantResult {
 }
 
 export const enum MutantStatus {
-  Killed = 'killed',
-  Survived = 'survived',
-  NoCoverage = 'noCoverage',
-  CompileError = 'compileError',
-  RuntimeError = 'runtimeError',
-  Timeout = 'timeout'
+  Killed = 'Killed',
+  Survived = 'Survived',
+  NoCoverage = 'NoCoverage',
+  CompileError = 'CompileError',
+  RuntimeError = 'RuntimeError',
+  Timeout = 'Timeout'
 }

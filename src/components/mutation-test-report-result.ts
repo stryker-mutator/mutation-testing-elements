@@ -1,6 +1,7 @@
 import { LitElement, html, property, customElement } from 'lit-element';
 import { MutationTestResult } from '../api';
 import { isFileResult } from '../helpers';
+import { bootstrap } from '../style';
 
 @customElement('mutation-test-report-result')
 export class MutationTestReportResultComponent extends LitElement {
@@ -8,10 +9,10 @@ export class MutationTestReportResultComponent extends LitElement {
   @property()
   private readonly model!: MutationTestResult;
 
+  public static styles = [bootstrap];
+
   public render() {
     return html`
-    <link rel="stylesheet" href="/dist/css/bootstrap.min.css">
-    <h1 class="display-1">${this.model.name}</h1>
     <div class='row'>
       <div class='totals col-sm-11'>
         <mutation-test-report-totals .model="${this.model}"></mutation-test-report-totals>

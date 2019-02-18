@@ -12,7 +12,7 @@
     "Total mutants": 2
   },
   "mutationScore": 50,
-  "health": "warning",
+  "health": "Warning",
   "childResults": [
     {
       "name": "test.js",
@@ -23,7 +23,7 @@
         "invalid": 1
       },
       "mutationScore": 50,
-      "health": "warning",
+      "health": "Warning",
       "language": "javascript",
       "source": "function add(a, b) {\n  return a + b;\n}",
       "mutants": [

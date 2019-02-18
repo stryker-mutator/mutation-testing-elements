@@ -1,21 +1,28 @@
-import { LitElement, html, property, customElement } from 'lit-element';
+import { LitElement, html, property, customElement, css, unsafeCSS } from 'lit-element';
 import { MutationTestResult } from '../api';
 import { isDirectoryResult } from '../helpers';
+import { bootstrap } from '../style';
 
 @customElement('mutation-test-report-app')
 export class MutationTestReportAppComponent extends LitElement {
-  @property() public src: string | undefined;
-  private errorMessage: string | undefined;
   private report: MutationTestResult | undefined;
+
   @property()
-  private context: MutationTestResult | undefined;
+  public src: string | undefined;
+
+  @property()
+  public errorMessage: string | undefined;
+
+  @property()
+  public context: MutationTestResult | undefined;
+
+  @property()
+  public path: ReadonlyArray<string> | undefined;
 
   public connectedCallback() {
     super.connectedCallback();
     if (this.src) {
       this.loadData(this.src)
-        .then(this.bindLocation)
-        .then(this.updateLocation)
         .catch(error =>
           this.errorMessage = error.toString());
     } else {
@@ -25,45 +32,64 @@ export class MutationTestReportAppComponent extends LitElement {
 
   private async loadData(src: string) {
     const res = await fetch(src);
-    const reportData: MutationTestResult = await res.json();
-    if (isDirectoryResult(reportData)) {
-      this.report = reportData;
-    } else {
-      this.errorMessage = `Report data not supported: ${JSON.stringify(reportData)}`;
-    }
+    this.report = await res.json();
+    this.updateContext();
   }
 
-  private readonly bindLocation = () => {
-    window.addEventListener('hashchange', this.updateLocation);
-  }
+  private updateContext() {
+    if (this.path) {
+      const pathQueue = this.path.slice();
+      let newContext: MutationTestResult | undefined = this.report;
+      let pathPart: string | undefined;
 
-  private readonly updateLocation = () => {
-    const hash = window.location.hash.substr(1);
-    const path = hash.split('/');
-    let newContext: MutationTestResult | undefined = this.report;
-    let pathPart: string | undefined;
-    while (pathPart = path.shift()) {
-      if (isDirectoryResult(newContext)) {
-        newContext = newContext.childResults.find(child => child.name === pathPart);
+      while (pathPart = pathQueue.shift()) {
+        if (isDirectoryResult(newContext)) {
+          newContext = newContext.childResults.find(child => child.name === pathPart);
+        } else {
+          newContext = undefined;
+          break;
+        }
+      }
+      this.context = newContext;
+      if (!this.context) {
+        this.errorMessage = `404 - ${this.path.join('/')} not found`;
       } else {
-        this.errorMessage = `404 - ${hash} not found`;
+        this.errorMessage = undefined;
       }
     }
-    this.context = newContext;
   }
+
+  private readonly updatePath = (event: CustomEvent) => {
+    this.path = event.detail;
+    this.updateContext();
+  }
+
+  public static styles = [
+    bootstrap
+  ];
 
   public render() {
     return html`
-    <link rel="stylesheet" href="/dist/css/bootstrap.min.css">
+    <mutation-test-report-router @path-changed="${this.updatePath}"></mutation-test-report-router>
     <div class="container">
       <div class="row">
         <div class="col-md-12">
+          ${this.renderTitle()}
+          <mutation-test-report-breadcrumb .path="${this.path}"></mutation-test-report-breadcrumb>
           ${this.renderErrorMessage()}
           ${this.renderMutationTestReport()}
         </div>
       </div>
     </div>
     `;
+  }
+
+  private renderTitle() {
+    if (this.context) {
+      return html`<h1 class="display-1">${this.context.name}</h1>`;
+    } else {
+      return undefined;
+    }
   }
 
   private renderErrorMessage() {
@@ -82,7 +108,7 @@ export class MutationTestReportAppComponent extends LitElement {
     if (this.context) {
       return html`<mutation-test-report-result .model="${this.context}"></mutation-test-report-result>`;
     } else {
-      return html``;
+      return '';
     }
   }
 }
