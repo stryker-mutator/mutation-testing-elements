@@ -1,5 +1,5 @@
 import { customElement, LitElement, property, html, css } from 'lit-element';
-import { MutantStatus } from '../../api';
+import { MutantResult } from '../../api';
 import { getContextClassForStatus } from '../helpers';
 import { bootstrap } from '../style';
 
@@ -7,52 +7,58 @@ import { bootstrap } from '../style';
 export class MutationTestReportMutantComponent extends LitElement {
 
   @property()
-  public mutantId!: string;
-
-  @property()
-  public mutatorName!: string;
-
-  @property()
-  public replacement!: string;
-
-  @property()
-  public status!: MutantStatus;
+  public mutant: MutantResult | undefined;
 
   @property()
   public show: boolean = true;
 
   @property()
-  public open: boolean = false;
+  public expand: boolean = false;
 
-  public static styles = [css`
+  public static styles = [
+    bootstrap,
+    css`
     .badge {
       cursor: pointer;
     }
     .disabled-code {
       text-decoration: line-through;
     }
-  `, bootstrap];
-
-  public connectedCallback() {
-    super.connectedCallback();
-    console.log(this.mutatorName, this.replacement, this.status);
-  }
+    ::slotted(.hljs-string) {
+      color: #fff;
+    }
+  `];
 
   public render() {
     // This part is newline significant, as it is rendered in a <code> block.
     // No unnecessary new lines
+    console.log(this.show, this.mutant);
     return html`${this.renderButton()}${this.renderCode()}`;
   }
 
   private renderButton() {
-    if (this.show) {
-      return html`<span class="badge badge-${this.open ? 'info' : getContextClassForStatus(this.status)}" @click="${() => this.open = !this.open}" title="${this.mutatorName}">${this.mutantId}</button>`;
+    if (this.show && this.mutant) {
+      return html`<span class="badge badge-${this.expand ? 'info' : getContextClassForStatus(this.mutant.status)}" @click="${() => this.expand = !this.expand}"
+  title="${this.mutant.mutatorName}">${this.mutant.id}</button>`;
     } else {
       return undefined;
     }
   }
 
   private renderCode() {
-    return html`<span class="badge badge-info" ?hidden="${!this.open || !this.show}">${this.replacement}</span><slot class="${this.open && this.show ? 'disabled-code' : ''}"></slot>`;
+    return html`${this.renderReplacement()}${this.renderActual()}`;
+  }
+
+  private renderActual() {
+    const actualCodeSlot = html`<slot></slot>`;
+    return html`<span class="${this.expand && this.show ? 'disabled-code' : ''}">${actualCodeSlot}</span>`;
+  }
+
+  private renderReplacement() {
+    if (this.mutant) {
+      return html`<span class="badge badge-info" ?hidden="${!this.expand || !this.show}">${this.mutant.replacement}</span>`;
+    } else {
+      return undefined;
+    }
   }
 }

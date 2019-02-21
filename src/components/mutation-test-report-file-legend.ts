@@ -37,6 +37,7 @@ export class MutationTestReportFileLegendComponent extends LitElement {
 
   private updateModel() {
     this.filters = [MutantStatus.Killed, MutantStatus.Survived, MutantStatus.NoCoverage, MutantStatus.Timeout, MutantStatus.CompileError, MutantStatus.RuntimeError]
+      .filter(status => this.mutants.some(mutant => mutant.status === status))
       .map(status => ({
         enabled: [MutantStatus.Survived, MutantStatus.NoCoverage, MutantStatus.Timeout].some(s => s === status),
         numberOfMutants: this.mutants.filter(m => m.status === status).length,
@@ -84,7 +85,7 @@ export class MutationTestReportFileLegendComponent extends LitElement {
             </label>
           </div>
           `)}
-          <button @click="${this.toggleOpenAll}" class="btn btn-sm btn-secondary" role="link">${this.collapseButtonText}</button>
+          <button @click="${this.toggleOpenAll}" class="btn btn-sm btn-secondary" type="button">${this.collapseButtonText}</button>
         </form>
       </div>
     `;

@@ -1,4 +1,5 @@
-import { LitElement, html, property, customElement, css, PropertyValues, unsafeCSS } from 'lit-element';
+import { LitElement, html, property, customElement, css, PropertyValues } from 'lit-element';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 import { FileResult, MutantStatus, MutantResult } from '../../api';
 import hljs from 'highlight.js/lib/highlight';
 import javascript from 'highlight.js/lib/languages/javascript';
@@ -6,10 +7,13 @@ import scala from 'highlight.js/lib/languages/scala';
 import java from 'highlight.js/lib/languages/java';
 import cs from 'highlight.js/lib/languages/cs';
 import typescript from 'highlight.js/lib/languages/typescript';
-import { getContextClassForStatus, LINE_START_INDEX, COLUMN_START_INDEX, lines as toLines, escapeHtml, NEW_LINE, CARRIAGE_RETURN } from '../helpers';
+import { getContextClassForStatus, LINE_START_INDEX, COLUMN_START_INDEX, escapeHtml, NEW_LINE, CARRIAGE_RETURN } from '../helpers';
 import { MutationTestReportMutantComponent } from './mutation-test-report-mutant';
 import { MutantFilter } from './mutation-test-report-file-legend';
 import { bootstrap, highlightJS } from '../style';
+import { ResultTable } from '../model/ResultTable';
+import { Thresholds } from '../../api/Thresholds';
+
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('typescript', typescript);
 hljs.registerLanguage('cs', cs);
@@ -22,7 +26,17 @@ export class MutationTestReportFileComponent extends LitElement {
   @property()
   private readonly model!: FileResult;
 
+  @property()
+  private readonly name!: string;
+
+  @property()
+  private readonly thresholds!: Thresholds;
+
+  private enabledMutantStates: MutantStatus[] = [];
+
   public static styles = [
+    highlightJS,
+    bootstrap,
     css`
     .bg-danger-light {
       background-color: #f2dede;
@@ -33,111 +47,105 @@ export class MutationTestReportFileComponent extends LitElement {
     .bg-warning-light {
         background-color: #fcf8e3;
     }
-    `,
-    bootstrap, highlightJS];
+    `];
 
   private readonly openAll = () => {
-    for (const mutantComponent of this.root.querySelectorAll('mutation-test-report-mutant')) {
-      if (mutantComponent instanceof MutationTestReportMutantComponent) {
-        mutantComponent.open = true;
-      }
-    }
+    this.forEachMutantComponent(mutantComponent => mutantComponent.expand = true);
   }
   private readonly collapseAll = () => {
-    for (const mutantComponent of this.root.querySelectorAll('mutation-test-report-mutant')) {
+    this.forEachMutantComponent(mutantComponent => mutantComponent.expand = false);
+  }
+
+  private forEachMutantComponent(action: (mutant: MutationTestReportMutantComponent) => void, host = this.root) {
+    for (const mutantComponent of host.querySelectorAll('mutation-test-report-mutant')) {
       if (mutantComponent instanceof MutationTestReportMutantComponent) {
-        mutantComponent.open = false;
+        action(mutantComponent);
       }
     }
   }
 
   private readonly filtersChanged = (event: CustomEvent<MutantFilter[]>) => {
-    const enabledMutantStates = event.detail
+    this.enabledMutantStates = event.detail
       .filter(mutantFilter => mutantFilter.enabled)
       .map(mutantFilter => mutantFilter.status);
-    for (const mutantComponent of this.root.querySelectorAll('mutation-test-report-mutant')) {
-      if (mutantComponent instanceof MutationTestReportMutantComponent) {
-        mutantComponent.show = enabledMutantStates.some(state => mutantComponent.status === state);
-      }
-    }
+    this.updateShownMutants();
+  }
+
+  private updateShownMutants() {
+    this.forEachMutantComponent(mutantComponent => {
+      mutantComponent.show = this.enabledMutantStates.some(state => mutantComponent.mutant !== undefined && mutantComponent.mutant.status === state);
+    });
   }
 
   public render() {
     return html`
-          <mutation-test-report-file-legend @filters-changed="${this.filtersChanged}" @open-all="${this.openAll}" @collapse-all="${this.collapseAll}"
-            .mutants="${this.model.mutants}"></mutation-test-report-file-legend>
-          <pre><code class="lang-${this.model.language} hljs" .innerHTML="${this.renderCode()}"></code></pre>
+        <div class="row">
+          <div class="totals col-sm-11">
+            <mutation-test-report-totals .model="${ResultTable.forFile(this.name, this.model, this.thresholds)}"></mutation-test-report-totals>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <mutation-test-report-file-legend @filters-changed="${this.filtersChanged}" @open-all="${this.openAll}"
+              @collapse-all="${this.collapseAll}" .mutants="${this.model.mutants}"></mutation-test-report-file-legend>
+            <pre><code class="lang-${this.model.language} hljs">${unsafeHTML(this.renderCode())}</code></pre>
+          </div>
+        </div>
         `;
   }
 
-  private get root() {
+  public firstUpdated(_changedProperties: PropertyValues) {
+    super.firstUpdated(_changedProperties);
+    const code = this.root.querySelector('code');
+    if (code) {
+      hljs.highlightBlock(code);
+      this.forEachMutantComponent(mutantComponent => {
+        mutantComponent.mutant = this.model.mutants.find(mutant => mutant.id.toString() === mutantComponent.getAttribute('mutant-id'));
+      }, code);
+    }
+  }
+
+  private get root(): ParentNode {
     return this.shadowRoot || this;
   }
 
-  private renderCode() {
-    const code = document.createElement('code');
-    code.classList.add(`lang-${this.model.language}`);
-    code.innerHTML = this.annotatedCode();
-    hljs.highlightBlock(code);
-    return code.innerHTML;
-  }
+  /**
+   * Walks over the code in this.model.source and adds the
+   * `<mutation-test-report-mutant>` elements.
+   * It also adds the background color using
+   * `<span class="bg-danger-light">` and friends.
+   */
+  private renderCode(): string {
+    const backgroundState = new BackgroundColorCalculator();
 
-  private annotatedCode(): string {
-
-    const lines = toLines(this.model.source);
-    const currentCursorMutantStatuses = {
-      killed: 0,
-      noCoverage: 0,
-      survived: 0,
-      timeout: 0
-    };
-
-    const adjustCurrentMutantResult = (valueToAdd: number) => (mutant: MutantResult) => {
-      switch (mutant.status) {
-        case MutantStatus.Killed:
-          currentCursorMutantStatuses.killed += valueToAdd;
-          break;
-        case MutantStatus.Survived:
-          currentCursorMutantStatuses.survived += valueToAdd;
-          break;
-        case MutantStatus.Timeout:
-          currentCursorMutantStatuses.timeout += valueToAdd;
-          break;
-        case MutantStatus.NoCoverage:
-          currentCursorMutantStatuses.noCoverage += valueToAdd;
-          break;
-      }
-    };
-
-    const determineBackground = () => {
-      if (currentCursorMutantStatuses.survived > 0) {
-        return getContextClassForStatus(MutantStatus.Survived) + '-light';
-      } else if (currentCursorMutantStatuses.noCoverage > 0) {
-        return getContextClassForStatus(MutantStatus.NoCoverage) + '-light';
-      } else if (currentCursorMutantStatuses.timeout > 0) {
-        return getContextClassForStatus(MutantStatus.Timeout) + '-light';
-      } else if (currentCursorMutantStatuses.killed > 0) {
-        return getContextClassForStatus(MutantStatus.Killed) + '-light';
-      }
-      return null;
-    };
-
-    const annotateCharacter = (char: string, line: number, column: number): string => {
+    const walker = (char: string, line: number, column: number): string => {
       const mutantsStarting = this.model.mutants.filter(m => m.location.start.line === line && m.location.start.column === column);
       const mutantsEnding = this.model.mutants.filter(m => m.location.end.line === line && m.location.end.column === column);
-      mutantsStarting.forEach(adjustCurrentMutantResult(1));
-      mutantsEnding.forEach(adjustCurrentMutantResult(-1));
-      const isStart = line === LINE_START_INDEX && column === COLUMN_START_INDEX;
-      const isEnd = line === lines.length + LINE_START_INDEX - 1 && column === lines[line - LINE_START_INDEX].length + COLUMN_START_INDEX - 1;
-      const backgroundColorAnnotation = mutantsStarting.length || mutantsEnding.length || isStart ? `<span class="bg-${determineBackground()}">` : '';
-      const backgroundColorEndAnnotation = ((mutantsStarting.length || mutantsEnding.length) && !isStart) || isEnd ? '</span>' : '';
-      const mutantsAnnotations = mutantsStarting.map(m =>
-        `<mutation-test-report-mutant mutantId="${m.id}" mutatorName="${m.mutatorName}" replacement="${m.replacement}" status="${m.status}">`);
-      const originalCodeEndAnnotations = mutantsEnding.map(() => `</mutation-test-report-mutant>`);
-      return `${backgroundColorEndAnnotation}${originalCodeEndAnnotations.join('')}${mutantsAnnotations.join('')}${backgroundColorAnnotation}${escapeHtml(char)}`;
-    };
+      const builder: string[] = [];
+      if (mutantsStarting.length || mutantsEnding.length) {
+        mutantsStarting.forEach(backgroundState.markMutantStart);
+        mutantsEnding.forEach(backgroundState.markMutantEnd);
 
-    return walkString(this.model.source, annotateCharacter);
+        // End previous color span
+        builder.push('</span>');
+
+        // End mutants
+        mutantsEnding.forEach(() => builder.push('</mutation-test-report-mutant>'));
+
+        // Start mutants
+        for (const mutant of mutantsStarting) {
+          builder.push(`<mutation-test-report-mutant mutant-id="${mutant.id}">`);
+        }
+
+        // Start new color span
+        builder.push(`<span class="bg-${backgroundState.determineBackground()}">`);
+      }
+
+      // Append the code character
+      builder.push(escapeHtml(char));
+      return builder.join('');
+    };
+    return `<span>${walkString(this.model.source, walker)}</span>`;
   }
 }
 
@@ -147,21 +155,70 @@ export class MutationTestReportFileComponent extends LitElement {
  * @param fn The function to execute on each character of the string
  */
 function walkString(source: string, fn: (char: string, line: number, column: number) => string): string {
-  const results: string[] = [];
   let column = COLUMN_START_INDEX;
   let row = LINE_START_INDEX;
+  const builder: string[] = [];
 
-  for (let i = 0; i < source.length; i++) { // tslint:disable-line:prefer-for-of
-    if (column === COLUMN_START_INDEX && source[i] === CARRIAGE_RETURN) {
+  for (const currentChar of source) {
+    if (column === COLUMN_START_INDEX && currentChar === CARRIAGE_RETURN) {
       continue;
     }
-    if (source[i] === NEW_LINE) {
+    if (currentChar === NEW_LINE) {
       row++;
       column = COLUMN_START_INDEX;
-      results.push(NEW_LINE);
+      builder.push(NEW_LINE);
       continue;
     }
-    results.push(fn(source[i], row, column++));
+    builder.push(fn(currentChar, row, column++));
   }
-  return results.join('');
+  return builder.join('');
+}
+
+/**
+ * Class to keep track of the states of the
+ * mutants that are active at the cursor while walking the code.
+ */
+class BackgroundColorCalculator {
+  private killed = 0;
+  private noCoverage = 0;
+  private survived = 0;
+  private timeout = 0;
+
+  public readonly markMutantStart = (mutant: MutantResult) => {
+    this.countMutant(1, mutant.status);
+  }
+
+  public readonly markMutantEnd = (mutant: MutantResult) => {
+    this.countMutant(-1, mutant.status);
+  }
+
+  private countMutant(valueToAdd: number, status: MutantStatus) {
+    switch (status) {
+      case MutantStatus.Killed:
+        this.killed += valueToAdd;
+        break;
+      case MutantStatus.Survived:
+        this.survived += valueToAdd;
+        break;
+      case MutantStatus.Timeout:
+        this.timeout += valueToAdd;
+        break;
+      case MutantStatus.NoCoverage:
+        this.noCoverage += valueToAdd;
+        break;
+    }
+  }
+
+  public determineBackground = () => {
+    if (this.survived > 0) {
+      return getContextClassForStatus(MutantStatus.Survived) + '-light';
+    } else if (this.noCoverage > 0) {
+      return getContextClassForStatus(MutantStatus.NoCoverage) + '-light';
+    } else if (this.timeout > 0) {
+      return getContextClassForStatus(MutantStatus.Timeout) + '-light';
+    } else if (this.killed > 0) {
+      return getContextClassForStatus(MutantStatus.Killed) + '-light';
+    }
+    return null;
+  }
 }

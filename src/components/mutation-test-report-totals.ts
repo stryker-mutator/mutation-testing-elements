@@ -1,27 +1,15 @@
 import { LitElement, html, property, customElement, css } from 'lit-element';
-import { MutationTestResult, MutationResultHealth } from '../../api';
-import { isDirectoryResult } from '../helpers';
 import { bootstrap } from '../style';
+import { ResultTable, TableRow } from '../model/ResultTable';
 
 @customElement('mutation-test-report-totals')
 export class MutationTestReportTotalsComponent extends LitElement {
-  @property()
-  public model!: MutationTestResult;
 
   @property()
-  private get childResults(): MutationTestResult[] {
-    if (isDirectoryResult(this.model)) {
-      return this.model.childResults;
-    } else {
-      return [];
-    }
-  }
+  public model!: ResultTable;
 
-  public connectedCallback() {
-    super.connectedCallback();
-  }
-
-  public static styles = [css`
+  public static styles = [bootstrap,
+    css`
     th.rotate {
       /* Something you can count on */
       height: 50px;
@@ -30,10 +18,10 @@ export class MutationTestReportTotalsComponent extends LitElement {
     }
 
     th.rotate > div {
-    transform:
+      transform:
       translate(27px, 0px)
       rotate(325deg);
-    width: 30px;
+      width: 30px;
     }
 
     .table-no-top>thead>tr>th {
@@ -43,11 +31,11 @@ export class MutationTestReportTotalsComponent extends LitElement {
     .table-no-top {
       border-width: 0;
     }
-  `, bootstrap];
+  `];
 
   public render() {
     return html`
-          <table class='table table-sm table-hover table-bordered table-no-top'>
+          <table class="table table-sm table-hover table-bordered table-no-top">
             ${this.renderHead()}
             ${this.renderBody()}
           </table>
@@ -57,13 +45,39 @@ export class MutationTestReportTotalsComponent extends LitElement {
   private renderHead() {
     return html`<thead>
   <tr>
-    <th style='width: 20%'>
+    <th style="width: 20%">
       <div><span>File / Directory</span></div>
     </th>
-    <th colspan='2'>
+    <th colspan="2">
       <div><span>Mutation score</span></div>
     </th>
-    ${this.renderTotalsColumns()}
+    <th class="rotate text-center" style="width: 50px">
+      <div><span># Killed</span></div>
+    </th>
+    <th class="rotate text-center" style="width: 50px">
+      <div><span># Survived</span></div>
+    </th>
+    <th class="rotate text-center" style="width: 50px">
+      <div><span># Timeout</span></div>
+    </th>
+    <th class="rotate text-center" style="width: 50px">
+      <div><span># No coverage</span></div>
+    </th>
+    <th class="rotate text-center" style="width: 50px">
+      <div><span># Runtime errors</span></div>
+    </th>
+    <th class="rotate text-center" style="width: 50px">
+      <div><span># Transpile errors</span></div>
+    </th>
+    <th class="rotate rotate-width-70 text-center" style="width: 70px">
+      <div><span>Total detected</span></div>
+    </th>
+    <th class="rotate rotate-width-70 text-center" style="width: 70px">
+      <div><span>Total undetected</span></div>
+    </th>
+    <th class="rotate rotate-width-70 text-center" style="width: 70px">
+      <div><span>Total mutants</span></div>
+    </th>
   </tr>
 </thead>`;
   }
@@ -71,18 +85,17 @@ export class MutationTestReportTotalsComponent extends LitElement {
   private renderBody() {
     return html`
     <tbody>
-      ${this.renderRow(this.model, false)}
-      ${this.childResults.map(child => html`${this.renderRow(child, true)}`)}
+      ${this.model.rows.map(this.renderRow)}
     </tbody>`;
   }
 
-  private renderRow(subject: MutationTestResult, hyperlink: boolean) {
-    const mutationScoreRounded = subject.mutationScore.toFixed(2);
-    const coloringClass = this.determineColoringClass(subject);
+  private readonly renderRow = (row: TableRow) => {
+    const mutationScoreRounded = row.mutationScore.toFixed(2);
+    const coloringClass = this.determineColoringClass(row.mutationScore);
     const style = `width: ${mutationScoreRounded}%`;
     return html`
     <tr>
-      <td>${hyperlink ? html`<a href="#${subject.name}">${subject.name}</a>` : html`<span>${subject.name}</span>`}</td>
+      <td>${row.shouldLink ? html`<a href="${this.link(row.name)}">${row.name}</a>` : html`<span>${row.name}</span>`}</td>
       <td>
         <div class="progress">
           <div class="progress-bar bg-${coloringClass}" role="progressbar" aria-valuenow="${mutationScoreRounded}"
@@ -92,29 +105,30 @@ export class MutationTestReportTotalsComponent extends LitElement {
         </div>
       </td>
       <th class="text-center text-${coloringClass}">${mutationScoreRounded}</th>
-      ${Object.keys(this.model.totals).map(title => html`<td class="text-center">${this.model.totals[title]}</td>`)}
+      <td class="text-center">${row.killed}</td>
+      <td class="text-center">${row.survived}</td>
+      <td class="text-center">${row.timeout}</td>
+      <td class="text-center">${row.noCoverage}</td>
+      <td class="text-center">${row.runtimeErrors}</td>
+      <td class="text-center">${row.compileErrors}</td>
+      <th class="text-center">${row.totalDetected}</th>
+      <th class="text-center">${row.totalUndetected}</th>
+      <th class="text-center">${row.totalMutants}</th>
     </tr>
     ` ;
   }
 
-  private renderTotalsColumns() {
-    return html`
-        ${Object.keys(this.model.totals).map(title => html`<th class='rotate text-center' style='width: 50px'>
-          <div><span>${title}</span></div>
-        </th>`)}
-    `;
+  private link(to: string) {
+    return `#${to}`;
   }
 
-  private determineColoringClass(subject: MutationTestResult) {
-    switch (subject.health) {
-      case MutationResultHealth.Danger:
-        return 'danger';
-      case MutationResultHealth.Good:
-        return 'success';
-      case MutationResultHealth.Warning:
-        return 'warning';
-      default:
-        return 'secondary';
+  private determineColoringClass(score: number) {
+    if (score < this.model.thresholds.low) {
+      return 'danger';
+    } else if (score < this.model.thresholds.high) {
+      return 'warning';
+    } else {
+      return 'success';
     }
   }
 

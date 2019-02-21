@@ -1,10 +1,11 @@
 import { LitElement, html, property, customElement } from 'lit-element';
 import { bootstrap } from '../style';
+import { ROOT_NAME } from '../helpers';
 
 @customElement('mutation-test-report-breadcrumb')
 export class MutationTestReportBreadcrumbComponent extends LitElement {
   @property()
-  public path: ReadonlyArray<string> | undefined;
+  public path: string | undefined;
 
   public static styles = [bootstrap];
 
@@ -12,16 +13,16 @@ export class MutationTestReportBreadcrumbComponent extends LitElement {
     return html`
         <ol class='breadcrumb'>
           ${this.renderRootItem()}
-          ${this.path ? this.renderBreadcrumbItems(this.path) : ''}
+          ${this.path ? this.renderBreadcrumbItems([this.path]) : ''}
         </ol>
     `;
   }
 
   private renderRootItem() {
     if (this.path && this.path.length) {
-      return this.renderLink('All files', '#');
+      return this.renderLink(ROOT_NAME, '#');
     } else {
-      return this.renderActiveItem('All files');
+      return this.renderActiveItem(ROOT_NAME);
     }
   }
 

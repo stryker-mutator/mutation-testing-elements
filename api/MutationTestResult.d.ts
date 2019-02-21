@@ -1,9 +1,9 @@
 import { MutationResultHealth } from './MutationResultHealth';
-import { ResultTotals } from './ResultTotals';
+import { FileResult, FileResultDictionary } from './FileResult';
+import { Thresholds } from './Thresholds';
 
 export declare interface MutationTestResult {
-  name: string;
-  totals: ResultTotals;
-  mutationScore: number;
-  health: MutationResultHealth;
+  schemaVersion: string;
+  thresholds: Thresholds;
+  files: FileResultDictionary;
 }

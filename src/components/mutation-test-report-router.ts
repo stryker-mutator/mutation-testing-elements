@@ -11,8 +11,7 @@ export class MutationTestReportRouterComponent extends LitElement {
   }
 
   private readonly updatePath = () => {
-    const pathAsString = window.location.hash.substr(1);
-    const path = pathAsString.length ? pathAsString.split('/') : [];
+    const path = window.location.hash.substr(1);
     this.dispatchEvent(new CustomEvent('path-changed', { detail: path }));
   }
 }

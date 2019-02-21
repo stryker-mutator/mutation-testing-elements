@@ -1,29 +1,11 @@
 {
-  "name": "src",
-  "totals": {
-    "# Killed": 1,
-    "# Survived": 1,
-    "# Timeout": 0,
-    "# No coverage": 0,
-    "# Runtime errors": 0,
-    "# Transpile errors": 0,
-    "Total detected": 2,
-    "Total undetected": 0,
-    "Total mutants": 2
-  },
   "mutationScore": 50,
-  "health": "Warning",
-  "childResults": [
-    {
-      "name": "test.js",
-      "totals": {
-        "detected": 1,
-        "undetected": 2,
-        "valid": 3,
-        "invalid": 1
-      },
-      "mutationScore": 50,
-      "health": "Warning",
+  "thresholds": {
+    "high": 80,
+    "low": 60
+  },
+  "files": {
+    "test.js": {
       "language": "javascript",
       "source": "function add(a, b) {\n  return a + b;\n}",
       "mutants": [
@@ -61,5 +43,5 @@
         }
       ]
     }
-  ]
+  }
 }

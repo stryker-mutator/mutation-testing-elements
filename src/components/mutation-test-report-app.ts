@@ -1,10 +1,11 @@
 import { LitElement, html, property, customElement, css, unsafeCSS } from 'lit-element';
-import { MutationTestResult } from '../../api';
-import { isDirectoryResult } from '../helpers';
+import { MutationTestResult, FileResult } from '../../api';
+import { ROOT_NAME, normalizeFileNames } from '../helpers';
 import { bootstrap } from '../style';
 
 @customElement('mutation-test-report-app')
 export class MutationTestReportAppComponent extends LitElement {
+  @property()
   private report: MutationTestResult | undefined;
 
   @property()
@@ -14,10 +15,19 @@ export class MutationTestReportAppComponent extends LitElement {
   public errorMessage: string | undefined;
 
   @property()
-  public context: MutationTestResult | undefined;
+  public context: FileResult | undefined;
 
   @property()
-  public path: ReadonlyArray<string> | undefined;
+  public path: string | undefined;
+
+  @property()
+  public get title(): string {
+    if (this.context && this.path) {
+      return this.path;
+    } else {
+      return ROOT_NAME;
+    }
+  }
 
   public connectedCallback() {
     super.connectedCallback();
@@ -32,29 +42,23 @@ export class MutationTestReportAppComponent extends LitElement {
 
   private async loadData(src: string) {
     const res = await fetch(src);
-    this.report = await res.json();
+    const report: MutationTestResult = await res.json();
+    report.files = normalizeFileNames(report.files);
+    this.report = report;
     this.updateContext();
   }
 
   private updateContext() {
-    if (this.path) {
-      const pathQueue = this.path.slice();
-      let newContext: MutationTestResult | undefined = this.report;
-      let pathPart: string | undefined;
-
-      while (pathPart = pathQueue.shift()) {
-        if (isDirectoryResult(newContext)) {
-          newContext = newContext.childResults.find(child => child.name === pathPart);
+    if (this.report) {
+      if (this.path) {
+        this.context = this.report.files[this.path];
+        if (!this.context) {
+          this.errorMessage = `404 - ${this.path} not found`;
         } else {
-          newContext = undefined;
-          break;
+          this.errorMessage = undefined;
         }
-      }
-      this.context = newContext;
-      if (!this.context) {
-        this.errorMessage = `404 - ${this.path.join('/')} not found`;
       } else {
-        this.errorMessage = undefined;
+        this.context = undefined;
       }
     }
   }
@@ -98,8 +102,8 @@ export class MutationTestReportAppComponent extends LitElement {
   }
 
   private renderTitle() {
-    if (this.context) {
-      return html`<h1 class="display-1">${this.context.name}</h1>`;
+    if (this.report) {
+      return html`<h1 class="display-4">${this.title}</h1>`;
     } else {
       return undefined;
     }
@@ -118,8 +122,10 @@ export class MutationTestReportAppComponent extends LitElement {
   }
 
   private renderMutationTestReport() {
-    if (this.context) {
-      return html`<mutation-test-report-result .model="${this.context}"></mutation-test-report-result>`;
+    if (this.context && this.report) {
+      return html`<mutation-test-report-file .name="${this.title}" .thresholds="${this.report.thresholds}" .model="${this.context}"></mutation-test-report-file>`;
+    } else if (this.report) {
+      return html`<mutation-test-report-result .model="${this.report}"></mutation-test-report-result>`;
     } else {
       return '';
     }
