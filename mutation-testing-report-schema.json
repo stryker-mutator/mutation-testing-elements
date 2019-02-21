@@ -169,7 +169,7 @@
                   "properties": {
                     "start": {
                       "$ref": "#/properties/files/definitions/position",
-                      "$id": "#/properties/files/properties/files/additionalProperties/file/properties/mutants/items/properties/location/properties/start",
+                      "$id": "#/properties/files/additionalProperties/file/properties/mutants/items/properties/location/properties/start",
                       "title": "Start position of the mutation. Inclusive."
                     },
                     "end": {
