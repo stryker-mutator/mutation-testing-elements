@@ -1,30 +1,4 @@
 {
-  "definitions": {
-    "position": {
-      "type": "object",
-      "title": "Position of a mutation. Both line and column start at one.",
-      "required": [
-        "line",
-        "column"
-      ],
-      "properties": {
-        "line": {
-          "type": "integer",
-          "minimum": 1,
-          "examples": [
-            4
-          ]
-        },
-        "column": {
-          "type": "integer",
-          "minimum": 1,
-          "examples": [
-            3
-          ]
-        }
-      }
-    }
-  },
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "http://stryker-mutator.io/report.schema.json",
   "title": "Schema for a mutation testing report.",
@@ -34,6 +8,7 @@
     "thresholds",
     "files"
   ],
+  "additionalProperties": false,
   "properties": {
     "schemaVersion": {
       "id": "#/properties/schemaVersion",
@@ -51,6 +26,7 @@
         "high",
         "low"
       ],
+      "additionalProperties": false,
       "properties": {
         "high": {
           "id": "#/properties/thresholds/properties/high",
@@ -78,6 +54,33 @@
       "$id": "#/properties/files",
       "type": "object",
       "title": "All mutated files.",
+      "definitions": {
+        "position": {
+          "type": "object",
+          "title": "Position of a mutation. Both line and column start at one.",
+          "required": [
+            "line",
+            "column"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "line": {
+              "type": "integer",
+              "minimum": 1,
+              "examples": [
+                4
+              ]
+            },
+            "column": {
+              "type": "integer",
+              "minimum": 1,
+              "examples": [
+                3
+              ]
+            }
+          }
+        }
+      },
       "additionalProperties": {
         "$id": "#/properties/files/additionalProperties/file",
         "type": "object",
@@ -87,6 +90,7 @@
           "source",
           "mutants"
         ],
+        "additionalProperties": false,
         "properties": {
           "language": {
             "$id": "#/properties/files/additionalProperties/file/properties/language",
@@ -122,6 +126,7 @@
                 "location",
                 "status"
               ],
+              "additionalProperties": false,
               "properties": {
                 "id": {
                   "$id": "#/properties/files/additionalProperties/file/properties/mutants/items/properties/id",
@@ -160,14 +165,15 @@
                     "start",
                     "end"
                   ],
+                  "additionalProperties": false,
                   "properties": {
                     "start": {
-                      "$ref": "#/definitions/position",
-                      "$id": "#/properties/files/additionalProperties/file/properties/mutants/items/properties/location/properties/start",
+                      "$ref": "#/properties/files/definitions/position",
+                      "$id": "#/properties/files/properties/files/additionalProperties/file/properties/mutants/items/properties/location/properties/start",
                       "title": "Start position of the mutation. Inclusive."
                     },
                     "end": {
-                      "$ref": "#/definitions/position",
+                      "$ref": "#/properties/files/definitions/position",
                       "$id": "#/properties/files/additionalProperties/file/properties/mutants/items/properties/location/properties/end",
                       "type": "object",
                       "title": "End position of the mutation. Exclusive."
