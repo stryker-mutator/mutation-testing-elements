@@ -32,7 +32,6 @@ export class MutationTestReportMutantComponent extends LitElement {
   public render() {
     // This part is newline significant, as it is rendered in a <code> block.
     // No unnecessary new lines
-    console.log(this.show, this.mutant);
     return html`${this.renderButton()}${this.renderCode()}`;
   }
 

@@ -12,7 +12,7 @@ import { MutationTestReportMutantComponent } from './mutation-test-report-mutant
 import { MutantFilter } from './mutation-test-report-file-legend';
 import { bootstrap, highlightJS } from '../style';
 import { ResultTable } from '../model/ResultTable';
-import { Thresholds } from '../../api/Thresholds';
+import { Thresholds, Position } from '../../api';
 
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('typescript', typescript);
@@ -117,13 +117,15 @@ export class MutationTestReportFileComponent extends LitElement {
    */
   private renderCode(): string {
     const backgroundState = new BackgroundColorCalculator();
-
-    const walker = (char: string, line: number, column: number): string => {
-      const mutantsStarting = this.model.mutants.filter(m => m.location.start.line === line && m.location.start.column === column);
-      const mutantsEnding = this.model.mutants.filter(m => m.location.end.line === line && m.location.end.column === column);
+    const startedMutants: MutantResult[] = [];
+    const walker = (char: string, pos: Position): string => {
+      const currentMutants = this.model.mutants.filter(m => eq(m.location.start, pos));
+      const mutantsEnding = startedMutants.filter(m => gte(pos, m.location.end));
+      mutantsEnding.forEach(mutant => startedMutants.splice(startedMutants.indexOf(mutant), 1));
+      startedMutants.push(...currentMutants);
       const builder: string[] = [];
-      if (mutantsStarting.length || mutantsEnding.length) {
-        mutantsStarting.forEach(backgroundState.markMutantStart);
+      if (currentMutants.length || mutantsEnding.length) {
+        currentMutants.forEach(backgroundState.markMutantStart);
         mutantsEnding.forEach(backgroundState.markMutantEnd);
 
         // End previous color span
@@ -133,9 +135,7 @@ export class MutationTestReportFileComponent extends LitElement {
         mutantsEnding.forEach(() => builder.push('</mutation-test-report-mutant>'));
 
         // Start mutants
-        for (const mutant of mutantsStarting) {
-          builder.push(`<mutation-test-report-mutant mutant-id="${mutant.id}">`);
-        }
+        currentMutants.forEach(mutant => builder.push(`<mutation-test-report-mutant mutant-id="${mutant.id}">`));
 
         // Start new color span
         builder.push(`<span class="bg-${backgroundState.determineBackground()}">`);
@@ -154,9 +154,9 @@ export class MutationTestReportFileComponent extends LitElement {
  * @param source the string to walk
  * @param fn The function to execute on each character of the string
  */
-function walkString(source: string, fn: (char: string, line: number, column: number) => string): string {
+function walkString(source: string, fn: (char: string, position: Position) => string): string {
   let column = COLUMN_START_INDEX;
-  let row = LINE_START_INDEX;
+  let line = LINE_START_INDEX;
   const builder: string[] = [];
 
   for (const currentChar of source) {
@@ -164,12 +164,12 @@ function walkString(source: string, fn: (char: string, line: number, column: num
       continue;
     }
     if (currentChar === NEW_LINE) {
-      row++;
+      line++;
       column = COLUMN_START_INDEX;
       builder.push(NEW_LINE);
       continue;
     }
-    builder.push(fn(currentChar, row, column++));
+    builder.push(fn(currentChar, { line, column: column++ }));
   }
   return builder.join('');
 }
@@ -221,4 +221,12 @@ class BackgroundColorCalculator {
     }
     return null;
   }
+}
+
+function gte(a: Position, b: Position) {
+  return a.line > b.line || (a.line === b.line && a.column >= b.column);
+}
+
+function eq(a: Position, b: Position) {
+  return a.line === b.line && a.column === b.column;
 }

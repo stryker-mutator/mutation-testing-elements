@@ -87,6 +87,7 @@ export class MutationTestReportAppComponent extends LitElement {
 
   public render() {
     return html`
+    <mutation-test-report-title .title="${this.title}"></mutation-test-report-title>
     <mutation-test-report-router @path-changed="${this.updatePath}"></mutation-test-report-router>
     <div class="container">
       <div class="row">
