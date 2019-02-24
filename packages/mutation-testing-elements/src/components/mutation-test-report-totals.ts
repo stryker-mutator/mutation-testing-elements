@@ -67,7 +67,7 @@ export class MutationTestReportTotalsComponent extends LitElement {
       <div><span># Runtime errors</span></div>
     </th>
     <th class="rotate text-center" style="width: 50px">
-      <div><span># Transpile errors</span></div>
+      <div><span># Compile errors</span></div>
     </th>
     <th class="rotate rotate-width-70 text-center" style="width: 70px">
       <div><span>Total detected</span></div>
