@@ -20,6 +20,30 @@
           "${workspaceFolder}/packages/mutation-testing-report-schema/dist/test/**/*.js"
         ],
         "internalConsoleOptions": "openOnSessionStart"
+      },
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Integration tests (Mutation testing elements)",
+        "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+        "args": [
+          "-r",
+          "source-map-support/register",
+          "-r",
+          "chromedriver",
+          "-u",
+          "tdd",
+          "--timeout",
+          "999999",
+          "--colors",
+          "${workspaceFolder}/packages/mutation-testing-elements/dist-test/test/integration/**/*.js"
+        ],
+        "internalConsoleOptions": "openOnSessionStart",
+        "sourceMaps": true,
+        "outFiles": [
+          "${workspaceFolder}/packages/mutation-testing-elements/dist-test/**/*.js",
+          "${workspaceFolder}/packages/mutation-testing-elements/dist/**/*.js"
+        ]
       }
     ]
 }

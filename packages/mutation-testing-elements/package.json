@@ -5,7 +5,9 @@
   "main": "dist/mutation-test-elements.js",
   "scripts": {
     "start": "webpack-dev-server --open",
-    "build": "webpack --configFile webpack.config.js --mode production"
+    "build": "webpack --configFile webpack.config.js --mode production",
+    "test": "npm run test:integration",
+    "test:integration": "mocha -r source-map-support/register -r chromedriver --timeout 60000 dist-test/test/integration/**/*.js"
   },
   "repository": {
     "type": "git",
