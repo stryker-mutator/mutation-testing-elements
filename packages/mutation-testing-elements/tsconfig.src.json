@@ -8,5 +8,10 @@
   "include": [
     "src",
     "typings"
+  ],
+  "references": [
+    {
+      "path": "../mutation-testing-report-schema/tsconfig.src.json"
+    }
   ]
 }

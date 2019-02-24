@@ -4,6 +4,7 @@
     "module": "commonjs",
     "strict": true,
     "composite": true,
+    "declaration": true,
     "esModuleInterop": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,

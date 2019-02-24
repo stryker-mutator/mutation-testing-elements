@@ -7,7 +7,7 @@
   "scripts": {
     "postinstall": "lerna bootstrap && link-parent-bin",
     "lint": "tslint -p tsconfig.lint.json",
-    "prebuild": "rimraf dist",
+    "prebuild": "rimraf packages/*/{dist,dist-test}",
     "build": "tsc -b && lerna run build",
     "test": "lerna run test",
     "start": "webpack-dev-server --open",
