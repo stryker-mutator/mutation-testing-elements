@@ -1,4 +1,4 @@
-import { Builder, WebDriver, By } from 'selenium-webdriver';
+import { Builder, WebDriver, By, Capabilities } from 'selenium-webdriver';
 import { StaticFileServer } from './StaticFileServer.spec';
 import path from 'path';
 import { expect } from 'chai';
@@ -9,7 +9,12 @@ describe('MutationTestingElements - reporting integration', () => {
 
   before(async () => {
     await server.listen(8080);
-    browser = await new Builder().forBrowser('chrome').build();
+    const headlessCapabilities = Capabilities.chrome();
+    headlessCapabilities.set('chromeOptions', { args: ['--headless'] });
+    browser = await new Builder()
+      .forBrowser('chrome')
+      .withCapabilities(headlessCapabilities)
+      .build();
   });
 
   after(async () => {
