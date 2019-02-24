@@ -1,0 +1,4 @@
+
+describe('MutationTestingElements - reporting integration', () => {
+
+});

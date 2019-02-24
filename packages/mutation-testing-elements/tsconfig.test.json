@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.settings.json",
+  "compilerOptions": {
+    "types": [
+      "mocha"
+    ],
+    "outDir": "dist-test"
+  },
+  "include": [
+    "test",
+    "typings"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.src.json"
+    }
+  ]
+}

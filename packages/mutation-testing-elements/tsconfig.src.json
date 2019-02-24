@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.settings.json",
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "types": [],
+    "outDir": "dist"
+  },
+  "include": [
+    "src",
+    "typings"
+  ]
+}

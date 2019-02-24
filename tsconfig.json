@@ -1,21 +1,11 @@
 {
-  "compilerOptions": {
-    "target": "es2015",
-    "module": "commonjs",
-    "strict": true,
-    "esModuleInterop": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "forceConsistentCasingInFileNames": true,
-    "experimentalDecorators": true,
-    "sourceMap": true,
-    "outDir": "dist"
-  },
-  "include": [
-    "src",
-    "test",
-    "typings"
+  "files": [],
+  "references": [
+    {
+      "path": "packages/mutation-testing-elements"
+    },
+    {
+      "path": "packages/mutation-testing-report-schema"
+    }
   ]
 }

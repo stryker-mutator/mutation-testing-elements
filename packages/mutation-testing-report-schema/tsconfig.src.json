@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.settings.json",
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "types": [
+      "node"
+    ],
+    "resolveJsonModule": true,
+    "outDir": "dist"
+  },
+  "include": [
+    "src",
+    "typings"
+  ],
+  "files": [
+    "src/mutation-testing-report-schema.json"
+  ]
+}

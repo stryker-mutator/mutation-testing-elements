@@ -1,20 +1,17 @@
 {
-  "name": "mutation-testing-elements",
+  "name": "root",
+  "private": true,
   "version": "0.0.6",
   "description": "A suite of web components for a mutation testing report.",
   "main": "dist/mutation-test-elements.js",
   "scripts": {
-    "test": "mocha",
-    "start": "webpack-dev-server --open",
+    "postinstall": "lerna bootstrap && link-parent-bin",
+    "lint": "tslint -p tsconfig.lint.json",
     "prebuild": "rimraf dist",
-    "build": "webpack --configFile webpack.config.js --mode production",
-    "pretest": "npm run build",
-    "preversion": "npm t",
-    "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
-    "postversion": "npm publish && git push && git push --tags",
-    "release:patch": "npm version patch -m \"chore(release): %s\"",
-    "release:minor": "npm version minor -m \"chore(release): %s\"",
-    "release:major": "npm version major -m \"chore(release): %s\""
+    "build": "tsc -b && lerna run build",
+    "test": "lerna run test",
+    "start": "webpack-dev-server --open",
+    "start:tsc": "tsc --build --watch"
   },
   "repository": {
     "type": "git",
@@ -26,25 +23,29 @@
   },
   "homepage": "https://github.com/stryker-mutator/mutation-testing-elements#readme",
   "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.6",
+    "@types/node": "^11.9.5",
     "ajv": "^6.5.2",
     "bootstrap": "^4.3.1",
     "chai": "^4.1.2",
-    "conventional-changelog-cli": "^2.0.12",
     "css-loader": "^2.1.0",
+    "highlight.js": "^9.14.2",
+    "lerna": "^3.13.0",
+    "link-parent-bin": "^1.0.0",
     "lit-element": "^2.0.1",
     "mocha": "^5.2.0",
+    "node-sass": "^4.11.0",
     "rimraf": "^2.6.3",
+    "sass-loader": "^7.1.0",
+    "source-map-support": "^0.5.10",
     "terser-webpack-plugin": "^1.2.2",
     "ts-loader": "^5.3.3",
     "tslint": "^5.12.1",
     "typescript": "^3.3.3",
+    "wd": "^1.11.1",
     "webpack": "^4.29.4",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.1.14"
-  },
-  "dependencies": {
-    "highlight.js": "^9.14.2",
-    "node-sass": "^4.11.0",
-    "sass-loader": "^7.1.0"
   }
 }

@@ -1,0 +1,23 @@
+{
+  "name": "mutation-testing-elements",
+  "version": "0.0.6",
+  "description": "A suite of web components for a mutation testing report.",
+  "main": "dist/mutation-test-elements.js",
+  "scripts": {
+    "start": "webpack-dev-server --open",
+    "build": "webpack --configFile webpack.config.js --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stryker-mutator/mutation-testing-elements.git"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/stryker-mutator/mutation-testing-elements/issues"
+  },
+  "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/mutation-testing-elements#readme",
+  "devDependencies": {
+    "mutation-testing-report-schema": "^0.0.6"
+  },
+  "dependencies": {}
+}
