@@ -1,6 +1,6 @@
 {
   "name": "mutation-testing-elements",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A suite of web components for a mutation testing report.",
   "main": "dist/mutation-test-elements.js",
   "scripts": {
@@ -21,7 +21,6 @@
   "devDependencies": {
     "@types/lodash.groupby": "^4.6.5",
     "lodash.groupby": "^4.6.0",
-    "mutation-testing-report-schema": "^0.0.6"
-  },
-  "dependencies": {}
+    "mutation-testing-report-schema": "^0.0.7"
+  }
 }

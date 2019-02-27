@@ -1,7 +1,7 @@
 {
   "name": "mutation-testing-report-schema",
   "private": true,
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "The json schema for a mutation testing report.",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
