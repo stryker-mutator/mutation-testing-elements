@@ -10,8 +10,8 @@ import { getContextClassForStatus, LINE_START_INDEX, COLUMN_START_INDEX, escapeH
 import { MutationTestReportMutantComponent } from './mutation-test-report-mutant';
 import { MutantFilter } from './mutation-test-report-file-legend';
 import { bootstrap, highlightJS } from '../style';
-import { ResultTable } from '../model/ResultTable';
-import { FileResult, MutantStatus, MutantResult, Thresholds, Position } from 'mutation-testing-report-schema';
+import { MutantStatus, MutantResult, Position } from 'mutation-testing-report-schema';
+import { FileResultModel } from '../model';
 
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('typescript', typescript);
@@ -23,13 +23,7 @@ hljs.registerLanguage('scala', scala);
 export class MutationTestReportFileComponent extends LitElement {
 
   @property()
-  private readonly model!: FileResult;
-
-  @property()
-  private readonly name!: string;
-
-  @property()
-  private readonly thresholds!: Thresholds;
+  private readonly model!: FileResultModel;
 
   private enabledMutantStates: MutantStatus[] = [];
 
@@ -78,11 +72,6 @@ export class MutationTestReportFileComponent extends LitElement {
 
   public render() {
     return html`
-        <div class="row">
-          <div class="totals col-sm-11">
-            <mutation-test-report-totals .model="${ResultTable.forFile(this.name, this.model, this.thresholds)}"></mutation-test-report-totals>
-          </div>
-        </div>
         <div class="row">
           <div class="col-md-12">
             <mutation-test-report-file-legend @filters-changed="${this.filtersChanged}" @open-all="${this.openAll}"

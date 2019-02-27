@@ -1,39 +1,27 @@
-import { Builder, WebDriver, By, Capabilities } from 'selenium-webdriver';
 import { StaticFileServer } from './StaticFileServer.spec';
 import path from 'path';
 import { expect } from 'chai';
+import { DirectoryReportPage } from './po/DirectoryReport.page.spec';
 
 describe('MutationTestingElements - reporting integration', () => {
   const server = new StaticFileServer([path.resolve(__dirname, '..', '..', '..', 'testResources'), path.resolve(__dirname, '..', '..', '..', 'dist')]);
-  let browser: WebDriver;
+  let page: DirectoryReportPage;
 
   before(async () => {
     await server.listen(8080);
-    const headlessCapabilities = Capabilities.chrome();
-    headlessCapabilities.set('chromeOptions', { args: ['--headless'] });
-    browser = await new Builder()
-      .forBrowser('chrome')
-      .withCapabilities(headlessCapabilities)
-      .build();
-  });
-
-  after(async () => {
-    await browser.close();
-    await server.dispose();
   });
 
   beforeEach(async () => {
-    await browser.get('http://localhost:8080');
+    page = new DirectoryReportPage();
   });
 
   describe('Scala example', () => {
     beforeEach(async () => {
-      const anchor = await (browser.findElement(By.css('a[href="/scala-example"]')));
-      await anchor.click();
+      await page.navigateTo('scala-example');
     });
-    it('should have title "All files"', async () => {
-      const title = await browser.getTitle();
-      expect(title).eq('All files');
+    it('should have title "All files - Stryker report"', async () => {
+      const title = await page.getTitle();
+      expect(title).eq('All files - Stryker report');
     });
   });
 });

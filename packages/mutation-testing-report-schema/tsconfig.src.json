@@ -1,7 +1,6 @@
 {
   "extends": "../../tsconfig.settings.json",
   "compilerOptions": {
-    "experimentalDecorators": true,
     "types": [
       "node"
     ],

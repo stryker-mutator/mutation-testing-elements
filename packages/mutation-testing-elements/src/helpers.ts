@@ -41,14 +41,18 @@ export function flatMap<T, R>(source: T[], fn: (input: T) => R[]) {
   return result;
 }
 
-export function normalizeFileNames(files: FileResultDictionary): FileResultDictionary {
-  const fileNames = Object.keys(files);
+export function pathJoin(...parts: string[]) {
+  return parts.reduce((prev, current) => prev.length ? current ? `${prev}/${current}` : prev : current, '');
+}
+
+export function normalizeFileNames(input: FileResultDictionary): FileResultDictionary {
+  const fileNames = Object.keys(input);
   const commonBasePath = determineCommonBasePath(fileNames);
-  const result: FileResultDictionary = {};
+  const output: FileResultDictionary = {};
   fileNames.forEach(fileName => {
-    result[normalize(fileName.substr(commonBasePath.length))] = files[fileName];
+    output[normalize(fileName.substr(commonBasePath.length))] = input[fileName];
   });
-  return result;
+  return output;
 }
 
 function normalize(fileName: string) {
@@ -57,7 +61,7 @@ function normalize(fileName: string) {
     .join('/');
 }
 
-function determineCommonBasePath(fileNames: string[]) {
+export function determineCommonBasePath(fileNames: string[]) {
   const directories = fileNames.map(fileName => fileName.split(/\/|\\/).slice(0, -1));
 
   if (directories.length) {

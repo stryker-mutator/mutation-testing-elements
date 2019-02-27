@@ -1,5 +1,6 @@
 {
   "files": [],
+  "extends": "./tsconfig.settings.json",
   "references": [
     {
       "path": "packages/mutation-testing-elements"

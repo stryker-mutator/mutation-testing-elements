@@ -14,21 +14,9 @@ export class StaticFileServer {
 
   public listen(port: number): Promise<void> {
     return new Promise((res, rej) => {
-      this.app.once('error', err => {
-        console.log('error', err);
-        rej(err);
-      });
+      this.app.once('error', rej);
       this.server = this.app.listen(port, res);
-    });
-  }
-
-  public dispose(): Promise<void> {
-    return new Promise(res => {
-      if (this.server) {
-        this.server.close(res);
-      } else {
-        res();
-      }
+      this.server.unref();
     });
   }
 }

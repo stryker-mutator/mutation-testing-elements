@@ -1,12 +1,19 @@
-import { LitElement, html, property, customElement, css } from 'lit-element';
-import { MutationTestResult, FileResult } from 'mutation-testing-report-schema';
-import { ROOT_NAME, normalizeFileNames } from '../helpers';
+import { LitElement, html, property, customElement, css, PropertyValues } from 'lit-element';
+import { MutationTestResult } from 'mutation-testing-report-schema';
+import { normalizeFileNames } from '../helpers';
 import { bootstrap } from '../style';
+import { ResultModel } from '../model/ResultModel';
+import { toDirectoryModel } from '../model';
+import { PathChangedEvent } from './mutation-test-report-router';
 
 @customElement('mutation-test-report-app')
 export class MutationTestReportAppComponent extends LitElement {
-  @property()
-  private report: MutationTestResult | undefined;
+
+  @property({ attribute: false })
+  public report: MutationTestResult | undefined;
+
+  @property({ attribute: false })
+  public rootModel: ResultModel | undefined;
 
   @property()
   public src: string | undefined;
@@ -14,56 +21,60 @@ export class MutationTestReportAppComponent extends LitElement {
   @property()
   public errorMessage: string | undefined;
 
-  @property()
-  public context: FileResult | undefined;
+  @property({ attribute: false })
+  public context: ResultModel | undefined;
 
   @property()
-  public path: string | undefined;
+  public path: ReadonlyArray<string> = [];
+
+  @property({ attribute: 'title-postfix' })
+  public titlePostfix: string | undefined;
 
   @property()
   public get title(): string {
-    if (this.context && this.path) {
-      return this.path;
-    } else {
-      return ROOT_NAME;
-    }
-  }
-
-  public connectedCallback() {
-    super.connectedCallback();
-    if (this.src) {
-      this.loadData(this.src)
-        .catch(error =>
-          this.errorMessage = error.toString());
-    } else {
-      this.errorMessage = 'Source not set. Please point the `src` attribute to the mutation test report data.';
-    }
-  }
-
-  private async loadData(src: string) {
-    const res = await fetch(src);
-    const report: MutationTestResult = await res.json();
-    report.files = normalizeFileNames(report.files);
-    this.report = report;
-    this.updateContext();
-  }
-
-  private updateContext() {
-    if (this.report) {
-      if (this.path) {
-        this.context = this.report.files[this.path];
-        if (!this.context) {
-          this.errorMessage = `404 - ${this.path} not found`;
-        } else {
-          this.errorMessage = undefined;
-        }
+    if (this.context) {
+      if (this.titlePostfix) {
+        return `${this.context.name} - ${this.titlePostfix}`;
       } else {
-        this.context = undefined;
+        return this.context.name;
+      }
+    } else {
+      return '';
+    }
+  }
+
+  private async loadData() {
+    if (this.src) {
+      try {
+        const res = await fetch(this.src);
+        this.report = await res.json();
+      } catch (error) {
+        this.errorMessage = error.toString();
       }
     }
   }
 
-  private readonly updatePath = (event: CustomEvent) => {
+  public updated(changedProperties: PropertyValues) {
+    if (changedProperties.has('report') && this.report) {
+      this.updateModel(this.report);
+      this.updateContext();
+    }
+    if (changedProperties.has('src')) {
+      this.loadData();
+    }
+  }
+
+  private updateModel(report: MutationTestResult) {
+    this.rootModel = toDirectoryModel(normalizeFileNames(report.files));
+  }
+
+  private updateContext() {
+    if (this.rootModel) {
+      this.context = this.rootModel.find(this.path.join('/'));
+    }
+  }
+
+  private readonly updatePath = (event: PathChangedEvent) => {
     this.path = event.detail;
     this.updateContext();
   }
@@ -89,22 +100,31 @@ export class MutationTestReportAppComponent extends LitElement {
     return html`
     <mutation-test-report-title .title="${this.title}"></mutation-test-report-title>
     <mutation-test-report-router @path-changed="${this.updatePath}"></mutation-test-report-router>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          ${this.renderTitle()}
-          <mutation-test-report-breadcrumb .path="${this.path}"></mutation-test-report-breadcrumb>
-          ${this.renderErrorMessage()}
-          ${this.renderMutationTestReport()}
-        </div>
-      </div>
-    </div>
+    ${this.renderContent()}
     `;
   }
 
   private renderTitle() {
-    if (this.report) {
+    if (this.context) {
       return html`<h1 class="display-4">${this.title}</h1>`;
+    } else {
+      return undefined;
+    }
+  }
+
+  private renderContent() {
+    if (this.context) {
+      return html`<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      ${this.renderTitle()}
+      <mutation-test-report-breadcrumb .path="${this.path}"></mutation-test-report-breadcrumb>
+      ${this.renderErrorMessage()}
+      ${this.renderTotals()}
+      ${this.renderFileReport()}
+    </div>
+  </div>
+</div>`;
     } else {
       return undefined;
     }
@@ -122,13 +142,25 @@ export class MutationTestReportAppComponent extends LitElement {
     }
   }
 
-  private renderMutationTestReport() {
-    if (this.context && this.report) {
-      return html`<mutation-test-report-file .name="${this.title}" .thresholds="${this.report.thresholds}" .model="${this.context}"></mutation-test-report-file>`;
-    } else if (this.report) {
-      return html`<mutation-test-report-result .model="${this.report}"></mutation-test-report-result>`;
+  private renderFileReport() {
+    if (this.context && this.report && this.context.representsFile) {
+      return html`<mutation-test-report-file .model="${this.context}"></mutation-test-report-file>`;
     } else {
-      return '';
+      return undefined;
+    }
+  }
+
+  private renderTotals() {
+    if (this.report && this.context) {
+      return html`
+    <div class='row'>
+      <div class='totals col-sm-11'>
+        <mutation-test-report-totals .thresholds="${this.report.thresholds}" .model="${this.context}"></mutation-test-report-totals>
+      </div>
+    </div>
+    `;
+    } else {
+      return undefined;
     }
   }
 }

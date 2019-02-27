@@ -5,7 +5,7 @@ import { ROOT_NAME } from '../helpers';
 @customElement('mutation-test-report-breadcrumb')
 export class MutationTestReportBreadcrumbComponent extends LitElement {
   @property()
-  public path: string | undefined;
+  public path: string[] | undefined;
 
   public static styles = [bootstrap];
 
@@ -13,7 +13,7 @@ export class MutationTestReportBreadcrumbComponent extends LitElement {
     return html`
         <ol class='breadcrumb'>
           ${this.renderRootItem()}
-          ${this.path ? this.renderBreadcrumbItems([this.path]) : ''}
+          ${this.path ? this.renderBreadcrumbItems(this.path) : ''}
         </ol>
     `;
   }

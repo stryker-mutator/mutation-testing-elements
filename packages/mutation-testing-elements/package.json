@@ -7,7 +7,7 @@
     "start": "webpack-dev-server --open",
     "build": "webpack --configFile webpack.config.js --mode production",
     "test": "npm run test:integration",
-    "test:integration": "mocha -r source-map-support/register -r chromedriver --timeout 60000 dist-test/test/integration/**/*.js"
+    "test:integration": "mocha -r source-map-support/register -r chromedriver --timeout 60000 test/dist/integration/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/mutation-testing-elements#readme",
   "devDependencies": {
+    "@types/lodash.groupby": "^4.6.5",
+    "lodash.groupby": "^4.6.0",
     "mutation-testing-report-schema": "^0.0.6"
   },
   "dependencies": {}

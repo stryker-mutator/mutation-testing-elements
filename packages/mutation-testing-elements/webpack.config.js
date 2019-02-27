@@ -15,7 +15,7 @@ module.exports = function (_env, argv) {
     },
     module: {
       rules: [
-        { test: /\.ts$/, loader: 'ts-loader', options: { configFile: 'tsconfig.src.json' } },
+        { test: /\.ts$/, loader: 'ts-loader', options: { configFile: 'src/tsconfig.json' } },
         {
           test: /\.scss$/,
           use: [
