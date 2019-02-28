@@ -12,7 +12,8 @@
       },
       "options": {
         "cwd": "${workspaceFolder}/packages/mutation-testing-elements"
-      }
+      },
+      "problemMatcher": []
     },
     {
       "type": "npm",

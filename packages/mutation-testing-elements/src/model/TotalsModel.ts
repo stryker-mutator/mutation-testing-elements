@@ -1,68 +1,90 @@
-export interface TotalsModel {
+import { MutantResult, MutantStatus } from 'mutation-testing-report-schema';
+
+const DEFAULT_SCORE = 100;
+export class TotalsModel {
   /**
    * The total number of mutants that were killed
    */
-  readonly killed: number;
+  public readonly killed: number;
   /**
    * The total number of mutants that timed out
    */
-  readonly timeout: number;
+  public readonly timeout: number;
   /**
    * The total number of mutants that were tested but survived
    */
-  readonly survived: number;
+  public readonly survived: number;
   /**
    * The total number of mutants that were not even tested because they were not covered by any tests.
    */
-  readonly noCoverage: number;
+  public readonly noCoverage: number;
   /**
    * The total number of mutants that caused an error during testing.
    * These didn't effect the mutation score, as they are treated as false positives.
    */
-  readonly runtimeErrors: number;
+  public readonly runtimeErrors: number;
   /**
    * The total number of mutants that caused an error during transpiling.
    * These didn't effect the mutation score. as they are treated as false positives.
    */
-  readonly compileErrors: number;
+  public readonly compileErrors: number;
   /**
    * The total number of mutants that were detected, meaning either killed or caused a time out.
    * `killed + timed out`
    */
-  readonly totalDetected: number;
+  public readonly totalDetected: number;
   /**
    * The total number of mutants that were undetected, so either survived or were not covered by any code
    * `survived + no coverage`
    */
-  readonly totalUndetected: number;
+  public readonly totalUndetected: number;
   /**
    * The total number of invalid mutants.
    * `runtimeErrors + transpileErrors`
    */
-  readonly totalInvalid: number;
+  public readonly totalInvalid: number;
   /**
    * Total number of valid mutants.
    * `totalDetected + totalUndetected`
    */
-  readonly totalValid: number;
+  public readonly totalValid: number;
   /**
    * The total number of mutants.
    * `totalInvalid + totalValid`
    */
-  readonly totalMutants: number;
+  public readonly totalMutants: number;
   /**
    * The total number of mutants tested in an area that had code coverage result
    * `totalDetected + survived`
    */
-  readonly totalCovered: number;
+  public readonly totalCovered: number;
   /**
    * The total percentage of mutants that were killed.
    * `totalDetected / totalValid * 100`,
    */
-  readonly mutationScore: number;
+  public readonly mutationScore: number;
   /**
    * The total percentage of mutants that were killed based on the code coverage results of the initial test run.
    * `totalDetected / totalCovered * 100`
    */
-  readonly mutationScoreBasedOnCoveredCode: number;
+  public readonly mutationScoreBasedOnCoveredCode: number;
+
+  constructor(mutants: ReadonlyArray<MutantResult>) {
+    const count = (status: MutantStatus) => mutants.filter(_ => _.status === status).length;
+
+    this.killed = count(MutantStatus.Killed);
+    this.timeout = count(MutantStatus.Timeout);
+    this.survived = count(MutantStatus.Survived);
+    this.noCoverage = count(MutantStatus.NoCoverage);
+    this.runtimeErrors = count(MutantStatus.RuntimeError);
+    this.compileErrors = count(MutantStatus.CompileError);
+    this.totalDetected = this.timeout + this.killed;
+    this.totalUndetected = this.survived + this.noCoverage;
+    this.totalCovered = this.totalDetected + this.survived;
+    this.totalValid = this.totalUndetected + this.totalDetected;
+    this.totalInvalid = this.runtimeErrors + this.compileErrors;
+    this.totalMutants = this.totalValid + this.totalInvalid;
+    this.mutationScore = this.totalValid > 0 ? this.totalDetected / this.totalValid * 100 : DEFAULT_SCORE;
+    this.mutationScoreBasedOnCoveredCode = this.totalValid > 0 ? this.totalDetected / this.totalCovered * 100 || 0 : DEFAULT_SCORE;
+  }
 }
