@@ -1,5 +1,5 @@
 const path = require('path');
-const TerserPlugin = require('terser-webpack-plugin');
+// const TerserPlugin = require('terser-webpack-plugin');
 const context = __dirname;
 module.exports = {
   entry: './src/index.ts',

@@ -20,7 +20,8 @@ module.exports = function (config) {
     webpack
   });
 
-  // Delete regular entry. Karma's `files` will be used
+  // Delete regular entry/output. Karma's `files` will be used
   delete config.webpack.entry;
+  delete config.webpack.output;
 }
 
