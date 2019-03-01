@@ -8,7 +8,7 @@
     "build": "webpack --configFile webpack.config.js --mode production",
     "test": "npm run test:unit && npm run test:integration",
     "test:unit": "karma start --singleRun true",
-    "test:integration": "mocha -r source-map-support/register -r chromedriver --timeout 60000 dist/test/integration/**/*.js"
+    "test:integration": "mocha -r ts-node/register -r chromedriver --timeout 60000 test/integration/**/*.ts"
   },
   "repository": {
     "type": "git",

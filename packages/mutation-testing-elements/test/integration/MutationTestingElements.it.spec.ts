@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import { DirectoryReportPage } from './po/DirectoryReport.page.spec';
 
 describe('MutationTestingElements - reporting integration', () => {
-  const server = new StaticFileServer([path.resolve(__dirname, '..', '..', '..', 'testResources'), path.resolve(__dirname, '..', '..', '..', 'dist')]);
+  const server = new StaticFileServer([path.resolve(__dirname, '..', '..', 'testResources'), path.resolve(__dirname, '..', '..', 'dist')]);
   let page: DirectoryReportPage;
 
   before(async () => {
