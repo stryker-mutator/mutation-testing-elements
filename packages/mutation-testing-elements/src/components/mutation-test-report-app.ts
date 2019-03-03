@@ -4,7 +4,8 @@ import { normalizeFileNames } from '../helpers';
 import { bootstrap } from '../style';
 import { ResultModel } from '../model/ResultModel';
 import { toDirectoryModel } from '../model';
-import { PathChangedEvent } from './mutation-test-report-router';
+import { locationChange$ } from '../lib/router';
+import { Subscription } from 'rxjs';
 
 @customElement('mutation-test-report-app')
 export class MutationTestReportAppComponent extends LitElement {
@@ -56,7 +57,7 @@ export class MutationTestReportAppComponent extends LitElement {
   }
 
   public updated(changedProperties: PropertyValues) {
-    if (changedProperties.has('report') && this.report) {
+    if ((changedProperties.has('path') || changedProperties.has('report')) && this.report) {
       this.updateModel(this.report);
       this.updateContext();
     }
@@ -73,11 +74,6 @@ export class MutationTestReportAppComponent extends LitElement {
     if (this.rootModel) {
       this.context = this.rootModel.find(this.path.join('/'));
     }
-  }
-
-  private readonly updatePath = (event: PathChangedEvent) => {
-    this.path = event.detail;
-    this.updateContext();
   }
 
   public static styles = [
@@ -97,10 +93,20 @@ export class MutationTestReportAppComponent extends LitElement {
     `
   ];
 
+  public readonly subscriptions: Subscription[] = [];
+  public connectedCallback() {
+    super.connectedCallback();
+    this.subscriptions.push(locationChange$.subscribe(path => this.path = path));
+  }
+
+  public disconnectedCallback() {
+    super.disconnectedCallback();
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
+
   public render() {
     return html`
     <mutation-test-report-title .title="${this.title}"></mutation-test-report-title>
-    <mutation-test-report-router @path-changed="${this.updatePath}"></mutation-test-report-router>
     ${this.renderContent()}
     `;
   }

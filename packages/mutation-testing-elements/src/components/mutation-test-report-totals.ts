@@ -10,10 +10,10 @@ import { ResultModel } from '../model/ResultModel';
 export class MutationTestReportTotalsComponent extends LitElement {
 
   @property()
-  public model!: FileResultModel | DirectoryResultModel;
+  public model: FileResultModel | DirectoryResultModel | undefined;
 
   @property()
-  public thresholds!: Thresholds;
+  public thresholds: Thresholds | undefined;
 
   public static styles = [bootstrap,
     css`
@@ -62,12 +62,16 @@ export class MutationTestReportTotalsComponent extends LitElement {
   `];
 
   public render() {
-    return html`
+    if (this.model) {
+      return html`
           <table class="table table-sm table-hover table-bordered table-no-top">
             ${this.renderHead()}
-            ${this.renderTableBody()}
+            ${this.renderTableBody(this.model)}
           </table>
       `;
+    } else {
+      return undefined;
+    }
   }
 
   private renderHead() {
@@ -110,10 +114,10 @@ export class MutationTestReportTotalsComponent extends LitElement {
 </thead>`;
   }
 
-  private renderTableBody() {
+  private renderTableBody(model: FileResultModel | DirectoryResultModel) {
     const renderChildren = () => {
-      if (!this.model.representsFile) {
-        return this.model.childResults.map(childResult => {
+      if (!model.representsFile) {
+        return model.childResults.map(childResult => {
           let fullName: string = childResult.name;
           while (!childResult.representsFile && childResult.childResults.length === 1) {
             childResult = childResult.childResults[0];
@@ -127,7 +131,7 @@ export class MutationTestReportTotalsComponent extends LitElement {
     };
     return html`
     <tbody>
-      ${this.renderRow(this.model.name, this.model, false)}
+      ${this.renderRow(model.name, model, false)}
       ${renderChildren()}
     </tbody>`;
   }
@@ -166,13 +170,16 @@ export class MutationTestReportTotalsComponent extends LitElement {
   }
 
   private determineColoringClass(score: number) {
-    if (score < this.thresholds.low) {
-      return 'danger';
-    } else if (score < this.thresholds.high) {
-      return 'warning';
+    if (this.thresholds) {
+      if (score < this.thresholds.low) {
+        return 'danger';
+      } else if (score < this.thresholds.high) {
+        return 'warning';
+      } else {
+        return 'success';
+      }
     } else {
-      return 'success';
+      return 'default';
     }
   }
-
 }

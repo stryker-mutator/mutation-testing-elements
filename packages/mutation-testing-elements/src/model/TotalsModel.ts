@@ -69,7 +69,7 @@ export class TotalsModel {
    */
   public readonly mutationScoreBasedOnCoveredCode: number;
 
-  constructor(mutants: ReadonlyArray<MutantResult>) {
+  constructor(mutants: ReadonlyArray<Pick<MutantResult, 'status'>>) {
     const count = (status: MutantStatus) => mutants.filter(_ => _.status === status).length;
 
     this.killed = count(MutantStatus.Killed);
