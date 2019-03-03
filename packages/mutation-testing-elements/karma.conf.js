@@ -4,10 +4,10 @@ module.exports = function (config) {
     basePath: '',
     frameworks: ['mocha'],
     files: [
-      'test/unit/**/*.ts'
+      'test/unit/index.js'
     ],
     preprocessors: {
-      'test/unit/**/*.ts': ['webpack'],
+      'test/unit/index.js': ['webpack', 'sourcemap'],
     },
     reporters: ['progress'],
     port: 9876,

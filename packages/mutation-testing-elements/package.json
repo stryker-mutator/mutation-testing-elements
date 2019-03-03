@@ -21,7 +21,9 @@
   "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/mutation-testing-elements#readme",
   "devDependencies": {
     "@types/lodash.groupby": "^4.6.5",
+    "@types/sinon-chai": "^3.2.2",
     "lodash.groupby": "^4.6.0",
-    "mutation-testing-report-schema": "^0.0.7"
+    "mutation-testing-report-schema": "^0.0.7",
+    "sinon-chai": "^3.3.0"
   }
 }

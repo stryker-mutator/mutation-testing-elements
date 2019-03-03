@@ -13,6 +13,11 @@ export class MutationTestReportRouterComponent extends LitElement {
     this.updatePath();
   }
 
+  public disconnectedCallback() {
+    super.disconnectedCallback();
+    window.removeEventListener('hashchange', this.updatePath);
+  }
+
   private readonly updatePath = () => {
     const pathString = window.location.hash.substr(1);
     const path = pathString.length ? pathString.split('/') : [];

@@ -18,7 +18,7 @@ export class MutationTestReportAppComponent extends LitElement {
   @property()
   public src: string | undefined;
 
-  @property()
+  @property({ attribute: false })
   public errorMessage: string | undefined;
 
   @property({ attribute: false })
@@ -49,7 +49,8 @@ export class MutationTestReportAppComponent extends LitElement {
         const res = await fetch(this.src);
         this.report = await res.json();
       } catch (error) {
-        this.errorMessage = error.toString();
+        const e = error.toString();
+        this.errorMessage = e;
       }
     }
   }
@@ -113,15 +114,12 @@ export class MutationTestReportAppComponent extends LitElement {
   }
 
   private renderContent() {
-    if (this.context) {
+    if (this.context || this.errorMessage) {
       return html`<div class="container">
   <div class="row">
     <div class="col-md-12">
-      ${this.renderTitle()}
-      <mutation-test-report-breadcrumb .path="${this.path}"></mutation-test-report-breadcrumb>
+      ${this.renderReport()}
       ${this.renderErrorMessage()}
-      ${this.renderTotals()}
-      ${this.renderFileReport()}
     </div>
   </div>
 </div>`;
@@ -139,6 +137,18 @@ export class MutationTestReportAppComponent extends LitElement {
         `;
     } else {
       return html``;
+    }
+  }
+
+  private renderReport() {
+    if (this.context) {
+      return html`
+      ${this.renderTitle()}
+      <mutation-test-report-breadcrumb .path="${this.path}"></mutation-test-report-breadcrumb>
+      ${this.renderTotals()}
+      ${this.renderFileReport()}`;
+    } else {
+      return undefined;
     }
   }
 

@@ -23,7 +23,7 @@ hljs.registerLanguage('scala', scala);
 export class MutationTestReportFileComponent extends LitElement {
 
   @property()
-  private readonly model!: FileResultModel;
+  public readonly model!: FileResultModel;
 
   private enabledMutantStates: MutantStatus[] = [];
 
