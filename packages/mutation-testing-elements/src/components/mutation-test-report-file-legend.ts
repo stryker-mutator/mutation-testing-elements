@@ -12,7 +12,7 @@ export interface MutantFilter {
 export class MutationTestReportFileLegendComponent extends LitElement {
 
   @property()
-  public mutants!: ReadonlyArray<MutantResult>;
+  public mutants: ReadonlyArray<Pick<MutantResult, 'status'>> = [];
 
   @property()
   private get collapseButtonText() {
@@ -60,7 +60,7 @@ export class MutationTestReportFileLegendComponent extends LitElement {
     if (this.collapsed) {
       this.dispatchEvent(new CustomEvent('collapse-all'));
     } else {
-      this.dispatchEvent(new CustomEvent('open-all'));
+      this.dispatchEvent(new CustomEvent('expand-all'));
     }
   }
 

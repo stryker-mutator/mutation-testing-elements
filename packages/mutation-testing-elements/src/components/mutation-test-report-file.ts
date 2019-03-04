@@ -42,7 +42,7 @@ export class MutationTestReportFileComponent extends LitElement {
     }
     `];
 
-  private readonly openAll = () => {
+  private readonly expandAll = () => {
     this.forEachMutantComponent(mutantComponent => mutantComponent.expand = true);
   }
   private readonly collapseAll = () => {
@@ -74,7 +74,7 @@ export class MutationTestReportFileComponent extends LitElement {
     return html`
         <div class="row">
           <div class="col-md-12">
-            <mutation-test-report-file-legend @filters-changed="${this.filtersChanged}" @open-all="${this.openAll}"
+            <mutation-test-report-file-legend @filters-changed="${this.filtersChanged}" @expand-all="${this.expandAll}"
               @collapse-all="${this.collapseAll}" .mutants="${this.model.mutants}"></mutation-test-report-file-legend>
             <pre><code class="lang-${this.model.language} hljs">${unsafeHTML(this.renderCode())}</code></pre>
           </div>
