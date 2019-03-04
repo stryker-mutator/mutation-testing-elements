@@ -7,6 +7,7 @@
     "start": "webpack-dev-server --open",
     "build": "webpack --configFile webpack.config.js --mode production",
     "test": "npm run test:unit && npm run test:integration",
+    "test:mutation": "cross-env STRYKER=true stryker run",
     "test:unit": "karma start --singleRun true",
     "test:integration": "mocha -r ts-node/register -r chromedriver --timeout 60000 test/integration/**/*.ts"
   },
