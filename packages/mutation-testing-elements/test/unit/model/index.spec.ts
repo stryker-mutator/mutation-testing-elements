@@ -109,9 +109,9 @@ describe(toDirectoryModel.name, () => {
     const file = createFileResult();
     const actual = toDirectoryModel({
       'a': file, // => 4
-      'b/a': file, // => 2
-      'Ac/a': file, // => 1
       'A/a': file, // => 0
+      'Ac/a': file, // => 1
+      'b/a': file, // => 2
       'B/a': file, // => 3
       'z': file // => 5
     });
