@@ -3,7 +3,7 @@ import { bootstrap } from '../style';
 import { FileResultModel, DirectoryResultModel } from '../model';
 import { Thresholds } from 'mutation-testing-report-schema';
 import * as svg from './svg';
-import { pathJoin } from '../helpers';
+import { pathJoin } from '../lib/helpers';
 import { ResultModel } from '../model/ResultModel';
 
 @customElement('mutation-test-report-totals')

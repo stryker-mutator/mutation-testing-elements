@@ -1,6 +1,6 @@
 import { LitElement, html, property, customElement, css, PropertyValues } from 'lit-element';
 import { MutationTestResult } from 'mutation-testing-report-schema';
-import { normalizeFileNames } from '../helpers';
+import { normalizeFileNames } from '../lib/helpers';
 import { bootstrap } from '../style';
 import { ResultModel } from '../model/ResultModel';
 import { toDirectoryModel } from '../model';

@@ -17,7 +17,9 @@ module.exports = {
       {
         test: /\.ts$/,
         loader: 'ts-loader',
-        options: { configFile: process.env.STRYKER ? 'tsconfig.stryker.json' : 'tsconfig.json' }
+        options: {
+          configFile: process.env.STRYKER ? 'tsconfig.stryker.json' : 'tsconfig.json'
+        }
       },
       {
         test: /\.scss$/,

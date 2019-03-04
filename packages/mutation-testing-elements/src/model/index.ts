@@ -1,5 +1,5 @@
 import { FileResultDictionary } from 'mutation-testing-report-schema';
-import { flatMap, ROOT_NAME, pathJoin } from '../helpers';
+import { flatMap, ROOT_NAME, pathJoin } from '../lib/helpers';
 import { TotalsModel } from './TotalsModel';
 import groupBy from 'lodash.groupby';
 import { DirectoryResultModel } from './DirectoryResultModel';

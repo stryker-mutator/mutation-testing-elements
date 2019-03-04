@@ -1,6 +1,6 @@
 import { customElement, LitElement, property, html, css } from 'lit-element';
 import { MutantResult } from 'mutation-testing-report-schema';
-import { getContextClassForStatus } from '../helpers';
+import { getContextClassForStatus } from '../lib/helpers';
 import { bootstrap } from '../style';
 
 @customElement('mutation-test-report-mutant')
@@ -24,9 +24,6 @@ export class MutationTestReportMutantComponent extends LitElement {
     .disabled-code {
       text-decoration: line-through;
     }
-    ::slotted(.hljs-string) {
-      color: #fff;
-    }
   `];
 
   public render() {
@@ -38,10 +35,9 @@ export class MutationTestReportMutantComponent extends LitElement {
   private renderButton() {
     if (this.show && this.mutant) {
       return html`<span class="badge badge-${this.expand ? 'info' : getContextClassForStatus(this.mutant.status)}" @click="${() => this.expand = !this.expand}"
-  title="${this.mutant.mutatorName}">${this.mutant.id}</button>`;
-    } else {
-      return undefined;
+  title="${this.mutant.mutatorName}">${this.mutant.id}</span>`;
     }
+    return undefined;
   }
 
   private renderCode() {
@@ -50,14 +46,13 @@ export class MutationTestReportMutantComponent extends LitElement {
 
   private renderActual() {
     const actualCodeSlot = html`<slot></slot>`;
-    return html`<span class="${this.expand && this.show ? 'disabled-code' : ''}">${actualCodeSlot}</span>`;
+    return html`<span class="original-code ${this.expand && this.show ? 'disabled-code' : ''}">${actualCodeSlot}</span>`;
   }
 
   private renderReplacement() {
     if (this.mutant) {
-      return html`<span class="badge badge-info" ?hidden="${!this.expand || !this.show}">${this.mutant.replacement}</span>`;
-    } else {
-      return undefined;
+      return html`<span class="replacement badge badge-info" ?hidden="${!this.expand || !this.show}">${this.mutant.replacement}</span>`;
     }
+    return undefined;
   }
 }

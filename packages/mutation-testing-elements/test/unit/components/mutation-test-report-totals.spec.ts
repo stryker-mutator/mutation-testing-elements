@@ -12,6 +12,10 @@ describe(MutationTestReportTotalsComponent.name, () => {
     await sut.updateComplete;
   });
 
+  afterEach(() => {
+    sut.dispose();
+  });
+
   it('should not show a table if no data is loaded', () => {
     expect(sut.$('table')).eq(null);
   });

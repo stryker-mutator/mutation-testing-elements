@@ -1,6 +1,6 @@
 import { LitElement, html, property, customElement } from 'lit-element';
 import { bootstrap } from '../style';
-import { ROOT_NAME } from '../helpers';
+import { ROOT_NAME } from '../lib/helpers';
 
 @customElement('mutation-test-report-breadcrumb')
 export class MutationTestReportBreadcrumbComponent extends LitElement {
