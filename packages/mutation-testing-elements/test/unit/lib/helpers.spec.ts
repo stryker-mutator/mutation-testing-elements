@@ -1,20 +1,7 @@
-import { getContextClassForStatus, lines, escapeHtml, flatMap, normalizeFileNames, determineCommonBasePath } from '../../../src/lib/helpers';
-import { MutantStatus, FileResultDictionary } from 'mutation-testing-report-schema';
+import { lines, flatMap, normalizeFileNames, determineCommonBasePath, renderCode } from '../../../src/lib/helpers';
+import { FileResultDictionary, MutantStatus } from 'mutation-testing-report-schema';
 import { expect } from 'chai';
-
-describe(getContextClassForStatus.name, () => {
-  function actArrangeAssert(expected: string, input: MutantStatus) {
-    it(`should should show "${expected}" for "${input}"`, () => {
-      expect(getContextClassForStatus(input)).eq(expected);
-    });
-  }
-  actArrangeAssert('success', MutantStatus.Killed);
-  actArrangeAssert('danger', MutantStatus.Survived);
-  actArrangeAssert('danger', MutantStatus.NoCoverage);
-  actArrangeAssert('warning', MutantStatus.Timeout);
-  actArrangeAssert('secondary', MutantStatus.CompileError);
-  actArrangeAssert('secondary', MutantStatus.RuntimeError);
-});
+import { FileResultModel } from '../../../src/model';
 
 describe(lines.name, () => {
   it('should split on unix line endings', () => {
@@ -24,20 +11,6 @@ describe(lines.name, () => {
   it('should split on windows line endings', () => {
     expect(lines('foo\r\nbar\r\nbaz')).deep.eq(['foo', 'bar', 'baz']);
   });
-});
-
-describe(escapeHtml.name, () => {
-  function actArrangeAssert(input: string, expectedOutput: string) {
-    it(`should translate ${input} to ${expectedOutput}`, () => {
-      expect(escapeHtml(input)).eq(expectedOutput);
-    });
-  }
-
-  actArrangeAssert('foo&bar', 'foo&amp;bar');
-  actArrangeAssert('foo<bar', 'foo&lt;bar');
-  actArrangeAssert('foo>bar', 'foo&gt;bar');
-  actArrangeAssert('foo"bar', 'foo&quot;bar');
-  actArrangeAssert('foo\'bar', 'foo&#039;bar');
 });
 
 describe(flatMap.name, () => {
@@ -78,15 +51,41 @@ describe(normalizeFileNames.name, () => {
 
 describe(determineCommonBasePath.name, () => {
 
+  it('should return empty string if there are no files', () => {
+    expect(determineCommonBasePath([])).eq('');
+  });
+
   it('should return empty string if nothing in common', () => {
-    expect(determineCommonBasePath(['foo/bar', 'baz/qux'])).deep.eq('');
+    expect(determineCommonBasePath(['foo/bar', 'baz/qux'])).eq('');
   });
 
   it('should determine a common root', () => {
-    expect(determineCommonBasePath(['tmp/foo/bar', 'tmp/baz/qux'])).deep.eq('tmp');
+    expect(determineCommonBasePath(['tmp/foo/bar', 'tmp/baz/qux'])).eq('tmp');
   });
 
   it('should ignore common characters in dir names', () => {
-    expect(determineCommonBasePath(['tmp/foo/bar', 'tmp/foo2/qux'])).deep.eq('tmp');
+    expect(determineCommonBasePath(['tmp/foo/bar', 'tmp/foo2/qux'])).eq('tmp');
+  });
+});
+
+describe(renderCode.name, () => {
+  it('should insert mutants in expected places, with correct backgrounds', () => {
+    const input = new FileResultModel('', '', {
+      language: 'javascript',
+      mutants: [
+        {
+          id: '1', location: { end: { column: 17, line: 1 }, start: { column: 14, line: 1 } },
+          mutatorName: 'Foo', replacement: 'foo', status: MutantStatus.Killed
+        }
+      ],
+      source: `
+      const foo = 'bar';
+
+      function add(a, b) {
+        return a + b;
+      }`.replace(/      /g, '').trim(),
+    });
+    const actualCode = renderCode(input);
+    expect(actualCode).eq('<span>const foo = &#039;</span><mutation-test-report-mutant mutant-id="1"><span class="bg-success-light">bar</span></mutation-test-report-mutant><span class="bg-null">&#039;;\n\nfunction add(a, b) {\n  return a + b;\n}</span>');
   });
 });

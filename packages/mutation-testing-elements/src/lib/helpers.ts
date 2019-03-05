@@ -1,41 +1,10 @@
-import { MutantStatus, FileResultDictionary, MutantResult, Position } from 'mutation-testing-report-schema';
+import { FileResultDictionary, MutantResult, Position } from 'mutation-testing-report-schema';
 import { FileResultModel } from '../model';
+import { BackgroundColorCalculator } from './BackgroundColorCalculator';
+import { escapeHtml } from './htmlHelpers';
 
 export const ROOT_NAME = 'All files';
 const SEPARATOR = '/';
-
-export function getContextClassForStatus(status: MutantStatus) {
-  switch (status) {
-    case MutantStatus.Killed:
-      return 'success';
-    case MutantStatus.NoCoverage:
-    case MutantStatus.Survived:
-      return 'danger';
-    case MutantStatus.Timeout:
-      return 'warning';
-    case MutantStatus.RuntimeError:
-    case MutantStatus.CompileError:
-      return 'secondary';
-  }
-}
-
-export const COLUMN_START_INDEX = 1;
-export const LINE_START_INDEX = 1;
-export const NEW_LINE = '\n';
-export const CARRIAGE_RETURN = '\r';
-export function lines(content: string) {
-  return content.split(NEW_LINE)
-    .map(line => line.endsWith(CARRIAGE_RETURN) ? line.substr(0, line.length - 1) : line);
-}
-
-export function escapeHtml(unsafe: string) {
-  return unsafe
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
 
 export function flatMap<T, R>(source: T[], fn: (input: T) => R[]) {
   const result: R[] = [];
@@ -65,22 +34,21 @@ function normalize(fileName: string) {
 
 export function determineCommonBasePath(fileNames: ReadonlyArray<string>) {
   const directories = fileNames.map(fileName => fileName.split(/\/|\\/).slice(0, -1));
-
-  if (directories.length) {
+  if (fileNames.length) {
     return directories.reduce(filterDirectories).join(SEPARATOR);
   } else {
     return '';
   }
-}
 
-function filterDirectories(previousDirectories: string[], currentDirectories: string[]) {
-  for (let i = 0; i < previousDirectories.length; i++) {
-    if (previousDirectories[i] !== currentDirectories[i]) {
-      return previousDirectories.splice(0, i);
+  function filterDirectories(previousDirectories: string[], currentDirectories: string[]) {
+    for (let i = 0; i < previousDirectories.length; i++) {
+      if (previousDirectories[i] !== currentDirectories[i]) {
+        return previousDirectories.splice(0, i);
+      }
     }
-  }
 
-  return previousDirectories;
+    return previousDirectories;
+  }
 }
 
 /**
@@ -122,6 +90,15 @@ export function renderCode(model: FileResultModel): string {
   return `<span>${walkString(model.source, walker)}</span>`;
 }
 
+export const COLUMN_START_INDEX = 1;
+export const LINE_START_INDEX = 1;
+export const NEW_LINE = '\n';
+export const CARRIAGE_RETURN = '\r';
+export function lines(content: string) {
+  return content.split(NEW_LINE)
+    .map(line => line.endsWith(CARRIAGE_RETURN) ? line.substr(0, line.length - 1) : line);
+}
+
 /**
  * Walks a string. Executes a function on each character of the string (except for new lines and carriage returns)
  * @param source the string to walk
@@ -145,55 +122,6 @@ function walkString(source: string, fn: (char: string, position: Position) => st
     builder.push(fn(currentChar, { line, column: column++ }));
   }
   return builder.join('');
-}
-
-/**
- * Class to keep track of the states of the
- * mutants that are active at the cursor while walking the code.
- */
-class BackgroundColorCalculator {
-  private killed = 0;
-  private noCoverage = 0;
-  private survived = 0;
-  private timeout = 0;
-
-  public readonly markMutantStart = (mutant: MutantResult) => {
-    this.countMutant(1, mutant.status);
-  }
-
-  public readonly markMutantEnd = (mutant: MutantResult) => {
-    this.countMutant(-1, mutant.status);
-  }
-
-  private countMutant(valueToAdd: number, status: MutantStatus) {
-    switch (status) {
-      case MutantStatus.Killed:
-        this.killed += valueToAdd;
-        break;
-      case MutantStatus.Survived:
-        this.survived += valueToAdd;
-        break;
-      case MutantStatus.Timeout:
-        this.timeout += valueToAdd;
-        break;
-      case MutantStatus.NoCoverage:
-        this.noCoverage += valueToAdd;
-        break;
-    }
-  }
-
-  public determineBackground = () => {
-    if (this.survived > 0) {
-      return getContextClassForStatus(MutantStatus.Survived) + '-light';
-    } else if (this.noCoverage > 0) {
-      return getContextClassForStatus(MutantStatus.NoCoverage) + '-light';
-    } else if (this.timeout > 0) {
-      return getContextClassForStatus(MutantStatus.Timeout) + '-light';
-    } else if (this.killed > 0) {
-      return getContextClassForStatus(MutantStatus.Killed) + '-light';
-    }
-    return null;
-  }
 }
 
 function gte(a: Position, b: Position) {

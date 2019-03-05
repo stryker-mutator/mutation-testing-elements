@@ -1,7 +1,7 @@
 import { customElement, LitElement, property, html, css } from 'lit-element';
 import { MutantResult } from 'mutation-testing-report-schema';
-import { getContextClassForStatus } from '../lib/helpers';
 import { bootstrap } from '../style';
+import { getContextClassForStatus } from '../lib/htmlHelpers';
 
 @customElement('mutation-test-report-mutant')
 export class MutationTestReportMutantComponent extends LitElement {
