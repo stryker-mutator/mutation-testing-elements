@@ -1,7 +1,7 @@
 import { PageObject } from './PageObject.po.spec';
-import { getCurrent } from '../Browser.spec';
-import { constants } from '../constants.spec';
+import { constants } from '../lib/constants';
 import Breadcrumb from './Breadcrumb.po.spec';
+import { getCurrent } from '../lib/browser';
 
 export class Page extends PageObject {
 

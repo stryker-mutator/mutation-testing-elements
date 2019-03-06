@@ -1,4 +1,4 @@
-import { StaticFileServer } from './StaticFileServer.spec';
+import { StaticFileServer } from './lib/StaticFileServer';
 import path from 'path';
 import { expect } from 'chai';
 import { DirectoryReportPage } from './po/DirectoryReport.page.spec';
