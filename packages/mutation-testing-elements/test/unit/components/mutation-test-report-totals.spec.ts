@@ -48,4 +48,28 @@ describe(MutationTestReportTotalsComponent.name, () => {
     expect(table).ok;
     expect(table.querySelectorAll('tbody tr')).lengthOf(3);
   });
+
+  it('should flatten a row if the directory only has one file', async () => {
+    // Arrange
+    const file = new FileResultModel('foo.js', 'bar/baz/foo.js', {
+      language: 'js',
+      mutants: [],
+      source: 'const bar = foo();'
+    });
+    sut.element.model = new DirectoryResultModel('bar', 'bar', new TotalsModel([{ status: MutantStatus.Killed }]), [
+      new DirectoryResultModel('baz', 'bar/baz', new TotalsModel([]), [
+        file
+      ])
+    ]);
+
+    // Act
+    await sut.updateComplete;
+
+    // Assert
+    const table = sut.$('table') as HTMLTableElement;
+    expect(table).ok;
+    const rows = table.querySelectorAll('tbody tr') as NodeListOf<HTMLTableRowElement>;
+    expect(rows).lengthOf(2);
+    expect((rows.item(1).cells.item(1) as HTMLTableCellElement).textContent).eq('baz/foo.js');
+  });
 });

@@ -10,9 +10,12 @@ describe(MutationTestReportAppComponent.name, () => {
   let fetchStub: sinon.SinonStub;
 
   beforeEach(() => {
-    window.location.hash = '';
     fetchStub = sinon.stub(window, 'fetch');
     sut = new CustomElementFixture('mutation-test-report-app');
+  });
+
+  afterEach(() => {
+    window.location.hash = '';
   });
 
   function createReport(): MutationTestResult {

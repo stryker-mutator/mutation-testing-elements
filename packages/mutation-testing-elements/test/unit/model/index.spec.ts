@@ -10,11 +10,11 @@ function createMutantResult(overrides?: Partial<MutantResult>): MutantResult {
     location: {
       end: {
         column: 3,
-        line: 4
+        line: 1
       },
       start: {
         column: 1,
-        line: 2
+        line: 1
       }
     },
     mutatorName: 'bazMutator',

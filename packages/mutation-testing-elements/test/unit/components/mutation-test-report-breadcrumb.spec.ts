@@ -27,7 +27,9 @@ describe(MutationTestReportBreadcrumbComponent.name, () => {
     await sut.updateComplete;
     const elements = sut.$$('li');
     expect(elements).lengthOf(2);
-    expect(elements[0].querySelector('a')).ok;
+    const anchor = elements[0].querySelector('a') as HTMLAnchorElement;
+    expect(anchor).ok;
+    expect(anchor.href).eq(href('#'));
     expect(elements[1].textContent).eq('foo.js');
     expect(elements[1].querySelector('a')).null;
   });
@@ -37,10 +39,18 @@ describe(MutationTestReportBreadcrumbComponent.name, () => {
     await sut.updateComplete;
     const elements = sut.$$('li');
     expect(elements).lengthOf(3);
-    expect(elements[0].querySelector('a')).ok;
+    const rootLink = elements[0].querySelector('a') as HTMLAnchorElement;
+    expect(rootLink).ok;
+    expect(rootLink.href).eq(href('#'));
     expect(elements[1].textContent).eq('bar');
-    expect(elements[1].querySelector('a')).ok;
+    const barAnchor = elements[1].querySelector('a') as HTMLAnchorElement;
+    expect(barAnchor).ok;
+    expect(barAnchor.href).eq(href('#bar'));
     expect(elements[2].textContent).eq('foo.js');
     expect(elements[2].querySelector('a')).null;
   });
+
+  function href(fragment: string) {
+    return `${window.location.toString().split('#')[0]}${fragment}`;
+  }
 });
