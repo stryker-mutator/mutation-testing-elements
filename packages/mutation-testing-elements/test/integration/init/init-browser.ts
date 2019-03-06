@@ -7,4 +7,3 @@ before(async () => {
 after(async () => {
   await getCurrent().close();
 });
-  
