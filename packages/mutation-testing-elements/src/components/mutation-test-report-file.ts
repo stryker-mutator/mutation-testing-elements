@@ -9,7 +9,6 @@ import typescript from 'highlight.js/lib/languages/typescript';
 import { MutationTestReportMutantComponent } from './mutation-test-report-mutant';
 import { MutantFilter } from './mutation-test-report-file-legend';
 import { bootstrap, highlightJS } from '../style';
-import { MutantStatus } from 'mutation-testing-report-schema';
 import { FileResultModel } from '../model';
 import { renderCode } from '../lib/helpers';
 
@@ -24,8 +23,6 @@ export class MutationTestReportFileComponent extends LitElement {
 
   @property()
   public model!: FileResultModel;
-
-  private enabledMutantStates: MutantStatus[] = [];
 
   public static styles = [
     highlightJS,
@@ -58,15 +55,11 @@ export class MutationTestReportFileComponent extends LitElement {
   }
 
   private readonly filtersChanged = (event: CustomEvent<MutantFilter[]>) => {
-    this.enabledMutantStates = event.detail
+    const enabledMutantStates = event.detail
       .filter(mutantFilter => mutantFilter.enabled)
       .map(mutantFilter => mutantFilter.status);
-    this.updateShownMutants();
-  }
-
-  private updateShownMutants() {
     this.forEachMutantComponent(mutantComponent => {
-      mutantComponent.show = this.enabledMutantStates.some(state => mutantComponent.mutant !== undefined && mutantComponent.mutant.status === state);
+      mutantComponent.show = enabledMutantStates.some(state => mutantComponent.mutant !== undefined && mutantComponent.mutant.status === state);
     });
   }
 
@@ -90,7 +83,8 @@ export class MutationTestReportFileComponent extends LitElement {
     if (code) {
       hljs.highlightBlock(code);
       this.forEachMutantComponent(mutantComponent => {
-        mutantComponent.mutant = this.model.mutants.find(mutant => mutant.id.toString() === mutantComponent.getAttribute('mutant-id'));
+        mutantComponent.mutant = this.model.mutants
+          .find(mutant => mutant.id.toString() === mutantComponent.getAttribute('mutant-id'));
       }, code);
     }
   }

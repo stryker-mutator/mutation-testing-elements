@@ -13,7 +13,7 @@ export class MutationTestReportBreadcrumbComponent extends LitElement {
     return html`
         <ol class='breadcrumb'>
           ${this.renderRootItem()}
-          ${this.path ? this.renderBreadcrumbItems(this.path) : ''}
+          ${this.renderBreadcrumbItems()}
         </ol>
     `;
   }
@@ -26,14 +26,18 @@ export class MutationTestReportBreadcrumbComponent extends LitElement {
     }
   }
 
-  private renderBreadcrumbItems(path: ReadonlyArray<string>) {
-    return path.map((item, index) => {
-      if (index === path.length - 1) {
-        return this.renderActiveItem(item);
-      } else {
-        return this.renderLink(item, `#${path.filter((_, i) => i <= index).join('/')}`);
-      }
-    });
+  private renderBreadcrumbItems() {
+    if (this.path) {
+      const path = this.path;
+      return path.map((item, index) => {
+        if (index === path.length - 1) {
+          return this.renderActiveItem(item);
+        } else {
+          return this.renderLink(item, `#${path.filter((_, i) => i <= index).join('/')}`);
+        }
+      });
+    }
+    return undefined;
   }
 
   private renderActiveItem(title: string) {
