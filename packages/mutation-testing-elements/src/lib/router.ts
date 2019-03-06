@@ -1,12 +1,15 @@
-import { fromEvent } from 'rxjs';
+import { fromEvent, of, merge } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 /**
  * Observable for location changes on the hash part of the url
+ * As soon as you subscribe you'll get a first event for the current location
  * @example
  * window.location.url === 'http://localhost:8080#foo/bar/baz.js' => ['foo', 'bar', 'baz.js ']
  */
-export const locationChange$ = fromEvent<HashChangeEvent>(window, 'hashchange').pipe(
-  tap(event => event.preventDefault()),
-  map(_ => window.location.hash.substr(1).split('/'))
-);
+export const locationChange$ = merge(of(1),
+  fromEvent<HashChangeEvent>(window, 'hashchange').pipe(
+    tap(event => event.preventDefault())
+  )).pipe(
+    map(_ => window.location.hash.substr(1).split('/'))
+  );
