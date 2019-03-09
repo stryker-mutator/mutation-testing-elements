@@ -1,5 +1,5 @@
 import { By } from 'selenium-webdriver';
-import { PageObject } from './PageObject.po.spec';
+import { PageObject } from './PageObject.po';
 
 export default class Breadcrumb extends PageObject {
 

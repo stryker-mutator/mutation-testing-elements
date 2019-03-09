@@ -34,7 +34,7 @@ export class MutationTestReportMutantComponent extends LitElement {
 
   private renderButton() {
     if (this.show && this.mutant) {
-      return html`<span class="badge badge-${this.expand ? 'info' : getContextClassForStatus(this.mutant.status)}" @click="${() => this.expand = !this.expand}"
+      return html`<span class="mutant-toggle badge badge-${this.expand ? 'info' : getContextClassForStatus(this.mutant.status)}" @click="${() => this.expand = !this.expand}"
   title="${this.mutant.mutatorName}">${this.mutant.id}</span>`;
     }
     return undefined;
