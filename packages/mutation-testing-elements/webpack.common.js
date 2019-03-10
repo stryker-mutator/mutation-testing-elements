@@ -3,12 +3,7 @@ const path = require('path');
 const context = __dirname;
 module.exports = {
   entry: './src/index.ts',
-  mode: 'development',
   context,
-  devtool: 'inline-source-map',
-  devServer: {
-    contentBase: ['./testResources', './node_modules/bootstrap', '.']
-  },
   resolve: {
     extensions: ['.ts', '.tsx', '.js']
   },
@@ -24,7 +19,6 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          // "style-loader", // creates style nodes from JS strings
           "css-loader", // translates CSS into CommonJS
           "sass-loader" // compiles Sass to CSS, using Node Sass by default
         ]
@@ -36,17 +30,3 @@ module.exports = {
     filename: 'mutation-test-elements.js'
   }
 };
-
-//   if (argv.mode === 'production') {
-//     console.log('Detected "production" mode');
-//     config.devtool = undefined;
-//     config.optimization = {
-//       minimizer: [
-//         new TerserPlugin({
-//           test: /\.js(\?.*)?$/i,
-//         }),
-//       ],
-//     };
-//   }
-//   return config;
-// };
