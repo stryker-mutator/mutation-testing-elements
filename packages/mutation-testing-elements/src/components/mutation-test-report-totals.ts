@@ -141,7 +141,7 @@ export class MutationTestReportTotalsComponent extends LitElement {
     const coloringClass = this.determineColoringClass(row.totals.mutationScore);
     const progressBarStyle = `width: ${mutationScoreRounded}%`;
     return html`
-    <tr>
+    <tr title="${row.name}">
       <td style="width: 17px;" class="icon no-border-right">${row.representsFile ? svg.file : svg.directory}</td>
       <td width="" class="no-border-left">${shouldLink ? html`<a href="${this.link(row.path)}">${name}</a>` : html`<span>${row.name}</span>`}</td>
       <td class="no-border-right vertical-middle">

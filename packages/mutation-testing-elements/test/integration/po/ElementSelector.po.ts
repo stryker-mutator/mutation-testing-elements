@@ -1,6 +1,6 @@
 import { ElementFinder } from './ElementFinder';
-import { WebElement, By } from 'selenium-webdriver';
-import { shadowRoot } from '../lib/helpers';
+import { WebElement, By, WebElementPromise } from 'selenium-webdriver';
+import { selectShadowRoot, wrapInWebElementPromise } from '../lib/helpers';
 
 export class ElementSelector {
   constructor(private readonly context: ElementFinder) { }
@@ -11,17 +11,18 @@ export class ElementSelector {
     return context.findElements(By.css(parts[parts.length - 1]));
   }
 
-  public async $(cssSelector: string): Promise<WebElement> {
-    const parts = cssSelector.split('>>>');
-    const context = await this.findContext(parts.slice(0, parts.length - 1));
-    return context.findElement(By.css(parts[parts.length - 1]));
+  public $(cssSelector: string): WebElementPromise {
+    return wrapInWebElementPromise(async () => {
+      const parts = cssSelector.split('>>>');
+      const context = await this.findContext(parts.slice(0, parts.length - 1));
+      return context.findElement(By.css(parts[parts.length - 1]));
+    });
   }
 
   private async findContext(webComponentPath: string[]) {
     let currentContext = this.context;
     for (const part of webComponentPath) {
-      const host = await currentContext.findElement(By.css(part));
-      const newContext = await shadowRoot(host);
+      const newContext = await selectShadowRoot(currentContext.findElement(By.css(part)));
       if (newContext) {
         currentContext = newContext;
       } else {

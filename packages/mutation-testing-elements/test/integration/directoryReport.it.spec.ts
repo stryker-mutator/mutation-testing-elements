@@ -12,18 +12,17 @@ describe('Directory report page', () => {
   describe('the results table', () => {
 
     it('should show 11 rows in the result table', async () => {
-      expect((await (await page.resultTable()).rows())).lengthOf(11);
+      expect(await page.resultTable().rows()).lengthOf(11);
     });
 
     it('should show "all files" with "77.83%" mutation score', async () => {
-      const allFilesRow = (await (await page.resultTable()).row('All files'));
-      expect((await (await allFilesRow.progressBar()).percentageText())).eq('77.83%');
+      expect(await page.resultTable().row('All files').progressBar().percentageText()).eq('77.83%');
     });
 
     it('should show expected totals for cli.ts', async () => {
-      const cliRow = await (await page.resultTable()).row('cli.ts');
+      const cliRow = await page.resultTable().row('cli.ts');
       return Promise.all([
-        expect(await (await cliRow.progressBar()).percentageText()).eq('8.70%'),
+        expect(await cliRow.progressBar().percentageText()).eq('8.70%'),
         expect(await cliRow.mutationScore()).eq('8.70'),
         expect(await cliRow.killed()).eq('2'),
         expect(await cliRow.survived()).eq('1'),

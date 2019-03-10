@@ -1,17 +1,22 @@
-import { WebElement } from 'selenium-webdriver';
-import { ElementFinder } from '../po/ElementFinder';
+import { WebElement, WebElementPromise } from 'selenium-webdriver';
 import { getCurrent } from './browser';
 
-export async function shadowRoot(element: ElementFinder): Promise<WebElement> {
-  const shadowRoot = await getCurrent().executeScript<WebElement | undefined>('return arguments[0].shadowRoot', element);
-  if (shadowRoot) {
-    return shadowRoot;
-  } else {
-    if (element.getTagName) {
-      const tagName = await element.getTagName();
-      throw new Error(`Tag ${tagName} does not have a shadow root`);
+export function selectShadowRoot(element: WebElement): WebElementPromise {
+  return wrapInWebElementPromise(async () => {
+    const shadowRoot = await getCurrent().executeScript<WebElement | undefined>('return arguments[0].shadowRoot', element);
+    if (shadowRoot) {
+      return shadowRoot;
     } else {
-      throw new Error('No shadow root');
+      if (element.getTagName) {
+        const tagName = await element.getTagName();
+        throw new Error(`Tag ${tagName} does not have a shadow root`);
+      } else {
+        throw new Error('No shadow root');
+      }
     }
-  }
+  });
+}
+
+export function wrapInWebElementPromise(p: () => Promise<WebElement>) {
+  return new WebElementPromise(getCurrent(), p());
 }

@@ -4,7 +4,7 @@ import { Checkbox } from './Checkbox.po';
 
 export class Legend extends PageObject {
 
-  public async displayButton(mutantState: MutantStatus): Promise<Checkbox> {
-    return new Checkbox(await this.$(`input[value="${mutantState}"]`));
+  public displayButton(mutantState: MutantStatus): Checkbox {
+    return new Checkbox(this.$(`input[value="${mutantState}"]`));
   }
 }

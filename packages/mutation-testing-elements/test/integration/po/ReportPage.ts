@@ -5,7 +5,7 @@ import { ElementSelector } from './ElementSelector.po';
 import { Legend } from './Legend.po';
 import { MutantComponent } from './MutantComponent.po';
 import { ResultTable } from './ResultTable.po';
-import { shadowRoot } from '../lib/helpers';
+import { selectShadowRoot } from '../lib/helpers';
 
 export class ReportPage extends ElementSelector {
 
@@ -21,25 +21,26 @@ export class ReportPage extends ElementSelector {
     return getCurrent().getTitle();
   }
 
-  public async breadcrumb(): Promise<Breadcrumb> {
-    const host = await this.$('mutation-test-report-app >>> mutation-test-report-breadcrumb');
-    return new Breadcrumb(await shadowRoot(host));
+  public breadcrumb(): Breadcrumb {
+    const host = this.$('mutation-test-report-app >>> mutation-test-report-breadcrumb');
+    return new Breadcrumb(selectShadowRoot(host));
   }
 
   public async mutants(): Promise<MutantComponent[]> {
     return Promise.all((await this.$$('mutation-test-report-app >>> mutation-test-report-file >>> mutation-test-report-mutant'))
-      .map(async host => new MutantComponent(await shadowRoot(host))));
+      .map(async host => new MutantComponent(await selectShadowRoot(host))));
   }
 
-  public async mutant(mutantId: number) {
-    return new MutantComponent(await shadowRoot(await this.$(`mutation-test-report-app >>> mutation-test-report-file >>> mutation-test-report-mutant[mutant-id="${mutantId}"]`)));
+  public mutant(mutantId: number) {
+    return new MutantComponent(selectShadowRoot(
+      this.$(`mutation-test-report-app >>> mutation-test-report-file >>> mutation-test-report-mutant[mutant-id="${mutantId}"]`)));
   }
 
-  public async legend() {
-    return new Legend(await shadowRoot(await this.$('mutation-test-report-app >>> mutation-test-report-file >>> mutation-test-report-file-legend')));
+  public legend() {
+    return new Legend(selectShadowRoot(this.$('mutation-test-report-app >>> mutation-test-report-file >>> mutation-test-report-file-legend')));
   }
 
-  public async resultTable() {
-    return new ResultTable(await shadowRoot(await this.$('mutation-test-report-app >>> mutation-test-report-totals')));
+  public resultTable() {
+    return new ResultTable(selectShadowRoot(this.$('mutation-test-report-app >>> mutation-test-report-totals')));
   }
 }
