@@ -8,11 +8,11 @@
     "thresholds",
     "files"
   ],
-  "additionalProperties": false,
   "properties": {
     "schemaVersion": {
       "id": "#/properties/schemaVersion",
       "type": "string",
+      "pattern": "^1(\\.\\d)?$",
       "title": "Major version of this report. Used for compatibility.",
       "examples": [
         "1"
@@ -26,7 +26,6 @@
         "high",
         "low"
       ],
-      "additionalProperties": false,
       "properties": {
         "high": {
           "id": "#/properties/thresholds/properties/high",
@@ -62,7 +61,6 @@
             "line",
             "column"
           ],
-          "additionalProperties": false,
           "properties": {
             "line": {
               "type": "integer",
@@ -90,7 +88,6 @@
           "source",
           "mutants"
         ],
-        "additionalProperties": false,
         "properties": {
           "language": {
             "$id": "#/properties/files/additionalProperties/file/properties/language",
@@ -126,7 +123,6 @@
                 "location",
                 "status"
               ],
-              "additionalProperties": false,
               "properties": {
                 "id": {
                   "$id": "#/properties/files/additionalProperties/file/properties/mutants/items/properties/id",
@@ -165,7 +161,6 @@
                     "start",
                     "end"
                   ],
-                  "additionalProperties": false,
                   "properties": {
                     "start": {
                       "$ref": "#/properties/files/definitions/position",
