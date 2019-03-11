@@ -2,7 +2,9 @@
   "name": "mutation-testing-elements",
   "version": "0.0.7",
   "description": "A suite of web components for a mutation testing report.",
-  "main": "dist/mutation-test-elements.js",
+  "unpkg": "dist/mutation-test-elements.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "start": "webpack-dev-server --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
