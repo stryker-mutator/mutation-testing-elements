@@ -12,7 +12,7 @@
     "schemaVersion": {
       "id": "#/properties/schemaVersion",
       "type": "string",
-      "pattern": "^1(\\.\\d)?$",
+      "pattern": "^1(\\.\\d*)?$",
       "title": "Major version of this report. Used for compatibility.",
       "examples": [
         "1"
