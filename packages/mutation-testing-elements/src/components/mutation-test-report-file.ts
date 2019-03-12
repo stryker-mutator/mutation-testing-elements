@@ -15,7 +15,6 @@ import { renderCode } from '../lib/helpers';
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('typescript', typescript);
 hljs.registerLanguage('cs', cs);
-hljs.registerLanguage('java', java);
 hljs.registerLanguage('scala', scala);
 
 @customElement('mutation-test-report-file')
