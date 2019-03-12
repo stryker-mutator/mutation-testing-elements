@@ -1,16 +1,15 @@
-import { LitElement, html, property, customElement, css, PropertyValues } from 'lit-element';
+import { LitElement, html, property, customElement, PropertyValues, unsafeCSS } from 'lit-element';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 import hljs from 'highlight.js/lib/highlight';
 import javascript from 'highlight.js/lib/languages/javascript';
 import scala from 'highlight.js/lib/languages/scala';
-import java from 'highlight.js/lib/languages/java';
 import cs from 'highlight.js/lib/languages/cs';
 import typescript from 'highlight.js/lib/languages/typescript';
-import { MutationTestReportMutantComponent } from './mutation-test-report-mutant';
-import { MutantFilter } from './mutation-test-report-file-legend';
-import { bootstrap, highlightJS } from '../style';
-import { FileResultModel } from '../model';
-import { renderCode } from '../lib/helpers';
+import { MutationTestReportMutantComponent } from '../mutation-test-report-mutant';
+import { MutantFilter } from '../mutation-test-report-file-legend';
+import { bootstrap, highlightJS } from '../../style';
+import { FileResultModel } from '../../model';
+import { renderCode } from '../../lib/helpers';
 
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('typescript', typescript);
@@ -26,17 +25,8 @@ export class MutationTestReportFileComponent extends LitElement {
   public static styles = [
     highlightJS,
     bootstrap,
-    css`
-    .bg-danger-light {
-      background-color: #f2dede;
-    }
-    .bg-success-light {
-        background-color: #dff0d8;
-    }
-    .bg-warning-light {
-        background-color: #fcf8e3;
-    }
-    `];
+    unsafeCSS(require('./mutation-test-report-file.scss'))
+  ];
 
   private readonly expandAll = () => {
     this.forEachMutantComponent(mutantComponent => mutantComponent.expand = true);
