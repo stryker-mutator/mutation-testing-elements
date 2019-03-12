@@ -1,0 +1,20 @@
+{
+  "folders": [
+    {
+      "path": "packages/mutation-testing-elements"
+    },
+    {
+      "path": "packages/mutation-testing-report-schema"
+    },
+    {
+      "path": ".",
+      "name": "parent"
+    }
+  ],
+  "settings": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.tslint": true
+    },
+    "typescript.tsdk": "./node_modules/typescript/lib"
+  }
+}

@@ -1,0 +1,332 @@
+{
+  "schemaVersion": "1",
+  "thresholds": {
+    "low": 60,
+    "high": 80
+  },
+  "files": {
+    "c:\\z\\github\\stryker-mutator\\mutation-testing-elements\\testResources\\csharp-example\\ExampleProject.csproj\\ExampleProject\\DummyCalc.cs": {
+      "source": "using ExampleClassLibrary;\r\n\r\nnamespace ExampleProject\r\n{\r\n    public class DummyCalc\r\n    {\r\n        public int SomeCalc(int first, int second)\r\n        {\r\n\t\t\twhile(second > 0) {\r\n\t\t\t\tfirst = first + second + 1;\r\n\t\t\t\tsecond--;\r\n\t\t\t}\r\n\t\t\twhile(1 < 0) {\r\n\t\t\t\t// endless looping\r\n\t\t\t}\r\n            return first;\r\n        }\r\n\r\n        public int Recursive(int n)\r\n        {\r\n            var recursive = new RecursiveMath();\r\n            return recursive.Fibinacci(n);\r\n        }\r\n    }\r\n}\r\n",
+      "language": "cs",
+      "mutants": [
+        {
+          "id": 0,
+          "mutatorName": "Binary expression mutation",
+          "replacement": "second < 0",
+          "location": {
+            "start": {
+              "line": 9,
+              "column": 10
+            },
+            "end": {
+              "line": 9,
+              "column": 20
+            }
+          },
+          "status": "Survived"
+        },
+        {
+          "id": 1,
+          "mutatorName": "Binary expression mutation",
+          "replacement": "second >= 0",
+          "location": {
+            "start": {
+              "line": 9,
+              "column": 10
+            },
+            "end": {
+              "line": 9,
+              "column": 20
+            }
+          },
+          "status": "Survived"
+        },
+        {
+          "id": 2,
+          "mutatorName": "Binary expression mutation",
+          "replacement": "first + second - 1",
+          "location": {
+            "start": {
+              "line": 10,
+              "column": 13
+            },
+            "end": {
+              "line": 10,
+              "column": 31
+            }
+          },
+          "status": "Survived"
+        },
+        {
+          "id": 3,
+          "mutatorName": "Binary expression mutation",
+          "replacement": "first - second ",
+          "location": {
+            "start": {
+              "line": 10,
+              "column": 13
+            },
+            "end": {
+              "line": 10,
+              "column": 28
+            }
+          },
+          "status": "Survived"
+        },
+        {
+          "id": 4,
+          "mutatorName": "PostDecrementExpression to PostIncrementExpression mutation",
+          "replacement": "\t\t\t\tsecond++",
+          "location": {
+            "start": {
+              "line": 11,
+              "column": 1
+            },
+            "end": {
+              "line": 11,
+              "column": 13
+            }
+          },
+          "status": "Survived"
+        },
+        {
+          "id": 5,
+          "mutatorName": "Binary expression mutation",
+          "replacement": "1 > 0",
+          "location": {
+            "start": {
+              "line": 13,
+              "column": 10
+            },
+            "end": {
+              "line": 13,
+              "column": 15
+            }
+          },
+          "status": "Survived"
+        },
+        {
+          "id": 6,
+          "mutatorName": "Binary expression mutation",
+          "replacement": "1 <= 0",
+          "location": {
+            "start": {
+              "line": 13,
+              "column": 10
+            },
+            "end": {
+              "line": 13,
+              "column": 15
+            }
+          },
+          "status": "Survived"
+        }
+      ]
+    },
+    "c:\\z\\github\\stryker-mutator\\mutation-testing-elements\\testResources\\csharp-example\\ExampleProject.csproj\\ExampleProject\\DummyMath.cs": {
+      "source": "namespace ExampleProject\r\n{\r\n    public class DummyMath\r\n    {\r\n        public int Add(int first, int second)\r\n        {\r\n            return checked(first + second);\r\n        }\r\n    }\r\n}\r\n",
+      "language": "cs",
+      "mutants": [
+        {
+          "id": 7,
+          "mutatorName": "Remove checked expression",
+          "replacement": "first + second",
+          "location": {
+            "start": {
+              "line": 7,
+              "column": 20
+            },
+            "end": {
+              "line": 7,
+              "column": 43
+            }
+          },
+          "status": "Survived"
+        },
+        {
+          "id": 8,
+          "mutatorName": "Binary expression mutation",
+          "replacement": "first - second",
+          "location": {
+            "start": {
+              "line": 7,
+              "column": 28
+            },
+            "end": {
+              "line": 7,
+              "column": 42
+            }
+          },
+          "status": "Killed"
+        }
+      ]
+    },
+    "c:\\z\\github\\stryker-mutator\\mutation-testing-elements\\testResources\\csharp-example\\ExampleProject.csproj\\ExampleProject\\Endlessloop.cs": {
+      "source": "using System;\r\nusing System.Collections.Generic;\r\nusing System.Text;\r\n\r\nnamespace ExampleProject\r\n{\r\n    public class EndlessLoop\r\n    {\r\n        public void SomeLoop()\r\n        {\r\n            while (1 < 0)\r\n            {\r\n                ;\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+      "language": "cs",
+      "mutants": [
+        {
+          "id": 9,
+          "mutatorName": "Binary expression mutation",
+          "replacement": "1 > 0",
+          "location": {
+            "start": {
+              "line": 11,
+              "column": 20
+            },
+            "end": {
+              "line": 11,
+              "column": 25
+            }
+          },
+          "status": "Timeout"
+        },
+        {
+          "id": 10,
+          "mutatorName": "Binary expression mutation",
+          "replacement": "1 <= 0",
+          "location": {
+            "start": {
+              "line": 11,
+              "column": 20
+            },
+            "end": {
+              "line": 11,
+              "column": 25
+            }
+          },
+          "status": "Survived"
+        }
+      ]
+    },
+    "c:\\z\\github\\stryker-mutator\\mutation-testing-elements\\testResources\\csharp-example\\ExampleProject.csproj\\ExampleProject\\NewCsharpFeatures.cs": {
+      "source": "using System;\r\nusing System.Collections.Generic;\r\nusing System.Text;\r\n\r\nnamespace ExampleProject\r\n{\r\n    public class NewCsharpFeatures\r\n    {\r\n        public double GetDefaultDoubleValue()\r\n        {\r\n            return default;\r\n        }\r\n    }\r\n}\r\n",
+      "language": "cs",
+      "mutants": []
+    },
+    "c:\\z\\github\\stryker-mutator\\mutation-testing-elements\\testResources\\csharp-example\\ExampleProject.csproj\\ExampleProject\\StringMagic.cs": {
+      "source": "namespace ExampleProject\r\n{\r\n    public class StringMagic\r\n    {\r\n        public string AddTwoStrings(string first, string second)\r\n        {\r\n            if(first.Length > 2)\r\n            {\r\n                return first + second;\r\n            } else\r\n            {\r\n                return second + first;\r\n            }\r\n        }\r\n\r\n        private bool Demo(out string test)\r\n        {\r\n            test = \"toto\";\r\n            return true;\r\n        }\r\n    }\r\n}\r\n",
+      "language": "cs",
+      "mutants": [
+        {
+          "id": 11,
+          "mutatorName": "Binary expression mutation",
+          "replacement": "first.Length < 2",
+          "location": {
+            "start": {
+              "line": 7,
+              "column": 16
+            },
+            "end": {
+              "line": 7,
+              "column": 32
+            }
+          },
+          "status": "Survived"
+        },
+        {
+          "id": 12,
+          "mutatorName": "Binary expression mutation",
+          "replacement": "first.Length >= 2",
+          "location": {
+            "start": {
+              "line": 7,
+              "column": 16
+            },
+            "end": {
+              "line": 7,
+              "column": 32
+            }
+          },
+          "status": "Survived"
+        },
+        {
+          "id": 13,
+          "mutatorName": "Binary expression mutation",
+          "replacement": "second - first",
+          "location": {
+            "start": {
+              "line": 6,
+              "column": 24
+            },
+            "end": {
+              "line": 6,
+              "column": 38
+            }
+          },
+          "status": "BuildError"
+        },
+        {
+          "id": 14,
+          "mutatorName": "Binary expression mutation",
+          "replacement": "first - second",
+          "location": {
+            "start": {
+              "line": 3,
+              "column": 24
+            },
+            "end": {
+              "line": 3,
+              "column": 38
+            }
+          },
+          "status": "BuildError"
+        },
+        {
+          "id": 15,
+          "mutatorName": "String mutation",
+          "replacement": "\"\"",
+          "location": {
+            "start": {
+              "line": 18,
+              "column": 20
+            },
+            "end": {
+              "line": 18,
+              "column": 26
+            }
+          },
+          "status": "Skipped"
+        },
+        {
+          "id": 16,
+          "mutatorName": "Boolean mutation",
+          "replacement": "false",
+          "location": {
+            "start": {
+              "line": 19,
+              "column": 20
+            },
+            "end": {
+              "line": 19,
+              "column": 24
+            }
+          },
+          "status": "Survived"
+        }
+      ]
+    },
+    "c:\\z\\github\\stryker-mutator\\mutation-testing-elements\\testResources\\csharp-example\\ExampleProject.csproj\\ExampleProject\\UnsafeCode.cs": {
+      "source": "using System;\r\nusing System.Collections.Generic;\r\nusing System.Text;\r\n\r\nnamespace ExampleProject\r\n{\r\n    public class UnsafeCode\r\n    {\r\n        public int GetElement(int[] arrayOfInt, int index)\r\n        {\r\n            unsafe\r\n            {\r\n                // Must pin object on heap so that it doesn't move while using interior pointers.\r\n                fixed (int* p = &arrayOfInt[0])\r\n                {\r\n                    return *(p + index);\r\n                }\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+      "language": "cs",
+      "mutants": [
+        {
+          "id": 17,
+          "mutatorName": "Binary expression mutation",
+          "replacement": "p - index",
+          "location": {
+            "start": {
+              "line": 16,
+              "column": 30
+            },
+            "end": {
+              "line": 16,
+              "column": 39
+            }
+          },
+          "status": "Killed"
+        }
+      ]
+    }
+  }
+}

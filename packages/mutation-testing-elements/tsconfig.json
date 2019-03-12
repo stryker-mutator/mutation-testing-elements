@@ -1,0 +1,22 @@
+// webpack ts-loader does not support project references yet :( => https://github.com/TypeStrong/ts-loader/issues/851
+// Workaround impossible  => https://github.com/TypeStrong/ts-loader/issues/909
+{
+  "extends": "../../tsconfig.settings.json",
+  "compilerOptions": {
+    "types": [
+      "mocha",
+      "webpack-env"
+    ],
+    "outDir": "dist",
+    "target": "es2015"
+  },
+  "include": [
+    "test",
+    "src"
+  ],
+  "references": [
+    {
+      "path": "../mutation-testing-report-schema/tsconfig.src.json"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "name": "mutation-testing-elements",
+  "version": "0.0.7",
+  "description": "A suite of web components for a mutation testing report.",
+  "unpkg": "dist/mutation-test-elements.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "start": "webpack-dev-server --open --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js",
+    "test": "npm run test:unit && npm run test:integration",
+    "test:mutation": "cross-env STRYKER=true stryker run",
+    "test:unit": "karma start --singleRun true",
+    "test:integration": "mocha -r ts-node/register -r chromedriver --timeout 60000 --file test/integration/init/init-browser.ts --file test/integration/init/init-server.ts test/integration/*.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stryker-mutator/mutation-testing-elements.git"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/stryker-mutator/mutation-testing-elements/issues"
+  },
+  "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/mutation-testing-elements#readme",
+  "devDependencies": {
+    "@types/lodash.groupby": "^4.6.5",
+    "@types/sinon-chai": "^3.2.2",
+    "lodash.groupby": "^4.6.0",
+    "mutation-testing-report-schema": "^0.0.7",
+    "rxjs": "^6.4.0",
+    "sinon-chai": "^3.3.0"
+  }
+}
