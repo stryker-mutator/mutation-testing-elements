@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/stryker-mutator/mutation-testing-elements.svg?branch=master)](https://travis-ci.org/stryker-mutator/mutation-testing-elements)
+
 # Mutation testing elements
 
 A suite of elements designed to display a mutation testing report.
@@ -49,7 +51,9 @@ Use the `mutation-test-report-app` element to load the mutation test report.
 <mutation-test-report-app src="mutation-report.json" title-postfix="Mutation Test Report"></mutation-test-report-app>
 ```
 
-This loads the report from the source (`src`) and displays it. Alternatively from loading the report from a source, you can use property binding directly:
+This loads the report from the source (`src`) and displays it. 
+
+Alternatively, you can use property binding directly:
 
 ```html
 <mutation-test-report-app></mutation-test-report-app>
@@ -60,7 +64,7 @@ This loads the report from the source (`src`) and displays it. Alternatively fro
 </script>
 ```
 
-You can use other ways to bind the `report` property. For example, you can use `<mutation-test-report-app [report]="myReport"></mutation-test-report-app>` to bind `report` to the `myReport` property of an Angular component.
+Feel free to use other ways to bind the `report` property. For example, you can use `<mutation-test-report-app [report]="myReport"></mutation-test-report-app>` to bind `report` to the `myReport` property in an Angular component.
 
 ## Mutation testing report schema
 
