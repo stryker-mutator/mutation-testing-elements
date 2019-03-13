@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "1.0",
+  "thresholds": {
+    "high": 80,
+    "low": 60
+  },
+  "files": {
+    "test.js": {
+      "language": "javascript",
+      "source": "function add(a, b) {\n  return a + b;\n}",
+      "mutants": [
+        {
+          "id": "2",
+          "mutatorName": "Block Statement",
+          "replacement": "{}",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 20
+            }
+          },
+          "status": "Killed"
+        }
+      ]
+    }
+  }
+}

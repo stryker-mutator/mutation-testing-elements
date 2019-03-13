@@ -12,8 +12,6 @@
       "args": [
         "-r",
         "source-map-support/register",
-        "-u",
-        "tdd",
         "--timeout",
         "999999",
         "--colors",
@@ -36,8 +34,6 @@
         "chromedriver"
       ],
       "args": [
-        "-u",
-        "tdd",
         "--timeout",
         "999999",
         "--colors",

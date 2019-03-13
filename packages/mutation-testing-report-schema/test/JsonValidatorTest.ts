@@ -2,24 +2,51 @@ import { expect } from 'chai';
 import Ajv from 'ajv';
 import { schema } from '../src';
 
-const SCHEMA_NAME = 'mutation-testing-report-schema';
+const SCHEMA_NAME = 'http://stryker-mutator.io/report.schema.json';
 
 describe('JsonSchema', () => {
 
-  it('should return true when the given json file is valid based on the json schema', () => {
-    const data = require('../../testResources/valid-mutation-testing-report.json');
-    const ajv = new Ajv().addSchema(schema, SCHEMA_NAME);
-    const valid = ajv.validate(SCHEMA_NAME, data);
+  let schemaValidator: Ajv.Ajv;
 
-    expect(valid, ajv.errorsText(ajv.errors)).true;
+  beforeEach(() => {
+    schemaValidator = new Ajv();
+    schemaValidator.addSchema(schema, SCHEMA_NAME);
   });
 
-  it('should return false when the given json file is invalid based on the json schema', () => {
-    const data = require('../../testResources/invalid-mutation-testing-report.json');
-    const ajv = new Ajv().addSchema(schema, SCHEMA_NAME);
-    const valid = ajv.validate(SCHEMA_NAME, data);
+  function validate(testResourceFileName: string) {
+    const report = require(`../../testResources/${testResourceFileName}.json`);
+    return schemaValidator.validate(SCHEMA_NAME, report);
+  }
 
-    expect(ajv.errorsText(ajv.errors)).contain('data should have required property \'schemaVersion\'');
+  function actAssertValid(testResourceFileName: string) {
+    const valid = validate(testResourceFileName);
+    expect(valid, schemaValidator.errorsText(schemaValidator.errors)).true;
+  }
+
+  function actAssertInvalid(testResourceFileName: string, expectedError: string) {
+    const valid = validate(testResourceFileName);
     expect(valid).false;
+    expect(schemaValidator.errorsText()).contain(expectedError);
+  }
+
+  it('should validate a report that strictly complies to the schema', () => {
+    actAssertValid('strict-report');
+  });
+
+  it('should validate a report that loosely complies to the schema', () => {
+    actAssertValid('additional-properties-report');
+  });
+
+  it('should invalidate a report where "schemaVersion" is missing', () => {
+    actAssertInvalid('missing-version-report', 'should have required property \'schemaVersion\'');
+  });
+
+  it('should invalidate a report where thresholds are invalid', () => {
+    actAssertInvalid('thresholds/threshold-too-high-report', 'thresholds.high should be <= 100');
+    actAssertInvalid('thresholds/threshold-too-low-report', 'thresholds.low should be >= 0');
+  });
+
+  it('should invalidate a report when mutant location is missing', () => {
+    actAssertInvalid('missing-mutant-location-report', 'files[\'test.js\'].mutants[0].location should have required property \'end\'');
   });
 });
