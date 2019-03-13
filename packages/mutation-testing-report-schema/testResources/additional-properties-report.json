@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "1.0",
+  "foo": "bar",
+  "thresholds": {
+    "high": 80,
+    "low": 60,
+    "bar": "baz"
+  },
+  "files": {
+    "test.js": {
+      "baz": "qux",
+      "language": "javascript",
+      "source": "function add(a, b) {\n  return a + b;\n}",
+      "mutants": [
+        {
+          "qux": "foo",
+          "id": "1",
+          "mutatorName": "Arithmetic Operator",
+          "replacement": "-",
+          "location": {
+            "foo": "bar",
+            "start": {
+              "bar": "baz",
+              "line": 2,
+              "column": 12
+            },
+            "end": {
+              "baz": "qux",
+              "line": 2,
+              "column": 13
+            }
+          },
+          "status": "Survived"
+        },
+        {
+          "id": "2",
+          "mutatorName": "Block Statement",
+          "replacement": "{}",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 20
+            },
+            "end": {
+              "line": 3,
+              "column": 1
+            }
+          },
+          "status": "Killed"
+        }
+      ]
+    }
+  }
+}
