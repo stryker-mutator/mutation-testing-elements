@@ -12,7 +12,11 @@
     "build": "tsc -b && lerna run build",
     "test": "lerna run test --stream",
     "start": "webpack-dev-server --open",
-    "start:tsc": "tsc --build --watch"
+    "start:tsc": "tsc --build --watch",
+    "lerna:version:patch": "lerna version --conventional-commits patch",
+    "lerna:version:minor": "lerna version --conventional-commits minor",
+    "lerna:version:major": "lerna version --conventional-commits major",
+    "lerna:publish": "lerna publish from-git"
   },
   "repository": {
     "type": "git",
