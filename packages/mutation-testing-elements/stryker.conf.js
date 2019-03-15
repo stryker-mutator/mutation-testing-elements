@@ -12,10 +12,16 @@ module.exports = function(config) {
         browsers: ['ChromeHeadless']
       }
     },
-    tsconfigFile: 'tsconfig.json',
+    transpilers: [
+      'tsconfig'
+    ],
     mutate: [
       'src/**/*.ts',
       '!src/**/*.d.ts'
+    ],
+    plugins: [
+      '@stryker-mutator/*',
+      require.resolve('./tsconfig-transpiler')
     ],
     maxConcurrentTestRunners: 2
   });
