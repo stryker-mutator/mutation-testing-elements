@@ -17,7 +17,7 @@
     "lerna:version:patch": "lerna version --conventional-commits patch",
     "lerna:version:minor": "lerna version --conventional-commits minor",
     "lerna:version:major": "lerna version --conventional-commits major",
-    "lerna:publish": "lerna publish from-git"
+    "lerna:publish": "lerna publish from-git --yes"
   },
   "repository": {
     "type": "git",
