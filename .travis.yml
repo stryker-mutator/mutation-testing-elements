@@ -4,3 +4,14 @@ node_js:
 addons:
   chrome: stable
 script: npm run all
+
+jobs:
+  include:
+    - stage: release
+      script: "npm run build && npm run lerna:publish"
+
+# Conditional stages: https://docs.travis-ci.com/user/conditional-builds-stages-jobs/
+stages:
+  - test
+  - name: release
+    if: branch = master AND fork = false AND tag IS present
