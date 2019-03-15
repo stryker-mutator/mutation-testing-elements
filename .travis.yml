@@ -13,7 +13,5 @@ deploy:
   provider: script
   script: npm run lerna:publish
   on:
-    os: linux
-    node: 10
     branch: master
     tags: true
