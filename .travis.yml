@@ -5,13 +5,15 @@ addons:
   chrome: stable
 script: npm run all
 
-jobs:
-  include:
-    - stage: release
-      script: "npm run build && npm run lerna:publish"
+before_deploy:
+  - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > ~/.npmrc
 
-# Conditional stages: https://docs.travis-ci.com/user/conditional-builds-stages-jobs/
-stages:
-  - test
-  - name: release
-    if: branch = master AND fork = false AND tag IS present
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: npm run lerna:publish
+  on:
+    os: linux
+    node: 10
+    branch: master
+    tags: true
