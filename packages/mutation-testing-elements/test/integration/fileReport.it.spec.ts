@@ -102,6 +102,15 @@ describe('File report "install-local-example/Options.ts"', () => {
       expect(await mutant.originalCodeTextDecoration()).eq('line-through');
     });
 
+    it('should show the popup', async () => {
+      expect(await mutant.popup().isVisible()).true;
+    });
+
+    it('should hide the popup when the user clicks somewhere else', async () => {
+      await page.clickOnCode();
+      expect(await mutant.popup().isVisible()).false;
+    });
+
     it('should show the mutated code', async () => {
       expect(await mutant.isMutantReplacementCodeVisible()).true;
     });
@@ -114,6 +123,10 @@ describe('File report "install-local-example/Options.ts"', () => {
 
       it('should remove the "line-through" from the original code', async () => {
         expect(await mutant.originalCodeTextDecoration()).eq('none');
+      });
+
+      it('should hide the popup', async () => {
+        expect(await mutant.popup().isVisible()).false;
       });
 
       it('should hide the mutated code', async () => {

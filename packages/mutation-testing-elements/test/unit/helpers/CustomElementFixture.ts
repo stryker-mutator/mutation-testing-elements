@@ -12,8 +12,28 @@ export class CustomElementFixture<TCustomElement extends LitElement> {
     return this.element.updateComplete;
   }
 
-  public $(selector: string): HTMLElement {
-    return (this.element.shadowRoot as ShadowRoot).querySelector(selector) as HTMLElement;
+  public waitFor(action: () => boolean, timeout = 500) {
+    const step = 50;
+    return new Promise((res, rej) => {
+      function tick(timeLeft: number) {
+        if (action()) {
+          res();
+        } else if (timeLeft <= 0) {
+          rej(new Error(`Condition not met in ${timeout} ms: ${action}`));
+        } else {
+          setTimeout(() => tick(timeLeft - step), step);
+        }
+      }
+      tick(timeout);
+    });
+  }
+
+  public $(selector: string, inShadow = true): HTMLElement {
+    if (inShadow) {
+      return (this.element.shadowRoot as ShadowRoot).querySelector(selector) as HTMLElement;
+    } else {
+      return this.element.querySelector(selector) as HTMLElement;
+    }
   }
 
   public $$(selector: string): Element[] {

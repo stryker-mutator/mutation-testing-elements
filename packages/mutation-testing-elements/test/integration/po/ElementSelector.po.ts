@@ -22,7 +22,8 @@ export class ElementSelector {
   private async findContext(webComponentPath: string[]) {
     let currentContext = this.context;
     for (const part of webComponentPath) {
-      const newContext = await selectShadowRoot(currentContext.findElement(By.css(part)));
+      const shadedElement = part.trim().length === 0 ? currentContext : currentContext.findElement(By.css(part));
+      const newContext = await selectShadowRoot(shadedElement as WebElement);
       if (newContext) {
         currentContext = newContext;
       } else {

@@ -26,6 +26,10 @@ export class ReportPage extends ElementSelector {
     return new Breadcrumb(selectShadowRoot(host));
   }
 
+  public clickOnCode() {
+    return this.$('mutation-test-report-app >>> mutation-test-report-file >>> code').click();
+  }
+
   public async mutants(): Promise<MutantComponent[]> {
     return Promise.all((await this.$$('mutation-test-report-app >>> mutation-test-report-file >>> mutation-test-report-mutant'))
       .map(async host => new MutantComponent(await selectShadowRoot(host))));

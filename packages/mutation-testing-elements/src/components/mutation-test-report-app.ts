@@ -60,6 +60,7 @@ export class MutationTestReportAppComponent extends LitElement {
     if ((changedProperties.has('path') || changedProperties.has('report')) && this.report) {
       this.updateModel(this.report);
       this.updateContext();
+      this.updateTitle();
     }
     if (changedProperties.has('src')) {
       this.loadData();
@@ -74,6 +75,10 @@ export class MutationTestReportAppComponent extends LitElement {
     if (this.rootModel) {
       this.context = this.rootModel.find(this.path.join('/'));
     }
+  }
+
+  private updateTitle() {
+    document.title = this.title;
   }
 
   public static styles = [
@@ -104,13 +109,6 @@ export class MutationTestReportAppComponent extends LitElement {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
-  public render() {
-    return html`
-    <mutation-test-report-title .title="${this.title}"></mutation-test-report-title>
-    ${this.renderContent()}
-    `;
-  }
-
   private renderTitle() {
     if (this.context) {
       return html`<h1 class="display-4">${this.title}</h1>`;
@@ -119,9 +117,9 @@ export class MutationTestReportAppComponent extends LitElement {
     }
   }
 
-  private renderContent() {
+  public render() {
     if (this.context || this.errorMessage) {
-      return html`<div class="container">
+      return html`<div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
       ${this.renderReport()}
@@ -130,7 +128,7 @@ export class MutationTestReportAppComponent extends LitElement {
   </div>
 </div>`;
     } else {
-      return undefined;
+      return html``;
     }
   }
 

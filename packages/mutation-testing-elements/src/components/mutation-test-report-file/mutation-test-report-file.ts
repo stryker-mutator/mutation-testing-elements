@@ -52,6 +52,17 @@ export class MutationTestReportFileComponent extends LitElement {
     });
   }
 
+  public connectedCallback() {
+    super.connectedCallback();
+    this.addEventListener('click', () => {
+      this.forEachMutantComponent(mutant => mutant.showPopup = false);
+    });
+    this.addEventListener('mutant-selected', (event: Event) => {
+      const selectedMutant = (event as CustomEvent<MutationTestReportMutantComponent>).detail;
+      this.forEachMutantComponent(mutant => mutant !== selectedMutant && (mutant.showPopup = false));
+    });
+  }
+
   public render() {
     if (this.model) {
       return html`
