@@ -6,11 +6,12 @@ import { Legend } from './Legend.po';
 import { MutantComponent } from './MutantComponent.po';
 import { ResultTable } from './ResultTable.po';
 import { selectShadowRoot } from '../lib/helpers';
+import { WebDriver } from 'selenium-webdriver';
 
 export class ReportPage extends ElementSelector {
 
-  constructor() {
-    super(getCurrent());
+  constructor(private readonly browser: WebDriver) {
+    super(browser);
   }
 
   public navigateTo(path: string) {
@@ -23,24 +24,31 @@ export class ReportPage extends ElementSelector {
 
   public breadcrumb(): Breadcrumb {
     const host = this.$('mutation-test-report-app >>> mutation-test-report-breadcrumb');
-    return new Breadcrumb(selectShadowRoot(host));
+    return new Breadcrumb(selectShadowRoot(host), this.browser);
+  }
+
+  public clickOnCode() {
+    return this.$('mutation-test-report-app >>> mutation-test-report-file >>> code').click();
   }
 
   public async mutants(): Promise<MutantComponent[]> {
     return Promise.all((await this.$$('mutation-test-report-app >>> mutation-test-report-file >>> mutation-test-report-mutant'))
-      .map(async host => new MutantComponent(await selectShadowRoot(host))));
+      .map(async host => new MutantComponent(await selectShadowRoot(host), this.browser)));
   }
 
   public mutant(mutantId: number) {
-    return new MutantComponent(selectShadowRoot(
-      this.$(`mutation-test-report-app >>> mutation-test-report-file >>> mutation-test-report-mutant[mutant-id="${mutantId}"]`)));
+    const shadowRoot = selectShadowRoot(
+      this.$(`mutation-test-report-app >>> mutation-test-report-file >>> mutation-test-report-mutant[mutant-id="${mutantId}"]`));
+    return new MutantComponent(shadowRoot, this.browser);
   }
 
   public legend() {
-    return new Legend(selectShadowRoot(this.$('mutation-test-report-app >>> mutation-test-report-file >>> mutation-test-report-file-legend')));
+    const context = selectShadowRoot(this.$('mutation-test-report-app >>> mutation-test-report-file >>> mutation-test-report-file-legend'));
+    return new Legend(context, this.browser);
   }
 
   public resultTable() {
-    return new ResultTable(selectShadowRoot(this.$('mutation-test-report-app >>> mutation-test-report-totals')));
+    const context = selectShadowRoot(this.$('mutation-test-report-app >>> mutation-test-report-totals'));
+    return new ResultTable(context, this.browser);
   }
 }

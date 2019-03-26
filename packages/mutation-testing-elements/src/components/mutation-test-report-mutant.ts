@@ -15,6 +15,9 @@ export class MutationTestReportMutantComponent extends LitElement {
   @property()
   public expand: boolean = false;
 
+  @property()
+  public showPopup: boolean = false;
+
   public static styles = [
     bootstrap,
     css`
@@ -26,6 +29,13 @@ export class MutationTestReportMutantComponent extends LitElement {
     }
   `];
 
+  private readonly mutantClicked = (event: Event) => {
+    this.expand = !this.expand;
+    this.showPopup = this.expand;
+    event.stopImmediatePropagation();
+    this.dispatchEvent(new CustomEvent('mutant-selected', { bubbles: true, detail: this, composed: true }));
+  }
+
   public render() {
     // This part is newline significant, as it is rendered in a <code> block.
     // No unnecessary new lines
@@ -34,8 +44,8 @@ export class MutationTestReportMutantComponent extends LitElement {
 
   private renderButton() {
     if (this.show && this.mutant) {
-      return html`<span class="mutant-toggle badge badge-${this.expand ? 'info' : getContextClassForStatus(this.mutant.status)}" @click="${() => this.expand = !this.expand}"
-  title="${this.mutant.mutatorName}">${this.mutant.id}</span>`;
+      return html`<mutation-test-report-popup ?show="${this.showPopup}" context="${getContextClassForStatus(this.mutant.status)}" header="${this.mutant.mutatorName}"><p slot="popover-body">Status: ${this.mutant.status}</p><span class="mutant-toggle badge badge-${this.expand ? 'info' : getContextClassForStatus(this.mutant.status)}"
+    @click="${this.mutantClicked}" title="${this.mutant.mutatorName}">${this.mutant.id}</span></mutation-test-report-popup>`;
     }
     return undefined;
   }

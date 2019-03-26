@@ -1,0 +1,35 @@
+:host {
+    position: relative;
+    display: inline-block;
+    user-select: none;
+}
+
+/* The actual popup */
+.popover {
+    width: 200px;
+    position: absolute;
+    z-index: 1;
+    top: 125%;
+    left: 50%;
+    margin-left: -100px;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.1s ease-in;
+}
+
+/* Popup arrow */
+.popover::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #555 transparent;
+}
+
+.popover.show {
+    visibility: visible;
+    opacity: 100;
+}

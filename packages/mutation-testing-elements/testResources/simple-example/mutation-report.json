@@ -7,19 +7,35 @@
   "files": {
     "test.js": {
       "language": "javascript",
-      "source": "function add(a, b) {\n  return a + b;\n}",
+      "source": "\"use strict\";\nfunction add(a, b) {\n  return a + b;\n}",
       "mutants": [
+        {
+          "id": "3",
+          "location": {
+            "start": {
+              "column": 1,
+              "line": 1
+            },
+            "end": {
+              "column": 13,
+              "line": 1
+            }
+          },
+          "replacement": "\"\"",
+          "mutatorName": "String Literal",
+          "status": "Survived"
+        },
         {
           "id": "1",
           "mutatorName": "Arithmetic Operator",
           "replacement": "-",
           "location": {
             "start": {
-              "line": 2,
+              "line": 3,
               "column": 12
             },
             "end": {
-              "line": 2,
+              "line": 3,
               "column": 13
             }
           },
@@ -31,11 +47,11 @@
           "replacement": "{}",
           "location": {
             "start": {
-              "line": 1,
+              "line": 2,
               "column": 20
             },
             "end": {
-              "line": 3,
+              "line": 4,
               "column": 1
             }
           },

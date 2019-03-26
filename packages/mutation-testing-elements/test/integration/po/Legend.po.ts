@@ -5,6 +5,6 @@ import { Checkbox } from './Checkbox.po';
 export class Legend extends PageObject {
 
   public displayButton(mutantState: MutantStatus): Checkbox {
-    return new Checkbox(this.$(`input[value="${mutantState}"]`));
+    return new Checkbox(this.$(`input[value="${mutantState}"]`), this.browser);
   }
 }
