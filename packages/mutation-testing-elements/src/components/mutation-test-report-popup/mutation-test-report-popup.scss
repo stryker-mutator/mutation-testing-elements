@@ -12,9 +12,9 @@
     top: 125%;
     left: 50%;
     margin-left: -100px;
-    // visibility: hidden;
+    visibility: hidden;
     opacity: 0;
-    transition: opacity 0.3s ease-in;
+    transition: 0.1s ease-in;
 }
 
 /* Popup arrow */
@@ -30,6 +30,6 @@
 }
 
 .popover.show {
-    // visibility: visible;
+    visibility: visible;
     opacity: 100;
 }

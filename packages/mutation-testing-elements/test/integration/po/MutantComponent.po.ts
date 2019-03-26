@@ -8,7 +8,7 @@ export class MutantComponent extends PageObject {
     const textDecoration = await this.originalCode().getCssValue('text-decoration');
     return /* like "none solid rgb(68, 68, 68)" */ textDecoration.split(' ')[0];
   }
-  public popup = () => new PopupComponent(this.$('mutation-test-report-popup'));
+  public popup = () => new PopupComponent(this.$('mutation-test-report-popup'), this.browser);
   private readonly originalCode = () => this.$('.original-code');
   private readonly mutantReplacement = () => this.$('.replacement');
   private readonly button = () => this.$('.mutant-toggle');

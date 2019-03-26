@@ -1,11 +1,19 @@
 import { PageObject } from './PageObject.po';
-import { getCurrent } from '../lib/browser';
+import { until } from 'selenium-webdriver';
 
 export class PopupComponent extends PageObject {
-  public async isVisible() {
-    // Wait for animation to finish
-    await getCurrent().sleep(500);
-    const opacity = await this.$('>>> .popover').getCssValue('opacity');
-    return opacity === '1';
+
+  private readonly popover = this.$('>>> .popover');
+
+  public awaitVisible() {
+    return this.browser.wait(until.elementIsVisible(this.popover));
+  }
+
+  public awaitInvisible() {
+    return this.browser.wait(until.elementIsNotVisible(this.popover));
+  }
+
+  public isVisible() {
+    return this.popover.isDisplayed();
   }
 }

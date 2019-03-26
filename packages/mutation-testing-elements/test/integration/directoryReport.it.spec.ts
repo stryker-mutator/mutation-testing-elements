@@ -1,11 +1,12 @@
 import { ReportPage } from './po/ReportPage';
 import { expect } from 'chai';
+import { getCurrent } from './lib/browser';
 
 describe('Directory report page', () => {
 
   let page: ReportPage;
   beforeEach(async () => {
-    page = new ReportPage();
+    page = new ReportPage(getCurrent());
     await page.navigateTo('install-local-example');
   });
 

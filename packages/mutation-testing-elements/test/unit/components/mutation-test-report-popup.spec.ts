@@ -16,7 +16,7 @@ describe('mutation-test-report-popup', () => {
   });
 
   it('should hide the popup by default', () => {
-    expect(getComputedStyle(popover).opacity).eq('0');
+    expect(getComputedStyle(popover).visibility).eq('hidden');
   });
 
   it('should be located on the screen if it is placed to the left', async () => {
@@ -28,6 +28,7 @@ describe('mutation-test-report-popup', () => {
     fixture.element.setAttribute('header', 'Foo');
     fixture.element.setAttribute('show', 'show');
     await fixture.updateComplete;
+    await expectPopupEventuallyVisible();
     expect(fixture.$('.popover-header').innerText).eq('Foo');
     expect(fixture.$('.popover-body').innerHTML.trim()).eq('<slot name="popover-body"></slot>');
   });
@@ -37,6 +38,10 @@ describe('mutation-test-report-popup', () => {
     fixture.element.setAttribute('header', 'Foo');
     await fixture.updateComplete;
     // Wait for the animation to finish
-    await fixture.waitFor(() => parseFloat(getComputedStyle(popover).opacity || '0') === 1);
+    await expectPopupEventuallyVisible();
   });
+
+  async function expectPopupEventuallyVisible() {
+    await fixture.waitFor(() => getComputedStyle(popover).visibility === 'visible');
+  }
 });

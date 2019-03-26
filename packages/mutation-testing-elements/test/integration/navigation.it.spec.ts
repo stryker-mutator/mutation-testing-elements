@@ -1,5 +1,6 @@
 import { ReportPage } from './po/ReportPage';
 import { expect } from 'chai';
+import { getCurrent } from './lib/browser';
 
 describe('Navigation', () => {
 
@@ -12,7 +13,7 @@ describe('Navigation', () => {
   };
 
   beforeEach(() => {
-    page = new ReportPage();
+    page = new ReportPage(getCurrent());
   });
 
   describe('when starting at the index page', () => {

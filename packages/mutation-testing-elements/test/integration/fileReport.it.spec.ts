@@ -2,13 +2,14 @@ import { expect } from 'chai';
 import { ReportPage } from './po/ReportPage';
 import { MutantStatus } from 'mutation-testing-report-schema';
 import { MutantComponent } from './po/MutantComponent.po';
+import { getCurrent } from './lib/browser';
 
 describe('File report "install-local-example/Options.ts"', () => {
 
   let page: ReportPage;
 
   beforeEach(async () => {
-    page = new ReportPage();
+    page = new ReportPage(getCurrent());
     await page.navigateTo('');
     await page.navigateTo('install-local-example/#Options.ts');
   });
@@ -62,6 +63,14 @@ describe('File report "install-local-example/Options.ts"', () => {
       expect(await page.mutant(15).isButtonVisible()).true;
     });
 
+    it('should be able to show activate mutant with an invisible popup over it', async () => {
+      // If visibility of a popup isn't "hidden" (only opacity 0), you cannot active this mutant
+      const mutant = page.mutant(8);
+      await mutant.toggleMutant();
+      await mutant.popup().awaitVisible();
+      expect(await mutant.popup().isVisible()).true;
+    });
+
     describe('and a killed mutant is enabled', () => {
 
       let mutant: MutantComponent;
@@ -108,6 +117,7 @@ describe('File report "install-local-example/Options.ts"', () => {
 
     it('should hide the popup when the user clicks somewhere else', async () => {
       await page.clickOnCode();
+      await mutant.popup().awaitInvisible();
       expect(await mutant.popup().isVisible()).false;
     });
 
@@ -126,6 +136,7 @@ describe('File report "install-local-example/Options.ts"', () => {
       });
 
       it('should hide the popup', async () => {
+        await mutant.popup().awaitInvisible();
         expect(await mutant.popup().isVisible()).false;
       });
 
