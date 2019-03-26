@@ -1,6 +1,6 @@
 {
   "name": "mutation-testing-elements",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A suite of web components for a mutation testing report.",
   "unpkg": "dist/mutation-test-elements.js",
   "main": "dist/index.js",
