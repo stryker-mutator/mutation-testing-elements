@@ -11,7 +11,7 @@ before_deploy:
 deploy:
   skip_cleanup: true
   provider: script
-  script: npm run lerna:publish
+  script: bash publish.sh
   on:
     branch: master
     tags: true

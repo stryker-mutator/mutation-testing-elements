@@ -3,3 +3,6 @@ dist
 dist-test
 .stryker-tmp
 reports
+
+target/
+pom.xml.versionsBackup
