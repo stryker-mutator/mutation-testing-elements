@@ -1,12 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>io.stryker-mutator</groupId>
     <artifactId>mutation-testing-elements</artifactId>
-    <version> 1.0.2</version>
+    <version>SET-BY-SCRIPT-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>A suite of web components for a mutation testing report.</description>
     <url>https://stryker-mutator.io/</url>
     <inceptionYear>2019</inceptionYear>
+
     <licenses>
         <license>
             <name>Apache License 2.0</name>
@@ -14,6 +16,7 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+    
     <developers>
         <!-- TODO -->
     </developers>
