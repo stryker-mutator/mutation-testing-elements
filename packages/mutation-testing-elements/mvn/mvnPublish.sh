@@ -14,4 +14,4 @@ echo "$PGP_SECRET" | base64 --decode | gpg --import
 
 echo "Starting deploy process"
 mvn -P release versions:set "-DnewVersion=$PACKAGE_VERSION"
-mvn -P release install --settings settings.xml
+mvn -P release deploy --settings settings.xml
