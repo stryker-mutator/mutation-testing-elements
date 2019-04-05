@@ -10,7 +10,11 @@
     background-color: #fcf8e3;
 }
 
-code {
+code, code.hljs {
     overflow: visible;
     height: 100%;
+}
+
+pre {
+    overflow: visible;
 }
