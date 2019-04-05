@@ -17,9 +17,12 @@ export class MutationTestReportTotalsComponent extends LitElement {
 
   public static styles = [bootstrap,
     css`
+    .table a {
+      display: block;
+    }
     th.rotate {
       /* Something you can count on */
-      height: 50px;
+      height: 80px;
       white-space: nowrap;
       padding-bottom: 10px;
     }
@@ -37,6 +40,7 @@ export class MutationTestReportTotalsComponent extends LitElement {
 
     .table-no-top {
       border-width: 0;
+      margin-bottom: 0;
     }
 
     .table .no-border-right {
