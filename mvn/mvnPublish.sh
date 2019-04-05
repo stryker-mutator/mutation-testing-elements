@@ -3,6 +3,8 @@ set -e
 
 # Called from packages/$project by npm postpublish, so the pwd is already the project folder
 
+RESOURCES_DIR=${1:-dist}
+echo $RESOURCES_DIR
 PROJ_BASE=$(basename `pwd`)
 PACKAGE_VERSION=$(cat package.json \
   | grep version \
@@ -12,9 +14,9 @@ PACKAGE_VERSION=$(cat package.json \
 
 echo "Deploying $PROJ_BASE $PACKAGE_VERSION..."
 
-echo "Copying dist files to resources"
+echo "Copying $RESOURCES_DIR files to resources"
 mkdir -p mvn/resources
-cp -r dist mvn/resources/$PROJ_BASE
+cp -r $RESOURCES_DIR mvn/resources/$PROJ_BASE
 
 echo "Starting deploy process"
 cd mvn
