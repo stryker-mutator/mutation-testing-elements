@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.3](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.0.2...v1.0.3) (2019-04-05)
+
+
+### Features
+
+* **muted title:** create a muted title ([ee1fa8e](https://github.com/stryker-mutator/mutation-testing-elements/commit/ee1fa8e))
+* **popup:** color the arrow ([b13898a](https://github.com/stryker-mutator/mutation-testing-elements/commit/b13898a))
+* **popup:** make popup visible at bottom of the screen ([#24](https://github.com/stryker-mutator/mutation-testing-elements/issues/24)) ([9606f03](https://github.com/stryker-mutator/mutation-testing-elements/commit/9606f03))
+* **popup:** vertical align popup text in middle ([849a366](https://github.com/stryker-mutator/mutation-testing-elements/commit/849a366))
+* **sonatype:** Add Sonatype release ([#21](https://github.com/stryker-mutator/mutation-testing-elements/issues/21)) ([f5447d6](https://github.com/stryker-mutator/mutation-testing-elements/commit/f5447d6))
+* **table headers:** don't overlap breadcrumb ([fa9d638](https://github.com/stryker-mutator/mutation-testing-elements/commit/fa9d638))
+
+
+
+
+
 ## [1.0.2](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.0.1...v1.0.2) (2019-03-26)
 
 

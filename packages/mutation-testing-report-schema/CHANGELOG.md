@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.3](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.0.2...v1.0.3) (2019-04-05)
+
+
+### Bug Fixes
+
+* **schema:** refer to position with name instead of id ([6fe7d0e](https://github.com/stryker-mutator/mutation-testing-elements/commit/6fe7d0e))
+
+
+### Features
+
+* **sonatype:** Add Sonatype release ([#21](https://github.com/stryker-mutator/mutation-testing-elements/issues/21)) ([f5447d6](https://github.com/stryker-mutator/mutation-testing-elements/commit/f5447d6))
+
+
+
+
+
 # [1.0.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v0.0.7...v1.0.0) (2019-03-13)
 
 
