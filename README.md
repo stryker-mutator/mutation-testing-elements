@@ -9,7 +9,7 @@ directory to navigate to a sub package.
 
 The `mutation-testing-report-schema` and `mutation-testing-elements` versions will be kept in sync. 
 
-The schema wil only have major and minor releases, as patch releases don't make sense. Backward compatible changes mean a minor version update, breaking changes will mean a major release.
+The schema can have major and minor releases, as well as patch releases. A bug or documentation update will mean a patch release. Backward compatible changes mean a minor release, breaking changes will mean a major release.
 
 The mutation-testing-elements major and minor version will be in sync with the schema, however it _can have_ patch releases for changes of the elements without a schema update.
 
@@ -19,9 +19,10 @@ An example (just for clarification, versions are not based on reality):
 
 | Schema version | Supported mutation-testing-elements implementations |
 | ------------- | ------------- |
-| `1.0`  | `1.0.0`, `1.0.1` |
-| `1.1` | `1.0.0`, `1.0.1`, `1.1.0`, `1.1.1` |
-| `2.0` | `2.0.0`, `2.0.1` |
+| `1.0.0`  | `1.0.0`, `1.0.1` |
+| `1.1.0` | `1.0.0`, `1.0.1`, `1.1.0`, `1.1.1` |
+| `2.0.0` | `2.0.0`, `2.0.1` |
+| `2.0.1` | `2.0.0`, `2.0.1` |
 
 ## Releasing
 
