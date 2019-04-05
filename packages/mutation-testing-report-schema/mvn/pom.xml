@@ -2,10 +2,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.stryker-mutator</groupId>
-    <artifactId>mutation-testing-elements</artifactId>
+    <artifactId>mutation-testing-report-schema</artifactId>
     <version>SET-BY-SCRIPT-SNAPSHOT</version>
     <name>${project.artifactId}</name>
-    <description>A suite of web components for a mutation testing report.</description>
+    <description>The json schema for a mutation testing report.</description>
     <url>https://stryker-mutator.io/</url>
     <inceptionYear>2019</inceptionYear>
 

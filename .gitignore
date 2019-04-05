@@ -6,3 +6,4 @@ reports
 
 target/
 pom.xml.versionsBackup
+packages/*/mvn/resources/
