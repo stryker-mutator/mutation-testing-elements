@@ -44,7 +44,7 @@ export class MutationTestReportMutantComponent extends LitElement {
 
   private renderButton() {
     if (this.show && this.mutant) {
-      return html`<mutation-test-report-popup ?show="${this.showPopup}" context="${getContextClassForStatus(this.mutant.status)}" header="${this.mutant.mutatorName}"><p slot="popover-body">Status: ${this.mutant.status}</p><span class="mutant-toggle badge badge-${this.expand ? 'info' : getContextClassForStatus(this.mutant.status)}"
+      return html`<mutation-test-report-popup ?show="${this.showPopup}" context="${getContextClassForStatus(this.mutant.status)}" header="${this.mutant.mutatorName}"><span slot="popover-body">Status: ${this.mutant.status}</span><span class="mutant-toggle badge badge-${this.expand ? 'info' : getContextClassForStatus(this.mutant.status)}"
     @click="${this.mutantClicked}" title="${this.mutant.mutatorName}">${this.mutant.id}</span></mutation-test-report-popup>`;
     }
     return undefined;
