@@ -1,6 +1,6 @@
 {
   "name": "mutation-testing-elements",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A suite of web components for a mutation testing report.",
   "unpkg": "dist/mutation-test-elements.js",
   "main": "dist/index.js",
@@ -27,7 +27,7 @@
     "@types/lodash.groupby": "^4.6.5",
     "@types/sinon-chai": "^3.2.2",
     "lodash.groupby": "^4.6.0",
-    "mutation-testing-report-schema": "^1.0.3",
+    "mutation-testing-report-schema": "^1.0.4",
     "rxjs": "^6.4.0",
     "sinon-chai": "^3.3.0"
   }
