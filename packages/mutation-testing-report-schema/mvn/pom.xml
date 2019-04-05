@@ -3,7 +3,7 @@
 
     <groupId>io.stryker-mutator</groupId>
     <artifactId>mutation-testing-report-schema</artifactId>
-    <version>1.0.0</version>
+     <version>SET-BY-SCRIPT-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>The json schema for a mutation testing report.</description>
     <url>https://stryker-mutator.io/</url>
