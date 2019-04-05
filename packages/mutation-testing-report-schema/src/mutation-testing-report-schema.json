@@ -50,7 +50,6 @@
       "title": "All mutated files.",
       "definitions": {
         "position": {
-          "$id": "#position",
           "type": "object",
           "title": "Position of a mutation. Both line and column start at one.",
           "required": [
@@ -150,11 +149,11 @@
                   ],
                   "properties": {
                     "start": {
-                      "$ref": "#position",
+                      "$ref": "#/properties/files/definitions/position",
                       "title": "Start position of the mutation. Inclusive."
                     },
                     "end": {
-                      "$ref": "#position",
+                      "$ref": "#/properties/files/definitions/position",
                       "title": "End position of the mutation. Exclusive."
                     }
                   }
