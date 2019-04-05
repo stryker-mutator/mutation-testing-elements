@@ -5,7 +5,8 @@
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
   "scripts": {
-    "test": "mocha -r source-map-support/register dist/test/**/*.js"
+    "test": "mocha -r source-map-support/register dist/test/**/*.js",
+    "postpublish": "../../mvn/mvnPublish.sh"
   },
   "repository": {
     "type": "git",
