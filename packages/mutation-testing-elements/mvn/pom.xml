@@ -18,7 +18,16 @@
     </licenses>
     
     <developers>
-        <!-- TODO -->
+        <developer>
+            <name>nicojs</name>
+            <id>Nico</id>
+            <url>https://github.com/nicojs</url>
+        </developer>
+        <developer>
+            <name>hugo-vrijswijk</name>
+            <id>Hugo</id>
+            <url>https://github.com/hugo-vrijswijk</url>
+        </developer>
     </developers>
     <issueManagement>
         <system>GitHub</system>
