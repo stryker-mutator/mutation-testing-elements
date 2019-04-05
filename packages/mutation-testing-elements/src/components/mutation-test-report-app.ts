@@ -95,6 +95,10 @@ export class MutationTestReportAppComponent extends LitElement {
       text-align: left;
       background-color: #fff;
     }
+
+    .display-4 small {
+      font-weight: 300;
+    }
     `
   ];
 
@@ -110,10 +114,19 @@ export class MutationTestReportAppComponent extends LitElement {
   }
 
   private renderTitle() {
+    const self = this;
     if (this.context) {
-      return html`<h1 class="display-4">${this.title}</h1>`;
-    } else {
-      return undefined;
+      if (this.titlePostfix) {
+        return html`<h1 class="display-4">${this.context.name}${renderPostfix()}</h1>`;
+      }
+    }
+    return undefined;
+    function renderPostfix() {
+      if (self.titlePostfix) {
+      return html`<small class="text-muted"> - ${self.titlePostfix}</small>`;
+      } else {
+        return undefined;
+      }
     }
   }
 
