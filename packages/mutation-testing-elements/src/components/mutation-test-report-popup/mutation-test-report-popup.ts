@@ -28,17 +28,13 @@ export class MutationTestReportPopupComponent extends LitElement {
     }
   }
 
-  public getContextClasses() {
-    if (this.context) {
-      return `bg-${this.context} text-white`;
-    } else {
-      return '';
-    }
+  private getBackgroundClasses() {
+    return this.context ? `bg-${this.context} text-white` : '';
   }
 
   public render() {
-    return html`<div class="popover ${this.show ? 'show' : 'hide'}">
-  <h3 class="popover-header ${this.getContextClasses()}">${this.header}</h3>
+    return html`<div class="popover popover-${this.context} ${this.show ? 'show' : 'hide'}">
+  <h3 class="popover-header ${this.getBackgroundClasses()}">${this.header}</h3>
   <div class="popover-body">
     <slot name="popover-body"></slot>
   </div>

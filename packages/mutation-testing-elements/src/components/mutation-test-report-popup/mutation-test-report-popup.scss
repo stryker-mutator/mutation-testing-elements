@@ -1,3 +1,6 @@
+@import "~bootstrap/scss/_functions.scss";
+@import "~bootstrap/scss/_variables.scss";
+
 :host {
     position: relative;
     display: inline-block;
@@ -23,10 +26,17 @@
     position: absolute;
     top: -10px;
     left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
+    margin-left: -6px;
+    border-width: 6px;
     border-style: solid;
     border-color: transparent transparent #555 transparent;
+}
+
+// Taken from bootstrap/scss/utilities/_borders.scs
+@each $color, $value in $theme-colors {
+  .popover-#{$color}::before {
+    border-bottom-color: $value ;
+  }
 }
 
 .popover.show {
