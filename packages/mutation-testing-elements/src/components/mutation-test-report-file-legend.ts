@@ -70,6 +70,11 @@ export class MutationTestReportFileLegendComponent extends LitElement {
         position: sticky;
         top: 0;
         background: #FFF;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        z-index: 10;
       }
   `, bootstrap];
 
