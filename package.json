@@ -18,7 +18,7 @@
     "lerna:version:minor": "lerna version --conventional-commits minor",
     "lerna:version:major": "lerna version --conventional-commits major",
     "lerna:publish": "lerna publish from-git --yes",
-    "prepublish": "echo $PGP_SECRET | base64 --decode | gpg --import"
+    "prepublishOnly": "echo $PGP_SECRET | base64 --decode | gpg --import"
   },
   "repository": {
     "type": "git",
