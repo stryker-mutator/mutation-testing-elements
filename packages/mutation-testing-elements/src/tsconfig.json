@@ -17,6 +17,9 @@
   "references": [
     {
       "path": "../../mutation-testing-report-schema/tsconfig.src.json"
+    },
+    {
+      "path": "../../mutation-testing-metrics/src"
     }
   ]
 }

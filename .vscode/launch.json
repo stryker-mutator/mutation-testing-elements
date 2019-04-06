@@ -7,7 +7,7 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Schema tests",
+      "name": "Mocha unit tests",
       "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
       "args": [
         "-r",
@@ -15,7 +15,8 @@
         "--timeout",
         "999999",
         "--colors",
-        "${workspaceFolder}/packages/mutation-testing-report-schema/dist/test/**/*.js"
+        "${workspaceFolder}/packages/mutation-testing-report-schema/dist/test/**/*.js",
+        "${workspaceFolder}/packages/mutation-testing-metrics/dist/test/**/*.js"
       ],
       "internalConsoleOptions": "openOnSessionStart"
     },
@@ -45,7 +46,7 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Unit tests tests (Mutation testing elements)",
+      "name": "Karma unit tests (Mutation testing elements)",
       "program": "${workspaceFolder}/node_modules/karma/bin/karma",
       "args": [
         "start"

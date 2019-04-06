@@ -1,19 +1,21 @@
 import { LitElement, html, property, customElement, css } from 'lit-element';
 import { bootstrap } from '../style';
-import { FileResultModel, DirectoryResultModel } from '../model';
 import { Thresholds } from 'mutation-testing-report-schema';
 import * as svg from './svg';
 import { pathJoin } from '../lib/helpers';
-import { ResultModel } from '../model/ResultModel';
+import { MetricsResult } from 'mutation-testing-metrics';
 
 @customElement('mutation-test-report-totals')
 export class MutationTestReportTotalsComponent extends LitElement {
 
   @property()
-  public model: FileResultModel | DirectoryResultModel | undefined;
+  public model: MetricsResult | undefined;
 
   @property()
   public thresholds: Thresholds | undefined;
+
+  @property()
+  public currentPath: string[] = [];
 
   public static styles = [bootstrap,
     css`
@@ -118,36 +120,37 @@ export class MutationTestReportTotalsComponent extends LitElement {
 </thead>`;
   }
 
-  private renderTableBody(model: FileResultModel | DirectoryResultModel) {
+  private renderTableBody(model: MetricsResult) {
     const renderChildren = () => {
-      if (!model.representsFile) {
+      if (model.file) {
+        return undefined;
+      } else {
         return model.childResults.map(childResult => {
           let fullName: string = childResult.name;
-          while (!childResult.representsFile && childResult.childResults.length === 1) {
+          while (!childResult.file && childResult.childResults.length === 1) {
             childResult = childResult.childResults[0];
             fullName = pathJoin(fullName, childResult.name);
           }
-          return this.renderRow(fullName, childResult, true);
+          return this.renderRow(fullName, childResult, pathJoin(...this.currentPath, fullName));
         });
-      } else {
-        return undefined;
       }
     };
     return html`
     <tbody>
-      ${this.renderRow(model.name, model, false)}
+      ${this.renderRow(model.name, model, undefined)}
       ${renderChildren()}
     </tbody>`;
   }
 
-  private renderRow(name: string, row: ResultModel, shouldLink: boolean) {
-    const mutationScoreRounded = row.totals.mutationScore.toFixed(2);
-    const coloringClass = this.determineColoringClass(row.totals.mutationScore);
+  private renderRow(name: string, row: MetricsResult, path: string | undefined) {
+    const mutationScoreRounded = row.metrics.mutationScore.toFixed(2);
+    const coloringClass = this.determineColoringClass(row.metrics.mutationScore);
     const progressBarStyle = `width: ${mutationScoreRounded}%`;
     return html`
     <tr title="${row.name}">
-      <td style="width: 17px;" class="icon no-border-right">${row.representsFile ? svg.file : svg.directory}</td>
-      <td width="" class="no-border-left">${shouldLink ? html`<a href="${this.link(row.path)}">${name}</a>` : html`<span>${row.name}</span>`}</td>
+      <td style="width: 17px;" class="icon no-border-right">${row.file ? svg.file : svg.directory}</td>
+      <td width="" class="no-border-left">${typeof path === 'string' ? html`<a href="${this.link(path)}">${name}</a>` :
+        html`<span>${row.name}</span>`}</td>
       <td class="no-border-right vertical-middle">
         <div class="progress">
           <div class="progress-bar bg-${coloringClass}" role="progressbar" aria-valuenow="${mutationScoreRounded}"
@@ -157,15 +160,15 @@ export class MutationTestReportTotalsComponent extends LitElement {
         </div>
       </td>
       <th style="width: 50px;" class="no-border-left text-center text-${coloringClass}">${mutationScoreRounded}</th>
-      <td class="text-center">${row.totals.killed}</td>
-      <td class="text-center">${row.totals.survived}</td>
-      <td class="text-center">${row.totals.timeout}</td>
-      <td class="text-center">${row.totals.noCoverage}</td>
-      <td class="text-center">${row.totals.runtimeErrors}</td>
-      <td class="text-center">${row.totals.compileErrors}</td>
-      <th class="text-center">${row.totals.totalDetected}</th>
-      <th class="text-center">${row.totals.totalUndetected}</th>
-      <th class="text-center">${row.totals.totalMutants}</th>
+      <td class="text-center">${row.metrics.killed}</td>
+      <td class="text-center">${row.metrics.survived}</td>
+      <td class="text-center">${row.metrics.timeout}</td>
+      <td class="text-center">${row.metrics.noCoverage}</td>
+      <td class="text-center">${row.metrics.runtimeErrors}</td>
+      <td class="text-center">${row.metrics.compileErrors}</td>
+      <th class="text-center">${row.metrics.totalDetected}</th>
+      <th class="text-center">${row.metrics.totalUndetected}</th>
+      <th class="text-center">${row.metrics.totalMutants}</th>
     </tr>`;
   }
 

@@ -5,8 +5,14 @@
   ],
   "jsRules": {},
   "rules": {
-    "array-type": [true, "array"],
-    "arrow-parens": [true, "ban-single-arg-parens"],
+    "array-type": [
+      true,
+      "array"
+    ],
+    "arrow-parens": [
+      true,
+      "ban-single-arg-parens"
+    ],
     "ban-types": false,
     "class-name": true,
     "comment-format": [
@@ -14,7 +20,10 @@
       "check-space"
     ],
     "completed-docs": false,
-    "curly": [true, "ignore-same-line"],
+    "curly": [
+      true,
+      "ignore-same-line"
+    ],
     "forin": false,
     "function-constructor": false,
     "interface-name": false,
@@ -61,13 +70,17 @@
     "no-use-before-declare": false,
     "no-var-keyword": true,
     "no-var-requires": false,
-    "object-literal-sort-keys": [true, "ignore-case"],
+    "object-literal-sort-keys": false,
     "one-line": [
       true,
       "check-open-brace",
       "check-whitespace"
     ],
-    "only-arrow-functions": [true, "allow-declarations", "allow-named-functions"],
+    "only-arrow-functions": [
+      true,
+      "allow-declarations",
+      "allow-named-functions"
+    ],
     "ordered-imports": false,
     "prefer-const": true,
     "prefer-method-signature": true,

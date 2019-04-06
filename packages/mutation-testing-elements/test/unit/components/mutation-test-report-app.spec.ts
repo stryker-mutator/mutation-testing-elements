@@ -124,7 +124,7 @@ describe(MutationTestReportAppComponent.name, () => {
       // Assert
       const file = sut.$('mutation-test-report-file') as MutationTestReportFileComponent;
       expect(file).ok;
-      expect(file.model.name).eq('foobar.js');
+      expect(file.model).ok;
     });
   });
 

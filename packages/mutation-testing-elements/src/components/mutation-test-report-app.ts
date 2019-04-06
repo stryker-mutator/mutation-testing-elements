@@ -1,9 +1,7 @@
 import { LitElement, html, property, customElement, css, PropertyValues } from 'lit-element';
 import { MutationTestResult } from 'mutation-testing-report-schema';
-import { normalizeFileNames } from '../lib/helpers';
+import { MetricsResult, calculateMetrics } from 'mutation-testing-metrics';
 import { bootstrap } from '../style';
-import { ResultModel } from '../model/ResultModel';
-import { toDirectoryModel } from '../model';
 import { locationChange$ } from '../lib/router';
 import { Subscription } from 'rxjs';
 
@@ -14,7 +12,7 @@ export class MutationTestReportAppComponent extends LitElement {
   public report: MutationTestResult | undefined;
 
   @property({ attribute: false })
-  public rootModel: ResultModel | undefined;
+  public rootModel: MetricsResult | undefined;
 
   @property()
   public src: string | undefined;
@@ -23,7 +21,7 @@ export class MutationTestReportAppComponent extends LitElement {
   public errorMessage: string | undefined;
 
   @property({ attribute: false })
-  public context: ResultModel | undefined;
+  public context: MetricsResult | undefined;
 
   @property()
   public path: ReadonlyArray<string> = [];
@@ -68,12 +66,15 @@ export class MutationTestReportAppComponent extends LitElement {
   }
 
   private updateModel(report: MutationTestResult) {
-    this.rootModel = toDirectoryModel(normalizeFileNames(report.files));
+    this.rootModel = calculateMetrics(report.files);
   }
 
   private updateContext() {
     if (this.rootModel) {
-      this.context = this.rootModel.find(this.path.join('/'));
+      // Find the current selected file/directory based on the path
+      this.context = this.path.reduce<MetricsResult | undefined>(
+        (model, currentPathPart) => model && model.childResults.find(child => child.name === currentPathPart),
+        this.rootModel);
     }
   }
 
@@ -123,7 +124,7 @@ export class MutationTestReportAppComponent extends LitElement {
     return undefined;
     function renderPostfix() {
       if (self.titlePostfix) {
-      return html`<small class="text-muted"> - ${self.titlePostfix}</small>`;
+        return html`<small class="text-muted"> - ${self.titlePostfix}</small>`;
       } else {
         return undefined;
       }
@@ -170,8 +171,8 @@ export class MutationTestReportAppComponent extends LitElement {
   }
 
   private renderFileReport() {
-    if (this.context && this.report && this.context.representsFile) {
-      return html`<mutation-test-report-file .model="${this.context}"></mutation-test-report-file>`;
+    if (this.context && this.report && this.context.file) {
+      return html`<mutation-test-report-file .model="${this.context.file}"></mutation-test-report-file>`;
     } else {
       return undefined;
     }
@@ -182,7 +183,8 @@ export class MutationTestReportAppComponent extends LitElement {
       return html`
     <div class='row'>
       <div class='totals col-sm-11'>
-        <mutation-test-report-totals .thresholds="${this.report.thresholds}" .model="${this.context}"></mutation-test-report-totals>
+        <mutation-test-report-totals .currentPath="${this.path}" .thresholds="${this.report.thresholds}" .model="${this.context}">
+        </mutation-test-report-totals>
       </div>
     </div>
     `;

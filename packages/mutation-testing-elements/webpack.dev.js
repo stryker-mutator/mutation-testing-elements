@@ -5,7 +5,7 @@ module.exports = merge(common, {
   mode: 'development',
   devtool: 'inline-source-map',
   devServer: {
-    contentBase: ['./testResources', './node_modules/bootstrap', '.']
+    contentBase: ['./testResources', '.']
   }
 });
 

@@ -8,8 +8,8 @@ import typescript from 'highlight.js/lib/languages/typescript';
 import { MutationTestReportMutantComponent } from '../mutation-test-report-mutant';
 import { MutantFilter } from '../mutation-test-report-file-legend';
 import { bootstrap, highlightJS } from '../../style';
-import { FileResultModel } from '../../model';
 import { renderCode } from '../../lib/helpers';
+import { FileResult } from 'mutation-testing-report-schema';
 
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('typescript', typescript);
@@ -20,7 +20,7 @@ hljs.registerLanguage('scala', scala);
 export class MutationTestReportFileComponent extends LitElement {
 
   @property()
-  public model!: FileResultModel;
+  public model!: FileResult;
 
   public static styles = [
     highlightJS,

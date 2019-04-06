@@ -1,0 +1,15 @@
+{
+  "extends": "../../../tsconfig.settings.json",
+  "compilerOptions": {
+    "types": [
+      "node"
+    ],
+    "resolveJsonModule": true,
+    "outDir": "../dist/src",
+  },
+  "references": [
+    {
+      "path": "../../mutation-testing-report-schema/tsconfig.src.json"
+    }
+  ]
+}
