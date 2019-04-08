@@ -1,16 +1,16 @@
 {
   "folders": [
     {
-      "path": "packages/mutation-testing-elements",
-      "name": "elements"
-    },
-    {
       "path": "packages/mutation-testing-report-schema",
       "name": "schema"
     },
     {
       "path": "packages/mutation-testing-metrics",
       "name": "metrics"
+    },
+    {
+      "path": "packages/mutation-testing-elements",
+      "name": "elements"
     },
     {
       "path": ".",
