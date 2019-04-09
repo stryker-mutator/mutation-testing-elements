@@ -1,11 +1,10 @@
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { MutationTestReportFileComponent } from '../../../src/components/mutation-test-report-file/mutation-test-report-file';
 import { expect } from 'chai';
-import { createFileResult } from '../model/index.spec';
-import { FileResultModel } from '../../../src/model';
 import { FileResult, MutantStatus } from 'mutation-testing-report-schema';
 import { MutationTestReportMutantComponent } from '../../../src/components/mutation-test-report-mutant';
 import { MutationTestReportFileLegendComponent, MutantFilter } from '../../../src/components/mutation-test-report-file-legend';
+import { createFileResult } from '../../helpers/factory';
 
 describe(MutationTestReportFileComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportFileComponent>;
@@ -14,7 +13,7 @@ describe(MutationTestReportFileComponent.name, () => {
   beforeEach(async () => {
     fileResult = createFileResult();
     sut = new CustomElementFixture('mutation-test-report-file');
-    sut.element.model = new FileResultModel('foo.js', 'foo.js', fileResult);
+    sut.element.model = fileResult;
     await sut.updateComplete;
   });
 

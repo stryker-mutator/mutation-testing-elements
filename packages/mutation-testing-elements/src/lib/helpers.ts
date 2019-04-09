@@ -1,63 +1,18 @@
-import { FileResultDictionary, MutantResult, Position } from 'mutation-testing-report-schema';
-import { FileResultModel } from '../model';
+import { MutantResult, Position, FileResult } from 'mutation-testing-report-schema';
 import { BackgroundColorCalculator } from './BackgroundColorCalculator';
 import { escapeHtml } from './htmlHelpers';
-
-export const ROOT_NAME = 'All files';
-const SEPARATOR = '/';
-
-export function flatMap<T, R>(source: T[], fn: (input: T) => R[]) {
-  const result: R[] = [];
-  source.map(fn).forEach(items => result.push(...items));
-  return result;
-}
 
 export function pathJoin(...parts: string[]) {
   return parts.reduce((prev, current) => prev.length ? current ? `${prev}/${current}` : prev : current, '');
 }
 
-export function normalizeFileNames(input: FileResultDictionary): FileResultDictionary {
-  const fileNames = Object.keys(input);
-  const commonBasePath = determineCommonBasePath(fileNames);
-  const output: FileResultDictionary = {};
-  fileNames.forEach(fileName => {
-    output[normalize(fileName.substr(commonBasePath.length))] = input[fileName];
-  });
-  return output;
-}
-
-function normalize(fileName: string) {
-  return fileName.split(/\/|\\/)
-    .filter(pathPart => pathPart)
-    .join('/');
-}
-
-export function determineCommonBasePath(fileNames: ReadonlyArray<string>) {
-  const directories = fileNames.map(fileName => fileName.split(/\/|\\/).slice(0, -1));
-  if (fileNames.length) {
-    return directories.reduce(filterDirectories).join(SEPARATOR);
-  } else {
-    return '';
-  }
-
-  function filterDirectories(previousDirectories: string[], currentDirectories: string[]) {
-    for (let i = 0; i < previousDirectories.length; i++) {
-      if (previousDirectories[i] !== currentDirectories[i]) {
-        return previousDirectories.splice(0, i);
-      }
-    }
-
-    return previousDirectories;
-  }
-}
-
 /**
- * Walks over the code in this.model.source and adds the
+ * Walks over the code in model.source and adds the
  * `<mutation-test-report-mutant>` elements.
  * It also adds the background color using
  * `<span class="bg-danger-light">` and friends.
  */
-export function renderCode(model: FileResultModel): string {
+export function renderCode(model: FileResult): string {
   const backgroundState = new BackgroundColorCalculator();
   const startedMutants: MutantResult[] = [];
   const walker = (char: string, pos: Position): string => {

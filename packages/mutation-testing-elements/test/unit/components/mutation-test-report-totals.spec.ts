@@ -1,8 +1,7 @@
 import { MutationTestReportTotalsComponent } from '../../../src/components/mutation-test-report-totals';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { expect } from 'chai';
-import { FileResultModel, DirectoryResultModel, TotalsModel } from '../../../src/model';
-import { MutantStatus } from 'mutation-testing-report-schema';
+import { createMetricsResult, createFileResult } from '../../helpers/factory';
 
 describe(MutationTestReportTotalsComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportTotalsComponent>;
@@ -21,10 +20,8 @@ describe(MutationTestReportTotalsComponent.name, () => {
   });
 
   it('should show a table with a single row for a file result', async () => {
-    sut.element.model = new FileResultModel('foo.js', 'foo.js', {
-      language: 'js',
-      mutants: [],
-      source: 'const bar = foo();'
+    sut.element.model = createMetricsResult({
+      file: createFileResult()
     });
     await sut.updateComplete;
     const table = sut.$('table') as HTMLTableElement;
@@ -34,15 +31,14 @@ describe(MutationTestReportTotalsComponent.name, () => {
   });
 
   it('should show a table with a 3 rows for a directory result with 2 directories and one file', async () => {
-    const file = new FileResultModel('foo.js', 'foo.js', {
-      language: 'js',
-      mutants: [],
-      source: 'const bar = foo();'
+    const file = createMetricsResult({
+      name: 'foo.js',
+      file: createFileResult()
     });
-    sut.element.model = new DirectoryResultModel('bar', 'bar', new TotalsModel([{ status: MutantStatus.Killed }]), [
-      file,
-      new DirectoryResultModel('baz', 'bar/baz', new TotalsModel([]), [])
-    ]);
+    sut.element.model = createMetricsResult({
+      name: 'bar',
+      childResults: [file, createMetricsResult({ name: 'baz' })]
+    });
     await sut.updateComplete;
     const table = sut.$('table') as HTMLTableElement;
     expect(table).ok;
@@ -51,16 +47,17 @@ describe(MutationTestReportTotalsComponent.name, () => {
 
   it('should flatten a row if the directory only has one file', async () => {
     // Arrange
-    const file = new FileResultModel('foo.js', 'bar/baz/foo.js', {
-      language: 'js',
-      mutants: [],
-      source: 'const bar = foo();'
+    const file = createMetricsResult({
+      name: 'foo.js',
+      file: createFileResult()
     });
-    sut.element.model = new DirectoryResultModel('bar', 'bar', new TotalsModel([{ status: MutantStatus.Killed }]), [
-      new DirectoryResultModel('baz', 'bar/baz', new TotalsModel([]), [
-        file
-      ])
-    ]);
+    sut.element.model = createMetricsResult({
+      name: 'bar',
+      childResults: [createMetricsResult({
+        name: 'baz',
+        childResults: [file]
+      })]
+    });
 
     // Act
     await sut.updateComplete;
@@ -72,4 +69,5 @@ describe(MutationTestReportTotalsComponent.name, () => {
     expect(rows).lengthOf(2);
     expect((rows.item(1).cells.item(1) as HTMLTableCellElement).textContent).eq('baz/foo.js');
   });
+
 });

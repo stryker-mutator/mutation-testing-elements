@@ -11,5 +11,5 @@ export const locationChange$ = merge(of(1),
   fromEvent<HashChangeEvent>(window, 'hashchange').pipe(
     tap(event => event.preventDefault())
   )).pipe(
-    map(_ => window.location.hash.substr(1).split('/'))
+    map(_ => window.location.hash.substr(1).split('/').filter(part => part !== ''))
   );
