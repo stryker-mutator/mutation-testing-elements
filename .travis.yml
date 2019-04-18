@@ -1,6 +1,10 @@
 language: node_js
 node_js:
 - node
+cache:
+  npm: true
+  directories:
+  - $HOME/.m2/repository # Maven cache
 addons:
   chrome: stable
 script: npm run all
