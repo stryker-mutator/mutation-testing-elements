@@ -17,7 +17,11 @@ export function calculateMetrics(files: FileResultDictionary): MetricsResult {
 }
 
 function calculateDirectoryMetrics(files: FileResultDictionary, name: string): MetricsResult {
-  const metrics = countMetrics(flatMap(Object.values(files), file => file.mutants));
+  const metrics = countMetrics(
+    flatMap(
+      Object.keys(files)
+        .map(fileName => files[fileName]),
+      file => file.mutants));
   const childResults = toChildModels(files);
   return {
     name,
