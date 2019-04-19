@@ -1,6 +1,6 @@
 import { compareNames, normalizeFileNames, flatMap } from './helpers';
 import { FileResultDictionary, FileResult, MutantResult, MutantStatus } from 'mutation-testing-report-schema';
-import { groupBy } from 'lodash';
+import groupBy from 'lodash.groupby';
 import { Metrics } from './api/Metrics';
 import { MetricsResult } from './api/MetricsResult';
 const DEFAULT_SCORE = 100;
@@ -19,6 +19,7 @@ export function calculateMetrics(files: FileResultDictionary): MetricsResult {
 function calculateDirectoryMetrics(files: FileResultDictionary, name: string): MetricsResult {
   const metrics = countMetrics(
     flatMap(
+      /* TODO: drop node 6 support and use Object.values */
       Object.keys(files)
         .map(fileName => files[fileName]),
       file => file.mutants));
@@ -40,7 +41,7 @@ function calculateFileMetrics(fileName: string, file: FileResult): MetricsResult
 }
 
 function toChildModels(files: FileResultDictionary): MetricsResult[] {
-  const filesByDirectory = groupBy(Object.entries(files), namedFile => namedFile[0].split('/')[0]);
+  const filesByDirectory = groupBy(/* TODO: drop node 6 support and use Object.entries */ Object.keys(files).map(key => [key, files[key]] as [string, FileResult]), namedFile => namedFile[0].split('/')[0]);
   return Object.keys(filesByDirectory)
     .map(directoryName => {
       if (filesByDirectory[directoryName].length > 1 || filesByDirectory[directoryName][0][0] !== directoryName) {
