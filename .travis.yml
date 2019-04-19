@@ -19,4 +19,5 @@ deploy:
   script: npm run lerna:publish
   on:
     branch: master
+    node: 'node' # this should be quoted; otherwise, 0.10 would not work
     tags: true
