@@ -15,6 +15,21 @@ export function getContextClassForStatus(status: MutantStatus) {
   }
 }
 
+export function getEmojiForStatus(status: MutantStatus) {
+  switch (status) {
+    case MutantStatus.Killed:
+      return '✔';
+    case MutantStatus.NoCoverage:
+    case MutantStatus.Survived:
+      return '❌';
+    case MutantStatus.Timeout:
+      return '⌛';
+    case MutantStatus.RuntimeError:
+    case MutantStatus.CompileError:
+      return '⚠';
+  }
+}
+
 export function escapeHtml(unsafe: string) {
   return unsafe
     .replace(/&/g, '&amp;')

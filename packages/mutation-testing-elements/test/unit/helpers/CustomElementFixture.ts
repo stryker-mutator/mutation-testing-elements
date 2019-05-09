@@ -47,4 +47,17 @@ export class CustomElementFixture<TCustomElement extends LitElement> {
   public dispose() {
     return this.element.remove();
   }
+
+  public async catchEvent<T extends Event = Event>(eventType: string, act: () => Promise<void>) {
+    let actual: Event | undefined;
+    const eventListener = (evt: Event) => actual = evt;
+    this.element.addEventListener(eventType, eventListener);
+    try {
+      await act();
+      await this.updateComplete;
+    } finally {
+      this.element.removeEventListener(eventType, eventListener);
+    }
+    return actual as T;
+  }
 }

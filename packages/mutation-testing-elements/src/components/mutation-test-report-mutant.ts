@@ -1,7 +1,7 @@
 import { customElement, LitElement, property, html, css } from 'lit-element';
 import { MutantResult } from 'mutation-testing-report-schema';
 import { bootstrap } from '../style';
-import { getContextClassForStatus } from '../lib/htmlHelpers';
+import { getContextClassForStatus, getEmojiForStatus } from '../lib/htmlHelpers';
 
 @customElement('mutation-test-report-mutant')
 export class MutationTestReportMutantComponent extends LitElement {
@@ -44,10 +44,25 @@ export class MutationTestReportMutantComponent extends LitElement {
 
   private renderButton() {
     if (this.show && this.mutant) {
-      return html`<mutation-test-report-popup ?show="${this.showPopup}" context="${getContextClassForStatus(this.mutant.status)}" header="${this.mutant.mutatorName}"><span slot="popover-body">Status: ${this.mutant.status}</span><span class="mutant-toggle badge badge-${this.expand ? 'info' : getContextClassForStatus(this.mutant.status)}"
+      return html`<mutation-test-report-popup ?show="${this.showPopup}" context="${getContextClassForStatus(this.mutant.status)}" header="${this.mutant.mutatorName}">${this.renderPopupBody(this.mutant)}<span class="mutant-toggle badge badge-${this.expand ? 'info' : getContextClassForStatus(this.mutant.status)}"
     @click="${this.mutantClicked}" title="${this.mutant.mutatorName}">${this.mutant.id}</span></mutation-test-report-popup>`;
     }
     return undefined;
+  }
+
+  private renderPopupBody(mutant: MutantResult) {
+    return html`<div slot="popover-body"><span class="btn">${getEmojiForStatus(mutant.status)} ${mutant.status}</span>${this.renderDescription(mutant)}</div>`;
+  }
+
+  private renderDescription(mutant: MutantResult) {
+    if (mutant.description) {
+      return html`<button class="show-more btn btn-link" @click="${() => this.showMoreInfo(mutant)}">📖 Show more</button>`;
+    }
+    return undefined;
+  }
+
+  private readonly showMoreInfo = (mutant: MutantResult) => {
+    this.dispatchEvent(new CustomEvent('show-more-click', { bubbles: true, detail: mutant, composed: true }));
   }
 
   private renderCode() {
@@ -61,7 +76,7 @@ export class MutationTestReportMutantComponent extends LitElement {
 
   private renderReplacement() {
     if (this.mutant) {
-      return html`<span class="replacement badge badge-info" ?hidden="${!this.expand || !this.show}">${this.mutant.replacement}</span>`;
+      return html`<span class="replacement badge badge-info" @click="${this.mutantClicked}" ?hidden="${!this.expand || !this.show}">${this.mutant.replacement || this.mutant.mutatorName}</span>`;
     }
     return undefined;
   }
