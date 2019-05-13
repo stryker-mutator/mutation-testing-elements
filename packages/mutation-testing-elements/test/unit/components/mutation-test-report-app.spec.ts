@@ -7,7 +7,7 @@ import { CustomElementFixture } from '../helpers/CustomElementFixture';
 
 describe(MutationTestReportAppComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportAppComponent>;
-  let fetchStub: sinon.SinonStub;
+  let fetchStub: sinon.SinonStub<[RequestInfo, RequestInit?], Promise<Response>>;
 
   beforeEach(() => {
     fetchStub = sinon.stub(window, 'fetch');
@@ -61,10 +61,11 @@ describe(MutationTestReportAppComponent.name, () => {
   describe('`src` attribute', () => {
     it('should should fetch report data when updated', async () => {
       // Arrange
-      const expectedReport = createReport();
-      fetchStub.resolves({
+      const response: Pick<Response, 'json'> = {
         json: () => Promise.resolve(expectedReport)
-      });
+      };
+      const expectedReport = createReport();
+      fetchStub.resolves(response as Response);
 
       // Act
       sut.element.setAttribute('src', '/mutation-testing-report.json');
