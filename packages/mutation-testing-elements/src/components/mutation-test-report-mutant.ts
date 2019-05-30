@@ -62,7 +62,7 @@ export class MutationTestReportMutantComponent extends LitElement {
   }
 
   private readonly showMoreInfo = (mutant: MutantResult) => {
-    this.dispatchEvent(new CustomEvent('show-more-click', { bubbles: true, detail: mutant, composed: true }));
+    this.dispatchEvent(new CustomEvent(SHOW_MORE_EVENT, { bubbles: true, detail: mutant, composed: true }));
   }
 
   private renderCode() {
@@ -81,3 +81,5 @@ export class MutationTestReportMutantComponent extends LitElement {
     return undefined;
   }
 }
+
+export const SHOW_MORE_EVENT = 'show-more-click';

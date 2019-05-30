@@ -6,7 +6,7 @@ import scala from 'highlight.js/lib/languages/scala';
 import java from 'highlight.js/lib/languages/java';
 import cs from 'highlight.js/lib/languages/cs';
 import typescript from 'highlight.js/lib/languages/typescript';
-import { MutationTestReportMutantComponent } from '../mutation-test-report-mutant';
+import { MutationTestReportMutantComponent, SHOW_MORE_EVENT } from '../mutation-test-report-mutant';
 import { MutantFilter } from '../mutation-test-report-file-legend';
 import { bootstrap, highlightJS } from '../../style';
 import { renderCode } from '../../lib/codeHelpers';
@@ -64,9 +64,10 @@ export class MutationTestReportFileComponent extends LitElement {
       const selectedMutant = (event as CustomEvent<MutationTestReportMutantComponent>).detail;
       this.forEachMutantComponent(mutant => mutant !== selectedMutant && (mutant.showPopup = false));
     });
-    this.addEventListener('show-more-click', (event: Event) => {
+    this.addEventListener(SHOW_MORE_EVENT, (event: Event) => {
       const selectedMutant = (event as CustomEvent<MutantResult>).detail;
       this.mutantInDialog = selectedMutant;
+      event.stopPropagation();
     });
     this.addEventListener('close-dialog', () => {
       this.mutantInDialog = undefined;
@@ -97,7 +98,7 @@ export class MutationTestReportFileComponent extends LitElement {
       return html`
           <div .hidden="${!this.mutantInDialog}" class="modal-backdrop show"></div>
           <mutation-test-report-modal-dialog ?show="${this.mutantInDialog}" header="${this.mutantInDialog.id}: ${this.mutantInDialog.mutatorName} - ${getEmojiForStatus(this.mutantInDialog.status)} ${this.mutantInDialog.status}">
-            <p slot="modal-body">${this.mutantInDialog.description}</p>
+            <p>${this.mutantInDialog.description}</p>
           </mutation-test-report-modal-dialog>
       `;
     } else {

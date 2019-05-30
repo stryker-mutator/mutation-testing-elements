@@ -33,7 +33,7 @@ export class MutationTestReportModalDialogComponent extends LitElement {
             <h5 class="modal-title">${this.header}</h5>
           </div>
           <div class="modal-body">
-            <slot name="modal-body"></slot>
+            <slot></slot>
           </div>
           <div class="modal-footer">
             <button type="button" @click="${this.emitCloseEvent}" class="btn btn-link">Close</button>

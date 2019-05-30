@@ -2,7 +2,7 @@ import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { MutationTestReportFileComponent } from '../../../src/components/mutation-test-report-file/mutation-test-report-file';
 import { expect } from 'chai';
 import { FileResult, MutantStatus, MutantResult } from 'mutation-testing-report-schema';
-import { MutationTestReportMutantComponent } from '../../../src/components/mutation-test-report-mutant';
+import { MutationTestReportMutantComponent, SHOW_MORE_EVENT } from '../../../src/components/mutation-test-report-mutant';
 import { MutationTestReportFileLegendComponent, MutantFilter } from '../../../src/components/mutation-test-report-file-legend';
 import { createFileResult } from '../../helpers/factory';
 import { MutationTestReportModalDialogComponent } from '../../../dist/components/mutation-test-report-modal-dialog';
@@ -73,112 +73,114 @@ describe(MutationTestReportFileComponent.name, () => {
       expect(mutantComponent.show).false;
     });
 
-    it('should not show the dialog when opening the page', async () => {
-      mutantComponent.show = true;
-      const background = sut.$('.modal-backdrop');
-      const dialog = sut.$('mutation-test-report-modal-dialog');
+    describe('the modal dialog', () => {
+      it('should not be shown when opening the page', async () => {
+        mutantComponent.show = true;
+        const background = sut.$('.modal-backdrop');
+        const dialog = sut.$('mutation-test-report-modal-dialog');
 
-      expect(background).null;
-      expect(dialog).null;
-    });
-
-    it('should show the dialog when a show-more-click event is received', async () => {
-      // Arrange
-      mutantComponent.show = true;
-      const mutant = createMutantResult();
-
-      // Act
-      legendComponent.dispatchEvent(new CustomEvent('show-more-click', { detail: mutant, bubbles: true, composed: true }));
-      await sut.updateComplete;
-      const dialog = sut.$('mutation-test-report-modal-dialog');
-
-      // Assert
-      expect(dialog).ok;
-    });
-
-    it('should show the correct header when the dialog is opened', async () => {
-      // Arrange
-      mutantComponent.show = true;
-      const mutant = createMutantResult({
-        id: '30',
-        mutatorName: 'testMutator',
-        status: MutantStatus.Killed
+        expect(background).null;
+        expect(dialog).null;
       });
 
-      // Act
-      await openDialog(mutant);
-      const dialog = sut.$('mutation-test-report-modal-dialog') as MutationTestReportModalDialogComponent;
+      it('should be shown when a show-more-click event is received', async () => {
+        // Arrange
+        mutantComponent.show = true;
+        const mutant = createMutantResult();
 
-      // Assert
-      expect(dialog.header).eq(`30: testMutator - ✔ Killed`);
-    });
+        // Act
+        legendComponent.dispatchEvent(new CustomEvent(SHOW_MORE_EVENT, { detail: mutant, bubbles: true, composed: true }));
+        await sut.updateComplete;
+        const dialog = sut.$('mutation-test-report-modal-dialog');
 
-    it('should display the description in the dialog when it\'s opened', async () => {
-      // Arrange
-      mutantComponent.show = true;
-      const mutant = createMutantResult({
-        description: 'This is a very weird mutant'
+        // Assert
+        expect(dialog).ok;
       });
 
-      // Act
-      await openDialog(mutant);
-      const dialogContent = sut.$('mutation-test-report-modal-dialog p');
+      it('should show the correct header when the dialog is opened', async () => {
+        // Arrange
+        mutantComponent.show = true;
+        const mutant = createMutantResult({
+          id: '30',
+          mutatorName: 'testMutator',
+          status: MutantStatus.Killed
+        });
 
-      // Assert
-      expect(dialogContent.textContent).eq('This is a very weird mutant');
-    });
+        // Act
+        await openDialog(mutant);
+        const dialog = sut.$('mutation-test-report-modal-dialog') as MutationTestReportModalDialogComponent;
 
-    it('should show the background when the dialog is opened', async () => {
-      // Arrange
-      mutantComponent.show = true;
+        // Assert
+        expect(dialog.header).eq(`30: testMutator - ✔ Killed`);
+      });
 
-      // Act
-      await openDialog();
-      const background = sut.$('.modal-backdrop');
+      it('should display the description in the dialog when it\'s opened', async () => {
+        // Arrange
+        mutantComponent.show = true;
+        const mutant = createMutantResult({
+          description: 'This is a very weird mutant'
+        });
 
-      // Assert
-      expect(background).ok;
-      expect(background.hidden).false;
-    });
+        // Act
+        await openDialog(mutant);
+        const dialogContent = sut.$('mutation-test-report-modal-dialog p');
 
-    it('should hide the dialog when a close-dialog event is received', async () => {
-      // Arrange
-      mutantComponent.show = true;
+        // Assert
+        expect(dialogContent.textContent).eq('This is a very weird mutant');
+      });
 
-      // Act
-      await openDialog();
-      legendComponent.dispatchEvent(new CustomEvent('close-dialog', { detail: undefined, bubbles: true, composed: true }));
-      await sut.updateComplete;
+      it('should show the background when the dialog is opened', async () => {
+        // Arrange
+        mutantComponent.show = true;
 
-      const background = sut.$('.modal-backdrop');
-      const dialog = sut.$('mutation-test-report-modal-dialog');
+        // Act
+        await openDialog();
+        const background = sut.$('.modal-backdrop');
 
-      // Assert
-      expect(background).null;
-      expect(dialog).null;
+        // Assert
+        expect(background).ok;
+        expect(background.hidden).false;
+      });
+
+      it('should hide when a close-dialog event is received', async () => {
+        // Arrange
+        mutantComponent.show = true;
+
+        // Act
+        await openDialog();
+        legendComponent.dispatchEvent(new CustomEvent('close-dialog', { detail: undefined, bubbles: true, composed: true }));
+        await sut.updateComplete;
+
+        const background = sut.$('.modal-backdrop');
+        const dialog = sut.$('mutation-test-report-modal-dialog');
+
+        // Assert
+        expect(background).null;
+        expect(dialog).null;
+      });
     });
 
     function createMutantResult(overrides?: Partial<MutantResult>) {
-      const defaults: MutantResult = {
-        id: '42',
-        location: {
-          end: { column: 3, line: 4 },
-          start: { line: 3, column: 4 }
-        },
-        mutatorName: 'fooMutator',
-        replacement: '+',
-        status: MutantStatus.Timeout
-      };
-      return { ...defaults, ...overrides };
-    }
+        const defaults: MutantResult = {
+          id: '42',
+          location: {
+            end: { column: 3, line: 4 },
+            start: { line: 3, column: 4 }
+          },
+          mutatorName: 'fooMutator',
+          replacement: '+',
+          status: MutantStatus.Timeout
+        };
+        return { ...defaults, ...overrides };
+      }
 
     async function openDialog(mutant?: MutantResult) {
-      let detail = mutant;
-      if (!detail) {
-        detail = createMutantResult();
+        let detail = mutant;
+        if (!detail) {
+          detail = createMutantResult();
+        }
+        legendComponent.dispatchEvent(new CustomEvent(SHOW_MORE_EVENT, { detail, bubbles: true, composed: true }));
+        await sut.updateComplete;
       }
-      legendComponent.dispatchEvent(new CustomEvent('show-more-click', { detail, bubbles: true, composed: true }));
-      await sut.updateComplete;
-    }
   });
 });

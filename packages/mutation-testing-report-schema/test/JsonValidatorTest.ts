@@ -49,4 +49,8 @@ describe('JsonSchema', () => {
   it('should invalidate a report when mutant location is missing', () => {
     actAssertInvalid('missing-mutant-location-report', 'files[\'test.js\'].mutants[0].location should have required property \'end\'');
   });
+
+  it('should validate a report when the replacement is missing', () => {
+    actAssertValid('missing-replacement-report');
+  });
 });

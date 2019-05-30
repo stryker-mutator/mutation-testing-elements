@@ -1,4 +1,4 @@
-import { MutationTestReportMutantComponent } from '../../../src/components/mutation-test-report-mutant';
+import { MutationTestReportMutantComponent, SHOW_MORE_EVENT } from '../../../src/components/mutation-test-report-mutant';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { expect } from 'chai';
 import { MutantStatus, MutantResult } from 'mutation-testing-report-schema';
@@ -72,7 +72,7 @@ describe(MutationTestReportMutantComponent.name, () => {
     expect(actualReplacement.textContent).eq('foobar');
   });
 
-  it('should fill the replacement with mutatorname if no replacement is defined', async () => {
+  it('should fill the replacement with mutator name if no replacement is defined', async () => {
     // Arrange
     sut.element.show = true;
     sut.element.mutant = createMutantResult({ mutatorName: 'FooMutator', replacement: undefined });
@@ -132,7 +132,7 @@ describe(MutationTestReportMutantComponent.name, () => {
 
     // Act
     const act = async () => showMoreButton.click();
-    const result = await sut.catchEvent<CustomEvent<MutantResult>>('show-more-click', act);
+    const result = await sut.catchEvent<CustomEvent<MutantResult>>(SHOW_MORE_EVENT, act);
 
     // Assert
     expect(result).ok;

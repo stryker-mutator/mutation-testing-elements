@@ -109,7 +109,6 @@
               "required": [
                 "id",
                 "mutatorName",
-                "replacement",
                 "location",
                 "status"
               ],
@@ -138,6 +137,13 @@
                     "+",
                     "&&",
                     "||"
+                  ]
+                },
+                "description": {
+                  "type": "string",
+                  "title": "Description of the applied mutation.",
+                  "examples": [
+                    "removed call to java/io/Writer::write"
                   ]
                 },
                 "location": {
