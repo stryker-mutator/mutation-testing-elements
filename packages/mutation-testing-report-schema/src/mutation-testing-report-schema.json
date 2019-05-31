@@ -90,7 +90,8 @@
               "javascript",
               "typescript",
               "cs",
-              "scala"
+              "scala",
+              "java"
             ]
           },
           "source": {
