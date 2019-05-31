@@ -17,6 +17,7 @@
           "id": "1",
           "mutatorName": "Arithmetic Operator",
           "replacement": "-",
+          "description": "Replaced + with -",
           "location": {
             "foo": "bar",
             "start": {
@@ -36,6 +37,7 @@
           "id": "2",
           "mutatorName": "Block Statement",
           "replacement": "{}",
+          "description": "Removed block statement",
           "location": {
             "start": {
               "line": 1,

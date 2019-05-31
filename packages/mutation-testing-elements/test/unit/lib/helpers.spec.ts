@@ -1,4 +1,4 @@
-import { lines, renderCode } from '../../../src/lib/helpers';
+import { lines, renderCode } from '../../../src/lib/codeHelpers';
 import { MutantStatus, FileResult } from 'mutation-testing-report-schema';
 import { expect } from 'chai';
 
