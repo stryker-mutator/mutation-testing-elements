@@ -10,31 +10,16 @@
       "source": "function add(a, b) {\n  return a + b;\n}",
       "mutants": [
         {
-          "id": "1",
-          "mutatorName": "Arithmetic Operator",
-          "location": {
-            "start": {
-              "line": 2,
-              "column": 12
-            },
-            "end": {
-              "line": 2,
-              "column": 13
-            }
-          },
-          "status": "Survived"
-        },
-        {
           "id": "2",
           "mutatorName": "Block Statement",
           "location": {
             "start": {
               "line": 1,
-              "column": 20
+              "column": 1
             },
             "end": {
-              "line": 3,
-              "column": 1
+              "line": 1,
+              "column": 4
             }
           },
           "status": "Killed"

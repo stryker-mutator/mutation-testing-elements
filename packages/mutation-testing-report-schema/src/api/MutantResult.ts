@@ -3,7 +3,8 @@ import { Location } from './Location';
 export interface MutantResult {
   id: string;
   mutatorName: string;
-  replacement: string;
+  replacement?: string;
+  description?: string;
   location: Location;
   status: MutantStatus;
 }

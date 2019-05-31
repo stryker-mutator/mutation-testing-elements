@@ -18,8 +18,13 @@ export function renderCode(model: FileResult): string {
   const walker = (char: string, pos: Position): string => {
     const currentMutants = model.mutants.filter(m => eq(m.location.start, pos));
     const mutantsEnding = startedMutants.filter(m => gte(pos, m.location.end));
+
+    // Remove the mutants that ended from the list of mutants that started
     mutantsEnding.forEach(mutant => startedMutants.splice(startedMutants.indexOf(mutant), 1));
+
+    // Add new mutants to started mutants
     startedMutants.push(...currentMutants);
+
     const builder: string[] = [];
     if (currentMutants.length || mutantsEnding.length) {
       currentMutants.forEach(backgroundState.markMutantStart);

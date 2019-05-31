@@ -7,9 +7,6 @@ export class MutationTestReportPopupComponent extends LitElement {
   @property()
   public header: string | undefined;
 
-  @property()
-  public content: string | undefined;
-
   @property({ converter: val => typeof val === 'string' })
   public show: boolean = false;
 
@@ -22,7 +19,7 @@ export class MutationTestReportPopupComponent extends LitElement {
   ];
 
   public firstUpdated() {
-    if (this.getBoundingClientRect().left < 100) {
+    if (this.getBoundingClientRect().left < 150) {
       const popover = (this.shadowRoot as ShadowRoot).querySelector('.popover') as HTMLElement;
       popover.style.marginLeft = '0px';
     }

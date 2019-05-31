@@ -3,18 +3,21 @@ import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 import hljs from 'highlight.js/lib/highlight';
 import javascript from 'highlight.js/lib/languages/javascript';
 import scala from 'highlight.js/lib/languages/scala';
+import java from 'highlight.js/lib/languages/java';
 import cs from 'highlight.js/lib/languages/cs';
 import typescript from 'highlight.js/lib/languages/typescript';
-import { MutationTestReportMutantComponent } from '../mutation-test-report-mutant';
+import { MutationTestReportMutantComponent, SHOW_MORE_EVENT } from '../mutation-test-report-mutant';
 import { MutantFilter } from '../mutation-test-report-file-legend';
 import { bootstrap, highlightJS } from '../../style';
-import { renderCode } from '../../lib/helpers';
-import { FileResult } from 'mutation-testing-report-schema';
+import { renderCode } from '../../lib/codeHelpers';
+import { FileResult, MutantResult } from 'mutation-testing-report-schema';
+import { getEmojiForStatus } from '../../lib/htmlHelpers';
 
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('typescript', typescript);
 hljs.registerLanguage('cs', cs);
 hljs.registerLanguage('scala', scala);
+hljs.registerLanguage('java', java);
 
 @customElement('mutation-test-report-file')
 export class MutationTestReportFileComponent extends LitElement {
@@ -61,13 +64,25 @@ export class MutationTestReportFileComponent extends LitElement {
       const selectedMutant = (event as CustomEvent<MutationTestReportMutantComponent>).detail;
       this.forEachMutantComponent(mutant => mutant !== selectedMutant && (mutant.showPopup = false));
     });
+    this.addEventListener(SHOW_MORE_EVENT, (event: Event) => {
+      const selectedMutant = (event as CustomEvent<MutantResult>).detail;
+      this.mutantInDialog = selectedMutant;
+      event.stopPropagation();
+    });
+    this.addEventListener('close-dialog', () => {
+      this.mutantInDialog = undefined;
+    });
   }
+
+  @property({attribute: false})
+  private mutantInDialog: MutantResult | undefined;
 
   public render() {
     if (this.model) {
       return html`
         <div class="row">
           <div class="col-md-12">
+            ${this.renderModalDialog()}
             <mutation-test-report-file-legend @filters-changed="${this.filtersChanged}" @expand-all="${this.expandAll}"
               @collapse-all="${this.collapseAll}" .mutants="${this.model.mutants}"></mutation-test-report-file-legend>
             <pre><code class="lang-${this.model.language} hljs">${unsafeHTML(renderCode(this.model))}</code></pre>
@@ -76,6 +91,19 @@ export class MutationTestReportFileComponent extends LitElement {
         `;
     }
     return undefined;
+  }
+
+  private renderModalDialog() {
+    if (this.mutantInDialog) {
+      return html`
+          <div .hidden="${!this.mutantInDialog}" class="modal-backdrop show"></div>
+          <mutation-test-report-modal-dialog ?show="${this.mutantInDialog}" header="${this.mutantInDialog.id}: ${this.mutantInDialog.mutatorName} - ${getEmojiForStatus(this.mutantInDialog.status)} ${this.mutantInDialog.status}">
+            <p>${this.mutantInDialog.description}</p>
+          </mutation-test-report-modal-dialog>
+      `;
+    } else {
+      return undefined;
+    }
   }
 
   public firstUpdated(_changedProperties: PropertyValues) {

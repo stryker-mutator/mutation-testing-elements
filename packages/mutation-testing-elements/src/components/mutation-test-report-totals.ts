@@ -2,7 +2,7 @@ import { LitElement, html, property, customElement, css } from 'lit-element';
 import { bootstrap } from '../style';
 import { Thresholds } from 'mutation-testing-report-schema';
 import * as svg from './svg';
-import { pathJoin } from '../lib/helpers';
+import { pathJoin } from '../lib/codeHelpers';
 import { MetricsResult } from 'mutation-testing-metrics';
 
 @customElement('mutation-test-report-totals')
