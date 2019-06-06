@@ -1,3 +1,5 @@
+@import "../../style/bootstrap-reboot.scss"; // import the variables
+
 .bg-danger-light {
     background-color: #f2dede;
 }
@@ -6,11 +8,17 @@
     background-color: #dff0d8;
 }
 
+
 .bg-warning-light {
     background-color: #fcf8e3;
 }
 
-code, code.hljs {
+.bg-caution-light {
+    background-color: adjust-color($color: theme-color('caution'), $lightness: 40%);
+}
+
+code,
+code.hljs {
     overflow: visible;
     height: 100%;
 }
