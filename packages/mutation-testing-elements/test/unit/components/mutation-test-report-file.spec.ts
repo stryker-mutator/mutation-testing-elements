@@ -3,7 +3,7 @@ import { MutationTestReportFileComponent } from '../../../src/components/mutatio
 import { expect } from 'chai';
 import { FileResult, MutantStatus, MutantResult } from 'mutation-testing-report-schema';
 import { MutationTestReportMutantComponent, SHOW_MORE_EVENT } from '../../../src/components/mutation-test-report-mutant';
-import { MutationTestReportFileLegendComponent, MutantFilter } from '../../../src/components/mutation-test-report-file-legend';
+import { MutationTestReportFileLegendComponent, MutantFilter } from '../../../dist/components/mutation-test-report-file-legend';
 import { createFileResult } from '../../helpers/factory';
 import { MutationTestReportModalDialogComponent } from '../../../dist/components/mutation-test-report-modal-dialog';
 
@@ -111,7 +111,7 @@ describe(MutationTestReportFileComponent.name, () => {
         const dialog = sut.$('mutation-test-report-modal-dialog') as MutationTestReportModalDialogComponent;
 
         // Assert
-        expect(dialog.header).eq(`30: testMutator - ✔ Killed`);
+        expect(dialog.header).eq(`30: testMutator - ✅ Killed`);
       });
 
       it('should display the description in the dialog when it\'s opened', async () => {

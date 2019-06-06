@@ -5,6 +5,7 @@ export function getContextClassForStatus(status: MutantStatus) {
     case MutantStatus.Killed:
       return 'success';
     case MutantStatus.NoCoverage:
+      return 'caution'; // custom class
     case MutantStatus.Survived:
       return 'danger';
     case MutantStatus.Timeout:
@@ -18,15 +19,16 @@ export function getContextClassForStatus(status: MutantStatus) {
 export function getEmojiForStatus(status: MutantStatus) {
   switch (status) {
     case MutantStatus.Killed:
-      return '✔';
+      return '✅';
     case MutantStatus.NoCoverage:
+      return '🙈';
     case MutantStatus.Survived:
-      return '❌';
+      return '👽';
     case MutantStatus.Timeout:
       return '⌛';
     case MutantStatus.RuntimeError:
     case MutantStatus.CompileError:
-      return '⚠';
+      return '💥';
   }
 }
 

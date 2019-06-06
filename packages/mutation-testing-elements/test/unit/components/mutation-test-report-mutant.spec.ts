@@ -2,6 +2,7 @@ import { MutationTestReportMutantComponent, SHOW_MORE_EVENT } from '../../../src
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { expect } from 'chai';
 import { MutantStatus, MutantResult } from 'mutation-testing-report-schema';
+import { expectedMutantColors } from '../../helpers/helperFunctions';
 
 describe(MutationTestReportMutantComponent.name, () => {
 
@@ -47,13 +48,16 @@ describe(MutationTestReportMutantComponent.name, () => {
     expect(sut.$('.replacement').hidden).true;
   });
 
-  it('should render correct badge color for mutant', async () => {
-    sut.element.show = true;
-    sut.element.mutant = createMutantResult({ status: MutantStatus.Survived });
-    await sut.updateComplete;
-    const badge = sut.$('span.badge');
-    expect(getComputedStyle(badge).background).match(/rgb\(220, 53, 69\)/);
-    expect(badge.innerText).eq(sut.element.mutant.id);
+  Object.keys(expectedMutantColors).forEach(status => {
+    it(`should render correct badge color for ${status} mutant`, async () => {
+      const actualMutantStatus = status as MutantStatus;
+      sut.element.show = true;
+      sut.element.mutant = createMutantResult({ status: actualMutantStatus });
+      await sut.updateComplete;
+      const badge = sut.$('span.badge');
+      expect(getComputedStyle(badge).backgroundColor).eq(expectedMutantColors[actualMutantStatus]);
+      expect(badge.innerText).eq(sut.element.mutant.id);
+    });
   });
 
   it('should render replacement when the button is clicked', async () => {

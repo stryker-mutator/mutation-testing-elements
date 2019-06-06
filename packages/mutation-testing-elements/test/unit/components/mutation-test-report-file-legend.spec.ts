@@ -2,6 +2,7 @@ import { MutationTestReportFileLegendComponent, MutantFilter } from '../../../sr
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { MutantStatus } from 'mutation-testing-report-schema';
 import { expect } from 'chai';
+import { normalizeWhitespace, expectedMutantColors } from '../../helpers/helperFunctions';
 
 describe(MutationTestReportFileLegendComponent.name, () => {
 
@@ -34,14 +35,38 @@ describe(MutationTestReportFileLegendComponent.name, () => {
     await sut.updateComplete;
     const actualCheckboxes = sut.$$('.form-check.form-check-inline');
     expect(actualCheckboxes).lengthOf(6);
-    const checkboxTexts = actualCheckboxes.map(checkbox => (checkbox.textContent as string).trim());
-    expect(checkboxTexts).deep.eq(['Killed (1)',
-      'Survived (1)',
-      'NoCoverage (1)',
-      'Timeout (1)',
-      'CompileError (1)',
-      'RuntimeError (1)'
+    const checkboxTexts = actualCheckboxes.map(checkbox => normalizeWhitespace((checkbox.textContent as string)));
+    expect(checkboxTexts).deep.eq([
+      '✅ Killed (1)',
+      '👽 Survived (1)',
+      '🙈 NoCoverage (1)',
+      '⌛ Timeout (1)',
+      '💥 CompileError (1)',
+      '💥 RuntimeError (1)'
     ]);
+  });
+
+  it('should show the correct colors for the states', async () => {
+    // Arrange
+    sut.element.mutants = [
+      { status: MutantStatus.CompileError },
+      { status: MutantStatus.Killed },
+      { status: MutantStatus.NoCoverage },
+      { status: MutantStatus.RuntimeError },
+      { status: MutantStatus.Survived },
+      { status: MutantStatus.Timeout }
+    ];
+
+    // Act
+    await sut.updateComplete;
+
+    // Assert
+    function assertColor(status: string, expectedColor: string) {
+      expect(getComputedStyle(sut.$(`[data-status=${status}] .badge`)).backgroundColor).eq(expectedColor);
+    }
+    Object.keys(expectedMutantColors).forEach(status => {
+      assertColor(status, expectedMutantColors[status as  MutantStatus]);
+    });
   });
 
   it('should dispatch the "filters-changed" event for the initial state', async () => {
