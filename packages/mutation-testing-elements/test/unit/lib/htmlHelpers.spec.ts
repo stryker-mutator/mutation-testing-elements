@@ -10,7 +10,7 @@ describe(getContextClassForStatus.name, () => {
   }
   actArrangeAssert('success', MutantStatus.Killed);
   actArrangeAssert('danger', MutantStatus.Survived);
-  actArrangeAssert('danger', MutantStatus.NoCoverage);
+  actArrangeAssert('caution', MutantStatus.NoCoverage);
   actArrangeAssert('warning', MutantStatus.Timeout);
   actArrangeAssert('secondary', MutantStatus.CompileError);
   actArrangeAssert('secondary', MutantStatus.RuntimeError);
