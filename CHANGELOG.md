@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.8](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.0.7...v1.0.8) (2019-06-17)
+
+
+### Features
+
+* **color:** add new color for state no-coverage ([1fec8c4](https://github.com/stryker-mutator/mutation-testing-elements/commit/1fec8c4))
+* **emoj:** add mutant emoijs ([419da6d](https://github.com/stryker-mutator/mutation-testing-elements/commit/419da6d))
+* **mutant description:** show optional mutant description ([#37](https://github.com/stryker-mutator/mutation-testing-elements/issues/37)) ([1f10847](https://github.com/stryker-mutator/mutation-testing-elements/commit/1f10847))
+
+
+
+
+
+
 ## [1.0.7](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.0.6...v1.0.7) (2019-04-18)
 
 
