@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/mutation-testing-elements#readme",
   "devDependencies": {
-    "@types/lodash.groupby": "^4.6.5",
+    "@types/lodash.groupby": "^4.6.6",
     "lodash.groupby": "^4.6.0",
     "mutation-testing-metrics": "^1.1.0",
     "mutation-testing-report-schema": "^1.1.0"
