@@ -68,7 +68,7 @@ export class MutationTestReportFileLegendComponent extends LitElement {
   public static styles = [
     bootstrap,
     css`
-      .legend{
+      .legend {
         position: sticky;
         top: 0;
         background: #FFF;
@@ -82,24 +82,21 @@ export class MutationTestReportFileLegendComponent extends LitElement {
         font-size: 1em;
         cursor: pointer;
       }
-      .
   `];
 
   public render() {
     return html`
-      <div class='row legend'>
-        <form class='col-md-12' novalidate='novalidate'>
-          ${this.filters.map(filter => html`
-          <div data-status="${filter.status}" class="form-check form-check-inline">
-            <label class="form-check-label">
-              <input class="form-check-input" type="checkbox" ?checked="${filter.enabled}" value="${filter.status}" @input="${() => this.checkboxClicked(filter)}">
-              <span class="badge badge-${getContextClassForStatus(filter.status)}">${getEmojiForStatus(filter.status)}
-                ${filter.status} (${filter.numberOfMutants})</span>
-            </label>
-          </div>
-          `)}
-          <button @click="${this.toggleOpenAll}" class="btn btn-sm btn-secondary" type="button">${this.collapseButtonText}</button>
-        </form>
+      <div class='row legend col-md-12'>
+        ${this.filters.map(filter => html`
+        <div data-status="${filter.status}" class="form-check form-check-inline">
+          <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" ?checked="${filter.enabled}" value="${filter.status}" @input="${() => this.checkboxClicked(filter)}">
+            <span class="badge badge-${getContextClassForStatus(filter.status)}">${getEmojiForStatus(filter.status)}
+              ${filter.status} (${filter.numberOfMutants})</span>
+          </label>
+        </div>
+        `)}
+        <button @click="${this.toggleOpenAll}" class="btn btn-sm btn-secondary" type="button">${this.collapseButtonText}</button>
       </div>
     `;
   }
