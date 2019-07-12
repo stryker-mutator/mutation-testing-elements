@@ -143,7 +143,12 @@ export class MutationTestReportTotalsComponent extends LitElement {
   }
 
   private renderRow(name: string, row: MetricsResult, path: string | undefined) {
-    const mutationScoreRounded = row.metrics.mutationScore.toFixed(2);
+    let mutationScore = 0;
+    let mutationScoreRounded = null;
+    if (row.metrics.mutationScore != null) {
+      mutationScore = row.metrics.mutationScore as number;
+      mutationScoreRounded = mutationScore.toFixed(2);
+    }
     const coloringClass = this.determineColoringClass(row.metrics.mutationScore);
     const progressBarStyle = `width: ${mutationScoreRounded}%`;
     return html`
@@ -155,11 +160,11 @@ export class MutationTestReportTotalsComponent extends LitElement {
         <div class="progress">
           <div class="progress-bar bg-${coloringClass}" role="progressbar" aria-valuenow="${mutationScoreRounded}"
             aria-valuemin="0" aria-valuemax="100" .style="${progressBarStyle}">
-            ${mutationScoreRounded}%
+            ${mutationScoreRounded ? mutationScoreRounded + '%' : ''}
           </div>
         </div>
       </td>
-      <th style="width: 50px;" class="no-border-left text-center text-${coloringClass}">${mutationScoreRounded}</th>
+      <th style="width: 50px;" class="no-border-left text-center text-${coloringClass}">${mutationScoreRounded ? mutationScoreRounded : 'N/A'}</th>
       <td class="text-center">${row.metrics.killed}</td>
       <td class="text-center">${row.metrics.survived}</td>
       <td class="text-center">${row.metrics.timeout}</td>
@@ -176,8 +181,8 @@ export class MutationTestReportTotalsComponent extends LitElement {
     return `#${to}`;
   }
 
-  private determineColoringClass(score: number) {
-    if (this.thresholds) {
+  private determineColoringClass(score: number | null) {
+    if (score != null && this.thresholds) {
       if (score < this.thresholds.low) {
         return 'danger';
       } else if (score < this.thresholds.high) {
