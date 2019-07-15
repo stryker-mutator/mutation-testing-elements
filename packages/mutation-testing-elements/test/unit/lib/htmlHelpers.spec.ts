@@ -31,9 +31,17 @@ describe(escapeHtml.name, () => {
 });
 
 describe(toAbsoluteUrl.name, () => {
-
   it('should make a fragment absolute', () => {
     const actual = toAbsoluteUrl('foo');
-    expect(actual).eq(window.location.href + '#foo');
+    expect(actual).eq(expectedUrl());
+
+    function expectedUrl() {
+      const currentUrl = window.location.href;
+      if (currentUrl.endsWith('#')) {
+        return `${currentUrl}foo`;
+      } else {
+        return `${currentUrl}#foo`;
+      }
+    }
   });
 });
