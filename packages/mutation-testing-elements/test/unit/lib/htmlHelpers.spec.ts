@@ -1,4 +1,4 @@
-import { escapeHtml, getContextClassForStatus } from '../../../src/lib/htmlHelpers';
+import { escapeHtml, getContextClassForStatus, toAbsoluteUrl } from '../../../src/lib/htmlHelpers';
 import { expect } from 'chai';
 import { MutantStatus } from 'mutation-testing-report-schema';
 
@@ -28,4 +28,12 @@ describe(escapeHtml.name, () => {
   actArrangeAssert('foo>bar', 'foo&gt;bar');
   actArrangeAssert('foo"bar', 'foo&quot;bar');
   actArrangeAssert('foo\'bar', 'foo&#039;bar');
+});
+
+describe(toAbsoluteUrl.name, () => {
+
+  it('should make a fragment absolute', () => {
+    const actual = toAbsoluteUrl('foo');
+    expect(actual).eq(window.location.href + '#foo');
+  });
 });

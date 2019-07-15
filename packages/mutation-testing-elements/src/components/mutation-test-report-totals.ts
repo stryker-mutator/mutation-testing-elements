@@ -4,6 +4,7 @@ import { Thresholds } from 'mutation-testing-report-schema';
 import * as svg from './svg';
 import { pathJoin } from '../lib/codeHelpers';
 import { MetricsResult } from 'mutation-testing-metrics';
+import { toAbsoluteUrl } from '../lib/htmlHelpers';
 
 @customElement('mutation-test-report-totals')
 export class MutationTestReportTotalsComponent extends LitElement {
@@ -149,7 +150,7 @@ export class MutationTestReportTotalsComponent extends LitElement {
     return html`
     <tr title="${row.name}">
       <td style="width: 17px;" class="icon no-border-right">${row.file ? svg.file : svg.directory}</td>
-      <td width="" class="no-border-left">${typeof path === 'string' ? html`<a href="${this.link(path)}">${name}</a>` :
+      <td width="" class="no-border-left">${typeof path === 'string' ? html`<a href="${toAbsoluteUrl(path)}">${name}</a>` :
         html`<span>${row.name}</span>`}</td>
       <td class="no-border-right vertical-middle">
         <div class="progress">
@@ -170,10 +171,6 @@ export class MutationTestReportTotalsComponent extends LitElement {
       <th class="text-center">${row.metrics.totalUndetected}</th>
       <th class="text-center">${row.metrics.totalMutants}</th>
     </tr>`;
-  }
-
-  private link(to: string) {
-    return `#${to}`;
   }
 
   private determineColoringClass(score: number) {
