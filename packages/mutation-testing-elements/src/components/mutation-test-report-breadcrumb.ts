@@ -1,5 +1,6 @@
 import { LitElement, html, property, customElement } from 'lit-element';
 import { bootstrap } from '../style';
+import { toAbsoluteUrl } from '../lib/htmlHelpers';
 const ROOT_NAME = 'All files';
 
 @customElement('mutation-test-report-breadcrumb')
@@ -20,7 +21,7 @@ export class MutationTestReportBreadcrumbComponent extends LitElement {
 
   private renderRootItem() {
     if (this.path && this.path.length) {
-      return this.renderLink(ROOT_NAME, '#');
+      return this.renderLink(ROOT_NAME, '');
     } else {
       return this.renderActiveItem(ROOT_NAME);
     }
@@ -33,7 +34,7 @@ export class MutationTestReportBreadcrumbComponent extends LitElement {
         if (index === path.length - 1) {
           return this.renderActiveItem(item);
         } else {
-          return this.renderLink(item, `#${path.filter((_, i) => i <= index).join('/')}`);
+          return this.renderLink(item, `${path.filter((_, i) => i <= index).join('/')}`);
         }
       });
     }
@@ -45,6 +46,6 @@ export class MutationTestReportBreadcrumbComponent extends LitElement {
   }
 
   private renderLink(title: string, url: string) {
-    return html`<li class="breadcrumb-item"><a href="${url}">${title}</a></li>`;
+    return html`<li class="breadcrumb-item"><a href="${toAbsoluteUrl(url)}">${title}</a></li>`;
   }
 }
