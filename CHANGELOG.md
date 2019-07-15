@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.1.0...v1.1.1) (2019-07-15)
+
+
+### Bug Fixes
+
+* **legend:** status alignments ([#45](https://github.com/stryker-mutator/mutation-testing-elements/issues/45)) ([5656efd](https://github.com/stryker-mutator/mutation-testing-elements/commit/5656efd))
+* **links:** use absolute urls inside the report ([#56](https://github.com/stryker-mutator/mutation-testing-elements/issues/56)) ([1fa4d2f](https://github.com/stryker-mutator/mutation-testing-elements/commit/1fa4d2f))
+* **popup:** caution popup arrow color ([#46](https://github.com/stryker-mutator/mutation-testing-elements/issues/46)) ([d44bd4b](https://github.com/stryker-mutator/mutation-testing-elements/commit/d44bd4b))
+* **popup:** popup offset ([#47](https://github.com/stryker-mutator/mutation-testing-elements/issues/47)) ([7860fc0](https://github.com/stryker-mutator/mutation-testing-elements/commit/7860fc0))
+* **router:** allow url encoded chars in file names ([#55](https://github.com/stryker-mutator/mutation-testing-elements/issues/55)) ([1d73afd](https://github.com/stryker-mutator/mutation-testing-elements/commit/1d73afd))
+
+
+
+
+
+
 
 ## [1.1.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.0.7...v1.1.0) (2019-06-17)
 
