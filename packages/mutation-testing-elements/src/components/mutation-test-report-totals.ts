@@ -65,6 +65,10 @@ export class MutationTestReportTotalsComponent extends LitElement {
     table th.vertical-middle, table td.vertical-middle {
       vertical-align: middle;
     }
+
+    .text-default {
+      color: #777;
+    }
   `];
 
   public render() {
@@ -143,14 +147,9 @@ export class MutationTestReportTotalsComponent extends LitElement {
   }
 
   private renderRow(name: string, row: MetricsResult, path: string | undefined) {
-    let mutationScore = 0;
-    let mutationScoreRounded = null;
-    if (row.metrics.mutationScore != null) {
-      mutationScore = row.metrics.mutationScore as number;
-      mutationScoreRounded = mutationScore.toFixed(2);
-    }
     const coloringClass = this.determineColoringClass(row.metrics.mutationScore);
-    const progressBarStyle = `width: ${mutationScoreRounded}%`;
+    const mutationScoreRounded = this.mutationScoreRounded(row.metrics.mutationScore);
+    const progressBarStyle = `width: ${mutationScoreRounded ? mutationScoreRounded : 0}%`;
     return html`
     <tr title="${row.name}">
       <td style="width: 17px;" class="icon no-border-right">${row.file ? svg.file : svg.directory}</td>
@@ -158,13 +157,15 @@ export class MutationTestReportTotalsComponent extends LitElement {
         html`<span>${row.name}</span>`}</td>
       <td class="no-border-right vertical-middle">
         <div class="progress">
-          <div class="progress-bar bg-${coloringClass}" role="progressbar" aria-valuenow="${mutationScoreRounded}"
+          <div class="progress-bar bg-${coloringClass}" role="progressbar" aria-valuenow="${mutationScoreRounded ? mutationScoreRounded : 0}"
             aria-valuemin="0" aria-valuemax="100" .style="${progressBarStyle}">
-            ${mutationScoreRounded ? mutationScoreRounded + '%' : ''}
+            ${mutationScoreRounded !== null ? mutationScoreRounded + '%' : 'Not available'}
           </div>
         </div>
       </td>
-      <th style="width: 50px;" class="no-border-left text-center text-${coloringClass}">${mutationScoreRounded ? mutationScoreRounded : 'N/A'}</th>
+      <th style="width: 50px;" class="no-border-left text-center text-${coloringClass}">
+        ${mutationScoreRounded !== null ? mutationScoreRounded : 'N/A'}
+      </th>
       <td class="text-center">${row.metrics.killed}</td>
       <td class="text-center">${row.metrics.survived}</td>
       <td class="text-center">${row.metrics.timeout}</td>
@@ -181,11 +182,18 @@ export class MutationTestReportTotalsComponent extends LitElement {
     return `#${to}`;
   }
 
-  private determineColoringClass(score: number | null) {
-    if (score != null && this.thresholds) {
-      if (score < this.thresholds.low) {
+  private mutationScoreRounded(mutationScore: number | null) {
+    if (mutationScore !== null) {
+      return mutationScore.toFixed(2);
+    }
+    return null;
+  }
+
+  private determineColoringClass(mutationScore: number | null) {
+    if (mutationScore != null && this.thresholds) {
+      if (mutationScore < this.thresholds.low) {
         return 'danger';
-      } else if (score < this.thresholds.high) {
+      } else if (mutationScore < this.thresholds.high) {
         return 'warning';
       } else {
         return 'success';

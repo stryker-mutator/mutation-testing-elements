@@ -70,4 +70,18 @@ describe(MutationTestReportTotalsComponent.name, () => {
     expect((rows.item(1).cells.item(1) as HTMLTableCellElement).textContent).eq('baz/foo.js');
   });
 
+  it('should show N/A when no mutation score is available', async () => {
+    sut.element.model = createMetricsResult({
+      name: 'foo',
+      childResults: [createMetricsResult({
+        name: 'bar.js',
+        childResults: []
+      })]
+    });
+
+    await sut.updateComplete;
+    const table = sut.$('table') as HTMLTableElement;
+    expect(table).ok;
+    expect(table.querySelectorAll('.progress-bar')).contains('N/A');
+  });
 });
