@@ -2,7 +2,6 @@ import { MutationTestReportTotalsComponent } from '../../../src/components/mutat
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { expect } from 'chai';
 import { createMetricsResult, createFileResult } from '../../helpers/factory';
-import { Metrics } from 'mutation-testing-metrics';
 
 describe(MutationTestReportTotalsComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportTotalsComponent>;
