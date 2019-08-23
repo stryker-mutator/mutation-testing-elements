@@ -1,6 +1,9 @@
 import { customElement, LitElement, property, html, unsafeCSS } from 'lit-element';
 import { bootstrap } from '../../style';
 
+// Variable should be kept in sync with 'popup-width' in './mutation-test-report-popup.scss'
+const popupWidth = 200;
+
 @customElement('mutation-test-report-popup')
 export class MutationTestReportPopupComponent extends LitElement {
 
@@ -19,7 +22,7 @@ export class MutationTestReportPopupComponent extends LitElement {
   ];
 
   public firstUpdated() {
-    if (this.getBoundingClientRect().left < 150) {
+    if (this.getBoundingClientRect().left < (popupWidth / 2)) {
       const popover = (this.shadowRoot as ShadowRoot).querySelector('.popover') as HTMLElement;
       popover.style.marginLeft = '0px';
     }

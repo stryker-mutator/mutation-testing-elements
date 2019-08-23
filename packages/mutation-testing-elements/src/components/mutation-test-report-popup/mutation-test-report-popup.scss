@@ -1,6 +1,9 @@
 @import "~bootstrap/scss/_functions.scss";
 @import "../../style/bootstrap-reboot.scss";
 
+// Variable should be kept in sync with 'popupWidth' in  './mutation-test-report-popup.ts'
+$popup-width: 200px;
+
 :host {
     position: relative;
     display: inline-block;
@@ -9,13 +12,12 @@
 
 /* The actual popup */
 .popover {
-    min-width: 200px;
-    max-width: 300px;
+    width: $popup-width;
     position: absolute;
     z-index: 1;
     top: 125%;
     left: 50%;
-    margin-left: -150px;
+    margin-left: - $popup-width / 2;
     visibility: hidden;
     opacity: 0;
     transition: 0.1s ease-in;
