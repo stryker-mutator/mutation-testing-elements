@@ -2,6 +2,7 @@ import { MutationTestReportTotalsComponent } from '../../../src/components/mutat
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { expect } from 'chai';
 import { createMetricsResult, createFileResult } from '../../helpers/factory';
+import { Metrics } from 'mutation-testing-metrics';
 
 describe(MutationTestReportTotalsComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportTotalsComponent>;
@@ -72,16 +73,14 @@ describe(MutationTestReportTotalsComponent.name, () => {
 
   it('should show N/A when no mutation score is available', async () => {
     sut.element.model = createMetricsResult({
-      name: 'foo',
-      childResults: [createMetricsResult({
-        name: 'bar.js',
-        childResults: []
-      })]
+      name: 'foo'
     });
+
+    sut.element.model.metrics.mutationScore = null;
 
     await sut.updateComplete;
     const table = sut.$('table') as HTMLTableElement;
     expect(table).ok;
-    expect(table.querySelectorAll('.progress-bar')).contains('N/A');
+    expect(table.querySelectorAll('.progress-bar')[0].textContent).contains('Not available');
   });
 });
