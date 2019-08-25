@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/stryker-mutator/mutation-testing-elements.svg?branch=master)](https://travis-ci.com/stryker-mutator/mutation-testing-elements)
+
 # Mutation testing elements
 
 Welcome to the mutation testing elements mono repo.
