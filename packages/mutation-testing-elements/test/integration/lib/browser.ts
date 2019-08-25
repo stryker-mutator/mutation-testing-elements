@@ -1,16 +1,18 @@
-import { Capabilities, Builder, WebDriver } from 'selenium-webdriver';
+import { Builder, WebDriver } from 'selenium-webdriver';
+import chrome from 'selenium-webdriver/chrome';
 
 let browser: WebDriver | null = null;
 
 export async function init() {
-  const headlessCapabilities = Capabilities.chrome();
-  if (process.env.TRAVIS) {
-    // Use headless chrome on the build server
-    headlessCapabilities.set('chromeOptions', { args: ['--headless'] });
-  }
+  const baseOptions = new chrome.Options();
+  // Use headless chrome on the build server
+  const chromeOptions = process.env.TRAVIS ?
+    baseOptions.headless() :
+    baseOptions;
+
   browser = await new Builder()
     .forBrowser('chrome')
-    .withCapabilities(headlessCapabilities)
+    .setChromeOptions(chromeOptions)
     .build();
 }
 

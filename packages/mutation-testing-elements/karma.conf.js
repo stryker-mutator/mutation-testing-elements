@@ -24,4 +24,3 @@ module.exports = function (config) {
   delete config.webpack.entry;
   delete config.webpack.output;
 }
-
