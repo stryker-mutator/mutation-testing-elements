@@ -60,7 +60,7 @@
     "link-parent-bin": "^1.0.1",
     "lit-element": "^2.2.0",
     "mocha": "^6.1.4",
-    "rimraf": "^2.6.3",
+    "rimraf": "^3.0.0",
     "rxjs": "^6.5.2",
     "sass": "^1.22.3",
     "sass-loader": "^7.1.0",
