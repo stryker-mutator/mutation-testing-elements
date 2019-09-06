@@ -8,4 +8,3 @@ module.exports = merge(common, {
     contentBase: ['./testResources', '.']
   }
 });
-
