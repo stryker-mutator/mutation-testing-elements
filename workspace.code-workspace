@@ -9,6 +9,10 @@
       "name": "metrics"
     },
     {
+      "path": "packages/mutation-testing-metrics-scala",
+      "name": "metrics-scala"
+    },
+    {
       "path": "packages/mutation-testing-elements",
       "name": "elements"
     },
