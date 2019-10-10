@@ -1,7 +1,7 @@
-import { customElement, LitElement, property, html, css } from 'lit-element';
+import { customElement, LitElement, property, html, unsafeCSS } from 'lit-element';
 import { MutantResult } from 'mutation-testing-report-schema';
-import { bootstrap } from '../style';
-import { getContextClassForStatus, getEmojiForStatus } from '../lib/htmlHelpers';
+import { bootstrap } from '../../style';
+import { getContextClassForStatus, getEmojiForStatus } from '../../lib/htmlHelpers';
 
 @customElement('mutation-test-report-mutant')
 export class MutationTestReportMutantComponent extends LitElement {
@@ -20,14 +20,8 @@ export class MutationTestReportMutantComponent extends LitElement {
 
   public static styles = [
     bootstrap,
-    css`
-    .badge {
-      cursor: pointer;
-    }
-    .disabled-code {
-      text-decoration: line-through;
-    }
-  `];
+    unsafeCSS(require('./index.scss'))
+  ];
 
   private readonly mutantClicked = (event: Event) => {
     this.expand = !this.expand;

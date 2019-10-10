@@ -18,7 +18,7 @@ export class MutationTestReportPopupComponent extends LitElement {
 
   public static styles = [
     bootstrap,
-    unsafeCSS(require('./mutation-test-report-popup.scss'))
+    unsafeCSS(require('./index.scss'))
   ];
 
   public firstUpdated() {

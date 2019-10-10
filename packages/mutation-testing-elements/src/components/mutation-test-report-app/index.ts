@@ -1,8 +1,8 @@
-import { LitElement, html, property, customElement, css, PropertyValues } from 'lit-element';
+import { LitElement, html, property, customElement, PropertyValues, unsafeCSS } from 'lit-element';
 import { MutationTestResult } from 'mutation-testing-report-schema';
 import { MetricsResult, calculateMetrics } from 'mutation-testing-metrics';
-import { bootstrap } from '../style';
-import { locationChange$ } from '../lib/router';
+import { bootstrap } from '../../style';
+import { locationChange$ } from '../../lib/router';
 import { Subscription } from 'rxjs';
 
 @customElement('mutation-test-report-app')
@@ -84,23 +84,7 @@ export class MutationTestReportAppComponent extends LitElement {
 
   public static styles = [
     bootstrap,
-    css`
-    :host {
-      line-height: 1.15;
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-      font-size: 1rem;
-      font-weight: 400;
-      line-height: 1.5;
-      color: #212529;
-      text-align: left;
-      background-color: #fff;
-    }
-
-    .display-4 small {
-      font-weight: 300;
-    }
-    `
+    unsafeCSS(require('./index.scss'))
   ];
 
   public readonly subscriptions: Subscription[] = [];
