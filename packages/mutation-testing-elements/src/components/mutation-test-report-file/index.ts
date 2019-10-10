@@ -28,7 +28,7 @@ export class MutationTestReportFileComponent extends LitElement {
   public static styles = [
     highlightJS,
     bootstrap,
-    unsafeCSS(require('./mutation-test-report-file.scss'))
+    unsafeCSS(require('./index.scss'))
   ];
 
   private readonly expandAll = () => {

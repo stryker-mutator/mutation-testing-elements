@@ -32,6 +32,7 @@ module.exports = {
         test: /\.scss$/,
         use: [
           "css-loader", // translates CSS into CommonJS
+          "postcss-loader",
           {
             loader: "sass-loader",
             options: {
