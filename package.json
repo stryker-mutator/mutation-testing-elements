@@ -46,7 +46,7 @@
     "ajv": "^6.10.0",
     "bootstrap": "^4.3.1",
     "chai": "^4.2.0",
-    "chromedriver": "^76.0.0",
+    "chromedriver": "^77.0.0",
     "cross-env": "^6.0.3",
     "css-loader": "^3.0.0",
     "express": "^4.17.1",
