@@ -4,7 +4,7 @@
 val Scala211 = "2.11.12"
 val Scala212 = "2.12.10"
 val Scala213 = "2.13.1"
-val Scala3   = "0.19.0-RC1"
+val Scala3   = "0.18.1-RC1"
 
 lazy val ScalaVersions = Seq(Scala213, Scala212)
 scalaVersion := Scala213
@@ -12,7 +12,7 @@ scalaVersion := Scala213
 // shadow sbt-scalajs' crossProject and CrossType from Scala.js 0.6.x
 import sbtcrossproject.CrossPlugin.autoImport.{crossProject, CrossType}
 
-lazy val root = crossProject(JVMPlatform, JSPlatform, NativePlatform)
+lazy val metrics = crossProject(JVMPlatform, JSPlatform, NativePlatform)
   .withoutSuffixFor(JVMPlatform)
   .crossType(CrossType.Pure)
   .in(file("metrics"))
@@ -27,7 +27,9 @@ lazy val sharedSettings = Seq(
   scalaVersion := Scala213,
   crossScalaVersions := ScalaVersions,
   skip in publish := false,
-  publishTo := sonatypePublishToBundle.value
+  publishTo := sonatypePublishToBundle.value,
+  Compile / unmanagedSourceDirectories += 
+    baseDirectory.value.getParentFile / "src" / "main" / (if(isDotty.value) "scala-3" else "scala-2")
 )
 
 lazy val jvmSettings = Seq(
@@ -37,7 +39,7 @@ lazy val jvmSettings = Seq(
     "org.glassfish"        % "jakarta.json"   % "1.1.6",
     "io.circe"             %% "circe-core"    % "0.12.1",
     "io.circe"             %% "circe-generic" % "0.12.1"
-  ).map(_ % Test)
+  ).map(_.withDottyCompat(scalaVersion.value) % Test)
 )
 
 lazy val nativeSettings = Seq(

@@ -1,6 +1,6 @@
 package mutationtesting
 
-import mutationtesting.MutantStatus.MutantStatus
+import mutationtesting.MutantStatus._
 
 sealed trait MetricsResult {
 

@@ -1,6 +1,6 @@
 package mutationtesting
 
-import MutantStatus.MutantStatus
+import mutationtesting.MutantStatus._
 
 final case class MutationTestReport(
     schemaVersion: String = "1",
@@ -23,9 +23,3 @@ final case class Location(start: Position, end: Position)
 final case class Position(line: Int, column: Int)
 
 final case class Thresholds(high: Int, low: Int)
-
-object MutantStatus extends Enumeration {
-  type MutantStatus = Value
-
-  val Killed, Survived, NoCoverage, Timeout, CompileError = Value
-}
