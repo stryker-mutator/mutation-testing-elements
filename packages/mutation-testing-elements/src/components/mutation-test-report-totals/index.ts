@@ -1,7 +1,7 @@
 import { LitElement, html, property, customElement, unsafeCSS } from 'lit-element';
 import { bootstrap } from '../../style';
 import { Thresholds } from 'mutation-testing-report-schema';
-import * as svg from '../svg';
+import { getIconForFile } from 'vscode-icons-js';
 import { pathJoin } from '../../lib/codeHelpers';
 import { MetricsResult } from 'mutation-testing-metrics';
 import { toAbsoluteUrl } from '../../lib/htmlHelpers';
@@ -104,7 +104,7 @@ export class MutationTestReportTotalsComponent extends LitElement {
     const progressBarStyle = `width: ${mutationScoreRounded}%`;
     return html`
     <tr title="${row.name}">
-      <td style="width: 17px;" class="icon no-border-right">${row.file ? svg.file : svg.directory}</td>
+      <td style="width: 17px;" class="icon no-border-right"><img style="width: 22px;" src="./icons/${row.file ? getIconForFile(row.name) : 'default_folder.svg'}"></td>
       <td width="" class="no-border-left">${typeof path === 'string' ? html`<a href="${toAbsoluteUrl(path)}">${name}</a>` :
         html`<span>${row.name}</span>`}</td>
       <td class="no-border-right vertical-middle">
