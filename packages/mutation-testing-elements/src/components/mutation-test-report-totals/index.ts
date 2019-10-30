@@ -1,10 +1,10 @@
 import { LitElement, html, property, customElement, unsafeCSS } from 'lit-element';
 import { bootstrap } from '../../style';
 import { Thresholds } from 'mutation-testing-report-schema';
-import { getIconForFile } from 'vscode-icons-js';
 import { pathJoin } from '../../lib/codeHelpers';
 import { MetricsResult } from 'mutation-testing-metrics';
 import { toAbsoluteUrl } from '../../lib/htmlHelpers';
+import { SvgService } from '../svg';
 
 @customElement('mutation-test-report-totals')
 export class MutationTestReportTotalsComponent extends LitElement {
@@ -17,6 +17,8 @@ export class MutationTestReportTotalsComponent extends LitElement {
 
   @property()
   public currentPath: string[] = [];
+
+  private svgService: SvgService = new SvgService();
 
   public static styles = [
     bootstrap,
@@ -104,7 +106,7 @@ export class MutationTestReportTotalsComponent extends LitElement {
     const progressBarStyle = `width: ${mutationScoreRounded}%`;
     return html`
     <tr title="${row.name}">
-      <td style="width: 17px;" class="icon no-border-right"><img style="width: 22px;" src="./icons/${row.file ? getIconForFile(row.name) : 'default_folder.svg'}"></td>
+      <td style="width: 32px;" class="icon no-border-right">${row.file ? this.svgService.getIconForFile(row.name) : this.svgService.getIconForFolder() }</td>
       <td width="" class="no-border-left">${typeof path === 'string' ? html`<a href="${toAbsoluteUrl(path)}">${name}</a>` :
         html`<span>${row.name}</span>`}</td>
       <td class="no-border-right vertical-middle">
