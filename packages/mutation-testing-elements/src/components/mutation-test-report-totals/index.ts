@@ -18,7 +18,7 @@ export class MutationTestReportTotalsComponent extends LitElement {
   @property()
   public currentPath: string[] = [];
 
-  private svgService: SvgService = new SvgService();
+  private readonly svgService: SvgService = new SvgService();
 
   public static styles = [
     bootstrap,
