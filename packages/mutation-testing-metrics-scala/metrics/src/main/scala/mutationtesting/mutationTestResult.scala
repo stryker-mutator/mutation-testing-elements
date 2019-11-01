@@ -3,6 +3,9 @@ package mutationtesting
 import mutationtesting.MutantStatus._
 
 final case class MutationTestReport(
+    `$schema`: Option[String] = Some(
+      "https://raw.githubusercontent.com/stryker-mutator/mutation-testing-elements/master/packages/mutation-testing-report-schema/src/mutation-testing-report-schema.json"
+    ),
     schemaVersion: String = "1",
     thresholds: Thresholds,
     files: Map[String, MutationTestResult]

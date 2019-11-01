@@ -8,6 +8,12 @@ Cross-compiled for Scala 2.12, 2.13, [Dotty](https://dotty.epfl.ch/), [Scala.js 
 
 ## Usage example
 
+Add the dependency to your project [![Maven Central](https://img.shields.io/maven-central/v/io.stryker-mutator/mutation-testing-metrics_2.13.svg?label=Maven%20Central&colorB=brightgreen)](https://search.maven.org/artifact/io.stryker-mutator/mutation-testing-metrics_2.13):
+
+```scala
+libraryDependencies += "io.stryker-mutator" %% "mutation-testing-metrics" % version
+```
+
 First create the mutation test report:
 
 ```scala mdoc
@@ -28,17 +34,14 @@ val survived: Int = metrics.survived
 
 The `MutationTestReport` case classes generate a JSON compliant with the mutation-testing JSON schema (as verified by [tests](metrics/.jvm/src/test/scala/mutationtesting/SchemaTest.scala)).
 
-Example usage with Circe (note the extra enum encoded that's needed):
+Example usage with Circe:
 
 ```scala mdoc
-val report = MutationTestReport(thresholds = ???, files = ???)
-
 import io.circe.Encoder
-import io.circe.generic.auto._
 import io.circe.syntax._
-implicit val encoder: Encoder[MutantStatus] = Encoder.encodeEnumeration(MutantStatus)
+import mutationtesting.MutationReportEncoder._
 
-val json: JSON = report.asJson
+val json = report.asJson
 ```
 
 ## API reference
