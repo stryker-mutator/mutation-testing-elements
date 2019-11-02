@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.1.1...v1.2.0) (2019-10-02)
+
+
+### Features
+
+* **build:** use postcss to optimize css assets ([8f24f06](https://github.com/stryker-mutator/mutation-testing-elements/commit/8f24f06))
+
+
+
+
+
 ## [1.1.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.1.0...v1.1.1) (2019-07-15)
 
 
