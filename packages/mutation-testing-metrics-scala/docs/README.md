@@ -14,34 +14,82 @@ Add the dependency to your project [![Maven Central](https://img.shields.io/mave
 libraryDependencies += "io.stryker-mutator" %% "mutation-testing-metrics" % version
 ```
 
+If you use Scala.js or Scala Native, use `%%%` instead after the groupId.
+
 First create the mutation test report:
 
-```scala mdoc
+```scala mdoc:silent
 import mutationtesting._
-val report = MutationTestReport(thresholds = ???, files = ???)
+val report = MutationTestReport(thresholds = Thresholds(high = 80, low = 10),
+  files = Map(
+    "src/stryker4s/Stryker4s.scala" -> MutationTestResult(
+      source = "case class Stryker4s(foo: String)",
+      mutants = Seq(
+        MutantResult("1", "BinaryOperator", "-", Location(Position(1, 2), Position(2, 3)), status = MutantStatus.Killed)
+      )
+    )
+  )
+)
+```
+
+The `MutationTestReport` case classes generate a JSON compliant with the [mutation-testing JSON schema](https://github.com/stryker-mutator/mutation-testing-elements/blob/master/packages/mutation-testing-report-schema/src/mutation-testing-report-schema.json).
+
+```scala mdoc:reset:invisible
+// Read actual json for more interesting metrics
+import scala.io.Source
+import io.circe.parser.decode
+import mutationtesting._
+import mutationtesting.MutationReportDecoder._
+val json = Source.fromFile("../mutation-testing-elements/testResources/scala-example/mutation-report.json").mkString
+
+val report = decode[MutationTestReport](json) match {
+  case Left(err)  => throw err
+  case Right(rep) => rep
+}
 ```
 
 Then calculate and use metrics from that report:
 
-```scala mdoc
-import mutationtesting.{Metrics, MetricsResult}
+```scala mdoc:silent
 val metrics: MetricsResult = Metrics.calculateMetrics(report)
-
-val mutationScore: Double = metrics.mutationScore
-val killed: Int = metrics.killed
-val survived: Int = metrics.survived
 ```
 
-The `MutationTestReport` case classes generate a JSON compliant with the mutation-testing JSON schema (as verified by [tests](metrics/.jvm/src/test/scala/mutationtesting/SchemaTest.scala)).
-
-Example usage with Circe:
+That report will have all the metrics you need:
 
 ```scala mdoc
-import io.circe.Encoder
+val mutationScore = metrics.mutationScore
+val killed = metrics.killed
+val survived = metrics.survived
+```
+
+## mutation-testing-metrics-circe
+
+Circe transcodings are provided by the `mutation-testing-metrics-circe` library to work with JSON and you don't want the extra dependency on `circe-generic`. It has two dependencies: `circe-core` and `circe-parser`.
+
+```scala
+libraryDependencies += "io.stryker-mutator" %% "mutation-testing-metrics-circe" % version
+```
+
+### Encoding
+
+Import the encoder:
+
+```scala mdoc:silent
 import io.circe.syntax._
 import mutationtesting.MutationReportEncoder._
 
-val json = report.asJson
+val encoded = report.asJson
+```
+
+### Decoding
+
+Import the decoder:
+
+```scala mdoc:silent
+import io.circe.parser.decode
+import mutationtesting.MutationReportDecoder._
+
+val decoded = decode[MutationTestReport](json)
 ```
 
 ## API reference
@@ -50,19 +98,21 @@ val json = report.asJson
 
 A `MetricsResult` has the following properties, as described in [the handbook](https://github.com/stryker-mutator/stryker-handbook/blob/master/mutant-states-and-metrics.md): 
  
-* `killed`
-* `survived`
-* `timeout`
-* `noCoverage`
-* `compileErrors`
-* `totalDetected`
-* `totalUndetected`
-* `totalCovered`
-* `totalValid`
-* `totalInvalid`
-* `totalMutants`
-* `mutationScore`
-* `mutationScoreBasedOnCoveredCode`
+```scala mdoc
+metrics.killed
+metrics.survived
+metrics.timeout
+metrics.noCoverage
+metrics.compileErrors
+metrics.totalDetected
+metrics.totalUndetected
+metrics.totalCovered
+metrics.totalValid
+metrics.totalInvalid
+metrics.totalMutants
+metrics.mutationScore
+metrics.mutationScoreBasedOnCoveredCode
+```
 
 A `MetricsResult` is a trait with three implementations:
 
@@ -78,3 +128,5 @@ with `sbt test`. Running `sbt +test` will compile and test all targets.
 
 In CI, JS and Native will only be compiled, while tests are run on the JVM project to provide faster CI builds. Publishing is done on all targets. For more information on
 cross-compilation in sbt, see <https://www.scala-sbt.org/1.x/docs/Cross-Build.html>.
+
+This readme uses [mdoc](https://scalameta.org/mdoc/). To edit it, please edit the readme in docs and call `sbt docs/mdoc` to compile the readme in the root of the project.

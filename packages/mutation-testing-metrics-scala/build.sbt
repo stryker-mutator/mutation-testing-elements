@@ -16,18 +16,24 @@ lazy val metrics = crossProject(JVMPlatform, JSPlatform, NativePlatform)
   .withoutSuffixFor(JVMPlatform)
   .crossType(CrossType.Pure)
   .in(file("metrics"))
-  .jvmSettings(jvmSettings)
-  .nativeSettings(nativeSettings)
   .settings(
     sharedSettings,
     name := "mutation-testing-metrics"
   )
+  .jvmSettings(jvmSettings)
+  .nativeSettings(nativeSettings)
 
 lazy val circe = crossProject(JVMPlatform, JSPlatform)
   .withoutSuffixFor(JVMPlatform)
   .crossType(CrossType.Pure)
   .in(file("circe"))
   .dependsOn(metrics)
+  .settings(
+    sharedSettings,
+    name := "mutation-testing-metrics-circe",
+    libraryDependencies += ("io.circe" %%% "circe-core"   % "0.12.3").withDottyCompat(scalaVersion.value),
+    libraryDependencies += ("io.circe" %%% "circe-parser" % "0.12.3").withDottyCompat(scalaVersion.value)
+  )
   .jvmSettings(
     jvmSettings,
     libraryDependencies ++= Seq(
@@ -35,22 +41,17 @@ lazy val circe = crossProject(JVMPlatform, JSPlatform)
       "org.glassfish"        % "jakarta.json" % "1.1.6" % Test
     )
   )
-  .settings(
-    sharedSettings,
-    name := "mutation-testing-metrics-circe",
-    libraryDependencies += ("io.circe" %%% "circe-core"   % "0.12.3").withDottyCompat(scalaVersion.value),
-    libraryDependencies += ("io.circe" %%% "circe-parser" % "0.12.3").withDottyCompat(scalaVersion.value)
-  )
 
 lazy val docs = crossProject(JVMPlatform) // new documentation project
   .withoutSuffixFor(JVMPlatform)
   .in(file("metrics-docs")) // important: it must not be docs/
+  .settings(scalaVersion := Scala213, mdocOut := file("."))
   .dependsOn(circe)
   .enablePlugins(MdocPlugin)
 
 lazy val sharedSettings = Seq(
   libraryDependencies += "com.eed3si9n.verify" %%% "verify" % "0.2.0" % Test,
-  testFrameworks += new TestFramework("verify.runner.Framework"),
+  testFrameworks := List(new TestFramework("verify.runner.Framework")),
   scalaVersion := Scala213,
   crossScalaVersions := ScalaVersions,
   skip in publish := false,

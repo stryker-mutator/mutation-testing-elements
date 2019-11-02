@@ -3,7 +3,7 @@
   "version": "1.1.1",
   "description": "Zero-dependency library to calculate mutation testing metrics in Scala.",
   "scripts": {
-    "test": "sbt 'all metricsJS/compile metricsNative/compile metrics/test'",
+    "test": "sbt 'all compile metrics/test circe/test'",
     "prepublishOnly": "sbt +publishSigned",
     "publish": "sbt sonatypeBundleRelease",
     "get-version": "echo $npm_package_version"
