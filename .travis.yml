@@ -11,7 +11,7 @@ addons:
       - libunwind-dev
       - libre2-dev
 before_script:
-  - sudo curl -Lo /usr/local/bin/sbt https://raw.githubusercontent.com/paulp/sbt-extras/master/sbt
+  - sudo curl -Lo /usr/local/bin/sbt https://raw.githubusercontent.com/paulp/sbt-extras/5b04f136cb046a5f400ab1b992c05ea90bf0714d/sbt
 script: npm run all
 
 before_deploy:

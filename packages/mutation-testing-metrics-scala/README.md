@@ -125,6 +125,8 @@ metrics.mutationScoreBasedOnCoveredCode
 
 ## Contributing
 
+To use this project, you will need sbt. The recommended way on macOS/Linux is with [sbt-extras](https://github.com/paulp/sbt-extras). On Windows, you can install sbt using the [official .msi](https://www.scala-sbt.org/download.html).
+
 This project uses the [sbt-crossproject](https://github.com/portable-scala/sbt-crossproject) plugin for multiple build targets. You can compile code with `sbt compile` and run tests
 with `sbt test`. Running `sbt +test` will compile and test all targets. 
 
