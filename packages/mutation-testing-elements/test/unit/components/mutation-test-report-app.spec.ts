@@ -2,7 +2,7 @@ import { MutationTestReportAppComponent } from '../../../src/components/mutation
 import { expect } from 'chai';
 import { MutationTestResult } from 'mutation-testing-report-schema';
 import * as sinon from 'sinon';
-import { MutationTestReportFileComponent } from '../../../src/components/mutation-test-report-file/mutation-test-report-file';
+import { MutationTestReportFileComponent } from '../../../src/components/mutation-test-report-file';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 
 describe(MutationTestReportAppComponent.name, () => {

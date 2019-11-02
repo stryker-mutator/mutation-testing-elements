@@ -1,7 +1,7 @@
-import { customElement, LitElement, property, PropertyValues, html, css } from 'lit-element';
+import { customElement, LitElement, property, PropertyValues, html, unsafeCSS } from 'lit-element';
 import { MutantResult, MutantStatus } from 'mutation-testing-report-schema';
-import { bootstrap } from '../style';
-import { getContextClassForStatus, getEmojiForStatus } from '../lib/htmlHelpers';
+import { bootstrap } from '../../style';
+import { getContextClassForStatus, getEmojiForStatus } from '../../lib/htmlHelpers';
 
 export interface MutantFilter {
   status: MutantStatus;
@@ -67,22 +67,8 @@ export class MutationTestReportFileLegendComponent extends LitElement {
 
   public static styles = [
     bootstrap,
-    css`
-      .legend {
-        position: sticky;
-        top: 0;
-        background: #FFF;
-        margin-top: 0.5rem;
-        margin-bottom: 0.5rem;
-        padding-top: 0.5rem;
-        padding-bottom: 0.5rem;
-        z-index: 10;
-      }
-      .badge {
-        font-size: 1em;
-        cursor: pointer;
-      }
-  `];
+    unsafeCSS(require('./index.scss'))
+  ];
 
   public render() {
     return html`

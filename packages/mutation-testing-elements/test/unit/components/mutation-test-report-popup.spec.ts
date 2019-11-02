@@ -1,5 +1,5 @@
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
-import { MutationTestReportPopupComponent } from '../../../src/components/mutation-test-report-popup/mutation-test-report-popup';
+import { MutationTestReportPopupComponent } from '../../../src/components/mutation-test-report-popup';
 import { expect } from 'chai';
 
 describe('mutation-test-report-popup', () => {

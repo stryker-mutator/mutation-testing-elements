@@ -1,5 +1,4 @@
 const path = require('path');
-// const TerserPlugin = require('terser-webpack-plugin');
 const context = __dirname;
 module.exports = {
   entry: './src/index.ts',
@@ -33,6 +32,7 @@ module.exports = {
         test: /\.scss$/,
         use: [
           "css-loader", // translates CSS into CommonJS
+          "postcss-loader",
           {
             loader: "sass-loader",
             options: {

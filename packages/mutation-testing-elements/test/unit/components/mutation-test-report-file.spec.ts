@@ -1,5 +1,5 @@
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
-import { MutationTestReportFileComponent } from '../../../src/components/mutation-test-report-file/mutation-test-report-file';
+import { MutationTestReportFileComponent } from '../../../src/components/mutation-test-report-file';
 import { expect } from 'chai';
 import { FileResult, MutantStatus, MutantResult } from 'mutation-testing-report-schema';
 import { MutationTestReportMutantComponent, SHOW_MORE_EVENT } from '../../../src/components/mutation-test-report-mutant';
