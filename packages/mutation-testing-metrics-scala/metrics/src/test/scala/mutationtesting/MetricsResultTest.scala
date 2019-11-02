@@ -48,10 +48,10 @@ object MetricsResultTest extends BasicTestSuite {
 
   private lazy val testSet = MetricsResultRoot(
     List(
-      Directory(
+      MetricsDirectory(
         "foo",
         List(
-          File(
+          MetricsFile(
             "bar.scala",
             List(
               MetricMutant(MutantStatus.Killed),
@@ -66,7 +66,7 @@ object MetricsResultTest extends BasicTestSuite {
               MetricMutant(MutantStatus.CompileError)
             )
           ),
-          File("baz.scala", Nil)
+          MetricsFile("baz.scala", Nil)
         )
       )
     )

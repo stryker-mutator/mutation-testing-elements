@@ -96,8 +96,8 @@ sealed trait FileOps extends MetricsResult {
 
 final case class MetricsResultRoot(files: Iterable[MetricsResult]) extends MetricsResult with DirOps
 
-final case class Directory(dirName: String, files: Iterable[MetricsResult]) extends MetricsResult with DirOps
+final case class MetricsDirectory(dirName: String, files: Iterable[MetricsResult]) extends MetricsResult with DirOps
 
-final case class File(fileName: String, mutants: Iterable[MetricMutant]) extends MetricsResult with FileOps
+final case class MetricsFile(fileName: String, mutants: Iterable[MetricMutant]) extends MetricsResult with FileOps
 
 final case class MetricMutant(status: MutantStatus)

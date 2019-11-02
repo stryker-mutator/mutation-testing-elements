@@ -15,8 +15,8 @@ object MetricsTest extends BasicTestSuite {
     assert(
       result == MetricsResultRoot(
         Seq(
-          Directory("dir", Seq(File("foo.scala", Nil), File("bar.scala", Nil))),
-          File("foo.scala", Nil)
+          MetricsDirectory("dir", Seq(MetricsFile("foo.scala", Nil), MetricsFile("bar.scala", Nil))),
+          MetricsFile("foo.scala", Nil)
         )
       )
     )
@@ -49,25 +49,33 @@ object MetricsTest extends BasicTestSuite {
     assert(
       result == MetricsResultRoot(
         List(
-          Directory(
+          MetricsDirectory(
             "dir",
             List(
-              Directory("bar", List(File("foo.scala", List(MetricMutant(Survived), MetricMutant(Killed))))),
-              Directory("baz", List(File("bar.scala", List(MetricMutant(Survived))))),
-              Directory("foo", List(File("bar.scala", List(MetricMutant(Killed))))),
-              File("baz.scala", List())
+              MetricsDirectory(
+                "bar",
+                List(MetricsFile("foo.scala", List(MetricMutant(Survived), MetricMutant(Killed))))
+              ),
+              MetricsDirectory("baz", List(MetricsFile("bar.scala", List(MetricMutant(Survived))))),
+              MetricsDirectory("foo", List(MetricsFile("bar.scala", List(MetricMutant(Killed))))),
+              MetricsFile("baz.scala", List())
             )
           ),
-          Directory(
+          MetricsDirectory(
             "foo",
             List(
-              Directory(
+              MetricsDirectory(
                 "foo",
-                List(Directory("foo", List(File("bar.scala", List(MetricMutant(Survived), MetricMutant(Killed))))))
+                List(
+                  MetricsDirectory(
+                    "foo",
+                    List(MetricsFile("bar.scala", List(MetricMutant(Survived), MetricMutant(Killed))))
+                  )
+                )
               )
             )
           ),
-          File("foo.scala", List())
+          MetricsFile("foo.scala", List())
         )
       )
     )

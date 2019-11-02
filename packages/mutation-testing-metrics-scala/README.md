@@ -54,7 +54,7 @@ val survived = metrics.survived
 
 ## mutation-testing-metrics-circe
 
-Circe transcodings are provided by the `mutation-testing-metrics-circe` library to work with JSON and you don't want the extra dependency on `circe-generic`. It has two dependencies: `circe-core` and `circe-parser`.
+Circe transcodings are provided by the `mutation-testing-metrics-circe` library to work with JSON if you don't want the extra dependency on `circe-generic`. It has two dependencies: `circe-core` and `circe-parser`.
 
 ```scala
 libraryDependencies += "io.stryker-mutator" %% "mutation-testing-metrics-circe" % version
@@ -117,11 +117,10 @@ metrics.mutationScoreBasedOnCoveredCode
 // res13: Double = 70.12987012987013
 ```
 
-A `MetricsResult` is a trait with three implementations:
-
-- `MetricsResultRoot`: The root of a `MetricsResult`, contains zero or more `MetricsResult`'s
-- `MetricsDirectory`: Representation of a directory. Has a directory name and zero or more `MetricsResult`'s
-- `MetricsFile`: Representation of a file with mutated code. Has a filename and zero or more `MetricMutant`'s
+- `MetricsResult` is a trait with three implementations:
+  - `MetricsResultRoot`: The root of a `MetricsResult`, contains zero or more `MetricsResult`'s
+  - `MetricsDirectory`: Representation of a directory. Has a directory name and zero or more `MetricsResult`'s
+  - `MetricsFile`: Representation of a file with mutated code. Has a filename and zero or more `MetricMutant`'s
 - `MetricMutant`: Contains a [`MutantStatus`](https://github.com/stryker-mutator/stryker-handbook/blob/master/mutant-states-and-metrics.md#mutant-states)
 
 ## Contributing
