@@ -22,12 +22,12 @@ export class SvgService {
     this.svgMapping.set('java', this.java);
     this.svgMapping.set('js', this.js);
     this.svgMapping.set('scala', this.scala);
-    this.svgMapping.set('typescript', this.typescript);
+    this.svgMapping.set('ts', this.typescript);
   }
 
   public getIconForFile(fileName: string): SVGTemplateResult {
-    const fileExtention = this.getFileExtention(fileName);
-    const svg = this.svgMapping.get(fileExtention);
+    const fileExtension = this.getFileExtension(fileName);
+    const svg = this.svgMapping.get(fileExtension);
 
     if (svg !== undefined) {
       return svg;
@@ -40,7 +40,7 @@ export class SvgService {
     return this.directory;
   }
 
-  private getFileExtention(fileName: string) {
+  private getFileExtension(fileName: string) {
     const tokens = fileName.split('.');
     return tokens[tokens.length - 1];
   }
