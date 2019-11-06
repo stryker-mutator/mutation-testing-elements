@@ -10,7 +10,7 @@ describe(SvgService.name, () => {
 
   it('should get a directory svg icon', () => {
     const directoryIcon = sut.getIconForFolder();
-    
+
     expect(directoryIcon.type).eq('svg');
     expect(directoryIcon.strings[0]).contains('directory');
   });
@@ -27,14 +27,14 @@ describe(SvgService.name, () => {
     });
 
     describe('retrieve based on known file types', () => {
-      var knownfileExtensions = ['cs', 'html','java','js', 'scala','ts'];
+      const knownfileExtensions = ['cs', 'html', 'java', 'js', 'scala', 'ts'];
 
-      knownfileExtensions.forEach((fileExtension) => {
+      knownfileExtensions.forEach(fileExtension => {
        it(`should retrieve an icon for file extension "${fileExtension}"`, () => {
          const knownFileExtension = `testfile.${fileExtension}`;
-      
+
          const fileIcon = sut.getIconForFile(knownFileExtension);
-      
+
          expect(fileIcon.type).eq('svg');
          expect(fileIcon.strings[0]).contains(fileExtension);
        });
