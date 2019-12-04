@@ -1,6 +1,6 @@
 {
   "name": "mutation-testing-elements",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "A suite of web components for a mutation testing report.",
   "unpkg": "dist/mutation-test-elements.js",
   "main": "dist/index.js",
@@ -26,7 +26,7 @@
   "devDependencies": {
     "@types/lodash.groupby": "^4.6.6",
     "lodash.groupby": "^4.6.0",
-    "mutation-testing-metrics": "^1.2.1",
+    "mutation-testing-metrics": "^1.2.2",
     "mutation-testing-report-schema": "^1.2.0"
   }
 }
