@@ -35,7 +35,7 @@ describe(MutationTestReportFileLegendComponent.name, () => {
       ];
       await sut.updateComplete;
       const actualCheckboxes = sut.$$('.form-check.form-check-inline');
-      expect(actualCheckboxes).lengthOf(6);
+      expect(actualCheckboxes).lengthOf(7);
       const checkboxTexts = actualCheckboxes.map(checkbox => normalizeWhitespace((checkbox.textContent as string)));
       expect(checkboxTexts).deep.eq([
         '✅ Killed (1)',

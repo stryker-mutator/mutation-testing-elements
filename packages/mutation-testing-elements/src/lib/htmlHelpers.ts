@@ -24,7 +24,7 @@ export function getEmojiForStatus(status: MutantStatus) {
     case MutantStatus.NoCoverage:
       return '🙈';
     case MutantStatus.Ignored:
-      return '‍🤥';
+      return '🤥';
     case MutantStatus.Survived:
       return '👽';
     case MutantStatus.Timeout:
