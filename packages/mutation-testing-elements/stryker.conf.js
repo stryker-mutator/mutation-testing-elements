@@ -1,5 +1,6 @@
 const config = require('../../stryker.parent');
 delete config.tsconfigFile;
+config.dashboard.module = 'elements';
 config.plugins = [
   '@stryker-mutator/*',
   require.resolve('./tsconfig-transpiler')
