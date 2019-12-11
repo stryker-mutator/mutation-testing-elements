@@ -5,8 +5,7 @@ let browser: WebDriver | null = null;
 
 export async function init() {
   const baseOptions = new chrome.Options();
-  // Use headless chrome on the build server
-  const chromeOptions = process.env.TRAVIS ?
+  const chromeOptions = process.env.TRAVIS || process.env.GITHUB_ACTIONS ?
     baseOptions.headless() :
     baseOptions;
 
