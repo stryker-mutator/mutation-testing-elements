@@ -1,3 +1,4 @@
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fstryker-mutator%2Fmutation-testing-elements%2Fmaster%3Fmodule%3Delements)](https://badge-api.stryker-mutator.io/github.com/stryker-mutator/mutation-testing-elements/master?module=elements)
 [![Build Status](https://travis-ci.org/stryker-mutator/mutation-testing-elements.svg?branch=master)](https://travis-ci.org/stryker-mutator/mutation-testing-elements)
 
 # Mutation testing elements
