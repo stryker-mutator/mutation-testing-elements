@@ -39,6 +39,8 @@ jobs:
       - name: Run Stryker
         run: |
           cd packages/mutation-testing-metrics-scala
+          export JAVA_OPTS="-XX:+CMSClassUnloadingEnabled -Xmx6G $JAVA_OPTS"
+          echo 'stryker4s{reporters=["console","dashboard"],base-dir="metrics",dashboard.module="metrics-scala"}' > stryker4s.conf
           npm run stryker
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
