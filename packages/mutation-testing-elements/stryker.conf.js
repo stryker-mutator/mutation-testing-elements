@@ -1,28 +1,19 @@
-module.exports = function(config) {
-  config.set({
-    mutator: 'typescript',
-    packageManager: 'npm',
-    reporters: ['html', 'clear-text', 'progress'],
-    testRunner: 'karma',
-    transpilers: [],
-    karma: {
-      projectType: 'custom',
-      configFile: 'karma.conf.js',
-      config: {
-        browsers: ['ChromeHeadless']
-      }
-    },
-    transpilers: [
-      'tsconfig'
-    ],
-    mutate: [
-      'src/**/*.ts',
-      '!src/**/*.d.ts'
-    ],
-    plugins: [
-      '@stryker-mutator/*',
-      require.resolve('./tsconfig-transpiler')
-    ],
-    maxConcurrentTestRunners: 2
-  });
+const config = require('../../stryker.parent');
+delete config.tsconfigFile;
+config.plugins = [
+  '@stryker-mutator/*',
+  require.resolve('./tsconfig-transpiler')
+];
+config.dashboard.module = 'elements';
+config.transpilers = ['tsconfig'];
+config.testRunner = 'karma';
+config.karma = {
+  projectType: 'custom',
+  configFile: 'karma.conf.js',
+  config: {
+    browsers: ['ChromeHeadless']
+  }
 };
+config.timeoutMs = 2000;
+config.coverageAnalysis = 'off';
+module.exports = config;

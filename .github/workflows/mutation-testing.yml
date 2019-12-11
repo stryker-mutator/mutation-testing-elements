@@ -1,0 +1,45 @@
+name: Mutation testing
+
+on: push
+
+jobs:
+  metrics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install & Build
+        run: |
+          npm ci
+          npm run build
+      - name: Run Stryker
+          run: |
+            cd packages/metrics
+            npm run stryker
+          env:
+            STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+  metrics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install & Build
+          run: |
+            npm ci
+            npm run build
+      - name: Run Stryker
+          run: |
+            cd packages/elements
+            npm run stryker
+          env:
+            STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+  
+  metrics-scala:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Run Stryker
+          run: |
+            cd packages/metrics-scala
+            npm run stryker
+          env:
+            STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+
