@@ -1,5 +1,3 @@
-process.env.STRYKER_DASHBOARD_API_KEY = '18f5251d-c314-4f4a-9211-bcaf66e3c077';
-
 module.exports = {
   mutator: 'typescript',
   packageManager: 'npm',
