@@ -7,7 +7,7 @@
     "prepublishOnly": "sbt +publishSigned",
     "publish": "sbt sonatypeBundleRelease",
     "get-version": "echo $npm_package_version",
-    "stryker": "sbt stryker"
+    "stryker": "sbt 'project stryker4s-core; stryker'"
   },
   "repository": {
     "type": "git",
