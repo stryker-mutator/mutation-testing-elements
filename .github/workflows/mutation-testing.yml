@@ -13,7 +13,7 @@ jobs:
           npm run build
       - name: Run Stryker
         run: |
-          cd packages/metrics
+          cd packages/mutation-testing-metrics
           npm run stryker
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
@@ -27,7 +27,7 @@ jobs:
           npm run build
       - name: Run Stryker
         run: |
-          cd packages/elements
+          cd packages/mutation-testing-elements
           npm run stryker
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
@@ -38,7 +38,7 @@ jobs:
       - uses: actions/checkout@v1
       - name: Run Stryker
         run: |
-          cd packages/metrics-scala
+          cd packages/mutation-testing-metrics-scala
           npm run stryker
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
