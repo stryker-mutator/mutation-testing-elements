@@ -10,4 +10,4 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-git"      % "1.0.0")
 
 addSbtPlugin("org.scalameta" % "sbt-mdoc" % "2.0.0")
 
-addSbtPlugin("io.stryker-mutator" % "sbt-stryker4s" % stryker4sVersion)
+addSbtPlugin("io.stryker-mutator" % "sbt-stryker4s" % "0.7.1")
