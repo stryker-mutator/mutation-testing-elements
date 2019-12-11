@@ -16,9 +16,9 @@ jobs:
   
     steps:
       - uses: actions/checkout@v1
-      - uses: olafurpg/setup-scala@v2
-        with:
-          java-version: openjdk@1.11
+    #   - uses: olafurpg/setup-scala@v2
+    #     with:
+    #       java-version: openjdk@1.11
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
