@@ -26,7 +26,7 @@ describe(MutationTestReportTotalsComponent.name, () => {
     await sut.updateComplete;
     const table = sut.$('table') as HTMLTableElement;
     expect(table).ok;
-    expect(table.querySelectorAll('thead th')).lengthOf(11);
+    expect(table.querySelectorAll('thead th')).lengthOf(12);
     expect(table.querySelectorAll('tbody th, tbody td')).lengthOf(13);
   });
 
