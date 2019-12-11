@@ -13,8 +13,6 @@ module.exports = {
   },
   maxConcurrentTestRunners: 2,
   dashboard: {
-    project: 'github.com/stryker-mutator/mutation-testing-elements',
-    version: 'master',
     reportType: 'full'
   }
 };
