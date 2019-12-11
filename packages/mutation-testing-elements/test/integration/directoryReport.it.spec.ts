@@ -21,19 +21,20 @@ describe('Directory report page', () => {
     });
 
     it('should show expected totals for cli.ts', async () => {
-      const cliRow = await page.resultTable().row('cli.ts');
+      const row = await page.resultTable().row('cli.ts');
       return Promise.all([
-        expect(await cliRow.progressBar().percentageText()).eq('8.70%'),
-        expect(await cliRow.mutationScore()).eq('8.70'),
-        expect(await cliRow.killed()).eq('2'),
-        expect(await cliRow.survived()).eq('1'),
-        expect(await cliRow.timeout()).eq('0'),
-        expect(await cliRow.noCoverage()).eq('20'),
-        expect(await cliRow.runtimeErrors()).eq('0'),
-        expect(await cliRow.compileErrors()).eq('3'),
-        expect(await cliRow.totalDetected()).eq('2'),
-        expect(await cliRow.totalUndetected()).eq('21'),
-        expect(await cliRow.totalMutants()).eq('26')]);
+        expect(await row.progressBar().percentageText()).eq('8.70%'),
+        expect(await row.mutationScore()).eq('8.70'),
+        expect(await row.killed()).eq('2'),
+        expect(await row.survived()).eq('1'),
+        expect(await row.timeout()).eq('0'),
+        expect(await row.noCoverage()).eq('20'),
+        expect(await row.ignored()).eq('0'),
+        expect(await row.runtimeErrors()).eq('0'),
+        expect(await row.compileErrors()).eq('3'),
+        expect(await row.totalDetected()).eq('2'),
+        expect(await row.totalUndetected()).eq('21'),
+        expect(await row.totalMutants()).eq('26')]);
     });
   });
 });

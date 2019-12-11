@@ -10,5 +10,6 @@ export const expectedMutantColors = Object.freeze({
   [MutantStatus.NoCoverage]: 'rgb(253, 126, 20)',
   [MutantStatus.Timeout]: 'rgb(255, 193, 7)',
   [MutantStatus.CompileError]: 'rgb(108, 117, 125)',
-  [MutantStatus.RuntimeError]: 'rgb(108, 117, 125)'
+  [MutantStatus.RuntimeError]: 'rgb(108, 117, 125)',
+  [MutantStatus.Ignored]: 'rgb(108, 117, 125)'
 });

@@ -62,6 +62,7 @@ function countMetrics(mutants: Pick<MutantResult, 'status'>[]): Metrics {
   const noCoverage = count(MutantStatus.NoCoverage);
   const runtimeErrors = count(MutantStatus.RuntimeError);
   const compileErrors = count(MutantStatus.CompileError);
+  const ignored = count(MutantStatus.Ignored);
   const totalDetected = timeout + killed;
   const totalUndetected = survived + noCoverage;
   const totalCovered = totalDetected + survived;
@@ -74,12 +75,13 @@ function countMetrics(mutants: Pick<MutantResult, 'status'>[]): Metrics {
     noCoverage,
     runtimeErrors,
     compileErrors,
+    ignored,
     totalDetected,
     totalUndetected, totalCovered,
     totalValid,
     totalInvalid,
     mutationScore: totalValid > 0 ? totalDetected / totalValid * 100 : DEFAULT_SCORE,
-    totalMutants: totalValid + totalInvalid,
+    totalMutants: totalValid + totalInvalid + ignored,
     mutationScoreBasedOnCoveredCode: totalValid > 0 ? totalDetected / totalCovered * 100 || 0 : DEFAULT_SCORE
   };
 }

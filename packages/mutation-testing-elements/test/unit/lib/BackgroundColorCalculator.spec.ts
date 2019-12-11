@@ -7,6 +7,7 @@ const EXPECTED_BACKGROUND_SURVIVED = getContextClassForStatus(MutantStatus.Survi
 const EXPECTED_BACKGROUND_NO_COVERAGE = getContextClassForStatus(MutantStatus.NoCoverage) + '-light';
 const EXPECTED_BACKGROUND_TIMEOUT = getContextClassForStatus(MutantStatus.Timeout) + '-light';
 const EXPECTED_BACKGROUND_KILLED = getContextClassForStatus(MutantStatus.Killed) + '-light';
+const EXPECTED_BACKGROUND_IGNORED = getContextClassForStatus(MutantStatus.Ignored) + '-light';
 
 describe(BackgroundColorCalculator.name, () => {
 
@@ -19,6 +20,7 @@ describe(BackgroundColorCalculator.name, () => {
     sut.markMutantStart({ status: MutantStatus.NoCoverage });
     sut.markMutantStart({ status: MutantStatus.RuntimeError });
     sut.markMutantStart({ status: MutantStatus.Timeout });
+    sut.markMutantStart({ status: MutantStatus.Ignored });
   });
 
   it('should determine no background by default', () => {
@@ -27,6 +29,7 @@ describe(BackgroundColorCalculator.name, () => {
     sut.markMutantEnd({ status: MutantStatus.NoCoverage });
     sut.markMutantEnd({ status: MutantStatus.RuntimeError });
     sut.markMutantEnd({ status: MutantStatus.Timeout });
+    sut.markMutantEnd({ status: MutantStatus.Ignored });
     expect(sut.determineBackground()).eq(null);
   });
 
@@ -50,5 +53,13 @@ describe(BackgroundColorCalculator.name, () => {
     sut.markMutantEnd({ status: MutantStatus.NoCoverage });
     sut.markMutantEnd({ status: MutantStatus.Timeout });
     expect(sut.determineBackground()).eq(EXPECTED_BACKGROUND_KILLED);
+  });
+
+  it('should determine background color for "Ignored"', () => {
+    sut.markMutantEnd({ status: MutantStatus.Survived });
+    sut.markMutantEnd({ status: MutantStatus.NoCoverage });
+    sut.markMutantEnd({ status: MutantStatus.Timeout });
+    sut.markMutantEnd({ status: MutantStatus.Killed });
+    expect(sut.determineBackground()).eq(EXPECTED_BACKGROUND_IGNORED);
   });
 });

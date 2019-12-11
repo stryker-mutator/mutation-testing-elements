@@ -37,7 +37,7 @@ export class MutationTestReportFileLegendComponent extends LitElement {
   }
 
   private updateModel() {
-    this.filters = [MutantStatus.Killed, MutantStatus.Survived, MutantStatus.NoCoverage, MutantStatus.Timeout, MutantStatus.CompileError, MutantStatus.RuntimeError]
+    this.filters = [MutantStatus.Killed, MutantStatus.Survived, MutantStatus.NoCoverage, MutantStatus.Ignored, MutantStatus.Timeout, MutantStatus.CompileError, MutantStatus.RuntimeError]
       .filter(status => this.mutants.some(mutant => mutant.status === status))
       .map(status => ({
         enabled: [MutantStatus.Survived, MutantStatus.NoCoverage, MutantStatus.Timeout].some(s => s === status),

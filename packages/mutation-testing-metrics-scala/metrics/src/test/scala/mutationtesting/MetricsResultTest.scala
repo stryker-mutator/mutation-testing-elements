@@ -10,6 +10,7 @@ object MetricsResultTest extends BasicTestSuite {
     assert(sut.timeout == 0)
     assert(sut.noCoverage == 0)
     assert(sut.compileErrors == 0)
+    assert(sut.ignored == 0)
     assert(sut.totalDetected == 0)
     assert(sut.totalUndetected == 0)
     assert(sut.totalCovered == 0)
@@ -36,12 +37,13 @@ object MetricsResultTest extends BasicTestSuite {
     ("timeout", _.timeout, 2),
     ("noCoverage", _.noCoverage, 3),
     ("compileErrors", _.compileErrors, 1),
+    ("ignored", _.ignored, 1),
     ("totalDetected", _.totalDetected, 4),
     ("totalUndetected", _.totalUndetected, 5),
     ("totalCovered", _.totalCovered, 6),
     ("totalValid", _.totalValid, 9),
     ("totalInvalid", _.totalInvalid, 1),
-    ("totalMutants", _.totalMutants, 10),
+    ("totalMutants", _.totalMutants, 11),
     ("mutationScore", _.mutationScore, (4d / 9d) * 100),
     ("mutationScoreBasedOnCoveredCode", _.mutationScoreBasedOnCoveredCode, (4d / 6d) * 100)
   )
@@ -63,7 +65,8 @@ object MetricsResultTest extends BasicTestSuite {
               MetricMutant(MutantStatus.NoCoverage),
               MetricMutant(MutantStatus.NoCoverage),
               MetricMutant(MutantStatus.NoCoverage),
-              MetricMutant(MutantStatus.CompileError)
+              MetricMutant(MutantStatus.CompileError),
+              MetricMutant(MutantStatus.Ignored),
             )
           ),
           MetricsFile("baz.scala", Nil)

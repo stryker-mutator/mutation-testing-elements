@@ -37,6 +37,7 @@ A `MetricsResult` has a `metrics` property containing the following metrics:
 * `noCoverage`
 * `runtimeErrors`
 * `compileErrors`
+* `ignored`
 * `totalDetected`
 * `totalUndetected`
 * `totalValid`

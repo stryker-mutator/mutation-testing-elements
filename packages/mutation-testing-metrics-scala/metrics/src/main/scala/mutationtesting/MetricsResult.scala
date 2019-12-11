@@ -30,6 +30,10 @@ sealed trait MetricsResult {
     */
   def compileErrors: Int
 
+  /** The total number of mutants that were not even tested because the config of the user asked for them to be ignored.
+   */
+  def ignored: Int
+
   /** The number of mutants detected by your tests.
     */
   lazy val totalDetected: Int = killed + timeout
@@ -54,7 +58,7 @@ sealed trait MetricsResult {
 
   /** All mutants.
     */
-  lazy val totalMutants: Int = totalValid + totalInvalid
+  lazy val totalMutants: Int = totalValid + totalInvalid + ignored
 
   /** The total percentage of mutants that were killed.
     */
@@ -78,6 +82,7 @@ sealed trait DirOps extends MetricsResult {
   override lazy val survived: Int      = sumOfChildrenWith(_.survived)
   override lazy val noCoverage: Int    = sumOfChildrenWith(_.noCoverage)
   override lazy val compileErrors: Int = sumOfChildrenWith(_.compileErrors)
+  override lazy val ignored: Int       = sumOfChildrenWith(_.ignored)
 
   private def sumOfChildrenWith[A](f: MetricsResult => A)(implicit num: Numeric[A]): A = files.map(f).sum
 }
@@ -90,6 +95,7 @@ sealed trait FileOps extends MetricsResult {
   override lazy val survived: Int      = countWhere(MutantStatus.Survived)
   override lazy val noCoverage: Int    = countWhere(MutantStatus.NoCoverage)
   override lazy val compileErrors: Int = countWhere(MutantStatus.CompileError)
+  override lazy val ignored: Int       = countWhere(MutantStatus.Ignored)
 
   private def countWhere(mutantStatus: MutantStatus): Int = mutants.count(_.status == mutantStatus)
 }

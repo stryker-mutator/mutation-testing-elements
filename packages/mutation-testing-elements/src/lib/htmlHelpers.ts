@@ -10,6 +10,7 @@ export function getContextClassForStatus(status: MutantStatus) {
       return 'danger';
     case MutantStatus.Timeout:
       return 'warning';
+    case MutantStatus.Ignored:
     case MutantStatus.RuntimeError:
     case MutantStatus.CompileError:
       return 'secondary';
@@ -22,6 +23,8 @@ export function getEmojiForStatus(status: MutantStatus) {
       return '✅';
     case MutantStatus.NoCoverage:
       return '🙈';
+    case MutantStatus.Ignored:
+      return '‍🤥';
     case MutantStatus.Survived:
       return '👽';
     case MutantStatus.Timeout:
