@@ -8,6 +8,22 @@ export function flatMap<T, R>(source: T[], fn: (input: T) => R[]) {
   return result;
 }
 
+type Dictionary<T> = Record<string, [string,T][]>;
+
+export function groupBy<T>(arr: [string,T][], criteria: (t: [string,T]) => string): Dictionary<T> {
+  return arr.reduce(
+    (obj: Dictionary<T>, item) => {
+      const key = criteria(item);
+      if (!obj.hasOwnProperty(key)) {
+        obj[key] = [];
+      }
+      obj[key].push(item);
+      return obj;
+    },
+    {}
+  )
+};
+
 export function pathJoin(...parts: string[]) {
   return parts.reduce((prev, current) => prev.length ? current ? `${prev}/${current}` : prev : current, '');
 }
