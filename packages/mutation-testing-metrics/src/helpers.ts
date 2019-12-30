@@ -8,6 +8,17 @@ export function flatMap<T, R>(source: T[], fn: (input: T) => R[]) {
   return result;
 }
 
+export function groupBy<T>(arr: T[], criteria: (element: T) => string): Record<string, T[]> {
+  return arr.reduce((acc: Record<string, T[]>, item) => {
+    const key = criteria(item);
+    if (!acc.hasOwnProperty(key)) {
+      acc[key] = [];
+    }
+    acc[key].push(item);
+    return acc;
+  }, {});
+}
+
 export function pathJoin(...parts: string[]) {
   return parts.reduce((prev, current) => prev.length ? current ? `${prev}/${current}` : prev : current, '');
 }

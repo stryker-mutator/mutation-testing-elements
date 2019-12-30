@@ -18,10 +18,7 @@
   },
   "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/mutation-testing-metrics#readme",
   "dependencies": {
-    "lodash.groupby": "^4.6.0",
     "mutation-testing-report-schema": "^1.2.0"
   },
-  "devDependencies": {
-    "@types/lodash.groupby": "^4.6.6"
-  }
+  "devDependencies": {}
 }
