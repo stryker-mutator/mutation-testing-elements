@@ -5,7 +5,8 @@
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
   "scripts": {
-    "test": "mocha -r source-map-support/register dist/test/**/*.js"
+    "test": "mocha -r source-map-support/register dist/test/**/*.js",
+    "stryker": "stryker run"
   },
   "repository": {
     "type": "git",
@@ -17,10 +18,7 @@
   },
   "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/mutation-testing-metrics#readme",
   "dependencies": {
-    "lodash.groupby": "^4.6.0",
     "mutation-testing-report-schema": "^1.2.0"
   },
-  "devDependencies": {
-    "@types/lodash.groupby": "^4.6.6"
-  }
+  "devDependencies": {}
 }

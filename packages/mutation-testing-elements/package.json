@@ -9,10 +9,10 @@
     "start": "webpack-dev-server --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
     "test": "npm run test:unit && npm run test:integration",
-    "test:mutation": "cross-env STRYKER=true stryker run",
     "test:unit": "karma start --singleRun true",
     "test:integration": "mocha -r ts-node/register -r chromedriver --timeout 60000 --file test/integration/init/init-browser.ts --file test/integration/init/init-server.ts test/integration/*.ts",
-    "postpublish": "../../mvn/mvnPublish.sh"
+    "postpublish": "../../mvn/mvnPublish.sh",
+    "stryker": "cross-env STRYKER=true stryker run"
   },
   "repository": {
     "type": "git",
@@ -24,8 +24,6 @@
   },
   "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/mutation-testing-elements#readme",
   "devDependencies": {
-    "@types/lodash.groupby": "^4.6.6",
-    "lodash.groupby": "^4.6.0",
     "mutation-testing-metrics": "^1.2.2",
     "mutation-testing-report-schema": "^1.2.0"
   }

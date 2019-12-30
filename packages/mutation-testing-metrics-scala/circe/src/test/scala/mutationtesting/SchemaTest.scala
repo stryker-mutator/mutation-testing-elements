@@ -10,8 +10,6 @@ import scala.io.Source
 
 object SchemaTest extends BasicTestSuite {
 
-  /** This test is in JVM as there is no pure Scala json schema validator at the moment, so we use a JVM one
-    */
   test("encoded json should be valid for mutation-testing-report-schema") {
     val sut = MutationTestReport(
       thresholds = Thresholds(high = 80, low = 10),

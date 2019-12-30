@@ -1,3 +1,6 @@
+
+[![Build Status](https://github.com/stryker-mutator/mutation-testing-elements/workflows/CI/badge.svg)](https://github.com/stryker-mutator/mutation-testing-elements/actions?query=workflow%3ACI+branch%3Amaster)
+
 # Mutation testing elements schema
 
 The json schema for mutation testing elements.
