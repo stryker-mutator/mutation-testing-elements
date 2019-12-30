@@ -4,9 +4,8 @@ import mutationtesting.MutantStatus._
 import io.circe._, io.circe.syntax._
 
 object MutationReportDecoder {
-  import mutationtesting.MutantStatusDecoder._
 
-  implicit val mutantStatusDecoder: Decoder[MutantStatus] = msDecoder
+  implicit val mutantStatusDecoder: Decoder[MutantStatus] = Decoder.decodeEnumeration(MutantStatus)
 
   implicit val positionDecoder: Decoder[Position] = Decoder.forProduct2("line", "column")(Position.apply)
 

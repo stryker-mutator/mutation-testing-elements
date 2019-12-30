@@ -1,10 +1,13 @@
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fstryker-mutator%2Fmutation-testing-elements%2Fmaster%3Fmodule%3Dmetrics-scala)](https://badge-api.stryker-mutator.io/github.com/stryker-mutator/mutation-testing-elements/master?module=metrics-scala)
+[![Build Status](https://github.com/stryker-mutator/mutation-testing-elements/workflows/CI/badge.svg)](https://github.com/stryker-mutator/mutation-testing-elements/actions?query=workflow%3ACI+branch%3Amaster)
+
 # Mutation testing metrics (Scala)
 
 Zero-dependency library to calculate mutation testing metrics in Scala.
 
 See [mutant states and metrics in the Stryker handbook](https://github.com/stryker-mutator/stryker-handbook/blob/master/mutant-states-and-metrics.md#readme) for more details about mutation testing metrics.
 
-Cross-compiled for Scala 2.12, 2.13, [Dotty](https://dotty.epfl.ch/), [Scala.js 0.6.x](http://www.scala-js.org/) and [Scala Native 0.3.x](https://www.scala-native.org/).
+Cross-compiled for Scala 2.12 and 2.13. If you want to use this library but require another target or platform (such as [Dotty](https://dotty.epfl.ch/), [Scala.js](http://www.scala-js.org/) or [Scala Native](https://www.scala-native.org/)) feel free to [create an issue](https://github.com/stryker-mutator/mutation-testing-elements/issues/new)!
 
 ## Usage example
 
@@ -13,8 +16,6 @@ Add the dependency to your project [![Maven Central](https://img.shields.io/mave
 ```scala
 libraryDependencies += "io.stryker-mutator" %% "mutation-testing-metrics" % version
 ```
-
-If you use Scala.js or Scala Native, use `%%%` instead after the groupId.
 
 First create the mutation test report:
 
@@ -78,7 +79,7 @@ Import the encoder:
 import io.circe.syntax._
 import mutationtesting.MutationReportEncoder._
 
-val encoded = report.asJson
+val encoded: io.circe.Json = report.asJson
 ```
 
 ### Decoding
@@ -89,7 +90,7 @@ Import the decoder:
 import io.circe.parser.decode
 import mutationtesting.MutationReportDecoder._
 
-val decoded = decode[MutationTestReport](json)
+val decoded: Either[io.circe.Error, MutationTestReport] = decode[MutationTestReport](json)
 ```
 
 ## API reference
@@ -124,10 +125,7 @@ metrics.mutationScoreBasedOnCoveredCode
 
 To use this project, you will need sbt. The recommended way on macOS/Linux is with [sbt-extras](https://github.com/paulp/sbt-extras). On Windows, you can install sbt using the [official .msi](https://www.scala-sbt.org/download.html).
 
-This project uses the [sbt-crossproject](https://github.com/portable-scala/sbt-crossproject) plugin for multiple build targets. You can compile code with `sbt compile` and run tests
-with `sbt test`. Running `sbt +test` will compile and test all targets. 
+This is a normal sbt project, you can compile code with `sbt compile` and run tests
+with `sbt test`. Running `sbt +test` will compile and test all targets. For more information on cross-compilation in sbt, see <https://www.scala-sbt.org/1.x/docs/Cross-Build.html>.
 
-In CI, JS and Native will only be compiled, while tests are run on the JVM project to provide faster CI builds. Publishing is done on all targets. For more information on
-cross-compilation in sbt, see <https://www.scala-sbt.org/1.x/docs/Cross-Build.html>.
-
-This readme uses [mdoc](https://scalameta.org/mdoc/). To edit it, please edit the readme in docs and call `sbt docs/mdoc` to compile the readme in the root of the project.
+This readme uses [mdoc](https://scalameta.org/mdoc/). To edit it, please edit the readme in the `docs/` folder and call `sbt docs/mdoc` to compile the readme in the root of the project.
