@@ -19,8 +19,8 @@ lazy val circe = project
     libraryDependencies ++= Seq(
       "io.circe"             %% "circe-core"   % "0.12.3",
       "io.circe"             %% "circe-parser" % "0.12.3",
-      "org.leadpony.justify" % "justify"       % "1.1.0" % Test,
-      "org.glassfish"        % "jakarta.json"  % "1.1.6" % Test
+      "org.leadpony.justify" % "justify"       % "2.0.0" % Test,
+      "org.leadpony.joy"     % "joy"           % "1.2.0" % Test
     )
   )
 
