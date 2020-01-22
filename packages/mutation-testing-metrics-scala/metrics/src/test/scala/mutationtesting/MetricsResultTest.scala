@@ -16,8 +16,8 @@ object MetricsResultTest extends BasicTestSuite {
     assert(sut.totalValid == 0)
     assert(sut.totalInvalid == 0)
     assert(sut.totalMutants == 0)
-    assert(sut.mutationScore == 100)
-    assert(sut.mutationScoreBasedOnCoveredCode == 100)
+    assert(sut.mutationScore.isNaN)
+    assert(sut.mutationScoreBasedOnCoveredCode.isNaN)
   }
 
   expectedSet.foreach({
