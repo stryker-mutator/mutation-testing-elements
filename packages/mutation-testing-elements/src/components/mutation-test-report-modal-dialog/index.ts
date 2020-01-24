@@ -1,5 +1,5 @@
-import { customElement, LitElement, html, css, property } from 'lit-element';
-import { bootstrap } from '../style';
+import { customElement, LitElement, html, property, unsafeCSS } from 'lit-element';
+import { bootstrap } from '../../style';
 
 @customElement('mutation-test-report-modal-dialog')
 export class MutationTestReportModalDialogComponent extends LitElement {
@@ -12,11 +12,7 @@ export class MutationTestReportModalDialogComponent extends LitElement {
 
   public static styles = [
     bootstrap,
-    css`
-      .modal-dialog{
-        margin-top: 5.15rem;
-      }
-    `
+    unsafeCSS(require('./index.scss'))
   ];
 
   public readonly emitCloseEvent = (event: Event) => {

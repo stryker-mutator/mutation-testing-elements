@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.3](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.2.2...v1.2.3) (2019-12-11)
+
+**Note:** Version bump only for package mutation-testing-elements
+
+
+
+
+
+## [1.2.2](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.2.1...v1.2.2) (2019-12-04)
+
+**Note:** Version bump only for package mutation-testing-elements
+
+
+
+
+
+## [1.2.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.2.0...v1.2.1) (2019-11-24)
+
+
+### Features
+
+* **elements:** allow override of top offset ([#214](https://github.com/stryker-mutator/mutation-testing-elements/issues/214)) ([b6c5c36](https://github.com/stryker-mutator/mutation-testing-elements/commit/b6c5c3605c2d761c8f31d4eebd069cfc3b4e5ed9))
+
+
+
+
+
+
+# [1.2.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.1.1...v1.2.0) (2019-10-02)
+
+
+### Features
+
+* **build:** use postcss to optimize css assets ([8f24f06](https://github.com/stryker-mutator/mutation-testing-elements/commit/8f24f06))
+
+
+
+
+
 ## [1.1.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.1.0...v1.1.1) (2019-07-15)
 
 

@@ -1,10 +1,10 @@
-import { LitElement, html, property, customElement, css } from 'lit-element';
-import { bootstrap } from '../style';
+import { LitElement, html, property, customElement, unsafeCSS } from 'lit-element';
+import { bootstrap } from '../../style';
 import { Thresholds } from 'mutation-testing-report-schema';
-import * as svg from './svg';
-import { pathJoin } from '../lib/codeHelpers';
+import * as svg from '../svg';
+import { pathJoin } from '../../lib/codeHelpers';
 import { MetricsResult } from 'mutation-testing-metrics';
-import { toAbsoluteUrl } from '../lib/htmlHelpers';
+import { toAbsoluteUrl } from '../../lib/htmlHelpers';
 
 @customElement('mutation-test-report-totals')
 export class MutationTestReportTotalsComponent extends LitElement {
@@ -18,59 +18,10 @@ export class MutationTestReportTotalsComponent extends LitElement {
   @property()
   public currentPath: string[] = [];
 
-  public static styles = [bootstrap,
-    css`
-    .table a {
-      display: block;
-    }
-    th.rotate {
-      /* Something you can count on */
-      height: 80px;
-      white-space: nowrap;
-      padding-bottom: 10px;
-    }
-
-    th.rotate > div {
-      transform:
-      translate(27px, 0px)
-      rotate(325deg);
-      width: 30px;
-    }
-
-    .table-no-top>thead>tr>th {
-      border-width: 0;
-    }
-
-    .table-no-top {
-      border-width: 0;
-      margin-bottom: 0;
-    }
-
-    .table .no-border-right {
-      border-right: none;
-    }
-    .table .no-border-left {
-      border-left: none;
-    }
-
-    table td.icon {
-      color: rgba(3,47,98,.55);
-      padding-left: 10px;
-      padding-right: 2px;
-    }
-
-    .octicon {
-      fill: currentColor;
-    }
-
-    table th.vertical-middle, table td.vertical-middle {
-      vertical-align: middle;
-    }
-
-    .text-default {
-      color: #777;
-    }
-  `];
+  public static styles = [
+    bootstrap,
+    unsafeCSS(require('./index.scss'))
+  ];
 
   public render() {
     if (this.model) {

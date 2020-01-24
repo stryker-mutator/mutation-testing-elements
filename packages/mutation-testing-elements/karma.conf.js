@@ -14,8 +14,8 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: process.env.TRAVIS ? ['ChromeHeadless'] : ['Chrome'],
-    singleRun: process.env.TRAVIS ? true : false,
+    browsers: process.env.GITHUB_ACTIONS || process.env.TRAVIS ? ['ChromeHeadless'] : ['Chrome'],
+    singleRun: process.env.GITHUB_ACTIONS || process.env.TRAVIS ? true : false,
     concurrency: Infinity,
     webpack
   });
@@ -24,4 +24,3 @@ module.exports = function (config) {
   delete config.webpack.entry;
   delete config.webpack.output;
 }
-

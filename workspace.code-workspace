@@ -9,6 +9,10 @@
       "name": "metrics"
     },
     {
+      "path": "packages/mutation-testing-metrics-scala",
+      "name": "metrics-scala"
+    },
+    {
       "path": "packages/mutation-testing-elements",
       "name": "elements"
     },
@@ -22,6 +26,12 @@
       "source.fixAll.tslint": true
     },
     "typescript.tsdk": "./node_modules/typescript/lib",
-    "search.usePCRE2": true
+    "search.usePCRE2": true,
+    "grunt.autoDetect": "off",
+    "gulp.autoDetect": "off",
+    "jake.autoDetect": "off",
+    "task.autoDetect": "off"
   }
+}
+}
 }

@@ -13,11 +13,11 @@ function transpilerFactory(log) {
         if (path.extname(file.name) === '.json' && path.basename(file.name).indexOf('tsconfig') >= 0) {
           const newContent = file.textContent.replace(/"extends"\s*:\s*"(..\/[^"]*)"/, (_, str) => {
             const better = `../../${str}`;
-            log.info('Replacing in %s ("%s" -> "%s")', file.name, str, better);
+            log.debug('Replacing in %s ("%s" -> "%s")', file.name, str, better);
             return `"extends": "${better}"`;
           }).replace(/"path":\s*"(..\/..\/[^"]*)"/, (_, str) => {
             const better = `../../${str}`;
-            log.info('Replacing in %s ("%s" -> "%s")', file.name, str, better);
+            log.debug('Replacing in %s ("%s" -> "%s")', file.name, str, better);
             return `"path": "${better}"`;
           });
           return new File(file.name, newContent);
