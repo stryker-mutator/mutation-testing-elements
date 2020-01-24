@@ -179,15 +179,15 @@ export class MutationTestReportTotalsComponent extends LitElement {
     </tr>`;
   }
 
-  private mutationScoreRounded(mutationScore: number | null) {
+  private mutationScoreRounded(mutationScore: number) {
     if (mutationScore !== null) {
       return mutationScore.toFixed(2);
     }
     return null;
   }
 
-  private determineColoringClass(mutationScore: number | null) {
-    if (mutationScore != null && this.thresholds) {
+  private determineColoringClass(mutationScore: number) {
+    if (isNaN(mutationScore) && this.thresholds) {
       if (mutationScore < this.thresholds.low) {
         return 'danger';
       } else if (mutationScore < this.thresholds.high) {

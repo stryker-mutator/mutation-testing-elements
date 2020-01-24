@@ -62,10 +62,10 @@ export interface Metrics {
    * The total percentage of mutants that were killed, or null if not available (n/a).
    * `totalDetected / totalValid * 100`,
    */
-  mutationScore: number | null;
+  mutationScore: number;
   /**
    * The total percentage of mutants that were killed based on the code coverage results of the initial test run, or null if not available (n/a).
    * `totalDetected / totalCovered * 100`
    */
-  mutationScoreBasedOnCoveredCode: number | null;
+  mutationScoreBasedOnCoveredCode: number;
 }

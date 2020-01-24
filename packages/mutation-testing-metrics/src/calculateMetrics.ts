@@ -3,7 +3,7 @@ import { FileResultDictionary, FileResult, MutantResult, MutantStatus } from 'mu
 import { groupBy } from 'lodash';
 import { Metrics } from './api/Metrics';
 import { MetricsResult } from './api/MetricsResult';
-const DEFAULT_SCORE = null;
+const DEFAULT_SCORE = NaN;
 const ROOT_NAME = 'All files';
 
 /**
