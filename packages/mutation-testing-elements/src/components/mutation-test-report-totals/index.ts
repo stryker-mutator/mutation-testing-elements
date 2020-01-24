@@ -100,7 +100,7 @@ export class MutationTestReportTotalsComponent extends LitElement {
 
   private renderRow(name: string, row: MetricsResult, path: string | undefined) {
     const coloringClass = this.determineColoringClass(row.metrics.mutationScore);
-    const mutationScoreRounded = this.mutationScoreRounded(row.metrics.mutationScore);
+    const mutationScoreRounded = row.metrics.mutationScore.toFixed(2);
     const progressBarStyle = `width: ${mutationScoreRounded ? mutationScoreRounded : 0}%`;
     return html`
     <tr title="${row.name}">
@@ -111,12 +111,12 @@ export class MutationTestReportTotalsComponent extends LitElement {
         <div class="progress">
           <div class="progress-bar bg-${coloringClass}" role="progressbar" aria-valuenow="${mutationScoreRounded ? mutationScoreRounded : 0}"
             aria-valuemin="0" aria-valuemax="100" .style="${progressBarStyle}">
-            ${!isNaN(mutationScoreRounded as number) ? mutationScoreRounded + '%' : 'Not available'}
+            ${mutationScoreRounded !== 'NaN' ? mutationScoreRounded + '%' : 'Not available'}
           </div>
         </div>
       </td>
       <th style="width: 50px;" class="no-border-left text-center text-${coloringClass}">
-        ${!isNaN(mutationScoreRounded as number) ? mutationScoreRounded : 'N/A'}
+        ${mutationScoreRounded !== 'NaN' ? mutationScoreRounded : 'N/A'}
       </th>
       <td class="text-center">${row.metrics.killed}</td>
       <td class="text-center">${row.metrics.survived}</td>
@@ -128,13 +128,6 @@ export class MutationTestReportTotalsComponent extends LitElement {
       <th class="text-center">${row.metrics.totalUndetected}</th>
       <th class="text-center">${row.metrics.totalMutants}</th>
     </tr>`;
-  }
-
-  private mutationScoreRounded(mutationScore: number) {
-    if (!isNaN(mutationScore)) {
-      return mutationScore.toFixed(2);
-    }
-    return NaN;
   }
 
   private determineColoringClass(mutationScore: number) {
