@@ -75,7 +75,7 @@ describe(MutationTestReportTotalsComponent.name, () => {
       name: 'foo'
     });
 
-    sut.element.model.metrics.mutationScore = null;
+    sut.element.model.metrics.mutationScore = NaN;
 
     await sut.updateComplete;
     const table = sut.$('table') as HTMLTableElement;
