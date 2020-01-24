@@ -111,12 +111,12 @@ export class MutationTestReportTotalsComponent extends LitElement {
         <div class="progress">
           <div class="progress-bar bg-${coloringClass}" role="progressbar" aria-valuenow="${mutationScoreRounded ? mutationScoreRounded : 0}"
             aria-valuemin="0" aria-valuemax="100" .style="${progressBarStyle}">
-            ${mutationScoreRounded !== null ? mutationScoreRounded + '%' : 'Not available'}
+            ${!isNaN(mutationScoreRounded as number) ? mutationScoreRounded + '%' : 'Not available'}
           </div>
         </div>
       </td>
       <th style="width: 50px;" class="no-border-left text-center text-${coloringClass}">
-        ${mutationScoreRounded !== null ? mutationScoreRounded : 'N/A'}
+        ${!isNaN(mutationScoreRounded as number) ? mutationScoreRounded : 'N/A'}
       </th>
       <td class="text-center">${row.metrics.killed}</td>
       <td class="text-center">${row.metrics.survived}</td>
@@ -131,14 +131,14 @@ export class MutationTestReportTotalsComponent extends LitElement {
   }
 
   private mutationScoreRounded(mutationScore: number) {
-    if (mutationScore !== null) {
+    if (!isNaN(mutationScore)) {
       return mutationScore.toFixed(2);
     }
-    return null;
+    return NaN;
   }
 
   private determineColoringClass(mutationScore: number) {
-    if (isNaN(mutationScore) && this.thresholds) {
+    if (!isNaN(mutationScore) && this.thresholds) {
       if (mutationScore < this.thresholds.low) {
         return 'danger';
       } else if (mutationScore < this.thresholds.high) {
