@@ -26,5 +26,9 @@
   "devDependencies": {
     "mutation-testing-metrics": "^1.2.2",
     "mutation-testing-report-schema": "^1.2.0"
+  },
+  "dependencies": {
+    "@types/prismjs": "^1.16.0",
+    "prismjs": "^1.19.0"
   }
 }
