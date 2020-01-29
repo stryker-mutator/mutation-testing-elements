@@ -6,7 +6,7 @@ import { bootstrap, prismjs } from '../../style';
 import { renderCode } from '../../lib/codeHelpers';
 import { FileResult, MutantResult } from 'mutation-testing-report-schema';
 import { getEmojiForStatus } from '../../lib/htmlHelpers';
-import { highlightElement } from 'prismjs/components/prism-core';
+import { highlightElement, plugins } from 'prismjs/components/prism-core';
 
 import 'prismjs/plugins/line-numbers/prism-line-numbers';
 // Order is important here! Scala depends on java, which depends on clike
@@ -16,6 +16,10 @@ import "prismjs/components/prism-typescript";
 import "prismjs/components/prism-csharp";
 import "prismjs/components/prism-java";
 import "prismjs/components/prism-scala";
+
+// Attempt to automatically download languages that are not already included above
+import "prismjs/plugins/autoloader/prism-autoloader";
+plugins.autoloader.languages_path = `https://unpkg.com/prismjs@latest/components/`;
 
 @customElement('mutation-test-report-file')
 export class MutationTestReportFileComponent extends LitElement {
