@@ -6,7 +6,16 @@ import { bootstrap, prismjs } from '../../style';
 import { renderCode } from '../../lib/codeHelpers';
 import { FileResult, MutantResult } from 'mutation-testing-report-schema';
 import { getEmojiForStatus } from '../../lib/htmlHelpers';
-import { highlightElement } from 'prismjs';
+import { highlightElement } from 'prismjs/components/prism-core';
+
+import 'prismjs/plugins/line-numbers/prism-line-numbers';
+// Order is important here! Scala depends on java, which depends on clike
+import "prismjs/components/prism-clike";
+import "prismjs/components/prism-javascript";
+import "prismjs/components/prism-typescript";
+import "prismjs/components/prism-csharp";
+import "prismjs/components/prism-java";
+import "prismjs/components/prism-scala";
 
 @customElement('mutation-test-report-file')
 export class MutationTestReportFileComponent extends LitElement {
@@ -74,7 +83,7 @@ export class MutationTestReportFileComponent extends LitElement {
             ${this.renderModalDialog()}
             <mutation-test-report-file-legend @filters-changed="${this.filtersChanged}" @expand-all="${this.expandAll}"
               @collapse-all="${this.collapseAll}" .mutants="${this.model.mutants}"></mutation-test-report-file-legend>
-            <pre><code class="language-${this.model.language}">${unsafeHTML(renderCode(this.model))}</code></pre>
+            <pre class="line-numbers"><code class="language-${this.model.language}">${unsafeHTML(renderCode(this.model))}</code></pre>
           </div>
         </div>
         `;
