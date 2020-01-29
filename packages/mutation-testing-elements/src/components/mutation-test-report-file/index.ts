@@ -18,6 +18,7 @@ import "prismjs/components/prism-java";
 import "prismjs/components/prism-scala";
 
 // Attempt to automatically download languages that are not already included above
+import "prismjs/plugins/keep-markup/prism-keep-markup";
 import "prismjs/plugins/autoloader/prism-autoloader";
 plugins.autoloader.languages_path = `https://unpkg.com/prismjs@latest/components/`;
 

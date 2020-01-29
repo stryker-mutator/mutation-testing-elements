@@ -16,13 +16,3 @@
 .bg-caution-light {
     background-color: adjust-color($color: theme-color('caution'), $lightness: 40%);
 }
-
-code,
-code.hljs {
-    overflow: visible;
-    height: 100%;
-}
-
-pre {
-    overflow: visible;
-}
