@@ -16,3 +16,7 @@
 .bg-caution-light {
     background-color: adjust-color($color: theme-color('caution'), $lightness: 40%);
 }
+
+pre {
+    overflow-y: hidden !important;
+} 
