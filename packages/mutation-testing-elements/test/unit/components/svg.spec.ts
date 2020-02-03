@@ -30,14 +30,14 @@ describe(SvgService.name, () => {
       const knownfileExtensions = ['cs', 'html', 'java', 'js', 'scala', 'ts'];
 
       knownfileExtensions.forEach(fileExtension => {
-       it(`should retrieve an icon for file extension "${fileExtension}"`, () => {
-         const knownFileExtension = `testfile.${fileExtension}`;
+        it(`should retrieve an icon for file extension "${fileExtension}"`, () => {
+          const knownFileExtension = `testfile.${fileExtension}`;
 
-         const fileIcon = sut.getIconForFile(knownFileExtension);
+          const fileIcon = sut.getIconForFile(knownFileExtension);
 
-         expect(fileIcon.type).eq('svg');
-         expect(fileIcon.strings[0]).contains(fileExtension);
-       });
+          expect(fileIcon.type).eq('svg');
+          expect(fileIcon.strings[0]).contains(fileExtension);
+        });
       });
     });
   });
