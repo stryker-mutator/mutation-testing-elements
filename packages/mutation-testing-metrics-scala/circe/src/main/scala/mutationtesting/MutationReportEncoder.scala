@@ -1,7 +1,7 @@
 package mutationtesting
 
 import mutationtesting.MutantStatus._
-import io.circe._, io.circe.syntax._
+import io.circe._
 
 object MutationReportEncoder {
 
