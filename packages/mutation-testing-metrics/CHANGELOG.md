@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.2](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.2.1...v1.2.2) (2019-12-04)
+
+
+### Bug Fixes
+
+* **metrics:** correct lodash import ([3c5d6d2](https://github.com/stryker-mutator/mutation-testing-elements/commit/3c5d6d28e33453801e1b137330f38b616e1910c7))
+
+
+
+
+
+## [1.2.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.2.0...v1.2.1) (2019-11-24)
+
+
+### Features
+
+* **metrics:** make `normalizeFileNames` public ([3017700](https://github.com/stryker-mutator/mutation-testing-elements/commit/3017700a5fb47a73c91e3fd9c9b849fbb49d3520))
+
+
+
+
+
+
+# [1.2.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.1.1...v1.2.0) (2019-10-02)
+
+**Note:** Version bump only for package mutation-testing-metrics
+
+
+
+
+
 ## [1.1.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.1.0...v1.1.1) (2019-07-15)
 
 **Note:** Version bump only for package mutation-testing-metrics

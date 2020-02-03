@@ -5,5 +5,9 @@ dist-test
 reports
 
 target/
+_site/
+.metals/
+.bloop/
+.idea/
 pom.xml.versionsBackup
 packages/*/mvn/resources/

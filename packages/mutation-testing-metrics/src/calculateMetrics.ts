@@ -1,6 +1,6 @@
 import { compareNames, normalizeFileNames, flatMap } from './helpers';
 import { FileResultDictionary, FileResult, MutantResult, MutantStatus } from 'mutation-testing-report-schema';
-import { groupBy } from 'lodash';
+import { groupBy } from './helpers';
 import { Metrics } from './api/Metrics';
 import { MetricsResult } from './api/MetricsResult';
 const DEFAULT_SCORE = 100;
