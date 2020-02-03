@@ -17,8 +17,9 @@ import 'prismjs/components/prism-csharp';
 import 'prismjs/components/prism-java';
 import 'prismjs/components/prism-scala';
 
-// Attempt to automatically download languages that are not already included above
+// Don't strip pre-existing HTML to keep the popups and badges working
 import 'prismjs/plugins/keep-markup/prism-keep-markup';
+// Attempt to automatically download languages that are not already included above
 import 'prismjs/plugins/autoloader/prism-autoloader';
 plugins.autoloader.languages_path = `https://unpkg.com/prismjs@latest/components/`;
 
