@@ -80,6 +80,6 @@ describe(MutationTestReportTotalsComponent.name, () => {
     await sut.updateComplete;
     const table = sut.$('table') as HTMLTableElement;
     expect(table).ok;
-    expect(table.querySelectorAll('.progress-bar')[0].textContent).contains('Not available');
+    expect(table.querySelectorAll('th.no-border-left')[0].textContent).contains('N/A');
   });
 });
