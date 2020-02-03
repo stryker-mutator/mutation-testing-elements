@@ -99,9 +99,11 @@ export class MutationTestReportTotalsComponent extends LitElement {
   }
 
   private renderRow(name: string, row: MetricsResult, path: string | undefined) {
-    const coloringClass = this.determineColoringClass(row.metrics.mutationScore);
-    const mutationScoreRounded = row.metrics.mutationScore.toFixed(2);
-    const progressBarStyle = `width: ${mutationScoreRounded ? mutationScoreRounded : 0}%`;
+    const { mutationScore } = row.metrics;
+    const scoreIsNotNaN = !isNaN(mutationScore);
+    const coloringClass = this.determineColoringClass(mutationScore);
+    const mutationScoreRounded = mutationScore.toFixed(2);
+    const progressBarStyle = `width: ${scoreIsNotNaN ? mutationScore : 0}%`;
     return html`
     <tr title="${row.name}">
       <td style="width: 17px;" class="icon no-border-right">${row.file ? svg.file : svg.directory}</td>
@@ -109,14 +111,14 @@ export class MutationTestReportTotalsComponent extends LitElement {
         html`<span>${row.name}</span>`}</td>
       <td class="no-border-right vertical-middle">
         <div class="progress">
-          <div class="progress-bar bg-${coloringClass}" role="progressbar" aria-valuenow="${mutationScoreRounded ? mutationScoreRounded : 0}"
-            aria-valuemin="0" aria-valuemax="100" .style="${progressBarStyle}">
-            ${mutationScoreRounded !== 'NaN' ? mutationScoreRounded + '%' : 'Not available'}
+          <div class="progress-bar bg-${coloringClass}" role="progressbar" aria-valuenow="${mutationScoreRounded}"
+            aria-valuemin="0" aria-valuemax="100" style="${progressBarStyle}">
+            ${scoreIsNotNaN ? `${mutationScoreRounded}%` : ''}
           </div>
         </div>
       </td>
       <th style="width: 50px;" class="no-border-left text-center text-${coloringClass}">
-        ${mutationScoreRounded !== 'NaN' ? mutationScoreRounded : 'N/A'}
+        ${scoreIsNotNaN ? mutationScoreRounded : 'N/A'}
       </th>
       <td class="text-center">${row.metrics.killed}</td>
       <td class="text-center">${row.metrics.survived}</td>
