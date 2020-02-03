@@ -88,7 +88,7 @@ export class MutationTestReportFileComponent extends LitElement {
             ${this.renderModalDialog()}
             <mutation-test-report-file-legend @filters-changed="${this.filtersChanged}" @expand-all="${this.expandAll}"
               @collapse-all="${this.collapseAll}" .mutants="${this.model.mutants}"></mutation-test-report-file-legend>
-            <pre class="line-numbers"><code class="language-${this.model.language}">${unsafeHTML(renderCode(this.model))}</code></pre>
+            <pre id="report-code-block" class="line-numbers"><code class="language-${this.model.language}">${unsafeHTML(renderCode(this.model))}</code></pre>
           </div>
         </div>
         `;
