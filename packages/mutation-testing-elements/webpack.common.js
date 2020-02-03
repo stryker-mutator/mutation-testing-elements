@@ -8,24 +8,11 @@ module.exports = {
   },
   module: {
     rules: [
-      // webpack ts-loader does not support project references yet :( => https://github.com/TypeStrong/ts-loader/issues/851
-      // Workaround pitched here: https://github.com/TypeStrong/ts-loader/issues/909
       {
         test: /\.ts$/,
-        include: path.resolve(__dirname, 'src'),
         loader: 'ts-loader',
         options: {
-          configFile: 'src/tsconfig.json',
-          instance: 'src'
-        }
-      },
-      {
-        test: /\.ts$/,
-        include: path.resolve(__dirname, 'test'),
-        loader: 'ts-loader',
-        options: {
-          configFile: 'test/tsconfig.json',
-          instance: 'test'
+          projectReferences: true,
         }
       },
       {
