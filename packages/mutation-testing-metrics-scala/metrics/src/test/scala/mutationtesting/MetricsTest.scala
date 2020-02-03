@@ -1,7 +1,6 @@
 package mutationtesting
 
 import verify._
-import mutationtesting._
 import mutationtesting.MutantStatus._
 
 object MetricsTest extends BasicTestSuite {
