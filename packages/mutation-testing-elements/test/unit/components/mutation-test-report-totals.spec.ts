@@ -69,6 +69,6 @@ describe(MutationTestReportTotalsComponent.name, () => {
     expect(table).ok;
     const rows = table.querySelectorAll('tbody tr');
     expect(rows).lengthOf(2);
-    expect((rows.item(1).cells.item(1) as HTMLTableCellElement).textContent).eq('baz/foo.js');
+    expect(((rows.item(1) as HTMLTableRowElement).cells.item(1) as HTMLTableCellElement).textContent).eq('baz/foo.js');
   });
 });
