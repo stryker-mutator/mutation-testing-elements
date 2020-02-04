@@ -3,7 +3,7 @@ import { WebElement, By, WebElementPromise } from 'selenium-webdriver';
 import { selectShadowRoot, wrapInWebElementPromise } from '../lib/helpers';
 
 export class ElementSelector {
-  constructor(private readonly context: ElementFinder) { }
+  constructor(private readonly context: ElementFinder) {}
 
   public async $$(cssSelector: string): Promise<WebElement[]> {
     const parts = cssSelector.split('>>>');

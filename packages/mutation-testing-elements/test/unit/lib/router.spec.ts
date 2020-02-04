@@ -3,7 +3,6 @@ import { expect } from 'chai';
 import { take } from 'rxjs/operators';
 
 describe('locationChange$', () => {
-
   afterEach(() => {
     window.location.hash = '';
   });

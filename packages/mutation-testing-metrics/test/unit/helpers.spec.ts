@@ -26,7 +26,7 @@ describe(normalizeFileNames.name, () => {
     // Assert
     expect(actual).deep.eq({
       ['c:/tmp/foo/bar']: foo,
-      ['root/baz/qux']: baz,
+      ['root/baz/qux']: baz
     });
   });
 });

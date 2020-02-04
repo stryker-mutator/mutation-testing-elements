@@ -27,7 +27,7 @@ describe(escapeHtml.name, () => {
   actArrangeAssert('foo<bar', 'foo&lt;bar');
   actArrangeAssert('foo>bar', 'foo&gt;bar');
   actArrangeAssert('foo"bar', 'foo&quot;bar');
-  actArrangeAssert('foo\'bar', 'foo&#039;bar');
+  actArrangeAssert("foo'bar", 'foo&#039;bar');
 });
 
 describe(toAbsoluteUrl.name, () => {

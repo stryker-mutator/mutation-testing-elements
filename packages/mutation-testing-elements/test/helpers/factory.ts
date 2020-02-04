@@ -24,9 +24,7 @@ export function createMutantResult(overrides?: Partial<MutantResult>): MutantRes
 export function createFileResult(overrides?: Partial<FileResult>): FileResult {
   const defaults: FileResult = {
     language: 'js',
-    mutants: [
-      createMutantResult()
-    ],
+    mutants: [createMutantResult()],
     source: 'const bar = foo();'
   };
   return { ...defaults, ...overrides };

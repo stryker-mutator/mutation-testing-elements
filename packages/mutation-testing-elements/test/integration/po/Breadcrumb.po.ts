@@ -2,7 +2,6 @@ import { By } from 'selenium-webdriver';
 import { PageObject } from './PageObject.po';
 
 export default class Breadcrumb extends PageObject {
-
   public async items(): Promise<string[]> {
     const elements = await this.$$('li');
     return Promise.all(elements.map(e => e.getText()));

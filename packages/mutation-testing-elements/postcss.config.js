@@ -2,7 +2,7 @@ module.exports = {
   plugins: [
     require('postcss-preset-env')({}),
     require('cssnano')({
-      preset: 'default',
+      preset: 'default'
     }),
     require('@fullhuman/postcss-purgecss')({
       content: ['src/**/*.ts'],
@@ -10,4 +10,4 @@ module.exports = {
       whitelistPatterns: [/^(bg|badge|popover|text)-(success|caution|danger|warning|secondary|default)(-light)?$/, /^lang-/, /^hljs/, /^:host$/]
     })
   ]
-}
+};

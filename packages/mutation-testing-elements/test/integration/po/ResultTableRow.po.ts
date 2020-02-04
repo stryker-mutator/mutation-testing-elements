@@ -3,9 +3,11 @@ import { By } from 'selenium-webdriver';
 import { ProgressBar } from './ProgressBar.po';
 
 export class ResultTableRow extends PageObject {
-
   private readonly nameTableElement = this.$.bind(this, 'td:nth-child(2)');
-  public navigate = () => this.nameTableElement().findElement(By.css('a')).click();
+  public navigate = () =>
+    this.nameTableElement()
+      .findElement(By.css('a'))
+      .click();
   public name = () => this.nameTableElement().getText();
   public progressBar = () => new ProgressBar(this.$('td:nth-child(3)>div.progress'), this.browser);
   public mutationScore = () => this.$('th:nth-child(4)').getText();

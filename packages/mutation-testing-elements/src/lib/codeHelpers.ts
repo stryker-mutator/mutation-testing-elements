@@ -3,7 +3,7 @@ import { BackgroundColorCalculator } from './BackgroundColorCalculator';
 import { escapeHtml } from './htmlHelpers';
 
 export function pathJoin(...parts: string[]) {
-  return parts.reduce((prev, current) => prev.length ? current ? `${prev}/${current}` : prev : current, '');
+  return parts.reduce((prev, current) => (prev.length ? (current ? `${prev}/${current}` : prev) : current), '');
 }
 
 /**
@@ -55,8 +55,7 @@ export const LINE_START_INDEX = 1;
 export const NEW_LINE = '\n';
 export const CARRIAGE_RETURN = '\r';
 export function lines(content: string) {
-  return content.split(NEW_LINE)
-    .map(line => line.endsWith(CARRIAGE_RETURN) ? line.substr(0, line.length - 1) : line);
+  return content.split(NEW_LINE).map(line => (line.endsWith(CARRIAGE_RETURN) ? line.substr(0, line.length - 1) : line));
 }
 
 /**

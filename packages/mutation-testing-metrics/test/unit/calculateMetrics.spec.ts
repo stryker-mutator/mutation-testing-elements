@@ -3,7 +3,6 @@ import { expect } from 'chai';
 import { MutantResult, MutantStatus, FileResult, FileResultDictionary } from 'mutation-testing-report-schema';
 
 describe(calculateMetrics.name, () => {
-
   function mutantResultFactory(overrides?: Partial<MutantResult>) {
     const defaults: MutantResult = {
       id: '42',
@@ -41,16 +40,11 @@ describe(calculateMetrics.name, () => {
   it('should count results of multiple files', () => {
     // Arrange
     const baz = fileResultFactory({
-      mutants: [
-        mutantResultFactory({ status: MutantStatus.Killed }),
-        mutantResultFactory({ status: MutantStatus.Survived })
-      ]
+      mutants: [mutantResultFactory({ status: MutantStatus.Killed }), mutantResultFactory({ status: MutantStatus.Survived })]
     });
     const input: FileResultDictionary = {
       'foo.js': fileResultFactory({
-        mutants: [
-          mutantResultFactory({ status: MutantStatus.Killed })
-        ]
+        mutants: [mutantResultFactory({ status: MutantStatus.Killed })]
       }),
       'bar/baz.js': baz
     };
@@ -109,7 +103,7 @@ describe(calculateMetrics.name, () => {
     // Arrange
     const input = {
       'foo\\bar/baz.js': fileResultFactory(),
-      'corge\\qux.js': fileResultFactory(),
+      'corge\\qux.js': fileResultFactory()
     };
 
     // Act
@@ -128,7 +122,7 @@ describe(calculateMetrics.name, () => {
     // Arrange
     const input = {
       'c:\\foo\\bar/baz.js': fileResultFactory(),
-      'c:\\foo\\bar/baz2.js': fileResultFactory(),
+      'c:\\foo\\bar/baz2.js': fileResultFactory()
     };
 
     // Act
@@ -145,15 +139,15 @@ describe(calculateMetrics.name, () => {
     const input: FileResultDictionary = {
       'foo.js': fileResultFactory({
         mutants: [
-          mutantResultFactory({ status: MutantStatus.RuntimeError, }),
-          mutantResultFactory({ status: MutantStatus.Killed, }),
-          mutantResultFactory({ status: MutantStatus.CompileError, }),
-          mutantResultFactory({ status: MutantStatus.NoCoverage, }),
-          mutantResultFactory({ status: MutantStatus.Survived, }),
-          mutantResultFactory({ status: MutantStatus.Killed, }),
-          mutantResultFactory({ status: MutantStatus.Timeout, }),
-        ],
-      }),
+          mutantResultFactory({ status: MutantStatus.RuntimeError }),
+          mutantResultFactory({ status: MutantStatus.Killed }),
+          mutantResultFactory({ status: MutantStatus.CompileError }),
+          mutantResultFactory({ status: MutantStatus.NoCoverage }),
+          mutantResultFactory({ status: MutantStatus.Survived }),
+          mutantResultFactory({ status: MutantStatus.Killed }),
+          mutantResultFactory({ status: MutantStatus.Timeout })
+        ]
+      })
     };
 
     // Act

@@ -3,7 +3,6 @@ import { expect } from 'chai';
 import { getCurrent } from './lib/browser';
 
 describe('Directory report page', () => {
-
   let page: ReportPage;
   beforeEach(async () => {
     page = new ReportPage(getCurrent());
@@ -11,17 +10,22 @@ describe('Directory report page', () => {
   });
 
   describe('the results table', () => {
-
     it('should show 11 rows in the result table', async () => {
       expect(await page.resultTable().rows()).lengthOf(11);
     });
 
     it('should show "all files" with "77.83%" mutation score', async () => {
-      expect(await page.resultTable().row('All files').progressBar().percentageText()).eq('77.83%');
+      expect(
+        await page
+          .resultTable()
+          .row('All files')
+          .progressBar()
+          .percentageText()
+      ).eq('77.83%');
     });
 
     it('should show expected totals for cli.ts', async () => {
-      const cliRow = await page.resultTable().row('cli.ts');
+      const cliRow = page.resultTable().row('cli.ts');
       return Promise.all([
         expect(await cliRow.progressBar().percentageText()).eq('8.70%'),
         expect(await cliRow.mutationScore()).eq('8.70'),
@@ -33,7 +37,8 @@ describe('Directory report page', () => {
         expect(await cliRow.compileErrors()).eq('3'),
         expect(await cliRow.totalDetected()).eq('2'),
         expect(await cliRow.totalUndetected()).eq('21'),
-        expect(await cliRow.totalMutants()).eq('26')]);
+        expect(await cliRow.totalMutants()).eq('26')
+      ]);
     });
   });
 });

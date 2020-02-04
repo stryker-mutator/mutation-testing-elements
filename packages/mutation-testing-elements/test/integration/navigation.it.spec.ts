@@ -3,7 +3,6 @@ import { expect } from 'chai';
 import { getCurrent } from './lib/browser';
 
 describe('Navigation', () => {
-
   let page: ReportPage;
 
   const itShouldShowAllFilesPage = () => {
@@ -24,9 +23,11 @@ describe('Navigation', () => {
     itShouldShowAllFilesPage();
 
     describe('-> "config"', () => {
-
       beforeEach(async () => {
-        await page.resultTable().row('config').navigate();
+        await page
+          .resultTable()
+          .row('config')
+          .navigate();
       });
 
       it('should show "config" page', async () => {
@@ -39,7 +40,10 @@ describe('Navigation', () => {
       });
 
       it('should show "Config.Scala" after navigating to Config.scala', async () => {
-        await page.resultTable().row('Config.scala').navigate();
+        await page
+          .resultTable()
+          .row('Config.scala')
+          .navigate();
         expect(await page.breadcrumb().items()).deep.equal(['All files', 'config', 'Config.scala']);
       });
 

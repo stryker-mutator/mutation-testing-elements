@@ -13,11 +13,11 @@ export class BackgroundColorCalculator {
 
   public readonly markMutantStart = (mutant: Pick<MutantResult, 'status'>) => {
     this.countMutant(1, mutant.status);
-  }
+  };
 
   public readonly markMutantEnd = (mutant: Pick<MutantResult, 'status'>) => {
     this.countMutant(-1, mutant.status);
-  }
+  };
 
   private countMutant(valueToAdd: number, status: MutantStatus) {
     switch (status) {
@@ -47,5 +47,5 @@ export class BackgroundColorCalculator {
       return getContextClassForStatus(MutantStatus.Killed) + '-light';
     }
     return null;
-  }
+  };
 }

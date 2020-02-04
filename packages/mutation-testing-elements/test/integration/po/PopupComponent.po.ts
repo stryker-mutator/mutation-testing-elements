@@ -2,7 +2,6 @@ import { PageObject } from './PageObject.po';
 import { until } from 'selenium-webdriver';
 
 export class PopupComponent extends PageObject {
-
   private readonly popover = this.$('>>> .popover');
 
   public awaitVisible() {

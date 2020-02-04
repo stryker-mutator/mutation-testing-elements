@@ -41,9 +41,7 @@ function toChildModels(files: FileResultDictionary): MetricsResult[] {
     .map(directoryName => {
       if (filesByDirectory[directoryName].length > 1 || filesByDirectory[directoryName][0][0] !== directoryName) {
         const directoryFiles: FileResultDictionary = {};
-        filesByDirectory[directoryName].forEach(
-          file => directoryFiles[file[0].substr(directoryName.length + 1)] = file[1]
-        );
+        filesByDirectory[directoryName].forEach(file => (directoryFiles[file[0].substr(directoryName.length + 1)] = file[1]));
         return calculateDirectoryMetrics(directoryFiles, directoryName);
       } else {
         const fileName = filesByDirectory[directoryName][0][0];
@@ -75,11 +73,12 @@ function countMetrics(mutants: Pick<MutantResult, 'status'>[]): Metrics {
     runtimeErrors,
     compileErrors,
     totalDetected,
-    totalUndetected, totalCovered,
+    totalUndetected,
+    totalCovered,
     totalValid,
     totalInvalid,
-    mutationScore: totalValid > 0 ? totalDetected / totalValid * 100 : DEFAULT_SCORE,
+    mutationScore: totalValid > 0 ? (totalDetected / totalValid) * 100 : DEFAULT_SCORE,
     totalMutants: totalValid + totalInvalid,
-    mutationScoreBasedOnCoveredCode: totalValid > 0 ? totalDetected / totalCovered * 100 || 0 : DEFAULT_SCORE
+    mutationScoreBasedOnCoveredCode: totalValid > 0 ? (totalDetected / totalCovered) * 100 || 0 : DEFAULT_SCORE
   };
 }

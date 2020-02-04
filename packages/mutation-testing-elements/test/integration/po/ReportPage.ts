@@ -9,7 +9,6 @@ import { selectShadowRoot } from '../lib/helpers';
 import { WebDriver } from 'selenium-webdriver';
 
 export class ReportPage extends ElementSelector {
-
   constructor(private readonly browser: WebDriver) {
     super(browser);
   }
@@ -32,13 +31,17 @@ export class ReportPage extends ElementSelector {
   }
 
   public async mutants(): Promise<MutantComponent[]> {
-    return Promise.all((await this.$$('mutation-test-report-app >>> mutation-test-report-file >>> mutation-test-report-mutant'))
-      .map(async host => new MutantComponent(await selectShadowRoot(host), this.browser)));
+    return Promise.all(
+      (await this.$$('mutation-test-report-app >>> mutation-test-report-file >>> mutation-test-report-mutant')).map(
+        async host => new MutantComponent(await selectShadowRoot(host), this.browser)
+      )
+    );
   }
 
   public mutant(mutantId: number) {
     const shadowRoot = selectShadowRoot(
-      this.$(`mutation-test-report-app >>> mutation-test-report-file >>> mutation-test-report-mutant[mutant-id="${mutantId}"]`));
+      this.$(`mutation-test-report-app >>> mutation-test-report-file >>> mutation-test-report-mutant[mutant-id="${mutantId}"]`)
+    );
     return new MutantComponent(shadowRoot, this.browser);
   }
 

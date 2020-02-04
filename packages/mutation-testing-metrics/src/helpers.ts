@@ -20,7 +20,7 @@ export function groupBy<T>(arr: T[], criteria: (element: T) => string): Record<s
 }
 
 export function pathJoin(...parts: string[]) {
-  return parts.reduce((prev, current) => prev.length ? current ? `${prev}/${current}` : prev : current, '');
+  return parts.reduce((prev, current) => (prev.length ? (current ? `${prev}/${current}` : prev) : current), '');
 }
 
 export function normalizeFileNames(input: FileResultDictionary): FileResultDictionary {
@@ -34,7 +34,8 @@ export function normalizeFileNames(input: FileResultDictionary): FileResultDicti
 }
 
 function normalize(fileName: string) {
-  return fileName.split(/\/|\\/)
+  return fileName
+    .split(/\/|\\/)
     .filter(pathPart => pathPart)
     .join('/');
 }

@@ -9,7 +9,6 @@ const EXPECTED_BACKGROUND_TIMEOUT = getContextClassForStatus(MutantStatus.Timeou
 const EXPECTED_BACKGROUND_KILLED = getContextClassForStatus(MutantStatus.Killed) + '-light';
 
 describe(BackgroundColorCalculator.name, () => {
-
   let sut: BackgroundColorCalculator;
 
   beforeEach(() => {

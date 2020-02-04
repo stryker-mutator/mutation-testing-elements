@@ -10,7 +10,7 @@ before(async () => {
 });
 
 function isInUse(port: number) {
-  return new Promise<Boolean>(res => {
+  return new Promise<boolean>(res => {
     const socket = net.connect(port);
     socket.on('connect', () => res(true));
     socket.on('error', () => res(false));

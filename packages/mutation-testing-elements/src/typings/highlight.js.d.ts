@@ -24,4 +24,4 @@ declare module 'highlight.js/lib/languages/cs' {
   export = Language;
 }
 
-declare class Language { }
+declare class Language {}

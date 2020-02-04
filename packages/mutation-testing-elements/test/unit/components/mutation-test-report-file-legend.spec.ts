@@ -5,7 +5,6 @@ import { expect } from 'chai';
 import { normalizeWhitespace, expectedMutantColors } from '../../helpers/helperFunctions';
 
 describe(MutationTestReportFileLegendComponent.name, () => {
-
   let sut: CustomElementFixture<MutationTestReportFileLegendComponent>;
 
   beforeEach(async () => {
@@ -18,7 +17,6 @@ describe(MutationTestReportFileLegendComponent.name, () => {
   });
 
   describe('filter buttons', () => {
-
     it('should display no checkboxes without mutants', () => {
       expect(sut.$$('input[checkbox]')).lengthOf(0);
     });
@@ -35,7 +33,7 @@ describe(MutationTestReportFileLegendComponent.name, () => {
       await sut.updateComplete;
       const actualCheckboxes = sut.$$('.form-check.form-check-inline');
       expect(actualCheckboxes).lengthOf(6);
-      const checkboxTexts = actualCheckboxes.map(checkbox => normalizeWhitespace((checkbox.textContent as string)));
+      const checkboxTexts = actualCheckboxes.map(checkbox => normalizeWhitespace(checkbox.textContent as string));
       expect(checkboxTexts).deep.eq([
         '✅ Killed (1)',
         '👽 Survived (1)',
@@ -49,11 +47,9 @@ describe(MutationTestReportFileLegendComponent.name, () => {
     Object.keys(expectedMutantColors).forEach(status => {
       it(`should render correct badge color for ${status} mutant`, async () => {
         // Arrange
-        const mutantStatus = (status as MutantStatus);
+        const mutantStatus = status as MutantStatus;
         const expectedColor = expectedMutantColors[mutantStatus];
-        sut.element.mutants = [
-          { status: mutantStatus }
-        ];
+        sut.element.mutants = [{ status: mutantStatus }];
 
         // Act
         await sut.updateComplete;
@@ -66,7 +62,7 @@ describe(MutationTestReportFileLegendComponent.name, () => {
 
     it('should dispatch the "filters-changed" event for the initial state', async () => {
       let actualEvent: CustomEvent | undefined;
-      sut.element.addEventListener('filters-changed', (ev: any) => actualEvent = ev);
+      sut.element.addEventListener('filters-changed', (ev: any) => (actualEvent = ev));
       sut.element.mutants = [
         { status: MutantStatus.CompileError },
         { status: MutantStatus.Killed },
@@ -81,7 +77,8 @@ describe(MutationTestReportFileLegendComponent.name, () => {
         { enabled: true, numberOfMutants: 1, status: MutantStatus.NoCoverage },
         { enabled: true, numberOfMutants: 1, status: MutantStatus.Timeout },
         { enabled: false, numberOfMutants: 1, status: MutantStatus.CompileError },
-        { enabled: false, numberOfMutants: 1, status: MutantStatus.RuntimeError }];
+        { enabled: false, numberOfMutants: 1, status: MutantStatus.RuntimeError }
+      ];
       await sut.updateComplete;
       expect(actualEvent).ok;
       expect((actualEvent as CustomEvent).detail).deep.eq(expected);
@@ -89,16 +86,14 @@ describe(MutationTestReportFileLegendComponent.name, () => {
 
     it('should dispatch the "filters-changed" event when a checkbox is checked', async () => {
       // Arrange
-      sut.element.mutants = [
-        { status: MutantStatus.CompileError },
-        { status: MutantStatus.Survived }
-      ];
+      sut.element.mutants = [{ status: MutantStatus.CompileError }, { status: MutantStatus.Survived }];
       await sut.updateComplete;
       let actualEvent: CustomEvent | undefined;
-      sut.element.addEventListener('filters-changed', (ev: any) => actualEvent = ev);
+      sut.element.addEventListener('filters-changed', (ev: any) => (actualEvent = ev));
       const expected: MutantFilter[] = [
         { enabled: false, numberOfMutants: 1, status: MutantStatus.Survived },
-        { enabled: false, numberOfMutants: 1, status: MutantStatus.CompileError }];
+        { enabled: false, numberOfMutants: 1, status: MutantStatus.CompileError }
+      ];
 
       // Act
       sut.$(`input[type="checkbox"][value="${MutantStatus.Survived}"]`).click();
@@ -122,7 +117,7 @@ describe(MutationTestReportFileLegendComponent.name, () => {
 
     it('should dispatch "expand-all" event when the button is clicked', async () => {
       let actual: Event | undefined;
-      sut.element.addEventListener('expand-all', evt => actual = evt);
+      sut.element.addEventListener('expand-all', evt => (actual = evt));
       collapseButton.click();
       await sut.updateComplete;
       expect(actual).ok;
@@ -130,7 +125,7 @@ describe(MutationTestReportFileLegendComponent.name, () => {
 
     it('should dispatch "collapse-all" event when the button is clicked a second time', async () => {
       let actual: Event | undefined;
-      sut.element.addEventListener('collapse-all', evt => actual = evt);
+      sut.element.addEventListener('collapse-all', evt => (actual = evt));
       collapseButton.click();
       await sut.updateComplete;
       expect(actual).not.ok;

@@ -53,10 +53,12 @@ describe(MutationTestReportTotalsComponent.name, () => {
     });
     sut.element.model = createMetricsResult({
       name: 'bar',
-      childResults: [createMetricsResult({
-        name: 'baz',
-        childResults: [file]
-      })]
+      childResults: [
+        createMetricsResult({
+          name: 'baz',
+          childResults: [file]
+        })
+      ]
     });
 
     // Act
@@ -65,9 +67,8 @@ describe(MutationTestReportTotalsComponent.name, () => {
     // Assert
     const table = sut.$('table') as HTMLTableElement;
     expect(table).ok;
-    const rows = table.querySelectorAll('tbody tr') as NodeListOf<HTMLTableRowElement>;
+    const rows = table.querySelectorAll('tbody tr');
     expect(rows).lengthOf(2);
     expect((rows.item(1).cells.item(1) as HTMLTableCellElement).textContent).eq('baz/foo.js');
   });
-
 });

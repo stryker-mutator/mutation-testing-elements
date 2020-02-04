@@ -12,10 +12,9 @@ export class MutationTestReportBreadcrumbComponent extends LitElement {
 
   public render() {
     return html`
-        <ol class='breadcrumb'>
-          ${this.renderRootItem()}
-          ${this.renderBreadcrumbItems()}
-        </ol>
+      <ol class="breadcrumb">
+        ${this.renderRootItem()} ${this.renderBreadcrumbItems()}
+      </ol>
     `;
   }
 
@@ -42,10 +41,14 @@ export class MutationTestReportBreadcrumbComponent extends LitElement {
   }
 
   private renderActiveItem(title: string) {
-    return html`<li class="breadcrumb-item active" aria-current="page">${title}</li>`;
+    return html`
+      <li class="breadcrumb-item active" aria-current="page">${title}</li>
+    `;
   }
 
   private renderLink(title: string, url: string) {
-    return html`<li class="breadcrumb-item"><a href="${toAbsoluteUrl(url)}">${title}</a></li>`;
+    return html`
+      <li class="breadcrumb-item"><a href="${toAbsoluteUrl(url)}">${title}</a></li>
+    `;
   }
 }

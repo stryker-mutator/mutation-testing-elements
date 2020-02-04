@@ -19,7 +19,7 @@ describe('mutation-test-report-popup', () => {
     expect(getComputedStyle(popover).visibility).eq('hidden');
   });
 
-  it('should be located on the screen if it is placed to the left', async () => {
+  it('should be located on the screen if it is placed to the left', () => {
     const marginLeft = popover.style.marginLeft;
     expect(marginLeft).eq('0px');
   });

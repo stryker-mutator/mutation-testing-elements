@@ -2,7 +2,6 @@ import { PageObject } from './PageObject.po';
 import { ResultTableRow } from './ResultTableRow.po';
 
 export class ResultTable extends PageObject {
-
   public head() {
     return this.$$('thead th');
   }

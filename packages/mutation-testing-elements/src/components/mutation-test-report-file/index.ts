@@ -1,4 +1,4 @@
-import { LitElement, html, property, customElement, PropertyValues, unsafeCSS } from 'lit-element';
+import { LitElement, html, property, customElement, unsafeCSS } from 'lit-element';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 import hljs from 'highlight.js/lib/highlight';
 import javascript from 'highlight.js/lib/languages/javascript';
@@ -21,22 +21,17 @@ hljs.registerLanguage('java', java);
 
 @customElement('mutation-test-report-file')
 export class MutationTestReportFileComponent extends LitElement {
-
   @property()
   public model!: FileResult;
 
-  public static styles = [
-    highlightJS,
-    bootstrap,
-    unsafeCSS(require('./index.scss'))
-  ];
+  public static styles = [highlightJS, bootstrap, unsafeCSS(require('./index.scss'))];
 
   private readonly expandAll = () => {
-    this.forEachMutantComponent(mutantComponent => mutantComponent.expand = true);
-  }
+    this.forEachMutantComponent(mutantComponent => (mutantComponent.expand = true));
+  };
   private readonly collapseAll = () => {
-    this.forEachMutantComponent(mutantComponent => mutantComponent.expand = false);
-  }
+    this.forEachMutantComponent(mutantComponent => (mutantComponent.expand = false));
+  };
 
   private forEachMutantComponent(action: (mutant: MutationTestReportMutantComponent) => void, host = this.root) {
     for (const mutantComponent of host.querySelectorAll('mutation-test-report-mutant')) {
@@ -47,18 +42,16 @@ export class MutationTestReportFileComponent extends LitElement {
   }
 
   private readonly filtersChanged = (event: CustomEvent<MutantFilter[]>) => {
-    const enabledMutantStates = event.detail
-      .filter(mutantFilter => mutantFilter.enabled)
-      .map(mutantFilter => mutantFilter.status);
+    const enabledMutantStates = event.detail.filter(mutantFilter => mutantFilter.enabled).map(mutantFilter => mutantFilter.status);
     this.forEachMutantComponent(mutantComponent => {
       mutantComponent.show = enabledMutantStates.some(state => mutantComponent.mutant !== undefined && mutantComponent.mutant.status === state);
     });
-  }
+  };
 
   public connectedCallback() {
     super.connectedCallback();
     this.addEventListener('click', () => {
-      this.forEachMutantComponent(mutant => mutant.showPopup = false);
+      this.forEachMutantComponent(mutant => (mutant.showPopup = false));
     });
     this.addEventListener('mutant-selected', (event: Event) => {
       const selectedMutant = (event as CustomEvent<MutationTestReportMutantComponent>).detail;
@@ -74,7 +67,7 @@ export class MutationTestReportFileComponent extends LitElement {
     });
   }
 
-  @property({attribute: false})
+  @property({ attribute: false })
   private mutantInDialog: MutantResult | undefined;
 
   public render() {
@@ -83,12 +76,16 @@ export class MutationTestReportFileComponent extends LitElement {
         <div class="row">
           <div class="col-md-12">
             ${this.renderModalDialog()}
-            <mutation-test-report-file-legend @filters-changed="${this.filtersChanged}" @expand-all="${this.expandAll}"
-              @collapse-all="${this.collapseAll}" .mutants="${this.model.mutants}"></mutation-test-report-file-legend>
+            <mutation-test-report-file-legend
+              @filters-changed="${this.filtersChanged}"
+              @expand-all="${this.expandAll}"
+              @collapse-all="${this.collapseAll}"
+              .mutants="${this.model.mutants}"
+            ></mutation-test-report-file-legend>
             <pre><code class="lang-${this.model.language} hljs">${unsafeHTML(renderCode(this.model))}</code></pre>
           </div>
         </div>
-        `;
+      `;
     }
     return undefined;
   }
@@ -96,23 +93,26 @@ export class MutationTestReportFileComponent extends LitElement {
   private renderModalDialog() {
     if (this.mutantInDialog) {
       return html`
-          <div .hidden="${!this.mutantInDialog}" class="modal-backdrop show"></div>
-          <mutation-test-report-modal-dialog ?show="${this.mutantInDialog}" header="${this.mutantInDialog.id}: ${this.mutantInDialog.mutatorName} - ${getEmojiForStatus(this.mutantInDialog.status)} ${this.mutantInDialog.status}">
-            <p>${this.mutantInDialog.description}</p>
-          </mutation-test-report-modal-dialog>
+        <div .hidden="${!this.mutantInDialog}" class="modal-backdrop show"></div>
+        <mutation-test-report-modal-dialog
+          ?show="${this.mutantInDialog}"
+          header="${this.mutantInDialog.id}: ${this.mutantInDialog.mutatorName} - ${getEmojiForStatus(this.mutantInDialog.status)} ${this
+            .mutantInDialog.status}"
+        >
+          <p>${this.mutantInDialog.description}</p>
+        </mutation-test-report-modal-dialog>
       `;
     } else {
       return undefined;
     }
   }
 
-  public firstUpdated(_changedProperties: PropertyValues) {
+  public firstUpdated() {
     const code = this.root.querySelector('code');
     if (code) {
       hljs.highlightBlock(code);
       this.forEachMutantComponent(mutantComponent => {
-        mutantComponent.mutant = this.model.mutants
-          .find(mutant => mutant.id.toString() === mutantComponent.getAttribute('mutant-id'));
+        mutantComponent.mutant = this.model.mutants.find(mutant => mutant.id.toString() === mutantComponent.getAttribute('mutant-id'));
       }, code);
     }
   }

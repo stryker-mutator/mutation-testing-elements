@@ -1,13 +1,11 @@
 const webpack = require('./webpack.dev');
-module.exports = function (config) {
+module.exports = function(config) {
   config.set({
     basePath: '',
     frameworks: ['mocha'],
-    files: [
-      'test/unit/index.js'
-    ],
+    files: ['test/unit/index.js'],
     preprocessors: {
-      'test/unit/index.js': ['webpack', 'sourcemap'],
+      'test/unit/index.js': ['webpack', 'sourcemap']
     },
     reporters: ['progress'],
     port: 9876,
@@ -23,4 +21,4 @@ module.exports = function (config) {
   // Delete regular entry/output. Karma's `files` will be used
   delete config.webpack.entry;
   delete config.webpack.output;
-}
+};
