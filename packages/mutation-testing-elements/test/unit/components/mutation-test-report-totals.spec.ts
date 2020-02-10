@@ -80,7 +80,7 @@ describe.only(MutationTestReportTotalsComponent.name, () => {
     await sut.updateComplete;
     const table = sut.$('table') as HTMLTableElement;
     expect(table).ok;
-    expect(table.querySelectorAll('th.no-border-left')[0].textContent).contains('N/A');
+    expect(table.querySelectorAll('td.no-border-right')[0].textContent).contains('N/A');
   });
 
   it('should show a progress bar when there is a score', async () => {
