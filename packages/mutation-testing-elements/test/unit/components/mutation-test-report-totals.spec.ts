@@ -3,7 +3,7 @@ import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { expect } from 'chai';
 import { createMetricsResult, createFileResult } from '../../helpers/factory';
 
-describe.only(MutationTestReportTotalsComponent.name, () => {
+describe(MutationTestReportTotalsComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportTotalsComponent>;
 
   beforeEach(async () => {
@@ -80,7 +80,7 @@ describe.only(MutationTestReportTotalsComponent.name, () => {
     await sut.updateComplete;
     const table = sut.$('table') as HTMLTableElement;
     expect(table).ok;
-    expect(table.querySelectorAll('td.no-border-right')[0].textContent).contains('N/A');
+    expect(table.querySelectorAll('td span.font-weight-bold')[0].textContent).contains('N/A');
   });
 
   it('should show a progress bar when there is a score', async () => {
