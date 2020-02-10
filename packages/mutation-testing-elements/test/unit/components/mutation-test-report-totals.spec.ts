@@ -3,7 +3,7 @@ import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { expect } from 'chai';
 import { createMetricsResult, createFileResult } from '../../helpers/factory';
 
-describe(MutationTestReportTotalsComponent.name, () => {
+describe.only(MutationTestReportTotalsComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportTotalsComponent>;
 
   beforeEach(async () => {
@@ -81,5 +81,32 @@ describe(MutationTestReportTotalsComponent.name, () => {
     const table = sut.$('table') as HTMLTableElement;
     expect(table).ok;
     expect(table.querySelectorAll('th.no-border-left')[0].textContent).contains('N/A');
+  });
+
+  it('should show a progress bar when there is a score', async () => {
+    sut.element.model = createMetricsResult({
+      name: 'foo'
+    });
+    const mutationScore = 50;
+
+    sut.element.model.metrics.mutationScore = mutationScore;
+
+    await sut.updateComplete;
+    const table = sut.$('table') as HTMLTableElement;
+    expect(table).ok;
+    expect(table.querySelectorAll('.progress')[0].textContent).contains(mutationScore);
+  });
+
+  it('should show no progress bar when score is NaN', async () => {
+    sut.element.model = createMetricsResult({
+      name: 'foo'
+    });
+
+    sut.element.model.metrics.mutationScore = NaN;
+
+    await sut.updateComplete;
+    const table = sut.$('table') as HTMLTableElement;
+    expect(table).ok;
+    expect(table.querySelector('.progress')).null;
   });
 });
