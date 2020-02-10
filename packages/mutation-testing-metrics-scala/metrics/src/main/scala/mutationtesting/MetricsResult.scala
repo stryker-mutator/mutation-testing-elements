@@ -56,11 +56,11 @@ sealed trait MetricsResult {
     */
   lazy val totalMutants: Int = totalValid + totalInvalid
 
-  /** The total percentage of mutants that were killed. Or [[scala.Double.NaN]] if there are no mutants.
+  /** The total percentage of mutants that were killed. Or a {{Double.NaN}} if there are no mutants.
     */
   lazy val mutationScore: Double = (totalDetected.toDouble / totalValid) * 100
 
-  /** The total percentage of mutants that were killed based on the code coverage results. Or [[scala.Double.NaN]] if there are no mutants.
+  /** The total percentage of mutants that were killed based on the code coverage results. Or {{Double.NaN}} if there are no mutants.
     */
   lazy val mutationScoreBasedOnCoveredCode: Double = (totalDetected.toDouble / totalCovered) * 100
 }
