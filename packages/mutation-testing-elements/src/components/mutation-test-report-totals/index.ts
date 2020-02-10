@@ -110,16 +110,19 @@ export class MutationTestReportTotalsComponent extends LitElement {
       <td width="" class="no-border-left">${typeof path === 'string' ? html`<a href="${toAbsoluteUrl(path)}">${name}</a>` :
         html`<span>${row.name}</span>`}</td>
       <td class="no-border-right vertical-middle">
-        ${scoreIsNotNaN ? html`<div class="progress">
-          <div class="progress-bar bg-${coloringClass}" role="progressbar" aria-valuenow="${mutationScoreRounded}"
-            aria-valuemin="0" aria-valuemax="100" style="${progressBarStyle}">
-            ${mutationScoreRounded}%
-          </div>
-        </div>` : undefined}
+        ${scoreIsNotNaN ? html`
+          <div class="progress">
+            <div class="progress-bar bg-${coloringClass}" role="progressbar" aria-valuenow="${mutationScoreRounded}"
+              aria-valuemin="0" aria-valuemax="100" style="${progressBarStyle}">
+              ${mutationScoreRounded}%
+            </div>
+          </div>` : html`
+          <span class="font-weight-bold text-muted">N/A</span>
+        `}
       </td>
-      <th style="width: 50px;" class="no-border-left text-center text-${coloringClass}">
-        ${scoreIsNotNaN ? mutationScoreRounded : 'N/A'}
-      </th>
+      <td style="width: 50px;" class="no-border-left font-weight-bold text-center text-${coloringClass}">
+        ${scoreIsNotNaN ? mutationScoreRounded : undefined}
+      </td>
       <td class="text-center">${row.metrics.killed}</td>
       <td class="text-center">${row.metrics.survived}</td>
       <td class="text-center">${row.metrics.timeout}</td>
