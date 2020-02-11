@@ -100,17 +100,17 @@ export class MutationTestReportTotalsComponent extends LitElement {
 
   private renderRow(name: string, row: MetricsResult, path: string | undefined) {
     const { mutationScore } = row.metrics;
-    const scoreIsNotNaN = !isNaN(mutationScore);
+    const scoreIsPresent = !isNaN(mutationScore);
     const coloringClass = this.determineColoringClass(mutationScore);
     const mutationScoreRounded = mutationScore.toFixed(2);
-    const progressBarStyle = `width: ${scoreIsNotNaN ? mutationScore : 0}%`;
+    const progressBarStyle = `width: ${mutationScore}%`;
     return html`
     <tr title="${row.name}">
       <td style="width: 17px;" class="icon no-border-right">${row.file ? svg.file : svg.directory}</td>
       <td width="" class="no-border-left">${typeof path === 'string' ? html`<a href="${toAbsoluteUrl(path)}">${name}</a>` :
         html`<span>${row.name}</span>`}</td>
       <td class="no-border-right vertical-middle">
-        ${scoreIsNotNaN ? html`
+        ${scoreIsPresent ? html`
           <div class="progress">
             <div class="progress-bar bg-${coloringClass}" role="progressbar" aria-valuenow="${mutationScoreRounded}"
               aria-valuemin="0" aria-valuemax="100" style="${progressBarStyle}">
@@ -121,7 +121,7 @@ export class MutationTestReportTotalsComponent extends LitElement {
         `}
       </td>
       <td style="width: 50px;" class="no-border-left font-weight-bold text-center text-${coloringClass}">
-        ${scoreIsNotNaN ? mutationScoreRounded : undefined}
+        ${scoreIsPresent ? mutationScoreRounded : undefined}
       </td>
       <td class="text-center">${row.metrics.killed}</td>
       <td class="text-center">${row.metrics.survived}</td>
