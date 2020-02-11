@@ -27,7 +27,7 @@ describe(MutationTestReportFileComponent.name, () => {
   });
 
   it('should highlight the code', () => {
-    expect(sut.$('code .hljs-keyword')).ok;
+    expect(sut.$('code .token')).ok;
   });
 
   describe('with `mutation-test-report-mutant`', () => {

@@ -18,7 +18,7 @@ The mutation test report supports the following features:
 📊 Calculates and displays the mutation score and other metrics  
 📁 Group results into directories  
 👓 Show mutants directly in your source code  
-😎 Code highlighting with [highlightjs](https://highlightjs.org/)  
+😎 Code highlighting with [Prism](https://prismjs.com/)  
 🧙‍ Filter mutants based on the outcome  
 🔗 Deep linking using anchors (uses fragment, so path will not be contaminated)  
 ✨ A nice (yet basic) UI with embedded [bootstrap](https://getbootstrap.com) css  
