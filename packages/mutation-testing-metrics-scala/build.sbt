@@ -20,7 +20,7 @@ lazy val circe = project
       "io.circe"             %% "circe-core"   % "0.12.3",
       "io.circe"             %% "circe-parser" % "0.12.3",
       "org.leadpony.justify" % "justify"       % "2.0.0" % Test,
-      "org.leadpony.joy"     % "joy"           % "1.2.0" % Test
+      "org.leadpony.joy"     % "joy"           % "1.3.0" % Test
     )
   )
 
