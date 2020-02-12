@@ -12,7 +12,7 @@ module.exports = {
         test: /\.ts$/,
         loader: 'ts-loader',
         options: {
-          projectReferences: true,
+          projectReferences: true
         }
       },
       {

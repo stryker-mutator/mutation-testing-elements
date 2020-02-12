@@ -16,7 +16,6 @@ describe(SvgService.name, () => {
   });
 
   describe('icons should be retrieved base on file extensions', () => {
-
     it('should retrieve a default icon if the file extension is unknown', () => {
       const unknownFileType = 'testfile.testextension';
 

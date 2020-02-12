@@ -21,6 +21,7 @@ import 'prismjs/components/prism-scala';
 import 'prismjs/plugins/keep-markup/prism-keep-markup';
 // Attempt to automatically download languages that are not already included above
 import 'prismjs/plugins/autoloader/prism-autoloader';
+// eslint-disable-next-line @typescript-eslint/camelcase
 plugins.autoloader.languages_path = `https://unpkg.com/prismjs@latest/components/`;
 
 @customElement('mutation-test-report-file')
@@ -28,11 +29,7 @@ export class MutationTestReportFileComponent extends LitElement {
   @property()
   public model!: FileResult;
 
-  public static styles = [
-    prismjs,
-    bootstrap,
-    unsafeCSS(require('./index.scss'))
-  ];
+  public static styles = [prismjs, bootstrap, unsafeCSS(require('./index.scss'))];
 
   private readonly expandAll = () => {
     this.forEachMutantComponent(mutantComponent => (mutantComponent.expand = true));

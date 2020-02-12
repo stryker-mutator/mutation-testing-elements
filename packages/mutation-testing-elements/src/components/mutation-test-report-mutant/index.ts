@@ -29,34 +29,19 @@ export class MutationTestReportMutantComponent extends LitElement {
   public render() {
     // This part is newline significant, as it is rendered in a <code> block.
     // No unnecessary new lines
-    return html`
-      ${this.renderButton()}${this.renderCode()}
-    `;
+    return html`${this.renderButton()}${this.renderCode()}`;
   }
 
   private renderButton() {
     if (this.show && this.mutant) {
-      return html`
-        <mutation-test-report-popup
-          ?show="${this.showPopup}"
-          context="${getContextClassForStatus(this.mutant.status)}"
-          header="${this.mutant.mutatorName}"
-          >${this.renderPopupBody(this.mutant)}<span
-            class="mutant-toggle badge badge-${this.expand ? 'info' : getContextClassForStatus(this.mutant.status)}"
-            @click="${this.mutantClicked}"
-            title="${this.mutant.mutatorName}"
-            >${this.mutant.id}</span
-          ></mutation-test-report-popup
-        >
-      `;
+      return html`<mutation-test-report-popup ?show="${this.showPopup}" context="${getContextClassForStatus(this.mutant.status)}" header="${this.mutant.mutatorName}">${this.renderPopupBody(this.mutant)}<span class="mutant-toggle badge badge-${this.expand ? 'info' : getContextClassForStatus(this.mutant.status)}"
+    @click="${this.mutantClicked}" title="${this.mutant.mutatorName}">${this.mutant.id}</span></mutation-test-report-popup>`;
     }
     return undefined;
   }
 
   private renderPopupBody(mutant: MutantResult) {
-    return html`
-      <div slot="popover-body"><span class="btn">${getEmojiForStatus(mutant.status)} ${mutant.status}</span>${this.renderDescription(mutant)}</div>
-    `;
+    return html`<div slot="popover-body"><span class="btn">${getEmojiForStatus(mutant.status)} ${mutant.status}</span>${this.renderDescription(mutant)}</div>`;
   }
 
   private renderDescription(mutant: MutantResult) {
@@ -73,27 +58,17 @@ export class MutationTestReportMutantComponent extends LitElement {
   };
 
   private renderCode() {
-    return html`
-      ${this.renderReplacement()}${this.renderActual()}
-    `;
+    return html`${this.renderReplacement()}${this.renderActual()}`;
   }
 
   private renderActual() {
-    const actualCodeSlot = html`
-      <slot></slot>
-    `;
-    return html`
-      <span class="original-code ${this.expand && this.show ? 'disabled-code' : ''}">${actualCodeSlot}</span>
-    `;
+    const actualCodeSlot = html`<slot></slot>`;
+    return html`<span class="original-code ${this.expand && this.show ? 'disabled-code' : ''}">${actualCodeSlot}</span>`;
   }
-
+  
   private renderReplacement() {
     if (this.mutant) {
-      return html`
-        <span class="replacement badge badge-info" @click="${this.mutantClicked}" ?hidden="${!this.expand || !this.show}"
-          >${this.mutant.replacement || this.mutant.mutatorName}</span
-        >
-      `;
+      return html`<span class="replacement badge badge-info" @click="${this.mutantClicked}" ?hidden="${!this.expand || !this.show}">${this.mutant.replacement || this.mutant.mutatorName}</span>`;
     }
     return undefined;
   }
