@@ -7,7 +7,7 @@ describe('mutation-test-report-popup', () => {
   let popover: HTMLElement;
   beforeEach(async () => {
     fixture = new CustomElementFixture('mutation-test-report-popup');
-    await fixture.updateComplete;
+    await fixture.whenStable();
     popover = fixture.$('.popover');
   });
 
@@ -27,7 +27,7 @@ describe('mutation-test-report-popup', () => {
   it('should contain header and body', async () => {
     fixture.element.setAttribute('header', 'Foo');
     fixture.element.setAttribute('show', 'show');
-    await fixture.updateComplete;
+    await fixture.whenStable();
     await expectPopupEventuallyVisible();
     expect(fixture.$('.popover-header').innerText).eq('Foo');
     expect(fixture.$('.popover-body').innerHTML.trim()).eq('<slot name="popover-body"></slot>');
@@ -36,7 +36,7 @@ describe('mutation-test-report-popup', () => {
   it('should show the popup when the "show" attribute is present', async () => {
     fixture.element.setAttribute('show', 'show');
     fixture.element.setAttribute('header', 'Foo');
-    await fixture.updateComplete;
+    await fixture.whenStable();
     // Wait for the animation to finish
     await expectPopupEventuallyVisible();
   });

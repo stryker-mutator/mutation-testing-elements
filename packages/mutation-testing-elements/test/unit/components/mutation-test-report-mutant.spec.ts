@@ -9,7 +9,7 @@ describe(MutationTestReportMutantComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportMutantComponent>;
   beforeEach(async () => {
     sut = new CustomElementFixture('mutation-test-report-mutant');
-    await sut.updateComplete;
+    await sut.whenStable();
   });
 
   afterEach(() => {
@@ -19,21 +19,21 @@ describe(MutationTestReportMutantComponent.name, () => {
   it('should not render when show = false', async () => {
     sut.element.show = false;
     sut.element.mutant = createMutantResult();
-    await sut.updateComplete;
+    await sut.whenStable();
     const badge = sut.$('span.badge');
     expect(getComputedStyle(badge).display).eq('none');
   });
 
   it('should not render when mutant is undefined', async () => {
     sut.element.show = true;
-    await sut.updateComplete;
+    await sut.whenStable();
     expect(sut.$('span.badge')).not.ok;
   });
 
   it('should render when show = true and mutant is set', async () => {
     sut.element.show = true;
     sut.element.mutant = createMutantResult();
-    await sut.updateComplete;
+    await sut.whenStable();
     expect(sut.$('span.badge')).ok;
   });
 
@@ -44,7 +44,7 @@ describe(MutationTestReportMutantComponent.name, () => {
   it('should hide replacement', async () => {
     sut.element.show = true;
     sut.element.mutant = createMutantResult();
-    await sut.updateComplete;
+    await sut.whenStable();
     expect(sut.$('.replacement').hidden).true;
   });
 
@@ -53,7 +53,7 @@ describe(MutationTestReportMutantComponent.name, () => {
       const actualMutantStatus = status as MutantStatus;
       sut.element.show = true;
       sut.element.mutant = createMutantResult({ status: actualMutantStatus });
-      await sut.updateComplete;
+      await sut.whenStable();
       const badge = sut.$('span.badge');
       expect(getComputedStyle(badge).backgroundColor).eq(expectedMutantColors[actualMutantStatus]);
       expect(badge.innerText).eq(sut.element.mutant.id);
@@ -64,12 +64,12 @@ describe(MutationTestReportMutantComponent.name, () => {
     // Arrange
     sut.element.show = true;
     sut.element.mutant = createMutantResult({ replacement: 'foobar' });
-    await sut.updateComplete;
+    await sut.whenStable();
     const actualReplacement = sut.$('.badge-info');
 
     // Act
     sut.$('span.badge').click();
-    await sut.updateComplete;
+    await sut.whenStable();
 
     // Assert
     expect(actualReplacement.hidden).false;
@@ -80,12 +80,12 @@ describe(MutationTestReportMutantComponent.name, () => {
     // Arrange
     sut.element.show = true;
     sut.element.mutant = createMutantResult({ mutatorName: 'FooMutator', replacement: undefined });
-    await sut.updateComplete;
+    await sut.whenStable();
     const actualReplacement = sut.$('.badge-info');
 
     // Act
     sut.$('span.badge').click();
-    await sut.updateComplete;
+    await sut.whenStable();
 
     // Assert
     expect(actualReplacement.hidden).false;
@@ -96,13 +96,13 @@ describe(MutationTestReportMutantComponent.name, () => {
     // Arrange
     sut.element.show = true;
     sut.element.mutant = createMutantResult({ replacement: 'foobar' });
-    await sut.updateComplete;
+    await sut.whenStable();
     const actualReplacement = sut.$('.badge-info');
 
     // Act
     sut.$('span.badge').click(); // Open
     sut.$('span.badge').click(); // Close
-    await sut.updateComplete;
+    await sut.whenStable();
 
     // Assert
     expect(actualReplacement.hidden).true;
@@ -114,11 +114,11 @@ describe(MutationTestReportMutantComponent.name, () => {
     sut.element.show = true;
     sut.element.showPopup = true;
     sut.element.mutant = createMutantResult({ description: 'A description' });
-    await sut.updateComplete;
+    await sut.whenStable();
     const showMoreButton = sut.$('.show-more');
 
     // Act
-    await sut.updateComplete;
+    await sut.whenStable();
 
     // Assert
     expect(showMoreButton).ok;
@@ -131,7 +131,7 @@ describe(MutationTestReportMutantComponent.name, () => {
     sut.element.showPopup = true;
     const mutant = createMutantResult({description: 'A description'});
     sut.element.mutant = mutant;
-    await sut.updateComplete;
+    await sut.whenStable();
     const showMoreButton = sut.$('.show-more');
 
     // Act
@@ -149,11 +149,11 @@ describe(MutationTestReportMutantComponent.name, () => {
     sut.element.show = true;
     sut.element.showPopup = true;
     sut.element.mutant = createMutantResult({description: undefined});
-    await sut.updateComplete;
+    await sut.whenStable();
     const showMoreButton = sut.$('.show-more');
 
     // Act
-    await sut.updateComplete;
+    await sut.whenStable();
 
     // Assert
     expect(showMoreButton).null;
@@ -164,11 +164,11 @@ describe(MutationTestReportMutantComponent.name, () => {
     sut.element.show = true;
     sut.element.mutant = createMutantResult({ replacement: 'foobar' });
     sut.element.innerHTML = '<span>inner code</span>';
-    await sut.updateComplete;
+    await sut.whenStable();
 
     // Act
     sut.$('span.badge').click();
-    await sut.updateComplete;
+    await sut.whenStable();
 
     // Assert
     // Select from the 'light-dom'
