@@ -2,7 +2,6 @@ package mutationtesting
 
 import verify._
 import java.nio.file.Paths
-import mutationtesting.MutantStatus._
 import org.leadpony.justify.api.JsonValidationService
 import java.io.ByteArrayInputStream
 import io.circe.parser.decode
@@ -42,7 +41,7 @@ object SchemaTest extends BasicTestSuite {
     val report =
       Source.fromFile("../mutation-testing-elements/testResources/scala-example/mutation-report.json").mkString
 
-    val result = decode[MutationTestReport](report) match {
+    decode[MutationTestReport](report) match {
       case Left(err) => fail(err.getMessage())
       case Right(report) =>
         assert(report.`$schema`.isEmpty)

@@ -60,18 +60,13 @@ sealed trait MetricsResult {
     */
   lazy val totalMutants: Int = totalValid + totalInvalid + ignored
 
-  /** The total percentage of mutants that were killed.
+  /** The total percentage of mutants that were killed. Or a {{Double.NaN}} if there are no mutants.
     */
-  lazy val mutationScore: Double = percentage(totalDetected.toDouble, totalValid.toDouble)
+  lazy val mutationScore: Double = (totalDetected.toDouble / totalValid) * 100
 
-  /** The total percentage of mutants that were killed based on the code coverage results.
+  /** The total percentage of mutants that were killed based on the code coverage results. Or {{Double.NaN}} if there are no mutants.
     */
-  lazy val mutationScoreBasedOnCoveredCode: Double = percentage(totalDetected.toDouble, totalCovered.toDouble)
-
-  private def percentage(n: Double, divisor: Double): Double = divisor match {
-    case 0 => 0
-    case _ => (n / divisor) * 100
-  }
+  lazy val mutationScoreBasedOnCoveredCode: Double = (totalDetected.toDouble / totalCovered) * 100
 }
 
 sealed trait DirOps extends MetricsResult {
