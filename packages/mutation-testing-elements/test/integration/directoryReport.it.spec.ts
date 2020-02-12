@@ -16,8 +16,8 @@ describe('Directory report page', () => {
       expect(await page.resultTable().rows()).lengthOf(11);
     });
 
-    it('should show "all files" with "77.83%" mutation score', async () => {
-      expect(await page.resultTable().row('All files').progressBar().percentageText()).eq('77.83%');
+    it('should show "all files" with "78.57%" mutation score', async () => {
+      expect(await page.resultTable().row('All files').progressBar().percentageText()).eq('78.57%');
     });
 
     it('should show expected totals for cli.ts', async () => {
