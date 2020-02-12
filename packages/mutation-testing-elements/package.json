@@ -24,8 +24,9 @@
   },
   "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/mutation-testing-elements#readme",
   "devDependencies": {
-    "@stryker-mutator/api": "^2.5.0",
+    "@types/prismjs": "^1.16.0",
     "mutation-testing-metrics": "^1.2.2",
-    "mutation-testing-report-schema": "^1.2.0"
+    "mutation-testing-report-schema": "^1.2.0",
+    "prismjs": "^1.19.0"
   }
 }

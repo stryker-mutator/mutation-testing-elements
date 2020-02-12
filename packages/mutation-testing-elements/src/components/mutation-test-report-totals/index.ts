@@ -1,10 +1,10 @@
 import { LitElement, html, property, customElement, unsafeCSS } from 'lit-element';
 import { bootstrap } from '../../style';
 import { Thresholds } from 'mutation-testing-report-schema';
-import * as svg from '../svg';
 import { pathJoin } from '../../lib/codeHelpers';
 import { MetricsResult } from 'mutation-testing-metrics';
 import { toAbsoluteUrl } from '../../lib/htmlHelpers';
+import { SvgService } from '../svg';
 
 @customElement('mutation-test-report-totals')
 export class MutationTestReportTotalsComponent extends LitElement {
@@ -17,7 +17,12 @@ export class MutationTestReportTotalsComponent extends LitElement {
   @property()
   public currentPath: string[] = [];
 
-  public static styles = [bootstrap, unsafeCSS(require('./index.scss'))];
+  private readonly svgService = new SvgService();
+
+  public static styles = [
+    bootstrap,
+    unsafeCSS(require('./index.scss'))
+  ];
 
   public render() {
     if (this.model) {
@@ -96,54 +101,47 @@ export class MutationTestReportTotalsComponent extends LitElement {
   }
 
   private renderRow(name: string, row: MetricsResult, path: string | undefined) {
-    const mutationScoreRounded = row.metrics.mutationScore.toFixed(2);
-    const coloringClass = this.determineColoringClass(row.metrics.mutationScore);
-    const progressBarStyle = `width: ${mutationScoreRounded}%`;
+    const { mutationScore } = row.metrics;
+    const scoreIsPresent = !isNaN(mutationScore);
+    const coloringClass = this.determineColoringClass(mutationScore);
+    const mutationScoreRounded = mutationScore.toFixed(2);
+    const progressBarStyle = `width: ${mutationScore}%`;
     return html`
-      <tr title="${row.name}">
-        <td style="width: 17px;" class="icon no-border-right">${row.file ? svg.file : svg.directory}</td>
-        <td width="" class="no-border-left">
-          ${typeof path === 'string'
-            ? html`
-                <a href="${toAbsoluteUrl(path)}">${name}</a>
-              `
-            : html`
-                <span>${row.name}</span>
-              `}
-        </td>
-        <td class="no-border-right vertical-middle">
+    <tr title="${row.name}">
+      <td style="width: 32px;" class="icon no-border-right">${row.file ? this.svgService.getIconForFile(row.name) : this.svgService.getIconForFolder() }</td>
+      <td width="" class="no-border-left">${typeof path === 'string' ? html`<a href="${toAbsoluteUrl(path)}">${name}</a>` :
+        html`<span>${row.name}</span>`}</td>
+      <td class="no-border-right vertical-middle">
+        ${scoreIsPresent ? html`
           <div class="progress">
-            <div
-              class="progress-bar bg-${coloringClass}"
-              role="progressbar"
-              aria-valuenow="${mutationScoreRounded}"
-              aria-valuemin="0"
-              aria-valuemax="100"
-              .style="${progressBarStyle}"
-            >
+            <div class="progress-bar bg-${coloringClass}" role="progressbar" aria-valuenow="${mutationScoreRounded}"
+              aria-valuemin="0" aria-valuemax="100" style="${progressBarStyle}">
               ${mutationScoreRounded}%
             </div>
-          </div>
-        </td>
-        <th style="width: 50px;" class="no-border-left text-center text-${coloringClass}">${mutationScoreRounded}</th>
-        <td class="text-center">${row.metrics.killed}</td>
-        <td class="text-center">${row.metrics.survived}</td>
-        <td class="text-center">${row.metrics.timeout}</td>
-        <td class="text-center">${row.metrics.noCoverage}</td>
-        <td class="text-center">${row.metrics.runtimeErrors}</td>
-        <td class="text-center">${row.metrics.compileErrors}</td>
-        <th class="text-center">${row.metrics.totalDetected}</th>
-        <th class="text-center">${row.metrics.totalUndetected}</th>
-        <th class="text-center">${row.metrics.totalMutants}</th>
-      </tr>
-    `;
+          </div>` : html`
+          <span class="font-weight-bold text-muted">N/A</span>
+        `}
+      </td>
+      <td style="width: 50px;" class="no-border-left font-weight-bold text-center text-${coloringClass}">
+        ${scoreIsPresent ? mutationScoreRounded : undefined}
+      </td>
+      <td class="text-center">${row.metrics.killed}</td>
+      <td class="text-center">${row.metrics.survived}</td>
+      <td class="text-center">${row.metrics.timeout}</td>
+      <td class="text-center">${row.metrics.noCoverage}</td>
+      <td class="text-center">${row.metrics.runtimeErrors}</td>
+      <td class="text-center">${row.metrics.compileErrors}</td>
+      <th class="text-center">${row.metrics.totalDetected}</th>
+      <th class="text-center">${row.metrics.totalUndetected}</th>
+      <th class="text-center">${row.metrics.totalMutants}</th>
+    </tr>`;
   }
 
-  private determineColoringClass(score: number) {
-    if (this.thresholds) {
-      if (score < this.thresholds.low) {
+  private determineColoringClass(mutationScore: number) {
+    if (!isNaN(mutationScore) && this.thresholds) {
+      if (mutationScore < this.thresholds.low) {
         return 'danger';
-      } else if (score < this.thresholds.high) {
+      } else if (mutationScore < this.thresholds.high) {
         return 'warning';
       } else {
         return 'success';

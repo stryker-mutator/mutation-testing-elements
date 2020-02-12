@@ -1,30 +1,38 @@
 import { LitElement, html, property, customElement, unsafeCSS } from 'lit-element';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html';
-import hljs from 'highlight.js/lib/highlight';
-import javascript from 'highlight.js/lib/languages/javascript';
-import scala from 'highlight.js/lib/languages/scala';
-import java from 'highlight.js/lib/languages/java';
-import cs from 'highlight.js/lib/languages/cs';
-import typescript from 'highlight.js/lib/languages/typescript';
 import { MutationTestReportMutantComponent, SHOW_MORE_EVENT } from '../mutation-test-report-mutant';
 import { MutantFilter } from '../mutation-test-report-file-legend';
-import { bootstrap, highlightJS } from '../../style';
+import { bootstrap, prismjs } from '../../style';
 import { renderCode } from '../../lib/codeHelpers';
 import { FileResult, MutantResult } from 'mutation-testing-report-schema';
 import { getEmojiForStatus } from '../../lib/htmlHelpers';
+import { highlightElement, plugins } from 'prismjs/components/prism-core';
 
-hljs.registerLanguage('javascript', javascript);
-hljs.registerLanguage('typescript', typescript);
-hljs.registerLanguage('cs', cs);
-hljs.registerLanguage('scala', scala);
-hljs.registerLanguage('java', java);
+import 'prismjs/plugins/line-numbers/prism-line-numbers';
+// Order is important here! Scala depends on java, which depends on clike
+import 'prismjs/components/prism-clike';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-csharp';
+import 'prismjs/components/prism-java';
+import 'prismjs/components/prism-scala';
+
+// Don't strip pre-existing HTML to keep the popups and badges working
+import 'prismjs/plugins/keep-markup/prism-keep-markup';
+// Attempt to automatically download languages that are not already included above
+import 'prismjs/plugins/autoloader/prism-autoloader';
+plugins.autoloader.languages_path = `https://unpkg.com/prismjs@latest/components/`;
 
 @customElement('mutation-test-report-file')
 export class MutationTestReportFileComponent extends LitElement {
   @property()
   public model!: FileResult;
 
-  public static styles = [highlightJS, bootstrap, unsafeCSS(require('./index.scss'))];
+  public static styles = [
+    prismjs,
+    bootstrap,
+    unsafeCSS(require('./index.scss'))
+  ];
 
   private readonly expandAll = () => {
     this.forEachMutantComponent(mutantComponent => (mutantComponent.expand = true));
@@ -76,13 +84,9 @@ export class MutationTestReportFileComponent extends LitElement {
         <div class="row">
           <div class="col-md-12">
             ${this.renderModalDialog()}
-            <mutation-test-report-file-legend
-              @filters-changed="${this.filtersChanged}"
-              @expand-all="${this.expandAll}"
-              @collapse-all="${this.collapseAll}"
-              .mutants="${this.model.mutants}"
-            ></mutation-test-report-file-legend>
-            <pre><code class="lang-${this.model.language} hljs">${unsafeHTML(renderCode(this.model))}</code></pre>
+            <mutation-test-report-file-legend @filters-changed="${this.filtersChanged}" @expand-all="${this.expandAll}"
+              @collapse-all="${this.collapseAll}" .mutants="${this.model.mutants}"></mutation-test-report-file-legend>
+            <pre id="report-code-block" class="line-numbers"><code class="language-${this.model.language}">${unsafeHTML(renderCode(this.model))}</code></pre>
           </div>
         </div>
       `;
@@ -110,7 +114,7 @@ export class MutationTestReportFileComponent extends LitElement {
   public firstUpdated() {
     const code = this.root.querySelector('code');
     if (code) {
-      hljs.highlightBlock(code);
+      highlightElement(code);
       this.forEachMutantComponent(mutantComponent => {
         mutantComponent.mutant = this.model.mutants.find(mutant => mutant.id.toString() === mutantComponent.getAttribute('mutant-id'));
       }, code);
