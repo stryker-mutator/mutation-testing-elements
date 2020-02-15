@@ -8,7 +8,7 @@ describe(MutationTestReportTotalsComponent.name, () => {
 
   beforeEach(async () => {
     sut = new CustomElementFixture('mutation-test-report-totals');
-    await sut.updateComplete;
+    await sut.whenStable();
   });
 
   afterEach(() => {
@@ -23,7 +23,7 @@ describe(MutationTestReportTotalsComponent.name, () => {
     sut.element.model = createMetricsResult({
       file: createFileResult()
     });
-    await sut.updateComplete;
+    await sut.whenStable();
     const table = sut.$('table') as HTMLTableElement;
     expect(table).ok;
     expect(table.querySelectorAll('thead th')).lengthOf(12);
@@ -39,7 +39,7 @@ describe(MutationTestReportTotalsComponent.name, () => {
       name: 'bar',
       childResults: [file, createMetricsResult({ name: 'baz' })]
     });
-    await sut.updateComplete;
+    await sut.whenStable();
     const table = sut.$('table') as HTMLTableElement;
     expect(table).ok;
     expect(table.querySelectorAll('tbody tr')).lengthOf(3);
@@ -60,7 +60,7 @@ describe(MutationTestReportTotalsComponent.name, () => {
     });
 
     // Act
-    await sut.updateComplete;
+    await sut.whenStable();
 
     // Assert
     const table = sut.$('table') as HTMLTableElement;
@@ -77,7 +77,7 @@ describe(MutationTestReportTotalsComponent.name, () => {
 
     sut.element.model.metrics.mutationScore = NaN;
 
-    await sut.updateComplete;
+    await sut.whenStable();
     const table = sut.$('table') as HTMLTableElement;
     expect(table).ok;
     expect(table.querySelectorAll('td span.font-weight-bold')[0].textContent).contains('N/A');
@@ -91,7 +91,7 @@ describe(MutationTestReportTotalsComponent.name, () => {
 
     sut.element.model.metrics.mutationScore = mutationScore;
 
-    await sut.updateComplete;
+    await sut.whenStable();
     const table = sut.$('table') as HTMLTableElement;
     expect(table).ok;
     expect(table.querySelectorAll('.progress')[0].textContent).contains(mutationScore);
@@ -104,7 +104,7 @@ describe(MutationTestReportTotalsComponent.name, () => {
 
     sut.element.model.metrics.mutationScore = NaN;
 
-    await sut.updateComplete;
+    await sut.whenStable();
     const table = sut.$('table') as HTMLTableElement;
     expect(table).ok;
     expect(table.querySelector('.progress')).null;

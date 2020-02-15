@@ -46,14 +46,14 @@ describe(MutationTestReportAppComponent.name, () => {
 
     it('should change when a report is set', async () => {
       sut.element.report = createReport();
-      await sut.updateComplete;
+      await sut.whenStable();
       expect(document.title).eq('All files');
     });
 
     it('should respect the "title-postfix" attribute', async () => {
       sut.element.setAttribute('title-postfix', 'Stryker report');
       sut.element.report = createReport();
-      await sut.updateComplete;
+      await sut.whenStable();
       expect(document.title).eq('All files - Stryker report');
     });
   });
@@ -69,9 +69,7 @@ describe(MutationTestReportAppComponent.name, () => {
 
       // Act
       sut.element.setAttribute('src', '/mutation-testing-report.json');
-      await sut.updateComplete; // await window.fetch
-      await sut.updateComplete; // await response.json
-      await sut.updateComplete; // await updated
+      await sut.whenStable(); // await window.fetch
 
       // Assert
       expect(sut.element.report).eq(expectedReport);
@@ -87,9 +85,7 @@ describe(MutationTestReportAppComponent.name, () => {
 
       // Act
       sut.element.setAttribute('src', '/mutation-testing-report.json');
-      await sut.updateComplete;
-      await sut.updateComplete;
-      await sut.updateComplete;
+      await sut.whenStable();
 
       // Assert
       expect(sut.element.errorMessage).eq(expectedErrorMessage);
@@ -102,25 +98,25 @@ describe(MutationTestReportAppComponent.name, () => {
   describe('report property', () => {
     it('should load the breadcrumb', async () => {
       sut.element.report = createReport();
-      await sut.updateComplete;
+      await sut.whenStable();
       expect(sut.$('mutation-test-report-breadcrumb')).ok;
     });
 
     it('should load the totals', async () => {
       sut.element.report = createReport();
-      await sut.updateComplete;
+      await sut.whenStable();
       expect(sut.$('mutation-test-report-totals')).ok;
     });
 
     it('should render a file when navigating to a file', async () => {
       // Arrange
       sut.element.report = createReport();
-      await sut.updateComplete;
+      await sut.whenStable();
 
       // Act
       window.location.hash = '#' + Object.keys(sut.element.report.files)[0];
       await tick(); // give routing a change (happens next tick)
-      await sut.updateComplete;
+      await sut.whenStable();
 
       // Assert
       const file = sut.$('mutation-test-report-file') as MutationTestReportFileComponent;

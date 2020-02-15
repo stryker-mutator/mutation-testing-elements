@@ -8,7 +8,7 @@ describe(MutationTestReportBreadcrumbComponent.name, () => {
 
   beforeEach(async () => {
     sut = new CustomElementFixture('mutation-test-report-breadcrumb');
-    await sut.updateComplete;
+    await sut.whenStable();
   });
 
   afterEach(() => {
@@ -24,7 +24,7 @@ describe(MutationTestReportBreadcrumbComponent.name, () => {
 
   it('should show a breadcrumb of 2 items if path has 1 item', async () => {
     sut.element.path = ['foo.js'];
-    await sut.updateComplete;
+    await sut.whenStable();
     const elements = sut.$$('li');
     expect(elements).lengthOf(2);
     const anchor = elements[0].querySelector('a') as HTMLAnchorElement;
@@ -36,7 +36,7 @@ describe(MutationTestReportBreadcrumbComponent.name, () => {
 
   it('should show a breadcrumb of 3 items if path has 2 item', async () => {
     sut.element.path = ['bar', 'foo.js'];
-    await sut.updateComplete;
+    await sut.whenStable();
     const elements = sut.$$('li');
     expect(elements).lengthOf(3);
     const rootLink = elements[0].querySelector('a') as HTMLAnchorElement;

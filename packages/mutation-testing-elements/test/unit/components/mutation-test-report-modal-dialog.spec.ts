@@ -7,7 +7,7 @@ describe(MutationTestReportModalDialogComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportModalDialogComponent>;
   beforeEach(async () => {
     sut = new CustomElementFixture('mutation-test-report-modal-dialog');
-    await sut.updateComplete;
+    await sut.whenStable();
   });
 
   afterEach(() => {
@@ -22,14 +22,14 @@ describe(MutationTestReportModalDialogComponent.name, () => {
 
   it('should render when show attribute is present', async () => {
     sut.element.setAttribute('show', 'true');
-    await sut.updateComplete;
+    await sut.whenStable();
     const modal = sut.$('div.modal');
     expect(modal.hidden).false;
   });
 
   it('should display the header in the title', async () => {
     sut.element.header = 'Test header';
-    await sut.updateComplete;
+    await sut.whenStable();
     const title = sut.$('h5.modal-title');
     expect(title.textContent).eq('Test header');
   });

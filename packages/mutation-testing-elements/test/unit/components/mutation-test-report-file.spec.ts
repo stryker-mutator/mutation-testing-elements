@@ -15,7 +15,7 @@ describe(MutationTestReportFileComponent.name, () => {
     fileResult = createFileResult();
     sut = new CustomElementFixture('mutation-test-report-file');
     sut.element.model = fileResult;
-    await sut.updateComplete;
+    await sut.whenStable();
   });
 
   afterEach(() => {
@@ -45,14 +45,14 @@ describe(MutationTestReportFileComponent.name, () => {
 
     it('should expand `mutation-test-report-mutant` when the "expand-all" event is triggered', async () => {
       legendComponent.dispatchEvent(new CustomEvent('expand-all'));
-      await sut.updateComplete;
+      await sut.whenStable();
       expect(mutantComponent.expand).true;
     });
 
     it('should collapse `mutation-test-report-mutant` when the "collapse-all" event is triggered', async () => {
       mutantComponent.expand = true;
       legendComponent.dispatchEvent(new CustomEvent('collapse-all'));
-      await sut.updateComplete;
+      await sut.whenStable();
       expect(mutantComponent.expand).false;
     });
 
@@ -67,7 +67,7 @@ describe(MutationTestReportFileComponent.name, () => {
 
       // Act
       legendComponent.dispatchEvent(new CustomEvent('filters-changed', { detail: filters }));
-      await sut.updateComplete;
+      await sut.whenStable();
 
       // Assert
       expect(mutantComponent.show).false;
@@ -90,7 +90,7 @@ describe(MutationTestReportFileComponent.name, () => {
 
         // Act
         legendComponent.dispatchEvent(new CustomEvent(SHOW_MORE_EVENT, { detail: mutant, bubbles: true, composed: true }));
-        await sut.updateComplete;
+        await sut.whenStable();
         const dialog = sut.$('mutation-test-report-modal-dialog');
 
         // Assert
@@ -149,7 +149,7 @@ describe(MutationTestReportFileComponent.name, () => {
         // Act
         await openDialog();
         legendComponent.dispatchEvent(new CustomEvent('close-dialog', { detail: undefined, bubbles: true, composed: true }));
-        await sut.updateComplete;
+        await sut.whenStable();
 
         const background = sut.$('.modal-backdrop');
         const dialog = sut.$('mutation-test-report-modal-dialog');
@@ -180,7 +180,7 @@ describe(MutationTestReportFileComponent.name, () => {
           detail = createMutantResult();
         }
         legendComponent.dispatchEvent(new CustomEvent(SHOW_MORE_EVENT, { detail, bubbles: true, composed: true }));
-        await sut.updateComplete;
+        await sut.whenStable();
       }
   });
 });
