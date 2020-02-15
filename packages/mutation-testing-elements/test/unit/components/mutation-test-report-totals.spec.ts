@@ -26,8 +26,8 @@ describe(MutationTestReportTotalsComponent.name, () => {
     await sut.whenStable();
     const table = sut.$('table') as HTMLTableElement;
     expect(table).ok;
-    expect(table.querySelectorAll('thead th')).lengthOf(11);
-    expect(table.querySelectorAll('tbody th, tbody td')).lengthOf(13);
+    expect(table.querySelectorAll('thead th')).lengthOf(12);
+    expect(table.querySelectorAll('tbody th, tbody td')).lengthOf(14);
   });
 
   it('should show a table with a 3 rows for a directory result with 2 directories and one file', async () => {

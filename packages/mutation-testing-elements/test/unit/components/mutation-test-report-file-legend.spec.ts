@@ -30,16 +30,18 @@ describe(MutationTestReportFileLegendComponent.name, () => {
         { status: MutantStatus.NoCoverage },
         { status: MutantStatus.RuntimeError },
         { status: MutantStatus.Survived },
-        { status: MutantStatus.Timeout }
+        { status: MutantStatus.Timeout },
+        { status: MutantStatus.Ignored }
       ];
       await sut.whenStable();
       const actualCheckboxes = sut.$$('.form-check.form-check-inline');
-      expect(actualCheckboxes).lengthOf(6);
+      expect(actualCheckboxes).lengthOf(7);
       const checkboxTexts = actualCheckboxes.map(checkbox => normalizeWhitespace((checkbox.textContent as string)));
       expect(checkboxTexts).deep.eq([
         '✅ Killed (1)',
         '👽 Survived (1)',
         '🙈 NoCoverage (1)',
+        '🤥 Ignored (1)',
         '⌛ Timeout (1)',
         '💥 CompileError (1)',
         '💥 RuntimeError (1)'
@@ -73,12 +75,14 @@ describe(MutationTestReportFileLegendComponent.name, () => {
         { status: MutantStatus.NoCoverage },
         { status: MutantStatus.RuntimeError },
         { status: MutantStatus.Survived },
-        { status: MutantStatus.Timeout }
+        { status: MutantStatus.Timeout },
+        { status: MutantStatus.Ignored }
       ];
       const expected: MutantFilter[] = [
         { enabled: false, numberOfMutants: 1, status: MutantStatus.Killed },
         { enabled: true, numberOfMutants: 1, status: MutantStatus.Survived },
         { enabled: true, numberOfMutants: 1, status: MutantStatus.NoCoverage },
+        { enabled: false, numberOfMutants: 1, status: MutantStatus.Ignored },
         { enabled: true, numberOfMutants: 1, status: MutantStatus.Timeout },
         { enabled: false, numberOfMutants: 1, status: MutantStatus.CompileError },
         { enabled: false, numberOfMutants: 1, status: MutantStatus.RuntimeError }];

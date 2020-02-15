@@ -15,5 +15,6 @@ export const enum MutantStatus {
   NoCoverage = 'NoCoverage',
   CompileError = 'CompileError',
   RuntimeError = 'RuntimeError',
-  Timeout = 'Timeout'
+  Timeout = 'Timeout',
+  Ignored = 'Ignored'
 }

@@ -60,6 +60,9 @@ export class MutationTestReportTotalsComponent extends LitElement {
       <div><span># No coverage</span></div>
     </th>
     <th class="rotate text-center" style="width: 50px">
+      <div><span># Ignored</span></div>
+    </th>
+    <th class="rotate text-center" style="width: 50px">
       <div><span># Runtime errors</span></div>
     </th>
     <th class="rotate text-center" style="width: 50px">
@@ -129,6 +132,7 @@ export class MutationTestReportTotalsComponent extends LitElement {
       <td class="text-center">${row.metrics.survived}</td>
       <td class="text-center">${row.metrics.timeout}</td>
       <td class="text-center">${row.metrics.noCoverage}</td>
+      <td class="text-center">${row.metrics.ignored}</td>
       <td class="text-center">${row.metrics.runtimeErrors}</td>
       <td class="text-center">${row.metrics.compileErrors}</td>
       <th class="text-center">${row.metrics.totalDetected}</th>

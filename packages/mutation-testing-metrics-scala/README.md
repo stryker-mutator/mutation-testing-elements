@@ -100,22 +100,24 @@ metrics.noCoverage
 // res4: Int = 0
 metrics.compileErrors
 // res5: Int = 0
+metrics.ignored
+// res6: Int = 0
 metrics.totalDetected
-// res6: Int = 162
+// res7: Int = 162
 metrics.totalUndetected
-// res7: Int = 69
+// res8: Int = 69
 metrics.totalCovered
-// res8: Int = 231
-metrics.totalValid
 // res9: Int = 231
+metrics.totalValid
+// res10: Int = 231
 metrics.totalInvalid
-// res10: Int = 0
+// res11: Int = 0
 metrics.totalMutants
-// res11: Int = 231
+// res12: Int = 231
 metrics.mutationScore
-// res12: Double = 70.12987012987013
-metrics.mutationScoreBasedOnCoveredCode
 // res13: Double = 70.12987012987013
+metrics.mutationScoreBasedOnCoveredCode
+// res14: Double = 70.12987012987013
 ```
 
 - `MetricsResult` is a trait with three implementations:

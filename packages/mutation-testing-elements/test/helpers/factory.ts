@@ -49,6 +49,7 @@ export function createMetrics(overrides?: Metrics): Metrics {
     compileErrors: 0,
     runtimeErrors: 0,
     noCoverage: 0,
+    ignored: 0,
     totalCovered: 0,
     totalDetected: 0,
     totalInvalid: 0,
