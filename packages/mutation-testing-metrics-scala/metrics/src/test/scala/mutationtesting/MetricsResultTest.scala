@@ -66,7 +66,7 @@ object MetricsResultTest extends BasicTestSuite {
               MetricMutant(MutantStatus.NoCoverage),
               MetricMutant(MutantStatus.NoCoverage),
               MetricMutant(MutantStatus.CompileError),
-              MetricMutant(MutantStatus.Ignored),
+              MetricMutant(MutantStatus.Ignored)
             )
           ),
           MetricsFile("baz.scala", Nil)
