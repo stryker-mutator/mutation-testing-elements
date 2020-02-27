@@ -31,7 +31,7 @@ sealed trait MetricsResult {
   def compileErrors: Int
 
   /** The total number of mutants that were not even tested because the config of the user asked for them to be ignored.
-   */
+    */
   def ignored: Int
 
   /** The number of mutants detected by your tests.
