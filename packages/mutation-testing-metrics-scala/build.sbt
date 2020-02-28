@@ -30,11 +30,56 @@ lazy val docs = project
   .dependsOn(circe)
   .enablePlugins(MdocPlugin)
 
+lazy val elements = project
+  .in(file("mutation-testing-elements"))
+  .settings(
+    npmProjectSettings,
+    name := "mutation-testing-elements",
+    description := "A suite of web components for a mutation testing report.",
+    skip in publish := skipElementsPublish
+  )
+
+lazy val schema = project
+  .in(file("mutation-testing-report-schema"))
+  .settings(
+    npmProjectSettings,
+    name := "mutation-testing-report-schema",
+    description := "The json schema for a mutation testing report.",
+    skip in publish := skipSchemaPublish
+  )
+
 lazy val sharedSettings = Seq(
   libraryDependencies += "com.eed3si9n.verify" %% "verify" % "0.2.0" % Test,
   testFrameworks := List(new TestFramework("verify.runner.Framework")),
   scalaVersion := Scala213,
   crossScalaVersions := Seq(Scala213, Scala212),
-  skip in publish := false,
+  skip in publish := skipNormalProjectPublish,
   publishTo := sonatypePublishToBundle.value
 )
+
+lazy val npmProjectSettings = Seq(
+  // These are not used, but prevent the project from being published twice
+  scalaVersion := Scala213,
+  crossScalaVersions := Seq(Scala213),
+  publishTo := sonatypePublishToBundle.value,
+  // Avoid conflicts with parallel publishing
+  sonatypeSessionName := s"[sbt-sonatype] npm-${name.value}-${version.value}",
+  // drop off Scala suffix from artifact names.
+  crossPaths := false,
+  // exclude scala-library from dependencies
+  autoScalaLibrary := false
+)
+
+def envVarIsTrue(envVar: String): Boolean =
+  sys.env
+    .get(envVar)
+    .map(_.toLowerCase == "true")
+    .isDefined
+
+// Only publish if PUBLISH_ELEMENTS env var is true
+lazy val skipElementsPublish = !envVarIsTrue("PUBLISH_ELEMENTS")
+// Only publish if PUBLISH_SCHEMA env var is true
+lazy val skipSchemaPublish = !envVarIsTrue("PUBLISH_SCHEMA")
+// Default, publish except if PUBLISH_ELEMENTS or PUBLISH_SCHEMA is true
+// See NPM_PROJECTS_PUBLISHING.md for more info
+lazy val skipNormalProjectPublish = !skipElementsPublish || !skipSchemaPublish
