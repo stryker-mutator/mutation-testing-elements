@@ -17,6 +17,8 @@ Add the dependency to your project [![Maven Central](https://img.shields.io/mave
 libraryDependencies += "io.stryker-mutator" %% "mutation-testing-metrics" % version
 ```
 
+The `mutation-testing-elements` and `mutation-testing-report-schema` projects are also published, see [NPM_PROJECTS_PUBLISHING](./NPM_PROJECTS_PUBLISHING.md) for more information.
+
 First create the mutation test report:
 
 ```scala
@@ -87,8 +89,8 @@ val decoded: Either[io.circe.Error, MutationTestReport] = decode[MutationTestRep
 
 ### `MetricsResult`
 
-A `MetricsResult` has the following properties, as described in [the handbook](https://github.com/stryker-mutator/stryker-handbook/blob/master/mutant-states-and-metrics.md): 
- 
+A `MetricsResult` has the following properties, as described in [the handbook](https://github.com/stryker-mutator/stryker-handbook/blob/master/mutant-states-and-metrics.md):
+
 ```scala
 metrics.killed
 // res1: Int = 162
