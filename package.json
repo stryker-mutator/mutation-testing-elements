@@ -35,7 +35,7 @@
     "@stryker-mutator/karma-runner": "^3.0.0",
     "@stryker-mutator/mocha-framework": "^2.4.0",
     "@stryker-mutator/mocha-runner": "^3.0.0",
-    "@stryker-mutator/typescript": "^2.4.0",
+    "@stryker-mutator/typescript": "^3.0.0",
     "@types/chai": "^4.1.7",
     "@types/express": "^4.17.0",
     "@types/mocha": "^7.0.1",
