@@ -33,7 +33,7 @@
     "@stryker-mutator/core": "^2.4.0",
     "@stryker-mutator/html-reporter": "^2.4.0",
     "@stryker-mutator/karma-runner": "^3.0.0",
-    "@stryker-mutator/mocha-framework": "^2.4.0",
+    "@stryker-mutator/mocha-framework": "^3.0.0",
     "@stryker-mutator/mocha-runner": "^3.0.0",
     "@stryker-mutator/typescript": "^2.4.0",
     "@types/chai": "^4.1.7",
