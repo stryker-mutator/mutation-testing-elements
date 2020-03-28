@@ -10,6 +10,7 @@ export class BackgroundColorCalculator {
   private noCoverage = 0;
   private survived = 0;
   private timeout = 0;
+  private ignored = 0;
 
   public readonly markMutantStart = (mutant: Pick<MutantResult, 'status'>) => {
     this.countMutant(1, mutant.status);
@@ -33,6 +34,9 @@ export class BackgroundColorCalculator {
       case MutantStatus.NoCoverage:
         this.noCoverage += valueToAdd;
         break;
+      case MutantStatus.Ignored:
+        this.ignored += valueToAdd;
+        break;
     }
   }
 
@@ -45,6 +49,8 @@ export class BackgroundColorCalculator {
       return getContextClassForStatus(MutantStatus.Timeout) + '-light';
     } else if (this.killed > 0) {
       return getContextClassForStatus(MutantStatus.Killed) + '-light';
+    } else if (this.ignored > 0) {
+      return getContextClassForStatus(MutantStatus.Ignored) + '-light';
     }
     return null;
   };

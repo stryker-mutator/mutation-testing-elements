@@ -14,31 +14,25 @@ describe('Directory report page', () => {
       expect(await page.resultTable().rows()).lengthOf(11);
     });
 
-    it('should show "all files" with "77.83%" mutation score', async () => {
-      expect(
-        await page
-          .resultTable()
-          .row('All files')
-          .progressBar()
-          .percentageText()
-      ).eq('77.83%');
+    it('should show "all files" with "78.57%" mutation score', async () => {
+      expect(await page.resultTable().row('All files').progressBar().percentageText()).eq('78.57%');
     });
 
     it('should show expected totals for cli.ts', async () => {
-      const cliRow = page.resultTable().row('cli.ts');
+      const row = await page.resultTable().row('cli.ts');
       return Promise.all([
-        expect(await cliRow.progressBar().percentageText()).eq('8.70%'),
-        expect(await cliRow.mutationScore()).eq('8.70'),
-        expect(await cliRow.killed()).eq('2'),
-        expect(await cliRow.survived()).eq('1'),
-        expect(await cliRow.timeout()).eq('0'),
-        expect(await cliRow.noCoverage()).eq('20'),
-        expect(await cliRow.runtimeErrors()).eq('0'),
-        expect(await cliRow.compileErrors()).eq('3'),
-        expect(await cliRow.totalDetected()).eq('2'),
-        expect(await cliRow.totalUndetected()).eq('21'),
-        expect(await cliRow.totalMutants()).eq('26')
-      ]);
+        expect(await row.progressBar().percentageText()).eq('8.70%'),
+        expect(await row.mutationScore()).eq('8.70'),
+        expect(await row.killed()).eq('2'),
+        expect(await row.survived()).eq('1'),
+        expect(await row.timeout()).eq('0'),
+        expect(await row.noCoverage()).eq('20'),
+        expect(await row.ignored()).eq('0'),
+        expect(await row.runtimeErrors()).eq('0'),
+        expect(await row.compileErrors()).eq('3'),
+        expect(await row.totalDetected()).eq('2'),
+        expect(await row.totalUndetected()).eq('21'),
+        expect(await row.totalMutants()).eq('26')]);
     });
   });
 });

@@ -1,12 +1,12 @@
 {
   "name": "mutation-testing-report-schema",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "The json schema for a mutation testing report.",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
   "scripts": {
     "test": "mocha -r source-map-support/register dist/test/**/*.js",
-    "postpublish": "../../mvn/mvnPublish.sh dist/src"
+    "postpublish": "PUBLISH_SCHEMA=true ../mutation-testing-metrics-scala/npmProjPublish.sh dist/src"
   },
   "repository": {
     "type": "git",

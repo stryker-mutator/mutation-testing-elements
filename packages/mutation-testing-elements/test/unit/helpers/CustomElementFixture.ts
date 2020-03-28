@@ -8,8 +8,8 @@ export class CustomElementFixture<TCustomElement extends LitElement> {
     document.body.append(this.element);
   }
 
-  public get updateComplete() {
-    return this.element.updateComplete;
+  public async whenStable() {
+    while (!await this.element.updateComplete);
   }
 
   public waitFor(action: () => boolean, timeout = 500) {
@@ -54,7 +54,7 @@ export class CustomElementFixture<TCustomElement extends LitElement> {
     this.element.addEventListener(eventType, eventListener);
     try {
       await act();
-      await this.updateComplete;
+      await this.whenStable();
     } finally {
       this.element.removeEventListener(eventType, eventListener);
     }

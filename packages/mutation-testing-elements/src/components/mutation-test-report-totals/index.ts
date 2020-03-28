@@ -37,45 +37,46 @@ export class MutationTestReportTotalsComponent extends LitElement {
   }
 
   private renderHead() {
-    return html`
-      <thead>
-        <tr>
-          <th colspan="2" style="width: 217px">
-            <div><span>File / Directory</span></div>
-          </th>
-          <th colspan="2">
-            <div><span>Mutation score</span></div>
-          </th>
-          <th class="rotate text-center" style="width: 50px">
-            <div><span># Killed</span></div>
-          </th>
-          <th class="rotate text-center" style="width: 50px">
-            <div><span># Survived</span></div>
-          </th>
-          <th class="rotate text-center" style="width: 50px">
-            <div><span># Timeout</span></div>
-          </th>
-          <th class="rotate text-center" style="width: 50px">
-            <div><span># No coverage</span></div>
-          </th>
-          <th class="rotate text-center" style="width: 50px">
-            <div><span># Runtime errors</span></div>
-          </th>
-          <th class="rotate text-center" style="width: 50px">
-            <div><span># Compile errors</span></div>
-          </th>
-          <th class="rotate rotate-width-70 text-center" style="width: 70px">
-            <div><span>Total detected</span></div>
-          </th>
-          <th class="rotate rotate-width-70 text-center" style="width: 70px">
-            <div><span>Total undetected</span></div>
-          </th>
-          <th class="rotate rotate-width-70 text-center" style="width: 70px">
-            <div><span>Total mutants</span></div>
-          </th>
-        </tr>
-      </thead>
-    `;
+    return html`<thead>
+  <tr>
+    <th colspan="2" style="width: 217px">
+      <div><span>File / Directory</span></div>
+    </th>
+    <th colspan="2">
+      <div><span>Mutation score</span></div>
+    </th>
+    <th class="rotate text-center" style="width: 50px">
+      <div><span># Killed</span></div>
+    </th>
+    <th class="rotate text-center" style="width: 50px">
+      <div><span># Survived</span></div>
+    </th>
+    <th class="rotate text-center" style="width: 50px">
+      <div><span># Timeout</span></div>
+    </th>
+    <th class="rotate text-center" style="width: 50px">
+      <div><span># No coverage</span></div>
+    </th>
+    <th class="rotate text-center" style="width: 50px">
+      <div><span># Ignored</span></div>
+    </th>
+    <th class="rotate text-center" style="width: 50px">
+      <div><span># Runtime errors</span></div>
+    </th>
+    <th class="rotate text-center" style="width: 50px">
+      <div><span># Compile errors</span></div>
+    </th>
+    <th class="rotate rotate-width-70 text-center" style="width: 70px">
+      <div><span>Total detected</span></div>
+    </th>
+    <th class="rotate rotate-width-70 text-center" style="width: 70px">
+      <div><span>Total undetected</span></div>
+    </th>
+    <th class="rotate rotate-width-70 text-center" style="width: 70px">
+      <div><span>Total mutants</span></div>
+    </th>
+  </tr>
+</thead>`;
   }
 
   private renderTableBody(model: MetricsResult) {
@@ -129,6 +130,7 @@ export class MutationTestReportTotalsComponent extends LitElement {
       <td class="text-center">${row.metrics.survived}</td>
       <td class="text-center">${row.metrics.timeout}</td>
       <td class="text-center">${row.metrics.noCoverage}</td>
+      <td class="text-center">${row.metrics.ignored}</td>
       <td class="text-center">${row.metrics.runtimeErrors}</td>
       <td class="text-center">${row.metrics.compileErrors}</td>
       <th class="text-center">${row.metrics.totalDetected}</th>

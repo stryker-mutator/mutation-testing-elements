@@ -32,5 +32,5 @@ An example (just for clarification, versions are not based on reality):
 Releasing is done with from the travis build server. Perform the following steps:
 
 * Clone the repo and run `npm install`.
-* Run `npm run lerna:version:patch`, `npm run lerna:version:minor` or `npm run lerna:version:major` (based on the release you want). Lerna will figure out which packages need to be released and prompt if it is OK.
-* After the new tag is pushed to the master branch, it should be released via travis.
+* Run `npm run lerna:version:patch`, `npm run lerna:version:minor` or `npm run lerna:version:major` (based on the release you want). Lerna will figure out which packages need to be released and prompt to ask if it is OK.
+* After the new tag is pushed to the master branch, it should be released via a github workflow.

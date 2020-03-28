@@ -14,6 +14,7 @@ describe(getContextClassForStatus.name, () => {
   actArrangeAssert('warning', MutantStatus.Timeout);
   actArrangeAssert('secondary', MutantStatus.CompileError);
   actArrangeAssert('secondary', MutantStatus.RuntimeError);
+  actArrangeAssert('secondary', MutantStatus.Ignored);
 });
 
 describe(escapeHtml.name, () => {

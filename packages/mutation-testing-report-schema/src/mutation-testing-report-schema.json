@@ -174,7 +174,8 @@
                     "NoCoverage",
                     "CompileError",
                     "RuntimeError",
-                    "Timeout"
+                    "Timeout",
+                    "Ignored"
                   ],
                   "examples": [
                     "Killed",
@@ -182,7 +183,8 @@
                     "NoCoverage",
                     "CompileError",
                     "RuntimeError",
-                    "Timeout"
+                    "Timeout",
+                    "Ignored"
                   ]
                 }
               }

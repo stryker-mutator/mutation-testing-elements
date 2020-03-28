@@ -31,8 +31,10 @@
     "jake.autoDetect": "off",
     "task.autoDetect": "off",
     "cSpell.words": [
+      "clike",
       "autoloader",
-      "prismjs"
+      "prismjs",
+      "templating"
     ]
   }
 }

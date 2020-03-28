@@ -139,15 +139,16 @@ describe(calculateMetrics.name, () => {
     const input: FileResultDictionary = {
       'foo.js': fileResultFactory({
         mutants: [
-          mutantResultFactory({ status: MutantStatus.RuntimeError }),
-          mutantResultFactory({ status: MutantStatus.Killed }),
-          mutantResultFactory({ status: MutantStatus.CompileError }),
-          mutantResultFactory({ status: MutantStatus.NoCoverage }),
-          mutantResultFactory({ status: MutantStatus.Survived }),
-          mutantResultFactory({ status: MutantStatus.Killed }),
-          mutantResultFactory({ status: MutantStatus.Timeout })
-        ]
-      })
+          mutantResultFactory({ status: MutantStatus.RuntimeError, }),
+          mutantResultFactory({ status: MutantStatus.Killed, }),
+          mutantResultFactory({ status: MutantStatus.CompileError, }),
+          mutantResultFactory({ status: MutantStatus.NoCoverage, }),
+          mutantResultFactory({ status: MutantStatus.Survived, }),
+          mutantResultFactory({ status: MutantStatus.Killed, }),
+          mutantResultFactory({ status: MutantStatus.Timeout, }),
+          mutantResultFactory({ status: MutantStatus.Ignored, }),
+        ],
+      }),
     };
 
     // Act
@@ -160,9 +161,10 @@ describe(calculateMetrics.name, () => {
     expect(actual.metrics.survived, 'survived').to.eq(1);
     expect(actual.metrics.noCoverage, 'noCoverage').to.eq(1);
     expect(actual.metrics.timeout, 'timeout').to.eq(1);
+    expect(actual.metrics.noCoverage, 'ignored').to.eq(1);
     expect(actual.metrics.totalCovered, 'totalCovered').to.eq(4);
     expect(actual.metrics.totalDetected, 'detected').to.eq(3);
-    expect(actual.metrics.totalMutants, 'mutants').to.eq(7);
+    expect(actual.metrics.totalMutants, 'mutants').to.eq(8);
     expect(actual.metrics.totalValid, 'mutants').to.eq(5);
     expect(actual.metrics.totalInvalid, 'mutants').to.eq(2);
     expect(actual.metrics.totalUndetected, 'undetected').to.eq(2);
