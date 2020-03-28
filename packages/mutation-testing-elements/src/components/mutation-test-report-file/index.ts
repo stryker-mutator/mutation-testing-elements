@@ -6,7 +6,7 @@ import { bootstrap, prismjs } from '../../style';
 import { renderCode } from '../../lib/codeHelpers';
 import { FileResult, MutantResult } from 'mutation-testing-report-schema';
 import { getEmojiForStatus } from '../../lib/htmlHelpers';
-import { highlightElement, plugins } from 'prismjs/components/prism-core';
+import { highlightElement } from 'prismjs/components/prism-core';
 
 import 'prismjs/plugins/line-numbers/prism-line-numbers';
 // Order is important here! Scala depends on java, which depends on clike
@@ -17,11 +17,14 @@ import 'prismjs/components/prism-csharp';
 import 'prismjs/components/prism-java';
 import 'prismjs/components/prism-scala';
 
+// Markup and markup-templating are needed for php
+import 'prismjs/components/prism-markup';
+import 'prismjs/components/prism-markup-templating';
+import 'prismjs/components/prism-php';
+
 // Don't strip pre-existing HTML to keep the popups and badges working
 import 'prismjs/plugins/keep-markup/prism-keep-markup';
-// Attempt to automatically download languages that are not already included above
-import 'prismjs/plugins/autoloader/prism-autoloader';
-plugins.autoloader.languages_path = `https://unpkg.com/prismjs@latest/components/`;
+// Removed auto-loader plugin because of https://github.com/stryker-mutator/mutation-testing-elements/issues/393
 
 @customElement('mutation-test-report-file')
 export class MutationTestReportFileComponent extends LitElement {

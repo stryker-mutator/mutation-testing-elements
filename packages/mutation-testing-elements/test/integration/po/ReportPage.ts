@@ -31,12 +31,16 @@ export class ReportPage extends ElementSelector {
     return this.$('mutation-test-report-app >>> mutation-test-report-file >>> code').click();
   }
 
+  public async isCodeHighlighted(): Promise<boolean> {
+    return this.isPresent('mutation-test-report-app >>> mutation-test-report-file >>> code span.token');
+  }
+
   public async mutants(): Promise<MutantComponent[]> {
     return Promise.all((await this.$$('mutation-test-report-app >>> mutation-test-report-file >>> mutation-test-report-mutant'))
       .map(async host => new MutantComponent(await selectShadowRoot(host), this.browser)));
   }
 
-  public mutant(mutantId: number) {
+  public mutant(mutantId: number | string) {
     const shadowRoot = selectShadowRoot(
       this.$(`mutation-test-report-app >>> mutation-test-report-file >>> mutation-test-report-mutant[mutant-id="${mutantId}"]`));
     return new MutantComponent(shadowRoot, this.browser);

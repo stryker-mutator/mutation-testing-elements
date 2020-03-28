@@ -26,12 +26,14 @@
       "source.fixAll.tslint": true
     },
     "typescript.tsdk": "./node_modules/typescript/lib",
-    "search.usePCRE2": true,
     "grunt.autoDetect": "off",
     "gulp.autoDetect": "off",
     "jake.autoDetect": "off",
-    "task.autoDetect": "off"
+    "task.autoDetect": "off",
+    "cSpell.words": [
+      "clike",
+      "prismjs",
+      "templating"
+    ]
   }
-}
-}
 }
