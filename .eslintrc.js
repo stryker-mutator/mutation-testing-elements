@@ -22,6 +22,7 @@ module.exports = {
     'prettier/@typescript-eslint'
   ],
   env: {
-    node: true
+    node: true,
+    es6: true
   }
 }
