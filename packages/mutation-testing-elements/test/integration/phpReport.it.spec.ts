@@ -2,7 +2,7 @@ import { ReportPage } from './po/ReportPage';
 import { getCurrent } from './lib/browser';
 import { expect } from 'chai';
 
-describe.only('File report "infection-php-example/TextFileLogger.php"', () => {
+describe('File report "infection-php-example/TextFileLogger.php"', () => {
   let page: ReportPage;
 
   before(async () => {
