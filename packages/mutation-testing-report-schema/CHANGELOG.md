@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.3.0...v1.3.1) (2020-03-28)
+
+
+### Features
+
+* **sbt:** use sbt for npm projects publishing ([#356](https://github.com/stryker-mutator/mutation-testing-elements/issues/356)) ([6970350](https://github.com/stryker-mutator/mutation-testing-elements/commit/6970350e1537813355bed1c2ea50d23c46f22be5))
+
+
+
+
+
+
 # [1.3.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.2.3...v1.3.0) (2020-02-27)
 
 
