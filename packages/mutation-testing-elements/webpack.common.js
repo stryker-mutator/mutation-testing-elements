@@ -4,7 +4,7 @@ module.exports = {
   entry: './src/index.ts',
   context,
   resolve: {
-    extensions: ['.ts', '.tsx', '.js']
+    extensions: ['.ts', '.tsx', '.js'],
   },
   module: {
     rules: [
@@ -13,25 +13,25 @@ module.exports = {
         loader: 'ts-loader',
         options: {
           projectReferences: true,
-        }
+        },
       },
       {
         test: /\.scss$/,
         use: [
-          "css-loader", // translates CSS into CommonJS
-          "postcss-loader",
+          'css-loader', // translates CSS into CommonJS
+          'postcss-loader',
           {
-            loader: "sass-loader",
+            loader: 'sass-loader',
             options: {
-              implementation: require('sass')
-            }
-          }
-        ]
-      }
-    ]
+              implementation: require('sass'),
+            },
+          },
+        ],
+      },
+    ],
   },
   output: {
     path: path.resolve(context, 'dist'),
-    filename: 'mutation-test-elements.js'
-  }
+    filename: 'mutation-test-elements.js',
+  },
 };

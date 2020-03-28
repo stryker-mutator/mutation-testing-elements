@@ -9,5 +9,5 @@ export class ProgressBar extends PageObject {
   public relativeBarWidth = async () => {
     const [totalSize, barSize] = await Promise.all([this.totalSize(), this.barSize()]);
     return Math.floor((barSize.width / totalSize.width) * 100);
-  }
+  };
 }

@@ -3,7 +3,6 @@ import { expect } from 'chai';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 
 describe(MutationTestReportBreadcrumbComponent.name, () => {
-
   let sut: CustomElementFixture<MutationTestReportBreadcrumbComponent>;
 
   beforeEach(async () => {

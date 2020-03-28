@@ -5,7 +5,6 @@ import { MutantComponent } from './po/MutantComponent.po';
 import { getCurrent } from './lib/browser';
 
 describe('File report "install-local-example/Options.ts"', () => {
-
   let page: ReportPage;
 
   beforeEach(async () => {
@@ -23,11 +22,16 @@ describe('File report "install-local-example/Options.ts"', () => {
   });
 
   it('should not "line-through" any of the original code lines', async () => {
-    await Promise.all((await page.mutants()).map(async mutant => {
-      const [decoration, isMutantReplacementVisible] = await Promise.all([mutant.originalCodeTextDecoration(), mutant.isMutantReplacementCodeVisible()]);
-      expect(decoration).eq('none');
-      expect(isMutantReplacementVisible).eq(false);
-    }));
+    await Promise.all(
+      (await page.mutants()).map(async (mutant) => {
+        const [decoration, isMutantReplacementVisible] = await Promise.all([
+          mutant.originalCodeTextDecoration(),
+          mutant.isMutantReplacementCodeVisible(),
+        ]);
+        expect(decoration).eq('none');
+        expect(isMutantReplacementVisible).eq(false);
+      })
+    );
   });
 
   it('should only filter Survived and NoCoverage mutants by default', async () => {
@@ -72,10 +76,9 @@ describe('File report "install-local-example/Options.ts"', () => {
     });
 
     describe('and a killed mutant is enabled', () => {
-
       let mutant: MutantComponent;
       beforeEach(async () => {
-        mutant = await page.mutant(1);
+        mutant = page.mutant(1);
         await mutant.toggleMutant();
       });
 
@@ -126,7 +129,6 @@ describe('File report "install-local-example/Options.ts"', () => {
     });
 
     describe('and later disabled', () => {
-
       beforeEach(async () => {
         await mutant.toggleMutant();
       });

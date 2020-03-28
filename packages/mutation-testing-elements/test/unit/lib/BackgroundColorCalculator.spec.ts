@@ -10,7 +10,6 @@ const EXPECTED_BACKGROUND_KILLED = getContextClassForStatus(MutantStatus.Killed)
 const EXPECTED_BACKGROUND_IGNORED = getContextClassForStatus(MutantStatus.Ignored) + '-light';
 
 describe(BackgroundColorCalculator.name, () => {
-
   let sut: BackgroundColorCalculator;
 
   beforeEach(() => {

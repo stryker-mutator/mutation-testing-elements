@@ -5,7 +5,6 @@ import { schema } from '../src';
 const SCHEMA_NAME = 'http://stryker-mutator.io/report.schema.json';
 
 describe('JsonSchema', () => {
-
   let schemaValidator: Ajv.Ajv;
 
   beforeEach(() => {
@@ -14,6 +13,7 @@ describe('JsonSchema', () => {
   });
 
   function validate(testResourceFileName: string) {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const report = require(`../../testResources/${testResourceFileName}.json`);
     return schemaValidator.validate(SCHEMA_NAME, report);
   }
@@ -38,7 +38,7 @@ describe('JsonSchema', () => {
   });
 
   it('should invalidate a report where "schemaVersion" is missing', () => {
-    actAssertInvalid('missing-version-report', 'should have required property \'schemaVersion\'');
+    actAssertInvalid('missing-version-report', "should have required property 'schemaVersion'");
   });
 
   it('should invalidate a report where thresholds are invalid', () => {
@@ -47,7 +47,7 @@ describe('JsonSchema', () => {
   });
 
   it('should invalidate a report when mutant location is missing', () => {
-    actAssertInvalid('missing-mutant-location-report', 'files[\'test.js\'].mutants[0].location should have required property \'end\'');
+    actAssertInvalid('missing-mutant-location-report', "files['test.js'].mutants[0].location should have required property 'end'");
   });
 
   it('should validate a report when the replacement is missing', () => {

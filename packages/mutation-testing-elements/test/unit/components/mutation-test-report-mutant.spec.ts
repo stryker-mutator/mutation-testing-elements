@@ -5,7 +5,6 @@ import { MutantStatus, MutantResult } from 'mutation-testing-report-schema';
 import { expectedMutantColors } from '../../helpers/helperFunctions';
 
 describe(MutationTestReportMutantComponent.name, () => {
-
   let sut: CustomElementFixture<MutationTestReportMutantComponent>;
   beforeEach(async () => {
     sut = new CustomElementFixture('mutation-test-report-mutant');
@@ -48,7 +47,7 @@ describe(MutationTestReportMutantComponent.name, () => {
     expect(sut.$('.replacement').hidden).true;
   });
 
-  Object.keys(expectedMutantColors).forEach(status => {
+  Object.keys(expectedMutantColors).forEach((status) => {
     it(`should render correct badge color for ${status} mutant`, async () => {
       const actualMutantStatus = status as MutantStatus;
       sut.element.show = true;
@@ -129,13 +128,13 @@ describe(MutationTestReportMutantComponent.name, () => {
     // Arrange
     sut.element.show = true;
     sut.element.showPopup = true;
-    const mutant = createMutantResult({description: 'A description'});
+    const mutant = createMutantResult({ description: 'A description' });
     sut.element.mutant = mutant;
     await sut.whenStable();
     const showMoreButton = sut.$('.show-more');
 
     // Act
-    const act = async () => showMoreButton.click();
+    const act = () => showMoreButton.click();
     const result = await sut.catchEvent<CustomEvent<MutantResult>>(SHOW_MORE_EVENT, act);
 
     // Assert
@@ -144,11 +143,11 @@ describe(MutationTestReportMutantComponent.name, () => {
     expect(result.detail).eq(mutant);
   });
 
-  it('should not display a show more button if the description isn\'t set', async () => {
+  it("should not display a show more button if the description isn't set", async () => {
     // Arrange
     sut.element.show = true;
     sut.element.showPopup = true;
-    sut.element.mutant = createMutantResult({description: undefined});
+    sut.element.mutant = createMutantResult({ description: undefined });
     await sut.whenStable();
     const showMoreButton = sut.$('.show-more');
 
@@ -181,11 +180,11 @@ describe(MutationTestReportMutantComponent.name, () => {
       id: '42',
       location: {
         end: { column: 3, line: 4 },
-        start: { line: 3, column: 4 }
+        start: { line: 3, column: 4 },
       },
       mutatorName: 'fooMutator',
       replacement: '+',
-      status: MutantStatus.Timeout
+      status: MutantStatus.Timeout,
     };
     return { ...defaults, ...overrides };
   }

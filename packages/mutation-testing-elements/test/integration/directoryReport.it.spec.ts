@@ -3,7 +3,6 @@ import { expect } from 'chai';
 import { getCurrent } from './lib/browser';
 
 describe('Directory report page', () => {
-
   let page: ReportPage;
   beforeEach(async () => {
     page = new ReportPage(getCurrent());
@@ -11,7 +10,6 @@ describe('Directory report page', () => {
   });
 
   describe('the results table', () => {
-
     it('should show 11 rows in the result table', async () => {
       expect(await page.resultTable().rows()).lengthOf(11);
     });
@@ -21,7 +19,7 @@ describe('Directory report page', () => {
     });
 
     it('should show expected totals for cli.ts', async () => {
-      const row = await page.resultTable().row('cli.ts');
+      const row = page.resultTable().row('cli.ts');
       return Promise.all([
         expect(await row.progressBar().percentageText()).eq('8.70%'),
         expect(await row.mutationScore()).eq('8.70'),
@@ -34,7 +32,8 @@ describe('Directory report page', () => {
         expect(await row.compileErrors()).eq('3'),
         expect(await row.totalDetected()).eq('2'),
         expect(await row.totalUndetected()).eq('21'),
-        expect(await row.totalMutants()).eq('26')]);
+        expect(await row.totalMutants()).eq('26'),
+      ]);
     });
   });
 });

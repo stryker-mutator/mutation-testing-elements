@@ -1,7 +1,6 @@
 import express from 'express';
 import http from 'http';
 export class StaticFileServer {
-
   private readonly app: express.Express;
   private server: http.Server | null = null;
 

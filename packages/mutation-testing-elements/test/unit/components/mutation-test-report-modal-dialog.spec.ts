@@ -3,7 +3,6 @@ import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { expect } from 'chai';
 
 describe(MutationTestReportModalDialogComponent.name, () => {
-
   let sut: CustomElementFixture<MutationTestReportModalDialogComponent>;
   beforeEach(async () => {
     sut = new CustomElementFixture('mutation-test-report-modal-dialog');
@@ -14,7 +13,7 @@ describe(MutationTestReportModalDialogComponent.name, () => {
     sut.dispose();
   });
 
-  it('should not render by default', async () => {
+  it('should not render by default', () => {
     const modal = sut.$('div.modal');
     expect(sut.element.show).false;
     expect(modal.hidden).true;
@@ -35,7 +34,7 @@ describe(MutationTestReportModalDialogComponent.name, () => {
   });
 
   it('should emit close event when close button is clicked', async () => {
-    const act = async () => {
+    const act = () => {
       const closeButton = sut.$('.modal-footer button');
       closeButton.click();
     };
@@ -44,7 +43,7 @@ describe(MutationTestReportModalDialogComponent.name, () => {
   });
 
   it('should emit close event when clicking next to the dialog', async () => {
-    const act = async () => {
+    const act = () => {
       const dialog = sut.$('div.modal');
       dialog.click();
     };
@@ -53,7 +52,7 @@ describe(MutationTestReportModalDialogComponent.name, () => {
   });
 
   it('should not emit the close event when clicking the dialog', async () => {
-    const act = async () => {
+    const act = () => {
       const dialog = sut.$('div.modal-dialog');
       dialog.click();
     };
@@ -61,5 +60,4 @@ describe(MutationTestReportModalDialogComponent.name, () => {
     const result = await sut.catchEvent('close-dialog', act);
     expect(result).undefined;
   });
-
 });

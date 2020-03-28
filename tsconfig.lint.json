@@ -1,8 +1,9 @@
 {
   "extends": "./tsconfig.settings.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true
+  },
   // This file is a workaround for: https://github.com/palantir/tslint/issues/4137
-  "include": [
-    "packages/*/src",
-    "packages/*/test"
-  ]
+  "include": ["packages/**/*", "stryker.parent.js"]
 }

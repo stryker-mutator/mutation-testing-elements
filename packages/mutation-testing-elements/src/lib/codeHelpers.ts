@@ -3,7 +3,7 @@ import { BackgroundColorCalculator } from './BackgroundColorCalculator';
 import { escapeHtml } from './htmlHelpers';
 
 export function pathJoin(...parts: string[]) {
-  return parts.reduce((prev, current) => prev.length ? current ? `${prev}/${current}` : prev : current, '');
+  return parts.reduce((prev, current) => (prev.length ? (current ? `${prev}/${current}` : prev) : current), '');
 }
 
 /**
@@ -16,11 +16,11 @@ export function renderCode(model: FileResult): string {
   const backgroundState = new BackgroundColorCalculator();
   const startedMutants: MutantResult[] = [];
   const walker = (char: string, pos: Position): string => {
-    const currentMutants = model.mutants.filter(m => eq(m.location.start, pos));
-    const mutantsEnding = startedMutants.filter(m => gte(pos, m.location.end));
+    const currentMutants = model.mutants.filter((m) => eq(m.location.start, pos));
+    const mutantsEnding = startedMutants.filter((m) => gte(pos, m.location.end));
 
     // Remove the mutants that ended from the list of mutants that started
-    mutantsEnding.forEach(mutant => startedMutants.splice(startedMutants.indexOf(mutant), 1));
+    mutantsEnding.forEach((mutant) => startedMutants.splice(startedMutants.indexOf(mutant), 1));
 
     // Add new mutants to started mutants
     startedMutants.push(...currentMutants);
@@ -37,7 +37,7 @@ export function renderCode(model: FileResult): string {
       mutantsEnding.forEach(() => builder.push('</mutation-test-report-mutant>'));
 
       // Start mutants
-      currentMutants.forEach(mutant => builder.push(`<mutation-test-report-mutant mutant-id="${mutant.id}">`));
+      currentMutants.forEach((mutant) => builder.push(`<mutation-test-report-mutant mutant-id="${mutant.id}">`));
 
       // Start new color span
       builder.push(`<span class="bg-${backgroundState.determineBackground()}">`);
@@ -55,8 +55,7 @@ export const LINE_START_INDEX = 1;
 export const NEW_LINE = '\n';
 export const CARRIAGE_RETURN = '\r';
 export function lines(content: string) {
-  return content.split(NEW_LINE)
-    .map(line => line.endsWith(CARRIAGE_RETURN) ? line.substr(0, line.length - 1) : line);
+  return content.split(NEW_LINE).map((line) => (line.endsWith(CARRIAGE_RETURN) ? line.substr(0, line.length - 1) : line));
 }
 
 /**

@@ -21,9 +21,15 @@
       "name": "parent"
     }
   ],
+  "extensions": {
+    "recommendations": [
+      "dbaeumer.vscode-eslint",
+      "esbenp.prettier-vscode"
+    ]
+  },
   "settings": {
     "editor.codeActionsOnSave": {
-      "source.fixAll.tslint": true
+      "source.fixAll.eslint": true
     },
     "typescript.tsdk": "./node_modules/typescript/lib",
     "grunt.autoDetect": "off",
@@ -32,8 +38,16 @@
     "task.autoDetect": "off",
     "cSpell.words": [
       "clike",
+      "autoloader",
       "prismjs",
       "templating"
-    ]
+    ],
+    "[json]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[jsonc]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }

@@ -4,14 +4,14 @@ const SEPARATOR = '/';
 
 export function flatMap<T, R>(source: T[], fn: (input: T) => R[]) {
   const result: R[] = [];
-  source.map(fn).forEach(items => result.push(...items));
+  source.map(fn).forEach((items) => result.push(...items));
   return result;
 }
 
 export function groupBy<T>(arr: T[], criteria: (element: T) => string): Record<string, T[]> {
   return arr.reduce((acc: Record<string, T[]>, item) => {
     const key = criteria(item);
-    if (!acc.hasOwnProperty(key)) {
+    if (!Object.prototype.hasOwnProperty.call(acc, key)) {
       acc[key] = [];
     }
     acc[key].push(item);
@@ -20,27 +20,28 @@ export function groupBy<T>(arr: T[], criteria: (element: T) => string): Record<s
 }
 
 export function pathJoin(...parts: string[]) {
-  return parts.reduce((prev, current) => prev.length ? current ? `${prev}/${current}` : prev : current, '');
+  return parts.reduce((prev, current) => (prev.length ? (current ? `${prev}/${current}` : prev) : current), '');
 }
 
 export function normalizeFileNames(input: FileResultDictionary): FileResultDictionary {
   const fileNames = Object.keys(input);
   const commonBasePath = determineCommonBasePath(fileNames);
   const output: FileResultDictionary = {};
-  fileNames.forEach(fileName => {
+  fileNames.forEach((fileName) => {
     output[normalize(fileName.substr(commonBasePath.length))] = input[fileName];
   });
   return output;
 }
 
 function normalize(fileName: string) {
-  return fileName.split(/\/|\\/)
-    .filter(pathPart => pathPart)
+  return fileName
+    .split(/\/|\\/)
+    .filter((pathPart) => pathPart)
     .join('/');
 }
 
 function determineCommonBasePath(fileNames: ReadonlyArray<string>) {
-  const directories = fileNames.map(fileName => fileName.split(/\/|\\/).slice(0, -1));
+  const directories = fileNames.map((fileName) => fileName.split(/\/|\\/).slice(0, -1));
   if (fileNames.length) {
     return directories.reduce(filterDirectories).join(SEPARATOR);
   } else {

@@ -21,7 +21,7 @@ describe(MutationTestReportTotalsComponent.name, () => {
 
   it('should show a table with a single row for a file result', async () => {
     sut.element.model = createMetricsResult({
-      file: createFileResult()
+      file: createFileResult(),
     });
     await sut.whenStable();
     const table = sut.$('table') as HTMLTableElement;
@@ -33,11 +33,11 @@ describe(MutationTestReportTotalsComponent.name, () => {
   it('should show a table with a 3 rows for a directory result with 2 directories and one file', async () => {
     const file = createMetricsResult({
       name: 'foo.js',
-      file: createFileResult()
+      file: createFileResult(),
     });
     sut.element.model = createMetricsResult({
       name: 'bar',
-      childResults: [file, createMetricsResult({ name: 'baz' })]
+      childResults: [file, createMetricsResult({ name: 'baz' })],
     });
     await sut.whenStable();
     const table = sut.$('table') as HTMLTableElement;
@@ -49,14 +49,16 @@ describe(MutationTestReportTotalsComponent.name, () => {
     // Arrange
     const file = createMetricsResult({
       name: 'foo.js',
-      file: createFileResult()
+      file: createFileResult(),
     });
     sut.element.model = createMetricsResult({
       name: 'bar',
-      childResults: [createMetricsResult({
-        name: 'baz',
-        childResults: [file]
-      })]
+      childResults: [
+        createMetricsResult({
+          name: 'baz',
+          childResults: [file],
+        }),
+      ],
     });
 
     // Act
@@ -65,14 +67,14 @@ describe(MutationTestReportTotalsComponent.name, () => {
     // Assert
     const table = sut.$('table') as HTMLTableElement;
     expect(table).ok;
-    const rows = table.querySelectorAll('tbody tr') as NodeListOf<HTMLTableRowElement>;
+    const rows = table.querySelectorAll('tbody tr');
     expect(rows).lengthOf(2);
-    expect((rows.item(1).cells.item(1) as HTMLTableCellElement).textContent).eq('baz/foo.js');
+    expect(((rows.item(1) as HTMLTableRowElement).cells.item(1) as HTMLTableCellElement).textContent).eq('baz/foo.js');
   });
 
   it('should show N/A when no mutation score is available', async () => {
     sut.element.model = createMetricsResult({
-      name: 'foo'
+      name: 'foo',
     });
 
     sut.element.model.metrics.mutationScore = NaN;
@@ -85,7 +87,7 @@ describe(MutationTestReportTotalsComponent.name, () => {
 
   it('should show a progress bar when there is a score', async () => {
     sut.element.model = createMetricsResult({
-      name: 'foo'
+      name: 'foo',
     });
     const mutationScore = 50;
 
@@ -99,7 +101,7 @@ describe(MutationTestReportTotalsComponent.name, () => {
 
   it('should show no progress bar when score is NaN', async () => {
     sut.element.model = createMetricsResult({
-      name: 'foo'
+      name: 'foo',
     });
 
     sut.element.model.metrics.mutationScore = NaN;

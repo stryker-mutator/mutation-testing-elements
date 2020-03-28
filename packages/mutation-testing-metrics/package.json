@@ -5,7 +5,7 @@
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
   "scripts": {
-    "test": "mocha -r source-map-support/register dist/test/**/*.js",
+    "test": "mocha --forbid-only --forbid-pending -r source-map-support/register dist/test/**/*.js",
     "stryker": "stryker run"
   },
   "repository": {

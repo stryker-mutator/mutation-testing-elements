@@ -3,7 +3,6 @@ import { expect } from 'chai';
 import { getCurrent } from './lib/browser';
 
 describe('Navigation', () => {
-
   let page: ReportPage;
 
   const itShouldShowAllFilesPage = () => {
@@ -24,7 +23,6 @@ describe('Navigation', () => {
     itShouldShowAllFilesPage();
 
     describe('-> "config"', () => {
-
       beforeEach(async () => {
         await page.resultTable().row('config').navigate();
       });

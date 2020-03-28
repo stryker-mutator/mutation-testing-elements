@@ -58,11 +58,13 @@ describe(MutationTestReportFileComponent.name, () => {
 
     it('should update hide a mutant if it is filtered', async () => {
       // Arrange
-      const filters: MutantFilter[] = [{
-        enabled: false,
-        numberOfMutants: 1,
-        status: MutantStatus.Killed
-      }];
+      const filters: MutantFilter[] = [
+        {
+          enabled: false,
+          numberOfMutants: 1,
+          status: MutantStatus.Killed,
+        },
+      ];
       mutantComponent.show = true;
 
       // Act
@@ -74,7 +76,7 @@ describe(MutationTestReportFileComponent.name, () => {
     });
 
     describe('the modal dialog', () => {
-      it('should not be shown when opening the page', async () => {
+      it('should not be shown when opening the page', () => {
         mutantComponent.show = true;
         const background = sut.$('.modal-backdrop');
         const dialog = sut.$('mutation-test-report-modal-dialog');
@@ -103,7 +105,7 @@ describe(MutationTestReportFileComponent.name, () => {
         const mutant = createMutantResult({
           id: '30',
           mutatorName: 'testMutator',
-          status: MutantStatus.Killed
+          status: MutantStatus.Killed,
         });
 
         // Act
@@ -114,11 +116,11 @@ describe(MutationTestReportFileComponent.name, () => {
         expect(dialog.header).eq(`30: testMutator - ✅ Killed`);
       });
 
-      it('should display the description in the dialog when it\'s opened', async () => {
+      it("should display the description in the dialog when it's opened", async () => {
         // Arrange
         mutantComponent.show = true;
         const mutant = createMutantResult({
-          description: 'This is a very weird mutant'
+          description: 'This is a very weird mutant',
         });
 
         // Act
@@ -161,26 +163,26 @@ describe(MutationTestReportFileComponent.name, () => {
     });
 
     function createMutantResult(overrides?: Partial<MutantResult>) {
-        const defaults: MutantResult = {
-          id: '42',
-          location: {
-            end: { column: 3, line: 4 },
-            start: { line: 3, column: 4 }
-          },
-          mutatorName: 'fooMutator',
-          replacement: '+',
-          status: MutantStatus.Timeout
-        };
-        return { ...defaults, ...overrides };
-      }
+      const defaults: MutantResult = {
+        id: '42',
+        location: {
+          end: { column: 3, line: 4 },
+          start: { line: 3, column: 4 },
+        },
+        mutatorName: 'fooMutator',
+        replacement: '+',
+        status: MutantStatus.Timeout,
+      };
+      return { ...defaults, ...overrides };
+    }
 
     async function openDialog(mutant?: MutantResult) {
-        let detail = mutant;
-        if (!detail) {
-          detail = createMutantResult();
-        }
-        legendComponent.dispatchEvent(new CustomEvent(SHOW_MORE_EVENT, { detail, bubbles: true, composed: true }));
-        await sut.whenStable();
+      let detail = mutant;
+      if (!detail) {
+        detail = createMutantResult();
       }
+      legendComponent.dispatchEvent(new CustomEvent(SHOW_MORE_EVENT, { detail, bubbles: true, composed: true }));
+      await sut.whenStable();
+    }
   });
 });
