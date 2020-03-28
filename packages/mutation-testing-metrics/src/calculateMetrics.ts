@@ -17,12 +17,12 @@ export function calculateMetrics(files: FileResultDictionary): MetricsResult {
 }
 
 function calculateDirectoryMetrics(files: FileResultDictionary, name: string): MetricsResult {
-  const metrics = countMetrics(flatMap(Object.values(files), file => file.mutants));
+  const metrics = countMetrics(flatMap(Object.values(files), (file) => file.mutants));
   const childResults = toChildModels(files);
   return {
     name,
     childResults,
-    metrics
+    metrics,
   };
 }
 
@@ -31,17 +31,17 @@ function calculateFileMetrics(fileName: string, file: FileResult): MetricsResult
     file,
     name: fileName,
     childResults: [],
-    metrics: countMetrics(file.mutants)
+    metrics: countMetrics(file.mutants),
   };
 }
 
 function toChildModels(files: FileResultDictionary): MetricsResult[] {
-  const filesByDirectory = groupBy(Object.entries(files), namedFile => namedFile[0].split('/')[0]);
+  const filesByDirectory = groupBy(Object.entries(files), (namedFile) => namedFile[0].split('/')[0]);
   return Object.keys(filesByDirectory)
-    .map(directoryName => {
+    .map((directoryName) => {
       if (filesByDirectory[directoryName].length > 1 || filesByDirectory[directoryName][0][0] !== directoryName) {
         const directoryFiles: FileResultDictionary = {};
-        filesByDirectory[directoryName].forEach(file => (directoryFiles[file[0].substr(directoryName.length + 1)] = file[1]));
+        filesByDirectory[directoryName].forEach((file) => (directoryFiles[file[0].substr(directoryName.length + 1)] = file[1]));
         return calculateDirectoryMetrics(directoryFiles, directoryName);
       } else {
         const fileName = filesByDirectory[directoryName][0][0];
@@ -53,7 +53,7 @@ function toChildModels(files: FileResultDictionary): MetricsResult[] {
 }
 
 function countMetrics(mutants: Pick<MutantResult, 'status'>[]): Metrics {
-  const count = (status: MutantStatus) => mutants.filter(_ => _.status === status).length;
+  const count = (status: MutantStatus) => mutants.filter((_) => _.status === status).length;
   const killed = count(MutantStatus.Killed);
   const timeout = count(MutantStatus.Timeout);
   const survived = count(MutantStatus.Survived);
@@ -79,8 +79,8 @@ function countMetrics(mutants: Pick<MutantResult, 'status'>[]): Metrics {
     totalCovered,
     totalValid,
     totalInvalid,
-    mutationScore: totalValid > 0 ? totalDetected / totalValid * 100 : DEFAULT_SCORE,
+    mutationScore: totalValid > 0 ? (totalDetected / totalValid) * 100 : DEFAULT_SCORE,
     totalMutants: totalValid + totalInvalid + ignored,
-    mutationScoreBasedOnCoveredCode: totalValid > 0 ? totalDetected / totalCovered * 100 || 0 : DEFAULT_SCORE
+    mutationScoreBasedOnCoveredCode: totalValid > 0 ? (totalDetected / totalCovered) * 100 || 0 : DEFAULT_SCORE,
   };
 }

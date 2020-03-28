@@ -24,14 +24,14 @@ describe(MutationTestReportAppComponent.name, () => {
         'foobar.js': {
           language: 'javascript',
           mutants: [],
-          source: 'foo = "bar";'
-        }
+          source: 'foo = "bar";',
+        },
       },
       schemaVersion: '1.0',
       thresholds: {
         high: 80,
-        low: 60
-      }
+        low: 60,
+      },
     };
   }
 
@@ -62,7 +62,7 @@ describe(MutationTestReportAppComponent.name, () => {
     it('should should fetch report data when updated', async () => {
       // Arrange
       const response: Pick<Response, 'json'> = {
-        json: () => Promise.resolve(expectedReport)
+        json: () => Promise.resolve(expectedReport),
       };
       const expectedReport = createReport();
       fetchStub.resolves(response as Response);
@@ -130,6 +130,6 @@ describe(MutationTestReportAppComponent.name, () => {
   }
 
   function tick() {
-    return new Promise(res => setTimeout(res, 0));
+    return new Promise((res) => setTimeout(res, 0));
   }
 });

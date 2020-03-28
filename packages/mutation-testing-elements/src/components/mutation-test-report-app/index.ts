@@ -72,7 +72,7 @@ export class MutationTestReportAppComponent extends LitElement {
     if (this.rootModel) {
       // Find the current selected file/directory based on the path
       this.context = this.path.reduce<MetricsResult | undefined>(
-        (model, currentPathPart) => model && model.childResults.find(child => child.name === currentPathPart),
+        (model, currentPathPart) => model && model.childResults.find((child) => child.name === currentPathPart),
         this.rootModel
       );
     }
@@ -87,29 +87,25 @@ export class MutationTestReportAppComponent extends LitElement {
   public readonly subscriptions: Subscription[] = [];
   public connectedCallback() {
     super.connectedCallback();
-    this.subscriptions.push(locationChange$.subscribe(path => (this.path = path)));
+    this.subscriptions.push(locationChange$.subscribe((path) => (this.path = path)));
   }
 
   public disconnectedCallback() {
     super.disconnectedCallback();
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
   private renderTitle() {
     const renderPostfix = () => {
       if (this.titlePostfix) {
-        return html`
-          <small class="text-muted"> - ${this.titlePostfix}</small>
-        `;
+        return html` <small class="text-muted"> - ${this.titlePostfix}</small> `;
       } else {
         return undefined;
       }
     };
     if (this.context) {
       if (this.titlePostfix) {
-        return html`
-          <h1 class="display-4">${this.context.name}${renderPostfix()}</h1>
-        `;
+        return html` <h1 class="display-4">${this.context.name}${renderPostfix()}</h1> `;
       }
     }
     return undefined;
@@ -157,9 +153,7 @@ export class MutationTestReportAppComponent extends LitElement {
 
   private renderFileReport() {
     if (this.context && this.report && this.context.file) {
-      return html`
-        <mutation-test-report-file .model="${this.context.file}"></mutation-test-report-file>
-      `;
+      return html` <mutation-test-report-file .model="${this.context.file}"></mutation-test-report-file> `;
     } else {
       return undefined;
     }

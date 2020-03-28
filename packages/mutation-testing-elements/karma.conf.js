@@ -1,11 +1,11 @@
 const webpack = require('./webpack.dev');
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
     basePath: '',
     frameworks: ['mocha'],
     files: ['test/unit/index.js'],
     preprocessors: {
-      'test/unit/index.js': ['webpack', 'sourcemap']
+      'test/unit/index.js': ['webpack', 'sourcemap'],
     },
     reporters: ['progress'],
     port: 9876,
@@ -15,7 +15,7 @@ module.exports = function(config) {
     browsers: process.env.GITHUB_ACTIONS || process.env.TRAVIS ? ['ChromeHeadless'] : ['Chrome'],
     singleRun: process.env.GITHUB_ACTIONS || process.env.TRAVIS ? true : false,
     concurrency: Infinity,
-    webpack
+    webpack,
   });
 
   // Delete regular entry/output. Karma's `files` will be used

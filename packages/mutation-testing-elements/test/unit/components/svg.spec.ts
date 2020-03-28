@@ -28,7 +28,7 @@ describe(SvgService.name, () => {
     describe('retrieve based on known file types', () => {
       const knownfileExtensions = ['cs', 'html', 'java', 'js', 'scala', 'ts'];
 
-      knownfileExtensions.forEach(fileExtension => {
+      knownfileExtensions.forEach((fileExtension) => {
         it(`should retrieve an icon for file extension "${fileExtension}"`, () => {
           const knownFileExtension = `testfile.${fileExtension}`;
 

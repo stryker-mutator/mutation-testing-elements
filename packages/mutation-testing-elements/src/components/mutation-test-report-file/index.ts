@@ -34,10 +34,10 @@ export class MutationTestReportFileComponent extends LitElement {
   public static styles = [prismjs, bootstrap, unsafeCSS(require('./index.scss'))];
 
   private readonly expandAll = () => {
-    this.forEachMutantComponent(mutantComponent => (mutantComponent.expand = true));
+    this.forEachMutantComponent((mutantComponent) => (mutantComponent.expand = true));
   };
   private readonly collapseAll = () => {
-    this.forEachMutantComponent(mutantComponent => (mutantComponent.expand = false));
+    this.forEachMutantComponent((mutantComponent) => (mutantComponent.expand = false));
   };
 
   private forEachMutantComponent(action: (mutant: MutationTestReportMutantComponent) => void, host = this.root) {
@@ -49,20 +49,20 @@ export class MutationTestReportFileComponent extends LitElement {
   }
 
   private readonly filtersChanged = (event: CustomEvent<MutantFilter[]>) => {
-    const enabledMutantStates = event.detail.filter(mutantFilter => mutantFilter.enabled).map(mutantFilter => mutantFilter.status);
-    this.forEachMutantComponent(mutantComponent => {
-      mutantComponent.show = enabledMutantStates.some(state => mutantComponent.mutant !== undefined && mutantComponent.mutant.status === state);
+    const enabledMutantStates = event.detail.filter((mutantFilter) => mutantFilter.enabled).map((mutantFilter) => mutantFilter.status);
+    this.forEachMutantComponent((mutantComponent) => {
+      mutantComponent.show = enabledMutantStates.some((state) => mutantComponent.mutant !== undefined && mutantComponent.mutant.status === state);
     });
   };
 
   public connectedCallback() {
     super.connectedCallback();
     this.addEventListener('click', () => {
-      this.forEachMutantComponent(mutant => (mutant.showPopup = false));
+      this.forEachMutantComponent((mutant) => (mutant.showPopup = false));
     });
     this.addEventListener('mutant-selected', (event: Event) => {
       const selectedMutant = (event as CustomEvent<MutationTestReportMutantComponent>).detail;
-      this.forEachMutantComponent(mutant => mutant !== selectedMutant && (mutant.showPopup = false));
+      this.forEachMutantComponent((mutant) => mutant !== selectedMutant && (mutant.showPopup = false));
     });
     this.addEventListener(SHOW_MORE_EVENT, (event: Event) => {
       const selectedMutant = (event as CustomEvent<MutantResult>).detail;
@@ -83,9 +83,15 @@ export class MutationTestReportFileComponent extends LitElement {
         <div class="row">
           <div class="col-md-12">
             ${this.renderModalDialog()}
-            <mutation-test-report-file-legend @filters-changed="${this.filtersChanged}" @expand-all="${this.expandAll}"
-              @collapse-all="${this.collapseAll}" .mutants="${this.model.mutants}"></mutation-test-report-file-legend>
-            <pre id="report-code-block" class="line-numbers"><code class="language-${this.model.language}">${unsafeHTML(renderCode(this.model))}</code></pre>
+            <mutation-test-report-file-legend
+              @filters-changed="${this.filtersChanged}"
+              @expand-all="${this.expandAll}"
+              @collapse-all="${this.collapseAll}"
+              .mutants="${this.model.mutants}"
+            ></mutation-test-report-file-legend>
+            <pre id="report-code-block" class="line-numbers"><code class="language-${this.model.language}">${unsafeHTML(
+              renderCode(this.model)
+            )}</code></pre>
           </div>
         </div>
       `;
@@ -114,8 +120,8 @@ export class MutationTestReportFileComponent extends LitElement {
     const code = this.root.querySelector('code');
     if (code) {
       highlightElement(code);
-      this.forEachMutantComponent(mutantComponent => {
-        mutantComponent.mutant = this.model.mutants.find(mutant => mutant.id.toString() === mutantComponent.getAttribute('mutant-id'));
+      this.forEachMutantComponent((mutantComponent) => {
+        mutantComponent.mutant = this.model.mutants.find((mutant) => mutant.id.toString() === mutantComponent.getAttribute('mutant-id'));
       }, code);
     }
   }

@@ -16,5 +16,5 @@ export const enum MutantStatus {
   CompileError = 'CompileError',
   RuntimeError = 'RuntimeError',
   Timeout = 'Timeout',
-  Ignored = 'Ignored'
+  Ignored = 'Ignored',
 }

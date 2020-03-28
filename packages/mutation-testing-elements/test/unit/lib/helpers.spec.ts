@@ -22,16 +22,16 @@ describe(renderCode.name, () => {
           location: { end: { column: 17, line: 1 }, start: { column: 14, line: 1 } },
           mutatorName: 'Foo',
           replacement: 'foo',
-          status: MutantStatus.Killed
-        }
+          status: MutantStatus.Killed,
+        },
       ],
       source: `const foo = 'bar';
 
       function add(a, b) {
         return a + b;
       }`
-        .replace(/      /g, '')
-        .trim() // strip the padding left
+        .replace(/^ {6}/g, '')
+        .trim(), // strip the padding left
     };
     const actualCode = renderCode(input);
     expect(actualCode).eq(
@@ -48,23 +48,23 @@ describe(renderCode.name, () => {
           location: { end: { column: 13, line: 3 }, start: { column: 10, line: 3 } },
           mutatorName: 'MethodReplacement',
           replacement: 'foo',
-          status: MutantStatus.Killed
+          status: MutantStatus.Killed,
         },
         {
           id: '2',
           location: { end: { column: 999 /*Doesn't exist*/, line: 4 }, start: { column: 15, line: 4 } },
           mutatorName: 'SemicolonRemover',
           replacement: '',
-          status: MutantStatus.Survived
-        }
+          status: MutantStatus.Survived,
+        },
       ],
       source: `const foo = 'bar';
 
       function add(a, b) {
         return a + b;
       }`
-        .replace(/      /g, '')
-        .trim() // strip the padding left
+        .replace(/ {6}/g, '')
+        .trim(), // strip the padding left
     };
     const actualCode = renderCode(input);
     expect(actualCode).include('<mutation-test-report-mutant mutant-id="1"><span class="bg-success-light">add</span></mutation-test-report-mutant>');

@@ -12,14 +12,16 @@ module.exports = {
     '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
-    'prettier/prettier': [
-      'error'
-    ]
+    'prettier/prettier': 'error'
   },
-  'extends': [
-    'plugin:prettier/recommended',
+  extends: [
+    'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking'
-  ]
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'prettier/@typescript-eslint'
+  ],
+  env: {
+    node: true
+  }
 }

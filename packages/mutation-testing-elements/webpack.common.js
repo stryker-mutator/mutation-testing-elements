@@ -4,7 +4,7 @@ module.exports = {
   entry: './src/index.ts',
   context,
   resolve: {
-    extensions: ['.ts', '.tsx', '.js']
+    extensions: ['.ts', '.tsx', '.js'],
   },
   module: {
     rules: [
@@ -12,8 +12,8 @@ module.exports = {
         test: /\.ts$/,
         loader: 'ts-loader',
         options: {
-          projectReferences: true
-        }
+          projectReferences: true,
+        },
       },
       {
         test: /\.scss$/,
@@ -23,15 +23,15 @@ module.exports = {
           {
             loader: 'sass-loader',
             options: {
-              implementation: require('sass')
-            }
-          }
-        ]
-      }
-    ]
+              implementation: require('sass'),
+            },
+          },
+        ],
+      },
+    ],
   },
   output: {
     path: path.resolve(context, 'dist'),
-    filename: 'mutation-test-elements.js'
-  }
+    filename: 'mutation-test-elements.js',
+  },
 };

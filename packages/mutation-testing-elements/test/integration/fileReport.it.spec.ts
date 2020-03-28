@@ -23,10 +23,10 @@ describe('File report "install-local-example/Options.ts"', () => {
 
   it('should not "line-through" any of the original code lines', async () => {
     await Promise.all(
-      (await page.mutants()).map(async mutant => {
+      (await page.mutants()).map(async (mutant) => {
         const [decoration, isMutantReplacementVisible] = await Promise.all([
           mutant.originalCodeTextDecoration(),
-          mutant.isMutantReplacementCodeVisible()
+          mutant.isMutantReplacementCodeVisible(),
         ]);
         expect(decoration).eq('none');
         expect(isMutantReplacementVisible).eq(false);
@@ -59,10 +59,7 @@ describe('File report "install-local-example/Options.ts"', () => {
 
   describe('when "Killed" is enabled', () => {
     beforeEach(async () => {
-      await page
-        .legend()
-        .displayButton(MutantStatus.Killed)
-        .click();
+      await page.legend().displayButton(MutantStatus.Killed).click();
     });
 
     it('should also show the killed mutants', async () => {
@@ -91,10 +88,7 @@ describe('File report "install-local-example/Options.ts"', () => {
 
       describe('and later "Killed" is disabled', () => {
         beforeEach(async () => {
-          await page
-            .legend()
-            .displayButton(MutantStatus.Killed)
-            .click();
+          await page.legend().displayButton(MutantStatus.Killed).click();
         });
 
         it('should have removed the "line-through" from the mutant\'s original code', async () => {

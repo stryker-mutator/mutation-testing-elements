@@ -4,8 +4,8 @@ exports.strykerPlugins = [
   {
     factory: transpilerFactory,
     kind: 'Transpiler',
-    name: 'tsconfig'
-  }
+    name: 'tsconfig',
+  },
 ];
 
 /**
@@ -20,7 +20,7 @@ function transpilerFactory(log) {
      * @param {Promise<import('@stryker-mutator/api/core').File[]>} files
      */
     transpile(files) {
-      return files.map(file => {
+      return files.map((file) => {
         if (path.extname(file.name) === '.json' && path.basename(file.name).includes('tsconfig')) {
           const newContent = file.textContent
             .replace(/"extends"\s*:\s*"(..\/[^"]*)"/, (_, str) => {
@@ -38,7 +38,7 @@ function transpilerFactory(log) {
           return file;
         }
       });
-    }
+    },
   };
 }
 transpilerFactory.inject = ['logger'];

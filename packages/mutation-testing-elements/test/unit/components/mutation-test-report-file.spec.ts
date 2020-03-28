@@ -62,8 +62,8 @@ describe(MutationTestReportFileComponent.name, () => {
         {
           enabled: false,
           numberOfMutants: 1,
-          status: MutantStatus.Killed
-        }
+          status: MutantStatus.Killed,
+        },
       ];
       mutantComponent.show = true;
 
@@ -105,7 +105,7 @@ describe(MutationTestReportFileComponent.name, () => {
         const mutant = createMutantResult({
           id: '30',
           mutatorName: 'testMutator',
-          status: MutantStatus.Killed
+          status: MutantStatus.Killed,
         });
 
         // Act
@@ -120,7 +120,7 @@ describe(MutationTestReportFileComponent.name, () => {
         // Arrange
         mutantComponent.show = true;
         const mutant = createMutantResult({
-          description: 'This is a very weird mutant'
+          description: 'This is a very weird mutant',
         });
 
         // Act
@@ -167,11 +167,11 @@ describe(MutationTestReportFileComponent.name, () => {
         id: '42',
         location: {
           end: { column: 3, line: 4 },
-          start: { line: 3, column: 4 }
+          start: { line: 3, column: 4 },
         },
         mutatorName: 'fooMutator',
         replacement: '+',
-        status: MutantStatus.Timeout
+        status: MutantStatus.Timeout,
       };
       return { ...defaults, ...overrides };
     }

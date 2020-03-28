@@ -7,10 +7,7 @@ export async function init() {
   const baseOptions = new chrome.Options();
   const chromeOptions = process.env.TRAVIS || process.env.GITHUB_ACTIONS ? baseOptions.headless() : baseOptions;
 
-  browser = await new Builder()
-    .forBrowser('chrome')
-    .setChromeOptions(chromeOptions)
-    .build();
+  browser = await new Builder().forBrowser('chrome').setChromeOptions(chromeOptions).build();
 }
 
 export function getCurrent(): WebDriver {

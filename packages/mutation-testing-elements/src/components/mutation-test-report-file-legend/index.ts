@@ -36,12 +36,20 @@ export class MutationTestReportFileLegendComponent extends LitElement {
   }
 
   private updateModel() {
-    this.filters = [MutantStatus.Killed, MutantStatus.Survived, MutantStatus.NoCoverage, MutantStatus.Ignored, MutantStatus.Timeout, MutantStatus.CompileError, MutantStatus.RuntimeError]
-      .filter(status => this.mutants.some(mutant => mutant.status === status))
-      .map(status => ({
-        enabled: [MutantStatus.Survived, MutantStatus.NoCoverage, MutantStatus.Timeout].some(s => s === status),
-        numberOfMutants: this.mutants.filter(m => m.status === status).length,
-        status
+    this.filters = [
+      MutantStatus.Killed,
+      MutantStatus.Survived,
+      MutantStatus.NoCoverage,
+      MutantStatus.Ignored,
+      MutantStatus.Timeout,
+      MutantStatus.CompileError,
+      MutantStatus.RuntimeError,
+    ]
+      .filter((status) => this.mutants.some((mutant) => mutant.status === status))
+      .map((status) => ({
+        enabled: [MutantStatus.Survived, MutantStatus.NoCoverage, MutantStatus.Timeout].some((s) => s === status),
+        numberOfMutants: this.mutants.filter((m) => m.status === status).length,
+        status,
       }));
     this.dispatchFiltersChangedEvent();
   }
@@ -70,7 +78,7 @@ export class MutationTestReportFileLegendComponent extends LitElement {
     return html`
       <div class="row legend col-md-12">
         ${this.filters.map(
-          filter => html`
+          (filter) => html`
             <div data-status="${filter.status}" class="form-check form-check-inline">
               <label class="form-check-label">
                 <input

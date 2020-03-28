@@ -1,3 +1,6 @@
+/**
+ * @type {import('@stryker-mutator/api/core').StrykerOptions}
+ */
 module.exports = {
   mutator: 'typescript',
   packageManager: 'npm',
@@ -9,10 +12,10 @@ module.exports = {
   tsconfigFile: 'tsconfig.stryker.json',
   mutate: ['src/**/*.ts'],
   mochaOptions: {
-    spec: ['test/unit/**/*.js']
+    spec: ['test/unit/**/*.js'],
   },
   maxConcurrentTestRunners: 2,
   dashboard: {
-    reportType: 'full'
-  }
+    reportType: 'full',
+  },
 };

@@ -9,7 +9,7 @@ export class CustomElementFixture<TCustomElement extends LitElement> {
   }
 
   public async whenStable() {
-    while (!await this.element.updateComplete);
+    while (!(await this.element.updateComplete));
   }
 
   public waitFor(action: () => boolean, timeout = 500) {

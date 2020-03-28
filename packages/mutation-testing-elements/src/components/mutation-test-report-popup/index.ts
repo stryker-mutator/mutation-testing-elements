@@ -9,7 +9,7 @@ export class MutationTestReportPopupComponent extends LitElement {
   @property()
   public header: string | undefined;
 
-  @property({ converter: val => typeof val === 'string' })
+  @property({ converter: (val) => typeof val === 'string' })
   public show = false;
 
   @property()
@@ -30,11 +30,11 @@ export class MutationTestReportPopupComponent extends LitElement {
 
   public render() {
     return html`<div class="popover popover-${this.context} ${this.show ? 'show' : 'hide'}">
-  <h3 class="popover-header ${this.getBackgroundClasses()}">${this.header}</h3>
-  <div class="popover-body">
-    <slot name="popover-body"></slot>
-  </div>
-</div>${slot()}`;
+        <h3 class="popover-header ${this.getBackgroundClasses()}">${this.header}</h3>
+        <div class="popover-body">
+          <slot name="popover-body"></slot>
+        </div> </div
+      >${slot()}`;
     function slot() {
       return html`<slot></slot>`;
     }

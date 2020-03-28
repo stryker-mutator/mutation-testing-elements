@@ -9,16 +9,16 @@ describe(calculateMetrics.name, () => {
       location: {
         end: {
           column: 4,
-          line: 3
+          line: 3,
         },
         start: {
           column: 2,
-          line: 1
-        }
+          line: 1,
+        },
       },
       mutatorName: 'FooMutator',
       replacement: '"foo"',
-      status: MutantStatus.Killed
+      status: MutantStatus.Killed,
     };
     return { ...defaults, ...overrides };
   }
@@ -27,7 +27,7 @@ describe(calculateMetrics.name, () => {
     const defaults: FileResult = {
       language: 'js',
       mutants: [mutantResultFactory()],
-      source: 'console.log("foo");'
+      source: 'console.log("foo");',
     };
     return { ...defaults, ...overrides };
   }
@@ -40,13 +40,13 @@ describe(calculateMetrics.name, () => {
   it('should count results of multiple files', () => {
     // Arrange
     const baz = fileResultFactory({
-      mutants: [mutantResultFactory({ status: MutantStatus.Killed }), mutantResultFactory({ status: MutantStatus.Survived })]
+      mutants: [mutantResultFactory({ status: MutantStatus.Killed }), mutantResultFactory({ status: MutantStatus.Survived })],
     });
     const input: FileResultDictionary = {
       'foo.js': fileResultFactory({
-        mutants: [mutantResultFactory({ status: MutantStatus.Killed })]
+        mutants: [mutantResultFactory({ status: MutantStatus.Killed })],
       }),
-      'bar/baz.js': baz
+      'bar/baz.js': baz,
     };
 
     // Act
@@ -62,13 +62,13 @@ describe(calculateMetrics.name, () => {
     expect(actual.childResults[0].childResults[0].file).eq(baz);
     expect(actual.childResults[0].metrics).include({
       killed: 1,
-      survived: 1
+      survived: 1,
     });
     expect(actual.childResults[0].metrics).deep.eq(actual.childResults[0].childResults[0].metrics);
     expect(actual.childResults[1].name).eq('foo.js');
     expect(actual.childResults[1].metrics).include({
       killed: 1,
-      survived: 0
+      survived: 0,
     });
   });
 
@@ -78,7 +78,7 @@ describe(calculateMetrics.name, () => {
       'foo/bar/baz.js': fileResultFactory(),
       'foo/bar/qux.js': fileResultFactory(),
       'bar/quux.js': fileResultFactory(),
-      'foo/corge.java': fileResultFactory()
+      'foo/corge.java': fileResultFactory(),
     };
 
     // Act
@@ -103,7 +103,7 @@ describe(calculateMetrics.name, () => {
     // Arrange
     const input = {
       'foo\\bar/baz.js': fileResultFactory(),
-      'corge\\qux.js': fileResultFactory()
+      'corge\\qux.js': fileResultFactory(),
     };
 
     // Act
@@ -122,7 +122,7 @@ describe(calculateMetrics.name, () => {
     // Arrange
     const input = {
       'c:\\foo\\bar/baz.js': fileResultFactory(),
-      'c:\\foo\\bar/baz2.js': fileResultFactory()
+      'c:\\foo\\bar/baz2.js': fileResultFactory(),
     };
 
     // Act
@@ -139,14 +139,14 @@ describe(calculateMetrics.name, () => {
     const input: FileResultDictionary = {
       'foo.js': fileResultFactory({
         mutants: [
-          mutantResultFactory({ status: MutantStatus.RuntimeError, }),
-          mutantResultFactory({ status: MutantStatus.Killed, }),
-          mutantResultFactory({ status: MutantStatus.CompileError, }),
-          mutantResultFactory({ status: MutantStatus.NoCoverage, }),
-          mutantResultFactory({ status: MutantStatus.Survived, }),
-          mutantResultFactory({ status: MutantStatus.Killed, }),
-          mutantResultFactory({ status: MutantStatus.Timeout, }),
-          mutantResultFactory({ status: MutantStatus.Ignored, }),
+          mutantResultFactory({ status: MutantStatus.RuntimeError }),
+          mutantResultFactory({ status: MutantStatus.Killed }),
+          mutantResultFactory({ status: MutantStatus.CompileError }),
+          mutantResultFactory({ status: MutantStatus.NoCoverage }),
+          mutantResultFactory({ status: MutantStatus.Survived }),
+          mutantResultFactory({ status: MutantStatus.Killed }),
+          mutantResultFactory({ status: MutantStatus.Timeout }),
+          mutantResultFactory({ status: MutantStatus.Ignored }),
         ],
       }),
     };

@@ -9,8 +9,8 @@ config.karma = {
   projectType: 'custom',
   configFile: 'karma.conf.js',
   config: {
-    browsers: ['ChromeHeadless']
-  }
+    browsers: ['ChromeHeadless'],
+  },
 };
 config.timeoutMs = 2000;
 config.coverageAnalysis = 'off';

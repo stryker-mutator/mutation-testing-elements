@@ -3,7 +3,7 @@ import { bootstrap } from '../../style';
 
 @customElement('mutation-test-report-modal-dialog')
 export class MutationTestReportModalDialogComponent extends LitElement {
-  @property({ converter: val => typeof val === 'string' })
+  @property({ converter: (val) => typeof val === 'string' })
   public show = false;
 
   @property()

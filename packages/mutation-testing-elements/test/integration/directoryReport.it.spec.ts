@@ -19,7 +19,7 @@ describe('Directory report page', () => {
     });
 
     it('should show expected totals for cli.ts', async () => {
-      const row = await page.resultTable().row('cli.ts');
+      const row = page.resultTable().row('cli.ts');
       return Promise.all([
         expect(await row.progressBar().percentageText()).eq('8.70%'),
         expect(await row.mutationScore()).eq('8.70'),
@@ -32,7 +32,8 @@ describe('Directory report page', () => {
         expect(await row.compileErrors()).eq('3'),
         expect(await row.totalDetected()).eq('2'),
         expect(await row.totalUndetected()).eq('21'),
-        expect(await row.totalMutants()).eq('26')]);
+        expect(await row.totalMutants()).eq('26'),
+      ]);
     });
   });
 });

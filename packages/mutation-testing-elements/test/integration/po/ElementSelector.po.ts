@@ -27,7 +27,7 @@ export class ElementSelector {
   public async isPresent(cssSelector: string): Promise<boolean> {
     const step = 100;
     const seconds = 3;
-    const maxAttempts = seconds * 1000 / step;
+    const maxAttempts = (seconds * 1000) / step;
     for (let attempts = 0; attempts < maxAttempts; attempts++) {
       try {
         await this.$(cssSelector);

@@ -7,16 +7,16 @@ export function createMutantResult(overrides?: Partial<MutantResult>): MutantRes
     location: {
       end: {
         column: 3,
-        line: 1
+        line: 1,
       },
       start: {
         column: 1,
-        line: 1
-      }
+        line: 1,
+      },
     },
     mutatorName: 'bazMutator',
     replacement: 'baz',
-    status: MutantStatus.Killed
+    status: MutantStatus.Killed,
   };
   return { ...defaults, ...overrides };
 }
@@ -25,7 +25,7 @@ export function createFileResult(overrides?: Partial<FileResult>): FileResult {
   const defaults: FileResult = {
     language: 'js',
     mutants: [createMutantResult()],
-    source: 'const bar = foo();'
+    source: 'const bar = foo();',
   };
   return { ...defaults, ...overrides };
 }
@@ -34,7 +34,7 @@ export function createMetricsResult(overrides?: Partial<MetricsResult>): Metrics
   const defaults: MetricsResult = {
     childResults: [],
     metrics: createMetrics(),
-    name: 'foo'
+    name: 'foo',
   };
   return { ...defaults, ...overrides };
 }
@@ -55,7 +55,7 @@ export function createMetrics(overrides?: Metrics): Metrics {
     totalUndetected: 0,
     totalValid: 0,
     mutationScore: 0,
-    mutationScoreBasedOnCoveredCode: 0
+    mutationScoreBasedOnCoveredCode: 0,
   };
   return { ...defaults, ...overrides };
 }

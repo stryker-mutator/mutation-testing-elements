@@ -8,16 +8,16 @@ describe(normalizeFileNames.name, () => {
     const baz = {
       language: 'bazLang',
       mutants: [],
-      source: 'baz lang'
+      source: 'baz lang',
     };
     const foo = {
       language: 'fooLang',
       mutants: [],
-      source: 'foo lang'
+      source: 'foo lang',
     };
     const input: FileResultDictionary = {
       ['c:\\tmp\\foo/bar']: foo,
-      ['/root/baz\\qux']: baz
+      ['/root/baz\\qux']: baz,
     };
 
     // Act
@@ -26,7 +26,7 @@ describe(normalizeFileNames.name, () => {
     // Assert
     expect(actual).deep.eq({
       ['c:/tmp/foo/bar']: foo,
-      ['root/baz/qux']: baz
+      ['root/baz/qux']: baz,
     });
   });
 });
