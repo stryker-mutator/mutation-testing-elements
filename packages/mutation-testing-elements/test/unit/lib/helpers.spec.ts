@@ -30,7 +30,7 @@ describe(renderCode.name, () => {
       function add(a, b) {
         return a + b;
       }`
-        .replace(/^ {6}/g, '')
+        .replace(/ {6}/g, '')
         .trim(), // strip the padding left
     };
     const actualCode = renderCode(input);
