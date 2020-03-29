@@ -29,7 +29,7 @@ function transpilerFactory(log) {
                 log.debug('Replacing in %s ("%s" -> "%s")', file.name, str, better);
                 return `"extends": "${better}"`;
               })
-              .replace(/"path":\s*"(..\/..\/[^"]*)"/, (_, str) => {
+              .replace(/"path":\s*"(..\/..\/[^"]*)"/g, (_, str) => {
                 const better = `../../${str}`;
                 log.debug('Replacing in %s ("%s" -> "%s")', file.name, str, better);
                 return `"path": "${better}"`;
