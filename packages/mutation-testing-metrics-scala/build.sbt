@@ -1,4 +1,4 @@
-val Scala212 = "2.12.10"
+val Scala212 = "2.12.11"
 val Scala213 = "2.13.1"
 
 scalaVersion := Scala213
@@ -19,7 +19,7 @@ lazy val circe = project
     libraryDependencies ++= Seq(
       "io.circe"             %% "circe-core"   % "0.13.0",
       "io.circe"             %% "circe-parser" % "0.13.0",
-      "org.leadpony.justify" % "justify"       % "2.0.0" % Test,
+      "org.leadpony.justify" % "justify"       % "2.1.0" % Test,
       "org.leadpony.joy"     % "joy"           % "1.3.0" % Test
     )
   )
