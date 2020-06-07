@@ -1,9 +1,8 @@
 package mutationtesting
 
-import verify._
 import mutationtesting.MutantStatus._
 
-object MetricsTest extends BasicTestSuite {
+class MetricsTest extends munit.FunSuite {
   test("MutationTestResult is split into tree structure") {
     val mtr = Map(
       "dir/foo.scala" -> MutationTestResult("dirFoo", Nil),
@@ -11,8 +10,9 @@ object MetricsTest extends BasicTestSuite {
       "foo.scala"     -> MutationTestResult("foo", Nil)
     )
     val result = Metrics.calculateMetrics(mtr)
-    assert(
-      result == MetricsResultRoot(
+    assertEquals(
+      result,
+      MetricsResultRoot(
         Seq(
           MetricsDirectory("dir", Seq(MetricsFile("foo.scala", Nil), MetricsFile("bar.scala", Nil))),
           MetricsFile("foo.scala", Nil)
@@ -45,8 +45,9 @@ object MetricsTest extends BasicTestSuite {
       "dir/baz.scala"         -> MutationTestResult("dirBar", rndMutants(0))
     )
     val result = Metrics.calculateMetrics(mtr)
-    assert(
-      result == MetricsResultRoot(
+    assertEquals(
+      result,
+      MetricsResultRoot(
         List(
           MetricsDirectory(
             "dir",
@@ -78,6 +79,6 @@ object MetricsTest extends BasicTestSuite {
         )
       )
     )
-    assert(result.mutationScore == 50)
+    assertEquals(result.mutationScore, 50d)
   }
 }

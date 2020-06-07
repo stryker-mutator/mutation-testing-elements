@@ -1,22 +1,21 @@
 package mutationtesting
 
-import verify._
-object MetricsResultTest extends BasicTestSuite {
+class MetricsResultTest extends munit.FunSuite {
   test("all should be 0 on empty root") {
     val sut = MetricsResultRoot(Nil)
 
-    assert(sut.killed == 0)
-    assert(sut.survived == 0)
-    assert(sut.timeout == 0)
-    assert(sut.noCoverage == 0)
-    assert(sut.compileErrors == 0)
-    assert(sut.ignored == 0)
-    assert(sut.totalDetected == 0)
-    assert(sut.totalUndetected == 0)
-    assert(sut.totalCovered == 0)
-    assert(sut.totalValid == 0)
-    assert(sut.totalInvalid == 0)
-    assert(sut.totalMutants == 0)
+    assertEquals(sut.killed, 0)
+    assertEquals(sut.survived, 0)
+    assertEquals(sut.timeout, 0)
+    assertEquals(sut.noCoverage, 0)
+    assertEquals(sut.compileErrors, 0)
+    assertEquals(sut.ignored, 0)
+    assertEquals(sut.totalDetected, 0)
+    assertEquals(sut.totalUndetected, 0)
+    assertEquals(sut.totalCovered, 0)
+    assertEquals(sut.totalValid, 0)
+    assertEquals(sut.totalInvalid, 0)
+    assertEquals(sut.totalMutants, 0)
     assert(sut.mutationScore.isNaN)
     assert(sut.mutationScoreBasedOnCoveredCode.isNaN)
   }
@@ -24,8 +23,9 @@ object MetricsResultTest extends BasicTestSuite {
   expectedSet.foreach({
     case (name, actualFunc, expected) =>
       test(s"$name should be $expected on testset") {
-        assert(
-          actualFunc(testSet) == expected,
+        assertEquals(
+          actualFunc(testSet),
+          expected,
           s"Unexpected value ${actualFunc(testSet)} for $name, expected $expected"
         )
       }

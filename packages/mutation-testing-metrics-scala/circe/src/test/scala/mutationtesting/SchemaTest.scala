@@ -1,13 +1,12 @@
 package mutationtesting
 
-import verify._
 import java.nio.file.Paths
 import org.leadpony.justify.api.JsonValidationService
 import java.io.ByteArrayInputStream
 import io.circe.parser.decode
 import scala.io.Source
 
-object SchemaTest extends BasicTestSuite {
+class SchemaTest extends munit.FunSuite {
 
   test("encoded json should be valid for mutation-testing-report-schema") {
     val sut = MutationTestReport(
@@ -33,7 +32,7 @@ object SchemaTest extends BasicTestSuite {
     val jsonString = toJsonString(sut)
     val reader     = createJsonReader(jsonString)
     // Actually asserts that no exception is thrown
-    assert(reader.readValue().toString == jsonString)
+    assertEquals(reader.readValue().toString, jsonString)
   }
 
   test("decoded json report is without errors") {
@@ -45,11 +44,11 @@ object SchemaTest extends BasicTestSuite {
       case Left(err) => fail(err.getMessage())
       case Right(report) =>
         assert(report.`$schema`.isEmpty)
-        assert(report.schemaVersion == "1")
-        assert(report.thresholds == Thresholds(80, 60))
+        assertEquals(report.schemaVersion, "1")
+        assertEquals(report.thresholds, Thresholds(80, 60))
         report.files.foreach({
           case (_, result) =>
-            assert(result.language == "scala")
+            assertEquals(result.language, "scala")
             assert(result.mutants.nonEmpty)
         })
     }
@@ -67,7 +66,7 @@ object SchemaTest extends BasicTestSuite {
       Paths.get("../mutation-testing-report-schema/src/mutation-testing-report-schema.json")
     )
     val byteStream = new ByteArrayInputStream(jsonString.getBytes())
-    val handler    = service.createProblemPrinter(fail)
+    val handler    = service.createProblemPrinter(fail(_))
     service.createReader(byteStream, schema, handler)
   }
 }

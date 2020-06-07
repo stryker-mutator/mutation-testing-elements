@@ -49,8 +49,8 @@ lazy val schema = project
   )
 
 lazy val sharedSettings = Seq(
-  libraryDependencies += "com.eed3si9n.verify" %% "verify" % "0.2.0" % Test,
-  testFrameworks := List(new TestFramework("verify.runner.Framework")),
+  libraryDependencies += "org.scalameta" %% "munit" % "0.7.8" % Test,
+  testFrameworks := List(new TestFramework("munit.Framework")),
   scalaVersion := Scala213,
   crossScalaVersions := Seq(Scala213, Scala212),
   skip in publish := skipNormalProjectPublish,
