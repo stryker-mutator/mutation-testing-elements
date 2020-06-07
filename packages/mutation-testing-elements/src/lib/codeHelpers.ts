@@ -26,19 +26,16 @@ export function renderCode(model: FileResult): string {
     startedMutants.push(...currentMutants);
 
     const builder: string[] = [];
-    if (currentMutants.length || mutantsEnding.length) {
-      currentMutants.forEach(backgroundState.markMutantStart);
-      mutantsEnding.forEach(backgroundState.markMutantEnd);
-
-      // End previous color span
+    if (mutantsEnding.length) {
       builder.push('</span>');
+      mutantsEnding.forEach(backgroundState.markMutantEnd);
+    }
 
-      // End mutants
-      mutantsEnding.forEach(() => builder.push('</mutation-test-report-mutant>'));
+    if (currentMutants.length) {
+      currentMutants.forEach(backgroundState.markMutantStart);
 
-      // Start mutants
-      currentMutants.forEach((mutant) => builder.push(`<mutation-test-report-mutant mutant-id="${mutant.id}">`));
-
+      // Write mutants
+      currentMutants.forEach((mutant) => builder.push(`<mutation-test-report-mutant mutant-id="${mutant.id}"></mutation-test-report-mutant>`));
       // Start new color span
       builder.push(`<span class="bg-${backgroundState.determineBackground()}">`);
     }

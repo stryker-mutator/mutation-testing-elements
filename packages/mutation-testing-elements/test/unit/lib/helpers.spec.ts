@@ -35,7 +35,7 @@ describe(renderCode.name, () => {
     };
     const actualCode = renderCode(input);
     expect(actualCode).eq(
-      '<span>const foo = &#039;</span><mutation-test-report-mutant mutant-id="1"><span class="bg-success-light">bar</span></mutation-test-report-mutant><span class="bg-null">&#039;;\n\nfunction add(a, b) {\n  return a + b;\n}</span>'
+      '<span>const foo = &#039;<mutation-test-report-mutant mutant-id="1"></mutation-test-report-mutant><span class="bg-success-light">bar</span>&#039;;\n\nfunction add(a, b) {\n  return a + b;\n}</span>'
     );
   });
 
@@ -67,7 +67,7 @@ describe(renderCode.name, () => {
         .trim(), // strip the padding left
     };
     const actualCode = renderCode(input);
-    expect(actualCode).include('<mutation-test-report-mutant mutant-id="1"><span class="bg-success-light">add</span></mutation-test-report-mutant>');
-    expect(actualCode).include('<mutation-test-report-mutant mutant-id="2"><span class="bg-danger-light">;\n</span></mutation-test-report-mutant>');
+    expect(actualCode).include('<mutation-test-report-mutant mutant-id="1"></mutation-test-report-mutant><span class="bg-success-light">add</span>');
+    expect(actualCode).include('<mutation-test-report-mutant mutant-id="2"></mutation-test-report-mutant><span class="bg-danger-light">;\n</span>');
   });
 });
