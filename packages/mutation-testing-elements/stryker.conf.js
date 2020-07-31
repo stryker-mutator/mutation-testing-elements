@@ -3,7 +3,7 @@ delete config.tsconfigFile;
 config.dashboard.module = 'elements';
 config.plugins = ['@stryker-mutator/*', require.resolve('./tsconfig-transpiler')];
 config.dashboard.module = 'elements';
-config.transpilers = ['tsconfig'];
+config.transpilers = ['typescript'];
 config.testRunner = 'karma';
 config.karma = {
   projectType: 'custom',
