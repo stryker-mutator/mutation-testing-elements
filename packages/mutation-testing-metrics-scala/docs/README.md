@@ -107,6 +107,7 @@ metrics.survived
 metrics.timeout
 metrics.noCoverage
 metrics.compileErrors
+metrics.runtimeErrors
 metrics.ignored
 metrics.totalDetected
 metrics.totalUndetected

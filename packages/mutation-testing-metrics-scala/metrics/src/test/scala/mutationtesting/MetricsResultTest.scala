@@ -38,12 +38,13 @@ class MetricsResultTest extends munit.FunSuite {
     ("noCoverage", _.noCoverage, 3),
     ("compileErrors", _.compileErrors, 1),
     ("ignored", _.ignored, 1),
+    ("runtimeErrors", _.runtimeErrors, 1),
     ("totalDetected", _.totalDetected, 4),
     ("totalUndetected", _.totalUndetected, 5),
     ("totalCovered", _.totalCovered, 6),
     ("totalValid", _.totalValid, 9),
-    ("totalInvalid", _.totalInvalid, 1),
-    ("totalMutants", _.totalMutants, 11),
+    ("totalInvalid", _.totalInvalid, 2),
+    ("totalMutants", _.totalMutants, 12),
     ("mutationScore", _.mutationScore, (4d / 9d) * 100),
     ("mutationScoreBasedOnCoveredCode", _.mutationScoreBasedOnCoveredCode, (4d / 6d) * 100)
   )
@@ -66,7 +67,8 @@ class MetricsResultTest extends munit.FunSuite {
               MetricMutant(MutantStatus.NoCoverage),
               MetricMutant(MutantStatus.NoCoverage),
               MetricMutant(MutantStatus.CompileError),
-              MetricMutant(MutantStatus.Ignored)
+              MetricMutant(MutantStatus.Ignored),
+              MetricMutant(MutantStatus.RuntimeError)
             )
           ),
           MetricsFile("baz.scala", Nil)
