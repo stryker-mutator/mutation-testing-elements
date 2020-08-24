@@ -1,2 +1,5 @@
 mutation-testing-elements/
 mutation-testing-report-schema/
+
+project/metals.sbt
+project/project/

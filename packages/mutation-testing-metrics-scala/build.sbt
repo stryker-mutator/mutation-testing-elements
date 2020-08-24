@@ -1,5 +1,5 @@
 val Scala212 = "2.12.11"
-val Scala213 = "2.13.2"
+val Scala213 = "2.13.3"
 
 scalaVersion := Scala213
 
@@ -17,10 +17,10 @@ lazy val circe = project
     sharedSettings,
     name := "mutation-testing-metrics-circe",
     libraryDependencies ++= Seq(
-      "io.circe"             %% "circe-core"   % "0.13.0",
-      "io.circe"             %% "circe-parser" % "0.13.0",
-      "org.leadpony.justify" % "justify"       % "2.1.0" % Test,
-      "org.leadpony.joy"     % "joy"           % "1.3.0" % Test
+      "io.circe"            %% "circe-core"   % "0.13.0",
+      "io.circe"            %% "circe-parser" % "0.13.0",
+      "org.leadpony.justify" % "justify"      % "2.1.0" % Test,
+      "org.leadpony.joy"     % "joy"          % "1.3.0" % Test
     )
   )
 
@@ -49,7 +49,7 @@ lazy val schema = project
   )
 
 lazy val sharedSettings = Seq(
-  libraryDependencies += "org.scalameta" %% "munit" % "0.7.8" % Test,
+  libraryDependencies += "org.scalameta" %% "munit" % "0.7.11" % Test,
   testFrameworks := List(new TestFramework("munit.Framework")),
   scalaVersion := Scala213,
   crossScalaVersions := Seq(Scala213, Scala212),
