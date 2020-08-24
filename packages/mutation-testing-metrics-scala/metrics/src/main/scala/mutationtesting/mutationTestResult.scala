@@ -4,7 +4,7 @@ import mutationtesting.MutantStatus._
 
 final case class MutationTestReport(
     `$schema`: Option[String] = Some(
-      "https://raw.githubusercontent.com/stryker-mutator/mutation-testing-elements/master/packages/mutation-testing-report-schema/src/mutation-testing-report-schema.json"
+      "https://git.io/mutation-testing-report-schema"
     ),
     schemaVersion: String = "1",
     thresholds: Thresholds,
@@ -18,7 +18,8 @@ final case class MutantResult(
     mutatorName: String,
     replacement: String,
     location: Location,
-    status: MutantStatus
+    status: MutantStatus,
+    description: Option[String] = None
 )
 
 final case class Location(start: Position, end: Position)

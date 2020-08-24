@@ -14,9 +14,12 @@ object MutationReportEncoder {
   implicit val locationEncoder: Encoder[Location] = Encoder.forProduct2("start", "end")(l => (l.start, l.end))
 
   implicit val mutantResultEncoder: Encoder[MutantResult] =
-    Encoder.forProduct5("id", "mutatorName", "replacement", "location", "status")(m =>
-      (m.id, m.mutatorName, m.replacement, m.location, m.status)
-    )
+    Encoder
+      .forProduct6("id", "mutatorName", "replacement", "location", "status", "description")((m: MutantResult) =>
+        (m.id, m.mutatorName, m.replacement, m.location, m.status, m.description)
+      )
+      // Remove `"description": null` if description is a None
+      .mapJson(_.dropNullValues)
 
   implicit val mutationTestResultEncoder: Encoder[MutationTestResult] =
     Encoder.forProduct3("source", "mutants", "language")(m => (m.source, m.mutants, m.language))
