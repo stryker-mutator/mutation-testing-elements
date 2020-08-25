@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.3.1...v1.4.0) (2020-08-25)
+
+
+### Bug Fixes
+
+* **elements:** fix stryker config in elements ([#592](https://github.com/stryker-mutator/mutation-testing-elements/issues/592)) ([01d5c9a](https://github.com/stryker-mutator/mutation-testing-elements/commit/01d5c9adfcc95e5b87dab1aa65df599746029e18))
+
+
+
+
+
 ## [1.3.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.3.0...v1.3.1) (2020-03-28)
 
 

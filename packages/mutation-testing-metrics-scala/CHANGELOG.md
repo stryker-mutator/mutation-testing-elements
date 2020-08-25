@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.3.1...v1.4.0) (2020-08-25)
+
+
+### Bug Fixes
+
+* **sonatype:** fix release process for sonatype ([a308a85](https://github.com/stryker-mutator/mutation-testing-elements/commit/a308a8512c2f2539f98ef16d65a01289b8d0ba1f))
+
+
+### Features
+
+* **metrics-scala:** add optional description field ([#602](https://github.com/stryker-mutator/mutation-testing-elements/issues/602)) ([2ef280c](https://github.com/stryker-mutator/mutation-testing-elements/commit/2ef280c8cffaa1e97001cd6d6d74e12630846604))
+* **metrics-scala:** add support for RuntimeError mutant status ([#609](https://github.com/stryker-mutator/mutation-testing-elements/issues/609)) ([d4c9ae5](https://github.com/stryker-mutator/mutation-testing-elements/commit/d4c9ae560753e4841b9ab03f1fe1cdaddd3b1894))
+
+
+
+
+
 ## [1.3.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.3.0...v1.3.1) (2020-03-28)
 
 
