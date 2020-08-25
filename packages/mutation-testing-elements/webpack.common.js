@@ -18,14 +18,12 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          'css-loader', // translates CSS into CommonJS
-          'postcss-loader',
           {
-            loader: 'sass-loader',
-            options: {
-              implementation: require('sass'),
-            },
+            loader: 'css-loader',
+            options: { esModule: false }, // translates CSS into CommonJS
           },
+          'postcss-loader',
+          'sass-loader',
         ],
       },
     ],
