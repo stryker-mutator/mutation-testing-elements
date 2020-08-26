@@ -116,9 +116,7 @@ export class MutationTestReportAppComponent extends LitElement {
       return html`
         <div class="container-fluid">
           <div class="row">
-            <div class="col-md-12">
-              ${this.renderReport()} ${this.renderErrorMessage()}
-            </div>
+            <div class="col-md-12">${this.renderReport()} ${this.renderErrorMessage()}</div>
           </div>
         </div>
       `;
@@ -129,11 +127,7 @@ export class MutationTestReportAppComponent extends LitElement {
 
   private renderErrorMessage() {
     if (this.errorMessage) {
-      return html`
-        <div class="alert alert-danger" role="alert">
-          ${this.errorMessage}
-        </div>
-      `;
+      return html`<div class="alert alert-danger" role="alert">${this.errorMessage}</div>`;
     } else {
       return html``;
     }
