@@ -24,9 +24,7 @@ export class MutationTestReportTotalsComponent extends LitElement {
   public render() {
     if (this.model) {
       return html`
-        <table class="table table-sm table-hover table-bordered table-no-top">
-          ${this.renderHead()} ${this.renderTableBody(this.model)}
-        </table>
+        <table class="table table-sm table-hover table-bordered table-no-top">${this.renderHead()} ${this.renderTableBody(this.model)}</table>
       `;
     } else {
       return undefined;
@@ -91,11 +89,7 @@ export class MutationTestReportTotalsComponent extends LitElement {
         });
       }
     };
-    return html`
-      <tbody>
-        ${this.renderRow(model.name, model, undefined)} ${renderChildren()}
-      </tbody>
-    `;
+    return html`<tbody>${this.renderRow(model.name, model, undefined)} ${renderChildren()}</tbody>`;
   }
 
   private renderRow(name: string, row: MetricsResult, path: string | undefined) {
