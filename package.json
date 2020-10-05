@@ -67,7 +67,7 @@
     "link-parent-bin": "^1.0.1",
     "lit-element": "^2.2.0",
     "mocha": "^8.0.1",
-    "postcss-loader": "^3.0.0",
+    "postcss-loader": "^4.0.3",
     "postcss-preset-env": "^6.7.0",
     "prettier": "~2.1.1",
     "rimraf": "^3.0.0",
