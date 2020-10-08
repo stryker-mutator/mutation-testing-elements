@@ -1,9 +1,10 @@
 pull_request_rules:
-  - name: automatic merge for Dependabot pull requests
+  - name: automatic merge for Dependabot devDependencies pull requests
     conditions:
       - author~=^dependabot(|-preview)\[bot\]$
       - check-success=build_and_test (10.x)
       - check-success=build_and_test (12.x)
+      - title~=^build\(deps-dev\)
     actions:
       merge:
         method: merge
