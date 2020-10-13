@@ -3,8 +3,3 @@ package.json
 package-lock.json
 # Handled by lerna
 lerna.json
-dist
-dist-test
-node_modules
-.stryker-tmp
-reports

@@ -3,32 +3,45 @@
   "$id": "http://stryker-mutator.io/report.schema.json",
   "title": "Schema for a mutation testing report.",
   "type": "object",
-  "required": ["schemaVersion", "thresholds", "files"],
+  "required": [
+    "schemaVersion",
+    "thresholds",
+    "files"
+  ],
   "properties": {
     "schemaVersion": {
       "type": "string",
       "pattern": "^1(\\.\\d*)?$",
       "title": "Major version of this report. Used for compatibility.",
-      "examples": ["1"]
+      "examples": [
+        "1"
+      ]
     },
     "thresholds": {
       "type": "object",
       "title": "Thresholds for the status of the reported application.",
-      "required": ["high", "low"],
+      "required": [
+        "high",
+        "low"
+      ],
       "properties": {
         "high": {
           "type": "integer",
           "title": "Higher bound threshold.",
           "minimum": 0,
           "maximum": 100,
-          "examples": [80]
+          "examples": [
+            80
+          ]
         },
         "low": {
           "type": "integer",
           "title": "Lower bound threshold.",
           "minimum": 0,
           "maximum": 100,
-          "examples": [60]
+          "examples": [
+            60
+          ]
         }
       }
     },
@@ -39,17 +52,24 @@
         "position": {
           "type": "object",
           "title": "Position of a mutation. Both line and column start at one.",
-          "required": ["line", "column"],
+          "required": [
+            "line",
+            "column"
+          ],
           "properties": {
             "line": {
               "type": "integer",
               "minimum": 1,
-              "examples": [4]
+              "examples": [
+                4
+              ]
             },
             "column": {
               "type": "integer",
               "minimum": 1,
-              "examples": [3]
+              "examples": [
+                3
+              ]
             }
           }
         }
@@ -57,17 +77,29 @@
       "additionalProperties": {
         "type": "object",
         "title": "Mutated file, with the relative path of the file as the key.",
-        "required": ["language", "source", "mutants"],
+        "required": [
+          "language",
+          "source",
+          "mutants"
+        ],
         "properties": {
           "language": {
             "type": "string",
             "title": "Programming language that is used. Used for code highlighting, see https://highlightjs.org/static/demo/.",
-            "examples": ["javascript", "typescript", "cs", "scala", "java"]
+            "examples": [
+              "javascript",
+              "typescript",
+              "cs",
+              "scala",
+              "java"
+            ]
           },
           "source": {
             "type": "string",
             "title": "Full source code of the mutated file, this is used for highlighting.",
-            "examples": ["using System; using....."]
+            "examples": [
+              "using System; using....."
+            ]
           },
           "mutants": {
             "type": "array",
@@ -75,32 +107,53 @@
             "items": {
               "type": "object",
               "title": "Single mutation.",
-              "required": ["id", "mutatorName", "location", "status"],
+              "required": [
+                "id",
+                "mutatorName",
+                "location",
+                "status"
+              ],
               "properties": {
                 "id": {
                   "type": "string",
                   "title": "Unique id, can be used to correlate this mutant with other reports.",
-                  "examples": ["321321"]
+                  "examples": [
+                    "321321"
+                  ]
                 },
                 "mutatorName": {
                   "type": "string",
                   "title": "Category of the mutation.",
-                  "examples": ["ConditionalExpression", "EqualityOperator", "LogicalOperator"]
+                  "examples": [
+                    "ConditionalExpression",
+                    "EqualityOperator",
+                    "LogicalOperator"
+                  ]
                 },
                 "replacement": {
                   "type": "string",
                   "title": "Actual mutation that has been applied.",
-                  "examples": ["-", "+", "&&", "||"]
+                  "examples": [
+                    "-",
+                    "+",
+                    "&&",
+                    "||"
+                  ]
                 },
                 "description": {
                   "type": "string",
                   "title": "Description of the applied mutation.",
-                  "examples": ["removed call to java/io/Writer::write"]
+                  "examples": [
+                    "removed call to java/io/Writer::write"
+                  ]
                 },
                 "location": {
                   "type": "object",
                   "title": "Location of the applied mutation.",
-                  "required": ["start", "end"],
+                  "required": [
+                    "start",
+                    "end"
+                  ],
                   "properties": {
                     "start": {
                       "$ref": "#/properties/files/definitions/position",
@@ -115,8 +168,24 @@
                 "status": {
                   "type": "string",
                   "title": "Result of the mutation.",
-                  "enum": ["Killed", "Survived", "NoCoverage", "CompileError", "RuntimeError", "Timeout", "Ignored"],
-                  "examples": ["Killed", "Survived", "NoCoverage", "CompileError", "RuntimeError", "Timeout", "Ignored"]
+                  "enum": [
+                    "Killed",
+                    "Survived",
+                    "NoCoverage",
+                    "CompileError",
+                    "RuntimeError",
+                    "Timeout",
+                    "Ignored"
+                  ],
+                  "examples": [
+                    "Killed",
+                    "Survived",
+                    "NoCoverage",
+                    "CompileError",
+                    "RuntimeError",
+                    "Timeout",
+                    "Ignored"
+                  ]
                 }
               }
             }

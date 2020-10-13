@@ -10,7 +10,7 @@
     "postinstall": "lerna bootstrap && link-parent-bin",
     "lint": "npm run lint:json && npm run lint:ts",
     "lint:ts": "eslint --ext .js,.ts .",
-    "lint:json": "prettier --check **/*.json",
+    "lint:json": "prettier --check *.json",
     "build": "tsc -b && lerna run build",
     "test": "lerna run test --stream",
     "start": "webpack-dev-server --open",
