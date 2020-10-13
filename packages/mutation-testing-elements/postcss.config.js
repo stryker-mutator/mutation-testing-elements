@@ -7,7 +7,7 @@ module.exports = {
     require('@fullhuman/postcss-purgecss')({
       content: ['src/**/*.ts'],
       // Don't purge dynamically added classes
-      whitelistPatterns: [/^(bg|badge|popover|text)-(success|caution|danger|warning|secondary|default)(-light)?$/, /^language-/, /^:host$/],
+      safelist: [/^(bg|badge|popover|text)-(success|caution|danger|warning|secondary|default)(-light)?$/, /^language-/, /^:host$/],
     }),
   ],
 };
