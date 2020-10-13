@@ -5,5 +5,5 @@
     "checkJs": true
   },
   // This file is a workaround for: https://github.com/palantir/tslint/issues/4137
-  "include": ["packages/**/*", "stryker.parent.js"]
+  "include": ["packages/**/*", "stryker.parent.js", ".eslintrc.js"]
 }
