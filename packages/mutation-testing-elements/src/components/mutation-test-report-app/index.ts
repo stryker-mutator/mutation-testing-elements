@@ -47,20 +47,20 @@ export class MutationTestReportAppComponent extends LitElement {
         const res = await fetch(this.src);
         this.report = await res.json();
       } catch (error) {
-        const e = error.toString();
+        const e = String(error);
         this.errorMessage = e;
       }
     }
   }
 
-  public updated(changedProperties: PropertyValues) {
+  public async updated(changedProperties: PropertyValues) {
     if ((changedProperties.has('path') || changedProperties.has('report')) && this.report) {
       this.updateModel(this.report);
       this.updateContext();
       this.updateTitle();
     }
     if (changedProperties.has('src')) {
-      this.loadData();
+      await this.loadData();
     }
   }
 

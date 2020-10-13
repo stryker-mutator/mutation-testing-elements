@@ -2,13 +2,17 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint', 'prettier'],
   parserOptions: {
-    project: require.resolve('./tsconfig.lint.json'),
+    tsconfigRootDir: __dirname,
+    project: ['tsconfig.lint.json', 'packages/*/test/tsconfig.json', 'packages/*/src/tsconfig.json'],
   },
+
   rules: {
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-unsafe-assignment': 'off',
     'prettier/prettier': 'error',
   },
   extends: [

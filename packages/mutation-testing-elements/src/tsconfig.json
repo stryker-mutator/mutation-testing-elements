@@ -1,23 +1,15 @@
 {
   "extends": "../../../tsconfig.settings.json",
   "compilerOptions": {
-    "types": [
-      "webpack-env"
-    ],
+    "types": ["webpack-env"],
     "outDir": "../dist",
     "module": "es2015",
     "moduleResolution": "node",
-    "lib": [
-      "es5",
-      "es2015",
-      "es2017.object",
-      "dom",
-      "dom.iterable"
-    ]
+    "lib": ["es5", "es2015", "es2017.object", "dom", "dom.iterable"]
   },
   "references": [
     {
-      "path": "../../mutation-testing-report-schema/tsconfig.src.json"
+      "path": "../../mutation-testing-report-schema/src"
     },
     {
       "path": "../../mutation-testing-metrics/src"

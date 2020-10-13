@@ -5,9 +5,5 @@
     "resolveJsonModule": true,
     "outDir": "../dist/src"
   },
-  "references": [
-    {
-      "path": "../../mutation-testing-report-schema/src"
-    }
-  ]
+  "include": ["**/*", "**/*.json"]
 }

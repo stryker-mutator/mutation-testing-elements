@@ -1,0 +1,10 @@
+webpack.*.js
+*.conf.js
+*.config.js
+tsconfig-transpiler.js
+node_modules
+dist
+dist-test
+.stryker-tmp
+reports
+packages/*/testResources/**
