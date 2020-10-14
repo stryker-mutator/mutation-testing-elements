@@ -1,5 +1,6 @@
 import { customElement, LitElement, property, html, unsafeCSS } from 'lit-element';
 import { bootstrap } from '../../style';
+import style from './index.scss';
 
 // Variable should be kept in sync with 'popup-width' in './mutation-test-report-popup.scss'
 const popupWidth = 200;
@@ -15,7 +16,7 @@ export class MutationTestReportPopupComponent extends LitElement {
   @property()
   public context: string | undefined;
 
-  public static styles = [bootstrap, unsafeCSS(require('./index.scss'))];
+  public static styles = [bootstrap, unsafeCSS(style)];
 
   public firstUpdated() {
     if (this.getBoundingClientRect().left < popupWidth / 2) {

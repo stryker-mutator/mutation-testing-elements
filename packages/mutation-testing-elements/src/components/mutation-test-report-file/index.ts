@@ -7,6 +7,7 @@ import { renderCode } from '../../lib/codeHelpers';
 import { FileResult, MutantResult } from 'mutation-testing-report-schema';
 import { getEmojiForStatus } from '../../lib/htmlHelpers';
 import { highlightElement } from 'prismjs/components/prism-core';
+import style from './index.scss';
 
 import 'prismjs/plugins/line-numbers/prism-line-numbers';
 // Order is important here! Scala depends on java, which depends on clike
@@ -31,7 +32,7 @@ export class MutationTestReportFileComponent extends LitElement {
   @property()
   public model!: FileResult;
 
-  public static styles = [prismjs, bootstrap, unsafeCSS(require('./index.scss'))];
+  public static styles = [prismjs, bootstrap, unsafeCSS(style)];
 
   private readonly expandAll = () => {
     this.forEachMutantComponent((mutantComponent) => (mutantComponent.expand = true));
