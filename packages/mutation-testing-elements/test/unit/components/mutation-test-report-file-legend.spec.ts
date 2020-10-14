@@ -64,7 +64,9 @@ describe(MutationTestReportFileLegendComponent.name, () => {
 
     it('should dispatch the "filters-changed" event for the initial state', async () => {
       let actualEvent: CustomEvent | undefined;
-      sut.element.addEventListener('filters-changed', (ev: any) => (actualEvent = ev));
+      sut.element.addEventListener('filters-changed', (ev: any) => {
+        actualEvent = ev;
+      });
       sut.element.mutants = [
         { status: MutantStatus.CompileError },
         { status: MutantStatus.Killed },
@@ -94,7 +96,9 @@ describe(MutationTestReportFileLegendComponent.name, () => {
       const r = await sut.whenStable();
       console.log(r);
       let actualEvent: CustomEvent | undefined;
-      sut.element.addEventListener('filters-changed', (ev: any) => (actualEvent = ev));
+      sut.element.addEventListener('filters-changed', (ev: any) => {
+        actualEvent = ev;
+      });
       const expected: MutantFilter[] = [
         { enabled: false, numberOfMutants: 1, status: MutantStatus.Survived },
         { enabled: false, numberOfMutants: 1, status: MutantStatus.CompileError },

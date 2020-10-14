@@ -19,7 +19,7 @@ export class CustomElementFixture<TCustomElement extends LitElement> {
         if (action()) {
           res();
         } else if (timeLeft <= 0) {
-          rej(new Error(`Condition not met in ${timeout} ms: ${action}`));
+          rej(new Error(`Condition not met in ${timeout} ms: ${action.toString()}`));
         } else {
           setTimeout(() => tick(timeLeft - step), step);
         }

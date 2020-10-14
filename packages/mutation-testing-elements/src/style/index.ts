@@ -1,6 +1,6 @@
 import { unsafeCSS } from 'lit-element';
-const bootstrapCss = require('./bootstrap.scss');
-const prismjsCss = require('./prismjs.scss');
+import bootstrapCss from './bootstrap.scss';
+import prismjsCss from './prismjs.scss';
 
-export const bootstrap = unsafeCSS(bootstrapCss.toString());
-export const prismjs = unsafeCSS(prismjsCss.toString());
+export const bootstrap = unsafeCSS(bootstrapCss);
+export const prismjs = unsafeCSS(prismjsCss);

@@ -1,5 +1,6 @@
 import { customElement, LitElement, html, property, unsafeCSS } from 'lit-element';
 import { bootstrap } from '../../style';
+import style from './index.scss';
 
 @customElement('mutation-test-report-modal-dialog')
 export class MutationTestReportModalDialogComponent extends LitElement {
@@ -9,7 +10,7 @@ export class MutationTestReportModalDialogComponent extends LitElement {
   @property()
   public header!: string;
 
-  public static styles = [bootstrap, unsafeCSS(require('./index.scss'))];
+  public static styles = [bootstrap, unsafeCSS(style)];
 
   public readonly emitCloseEvent = (event: Event) => {
     this.dispatchEvent(new CustomEvent('close-dialog', { bubbles: true, detail: this, composed: true }));

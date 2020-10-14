@@ -2,6 +2,7 @@ import { customElement, LitElement, property, html, unsafeCSS } from 'lit-elemen
 import { MutantResult } from 'mutation-testing-report-schema';
 import { bootstrap } from '../../style';
 import { getContextClassForStatus, getEmojiForStatus } from '../../lib/htmlHelpers';
+import style from './index.scss';
 
 @customElement('mutation-test-report-mutant')
 export class MutationTestReportMutantComponent extends LitElement {
@@ -17,7 +18,7 @@ export class MutationTestReportMutantComponent extends LitElement {
   @property()
   public showPopup = false;
 
-  public static styles = [bootstrap, unsafeCSS(require('./index.scss'))];
+  public static styles = [bootstrap, unsafeCSS(style)];
 
   private readonly mutantClicked = (event: Event) => {
     this.expand = !this.expand;

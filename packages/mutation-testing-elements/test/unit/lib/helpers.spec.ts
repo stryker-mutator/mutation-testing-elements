@@ -35,7 +35,7 @@ describe(renderCode.name, () => {
     };
     const actualCode = renderCode(input);
     expect(actualCode).eq(
-      '<span>const foo = &#039;</span><mutation-test-report-mutant mutant-id="1"><span class="bg-success-light">bar</span></mutation-test-report-mutant><span class="bg-null">&#039;;\n\nfunction add(a, b) {\n  return a + b;\n}</span>'
+      '<span>const foo = &#039;</span><mutation-test-report-mutant mutant-id="1"><span class="bg-success-light">bar</span></mutation-test-report-mutant><span class="bg-">&#039;;\n\nfunction add(a, b) {\n  return a + b;\n}</span>'
     );
   });
 

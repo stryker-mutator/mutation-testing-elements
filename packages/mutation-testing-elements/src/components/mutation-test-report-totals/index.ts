@@ -5,6 +5,7 @@ import { pathJoin } from '../../lib/codeHelpers';
 import { MetricsResult } from 'mutation-testing-metrics';
 import { toAbsoluteUrl } from '../../lib/htmlHelpers';
 import { SvgService } from '../svg';
+import style from './index.scss';
 
 @customElement('mutation-test-report-totals')
 export class MutationTestReportTotalsComponent extends LitElement {
@@ -19,7 +20,7 @@ export class MutationTestReportTotalsComponent extends LitElement {
 
   private readonly svgService = new SvgService();
 
-  public static styles = [bootstrap, unsafeCSS(require('./index.scss'))];
+  public static styles = [bootstrap, unsafeCSS(style)];
 
   public render() {
     if (this.model) {

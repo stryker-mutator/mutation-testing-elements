@@ -2,6 +2,7 @@ import { customElement, LitElement, property, PropertyValues, html, unsafeCSS } 
 import { MutantResult, MutantStatus } from 'mutation-testing-report-schema';
 import { bootstrap } from '../../style';
 import { getContextClassForStatus, getEmojiForStatus } from '../../lib/htmlHelpers';
+import style from './index.scss';
 
 export interface MutantFilter {
   status: MutantStatus;
@@ -72,7 +73,7 @@ export class MutationTestReportFileLegendComponent extends LitElement {
     }
   };
 
-  public static styles = [bootstrap, unsafeCSS(require('./index.scss'))];
+  public static styles = [bootstrap, unsafeCSS(style)];
 
   public render() {
     return html`

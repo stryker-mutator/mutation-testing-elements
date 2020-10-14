@@ -40,7 +40,7 @@ export function renderCode(model: FileResult): string {
       currentMutants.forEach((mutant) => builder.push(`<mutation-test-report-mutant mutant-id="${mutant.id}">`));
 
       // Start new color span
-      builder.push(`<span class="bg-${backgroundState.determineBackground()}">`);
+      builder.push(`<span class="bg-${backgroundState.determineBackground() || ''}">`);
     }
 
     // Append the code character

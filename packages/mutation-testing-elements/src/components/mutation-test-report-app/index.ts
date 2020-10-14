@@ -4,6 +4,7 @@ import { MetricsResult, calculateMetrics } from 'mutation-testing-metrics';
 import { bootstrap } from '../../style';
 import { locationChange$ } from '../../lib/router';
 import { Subscription } from 'rxjs';
+import style from './index.scss';
 
 @customElement('mutation-test-report-app')
 export class MutationTestReportAppComponent extends LitElement {
@@ -47,20 +48,20 @@ export class MutationTestReportAppComponent extends LitElement {
         const res = await fetch(this.src);
         this.report = await res.json();
       } catch (error) {
-        const e = error.toString();
+        const e = String(error);
         this.errorMessage = e;
       }
     }
   }
 
-  public updated(changedProperties: PropertyValues) {
+  public async updated(changedProperties: PropertyValues) {
     if ((changedProperties.has('path') || changedProperties.has('report')) && this.report) {
       this.updateModel(this.report);
       this.updateContext();
       this.updateTitle();
     }
     if (changedProperties.has('src')) {
-      this.loadData();
+      await this.loadData();
     }
   }
 
@@ -82,7 +83,7 @@ export class MutationTestReportAppComponent extends LitElement {
     document.title = this.title;
   }
 
-  public static styles = [bootstrap, unsafeCSS(require('./index.scss'))];
+  public static styles = [bootstrap, unsafeCSS(style)];
 
   public readonly subscriptions: Subscription[] = [];
   public connectedCallback() {

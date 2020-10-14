@@ -14,7 +14,7 @@ describe('JsonSchema', () => {
 
   function validate(testResourceFileName: string) {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const report = require(`../../testResources/${testResourceFileName}.json`);
+    const report: unknown = require(`../../testResources/${testResourceFileName}.json`);
     return schemaValidator.validate(SCHEMA_NAME, report);
   }
 
