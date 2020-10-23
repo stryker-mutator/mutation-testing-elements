@@ -13,3 +13,30 @@
 .display-4 small {
   font-weight: 300;
 }
+
+:host(.dark){
+  --prism-maintext: #ccc;
+  --prism-background: #2d2d2d;
+  --prism-text: #999;
+  --prism-keywords: #cc99cd;
+  --prism-punctuation: #ccc;
+  --prism-functions: #f08d49;
+  --prism-strings:  #7ec699;
+  --prism-namespace:  #e2777a;
+  --prism-names: #6196cc;
+  --prism-symbol: #f8c555;
+  --prism-url: #9a6e3a;
+}
+:host(:not(.dark)) {
+  --prism-maintext: black;
+  --prism-background: #f5f2f0;
+  --prism-text: #999;
+  --prism-keywords: #07a;
+  --prism-punctuation: #999;
+  --prism-functions: #f08d49;
+  --prism-strings:  #690;
+  --prism-namespace:  #e2777a;
+  --prism-names: #6196cc;
+  --prism-symbol: #DD4A68;
+  --prism-url: #67cdcc;
+}
