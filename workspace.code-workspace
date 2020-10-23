@@ -37,8 +37,9 @@
     "jake.autoDetect": "off",
     "task.autoDetect": "off",
     "cSpell.words": [
-      "clike",
       "autoloader",
+      "bootswatch",
+      "clike",
       "prismjs",
       "templating"
     ],
