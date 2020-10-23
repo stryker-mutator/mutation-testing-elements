@@ -2,7 +2,7 @@ import { LitElement, html, property, customElement, unsafeCSS } from 'lit-elemen
 import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 import { MutationTestReportMutantComponent, SHOW_MORE_EVENT } from '../mutation-test-report-mutant';
 import { MutantFilter } from '../mutation-test-report-file-legend';
-import { bootstrap, prismjs } from '../../style';
+import { bootstrap, prismjslight, prismjsdark } from '../../style';
 import { renderCode } from '../../lib/codeHelpers';
 import { FileResult, MutantResult } from 'mutation-testing-report-schema';
 import { getEmojiForStatus } from '../../lib/htmlHelpers';
@@ -27,12 +27,22 @@ import 'prismjs/components/prism-php';
 import 'prismjs/plugins/keep-markup/prism-keep-markup';
 // Removed auto-loader plugin because of https://github.com/stryker-mutator/mutation-testing-elements/issues/393
 
+const lightTheme = prismjslight.cssText;
+
+const darkTheme = prismjsdark.cssText;
+
 @customElement('mutation-test-report-file')
 export class MutationTestReportFileComponent extends LitElement {
   @property()
   public model!: FileResult;
 
-  public static styles = [prismjs, bootstrap, unsafeCSS(style)];
+  @property()
+  public dark = false;
+
+  public static styles = [
+    bootstrap,
+    unsafeCSS(style)
+  ];
 
   private readonly expandAll = () => {
     this.forEachMutantComponent((mutantComponent) => (mutantComponent.expand = true));
@@ -80,7 +90,10 @@ export class MutationTestReportFileComponent extends LitElement {
 
   public render() {
     if (this.model) {
+      const style = this.dark ? darkTheme : lightTheme;
+
       return html`
+        <style>${style}</style>
         <div class="row">
           <div class="col-md-12">
             ${this.renderModalDialog()}
