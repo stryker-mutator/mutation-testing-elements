@@ -11,6 +11,9 @@
   --prism-names: #6196cc;
   --prism-symbol: #f8c555;
   --prism-url: #9a6e3a;
+  --danger-background: #270c0c;
+  --success-background: #28352c;
+  --warning-background: #24200b;
 }
 
 :host(:not([theme="dark"])) {
@@ -25,4 +28,7 @@
   --prism-names: #6196cc;
   --prism-symbol: #DD4A68;
   --prism-url: #67cdcc;
+  --danger-background: #f2dede;
+  --success-background: #dff0d8;
+  --warning-background: #fcf8e3;
 }
