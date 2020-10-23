@@ -98,6 +98,8 @@ export class MutationTestReportAppComponent extends LitElement {
 
   public toggleDarkTheme = (event: CustomEvent<boolean>) => {
     this.theme = event.detail ? 'dark' : 'light';
+
+    localStorage.setItem('mutation-testing-elements-theme', this.theme);
   };
 
   public static styles = [unsafeCSS(theme), bootstrap, unsafeCSS(style)];
