@@ -125,6 +125,42 @@ describe(MutationTestReportAppComponent.name, () => {
     });
   });
 
+  describe('theme property', () => {
+    it('should have default theme light', async () => {
+      // Arrange
+      sut.element.report = createReport();
+      await sut.whenStable();
+
+      expect(sut.element.theme).eq('light');
+    });
+
+    it('should get theme from localstorage', async () => {
+      // Act
+      localStorage.setItem('mutation-testing-elements-theme', 'dark');
+
+      // Arrange
+      sut.element.report = createReport();
+      await sut.whenStable();
+
+      // Assert
+      expect(sut.element.theme).eq('dark');
+    });
+
+    it('should set theme to localstorage', async () => {
+      // Arrange
+      sut.element.report = createReport();
+      await sut.whenStable();
+
+      // Act
+      // click toggle
+
+      // Assert
+      expect(sut.element.theme).eq('dark');
+
+      expect(localStorage.getItem('mutation-testing-elements-theme'), 'dark');
+    });
+  });
+
   function getColor(element: HTMLElement) {
     return getComputedStyle(element).color;
   }
