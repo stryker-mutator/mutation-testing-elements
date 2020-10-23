@@ -46,6 +46,15 @@ export class MutationTestReportAppComponent extends LitElement {
     }
   }
 
+  public firstUpdated(): void {
+    console.log(this.theme);
+    if (this.theme == undefined) {
+      const theme = localStorage.getItem('mutation-testing-elements-theme');
+      this.theme = theme ? theme : 'light';
+      console.log(this.theme);
+    }
+  }
+
   private async loadData() {
     if (this.src) {
       try {
@@ -145,7 +154,7 @@ export class MutationTestReportAppComponent extends LitElement {
   private renderReport() {
     if (this.context) {
       return html`
-        <mutation-test-report-dark-mode-toggle @toggle="${this.toggleDarkTheme}" class="toggle"> </mutation-test-report-dark-mode-toggle>
+        <mutation-test-report-dark-mode-toggle @toggle="${this.toggleDarkTheme}" class="toggle" .dark="${this.theme == 'dark'}"> </mutation-test-report-dark-mode-toggle>
         ${this.renderTitle()}
         <mutation-test-report-breadcrumb .path="${this.path}"></mutation-test-report-breadcrumb>
         ${this.renderTotals()} ${this.renderFileReport()}

@@ -8,8 +8,11 @@ export class MutationTestReportDarkModeToggleComponent extends LitElement {
   private dark = true;
 
   private readonly dispatchDarkModeChangedEvent = (e: MouseEvent) => {
-    this.dispatchEvent(new CustomEvent('toggle', { detail: (e.target as HTMLInputElement).checked }));
-    console.log((e.target as HTMLInputElement).checked);
+    const checked = (e.target as HTMLInputElement).checked;
+    this.dispatchEvent(new CustomEvent('toggle', { detail: checked }));
+    console.log(checked);
+
+    localStorage.setItem('mutation-testing-elements-theme', checked ? 'dark' : 'light');
   };
 
   public static styles = [bootstrap, unsafeCSS(style)];
