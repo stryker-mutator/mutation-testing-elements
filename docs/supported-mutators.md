@@ -1,5 +1,6 @@
 ---
 title: Supported mutators
+custom_edit_url: https://github.com/stryker-mutator/mutation-testing-elements/edit/master/docs/supported-mutators.md
 ---
 
 All Stryker versions support a variety of different mutators. We've aligned on a standard naming scheme so it is easy to switch and compare implementations. The difference in support is listed below.

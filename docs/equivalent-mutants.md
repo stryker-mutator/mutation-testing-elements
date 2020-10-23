@@ -1,5 +1,6 @@
 ---
 title: Equivalent mutants
+custom_edit_url: https://github.com/stryker-mutator/mutation-testing-elements/edit/master/docs/equivalent-mutants.md
 ---
 
 Suppose you are writing a big chunk of code. You have decided to run both unit and mutation tests.

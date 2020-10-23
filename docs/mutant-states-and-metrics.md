@@ -1,5 +1,6 @@
 ---
 title: Mutant states and metrics
+custom_edit_url: https://github.com/stryker-mutator/mutation-testing-elements/edit/master/docs/mutant-states-and-metrics.md
 ---
 
 This page should shed some light on the different outcomes a mutant can have and the different metrics you'll find in any given mutation testing report.
