@@ -13,3 +13,12 @@
 .display-4 small {
   font-weight: 300;
 }
+
+.toggle {
+  float: right;
+  top: var(--top-offset, 0);
+  position: sticky;
+  z-index: 20;
+  margin-right: 1em;
+  padding-top: 0.5em;
+}
