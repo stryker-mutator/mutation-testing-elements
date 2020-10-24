@@ -2,13 +2,13 @@ import { customElement, LitElement, html, unsafeCSS, property } from 'lit-elemen
 import { bootstrap } from '../../style';
 import style from './index.scss';
 
-@customElement('mutation-test-report-dark-mode-toggle')
-export class MutationTestReportDarkModeToggleComponent extends LitElement {
+@customElement('mutation-test-report-theme-switch')
+export class MutationTestReportThemeSwitchComponent extends LitElement {
   @property()
   private dark = true;
 
-  private readonly dispatchDarkModeChangedEvent = (e: MouseEvent) => {
-    this.dispatchEvent(new CustomEvent('toggle', { detail: (e.target as HTMLInputElement).checked }));
+  private readonly dispatchThemeChangedEvent = (e: MouseEvent) => {
+    this.dispatchEvent(new CustomEvent('theme-switch', { detail: (e.target as HTMLInputElement).checked ? 'dark' : 'light' }));
     console.log((e.target as HTMLInputElement).checked);
   };
 
@@ -17,7 +17,7 @@ export class MutationTestReportDarkModeToggleComponent extends LitElement {
   public render() {
     return html`
       <div class="check-box-container">
-        <input type="checkbox" @click="${this.dispatchDarkModeChangedEvent}" ?checked="${this.dark}" id="time" />
+        <input type="checkbox" @click="${this.dispatchThemeChangedEvent}" ?checked="${this.dark}" id="time" />
         <label for="time">Night</label>
       </div>
     `;

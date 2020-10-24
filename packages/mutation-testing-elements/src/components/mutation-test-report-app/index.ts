@@ -145,7 +145,7 @@ export class MutationTestReportAppComponent extends LitElement {
   private renderReport() {
     if (this.context) {
       return html`
-        <mutation-test-report-dark-mode-toggle @toggle="${this.toggleDarkTheme}" class="toggle"> </mutation-test-report-dark-mode-toggle>
+        <mutation-test-report-theme-switch @toggle="${this.toggleDarkTheme}" class="toggle"> </mutation-test-report-theme-switch>
         ${this.renderTitle()}
         <mutation-test-report-breadcrumb .path="${this.path}"></mutation-test-report-breadcrumb>
         ${this.renderTotals()} ${this.renderFileReport()}
