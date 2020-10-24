@@ -13,6 +13,7 @@ describe(MutationTestReportAppComponent.name, () => {
   beforeEach(() => {
     fetchStub = sinon.stub(window, 'fetch');
     matchMediaStub = sinon.stub(window, 'matchMedia');
+    matchMediaStub.returns({ matches: false } as MediaQueryList);
     sut = new CustomElementFixture('mutation-test-report-app');
   });
 
@@ -126,7 +127,7 @@ describe(MutationTestReportAppComponent.name, () => {
   });
 
   describe('theme property', () => {
-    it('should have default theme light', async () => {
+    it.only('should have default theme light', async () => {
       // Arrange
       sut.element.report = createReport();
       await sut.whenStable();

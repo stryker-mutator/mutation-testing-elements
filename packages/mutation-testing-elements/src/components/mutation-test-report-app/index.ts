@@ -48,6 +48,7 @@ export class MutationTestReportAppComponent extends LitElement {
 
   public firstUpdated(): void {
     console.log(this.theme);
+    debugger;
     if (this.theme == undefined) {
       const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       if (prefersDark) {
@@ -55,8 +56,10 @@ export class MutationTestReportAppComponent extends LitElement {
       }
       const theme = localStorage.getItem('mutation-testing-elements-theme');
       if (theme) {
+        this.theme = theme
+      } else {
         // default to light
-        this.theme = theme ? theme : 'light';
+        this.theme = this.theme == undefined ? 'light' : this.theme;
       }
       console.log(this.theme);
     }
