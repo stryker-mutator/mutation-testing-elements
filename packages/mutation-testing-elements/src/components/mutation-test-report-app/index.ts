@@ -96,8 +96,8 @@ export class MutationTestReportAppComponent extends LitElement {
     document.title = this.title;
   }
 
-  public toggleDarkTheme = (event: CustomEvent<boolean>) => {
-    this.theme = event.detail ? 'dark' : 'light';
+  public themeSwitch = (event: CustomEvent<string>) => {
+    this.theme = event.detail;
 
     localStorage.setItem('mutation-testing-elements-theme', this.theme);
   };
@@ -156,7 +156,8 @@ export class MutationTestReportAppComponent extends LitElement {
   private renderReport() {
     if (this.context) {
       return html`
-        <mutation-test-report-dark-mode-toggle @toggle="${this.toggleDarkTheme}" class="toggle" .dark="${this.theme == 'dark'}"> </mutation-test-report-dark-mode-toggle>
+        <mutation-test-report-theme-switch @theme-switch="${this.themeSwitch}" class="theme-switch" .theme="${this.theme}">
+        </mutation-test-report-theme-switch>
         ${this.renderTitle()}
         <mutation-test-report-breadcrumb .path="${this.path}"></mutation-test-report-breadcrumb>
         ${this.renderTotals()} ${this.renderFileReport()}

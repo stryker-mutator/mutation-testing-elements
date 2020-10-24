@@ -6,4 +6,4 @@ import './components/mutation-test-report-breadcrumb';
 import './components/mutation-test-report-mutant';
 import './components/mutation-test-report-modal-dialog';
 import './components/mutation-test-report-file-legend';
-import './components/mutation-test-report-dark-mode-toggle';
+import './components/mutation-test-report-theme-switch';
