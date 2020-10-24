@@ -1,3 +1,4 @@
+@import "../../style/bootstrap-reboot.scss"; // import the variables
 
 :host([theme="dark"])  {
   --prism-maintext: #ccc;
@@ -11,6 +12,9 @@
   --prism-names: #6196cc;
   --prism-symbol: #f8c555;
   --prism-url: #9a6e3a;
+
+  --bs-blockquote-footer: $gray-600;
+  --bs-table-primary-bg: $primary;
 }
 
 :host(:not([theme="dark"])) {
@@ -25,4 +29,7 @@
   --prism-names: #6196cc;
   --prism-symbol: #DD4A68;
   --prism-url: #67cdcc;
+
+  --bs-blockquote-footer: $blockquote-small-color;
+  --bs-table-primary-bg: theme-color-level('primary', $table-bg-level);
 }
