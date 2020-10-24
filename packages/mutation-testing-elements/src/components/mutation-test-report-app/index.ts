@@ -48,7 +48,7 @@ export class MutationTestReportAppComponent extends LitElement {
 
   public firstUpdated(): void {
     if (this.theme == undefined) {
-      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)')?.matches;
       if (prefersDark) {
         this.theme = 'dark';
       }
