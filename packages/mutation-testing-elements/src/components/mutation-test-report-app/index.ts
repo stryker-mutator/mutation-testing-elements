@@ -46,6 +46,15 @@ export class MutationTestReportAppComponent extends LitElement {
     }
   }
 
+  public firstUpdated(): void {
+    console.log(this.theme);
+    if (this.theme == undefined) {
+      const theme = localStorage.getItem('mutation-testing-elements-theme');
+      this.theme = theme ? theme : 'light';
+      console.log(this.theme);
+    }
+  }
+
   private async loadData() {
     if (this.src) {
       try {
@@ -87,8 +96,10 @@ export class MutationTestReportAppComponent extends LitElement {
     document.title = this.title;
   }
 
-  public toggleDarkTheme = (event: CustomEvent<boolean>) => {
-    this.theme = event.detail ? 'dark' : 'light';
+  public themeSwitch = (event: CustomEvent<string>) => {
+    this.theme = event.detail;
+
+    localStorage.setItem('mutation-testing-elements-theme', this.theme);
   };
 
   public static styles = [unsafeCSS(theme), bootstrap, unsafeCSS(style)];
@@ -145,7 +156,8 @@ export class MutationTestReportAppComponent extends LitElement {
   private renderReport() {
     if (this.context) {
       return html`
-        <mutation-test-report-theme-switch @toggle="${this.toggleDarkTheme}" class="toggle"> </mutation-test-report-theme-switch>
+        <mutation-test-report-theme-switch @theme-switch="${this.themeSwitch}" class="theme-switch" .theme="${this.theme}">
+        </mutation-test-report-theme-switch>
         ${this.renderTitle()}
         <mutation-test-report-breadcrumb .path="${this.path}"></mutation-test-report-breadcrumb>
         ${this.renderTotals()} ${this.renderFileReport()}
