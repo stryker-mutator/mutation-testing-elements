@@ -45,6 +45,7 @@
     "jake.autoDetect": "off",
     "task.autoDetect": "off",
     "cSpell.words": [
+      "Theming",
       "autoloader",
       "bootswatch",
       "clike",
