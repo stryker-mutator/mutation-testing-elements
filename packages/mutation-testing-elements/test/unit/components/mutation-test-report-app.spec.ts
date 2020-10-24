@@ -8,9 +8,11 @@ import { CustomElementFixture } from '../helpers/CustomElementFixture';
 describe(MutationTestReportAppComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportAppComponent>;
   let fetchStub: sinon.SinonStub<[RequestInfo, RequestInit?], Promise<Response>>;
+  let matchMediaStub: sinon.SinonStub<[query: string], MediaQueryList>;
 
   beforeEach(() => {
     fetchStub = sinon.stub(window, 'fetch');
+    matchMediaStub = sinon.stub(window, 'matchMedia');
     sut = new CustomElementFixture('mutation-test-report-app');
   });
 
@@ -171,19 +173,18 @@ describe(MutationTestReportAppComponent.name, () => {
 
     it('should use user preferes dark (os preference)', async () => {
       // Arrange
-      localStorage.setItem('mutation-testing-elements-theme', 'dark');
-      sut.element.theme = 'light';
+      matchMediaStub.returns({ matches: true } as MediaQueryList);
       sut.element.report = createReport();
       await sut.whenStable();
 
       // Assert
-      expect(sut.element.theme).eq('light');
+      expect(sut.element.theme).eq('dark');
     });
 
     it('should use local storage over user preferes dark', async () => {
       // Arrange
+      matchMediaStub.returns({ matches: true } as MediaQueryList);
       localStorage.setItem('mutation-testing-elements-theme', 'dark');
-      sut.element.theme = 'light';
       sut.element.report = createReport();
       await sut.whenStable();
 

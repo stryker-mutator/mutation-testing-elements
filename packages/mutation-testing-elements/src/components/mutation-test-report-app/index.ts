@@ -50,7 +50,6 @@ export class MutationTestReportAppComponent extends LitElement {
     console.log(this.theme);
     if (this.theme == undefined) {
       const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      console.log('prefers', prefersDark);
       if (prefersDark) {
         this.theme = 'dark';
       }
