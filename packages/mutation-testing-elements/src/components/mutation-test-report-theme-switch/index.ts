@@ -5,7 +5,7 @@ import style from './index.scss';
 @customElement('mutation-test-report-theme-switch')
 export class MutationTestReportThemeSwitchComponent extends LitElement {
   @property()
-  public theme = 'dark';
+  public theme: string | undefined;
 
   private readonly dispatchThemeChangedEvent = (e: MouseEvent) => {
     const checked = (e.target as HTMLInputElement).checked;
