@@ -32,7 +32,7 @@ th.rotate > div {
 }
 
 table td.icon {
-  color: rgba(3,47,98,.55);
+  color: var(--mut-table-icon-color);
   padding-left: 10px;
   padding-right: 2px;
 }

@@ -1,0 +1,192 @@
+// Heavily inspired by Darkly 4.5.3
+// https://github.com/thomaspark/bootswatch/tree/v4/dist/darkly
+// Bootswatch
+
+// Reboot
+
+:host {
+  background-color: var(--bs-body-bs);
+  color: var(--bs-body-color);
+}
+
+// Background
+@each $color, $value in $theme-colors {
+  .bg-#{$color} {
+    background-color: var(--bs-#{$color}-bg) !important;
+  }
+}
+
+// Buttons ==================================================================
+.btn {
+  color: var(--bs-body-color);
+  @include hover() {
+    color: var(--bs-body-color);
+    text-decoration: none;
+  }
+}
+@each $color, $value in $theme-colors {
+  .btn-#{$color} {
+    color: var(--bs-btn-#{$color}-color);
+    @include hover() {
+      color: var(--bs-btn-#{$color}-hover-color);
+    }
+  }
+}
+
+// Badge ==================================
+
+@each $color, $value in $theme-colors {
+  .badge-#{$color} {
+    color: var(--bs-badge-#{$color}-color);
+    background-color: var(--bs-badge-#{$color}-bg);
+  }
+}
+
+// Modal ===============================
+.modal-content {
+  background-color: var(--bs-modal-content-bg);
+  border-color: var(--bs-modal-content-border-color);
+}
+.modal-header {
+  border-bottom: var(--bs-modal-header-border-color);
+}
+
+// Typography ==================================================================
+
+a {
+  color: var(--bs-link-color);
+
+  @include hover() {
+    color: var(--bs-link-hover-color);
+  }
+}
+
+
+// Popovers
+.popover {
+  background-color: var(--bs-popover-bg);
+}
+
+// Tables ======================================================================
+
+.table {
+  color: var(--bs-body-color);
+
+  &-hover {
+    tbody tr {
+      @include hover() {
+        color: var(--bs-body-color);
+        background-color: var(--bs-table-hover-bg);
+      }
+    }
+
+    .table-primary:hover {
+      &,
+      > th,
+      > td {
+        background-color: var(--bs-table-primary-hover-bg);
+      }
+    }
+
+    .table-secondary:hover {
+      &,
+      > th,
+      > td {
+        background-color: var(--bs-table-secondary-hover-bg);
+      }
+    }
+
+    .table-light:hover {
+      &,
+      > th,
+      > td {
+        background-color: var(--bs-table-light-hover-bg);
+      }
+    }
+
+    .table-dark:hover {
+      &,
+      > th,
+      > td {
+        background-color: var(--bs-table-dark-hover-bg);
+      }
+    }
+
+    .table-success:hover {
+      &,
+      > th,
+      > td {
+        background-color: var(--bs-table-success-hover-bg);
+      }
+    }
+
+    .table-info:hover {
+      &,
+      > th,
+      > td {
+        background-color: var(--bs-table-info-hover-bg);
+      }
+    }
+
+    .table-danger:hover {
+      &,
+      > th,
+      > td {
+        background-color: var(--bs-table-danger-hover-bg);
+      }
+    }
+
+    .table-warning:hover {
+      &,
+      > th,
+      > td {
+        background-color: var(--bs-table-warning-hover-bg);
+      }
+    }
+
+    .table-caution:hover {
+      &,
+      > th,
+      > td {
+        background-color: var(--bs-table-caution-hover-bg);
+      }
+    }
+  }
+}
+
+// Progress ========================
+.progress {
+  background-color: var(--bs-progress-bg);
+}
+
+// Navs ========================================================================
+
+.nav-tabs,
+.nav-pills {
+  .nav-link,
+  .nav-link.active,
+  .nav-link.active:focus,
+  .nav-link.active:hover,
+  .nav-item.open .nav-link,
+  .nav-item.open .nav-link:focus,
+  .nav-item.open .nav-link:hover {
+    color: var(--bs-link-color);
+  }
+}
+
+.breadcrumb a {
+  color: var(--bs-link-color);
+}
+
+.breadcrumb {
+  background-color: var(--bs-breadcrumb-bg);
+}
+
+.breadcrumb-item {
+  &.active {
+    color: var(--bs-breadcrumb-active-color);
+  }
+  &::before {
+    color: var(--bs-breadcrumb-active-color);
+  }
+}
