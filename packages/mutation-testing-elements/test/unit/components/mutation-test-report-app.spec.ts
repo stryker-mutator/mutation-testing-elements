@@ -16,6 +16,8 @@ describe(MutationTestReportAppComponent.name, () => {
 
   afterEach(() => {
     window.location.hash = '';
+    sut.dispose();
+    localStorage.clear();
   });
 
   function createReport(): MutationTestResult {
@@ -34,10 +36,6 @@ describe(MutationTestReportAppComponent.name, () => {
       },
     };
   }
-
-  afterEach(() => {
-    sut.dispose();
-  });
 
   describe('the title', () => {
     it('should not change without a report', () => {
@@ -134,7 +132,7 @@ describe(MutationTestReportAppComponent.name, () => {
       expect(sut.element.theme).eq('light');
     });
 
-    it('should get theme from localstorage', async () => {
+    it('should get theme from local storage', async () => {
       // Act
       localStorage.setItem('mutation-testing-elements-theme', 'dark');
 
@@ -146,13 +144,13 @@ describe(MutationTestReportAppComponent.name, () => {
       expect(sut.element.theme).eq('dark');
     });
 
-    it('should set theme to localstorage', async () => {
+    it('should set theme to local storage', async () => {
       // Arrange
       sut.element.report = createReport();
       await sut.whenStable();
 
       // Act
-      // click toggle
+      sut.$('mutation-test-report-theme-switch').dispatchEvent(new CustomEvent('theme-switch', { detail: 'light' }));
 
       // Assert
       expect(sut.element.theme).eq('dark');
