@@ -37,7 +37,7 @@ $popup-width: 200px;
 // Taken from bootstrap/scss/utilities/_borders.scs
 @each $color, $value in $theme-colors {
   .popover-#{$color}::before {
-    border-bottom-color: $value ;
+    border-bottom-color: var(--bs-#{$color}-bg);
   }
 }
 
