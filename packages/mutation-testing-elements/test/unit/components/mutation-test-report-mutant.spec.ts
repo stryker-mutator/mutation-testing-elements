@@ -141,8 +141,8 @@ describe(MutationTestReportMutantComponent.name, () => {
 
     // Assert
     expect(result).ok;
-    expect(result.detail).ok;
-    expect(result.detail).eq(mutant);
+    expect(result!.detail).ok;
+    expect(result!.detail).eq(mutant);
   });
 
   it("should not display a show more button if the description isn't set", async () => {
@@ -160,7 +160,7 @@ describe(MutationTestReportMutantComponent.name, () => {
     expect(showMoreButton).null;
   });
 
-  it('should line-through original code when the button is cliced', async () => {
+  it('should line-through original code when the button is clicked', async () => {
     // Arrange
     sut.element.show = true;
     sut.element.mutant = createMutantResult({ replacement: 'foobar' });
