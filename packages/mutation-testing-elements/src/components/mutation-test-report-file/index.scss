@@ -1,16 +1,15 @@
 @import "../../style/bootstrap-reboot.scss"; // import the variables
 
 .bg-danger-light {
-    background-color: #f2dede;
+    background-color: var(--danger-background, #f2dede);
 }
 
 .bg-success-light {
-    background-color: #dff0d8;
+    background-color: var(--success-background, #dff0d8);
 }
 
-
 .bg-warning-light {
-    background-color: #fcf8e3;
+    background-color: var(--warning-background, #fcf8e3);
 }
 
 .bg-caution-light {
