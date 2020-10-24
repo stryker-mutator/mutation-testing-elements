@@ -127,7 +127,7 @@ describe(MutationTestReportAppComponent.name, () => {
   });
 
   describe('theme property', () => {
-    it.only('should have default theme light', async () => {
+    it('should have default theme light', async () => {
       // Arrange
       sut.element.report = createReport();
       await sut.whenStable();
@@ -153,11 +153,11 @@ describe(MutationTestReportAppComponent.name, () => {
       await sut.whenStable();
 
       // Act
-      sut.$('mutation-test-report-theme-switch').dispatchEvent(new CustomEvent('theme-switch', { detail: 'light' }));
+      sut.$('mutation-test-report-theme-switch').dispatchEvent(new CustomEvent('theme-switch', { detail: 'dark' }));
+      await sut.whenStable();
 
       // Assert
       expect(sut.element.theme).eq('dark');
-
       expect(localStorage.getItem('mutation-testing-elements-theme'), 'dark');
     });
 
@@ -172,7 +172,7 @@ describe(MutationTestReportAppComponent.name, () => {
       expect(sut.element.theme).eq('light');
     });
 
-    it('should use user preferes dark (os preference)', async () => {
+    it('should use user prefers dark (os preference)', async () => {
       // Arrange
       matchMediaStub.returns({ matches: true } as MediaQueryList);
       sut.element.report = createReport();
@@ -182,15 +182,15 @@ describe(MutationTestReportAppComponent.name, () => {
       expect(sut.element.theme).eq('dark');
     });
 
-    it('should use local storage over user preferes dark', async () => {
+    it('should use local storage over user prefers dark', async () => {
       // Arrange
-      matchMediaStub.returns({ matches: true } as MediaQueryList);
+      matchMediaStub.withArgs('(prefers-color-scheme: dark)').returns({ matches: false } as MediaQueryList);
       localStorage.setItem('mutation-testing-elements-theme', 'dark');
       sut.element.report = createReport();
       await sut.whenStable();
 
       // Assert
-      expect(sut.element.theme).eq('light');
+      expect(sut.element.theme).eq('dark');
     });
   });
 

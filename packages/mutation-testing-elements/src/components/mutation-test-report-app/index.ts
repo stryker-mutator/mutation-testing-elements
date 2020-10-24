@@ -47,17 +47,17 @@ export class MutationTestReportAppComponent extends LitElement {
   }
 
   public firstUpdated(): void {
-    if (this.theme == undefined) {
-      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)')?.matches;
-      if (prefersDark) {
-        this.theme = 'dark';
-      }
+    if (!this.theme) {
+      // 1. check local storage
       const theme = localStorage.getItem('mutation-testing-elements-theme');
       if (theme) {
-        this.theme = theme
+        this.theme = theme;
+        // 2. check for user's OS preference
+      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)')?.matches) {
+        this.theme = 'dark';
+        // 3. default is light
       } else {
-        // default to light
-        this.theme = this.theme == undefined ? 'light' : this.theme;
+        this.theme = 'light';
       }
     }
   }
@@ -109,11 +109,7 @@ export class MutationTestReportAppComponent extends LitElement {
     localStorage.setItem('mutation-testing-elements-theme', this.theme);
   };
 
-  public static styles = [
-    unsafeCSS(theme),
-    bootstrap,
-    unsafeCSS(style)
-  ];
+  public static styles = [unsafeCSS(theme), bootstrap, unsafeCSS(style)];
 
   public readonly subscriptions: Subscription[] = [];
   public connectedCallback() {

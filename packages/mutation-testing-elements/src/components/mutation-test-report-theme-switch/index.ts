@@ -10,7 +10,6 @@ export class MutationTestReportThemeSwitchComponent extends LitElement {
   private readonly dispatchThemeChangedEvent = (e: MouseEvent) => {
     const checked = (e.target as HTMLInputElement).checked;
     this.dispatchEvent(new CustomEvent('theme-switch', { detail: checked ? 'dark' : 'light' }));
-    console.log((e.target as HTMLInputElement).checked);
   };
 
   public static styles = [bootstrap, unsafeCSS(style)];
