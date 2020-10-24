@@ -49,8 +49,16 @@ export class MutationTestReportAppComponent extends LitElement {
   public firstUpdated(): void {
     console.log(this.theme);
     if (this.theme == undefined) {
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      console.log('prefers', prefersDark);
+      if (prefersDark) {
+        this.theme = 'dark';
+      }
       const theme = localStorage.getItem('mutation-testing-elements-theme');
-      this.theme = theme ? theme : 'light';
+      if (theme) {
+        // default to light
+        this.theme = theme ? theme : 'light';
+      }
       console.log(this.theme);
     }
   }
@@ -102,7 +110,11 @@ export class MutationTestReportAppComponent extends LitElement {
     localStorage.setItem('mutation-testing-elements-theme', this.theme);
   };
 
-  public static styles = [unsafeCSS(theme), bootstrap, unsafeCSS(style)];
+  public static styles = [
+    unsafeCSS(theme),
+    bootstrap,
+    unsafeCSS(style)
+  ];
 
   public readonly subscriptions: Subscription[] = [];
   public connectedCallback() {

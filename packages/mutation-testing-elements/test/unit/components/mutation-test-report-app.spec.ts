@@ -160,7 +160,29 @@ describe(MutationTestReportAppComponent.name, () => {
       expect(localStorage.getItem('mutation-testing-elements-theme'), 'dark');
     });
 
-    it('should set theme to localstorage', async () => {
+    it('should choose attribute value over local storage', async () => {
+      // Arrange
+      localStorage.setItem('mutation-testing-elements-theme', 'dark');
+      sut.element.theme = 'light';
+      sut.element.report = createReport();
+      await sut.whenStable();
+
+      // Assert
+      expect(sut.element.theme).eq('light');
+    });
+
+    it('should use user preferes dark (os preference)', async () => {
+      // Arrange
+      localStorage.setItem('mutation-testing-elements-theme', 'dark');
+      sut.element.theme = 'light';
+      sut.element.report = createReport();
+      await sut.whenStable();
+
+      // Assert
+      expect(sut.element.theme).eq('light');
+    });
+
+    it('should use local storage over user preferes dark', async () => {
       // Arrange
       localStorage.setItem('mutation-testing-elements-theme', 'dark');
       sut.element.theme = 'light';
