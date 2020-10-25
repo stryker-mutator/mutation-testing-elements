@@ -48,7 +48,6 @@
     "@typescript-eslint/parser": "^4.4.1",
     "ajv": "^6.10.0",
     "bootstrap": "^4.3.1",
-    "bootswatch": "^4.5.3",
     "chai": "^4.2.0",
     "chromedriver": "^85.0.0",
     "cross-env": "^7.0.0",
