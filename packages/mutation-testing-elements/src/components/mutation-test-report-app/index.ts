@@ -59,7 +59,6 @@ export class MutationTestReportAppComponent extends LitElement {
       } else {
         this.theme = 'light';
       }
-      // this.dispachThemeUpdatedEvent();
     }
   }
 
