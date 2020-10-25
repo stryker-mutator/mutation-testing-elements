@@ -45,6 +45,14 @@
         }
       }
     },
+    "projectRoot": {
+      "type": "string",
+      "title": "Path to the project root",
+      "examples": [
+        "C:\\Projects\\project-under-test",
+        "/home/user/projects/project-under-test"
+      ]
+    },
     "files": {
       "type": "object",
       "title": "All mutated files.",
