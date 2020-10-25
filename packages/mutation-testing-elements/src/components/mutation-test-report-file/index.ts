@@ -32,6 +32,9 @@ export class MutationTestReportFileComponent extends LitElement {
   @property()
   public model!: FileResult;
 
+  @property()
+  public dark = true;
+
   public static styles = [prismjs, bootstrap, unsafeCSS(style)];
 
   private readonly expandAll = () => {
@@ -81,7 +84,7 @@ export class MutationTestReportFileComponent extends LitElement {
   public render() {
     if (this.model) {
       return html`
-        <div class="row">
+        <div class="row ${this.dark ? 'dark' : ''}">
           <div class="col-md-12">
             ${this.renderModalDialog()}
             <mutation-test-report-file-legend

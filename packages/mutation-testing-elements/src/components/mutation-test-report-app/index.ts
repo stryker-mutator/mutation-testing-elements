@@ -5,6 +5,7 @@ import { bootstrap } from '../../style';
 import { locationChange$ } from '../../lib/router';
 import { Subscription } from 'rxjs';
 import style from './index.scss';
+import theme from './theme.scss';
 
 @customElement('mutation-test-report-app')
 export class MutationTestReportAppComponent extends LitElement {
@@ -29,6 +30,9 @@ export class MutationTestReportAppComponent extends LitElement {
   @property({ attribute: 'title-postfix' })
   public titlePostfix: string | undefined;
 
+  @property({ reflect: true })
+  public theme: string | undefined;
+
   @property()
   public get title(): string {
     if (this.context) {
@@ -39,6 +43,22 @@ export class MutationTestReportAppComponent extends LitElement {
       }
     } else {
       return '';
+    }
+  }
+
+  public firstUpdated(): void {
+    if (!this.theme) {
+      // 1. check local storage
+      const theme = localStorage.getItem('mutation-testing-elements-theme');
+      if (theme) {
+        this.theme = theme;
+        // 2. check for user's OS preference
+      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)')?.matches) {
+        this.theme = 'dark';
+        // 3. default is light
+      } else {
+        this.theme = 'light';
+      }
     }
   }
 
@@ -63,6 +83,9 @@ export class MutationTestReportAppComponent extends LitElement {
     if (changedProperties.has('src')) {
       await this.loadData();
     }
+    if (changedProperties.has('theme')) {
+      this.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme: this.theme } }));
+    }
   }
 
   private updateModel(report: MutationTestResult) {
@@ -83,7 +106,13 @@ export class MutationTestReportAppComponent extends LitElement {
     document.title = this.title;
   }
 
-  public static styles = [bootstrap, unsafeCSS(style)];
+  public themeSwitch = (event: CustomEvent<string>) => {
+    this.theme = event.detail;
+
+    localStorage.setItem('mutation-testing-elements-theme', this.theme);
+  };
+
+  public static styles = [unsafeCSS(theme), bootstrap, unsafeCSS(style)];
 
   public readonly subscriptions: Subscription[] = [];
   public connectedCallback() {
@@ -99,14 +128,14 @@ export class MutationTestReportAppComponent extends LitElement {
   private renderTitle() {
     const renderPostfix = () => {
       if (this.titlePostfix) {
-        return html` <small class="text-muted"> - ${this.titlePostfix}</small> `;
+        return html`<small class="text-muted"> - ${this.titlePostfix}</small>`;
       } else {
         return undefined;
       }
     };
     if (this.context) {
       if (this.titlePostfix) {
-        return html` <h1 class="display-4">${this.context.name}${renderPostfix()}</h1> `;
+        return html`<h1 class="display-4">${this.context.name}${renderPostfix()}</h1>`;
       }
     }
     return undefined;
@@ -137,6 +166,8 @@ export class MutationTestReportAppComponent extends LitElement {
   private renderReport() {
     if (this.context) {
       return html`
+        <mutation-test-report-theme-switch @theme-switch="${this.themeSwitch}" class="theme-switch" .theme="${this.theme}">
+        </mutation-test-report-theme-switch>
         ${this.renderTitle()}
         <mutation-test-report-breadcrumb .path="${this.path}"></mutation-test-report-breadcrumb>
         ${this.renderTotals()} ${this.renderFileReport()}
@@ -148,7 +179,7 @@ export class MutationTestReportAppComponent extends LitElement {
 
   private renderFileReport() {
     if (this.context && this.report && this.context.file) {
-      return html` <mutation-test-report-file .model="${this.context.file}"></mutation-test-report-file> `;
+      return html`<mutation-test-report-file .model="${this.context.file}"></mutation-test-report-file>`;
     } else {
       return undefined;
     }

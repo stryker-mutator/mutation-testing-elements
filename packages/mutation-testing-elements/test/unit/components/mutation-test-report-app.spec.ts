@@ -8,14 +8,19 @@ import { CustomElementFixture } from '../helpers/CustomElementFixture';
 describe(MutationTestReportAppComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportAppComponent>;
   let fetchStub: sinon.SinonStub<[RequestInfo, RequestInit?], Promise<Response>>;
+  let matchMediaStub: sinon.SinonStub<[query: string], MediaQueryList>;
 
   beforeEach(() => {
     fetchStub = sinon.stub(window, 'fetch');
+    matchMediaStub = sinon.stub(window, 'matchMedia');
+    matchMediaStub.returns({ matches: false } as MediaQueryList);
     sut = new CustomElementFixture('mutation-test-report-app');
   });
 
   afterEach(() => {
     window.location.hash = '';
+    sut.dispose();
+    localStorage.clear();
   });
 
   function createReport(): MutationTestResult {
@@ -34,10 +39,6 @@ describe(MutationTestReportAppComponent.name, () => {
       },
     };
   }
-
-  afterEach(() => {
-    sut.dispose();
-  });
 
   describe('the title', () => {
     it('should not change without a report', () => {
@@ -122,6 +123,93 @@ describe(MutationTestReportAppComponent.name, () => {
       const file = sut.$('mutation-test-report-file') as MutationTestReportFileComponent;
       expect(file).ok;
       expect(file.model).ok;
+    });
+  });
+
+  describe('theme property', () => {
+    it('should have default theme light', async () => {
+      // Arrange
+      sut.element.report = createReport();
+      await sut.whenStable();
+
+      expect(sut.element.theme).eq('light');
+    });
+
+    it('should get theme from local storage', async () => {
+      // Act
+      localStorage.setItem('mutation-testing-elements-theme', 'dark');
+
+      // Arrange
+      sut.element.report = createReport();
+      await sut.whenStable();
+
+      // Assert
+      expect(sut.element.theme).eq('dark');
+    });
+
+    it('should set theme to local storage', async () => {
+      // Arrange
+      sut.element.report = createReport();
+      await sut.whenStable();
+
+      // Act
+      sut.$('mutation-test-report-theme-switch').dispatchEvent(new CustomEvent('theme-switch', { detail: 'dark' }));
+      await sut.whenStable();
+
+      // Assert
+      expect(sut.element.theme).eq('dark');
+      expect(localStorage.getItem('mutation-testing-elements-theme'), 'dark');
+    });
+
+    it('should choose attribute value over local storage', async () => {
+      // Arrange
+      localStorage.setItem('mutation-testing-elements-theme', 'dark');
+      sut.element.theme = 'light';
+      sut.element.report = createReport();
+      await sut.whenStable();
+
+      // Assert
+      expect(sut.element.theme).eq('light');
+    });
+
+    it('should use user prefers dark (os preference)', async () => {
+      // Arrange
+      matchMediaStub.returns({ matches: true } as MediaQueryList);
+      sut.element.report = createReport();
+      await sut.whenStable();
+
+      // Assert
+      expect(sut.element.theme).eq('dark');
+    });
+
+    it('should use local storage over user prefers dark', async () => {
+      // Arrange
+      matchMediaStub.withArgs('(prefers-color-scheme: dark)').returns({ matches: false } as MediaQueryList);
+      localStorage.setItem('mutation-testing-elements-theme', 'dark');
+      sut.element.report = createReport();
+      await sut.whenStable();
+
+      // Assert
+      expect(sut.element.theme).eq('dark');
+    });
+
+    it('should trigger a `theme-selected` event when the theme changes', async () => {
+      sut.element.report = createReport();
+      await sut.whenStable();
+      const event = await sut.catchEvent<CustomEvent<{ theme: string }>>('theme-changed', () => {
+        sut.$('mutation-test-report-theme-switch').dispatchEvent(new CustomEvent('theme-switch', { detail: 'dark' }));
+      });
+      expect(event?.detail.theme).eq('dark');
+    });
+
+    it('should trigger a `theme-selected` event when the theme changes during init', async () => {
+      // Arrange
+      const event = await sut.catchEvent<CustomEvent<{ theme: string }>>('theme-changed', async () => {
+        matchMediaStub.returns({ matches: true } as MediaQueryList);
+        sut.element.report = createReport();
+        await sut.whenStable();
+      });
+      expect(event?.detail.theme).eq('dark');
     });
   });
 

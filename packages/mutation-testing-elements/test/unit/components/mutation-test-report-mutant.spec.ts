@@ -3,6 +3,7 @@ import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { expect } from 'chai';
 import { MutantStatus, MutantResult } from 'mutation-testing-report-schema';
 import { expectedMutantColors } from '../../helpers/helperFunctions';
+import { getContextClassForStatus } from '../../../src/lib/htmlHelpers';
 
 describe(MutationTestReportMutantComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportMutantComponent>;
@@ -50,6 +51,7 @@ describe(MutationTestReportMutantComponent.name, () => {
   Object.keys(expectedMutantColors).forEach((status) => {
     it(`should render correct badge color for ${status} mutant`, async () => {
       const actualMutantStatus = status as MutantStatus;
+      sut.element.style.cssText = `--bs-badge-${getContextClassForStatus(actualMutantStatus)}-bg: ${expectedMutantColors[actualMutantStatus]};`;
       sut.element.show = true;
       sut.element.mutant = createMutantResult({ status: actualMutantStatus });
       await sut.whenStable();
@@ -139,8 +141,8 @@ describe(MutationTestReportMutantComponent.name, () => {
 
     // Assert
     expect(result).ok;
-    expect(result.detail).ok;
-    expect(result.detail).eq(mutant);
+    expect(result!.detail).ok;
+    expect(result!.detail).eq(mutant);
   });
 
   it("should not display a show more button if the description isn't set", async () => {
@@ -158,7 +160,7 @@ describe(MutationTestReportMutantComponent.name, () => {
     expect(showMoreButton).null;
   });
 
-  it('should line-through original code when the button is cliced', async () => {
+  it('should line-through original code when the button is clicked', async () => {
     // Arrange
     sut.element.show = true;
     sut.element.mutant = createMutantResult({ replacement: 'foobar' });

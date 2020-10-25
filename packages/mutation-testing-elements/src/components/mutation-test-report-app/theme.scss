@@ -1,0 +1,123 @@
+@import '../../style/bootstrap-reboot.scss'; // import the variables
+
+// Bootstrap theming =================================================
+:host(:not([theme='dark'])) {  
+  --bs-link-color: #{$link-color};
+  --bs-link-hover-color: #{$link-hover-color};
+  --bs-breadcrumb-bg: #{$breadcrumb-bg};
+  --bs-breadcrumb-active-color: #{$breadcrumb-active-color};
+  --bs-body-bg: #{$body-bg};
+  --bs-body-color: #{$body-color};
+  --bs-table-border-color: #{$table-border-color};
+  --bs-table-hover-bg: #{$table-hover-bg};
+  --bs-popover-bg: #{$popover-bg};
+  --bs-popover-header-bg: #{$popover-header-bg};
+  --bs-modal-content-bg: #{$modal-content-bg};
+  --bs-modal-content-border-color: #{$modal-content-border-color};
+  --bs-modal-header-border-color: #{$modal-header-border-color};
+  --bs-progress-bg: #{$progress-bg};
+
+  @each $color, $value in $theme-colors {
+    --bs-table-#{$color}-bg: #{theme-color-level($color, $table-bg-level)};
+    --bs-table-#{$color}-hover-bg: #{darken($value, 5%)};
+    --bs-badge-#{$color}-color: #{color-yiq($value)};
+    --bs-badge-#{$color}-bg: #{$value};
+    --bs-btn-#{$color}-color: #{color-yiq($value)};
+    --bs-btn-#{$color}-hover-color: #{color-yiq(darken($value, 7.5%))};
+    --bs-#{$color}-bg: #{$value};
+  }
+  --bs-anchor: #{$darkly-white};
+}
+:host([theme='dark']) {
+  --bs-link-color: #{$darkly-link-color};
+  --bs-link-hover-color: #{darken($darkly-white, 15%)};
+  --bs-breadcrumb-bg: #{$darkly-breadcrumb-bg};
+  --bs-breadcrumb-active-color: #{$darkly-breadcrumb-active-color};
+  --bs-body-bg: #{$darkly-body-bg};
+  --bs-body-color: #{$darkly-body-color};
+  --bs-table-border-color: #{$darkly-table-border-color};
+  --bs-table-hover-bg: #{$darkly-table-hover-bg};
+  --bs-popover-bg: #{$darkly-popover-bg};
+  --bs-popover-header-bg: #{$darkly-popover-header-bg};
+  --bs-modal-content-bg: #{$darkly-modal-content-bg};
+  --bs-modal-content-border-color: #{$darkly-modal-content-border-color};
+  --bs-modal-header-border-color: #{$darkly-modal-header-border-color};
+  --bs-progress-bg: #{$darkly-progress-bg};
+
+  @each $color, $value in $darkly-theme-colors {
+    --bs-table-#{$color}-bg: #{$value};
+    --bs-table-#{$color}-hover-bg: #{darken($value, 5%)};
+    --bs-badge-#{$color}-color: #{color-yiq($value)};
+    --bs-badge-#{$color}-bg: #{$value};
+    --bs-btn-#{$color}-color: #{color-yiq($value)};
+    --bs-btn-#{$color}-hover-color: #{color-yiq(darken($value, 7.5%))};
+    --bs-#{$color}-bg: #{$value};
+  }
+}
+
+// Prismjs theming (code highlighting) =====================================
+:host(:not([theme='dark'])) {
+  --prism-maintext: black;
+  --prism-background: #f5f2f0;
+  --prism-text: #999;
+  --prism-keywords: #07a;
+  --prism-punctuation: #999;
+  --prism-functions: #dd4a68;
+  --prism-strings: #690;
+  --prism-namespace: slategray;
+  --prism-names: #905;
+  --prism-symbol: #dd4a68;
+  --prism-url: #67cdcc;
+}
+:host([theme='dark']) {
+  --prism-maintext: #ccc;
+  --prism-background: #2d2d2d;
+  --prism-text: #999;
+  --prism-keywords: #cc99cd;
+  --prism-punctuation: #ccc;
+  --prism-functions: #f08d49;
+  --prism-strings: #7ec699;
+  --prism-namespace: #e2777a;
+  --prism-names: #6196cc;
+  --prism-symbol: #f8c555;
+  --prism-url: #9a6e3a;
+}
+
+// File icon theming ================================
+// @see https://github.com/microsoft/vscode/blob/master/extensions/theme-seti/icons/vs-seti-icon-theme.json
+:host(:not([theme='dark'])) {
+  --mut-file-ts-color: #498ba7;
+  --mut-file-scala-color: #b8383d;
+  --mut-file-java-color: #b8383d;
+  --mut-file-js-color: #b7b73b;
+  --mut-file-php-color: #9068b0;
+  --mut-file-html-color: #498ba7;
+  --mut-file-csharp-color: #498ba7;
+  --mut-file-vue-color: #7fae42;
+}
+:host([theme='dark']) {
+  --mut-file-ts-color: #519aba;
+  --mut-file-scala-color: #cc3e44;
+  --mut-file-java-color: #cc3e44;
+  --mut-file-js-color: #cbcb41;
+  --mut-file-php-color: #a074c4;
+  --mut-file-html-color: #519aba;
+  --mut-file-csharp-color: #519aba;
+  --mut-file-vue-color: #8dc149;
+}
+
+// Mutation testing elements custom theming ================================
+:host(:not([theme='dark'])) {
+  --mut-danger-bg: #f2dede;
+  --mut-success-bg: #dff0d8;
+  --mut-warning-bg: #fcf8e3;
+  --mut-caution-bg: #{adjust-color($color: theme-color('caution'), $lightness: 40%)};
+  --mut-table-icon-color: #498ba7;
+}
+:host([theme='dark']) {
+  --mut-danger-bg: #270c0c;
+  --mut-success-bg: #2f3d33;
+  --mut-warning-bg: #24200b;
+  --mut-caution-bg: #{adjust-color($color: darkly-theme-color('caution'), $lightness: -40%)};
+  --mut-table-icon-color: #519aba;
+}

@@ -3,6 +3,7 @@ import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { MutantStatus } from 'mutation-testing-report-schema';
 import { expect } from 'chai';
 import { normalizeWhitespace, expectedMutantColors } from '../../helpers/helperFunctions';
+import { getContextClassForStatus } from '../../../src/lib/htmlHelpers';
 
 describe(MutationTestReportFileLegendComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportFileLegendComponent>;
@@ -50,6 +51,7 @@ describe(MutationTestReportFileLegendComponent.name, () => {
       it(`should render correct badge color for ${status} mutant`, async () => {
         // Arrange
         const mutantStatus = status as MutantStatus;
+        sut.element.style.cssText = `--bs-badge-${getContextClassForStatus(mutantStatus)}-bg: ${expectedMutantColors[mutantStatus]};`;
         const expectedColor = expectedMutantColors[mutantStatus];
         sut.element.mutants = [{ status: mutantStatus }];
 
@@ -93,8 +95,7 @@ describe(MutationTestReportFileLegendComponent.name, () => {
     it('should dispatch the "filters-changed" event when a checkbox is checked', async () => {
       // Arrange
       sut.element.mutants = [{ status: MutantStatus.CompileError }, { status: MutantStatus.Survived }];
-      const r = await sut.whenStable();
-      console.log(r);
+      await sut.whenStable();
       let actualEvent: CustomEvent | undefined;
       sut.element.addEventListener('filters-changed', (ev: any) => {
         actualEvent = ev;

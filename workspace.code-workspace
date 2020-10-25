@@ -28,6 +28,14 @@
     ]
   },
   "settings": {
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/bower_components": true,
+      "**/*.code-search": true,
+      "**/dist": true,
+      "**/dist-test": true,
+      "**/*.tsbuildinfo": true,
+    },
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": true
     },
@@ -37,8 +45,10 @@
     "jake.autoDetect": "off",
     "task.autoDetect": "off",
     "cSpell.words": [
-      "clike",
+      "Theming",
       "autoloader",
+      "bootswatch",
+      "clike",
       "prismjs",
       "templating"
     ],
