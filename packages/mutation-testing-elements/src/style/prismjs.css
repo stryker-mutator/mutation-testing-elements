@@ -59,11 +59,14 @@ pre[class*="language-"] {
 	color: var(--prism-punctuation, #ccc);
 }
 
+.token.namespace {
+  color: var(--prism-namespace, #e2777a);
+}
+
 .token.tag,
 .token.attr-name,
-.token.namespace,
 .token.deleted {
-	color: var(--prism-names, #e2777a);
+  color: var(--prism-names, #e2777a);
 }
 
 .token.function-name {
