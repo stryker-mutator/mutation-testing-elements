@@ -1,3 +1,4 @@
+/// <reference types="./typings/globals-chai" />
 import { ReportPage } from './po/ReportPage';
 import { expect } from 'chai';
 import { getCurrent } from './lib/browser';
@@ -22,6 +23,10 @@ describe('Theming', () => {
 
     it('should have a dark background', async () => {
       expect(await page.backgroundColor()).eq('rgba(34, 34, 34, 1)');
+    });
+
+    it('should match the screenshot', async () => {
+      await expect(await getCurrent().takeScreenshot()).to.matchScreenshot();
     });
 
     it('should remain in dark theme after a page reload', async () => {

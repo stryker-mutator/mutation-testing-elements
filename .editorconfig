@@ -1,5 +1,5 @@
 # 2 space indentation
-[{*.ts,*.js,*.json,*.code-workspace,*.scss,*.css,*.html}]
+[{*.ts,*.js,*.json,*.jsonc,*.code-workspace,*.scss,*.css,*.html}]
 indent_style = space
 indent_size = 2
 end_of_line = ls
