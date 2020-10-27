@@ -1,7 +1,18 @@
 /// <reference types="./typings/globals-chai" />
 import { ReportPage } from './po/ReportPage';
 import { expect } from 'chai';
+import os = require('os');
 import { getCurrent } from './lib/browser';
+import type { Context } from 'mocha';
+
+async function actScreenshotMatching(this: Context) {
+  if (os.platform() === 'win32') {
+    console.log(`[SKIP]: Skip snapshot testing on ${os.platform()}`);
+    this.skip();
+  } else {
+    await expect(await getCurrent().takeScreenshot()).to.matchScreenshot();
+  }
+}
 
 describe('Theming', () => {
   let page: ReportPage;
@@ -25,9 +36,7 @@ describe('Theming', () => {
       expect(await page.backgroundColor()).eq('rgba(34, 34, 34, 1)');
     });
 
-    it('should match the dark theme', async () => {
-      await expect(await getCurrent().takeScreenshot()).to.matchScreenshot();
-    });
+    it('should match the dark theme', actScreenshotMatching);
 
     it('should remain in dark theme after a page reload', async () => {
       await getCurrent().navigate().refresh();
@@ -43,9 +52,7 @@ describe('Theming', () => {
         expect(await page.codeBackgroundColor()).eq('rgba(45, 45, 45, 1)');
       });
 
-      it('should match the dark theme', async () => {
-        await expect(await getCurrent().takeScreenshot()).to.matchScreenshot();
-      });
+      it('should match the dark theme', actScreenshotMatching);
     });
   });
 
@@ -58,9 +65,7 @@ describe('Theming', () => {
       expect(await page.backgroundColor()).eq('rgba(255, 255, 255, 1)');
     });
 
-    it('should match the light theme', async () => {
-      await expect(await getCurrent().takeScreenshot()).to.matchScreenshot();
-    });
+    it('should match the light theme', actScreenshotMatching);
 
     describe('when opening a code file', () => {
       beforeEach(async () => {
@@ -70,9 +75,7 @@ describe('Theming', () => {
         expect(await page.codeBackgroundColor()).eq('rgba(245, 242, 240, 1)');
       });
 
-      it('should match the light theme', async () => {
-        await expect(await getCurrent().takeScreenshot()).to.matchScreenshot();
-      });
+      it('should match the light theme', actScreenshotMatching);
     });
   });
 });
