@@ -4,6 +4,7 @@
     "high": 80,
     "low": 60
   },
+  "projectRoot": "/src/project",
   "files": {
     "test.js": {
       "language": "javascript",

@@ -5,6 +5,7 @@
         "low": 20,
         "high": 80
     },
+    "projectRoot": "\/Users\/tfidry\/Project",
     "files": {
         "\/Users\/tfidry\/Project\/Humbug\/infection\/src\/Logger\/TextFileLogger.php": {
             "language": "php",

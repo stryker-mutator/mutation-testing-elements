@@ -37,6 +37,7 @@ describe(MutationTestReportAppComponent.name, () => {
         high: 80,
         low: 60,
       },
+      projectRoot: '/src/project',
     };
   }
 

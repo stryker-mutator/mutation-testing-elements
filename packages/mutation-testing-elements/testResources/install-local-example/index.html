@@ -5150,6 +5150,7 @@
           "source": "import * as os from 'os';\nimport * as path from 'path';\nimport * as rimraf from 'rimraf';\nimport * as uniqid from 'uniqid';\n\nexport function del(filename: string) {\n    return new Promise((resolve, reject) => rimraf(filename, (err) => {\n        if (err) {\n            reject(err);\n        } else {\n            resolve();\n        }\n    }));\n}\n\nexport function getRandomTmpDir(prefix: string) {\n    return path.resolve(os.tmpdir(), uniqid(prefix));\n}\n"
         }
       },
+      "projectRoot": "C:\\z\\github\\nicojs\\node-install-local",
       "mutationScore": 0,
       "schemaVersion": "1",
       "thresholds": {
