@@ -1,17 +1,11 @@
 /// <reference types="./typings/globals-chai" />
 import { ReportPage } from './po/ReportPage';
 import { expect } from 'chai';
-import os = require('os');
 import { getCurrent } from './lib/browser';
 import type { Context } from 'mocha';
 
 async function actScreenshotMatching(this: Context) {
-  if (os.platform() === 'win32') {
-    console.log(`[SKIP]: Skip snapshot testing on ${os.platform()}`);
-    this.skip();
-  } else {
-    await expect(await getCurrent().takeScreenshot()).to.matchScreenshot();
-  }
+  await expect(await getCurrent().takeScreenshot()).to.matchScreenshot();
 }
 
 describe('Theming', () => {
