@@ -23,3 +23,8 @@ jobs:
       - run: npm ci
       - name: Lint & Build & Test
         run: npm run all
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: image-diffs
+          path: packages/mutation-testing-elements/reports/diff/
