@@ -25,7 +25,7 @@ describe('Theming', () => {
       expect(await page.backgroundColor()).eq('rgba(34, 34, 34, 1)');
     });
 
-    it('should match the screenshot', async () => {
+    it('should match the dark theme', async () => {
       await expect(await getCurrent().takeScreenshot()).to.matchScreenshot();
     });
 
@@ -34,9 +34,18 @@ describe('Theming', () => {
       expect(await page.themeSelector.selectedTheme()).eq('dark');
     });
 
-    it('should show a dark code editor', async () => {
-      await page.resultTable().row('helpers.ts').navigate();
-      expect(await page.codeBackgroundColor()).eq('rgba(45, 45, 45, 1)');
+    describe('when opening a code file', () => {
+      beforeEach(async () => {
+        await page.resultTable().row('helpers.ts').navigate();
+      });
+
+      it('should show a dark code editor', async () => {
+        expect(await page.codeBackgroundColor()).eq('rgba(45, 45, 45, 1)');
+      });
+
+      it('should match the dark theme', async () => {
+        await expect(await getCurrent().takeScreenshot()).to.matchScreenshot();
+      });
     });
   });
 
@@ -49,9 +58,21 @@ describe('Theming', () => {
       expect(await page.backgroundColor()).eq('rgba(255, 255, 255, 1)');
     });
 
-    it('should show a light code editor', async () => {
-      await page.resultTable().row('helpers.ts').navigate();
-      expect(await page.codeBackgroundColor()).eq('rgba(245, 242, 240, 1)');
+    it('should match the light theme', async () => {
+      await expect(await getCurrent().takeScreenshot()).to.matchScreenshot();
+    });
+
+    describe('when opening a code file', () => {
+      beforeEach(async () => {
+        await page.resultTable().row('helpers.ts').navigate();
+      });
+      it('should show a light code editor', async () => {
+        expect(await page.codeBackgroundColor()).eq('rgba(245, 242, 240, 1)');
+      });
+
+      it('should match the light theme', async () => {
+        await expect(await getCurrent().takeScreenshot()).to.matchScreenshot();
+      });
     });
   });
 });
