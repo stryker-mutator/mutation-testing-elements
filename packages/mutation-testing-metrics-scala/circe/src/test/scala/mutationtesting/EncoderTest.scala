@@ -23,7 +23,8 @@ class EncoderTest extends munit.FunSuite {
             )
           )
         )
-      )
+      ),
+      projectRoot = Some("/src/stryker4s")
     )
 
     val result = sut.asJson.noSpaces

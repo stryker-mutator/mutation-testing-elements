@@ -27,7 +27,8 @@ class SchemaTest extends munit.FunSuite {
             )
           )
         )
-      )
+      ),
+      projectRoot = Some("/src/stryker4s")
     )
     val jsonString = toJsonString(sut)
     val reader     = createJsonReader(jsonString)

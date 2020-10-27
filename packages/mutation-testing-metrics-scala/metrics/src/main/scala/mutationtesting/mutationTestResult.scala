@@ -8,7 +8,7 @@ final case class MutationTestReport(
     ),
     schemaVersion: String = "1",
     thresholds: Thresholds,
-    projectRoot: String,
+    projectRoot: Option[String] = None,
     files: Map[String, MutationTestResult]
 )
 
