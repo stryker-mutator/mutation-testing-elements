@@ -20,7 +20,7 @@ The mutation test report supports the following features:
 👓 Show mutants directly in your source code  
 😎 Code highlighting with [Prism](https://prismjs.com/)  
 🧙‍ Filter mutants based on the outcome  
-🌑 Switch between light and dark theme
+🌑 Switch between light and dark theme  
 🔗 Deep linking using anchors (uses fragment, so path will not be contaminated)  
 ✨ A nice (yet basic) UI with embedded [bootstrap](https://getbootstrap.com) css  
 🎓 Adheres to [custom element best practices](https://developers.google.com/web/fundamentals/web-components/best-practices)
