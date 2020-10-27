@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.4.0...v1.4.1) (2020-10-27)
+
+
+### Reverts
+
+* Revert "Apply formatting for new prettier version" ([30ab981](https://github.com/stryker-mutator/mutation-testing-elements/commit/30ab981e0a01eb553b28ec1eff6a5947499b5afb))
+
+
+
+
+
 # [1.4.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.3.1...v1.4.0) (2020-08-25)
 
 
