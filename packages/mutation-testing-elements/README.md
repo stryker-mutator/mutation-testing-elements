@@ -5,12 +5,12 @@
 
 A suite of elements designed to display a mutation testing report.
 
-<img alt="Directory result example" style="max-width: 300px" src="https://raw.githubusercontent.com/stryker-mutator/mutation-testing-elements/master/packages/mutation-testing-elements/docs/directory-result-example.png">
+<img alt="Directory result example" width="300" src="https://raw.githubusercontent.com/stryker-mutator/mutation-testing-elements/master/packages/mutation-testing-elements/docs/directory-result-example.png">
 
-<img alt="File result example" style="max-width: 300px" src="https://raw.githubusercontent.com/stryker-mutator/mutation-testing-elements/master/packages/mutation-testing-elements/docs/file-result-example.png">
+<img alt="File result example" width="300" src="https://raw.githubusercontent.com/stryker-mutator/mutation-testing-elements/master/packages/mutation-testing-elements/docs/file-result-example.png">
 
-<img alt="File result example dark" style="max-width: 300px" src="https://raw.githubusercontent.com/stryker-mutator/mutation-testing-elements/master/packages/mutation-testing-elements/docs/file-result-example-dark.png">
-
+<img alt="File result example dark" width="300" src="https://raw.githubusercontent.com/stryker-mutator/mutation-testing-elements/master/packages/mutation-testing-elements/docs/file-result-example-dark.png">
+g
 ***Note:** Please see https://stryker-mutator.io for an introduction to mutation testing.*
 
 ## Features
