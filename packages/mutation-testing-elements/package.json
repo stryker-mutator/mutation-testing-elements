@@ -10,8 +10,8 @@
     "build": "webpack --config webpack.prod.js",
     "test": "npm run test:unit && npm run test:integration",
     "test:unit": "karma start --singleRun true",
-    "test:integration": "mocha --forbid-only --forbid-pending --config ./test/integration/.mocharc.jsonc",
-    "test:integration:update": "cross-env UPDATE_ALL_SCREENSHOTS=true mocha --config ./test/integration/.mocharc.jsonc",
+    "test:integration": "mocha --forbid-only --config ./test/integration/.mocharc.jsonc",
+    "test:integration:update": "cross-env UPDATE_ALL_SCREENSHOTS=true HEADLESS=true mocha --config ./test/integration/.mocharc.jsonc",
     "postpublish": "PUBLISH_ELEMENTS=true ../mutation-testing-metrics-scala/npmProjPublish.sh",
     "stryker": "cross-env STRYKER=true stryker run"
   },

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import path = require('path');
+import { platform } from 'os';
 import { promises as fs, existsSync } from 'fs';
 import * as chai from 'chai';
 import type { Context } from 'mocha';
@@ -15,7 +16,7 @@ chai.use(({ Assertion }) => {
   Assertion.addMethod('matchScreenshot', async function () {
     const snapshotFileExists = existsSync(currentSnapshotFile);
     const actualBase64Encoded: string = this._obj;
-    if (process.env.CI || (process.env.UPDATE_ALL_SCREENSHOTS !== 'true' && snapshotFileExists)) {
+    if (process.env.UPDATE_ALL_SCREENSHOTS !== 'true' && (process.env.CI || snapshotFileExists)) {
       expect(snapshotFileExists, `Snapshot file does not exist! ${currentSnapshotFile}`).true;
       await assertSnapshot(actualBase64Encoded);
     } else {
@@ -27,7 +28,7 @@ chai.use(({ Assertion }) => {
 export const mochaHooks = {
   beforeEach(this: Context) {
     const { dir, name } = path.parse(this.currentTest!.file!);
-    currentSnapshotFile = path.join(dir, name, `${this.currentTest!.fullTitle().toLowerCase().replace(/\s/g, '-')}.snap.png`);
+    currentSnapshotFile = path.join(dir, name, `${this.currentTest!.fullTitle().toLowerCase().replace(/\s/g, '-')}.${platform()}.snap.png`);
   },
 };
 

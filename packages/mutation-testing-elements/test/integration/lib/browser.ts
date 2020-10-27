@@ -5,7 +5,7 @@ let browser: WebDriver | null = null;
 
 export async function init() {
   const baseOptions = new chrome.Options();
-  const chromeOptions = process.env.CI ? baseOptions.headless() : baseOptions;
+  const chromeOptions = process.env.HEADLESS || process.env.CI ? baseOptions.headless() : baseOptions;
 
   browser = await new Builder().forBrowser('chrome').setChromeOptions(chromeOptions).build();
 }

@@ -99,3 +99,9 @@ Specify the postfix to append to the title of the current page. It us reflected 
 These elements are built with [LitElement](https://lit-element.polymer-project.org/), which uses the Web Components set of standards. They are currently supported by all major browsers with the exception of Edge.
 
 For compatibility with older browsers and Edge, load the Web Components polyfills: https://lit-element.polymer-project.org/guide/use#polyfills
+
+## Run tests
+
+There are unit tests with karma and integration tests using selenium-webdriver. You can run them with `npm test` or by running `npm run test:unit` or `npm run test:integration` respectively. There is also a launch configuration so you can debug from vscode.
+
+The integration tests also do screenshot comparisons. Currently, they only run on 
