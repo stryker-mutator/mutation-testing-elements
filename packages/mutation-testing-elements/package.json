@@ -12,7 +12,8 @@
     "test:unit": "karma start --singleRun true",
     "test:integration": "mocha --forbid-only --forbid-pending -r ts-node/register -r chromedriver --timeout 60000 --file test/integration/init/init-browser.ts --file test/integration/init/init-server.ts test/integration/*.ts",
     "postpublish": "PUBLISH_ELEMENTS=true ../mutation-testing-metrics-scala/npmProjPublish.sh",
-    "stryker": "cross-env STRYKER=true stryker run"
+    "stryker": "cross-env STRYKER=true stryker run",
+    "get-version": "echo $npm_package_version"
   },
   "repository": {
     "type": "git",
