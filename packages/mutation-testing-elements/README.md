@@ -9,6 +9,8 @@ A suite of elements designed to display a mutation testing report.
 
 ![File result example](https://raw.githubusercontent.com/stryker-mutator/mutation-testing-elements/master/packages/mutation-testing-elements/docs/file-result-example.png)
 
+![File result example dark](https://raw.githubusercontent.com/stryker-mutator/mutation-testing-elements/master/packages/mutation-testing-elements/docs/file-result-example-dark.png)
+
 ***Note:** Please see https://stryker-mutator.io for an introduction to mutation testing.*
 
 ## Features
@@ -93,6 +95,24 @@ Specify the mutation testing report directly by binding it to this property. It 
 Default: `undefined`
 
 Specify the postfix to append to the title of the current page. It us reflected as attribute: `title-postfix`.
+
+### `theme` [`'light' | 'dark'`]
+
+Default: _user preference (OS setting)_
+
+Specify in which theme the report needs to be shown. Possibilities: `'light'` or `'dark'`.
+
+### ⚡ `theme-changed` [`CustomEvent<{ theme: string }>`]
+
+Add an event listener that will raise an event when the theme is changed. 
+
+```js
+const app = document.querySelector('mutation-test-report-app');
+app.addEventListener('theme-changed', (event) => {
+    console.log('new theme is', event.detail.theme );
+    // You can also use `app.theme` here.
+});
+```
 
 ## Browser compatibility
 
