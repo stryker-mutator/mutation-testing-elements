@@ -7,12 +7,12 @@ import type { Context } from 'mocha';
 describe('Theming', () => {
   async function actScreenshotMatching(this: Context) {
     if (isHeadless()) {
-      console.log('[SKIP] skipping screenshot comparison, because not running in headless mode');
-      this.skip();
-    } else {
       const browser = getCurrent();
       await browser.sleep(300); // wait for all animations to be done
       await expect(await page.takeScreenshot()).to.matchScreenshot();
+    } else {
+      console.log('[SKIP] skipping screenshot comparison, because not running in headless mode');
+      this.skip();
     }
   }
   let page: ReportPage;
