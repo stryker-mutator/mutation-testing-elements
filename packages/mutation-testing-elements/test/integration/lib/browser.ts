@@ -3,10 +3,13 @@ import chrome from 'selenium-webdriver/chrome';
 
 let browser: WebDriver | null = null;
 
-export async function init() {
-  const baseOptions = new chrome.Options();
-  const chromeOptions = process.env.HEADLESS || process.env.CI ? baseOptions.headless() : baseOptions;
+export function isHeadless(): boolean {
+  return !!(process.env.HEADLESS || process.env.CI);
+}
 
+export async function init() {
+  const baseOptions = new chrome.Options().windowSize({ width: 1400, height: 900 });
+  const chromeOptions = isHeadless() ? baseOptions.headless() : baseOptions;
   browser = await new Builder().forBrowser('chrome').setChromeOptions(chromeOptions).build();
 }
 

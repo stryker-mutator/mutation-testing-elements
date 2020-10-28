@@ -13,6 +13,10 @@ export class ReportPage extends ElementSelector {
     super(browser);
   }
 
+  public takeScreenshot(): Promise<string> {
+    return this.$('mutation-test-report-app >>> .container-fluid').takeScreenshot();
+  }
+
   public navigateTo(path: string) {
     return this.browser.get(constants.BASE_URL + path);
   }

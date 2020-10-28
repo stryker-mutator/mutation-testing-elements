@@ -1,16 +1,20 @@
 /// <reference types="./typings/globals-chai" />
 import { ReportPage } from './po/ReportPage';
 import { expect } from 'chai';
-import { getCurrent } from './lib/browser';
+import { getCurrent, isHeadless } from './lib/browser';
 import type { Context } from 'mocha';
 
-async function actScreenshotMatching(this: Context) {
-  const browser = getCurrent();
-  await browser.sleep(500); // wait for all animations to be done
-  await expect(await browser.takeScreenshot()).to.matchScreenshot();
-}
-
 describe('Theming', () => {
+  async function actScreenshotMatching(this: Context) {
+    if (isHeadless()) {
+      console.log('[SKIP] skipping screenshot comparison, because not running in headless mode');
+      this.skip();
+    } else {
+      const browser = getCurrent();
+      await browser.sleep(300); // wait for all animations to be done
+      await expect(await page.takeScreenshot()).to.matchScreenshot();
+    }
+  }
   let page: ReportPage;
 
   beforeEach(async () => {

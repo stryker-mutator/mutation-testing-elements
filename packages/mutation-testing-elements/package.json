@@ -12,6 +12,7 @@
     "test:unit": "karma start --singleRun true",
     "test:integration": "mocha --forbid-only --config ./test/integration/.mocharc.jsonc",
     "test:integration:update": "cross-env UPDATE_ALL_SCREENSHOTS=true HEADLESS=true mocha --config ./test/integration/.mocharc.jsonc",
+    "test:integration:headless": "cross-env HEADLESS=true mocha --config ./test/integration/.mocharc.jsonc",
     "postpublish": "PUBLISH_ELEMENTS=true ../mutation-testing-metrics-scala/npmProjPublish.sh",
     "stryker": "cross-env STRYKER=true stryker run"
   },
