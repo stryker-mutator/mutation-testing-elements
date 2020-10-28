@@ -5,7 +5,9 @@ import { getCurrent } from './lib/browser';
 import type { Context } from 'mocha';
 
 async function actScreenshotMatching(this: Context) {
-  await expect(await getCurrent().takeScreenshot()).to.matchScreenshot();
+  const browser = getCurrent();
+  await browser.sleep(500); // wait for all animations to be done
+  await expect(await browser.takeScreenshot()).to.matchScreenshot();
 }
 
 describe('Theming', () => {
