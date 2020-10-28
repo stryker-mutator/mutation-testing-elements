@@ -1,4 +1,6 @@
-import { constants } from '../lib/constants';
+import { from } from 'rxjs';
+import { mergeMap, toArray } from 'rxjs/operators';
+import { constants, MAX_WEBDRIVER_CONCURRENCY } from '../lib/constants';
 import Breadcrumb from './Breadcrumb.po';
 import { ElementSelector } from './ElementSelector.po';
 import { Legend } from './Legend.po';
@@ -53,11 +55,13 @@ export class ReportPage extends ElementSelector {
   }
 
   public async mutants(): Promise<MutantComponent[]> {
-    return Promise.all(
-      (await this.$$('mutation-test-report-app >>> mutation-test-report-file >>> mutation-test-report-mutant')).map(
-        async (host) => new MutantComponent(await selectShadowRoot(host), this.browser)
+    const mutantElement$ = from(await this.$$('mutation-test-report-app >>> mutation-test-report-file >>> mutation-test-report-mutant'));
+    return mutantElement$
+      .pipe(
+        mergeMap(async (host) => new MutantComponent(await selectShadowRoot(host), this.browser), MAX_WEBDRIVER_CONCURRENCY),
+        toArray()
       )
-    );
+      .toPromise();
   }
 
   public mutant(mutantId: number | string) {
