@@ -1,6 +1,6 @@
 {
   "name": "mutation-testing-elements",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "A suite of web components for a mutation testing report.",
   "unpkg": "dist/mutation-test-elements.js",
   "main": "dist/index.js",
@@ -27,8 +27,8 @@
   "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/mutation-testing-elements#readme",
   "devDependencies": {
     "@types/prismjs": "^1.16.1",
-    "mutation-testing-metrics": "^1.4.0",
-    "mutation-testing-report-schema": "^1.4.0",
+    "mutation-testing-metrics": "^1.4.1",
+    "mutation-testing-report-schema": "^1.4.1",
     "prismjs": "^1.21.0"
   }
 }
