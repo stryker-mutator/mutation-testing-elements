@@ -22,16 +22,14 @@ describe('File report "install-local-example/Options.ts"', () => {
   });
 
   it('should not "line-through" any of the original code lines', async () => {
-    await Promise.all(
-      (await page.mutants()).map(async (mutant) => {
-        const [decoration, isMutantReplacementVisible] = await Promise.all([
-          mutant.originalCodeTextDecoration(),
-          mutant.isMutantReplacementCodeVisible(),
-        ]);
-        expect(decoration).eq('none');
-        expect(isMutantReplacementVisible).eq(false);
-      })
-    );
+    for await (const mutant of await page.mutants()) {
+      const [decoration, isMutantReplacementVisible] = await Promise.all([
+        mutant.originalCodeTextDecoration(),
+        mutant.isMutantReplacementCodeVisible(),
+      ]);
+      expect(decoration).eq('none');
+      expect(isMutantReplacementVisible).eq(false);
+    }
   });
 
   it('should only filter Survived and NoCoverage mutants by default', async () => {

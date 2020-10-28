@@ -2,12 +2,15 @@ import { StaticFileServer } from '../lib/StaticFileServer';
 import path from 'path';
 import net from 'net';
 const server = new StaticFileServer([path.resolve(__dirname, '..', '..', '..', 'testResources'), path.resolve(__dirname, '..', '..', '..', 'dist')]);
-before(async () => {
-  const port = 8080;
-  if (!(await isInUse(port))) {
-    await server.listen(port);
-  }
-});
+
+export const mochaHooks = {
+  async beforeAll() {
+    const port = 8080;
+    if (!(await isInUse(port))) {
+      await server.listen(port);
+    }
+  },
+};
 
 function isInUse(port: number) {
   return new Promise<boolean>((res) => {

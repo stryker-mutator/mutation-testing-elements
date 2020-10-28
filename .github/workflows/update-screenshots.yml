@@ -3,7 +3,10 @@ on:
     workflow_dispatch:
 jobs:
   update:
-    runs-on: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -15,5 +18,7 @@ jobs:
         run: |
           git config --global user.name 'Stryker Mutator NPA'
           git config --global user.email 'stryker-mutator@users.noreply.github.com'
-          git commit -am "test(screenshots): update screenshots for ${{ runner.os }}""
+          git pull
+          git add .
+          git commit -m "test(screenshots): update screenshots for ${{ runner.os }}"
           git push

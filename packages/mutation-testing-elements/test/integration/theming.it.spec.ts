@@ -1,8 +1,20 @@
+/// <reference types="./typings/globals-chai" />
 import { ReportPage } from './po/ReportPage';
 import { expect } from 'chai';
-import { getCurrent } from './lib/browser';
+import { getCurrent, isHeadless } from './lib/browser';
+import type { Context } from 'mocha';
 
 describe('Theming', () => {
+  async function actScreenshotMatching(this: Context) {
+    if (isHeadless()) {
+      const browser = getCurrent();
+      await browser.sleep(300); // wait for all animations to be done
+      await expect(await page.takeScreenshot()).to.matchScreenshot();
+    } else {
+      console.log('[SKIP] skipping screenshot comparison, because not running in headless mode');
+      this.skip();
+    }
+  }
   let page: ReportPage;
 
   beforeEach(async () => {
@@ -24,14 +36,23 @@ describe('Theming', () => {
       expect(await page.backgroundColor()).eq('rgba(34, 34, 34, 1)');
     });
 
+    it('should match the dark theme', actScreenshotMatching);
+
     it('should remain in dark theme after a page reload', async () => {
       await getCurrent().navigate().refresh();
       expect(await page.themeSelector.selectedTheme()).eq('dark');
     });
 
-    it('should show a dark code editor', async () => {
-      await page.resultTable().row('helpers.ts').navigate();
-      expect(await page.codeBackgroundColor()).eq('rgba(45, 45, 45, 1)');
+    describe('when opening a code file', () => {
+      beforeEach(async () => {
+        await page.resultTable().row('helpers.ts').navigate();
+      });
+
+      it('should show a dark code editor', async () => {
+        expect(await page.codeBackgroundColor()).eq('rgba(45, 45, 45, 1)');
+      });
+
+      it('should match the dark theme', actScreenshotMatching);
     });
   });
 
@@ -44,9 +65,17 @@ describe('Theming', () => {
       expect(await page.backgroundColor()).eq('rgba(255, 255, 255, 1)');
     });
 
-    it('should show a light code editor', async () => {
-      await page.resultTable().row('helpers.ts').navigate();
-      expect(await page.codeBackgroundColor()).eq('rgba(245, 242, 240, 1)');
+    it('should match the light theme', actScreenshotMatching);
+
+    describe('when opening a code file', () => {
+      beforeEach(async () => {
+        await page.resultTable().row('helpers.ts').navigate();
+      });
+      it('should show a light code editor', async () => {
+        expect(await page.codeBackgroundColor()).eq('rgba(245, 242, 240, 1)');
+      });
+
+      it('should match the light theme', actScreenshotMatching);
     });
   });
 });
