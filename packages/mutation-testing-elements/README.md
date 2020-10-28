@@ -104,4 +104,6 @@ For compatibility with older browsers and Edge, load the Web Components polyfill
 
 There are unit tests with karma and integration tests using selenium-webdriver. You can run them with `npm test` or by running `npm run test:unit` or `npm run test:integration` respectively. There is also a launch configuration so you can debug from vscode.
 
-The integration tests also do screenshot comparisons. Currently, they only run on 
+The integration tests also do screenshot comparisons. Currently, they only run when you're running in a headless browser, because the screenshots differ ever so slightly with the snapshots. You can run `npm run test:integration:headless` to run locally with screenshot comparison. It will compare and show you a diff file if the diff is deemed to large. Screenshot tests can be updated for your environment with `npm run test:integration:update`. 
+
+Screenshot snapshots are OS dependent, because, again, the screenshots differ ever so slightly on linux vs windows. You can update the screenshot for both linux and windows by running the "Update screenshots" workflow on your branch (with github). _Use with caution_ always double check the diff before updating!
