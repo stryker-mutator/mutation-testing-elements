@@ -26,6 +26,7 @@
         "high": 80,
         "low": 60
       },
+      "projectRoot": "src/main/scala/stryker4s",
       "files": {
         "src/main/scala/stryker4s/run/process/WindowsProcessRunner.scala": {
           "source": "package stryker4s.run.process\n\nimport better.files.File\n\nimport scala.util.Try\n\nclass WindowsProcessRunner extends ProcessRunner {\n  override def apply(command: Command, workingDir: File): Try[Seq[String]] = {\n    super.apply(Command(s\"cmd /c ${command.command}\", command.args), workingDir)\n  }\n\n  override def apply(command: Command, workingDir: File, envVar: (String, String)): Try[Int] = {\n    super.apply(Command(s\"cmd /c ${command.command}\", command.args), workingDir, envVar)\n  }\n}\n",

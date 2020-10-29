@@ -1,6 +1,7 @@
 document.querySelector('mutation-test-report-app').report = {
   schemaVersion: 1,
   thresholds: { high: 60, low: 80 },
+  projectRoot: '/src/project',
   files: {
     'org/pitest/elements/models/PackageSummaryData.java': {
       source:

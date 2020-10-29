@@ -23,13 +23,14 @@ class EncoderTest extends munit.FunSuite {
             )
           )
         )
-      )
+      ),
+      projectRoot = Some("/src/stryker4s")
     )
 
     val result = sut.asJson.noSpaces
 
     val expectedJson =
-      """{"$schema":"https://git.io/mutation-testing-report-schema","schemaVersion":"1","thresholds":{"high":80,"low":10},"files":{"src/stryker4s/Stryker4s.scala":{"source":"case class Stryker4s(foo: String)","mutants":[{"id":"1","mutatorName":"BinaryOperator","replacement":"-","location":{"start":{"line":1,"column":2},"end":{"line":2,"column":3}},"status":"Killed"}],"language":"scala"}}}"""
+      """{"$schema":"https://git.io/mutation-testing-report-schema","schemaVersion":"1","thresholds":{"high":80,"low":10},"projectRoot":"/src/stryker4s","files":{"src/stryker4s/Stryker4s.scala":{"source":"case class Stryker4s(foo: String)","mutants":[{"id":"1","mutatorName":"BinaryOperator","replacement":"-","location":{"start":{"line":1,"column":2},"end":{"line":2,"column":3}},"status":"Killed"}],"language":"scala"}}}"""
     assertEquals(result, expectedJson)
   }
 }

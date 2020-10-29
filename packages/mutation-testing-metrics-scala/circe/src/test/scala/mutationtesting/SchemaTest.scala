@@ -27,7 +27,8 @@ class SchemaTest extends munit.FunSuite {
             )
           )
         )
-      )
+      ),
+      projectRoot = Some("/src/stryker4s")
     )
     val jsonString = toJsonString(sut)
     val reader     = createJsonReader(jsonString)
@@ -46,6 +47,7 @@ class SchemaTest extends munit.FunSuite {
         assert(report.`$schema`.isEmpty)
         assertEquals(report.schemaVersion, "1")
         assertEquals(report.thresholds, Thresholds(80, 60))
+        assertEquals(report.projectRoot, Some("src/main/scala/stryker4s"))
         report.files.foreach({
           case (_, result) =>
             assertEquals(result.language, "scala")

@@ -25,7 +25,7 @@ object MutationReportEncoder {
     Encoder.forProduct3("source", "mutants", "language")(m => (m.source, m.mutants, m.language))
 
   implicit val mutationTestReportEncoder: Encoder[MutationTestReport] =
-    Encoder.forProduct4("$schema", "schemaVersion", "thresholds", "files")(m =>
-      (m.`$schema`, m.schemaVersion, m.thresholds, m.files)
+    Encoder.forProduct5("$schema", "schemaVersion", "thresholds", "projectRoot", "files")(m =>
+      (m.`$schema`, m.schemaVersion, m.thresholds, m.projectRoot, m.files)
     )
 }
