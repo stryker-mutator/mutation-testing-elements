@@ -22,10 +22,7 @@
     }
   ],
   "extensions": {
-    "recommendations": [
-      "dbaeumer.vscode-eslint",
-      "esbenp.prettier-vscode"
-    ]
+    "recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
   },
   "settings": {
     "search.exclude": {
@@ -34,7 +31,7 @@
       "**/*.code-search": true,
       "**/dist": true,
       "**/dist-test": true,
-      "**/*.tsbuildinfo": true,
+      "**/*.tsbuildinfo": true
     },
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": true
@@ -44,14 +41,7 @@
     "gulp.autoDetect": "off",
     "jake.autoDetect": "off",
     "task.autoDetect": "off",
-    "cSpell.words": [
-      "Theming",
-      "autoloader",
-      "bootswatch",
-      "clike",
-      "prismjs",
-      "templating"
-    ],
+    "cSpell.words": ["Theming", "autoloader", "bootswatch", "clike", "prismjs", "templating"],
     "[json]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
@@ -59,5 +49,24 @@
       "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Attach",
+        "port": 9229,
+        "request": "attach",
+        "skipFiles": ["<node_internals>/**"],
+        "type": "pwa-node"
+      },
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Launch Program",
+        "skipFiles": ["<node_internals>/**"],
+        "program": "${file}"
+      }
+    ]
   }
 }
