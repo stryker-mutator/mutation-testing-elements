@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/@stryker-mutator/core/schema/stryker-schema.json",
+  "packageManager": "npm",
+  "reporters": ["html", "clear-text", "progress", "dashboard"],
+  "testRunner": "mocha",
+  "buildCommand": "tsc -b",
+  "coverageAnalysis": "perTest",
+  "checkers": ["typescript"],
+  "mochaOptions": {
+    "spec": ["dist/test/unit/**/*.js"]
+  },
+  "concurrency": 2
+}

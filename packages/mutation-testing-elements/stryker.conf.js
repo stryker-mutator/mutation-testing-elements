@@ -1,9 +1,5 @@
 const config = require('../../stryker.parent');
-delete config.tsconfigFile;
-config.dashboard.module = 'elements';
-config.plugins = ['@stryker-mutator/*', require.resolve('./tsconfig-transpiler')];
-config.dashboard.module = 'elements';
-config.transpilers = ['typescript'];
+config.dashboard = { module: 'elements' };
 config.testRunner = 'karma';
 config.karma = {
   projectType: 'custom',
@@ -12,6 +8,4 @@ config.karma = {
     browsers: ['ChromeHeadless'],
   },
 };
-config.timeoutMs = 2000;
-config.coverageAnalysis = 'off';
 module.exports = config;

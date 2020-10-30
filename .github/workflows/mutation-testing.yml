@@ -10,41 +10,31 @@ jobs:
   metrics:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - name: Install & Build
-        run: |
-          npm ci
-          npm run build
+      - uses: actions/checkout@v2
+      - run: npm ci
       - name: Run Stryker
-        run: |
-          cd packages/mutation-testing-metrics
-          npm run stryker
+        run: npx lerna run --stream --scope mutation-testing-metrics stryker
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
   elements:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - name: Install & Build
-        run: |
-          npm ci
-          npm run build
+      - uses: actions/checkout@v2
+      - run: npm ci
+      - run: npm run build
       - name: Run Stryker
-        run: |
-          cd packages/mutation-testing-elements
-          npm run stryker
+        run: npx lerna run --stream --scope mutation-testing-elements stryker
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
   
   metrics-scala:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Run Stryker
         run: |
-          cd packages/mutation-testing-metrics-scala
           export JAVA_OPTS="-XX:+CMSClassUnloadingEnabled -Xmx6G $JAVA_OPTS"
-          npm run stryker
+          npx lerna run --stream --scope mutation-testing-metrics-scala stryker
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
 
