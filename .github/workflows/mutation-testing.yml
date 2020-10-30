@@ -21,6 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: npm ci
+      - run: npm run build
       - name: Run Stryker
         run: npx lerna run --stream --scope mutation-testing-elements stryker
         env:
