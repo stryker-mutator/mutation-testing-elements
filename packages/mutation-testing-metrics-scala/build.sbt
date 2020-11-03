@@ -19,8 +19,8 @@ lazy val circe = project
     libraryDependencies ++= Seq(
       "io.circe"            %% "circe-core"   % "0.13.0",
       "io.circe"            %% "circe-parser" % "0.13.0",
-      "org.leadpony.justify" % "justify"      % "2.1.0" % Test,
-      "org.leadpony.joy"     % "joy"          % "1.3.0" % Test
+      "org.leadpony.justify" % "justify"      % "3.1.0" % Test,
+      "org.leadpony.joy"     % "joy-classic"  % "2.0.0" % Test
     )
   )
 
@@ -51,13 +51,12 @@ lazy val schema = project
   )
 
 lazy val sharedSettings = Seq(
-  libraryDependencies += "org.scalameta" %% "munit" % "0.7.14" % Test,
+  libraryDependencies += "org.scalameta" %% "munit" % "0.7.15" % Test,
   testFrameworks := List(new TestFramework("munit.Framework")),
   scalaVersion := Scala213,
   crossScalaVersions := Seq(Scala213, Scala212),
   skip in publish := skipNormalProjectPublish,
-  publishTo := sonatypePublishToBundle.value,
-  version := packageVersion(file("."))
+  publishTo := sonatypePublishToBundle.value
 )
 
 lazy val npmProjectSettings = Seq(
@@ -71,6 +70,32 @@ lazy val npmProjectSettings = Seq(
   crossPaths := false,
   // exclude scala-library from dependencies
   autoScalaLibrary := false
+)
+
+inThisBuild(
+  Seq(
+    // Don't publish root project
+    skip in publish := true,
+    version := packageVersion(file(".")),
+    organization := "io.stryker-mutator",
+    homepage := Some(url("https://stryker-mutator.io/")),
+    licenses += "Apache-2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0"),
+    scmInfo := Some(
+      ScmInfo(
+        url("https://github.com/stryker-mutator/mutation-testing-elements"),
+        "scm:git:https://github.com/stryker-mutator/mutation-testing-elements.git",
+        "scm:git:git@github.com:stryker-mutator/mutation-testing-elements.git"
+      )
+    ),
+    developers := List(
+      Developer(
+        "hugo-vrijswijk",
+        "Hugo van Rijswijk",
+        "hugo.v.rijswijk@gmail.com",
+        url("https://github.com/hugo-vrijswijk")
+      )
+    )
+  )
 )
 
 def envVarIsTrue(envVar: String): Boolean =

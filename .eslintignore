@@ -8,3 +8,4 @@ dist-test
 .stryker-tmp
 reports
 packages/*/testResources/**
+target/
