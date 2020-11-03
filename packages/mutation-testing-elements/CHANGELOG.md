@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.2](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.4.1...v1.4.2) (2020-11-03)
+
+
+### Features
+
+* **schema:** Allow for ProjectRoot with absolute path to the projectfolder ([e8e8425](https://github.com/stryker-mutator/mutation-testing-elements/commit/e8e842531b689276be97eff371c3c8816bef3425))
+
+
+
+
+
 ## [1.4.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.4.0...v1.4.1) (2020-10-27)
 
 
