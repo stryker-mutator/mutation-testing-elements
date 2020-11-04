@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.4](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.4.3...v1.4.4) (2020-11-04)
+
+
+### Bug Fixes
+
+* **metrics-scala:** drop null-values from circe json ([0293141](https://github.com/stryker-mutator/mutation-testing-elements/commit/0293141ffa013763a8fca52b9be175eba149f7e7))
+
+
+
+
+
 ## [1.4.2](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.4.1...v1.4.2) (2020-11-03)
 
 
