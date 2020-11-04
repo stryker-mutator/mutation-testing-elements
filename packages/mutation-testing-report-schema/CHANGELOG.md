@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.3](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.4.2...v1.4.3) (2020-11-04)
+
+
+### Bug Fixes
+
+* **ts:** make project root optional in TS api ([#721](https://github.com/stryker-mutator/mutation-testing-elements/issues/721)) ([c066733](https://github.com/stryker-mutator/mutation-testing-elements/commit/c06673391ee3c58ddfc2d074d3653755ef641c0a))
+
+
+
+
+
 ## [1.4.2](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.4.1...v1.4.2) (2020-11-03)
 
 
