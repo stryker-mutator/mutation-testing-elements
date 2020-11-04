@@ -18,14 +18,14 @@ object MutationReportEncoder {
       .forProduct6("id", "mutatorName", "replacement", "location", "status", "description")((m: MutantResult) =>
         (m.id, m.mutatorName, m.replacement, m.location, m.status, m.description)
       )
-      // Remove `"description": null` if description is a None
-      .mapJson(_.dropNullValues)
 
   implicit val mutationTestResultEncoder: Encoder[MutationTestResult] =
     Encoder.forProduct3("source", "mutants", "language")(m => (m.source, m.mutants, m.language))
 
   implicit val mutationTestReportEncoder: Encoder[MutationTestReport] =
-    Encoder.forProduct5("$schema", "schemaVersion", "thresholds", "projectRoot", "files")(m =>
-      (m.`$schema`, m.schemaVersion, m.thresholds, m.projectRoot, m.files)
-    )
+    Encoder
+      .forProduct5("$schema", "schemaVersion", "thresholds", "projectRoot", "files")((m: MutationTestReport) =>
+        (m.`$schema`, m.schemaVersion, m.thresholds, m.projectRoot, m.files)
+      )
+      .mapJson(_.deepDropNullValues)
 }
