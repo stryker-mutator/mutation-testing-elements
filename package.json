@@ -69,7 +69,7 @@
     "mocha": "^8.2.0",
     "postcss-loader": "^4.0.3",
     "postcss-preset-env": "^6.7.0",
-    "prettier": "~2.1.1",
+    "prettier": "~2.2.0",
     "resemblejs": "^3.2.5",
     "rimraf": "^3.0.0",
     "rxjs": "^6.6.3",
