@@ -8,13 +8,13 @@ export class CustomElementFixture<TCustomElement extends LitElement> {
     document.body.append(this.element);
   }
 
-  public async whenStable() {
+  public async whenStable(): Promise<void> {
     while (!(await this.element.updateComplete));
   }
 
-  public waitFor(action: () => boolean, timeout = 500) {
+  public waitFor(action: () => boolean, timeout = 500): Promise<void> {
     const step = 50;
-    return new Promise((res, rej) => {
+    return new Promise<void>((res, rej) => {
       function tick(timeLeft: number) {
         if (action()) {
           res();
