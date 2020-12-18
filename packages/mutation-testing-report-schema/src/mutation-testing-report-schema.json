@@ -4,56 +4,40 @@
   "title": "MutationTestResult",
   "description": "Schema for a mutation testing report.",
   "type": "object",
-  "required": [
-    "schemaVersion",
-    "thresholds",
-    "files"
-  ],
+  "required": ["schemaVersion", "thresholds", "files"],
   "properties": {
     "schemaVersion": {
       "type": "string",
       "pattern": "^1(\\.\\d*)?$",
       "description": "Major version of this report. Used for compatibility.",
-      "examples": [
-        "1"
-      ]
+      "examples": ["1"]
     },
     "thresholds": {
       "type": "object",
       "title": "Thresholds",
       "description": "Thresholds for the status of the reported application.",
-      "required": [
-        "high",
-        "low"
-      ],
+      "required": ["high", "low"],
       "properties": {
         "high": {
           "type": "integer",
           "description": "Higher bound threshold.",
           "minimum": 0,
           "maximum": 100,
-          "examples": [
-            80
-          ]
+          "examples": [80]
         },
         "low": {
           "type": "integer",
           "description": "Lower bound threshold.",
           "minimum": 0,
           "maximum": 100,
-          "examples": [
-            60
-          ]
+          "examples": [60]
         }
       }
     },
     "projectRoot": {
       "type": "string",
       "description": "The optional location of the project root.",
-      "examples": [
-        "C:\\Projects\\project-under-test",
-        "/home/user/projects/project-under-test"
-      ]
+      "examples": ["C:\\Projects\\project-under-test", "/home/user/projects/project-under-test"]
     },
     "files": {
       "type": "object",
@@ -63,29 +47,17 @@
         "type": "object",
         "title": "FileResult",
         "description": "Mutated file, with the relative path of the file as the key.",
-        "required": [
-          "language",
-          "source",
-          "mutants"
-        ],
+        "required": ["language", "source", "mutants"],
         "properties": {
           "language": {
             "type": "string",
             "description": "Programming language that is used. Used for code highlighting, see https://highlightjs.org/static/demo/.",
-            "examples": [
-              "javascript",
-              "typescript",
-              "cs",
-              "scala",
-              "java"
-            ]
+            "examples": ["javascript", "typescript", "cs", "scala", "java"]
           },
           "source": {
             "type": "string",
             "description": "Full source code of the mutated file, this is used for highlighting.",
-            "examples": [
-              "using System; using....."
-            ]
+            "examples": ["using System; using....."]
           },
           "mutants": {
             "type": "array",
@@ -94,45 +66,27 @@
               "type": "object",
               "title": "MutantResult",
               "description": "Single mutation.",
-              "required": [
-                "id",
-                "mutatorName",
-                "location",
-                "status"
-              ],
+              "required": ["id", "mutatorName", "location", "status"],
               "properties": {
                 "id": {
                   "type": "string",
                   "description": "Unique id, can be used to correlate this mutant with other reports.",
-                  "examples": [
-                    "321321"
-                  ]
+                  "examples": ["321321"]
                 },
                 "mutatorName": {
                   "type": "string",
                   "description": "Category of the mutation.",
-                  "examples": [
-                    "ConditionalExpression",
-                    "EqualityOperator",
-                    "LogicalOperator"
-                  ]
+                  "examples": ["ConditionalExpression", "EqualityOperator", "LogicalOperator"]
                 },
                 "replacement": {
                   "type": "string",
                   "description": "Actual mutation that has been applied.",
-                  "examples": [
-                    "-",
-                    "+",
-                    "&&",
-                    "||"
-                  ]
+                  "examples": ["-", "+", "&&", "||"]
                 },
                 "description": {
                   "type": "string",
                   "description": "Description of the applied mutation.",
-                  "examples": [
-                    "removed call to java/io/Writer::write"
-                  ]
+                  "examples": ["removed call to java/io/Writer::write"]
                 },
                 "location": {
                   "$ref": "#/definitions/location"
@@ -140,15 +94,7 @@
                 "status": {
                   "type": "string",
                   "description": "Result of the mutation.",
-                  "enum": [
-                    "Killed",
-                    "Survived",
-                    "NoCoverage",
-                    "CompileError",
-                    "RuntimeError",
-                    "Timeout",
-                    "Ignored"
-                  ]
+                  "enum": ["Killed", "Survived", "NoCoverage", "CompileError", "RuntimeError", "Timeout", "Ignored"]
                 }
               }
             }
@@ -162,41 +108,31 @@
       "type": "object",
       "title": "Position",
       "description": "Position of a mutation. Both line and column start at one.",
-      "required": [
-        "line",
-        "column"
-      ],
+      "required": ["line", "column"],
       "properties": {
         "line": {
           "type": "integer",
           "minimum": 1,
-          "examples": [
-            4
-          ]
+          "examples": [4]
         },
         "column": {
           "type": "integer",
           "minimum": 1,
-          "examples": [
-            3
-          ]
+          "examples": [3]
         }
       }
-    }
-  },
-  "location": {
-    "type": "object",
-    "description": "A location with start and end. Start is inclusive, end is exclusive.",
-    "required": [
-      "start",
-      "end"
-    ],
-    "properties": {
-      "start": {
-        "$ref": "#/definitions/position"
-      },
-      "end": {
-        "$ref": "#/definitions/position"
+    },
+    "location": {
+      "type": "object",
+      "description": "A location with start and end. Start is inclusive, end is exclusive.",
+      "required": ["start", "end"],
+      "properties": {
+        "start": {
+          "$ref": "#/definitions/position"
+        },
+        "end": {
+          "$ref": "#/definitions/position"
+        }
       }
     }
   }
