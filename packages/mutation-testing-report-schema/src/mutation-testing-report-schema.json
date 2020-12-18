@@ -6,11 +6,41 @@
   "type": "object",
   "required": ["schemaVersion", "thresholds", "files"],
   "properties": {
+    "config": {
+      "description": "Free-format object that represents the configuration used to run mutation testing.",
+      "type": "object"
+    },
     "schemaVersion": {
       "type": "string",
       "pattern": "^1(\\.\\d*)?$",
       "description": "Major version of this report. Used for compatibility.",
       "examples": ["1"]
+    },
+    "tests": {
+      "title": "TestDefinitionDictionary",
+      "description": "Test definitions by (unique) id",
+      "additionalProperties": {
+        "type": "object",
+        "title": "TestDefinition",
+        "description": "A test in your test suite that ran during mutation testing.",
+        "required": ["name"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the test, used to display the test."
+          },
+          "fileName": {
+            "type": "string",
+            "description": "The file name relative to the project root where this test resides"
+          },
+          "location": {
+            "$ref": "#/definitions/location",
+            "title": "OpenEndLocation",
+            "description": "Location without a required end",
+            "required": ["start"]
+          }
+        }
+      }
     },
     "thresholds": {
       "type": "object",
@@ -73,6 +103,18 @@
                   "description": "Unique id, can be used to correlate this mutant with other reports.",
                   "examples": ["321321"]
                 },
+                "description": {
+                  "type": "string",
+                  "description": "Description of the applied mutation.",
+                  "examples": ["removed call to java/io/Writer::write"]
+                },
+                "killedBy": {
+                  "type": "string",
+                  "description": "The id of the test this mutant was killed by"
+                },
+                "location": {
+                  "$ref": "#/definitions/location"
+                },
                 "mutatorName": {
                   "type": "string",
                   "description": "Category of the mutation.",
@@ -83,21 +125,137 @@
                   "description": "Actual mutation that has been applied.",
                   "examples": ["-", "+", "&&", "||"]
                 },
-                "description": {
-                  "type": "string",
-                  "description": "Description of the applied mutation.",
-                  "examples": ["removed call to java/io/Writer::write"]
-                },
-                "location": {
-                  "$ref": "#/definitions/location"
-                },
                 "status": {
                   "type": "string",
+                  "title": "MutantStatus",
                   "description": "Result of the mutation.",
                   "enum": ["Killed", "Survived", "NoCoverage", "CompileError", "RuntimeError", "Timeout", "Ignored"]
+                },
+                "testCoverage": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "testsRan": {
+                  "type": "number",
+                  "description": "The number of tests actually ran for this mutant. Can differ from testCoverage because of \"--bail\" mode in test runners"
+                },
+                "duration": {
+                  "type": "number",
+                  "description": "The time it took to test this mutant in milliseconds."
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "performance": {
+      "type": "object",
+      "title": "PerformanceStatistics",
+      "description": "The performance statistics per phase. Total time should be roughly equal to the sum of all these.",
+      "properties": {
+        "setup": {
+          "type": "number",
+          "description": "Time it took to run the setup phase in milliseconds."
+        },
+        "initialRun": {
+          "type": "number",
+          "description": "Time it took to run the initial test phase (dry-run) in milliseconds."
+        },
+        "mutation": {
+          "type": "number",
+          "description": "Time it took to run the mutation test phase in milliseconds."
+        }
+      }
+    },
+    "system": {
+      "type": "object",
+      "title": "SystemInformation",
+      "description": "Information about the system that performed mutation testing",
+      "properties": {
+        "ci": {
+          "description": "Did mutation testing run in a Continuous Integration environment (pipeline)?",
+          "type": "boolean"
+        },
+        "os": {
+          "title": "OSInformation",
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string",
+              "examples": ["Windows 10 Pro", "Debian Buster", " Ubuntu 20.04.1 LTS"]
+            },
+            "platform": {
+              "type": "string",
+              "examples": ["linux", "win32"]
+            },
+            "version": {
+              "type": "string",
+              "examples": ["10.0.19041"]
+            }
+          },
+          "cpu": {
+            "title": "CpuInformation",
+            "type": "object",
+            "properties": {
+              "model": {
+                "type": "string",
+                "examples": ["Intel(R) Core(TM) i9-9880H CPU @ 2.30GHz"]
+              },
+              "logicalCores": {
+                "type": "number"
+              },
+              "baseClock": {
+                "type": "number",
+                "description": "Clock speed in MHz"
+              }
+            }
+          },
+          "ram": {
+            "title": "RamInformation",
+            "type": "object",
+            "properties": {
+              "total": {
+                "type": "number",
+                "description": "The total RAM of the system that performed mutation testing in MB"
+              }
+            }
+          }
+        }
+      }
+    },
+    "framework": {
+      "type": "object",
+      "title": "FrameworkInformation",
+      "description": "Extra information about the framework used",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the framework used.",
+          "examples": ["Stryker", "Stryker4s", "Stryker.NET", "Infection PHP", "Pitest"]
+        },
+        "version": {
+          "type": "string",
+          "description": "The version of the framework."
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL to the home-page of the framework."
+        },
+        "imageUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "The url to an image for the framework, can be a data-url."
+        },
+        "dependencies": {
+          "title": "Dependencies",
+          "description": "Dependencies used by the framework. Key-value pair of dependencies and their versions.",
+          "additionalProperties": {
+            "type": "string"
           }
         }
       }
