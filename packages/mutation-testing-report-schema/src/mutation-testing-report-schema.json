@@ -51,7 +51,7 @@
         "properties": {
           "language": {
             "type": "string",
-            "description": "Programming language that is used. Used for code highlighting, see https://highlightjs.org/static/demo/.",
+            "description": "Programming language that is used. Used for code highlighting, see https://prismjs.com/#examples.",
             "examples": ["javascript", "typescript", "cs", "scala", "java"]
           },
           "source": {
