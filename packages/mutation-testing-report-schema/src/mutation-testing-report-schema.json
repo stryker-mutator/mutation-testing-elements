@@ -1,7 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "http://stryker-mutator.io/report.schema.json",
-  "title": "Schema for a mutation testing report.",
+  "title": "MutationTestResult",
+  "description": "Schema for a mutation testing report.",
   "type": "object",
   "required": [
     "schemaVersion",
@@ -12,14 +13,15 @@
     "schemaVersion": {
       "type": "string",
       "pattern": "^1(\\.\\d*)?$",
-      "title": "Major version of this report. Used for compatibility.",
+      "description": "Major version of this report. Used for compatibility.",
       "examples": [
         "1"
       ]
     },
     "thresholds": {
       "type": "object",
-      "title": "Thresholds for the status of the reported application.",
+      "title": "Thresholds",
+      "description": "Thresholds for the status of the reported application.",
       "required": [
         "high",
         "low"
@@ -27,7 +29,7 @@
       "properties": {
         "high": {
           "type": "integer",
-          "title": "Higher bound threshold.",
+          "description": "Higher bound threshold.",
           "minimum": 0,
           "maximum": 100,
           "examples": [
@@ -36,7 +38,7 @@
         },
         "low": {
           "type": "integer",
-          "title": "Lower bound threshold.",
+          "description": "Lower bound threshold.",
           "minimum": 0,
           "maximum": 100,
           "examples": [
@@ -47,7 +49,7 @@
     },
     "projectRoot": {
       "type": "string",
-      "title": "The optional location of the project root.",
+      "description": "The optional location of the project root.",
       "examples": [
         "C:\\Projects\\project-under-test",
         "/home/user/projects/project-under-test"
@@ -55,36 +57,12 @@
     },
     "files": {
       "type": "object",
-      "title": "All mutated files.",
-      "definitions": {
-        "position": {
-          "type": "object",
-          "title": "Position of a mutation. Both line and column start at one.",
-          "required": [
-            "line",
-            "column"
-          ],
-          "properties": {
-            "line": {
-              "type": "integer",
-              "minimum": 1,
-              "examples": [
-                4
-              ]
-            },
-            "column": {
-              "type": "integer",
-              "minimum": 1,
-              "examples": [
-                3
-              ]
-            }
-          }
-        }
-      },
+      "title": "FileResultDictionary",
+      "description": "All mutated files.",
       "additionalProperties": {
         "type": "object",
-        "title": "Mutated file, with the relative path of the file as the key.",
+        "title": "FileResult",
+        "description": "Mutated file, with the relative path of the file as the key.",
         "required": [
           "language",
           "source",
@@ -93,7 +71,7 @@
         "properties": {
           "language": {
             "type": "string",
-            "title": "Programming language that is used. Used for code highlighting, see https://highlightjs.org/static/demo/.",
+            "description": "Programming language that is used. Used for code highlighting, see https://highlightjs.org/static/demo/.",
             "examples": [
               "javascript",
               "typescript",
@@ -104,7 +82,7 @@
           },
           "source": {
             "type": "string",
-            "title": "Full source code of the mutated file, this is used for highlighting.",
+            "description": "Full source code of the mutated file, this is used for highlighting.",
             "examples": [
               "using System; using....."
             ]
@@ -114,7 +92,8 @@
             "uniqueItems": true,
             "items": {
               "type": "object",
-              "title": "Single mutation.",
+              "title": "MutantResult",
+              "description": "Single mutation.",
               "required": [
                 "id",
                 "mutatorName",
@@ -124,14 +103,14 @@
               "properties": {
                 "id": {
                   "type": "string",
-                  "title": "Unique id, can be used to correlate this mutant with other reports.",
+                  "description": "Unique id, can be used to correlate this mutant with other reports.",
                   "examples": [
                     "321321"
                   ]
                 },
                 "mutatorName": {
                   "type": "string",
-                  "title": "Category of the mutation.",
+                  "description": "Category of the mutation.",
                   "examples": [
                     "ConditionalExpression",
                     "EqualityOperator",
@@ -140,7 +119,7 @@
                 },
                 "replacement": {
                   "type": "string",
-                  "title": "Actual mutation that has been applied.",
+                  "description": "Actual mutation that has been applied.",
                   "examples": [
                     "-",
                     "+",
@@ -150,42 +129,18 @@
                 },
                 "description": {
                   "type": "string",
-                  "title": "Description of the applied mutation.",
+                  "description": "Description of the applied mutation.",
                   "examples": [
                     "removed call to java/io/Writer::write"
                   ]
                 },
                 "location": {
-                  "type": "object",
-                  "title": "Location of the applied mutation.",
-                  "required": [
-                    "start",
-                    "end"
-                  ],
-                  "properties": {
-                    "start": {
-                      "$ref": "#/properties/files/definitions/position",
-                      "title": "Start position of the mutation. Inclusive."
-                    },
-                    "end": {
-                      "$ref": "#/properties/files/definitions/position",
-                      "title": "End position of the mutation. Exclusive."
-                    }
-                  }
+                  "$ref": "#/definitions/location"
                 },
                 "status": {
                   "type": "string",
-                  "title": "Result of the mutation.",
+                  "description": "Result of the mutation.",
                   "enum": [
-                    "Killed",
-                    "Survived",
-                    "NoCoverage",
-                    "CompileError",
-                    "RuntimeError",
-                    "Timeout",
-                    "Ignored"
-                  ],
-                  "examples": [
                     "Killed",
                     "Survived",
                     "NoCoverage",
@@ -199,6 +154,49 @@
             }
           }
         }
+      }
+    }
+  },
+  "definitions": {
+    "position": {
+      "type": "object",
+      "title": "Position",
+      "description": "Position of a mutation. Both line and column start at one.",
+      "required": [
+        "line",
+        "column"
+      ],
+      "properties": {
+        "line": {
+          "type": "integer",
+          "minimum": 1,
+          "examples": [
+            4
+          ]
+        },
+        "column": {
+          "type": "integer",
+          "minimum": 1,
+          "examples": [
+            3
+          ]
+        }
+      }
+    }
+  },
+  "location": {
+    "type": "object",
+    "description": "A location with start and end. Start is inclusive, end is exclusive.",
+    "required": [
+      "start",
+      "end"
+    ],
+    "properties": {
+      "start": {
+        "$ref": "#/definitions/position"
+      },
+      "end": {
+        "$ref": "#/definitions/position"
       }
     }
   }
