@@ -1,8 +1,21 @@
 {
+  "$schema": "../src/mutation-testing-report-schema.json",
   "schemaVersion": "1.0",
   "thresholds": {
     "high": 80,
     "low": 60
+  },
+  "config": {
+    "custom": "config"
+  },
+  "framework": {
+    "name": "Stryker",
+    "url": "https://stryker-mutator.io",
+    "imageUrl": "https://stryker-mutator.io/img/stryker.svg",
+    "dependencies": {
+      "@stryker-mutator/jest-runner": "1.0.2",
+      "nodejs": "12"
+    }
   },
   "files": {
     "test.js": {
@@ -22,7 +35,11 @@
               "column": 13
             }
           },
-          "status": "Survived"
+          "status": "Survived",
+          "description": "Changed + in -",
+          "duration": 42,
+          "replacement": "-",
+          "coveredBy": ["test-2"]
         },
         {
           "id": "2",
@@ -37,9 +54,31 @@
               "column": 1
             }
           },
-          "status": "Killed"
+          "status": "Killed",
+          "coveredBy": ["test-1", "test-2"],
+          "killedBy": ["test-1"],
+          "duration": 4,
+          "replacement": "&&",
+          "testsRan": 1
         }
       ]
+    }
+  },
+  "tests": {
+    "test-1": {
+      "name": "foo should bar",
+      "location": {
+        "start": { "line": 4, "column": 1 },
+        "end": { "line": 6, "column": 1 }
+      },
+      "fileName": "fooSpec.ts"
+    },
+    "test-2": {
+      "name": "baz should qux",
+      "location": {
+        "start": { "line": 8, "column": 1 }
+      },
+      "fileName": "fooSpec.ts"
     }
   }
 }

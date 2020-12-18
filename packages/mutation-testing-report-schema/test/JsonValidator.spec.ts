@@ -8,7 +8,10 @@ describe('JsonSchema', () => {
   let schemaValidator: Ajv.Ajv;
 
   beforeEach(() => {
-    schemaValidator = new Ajv();
+    schemaValidator = new Ajv({
+      missingRefs: 'fail',
+      strictKeywords: true,
+    });
     schemaValidator.addSchema(schema, SCHEMA_NAME);
   });
 
@@ -48,6 +51,10 @@ describe('JsonSchema', () => {
 
   it('should invalidate a report when mutant location is missing', () => {
     actAssertInvalid('missing-mutant-location-report', "files['test.js'].mutants[0].location should have required property 'end'");
+  });
+
+  it('should validate a report when the framework.name is missing', () => {
+    actAssertInvalid('missing-framework-name', "framework should have required property 'name'");
   });
 
   it('should validate a report when the replacement is missing', () => {
