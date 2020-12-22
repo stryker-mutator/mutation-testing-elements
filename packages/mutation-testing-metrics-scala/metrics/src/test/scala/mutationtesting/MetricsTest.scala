@@ -3,11 +3,11 @@ package mutationtesting
 import mutationtesting.MutantStatus._
 
 class MetricsTest extends munit.FunSuite {
-  test("MutationTestResult is split into tree structure") {
-    val mtr = Map(
-      "dir/foo.scala" -> MutationTestResult("dirFoo", Nil),
-      "dir/bar.scala" -> MutationTestResult("dirBar", Nil),
-      "foo.scala"     -> MutationTestResult("foo", Nil)
+  test("FileResultDictionary is split into tree structure") {
+    val mtr: FileResultDictionary = Map(
+      "dir/foo.scala" -> FileResult("dirFoo", Nil),
+      "dir/bar.scala" -> FileResult("dirBar", Nil),
+      "foo.scala"     -> FileResult("foo", Nil)
     )
     val result = Metrics.calculateMetrics(mtr)
     assertEquals(
@@ -21,7 +21,7 @@ class MetricsTest extends munit.FunSuite {
     )
   }
 
-  test("MutationTestResult split into more complex tree structure") {
+  test("FileResultDictionary split into more complex tree structure") {
     val iter = Iterator.from(0)
     def rndMutation: MutantResult = {
       val id     = iter.next()
@@ -36,13 +36,13 @@ class MetricsTest extends munit.FunSuite {
     }
     def rndMutants(count: Int) = Seq.fill(count)(rndMutation)
 
-    val mtr = Map(
-      "foo.scala"             -> MutationTestResult("foo", rndMutants(0)),
-      "dir/foo/bar.scala"     -> MutationTestResult("dirFoo", rndMutants(1)),
-      "foo/foo/foo/bar.scala" -> MutationTestResult("dirFoo", rndMutants(2)),
-      "dir/bar/foo.scala"     -> MutationTestResult("dirFoo", rndMutants(2)),
-      "dir/baz/bar.scala"     -> MutationTestResult("dirBar", rndMutants(1)),
-      "dir/baz.scala"         -> MutationTestResult("dirBar", rndMutants(0))
+    val mtr: FileResultDictionary = Map(
+      "foo.scala"             -> FileResult("foo", rndMutants(0)),
+      "dir/foo/bar.scala"     -> FileResult("dirFoo", rndMutants(1)),
+      "foo/foo/foo/bar.scala" -> FileResult("dirFoo", rndMutants(2)),
+      "dir/bar/foo.scala"     -> FileResult("dirFoo", rndMutants(2)),
+      "dir/baz/bar.scala"     -> FileResult("dirBar", rndMutants(1)),
+      "dir/baz.scala"         -> FileResult("dirBar", rndMutants(0))
     )
     val result = Metrics.calculateMetrics(mtr)
     assertEquals(

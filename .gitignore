@@ -8,6 +8,7 @@ target/
 _site/
 .metals/
 .bloop/
+.bsp/
 .idea/
 pom.xml.versionsBackup
 packages/*/mvn/resources/

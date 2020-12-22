@@ -25,10 +25,10 @@ class EncoderTest extends munit.FunSuite {
   }
 
   def testReport =
-    MutationTestReport(
+    MutationTestResult(
       thresholds = Thresholds(high = 80, low = 10),
       files = Map(
-        "src/stryker4s/Stryker4s.scala" -> MutationTestResult(
+        "src/stryker4s/Stryker4s.scala" -> FileResult(
           source = "case class Stryker4s(foo: String)",
           mutants = Seq(
             MutantResult(
