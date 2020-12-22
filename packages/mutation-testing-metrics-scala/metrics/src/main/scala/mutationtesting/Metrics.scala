@@ -2,18 +2,18 @@ package mutationtesting
 
 object Metrics {
 
-  def calculateMetrics(mutationTestReport: MutationTestReport): MetricsResult =
+  def calculateMetrics(mutationTestReport: MutationTestResult): MetricsResult =
     calculateMetrics(mutationTestReport.files)
 
-  def calculateMetrics(mutationTestResults: Map[String, MutationTestResult]): MetricsResult =
+  def calculateMetrics(mutationTestResults: FileResultDictionary): MetricsResult =
     MetricsResultRoot(
       parseMutationTestResults(
         mutationTestResults
-          .map({ case (name, result) => (name.split("/").toIterable, result) })
+          .map({ case (name, result) => (name.split("/").toSeq, result) })
       )
     )
 
-  private def parseMutationTestResults(results: Map[Iterable[String], MutationTestResult]): Iterable[MetricsResult] = {
+  private def parseMutationTestResults(results: Map[Seq[String], FileResult]): Seq[MetricsResult] = {
     val (rootFiles, directories) = results.partition(_._1.size == 1)
 
     directories
