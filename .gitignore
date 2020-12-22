@@ -3,6 +3,8 @@ dist
 dist-test
 .stryker-tmp
 reports
+src-generated
+*.tsbuildinfo
 
 target/
 _site/

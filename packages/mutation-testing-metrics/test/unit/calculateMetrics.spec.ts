@@ -1,6 +1,6 @@
 import { calculateMetrics } from '../../src/calculateMetrics';
 import { expect } from 'chai';
-import { MutantResult, MutantStatus, FileResult, FileResultDictionary } from 'mutation-testing-report-schema';
+import { MutantResult, FileResult, FileResultDictionary } from 'mutation-testing-report-schema';
 
 describe(calculateMetrics.name, () => {
   function mutantResultFactory(overrides?: Partial<MutantResult>) {
@@ -18,7 +18,7 @@ describe(calculateMetrics.name, () => {
       },
       mutatorName: 'FooMutator',
       replacement: '"foo"',
-      status: MutantStatus.Killed,
+      status: 'Killed',
     };
     return { ...defaults, ...overrides };
   }
@@ -40,11 +40,11 @@ describe(calculateMetrics.name, () => {
   it('should count results of multiple files', () => {
     // Arrange
     const baz = fileResultFactory({
-      mutants: [mutantResultFactory({ status: MutantStatus.Killed }), mutantResultFactory({ status: MutantStatus.Survived })],
+      mutants: [mutantResultFactory({ status: 'Killed' }), mutantResultFactory({ status: 'Survived' })],
     });
     const input: FileResultDictionary = {
       'foo.js': fileResultFactory({
-        mutants: [mutantResultFactory({ status: MutantStatus.Killed })],
+        mutants: [mutantResultFactory({ status: 'Killed' })],
       }),
       'bar/baz.js': baz,
     };
@@ -139,14 +139,14 @@ describe(calculateMetrics.name, () => {
     const input: FileResultDictionary = {
       'foo.js': fileResultFactory({
         mutants: [
-          mutantResultFactory({ status: MutantStatus.RuntimeError }),
-          mutantResultFactory({ status: MutantStatus.Killed }),
-          mutantResultFactory({ status: MutantStatus.CompileError }),
-          mutantResultFactory({ status: MutantStatus.NoCoverage }),
-          mutantResultFactory({ status: MutantStatus.Survived }),
-          mutantResultFactory({ status: MutantStatus.Killed }),
-          mutantResultFactory({ status: MutantStatus.Timeout }),
-          mutantResultFactory({ status: MutantStatus.Ignored }),
+          mutantResultFactory({ status: 'RuntimeError' }),
+          mutantResultFactory({ status: 'Killed' }),
+          mutantResultFactory({ status: 'CompileError' }),
+          mutantResultFactory({ status: 'NoCoverage' }),
+          mutantResultFactory({ status: 'Survived' }),
+          mutantResultFactory({ status: 'Killed' }),
+          mutantResultFactory({ status: 'Timeout' }),
+          mutantResultFactory({ status: 'Ignored' }),
         ],
       }),
     };

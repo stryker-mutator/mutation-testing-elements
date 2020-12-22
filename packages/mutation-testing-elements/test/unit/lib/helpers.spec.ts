@@ -1,5 +1,5 @@
 import { lines, renderCode } from '../../../src/lib/codeHelpers';
-import { MutantStatus, FileResult } from 'mutation-testing-report-schema';
+import { FileResult } from 'mutation-testing-report-schema';
 import { expect } from 'chai';
 
 describe(lines.name, () => {
@@ -22,7 +22,7 @@ describe(renderCode.name, () => {
           location: { end: { column: 17, line: 1 }, start: { column: 14, line: 1 } },
           mutatorName: 'Foo',
           replacement: 'foo',
-          status: MutantStatus.Killed,
+          status: 'Killed',
         },
       ],
       source: `const foo = 'bar';
@@ -48,14 +48,14 @@ describe(renderCode.name, () => {
           location: { end: { column: 13, line: 3 }, start: { column: 10, line: 3 } },
           mutatorName: 'MethodReplacement',
           replacement: 'foo',
-          status: MutantStatus.Killed,
+          status: 'Killed',
         },
         {
           id: '2',
           location: { end: { column: 999 /*Doesn't exist*/, line: 4 }, start: { column: 15, line: 4 } },
           mutatorName: 'SemicolonRemover',
           replacement: '',
-          status: MutantStatus.Survived,
+          status: 'Survived',
         },
       ],
       source: `const foo = 'bar';

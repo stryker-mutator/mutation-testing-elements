@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.settings.json",
+  "compilerOptions": {
+    "types": ["mocha", "node"],
+    "outDir": "dist",
+    "resolveJsonModule": true
+  },
+  "include": ["test/**/*"],
+  "references": [
+    {
+      "path": "./tsconfig.src.json"
+    }
+  ]
+}

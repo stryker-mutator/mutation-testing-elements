@@ -1,6 +1,5 @@
 import { expect } from 'chai';
 import { ReportPage } from './po/ReportPage';
-import { MutantStatus } from 'mutation-testing-report-schema';
 import { MutantComponent } from './po/MutantComponent.po';
 import { getCurrent } from './lib/browser';
 
@@ -34,10 +33,10 @@ describe('File report "install-local-example/Options.ts"', () => {
 
   it('should only filter Survived and NoCoverage mutants by default', async () => {
     const legend = page.legend();
-    expect(await legend.displayButton(MutantStatus.Killed).isChecked()).false;
-    expect(await legend.displayButton(MutantStatus.Survived).isChecked()).true;
-    expect(await legend.displayButton(MutantStatus.NoCoverage).isChecked()).true;
-    expect(await legend.displayButton(MutantStatus.CompileError).isChecked()).false;
+    expect(await legend.displayButton('Killed').isChecked()).false;
+    expect(await legend.displayButton('Survived').isChecked()).true;
+    expect(await legend.displayButton('NoCoverage').isChecked()).true;
+    expect(await legend.displayButton('CompileError').isChecked()).false;
   });
 
   it('should hide killed mutants', async () => {
@@ -57,7 +56,7 @@ describe('File report "install-local-example/Options.ts"', () => {
 
   describe('when "Killed" is enabled', () => {
     beforeEach(async () => {
-      await page.legend().displayButton(MutantStatus.Killed).click();
+      await page.legend().displayButton('Killed').click();
     });
 
     it('should also show the killed mutants', async () => {
@@ -86,7 +85,7 @@ describe('File report "install-local-example/Options.ts"', () => {
 
       describe('and later "Killed" is disabled', () => {
         beforeEach(async () => {
-          await page.legend().displayButton(MutantStatus.Killed).click();
+          await page.legend().displayButton('Killed').click();
         });
 
         it('should have removed the "line-through" from the mutant\'s original code', async () => {

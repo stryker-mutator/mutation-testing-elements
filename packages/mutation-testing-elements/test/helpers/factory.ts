@@ -1,4 +1,4 @@
-import { MutantResult, MutantStatus, FileResult } from 'mutation-testing-report-schema';
+import { MutantResult, FileResult } from 'mutation-testing-report-schema';
 import { Metrics, MetricsResult } from 'mutation-testing-metrics';
 
 export function createMutantResult(overrides?: Partial<MutantResult>): MutantResult {
@@ -16,7 +16,7 @@ export function createMutantResult(overrides?: Partial<MutantResult>): MutantRes
     },
     mutatorName: 'bazMutator',
     replacement: 'baz',
-    status: MutantStatus.Killed,
+    status: 'Killed',
   };
   return { ...defaults, ...overrides };
 }

@@ -8,13 +8,13 @@ describe(getContextClassForStatus.name, () => {
       expect(getContextClassForStatus(input)).eq(expected);
     });
   }
-  actArrangeAssert('success', MutantStatus.Killed);
-  actArrangeAssert('danger', MutantStatus.Survived);
-  actArrangeAssert('caution', MutantStatus.NoCoverage);
-  actArrangeAssert('warning', MutantStatus.Timeout);
-  actArrangeAssert('secondary', MutantStatus.CompileError);
-  actArrangeAssert('secondary', MutantStatus.RuntimeError);
-  actArrangeAssert('secondary', MutantStatus.Ignored);
+  actArrangeAssert('success', 'Killed');
+  actArrangeAssert('danger', 'Survived');
+  actArrangeAssert('caution', 'NoCoverage');
+  actArrangeAssert('warning', 'Timeout');
+  actArrangeAssert('secondary', 'CompileError');
+  actArrangeAssert('secondary', 'RuntimeError');
+  actArrangeAssert('secondary', 'Ignored');
 });
 
 describe(escapeHtml.name, () => {

@@ -2,35 +2,35 @@ import { MutantStatus } from 'mutation-testing-report-schema';
 
 export function getContextClassForStatus(status: MutantStatus) {
   switch (status) {
-    case MutantStatus.Killed:
+    case 'Killed':
       return 'success';
-    case MutantStatus.NoCoverage:
+    case 'NoCoverage':
       return 'caution'; // custom class
-    case MutantStatus.Survived:
+    case 'Survived':
       return 'danger';
-    case MutantStatus.Timeout:
+    case 'Timeout':
       return 'warning';
-    case MutantStatus.Ignored:
-    case MutantStatus.RuntimeError:
-    case MutantStatus.CompileError:
+    case 'Ignored':
+    case 'RuntimeError':
+    case 'CompileError':
       return 'secondary';
   }
 }
 
 export function getEmojiForStatus(status: MutantStatus) {
   switch (status) {
-    case MutantStatus.Killed:
+    case 'Killed':
       return '✅';
-    case MutantStatus.NoCoverage:
+    case 'NoCoverage':
       return '🙈';
-    case MutantStatus.Ignored:
+    case 'Ignored':
       return '🤥';
-    case MutantStatus.Survived:
+    case 'Survived':
       return '👽';
-    case MutantStatus.Timeout:
+    case 'Timeout':
       return '⌛';
-    case MutantStatus.RuntimeError:
-    case MutantStatus.CompileError:
+    case 'RuntimeError':
+    case 'CompileError':
       return '💥';
   }
 }

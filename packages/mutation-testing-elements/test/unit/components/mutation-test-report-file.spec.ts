@@ -1,7 +1,7 @@
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { MutationTestReportFileComponent } from '../../../src/components/mutation-test-report-file';
 import { expect } from 'chai';
-import { FileResult, MutantStatus, MutantResult } from 'mutation-testing-report-schema';
+import { FileResult, MutantResult } from 'mutation-testing-report-schema';
 import { MutationTestReportMutantComponent, SHOW_MORE_EVENT } from '../../../src/components/mutation-test-report-mutant';
 import { MutationTestReportFileLegendComponent, MutantFilter } from '../../../dist/components/mutation-test-report-file-legend';
 import { createFileResult } from '../../helpers/factory';
@@ -62,7 +62,7 @@ describe(MutationTestReportFileComponent.name, () => {
         {
           enabled: false,
           numberOfMutants: 1,
-          status: MutantStatus.Killed,
+          status: 'Killed',
         },
       ];
       mutantComponent.show = true;
@@ -105,7 +105,7 @@ describe(MutationTestReportFileComponent.name, () => {
         const mutant = createMutantResult({
           id: '30',
           mutatorName: 'testMutator',
-          status: MutantStatus.Killed,
+          status: 'Killed',
         });
 
         // Act
@@ -171,7 +171,7 @@ describe(MutationTestReportFileComponent.name, () => {
         },
         mutatorName: 'fooMutator',
         replacement: '+',
-        status: MutantStatus.Timeout,
+        status: 'Timeout',
       };
       return { ...defaults, ...overrides };
     }

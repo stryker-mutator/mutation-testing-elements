@@ -141,8 +141,8 @@ describe(MutationTestReportMutantComponent.name, () => {
 
     // Assert
     expect(result).ok;
-    expect(result!.detail).ok;
-    expect(result!.detail).eq(mutant);
+    expect(result?.detail).ok;
+    expect(result?.detail).eq(mutant);
   });
 
   it("should not display a show more button if the description isn't set", async () => {
@@ -186,7 +186,7 @@ describe(MutationTestReportMutantComponent.name, () => {
       },
       mutatorName: 'fooMutator',
       replacement: '+',
-      status: MutantStatus.Timeout,
+      status: 'Timeout',
     };
     return { ...defaults, ...overrides };
   }

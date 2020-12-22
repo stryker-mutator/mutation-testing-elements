@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.settings.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "resolveJsonModule": true,
+    "outDir": "dist"
+  },
+  "include": ["src/**/*", "src/**/*.json", "src-generated/**/*"]
+}
