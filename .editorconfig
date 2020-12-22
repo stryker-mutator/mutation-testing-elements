@@ -2,4 +2,4 @@
 [{*.ts,*.js,*.json,*.jsonc,*.code-workspace,*.scss,*.css,*.html}]
 indent_style = space
 indent_size = 2
-end_of_line = ls
+end_of_line = lf
