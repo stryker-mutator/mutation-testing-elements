@@ -35,7 +35,67 @@
             "type": "array",
             "uniqueItems": true,
             "items": {
-              "$ref": "#/definitions/mutantResult"
+              "type": "object",
+              "title": "MutantResult",
+              "description": "Single mutation.",
+              "required": ["id", "mutatorName", "location", "status"],
+              "properties": {
+                "coveredBy": {
+                  "type": "array",
+                  "description": "The test ids that covered this mutant. If a mutation testing framework doesn't measure this information, you can simply leave this one out.",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description of the applied mutation.",
+                  "examples": ["removed call to java/io/Writer::write"]
+                },
+                "duration": {
+                  "type": "number",
+                  "description": "The net time it took to test this mutant in milliseconds. This is the time measurement without overhead from the mutation testing framework."
+                },
+                "id": {
+                  "type": "string",
+                  "description": "Unique id, can be used to correlate this mutant cross reports.",
+                  "examples": ["321321"]
+                },
+                "killedBy": {
+                  "type": "array",
+                  "description": "The test ids that killed this mutant. It is a best practice to \"bail\" on first failing test, in which case you can fill this array with that one test.",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "location": {
+                  "$ref": "#/definitions/location"
+                },
+                "mutatorName": {
+                  "type": "string",
+                  "description": "Category of the mutation.",
+                  "examples": ["ConditionalExpression", "EqualityOperator", "LogicalOperator"]
+                },
+                "replacement": {
+                  "type": "string",
+                  "description": "Actual mutation that has been applied.",
+                  "examples": ["-", "+", "&&", "||"]
+                },
+                "static": {
+                  "type": "boolean",
+                  "description": "A static mutant means that it was loaded once at during initialization, this makes it slow to test or even impossible, depending on the mutation testing framework."
+                },
+                "status": {
+                  "type": "string",
+                  "title": "MutantStatus",
+                  "description": "Result of the mutation.",
+                  "enum": ["Killed", "Survived", "NoCoverage", "CompileError", "RuntimeError", "Timeout", "Ignored"]
+                },
+                "testsCompleted": {
+                  "type": "number",
+                  "description": "The number of tests actually completed in order to test this mutant. Can differ from \"coveredBy\" because of bailing a mutant test run after first failing test."
+                }
+              }
             }
           },
           "source": {
@@ -54,7 +114,22 @@
         "tests": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/testDefinition"
+            "type": "object",
+            "title": "TestDefinition",
+            "required": ["id", "name"],
+            "description": "A test in your test file.",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string",
+                "description": "Name of the test, used to display the test."
+              },
+              "location": {
+                "$ref": "#/definitions/openEndLocation"
+              }
+            }
           }
         }
       }
@@ -203,69 +278,6 @@
     }
   },
   "definitions": {
-    "mutantResult": {
-      "type": "object",
-      "title": "MutantResult",
-      "description": "Single mutation.",
-      "required": ["id", "mutatorName", "location", "status"],
-      "properties": {
-        "coveredBy": {
-          "type": "array",
-          "description": "The test ids that covered this mutant. If a mutation testing framework doesn't measure this information, you can simply leave this one out.",
-          "items": {
-            "type": "string"
-          }
-        },
-        "description": {
-          "type": "string",
-          "description": "Description of the applied mutation.",
-          "examples": ["removed call to java/io/Writer::write"]
-        },
-        "duration": {
-          "type": "number",
-          "description": "The net time it took to test this mutant in milliseconds. This is the time measurement without overhead from the mutation testing framework."
-        },
-        "id": {
-          "type": "string",
-          "description": "Unique id, can be used to correlate this mutant cross reports.",
-          "examples": ["321321"]
-        },
-        "killedBy": {
-          "type": "array",
-          "description": "The test ids that killed this mutant. It is a best practice to \"bail\" on first failing test, in which case you can fill this array with that one test.",
-          "items": {
-            "type": "string"
-          }
-        },
-        "location": {
-          "$ref": "#/definitions/location"
-        },
-        "mutatorName": {
-          "type": "string",
-          "description": "Category of the mutation.",
-          "examples": ["ConditionalExpression", "EqualityOperator", "LogicalOperator"]
-        },
-        "replacement": {
-          "type": "string",
-          "description": "Actual mutation that has been applied.",
-          "examples": ["-", "+", "&&", "||"]
-        },
-        "static": {
-          "type": "boolean",
-          "description": "A static mutant means that it was loaded once at during initialization, this makes it slow to test or even impossible, depending on the mutation testing framework."
-        },
-        "status": {
-          "type": "string",
-          "title": "MutantStatus",
-          "description": "Result of the mutation.",
-          "enum": ["Killed", "Survived", "NoCoverage", "CompileError", "RuntimeError", "Timeout", "Ignored"]
-        },
-        "testsCompleted": {
-          "type": "number",
-          "description": "The number of tests actually completed in order to test this mutant. Can differ from \"coveredBy\" because of bailing a mutant test run after first failing test."
-        }
-      }
-    },
     "position": {
       "type": "object",
       "title": "Position",
@@ -309,24 +321,6 @@
         },
         "end": {
           "$ref": "#/definitions/position"
-        }
-      }
-    },
-    "testDefinition": {
-      "type": "object",
-      "title": "TestDefinition",
-      "required": ["id", "name"],
-      "description": "A test in your test file.",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string",
-          "description": "Name of the test, used to display the test."
-        },
-        "location": {
-          "$ref": "#/definitions/openEndLocation"
         }
       }
     }
