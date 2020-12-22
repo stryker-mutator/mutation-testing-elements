@@ -76,4 +76,8 @@ describe('JsonSchema', () => {
   it('should validate a report when end is missing in test location', () => {
     actAssertValid('missing-end-location');
   });
+
+  it('should validate a report when imageUrl is a data URL', () => {
+    actAssertValid('data-url');
+  });
 });

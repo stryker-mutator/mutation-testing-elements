@@ -42,7 +42,7 @@
               "properties": {
                 "coveredBy": {
                   "type": "array",
-                  "description": "The test ids that covered this mutant. If a mutation testing framework doesn't measure this information, you can simply leave this one out.",
+                  "description": "The test ids that covered this mutant. If a mutation testing framework doesn't measure this information, it can simply be left out.",
                   "items": {
                     "type": "string"
                   }
@@ -58,7 +58,7 @@
                 },
                 "id": {
                   "type": "string",
-                  "description": "Unique id, can be used to correlate this mutant cross reports.",
+                  "description": "Unique id, can be used to correlate this mutant across reports.",
                   "examples": ["321321"]
                 },
                 "killedBy": {
@@ -83,7 +83,7 @@
                 },
                 "static": {
                   "type": "boolean",
-                  "description": "A static mutant means that it was loaded once at during initialization, this makes it slow to test or even impossible, depending on the mutation testing framework."
+                  "description": "A static mutant means that it was loaded once at during initialization, this makes it slow or even impossible to test, depending on the mutation testing framework."
                 },
                 "status": {
                   "type": "string",
@@ -124,7 +124,8 @@
               "description": "A test in your test file.",
               "properties": {
                 "id": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "Unique id of the test, used to correlate what test killed a mutant."
                 },
                 "name": {
                   "type": "string",
@@ -211,8 +212,7 @@
             },
             "imageUrl": {
               "type": "string",
-              "format": "uri",
-              "description": "The url to an image for the framework, can be a data-url."
+              "description": "The URL to an image for the framework, can be a data URL."
             }
           }
         },
