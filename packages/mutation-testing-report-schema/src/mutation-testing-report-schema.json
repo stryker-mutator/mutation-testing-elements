@@ -16,25 +16,45 @@
       "description": "Major version of this report. Used for compatibility.",
       "examples": ["1"]
     },
-    "tests": {
-      "title": "TestDefinitionDictionary",
-      "description": "Test definitions by (unique) id",
+    "files": {
+      "type": "object",
+      "title": "FileResultDictionary",
+      "description": "All mutated files.",
       "additionalProperties": {
         "type": "object",
-        "title": "TestDefinition",
-        "description": "A test in your test suite that ran during mutation testing.",
-        "required": ["name"],
+        "title": "FileResult",
+        "description": "Mutated file, with the relative path of the file as the key.",
+        "required": ["language", "source", "mutants"],
         "properties": {
-          "name": {
-            "type": "string",
-            "description": "Name of the test, used to display the test."
+          "language": {
+            "description": "Programming language that is used. Used for code highlighting, see https://prismjs.com/#examples.",
+            "examples": ["javascript", "typescript", "cs", "scala", "java"],
+            "type": "string"
           },
-          "filePath": {
-            "type": "string",
-            "description": "The file name relative to the project root where this test resides"
+          "mutants": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/definitions/mutantResult"
+            }
           },
-          "location": {
-            "$ref": "#/definitions/openEndLocation"
+          "source": {
+            "description": "Full source code of the mutated file, this is used for highlighting.",
+            "examples": ["using System; using....."],
+            "type": "string"
+          }
+        }
+      }
+    },
+    "testFiles": {
+      "title": "TestFileDefinitionDictionary",
+      "description": "Test file definitions by file path OR class name.",
+      "required": ["tests"],
+      "properties": {
+        "tests": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/testDefinition"
           }
         }
       }
@@ -66,36 +86,6 @@
       "description": "The optional location of the project root.",
       "examples": ["C:\\Projects\\project-under-test", "/home/user/projects/project-under-test"]
     },
-    "files": {
-      "type": "object",
-      "title": "FileResultDictionary",
-      "description": "All mutated files.",
-      "additionalProperties": {
-        "type": "object",
-        "title": "FileResult",
-        "description": "Mutated file, with the relative path of the file as the key.",
-        "required": ["language", "source", "mutants"],
-        "properties": {
-          "language": {
-            "description": "Programming language that is used. Used for code highlighting, see https://prismjs.com/#examples.",
-            "examples": ["javascript", "typescript", "cs", "scala", "java"],
-            "type": "string"
-          },
-          "mutants": {
-            "type": "array",
-            "uniqueItems": true,
-            "items": {
-              "$ref": "#definitions/mutantResult"
-            }
-          },
-          "source": {
-            "description": "Full source code of the mutated file, this is used for highlighting.",
-            "examples": ["using System; using....."],
-            "type": "string"
-          }
-        }
-      }
-    },
     "performance": {
       "type": "object",
       "title": "PerformanceStatistics",
@@ -115,6 +105,46 @@
         }
       }
     },
+    "framework": {
+      "type": "object",
+      "title": "FrameworkInformation",
+      "description": "Extra information about the framework used",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the framework used.",
+          "examples": ["Stryker", "Stryker4s", "Stryker.NET", "Infection PHP", "Pitest"]
+        },
+        "version": {
+          "type": "string",
+          "description": "The version of the framework."
+        },
+        "branding": {
+          "type": "object",
+          "required": ["homepageUrl"],
+          "properties": {
+            "homepageUrl": {
+              "type": "string",
+              "format": "uri",
+              "description": "URL to the homepage of the framework."
+            },
+            "imageUrl": {
+              "type": "string",
+              "format": "uri",
+              "description": "The url to an image for the framework, can be a data-url."
+            }
+          }
+        },
+        "dependencies": {
+          "title": "Dependencies",
+          "description": "Dependencies used by the framework. Key-value pair of dependencies and their versions.",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
     "system": {
       "type": "object",
       "title": "SystemInformation",
@@ -130,7 +160,7 @@
           "properties": {
             "description": {
               "type": "string",
-              "examples": ["Windows 10 Pro", "Debian Buster", " Ubuntu 20.04.1 LTS"]
+              "examples": ["Windows 10 Pro", "Debian Buster", "Ubuntu 20.04.1 LTS"]
             },
             "platform": {
               "type": "string",
@@ -170,40 +200,6 @@
           }
         }
       }
-    },
-    "framework": {
-      "type": "object",
-      "title": "FrameworkInformation",
-      "description": "Extra information about the framework used",
-      "required": ["name"],
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Name of the framework used.",
-          "examples": ["Stryker", "Stryker4s", "Stryker.NET", "Infection PHP", "Pitest"]
-        },
-        "version": {
-          "type": "string",
-          "description": "The version of the framework."
-        },
-        "url": {
-          "type": "string",
-          "format": "uri",
-          "description": "URL to the home-page of the framework."
-        },
-        "imageUrl": {
-          "type": "string",
-          "format": "uri",
-          "description": "The url to an image for the framework, can be a data-url."
-        },
-        "dependencies": {
-          "title": "Dependencies",
-          "description": "Dependencies used by the framework. Key-value pair of dependencies and their versions.",
-          "additionalProperties": {
-            "type": "string"
-          }
-        }
-      }
     }
   },
   "definitions": {
@@ -227,11 +223,11 @@
         },
         "duration": {
           "type": "number",
-          "description": "The time it took to test this mutant in milliseconds."
+          "description": "The net time it took to test this mutant in milliseconds. This is the time measurement without overhead from the mutation testing framework."
         },
         "id": {
           "type": "string",
-          "description": "Unique id, can be used to correlate this mutant with other reports.",
+          "description": "Unique id, can be used to correlate this mutant cross reports.",
           "examples": ["321321"]
         },
         "killedBy": {
@@ -254,15 +250,19 @@
           "description": "Actual mutation that has been applied.",
           "examples": ["-", "+", "&&", "||"]
         },
+        "static": {
+          "type": "boolean",
+          "description": "A static mutant means that it was loaded once at during initialization, this makes it slow to test or even impossible, depending on the mutation testing framework."
+        },
         "status": {
           "type": "string",
           "title": "MutantStatus",
           "description": "Result of the mutation.",
           "enum": ["Killed", "Survived", "NoCoverage", "CompileError", "RuntimeError", "Timeout", "Ignored"]
         },
-        "testsRan": {
+        "testsCompleted": {
           "type": "number",
-          "description": "The number of tests actually ran for this mutant. Can differ from \"coveredBy\" because of bailing a mutant test run after first failing test."
+          "description": "The number of tests actually completed in order to test this mutant. Can differ from \"coveredBy\" because of bailing a mutant test run after first failing test."
         }
       }
     },
@@ -309,6 +309,24 @@
         },
         "end": {
           "$ref": "#/definitions/position"
+        }
+      }
+    },
+    "testDefinition": {
+      "type": "object",
+      "title": "TestDefinition",
+      "required": ["id", "name"],
+      "description": "A test in your test file.",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the test, used to display the test."
+        },
+        "location": {
+          "$ref": "#/definitions/openEndLocation"
         }
       }
     }
