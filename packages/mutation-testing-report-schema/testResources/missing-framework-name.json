@@ -6,7 +6,7 @@
     "low": 60
   },
   "framework": {
-    "url": "https://stryker-mutator.io",
+    "homepageUrl": "https://stryker-mutator.io",
     "imageUrl": "https://stryker-mutator.io/img/stryker.svg",
     "dependencies": {
       "@stryker-mutator/jest-runner": "1.0.2",

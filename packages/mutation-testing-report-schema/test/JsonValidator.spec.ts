@@ -53,15 +53,27 @@ describe('JsonSchema', () => {
     actAssertInvalid('missing-mutant-location-report', "files['test.js'].mutants[0].location should have required property 'end'");
   });
 
-  it('should validate a report when a test name is missing', () => {
-    actAssertInvalid('missing-test-name', ".tests['test-1'] should have required property 'name'");
+  it('should invalidate a report when a test name is missing', () => {
+    actAssertInvalid('missing-test-name', "data.testFiles['test/foo.spec.js'].tests[0] should have required property 'name'");
   });
 
-  it('should validate a report when the framework.name is missing', () => {
+  it('should invalidate a report when the framework.name is missing', () => {
     actAssertInvalid('missing-framework-name', "framework should have required property 'name'");
+  });
+
+  it('should invalidate a report when the tests in testFiles are missing', () => {
+    actAssertInvalid('missing-tests', "data.testFiles['test/foo.spec.js'] should have required property 'tests'");
   });
 
   it('should validate a report when the replacement is missing', () => {
     actAssertValid('missing-replacement-report');
+  });
+
+  it('should validate a report when testFiles is missing', () => {
+    actAssertValid('missing-testFiles');
+  });
+
+  it('should validate a report when end is missing in test location', () => {
+    actAssertValid('missing-end-location');
   });
 });

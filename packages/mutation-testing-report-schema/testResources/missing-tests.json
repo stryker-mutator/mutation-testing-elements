@@ -6,13 +6,7 @@
     "low": 60
   },
   "testFiles": {
-    "test/foo.spec.js": {
-      "tests": [
-        {
-          "id": "test-1"
-        }
-      ]
-    }
+    "test/foo.spec.js": {}
   },
   "files": {}
 }

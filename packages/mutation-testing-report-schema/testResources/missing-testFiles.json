@@ -5,14 +5,5 @@
     "high": 80,
     "low": 60
   },
-  "testFiles": {
-    "test/foo.spec.js": {
-      "tests": [
-        {
-          "id": "test-1"
-        }
-      ]
-    }
-  },
   "files": {}
 }

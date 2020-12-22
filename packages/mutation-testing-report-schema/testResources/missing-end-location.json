@@ -9,7 +9,14 @@
     "test/foo.spec.js": {
       "tests": [
         {
-          "id": "test-1"
+          "id": "test-1",
+          "name": "foo should be bar",
+          "location": {
+            "start": {
+              "line": 4,
+              "column": 3
+            }
+          }
         }
       ]
     }

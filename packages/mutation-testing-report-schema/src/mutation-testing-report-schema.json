@@ -107,27 +107,32 @@
       }
     },
     "testFiles": {
+      "type": "object",
       "title": "TestFileDefinitionDictionary",
       "description": "Test file definitions by file path OR class name.",
-      "required": ["tests"],
-      "properties": {
-        "tests": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "title": "TestDefinition",
-            "required": ["id", "name"],
-            "description": "A test in your test file.",
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string",
-                "description": "Name of the test, used to display the test."
-              },
-              "location": {
-                "$ref": "#/definitions/openEndLocation"
+      "additionalProperties": {
+        "type": "object",
+        "title": "TestFile",
+        "required": ["tests"],
+        "properties": {
+          "tests": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "title": "TestDefinition",
+              "required": ["id", "name"],
+              "description": "A test in your test file.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Name of the test, used to display the test."
+                },
+                "location": {
+                  "$ref": "#/definitions/openEndLocation"
+                }
               }
             }
           }

@@ -12,7 +12,7 @@
     "name": "Stryker",
     "version": "4.3.0",
     "branding": {
-      "url": "https://stryker-mutator.io",
+      "homepageUrl": "https://stryker-mutator.io",
       "imageUrl": "https://stryker-mutator.io/img/stryker.svg"
     },
     "dependencies": {
@@ -91,9 +91,8 @@
     "mutation": 60321
   },
   "projectRoot": "/home/user/projects/project-under-test",
-  "tests": {},
   "testFiles": {
-    "io.stryker4s.core.case": {
+    "test/foo.spec.js": {
       "tests": [
         {
           "id": "test-1",
