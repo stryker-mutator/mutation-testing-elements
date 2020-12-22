@@ -113,6 +113,7 @@
       "additionalProperties": {
         "type": "object",
         "title": "TestFile",
+        "description": "A file containing one or more tests",
         "required": ["tests"],
         "properties": {
           "tests": {
@@ -199,10 +200,12 @@
         },
         "version": {
           "type": "string",
-          "description": "The version of the framework."
+          "description": "Version of the framework."
         },
         "branding": {
           "type": "object",
+          "title": "BrandingInformation",
+          "description": "Extra branding information about the framework used.",
           "required": ["homepageUrl"],
           "properties": {
             "homepageUrl": {
@@ -212,7 +215,7 @@
             },
             "imageUrl": {
               "type": "string",
-              "description": "The URL to an image for the framework, can be a data URL."
+              "description": "URL to an image for the framework, can be a data URL."
             }
           }
         },
@@ -228,33 +231,36 @@
     "system": {
       "type": "object",
       "title": "SystemInformation",
-      "description": "Information about the system that performed mutation testing",
+      "description": "Information about the system that performed mutation testing.",
       "properties": {
         "ci": {
           "description": "Did mutation testing run in a Continuous Integration environment (pipeline)? Note that there is no way of knowing this for sure. It's done on a best-effort basis.",
           "type": "boolean"
         },
         "os": {
-          "title": "OSInformation",
           "type": "object",
+          "title": "OSInformation",
           "properties": {
             "description": {
               "type": "string",
+              "description": "Human-readable description of the OS",
               "examples": ["Windows 10 Pro", "Debian Buster", "Ubuntu 20.04.1 LTS"]
             },
             "platform": {
               "type": "string",
+              "description": "Platform identifier",
               "examples": ["linux", "win32"]
             },
             "version": {
               "type": "string",
+              "description": "Version of the OS or distribution",
               "examples": ["10.0.19041"]
             }
           }
         },
         "cpu": {
-          "title": "CpuInformation",
           "type": "object",
+          "title": "CpuInformation",
           "properties": {
             "baseClock": {
               "type": "number",
@@ -275,7 +281,7 @@
           "properties": {
             "total": {
               "type": "number",
-              "description": "The total RAM of the system that performed mutation testing in MB"
+              "description": "The total RAM of the system that performed mutation testing in MB."
             }
           }
         }
