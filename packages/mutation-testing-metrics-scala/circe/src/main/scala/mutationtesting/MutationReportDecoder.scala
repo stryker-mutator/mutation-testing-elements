@@ -16,9 +16,9 @@ object MutationReportDecoder {
   implicit val mutantResultDecoder: Decoder[MutantResult] =
     Decoder.forProduct6("id", "mutatorName", "replacement", "location", "status", "description")(MutantResult.apply)
 
-  implicit val mutationTestResultDecoder: Decoder[MutationTestResult] =
-    Decoder.forProduct3("source", "mutants", "language")(MutationTestResult.apply)
+  implicit val fileResultDecoder: Decoder[FileResult] =
+    Decoder.forProduct3("source", "mutants", "language")(FileResult.apply)
 
-  implicit val mutationTestReportDecoder: Decoder[MutationTestReport] =
-    Decoder.forProduct5("$schema", "schemaVersion", "thresholds", "projectRoot", "files")(MutationTestReport.apply)
+  implicit val mutationTestResultDecoder: Decoder[MutationTestResult] =
+    Decoder.forProduct5("$schema", "schemaVersion", "thresholds", "projectRoot", "files")(MutationTestResult.apply)
 }

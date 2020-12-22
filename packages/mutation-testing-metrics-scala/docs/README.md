@@ -23,9 +23,9 @@ First create the mutation test report:
 
 ```scala mdoc:silent
 import mutationtesting._
-val report = MutationTestReport(thresholds = Thresholds(high = 80, low = 10),
+val report = MutationTestResult(thresholds = Thresholds(high = 80, low = 10),
   files = Map(
-    "src/stryker4s/Stryker4s.scala" -> MutationTestResult(
+    "src/stryker4s/Stryker4s.scala" -> FileResult(
       source = "case class Stryker4s(foo: String)",
       mutants = Seq(
         MutantResult("1", "BinaryOperator", "-", Location(Position(1, 2), Position(2, 3)), status = MutantStatus.Killed)
@@ -35,7 +35,7 @@ val report = MutationTestReport(thresholds = Thresholds(high = 80, low = 10),
 )
 ```
 
-The `MutationTestReport` case classes generate a JSON compliant with the [mutation-testing JSON schema](https://github.com/stryker-mutator/mutation-testing-elements/blob/master/packages/mutation-testing-report-schema/src/mutation-testing-report-schema.json).
+The `MutationTestResult` case classes generate a JSON compliant with the [mutation-testing JSON schema](https://github.com/stryker-mutator/mutation-testing-elements/blob/master/packages/mutation-testing-report-schema/src/mutation-testing-report-schema.json).
 
 ```scala mdoc:reset:invisible
 // Read actual json for more interesting metrics
@@ -45,7 +45,7 @@ import mutationtesting._
 import mutationtesting.MutationReportDecoder._
 val json = Source.fromFile("../mutation-testing-elements/testResources/scala-example/mutation-report.json").mkString
 
-val report = decode[MutationTestReport](json) match {
+val report = decode[MutationTestResult](json) match {
   case Left(err)  => throw err
   case Right(rep) => rep
 }
@@ -92,7 +92,7 @@ Import the decoder:
 import io.circe.parser.decode
 import mutationtesting.MutationReportDecoder._
 
-val decoded: Either[io.circe.Error, MutationTestReport] = decode[MutationTestReport](json)
+val decoded: Either[io.circe.Error, MutationTestResult] = decode[MutationTestResult](json)
 ```
 
 ## API reference

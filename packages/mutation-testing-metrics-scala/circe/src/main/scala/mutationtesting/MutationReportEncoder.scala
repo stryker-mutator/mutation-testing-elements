@@ -19,12 +19,12 @@ object MutationReportEncoder {
         (m.id, m.mutatorName, m.replacement, m.location, m.status, m.description)
       )
 
-  implicit val mutationTestResultEncoder: Encoder[MutationTestResult] =
+  implicit val fileResultEncoder: Encoder[FileResult] =
     Encoder.forProduct3("source", "mutants", "language")(m => (m.source, m.mutants, m.language))
 
-  implicit val mutationTestReportEncoder: Encoder[MutationTestReport] =
+  implicit val mutationTestResultEncoder: Encoder[MutationTestResult] =
     Encoder
-      .forProduct5("$schema", "schemaVersion", "thresholds", "projectRoot", "files")((m: MutationTestReport) =>
+      .forProduct5("$schema", "schemaVersion", "thresholds", "projectRoot", "files")((m: MutationTestResult) =>
         (m.`$schema`, m.schemaVersion, m.thresholds, m.projectRoot, m.files)
       )
       .mapJson(_.deepDropNullValues)

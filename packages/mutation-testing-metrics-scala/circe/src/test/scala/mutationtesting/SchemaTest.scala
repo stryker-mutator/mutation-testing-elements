@@ -9,10 +9,10 @@ import scala.io.Source
 class SchemaTest extends munit.FunSuite {
 
   test("encoded json should be valid for mutation-testing-report-schema") {
-    val sut = MutationTestReport(
+    val sut = MutationTestResult(
       thresholds = Thresholds(high = 80, low = 10),
       files = Map(
-        "src/stryker4s/Stryker4s.scala" -> MutationTestResult(
+        "src/stryker4s/Stryker4s.scala" -> FileResult(
           source = "case class Stryker4s(foo: String)",
           mutants = Seq(
             MutantResult(
@@ -41,7 +41,7 @@ class SchemaTest extends munit.FunSuite {
     val report =
       Source.fromFile("../mutation-testing-elements/testResources/scala-example/mutation-report.json").mkString
 
-    decode[MutationTestReport](report) match {
+    decode[MutationTestResult](report) match {
       case Left(err) => fail(err.getMessage())
       case Right(report) =>
         assert(report.`$schema`.isEmpty)
@@ -56,7 +56,7 @@ class SchemaTest extends munit.FunSuite {
     }
   }
 
-  def toJsonString(report: MutationTestReport) = {
+  def toJsonString(report: MutationTestResult) = {
     import mutationtesting.MutationReportEncoder._
     import io.circe.syntax._
     report.asJson.noSpaces

@@ -23,9 +23,9 @@ First create the mutation test report:
 
 ```scala
 import mutationtesting._
-val report = MutationTestReport(thresholds = Thresholds(high = 80, low = 10),
+val report = MutationTestResult(thresholds = Thresholds(high = 80, low = 10),
   files = Map(
-    "src/stryker4s/Stryker4s.scala" -> MutationTestResult(
+    "src/stryker4s/Stryker4s.scala" -> FileResult(
       source = "case class Stryker4s(foo: String)",
       mutants = Seq(
         MutantResult("1", "BinaryOperator", "-", Location(Position(1, 2), Position(2, 3)), status = MutantStatus.Killed)
@@ -35,7 +35,7 @@ val report = MutationTestReport(thresholds = Thresholds(high = 80, low = 10),
 )
 ```
 
-The `MutationTestReport` case classes generate a JSON compliant with the [mutation-testing JSON schema](https://github.com/stryker-mutator/mutation-testing-elements/blob/master/packages/mutation-testing-report-schema/src/mutation-testing-report-schema.json).
+The `MutationTestResult` case classes generate a JSON compliant with the [mutation-testing JSON schema](https://github.com/stryker-mutator/mutation-testing-elements/blob/master/packages/mutation-testing-report-schema/src/mutation-testing-report-schema.json).
 
 
 Then calculate and use metrics from that report:
@@ -82,7 +82,7 @@ Import the decoder:
 import io.circe.parser.decode
 import mutationtesting.MutationReportDecoder._
 
-val decoded: Either[io.circe.Error, MutationTestReport] = decode[MutationTestReport](json)
+val decoded: Either[io.circe.Error, MutationTestResult] = decode[MutationTestResult](json)
 ```
 
 ## API reference

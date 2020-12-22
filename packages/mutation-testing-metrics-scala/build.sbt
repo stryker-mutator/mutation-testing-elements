@@ -1,5 +1,5 @@
 val Scala212 = "2.12.11"
-val Scala213 = "2.13.3"
+val Scala213 = "2.13.4"
 
 scalaVersion := Scala213
 
@@ -51,7 +51,7 @@ lazy val schema = project
   )
 
 lazy val sharedSettings = Seq(
-  libraryDependencies += "org.scalameta" %% "munit" % "0.7.15" % Test,
+  libraryDependencies += "org.scalameta" %% "munit" % "0.7.20" % Test,
   testFrameworks := List(new TestFramework("munit.Framework")),
   scalaVersion := Scala213,
   crossScalaVersions := Seq(Scala213, Scala212),
