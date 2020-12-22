@@ -70,7 +70,7 @@ describe('JsonSchema', () => {
   });
 
   it('should validate a report when testFiles is missing', () => {
-    actAssertValid('missing-testFiles');
+    actAssertValid('missing-test-files');
   });
 
   it('should validate a report when end is missing in test location', () => {
