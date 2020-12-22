@@ -151,7 +151,7 @@
       "description": "Information about the system that performed mutation testing",
       "properties": {
         "ci": {
-          "description": "Did mutation testing run in a Continuous Integration environment (pipeline)? Note that there is no way of knowing this for sure. It's usually a good practice.",
+          "description": "Did mutation testing run in a Continuous Integration environment (pipeline)? Note that there is no way of knowing this for sure. It's done on a best-effort basis.",
           "type": "boolean"
         },
         "os": {
