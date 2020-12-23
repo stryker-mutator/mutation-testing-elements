@@ -191,12 +191,12 @@
     "framework": {
       "type": "object",
       "title": "FrameworkInformation",
-      "description": "Extra information about the framework used",
+      "description": "Extra information about the framework used",
       "required": ["name"],
       "properties": {
         "name": {
           "type": "string",
-          "description": "Name of the framework used.",
+          "description": "Name of the framework used.",
           "examples": ["Stryker", "Stryker4s", "Stryker.NET", "Infection PHP", "Pitest"]
         },
         "version": {
@@ -212,7 +212,7 @@
             "homepageUrl": {
               "type": "string",
               "format": "uri",
-              "description": "URL to the homepage of the framework."
+              "description": "URL to the homepage of the framework."
             },
             "imageUrl": {
               "type": "string",
@@ -223,7 +223,7 @@
         "dependencies": {
           "type": "object",
           "title": "Dependencies",
-          "description": "Dependencies used by the framework. Key-value pair of dependencies and their versions.",
+          "description": "Dependencies used by the framework. Key-value pair of dependencies and their versions.",
           "additionalProperties": {
             "type": "string"
           }
