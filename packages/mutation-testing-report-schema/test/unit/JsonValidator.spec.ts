@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import Ajv from 'ajv';
-import { schema } from '../src';
+import { schema } from '../../src';
 
 const SCHEMA_NAME = 'http://stryker-mutator.io/report.schema.json';
 
@@ -17,7 +17,7 @@ describe('JsonSchema', () => {
 
   function validate(testResourceFileName: string) {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const report: unknown = require(`../../testResources/${testResourceFileName}.json`);
+    const report: unknown = require(`../../../testResources/${testResourceFileName}.json`);
     return schemaValidator.validate(SCHEMA_NAME, report);
   }
 

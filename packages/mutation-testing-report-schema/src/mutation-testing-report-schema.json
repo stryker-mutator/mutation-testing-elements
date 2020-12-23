@@ -220,6 +220,7 @@
           }
         },
         "dependencies": {
+          "type": "object",
           "title": "Dependencies",
           "description": "Dependencies used by the framework. Key-value pair of dependencies and their versions.",
           "additionalProperties": {
