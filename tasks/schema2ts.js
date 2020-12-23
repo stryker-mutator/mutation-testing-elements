@@ -1,12 +1,11 @@
-// @ts-check
-
+/* eslint-disable @typescript-eslint/no-var-requires */
 // See https://github.com/bcherny/json-schema-to-typescript/issues/358
 
 const path = require('path');
 const { promises: fs } = require('fs');
 const schema2ts = require('json-schema-to-typescript');
 
-const [_1, _2, src, target] = process.argv.filter((arg) => !arg.startsWith('-'));
+const [, , src, target] = process.argv.filter((arg) => !arg.startsWith('-'));
 
 if (!target) {
   throw new Error(`Usage node ${path.relative(__dirname, __filename)} schema outFile`);
@@ -16,7 +15,7 @@ async function main() {
   const input = require(path.resolve(src));
   const transformed = transform(input);
   const ts = await schema2ts.compile(transformed, path.basename(src), {
-    enableConstEnums: false
+    enableConstEnums: false,
   });
   await fs.mkdir(path.dirname(target), { recursive: true });
   await fs.writeFile(target, ts, 'utf-8');
@@ -46,9 +45,9 @@ function transform(input) {
         ...(typeof input.additionalProperties === 'undefined'
           ? { additionalProperties: false }
           : typeof input.additionalProperties === 'object'
-            ? { additionalProperties: transform(input.additionalProperties) }
-            : undefined),
-        ...(input.title === 'MutantStatus' ? { tsEnumNames: input.enum } : undefined)
+          ? { additionalProperties: transform(input.additionalProperties) }
+          : undefined),
+        ...(input.title === 'MutantStatus' ? { tsEnumNames: input.enum } : undefined),
       };
     case 'array':
       return {
@@ -58,8 +57,8 @@ function transform(input) {
     case 'string':
       return {
         ...input,
-        ...(input.title === 'MutantStatus' ? { tsEnumNames: input.enum } : undefined)
-      }
+        ...(input.title === 'MutantStatus' ? { tsEnumNames: input.enum } : undefined),
+      };
     case 'boolean':
     case 'integer':
     case 'number':
@@ -67,7 +66,7 @@ function transform(input) {
     case undefined:
       throw new Error(`Missing "type" in ${JSON.stringify(input, null, 2)}`);
     default:
-      throw new Error(`Unsupported type ${input.type} in ${JSON.stringify(input, null, 2)}`);
+      throw new Error(`Unsupported type ${String(input.type)} in ${JSON.stringify(input, null, 2)}`);
   }
 }
 
