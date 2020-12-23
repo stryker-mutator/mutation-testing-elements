@@ -42,7 +42,7 @@ The `MutationTestResult` case classes generate a JSON compliant with the [mutati
 import scala.io.Source
 import io.circe.parser.decode
 import mutationtesting._
-import mutationtesting.MutationReportDecoder._
+import mutationtesting.circe._
 val json = Source.fromFile("../mutation-testing-elements/testResources/scala-example/mutation-report.json").mkString
 
 val report = decode[MutationTestResult](json) match {
@@ -73,26 +73,17 @@ Circe transcodings are provided by the `mutation-testing-metrics-circe` library 
 libraryDependencies += "io.stryker-mutator" %% "mutation-testing-metrics-circe" % version
 ```
 
-### Encoding
+### Encoding & decoding
 
-Import the encoder:
+Import the codec:
 
 ```scala mdoc:silent
 import io.circe.syntax._
-import mutationtesting.MutationReportEncoder._
+import mutationtesting.circe._
 
 val encoded: io.circe.Json = report.asJson
-```
 
-### Decoding
-
-Import the decoder:
-
-```scala mdoc:silent
-import io.circe.parser.decode
-import mutationtesting.MutationReportDecoder._
-
-val decoded: Either[io.circe.Error, MutationTestResult] = decode[MutationTestResult](json)
+val decoded: Either[io.circe.Error, MutationTestResult] = decode[MutationTestResult](encoded.toString)
 ```
 
 ## API reference

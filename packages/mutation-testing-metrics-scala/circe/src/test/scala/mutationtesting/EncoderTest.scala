@@ -1,9 +1,9 @@
 package mutationtesting
 
 import io.circe.syntax._
+import mutationtesting.circe._
 
 class EncoderTest extends munit.FunSuite {
-  import mutationtesting.MutationReportEncoder._
   test("encoded JSON should be valid") {
     val sut = testReport
 

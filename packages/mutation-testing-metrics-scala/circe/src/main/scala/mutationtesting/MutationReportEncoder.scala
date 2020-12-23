@@ -1,31 +1,29 @@
 package mutationtesting
 
-import mutationtesting.MutantStatus._
 import io.circe._
 
+@deprecated(message = "Use mutationtesting.circe instead", since = "1.5.0")
 object MutationReportEncoder {
 
-  implicit val mutantStatusEncoder: Encoder[MutantStatus] = Encoder.encodeEnumeration(MutantStatus)
+  @deprecated(message = "Use mutationtesting.circe instead", since = "1.5.0")
+  implicit lazy val mutantStatusEncoder: Encoder[MutantStatus] = circe.mutantStatusCodec
 
-  implicit val positionEncoder: Encoder[Position] = Encoder.forProduct2("line", "column")(p => (p.line, p.column))
+  @deprecated(message = "Use mutationtesting.circe instead", since = "1.5.0")
+  implicit lazy val positionEncoder: Encoder[Position] = circe.positionCodec
 
-  implicit val thresholdsEncoder: Encoder[Thresholds] = Encoder.forProduct2("high", "low")(t => (t.high, t.low))
+  @deprecated(message = "Use mutationtesting.circe instead", since = "1.5.0")
+  implicit lazy val thresholdsEncoder: Encoder[Thresholds] = circe.thresholdsCodec
 
-  implicit val locationEncoder: Encoder[Location] = Encoder.forProduct2("start", "end")(l => (l.start, l.end))
+  @deprecated(message = "Use mutationtesting.circe instead", since = "1.5.0")
+  implicit lazy val locationEncoder: Encoder[Location] = circe.locationCodec
 
-  implicit val mutantResultEncoder: Encoder[MutantResult] =
-    Encoder
-      .forProduct6("id", "mutatorName", "replacement", "location", "status", "description")((m: MutantResult) =>
-        (m.id, m.mutatorName, m.replacement, m.location, m.status, m.description)
-      )
+  @deprecated(message = "Use mutationtesting.circe instead", since = "1.5.0")
+  implicit lazy val mutantResultEncoder: Encoder[MutantResult] = circe.mutantResultCodec
 
-  implicit val fileResultEncoder: Encoder[FileResult] =
-    Encoder.forProduct3("source", "mutants", "language")(m => (m.source, m.mutants, m.language))
+  @deprecated(message = "Use mutationtesting.circe instead", since = "1.5.0")
+  implicit lazy val fileResultEncoder: Encoder[FileResult] = circe.fileResultCodec
 
-  implicit val mutationTestResultEncoder: Encoder[MutationTestResult] =
-    Encoder
-      .forProduct5("$schema", "schemaVersion", "thresholds", "projectRoot", "files")((m: MutationTestResult) =>
-        (m.`$schema`, m.schemaVersion, m.thresholds, m.projectRoot, m.files)
-      )
-      .mapJson(_.deepDropNullValues)
+  @deprecated(message = "Use mutationtesting.circe instead", since = "1.5.0")
+  implicit lazy val mutationTestResultEncoder: Encoder[MutationTestResult] = circe.mutationTestResultCodec
+    .mapJson(_.deepDropNullValues)
 }

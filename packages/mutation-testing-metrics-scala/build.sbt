@@ -26,7 +26,7 @@ lazy val circe = project
 
 lazy val docs = project
   .in(file("metrics-docs")) // important: it must not be docs/
-  .settings(scalaVersion := Scala213, mdocOut := file("."))
+  .settings(scalaVersion := Scala213, mdocOut := file("."), mdocExtraArguments += "--no-link-hygiene")
   .dependsOn(circe)
   .enablePlugins(MdocPlugin)
 

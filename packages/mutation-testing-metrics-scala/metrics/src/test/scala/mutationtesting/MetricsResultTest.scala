@@ -20,16 +20,15 @@ class MetricsResultTest extends munit.FunSuite {
     assert(sut.mutationScoreBasedOnCoveredCode.isNaN)
   }
 
-  expectedSet.foreach({
-    case (name, actualFunc, expected) =>
-      test(s"$name should be $expected on testset") {
-        assertEquals(
-          actualFunc(testSet),
-          expected,
-          s"Unexpected value ${actualFunc(testSet)} for $name, expected $expected"
-        )
-      }
-  })
+  expectedSet.foreach { case (name, actualFunc, expected) =>
+    test(s"$name should be $expected on testset") {
+      assertEquals(
+        actualFunc(testSet),
+        expected,
+        s"Unexpected value ${actualFunc(testSet)} for $name, expected $expected"
+      )
+    }
+  }
 
   private lazy val expectedSet: List[(String, MetricsResult => Number, Number)] = List(
     ("killed", _.killed, 2),
