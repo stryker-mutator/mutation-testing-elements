@@ -63,26 +63,17 @@ Circe transcodings are provided by the `mutation-testing-metrics-circe` library 
 libraryDependencies += "io.stryker-mutator" %% "mutation-testing-metrics-circe" % version
 ```
 
-### Encoding
+### Encoding & decoding
 
-Import the encoder:
+Import the codec:
 
 ```scala
 import io.circe.syntax._
-import mutationtesting.MutationReportEncoder._
+import mutationtesting.circe._
 
 val encoded: io.circe.Json = report.asJson
-```
 
-### Decoding
-
-Import the decoder:
-
-```scala
-import io.circe.parser.decode
-import mutationtesting.MutationReportDecoder._
-
-val decoded: Either[io.circe.Error, MutationTestResult] = decode[MutationTestResult](json)
+val decoded: Either[io.circe.Error, MutationTestResult] = decode[MutationTestResult](encoded.toString)
 ```
 
 ## API reference
