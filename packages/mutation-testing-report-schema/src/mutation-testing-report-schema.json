@@ -172,6 +172,7 @@
       "type": "object",
       "title": "PerformanceStatistics",
       "description": "The performance statistics per phase. Total time should be roughly equal to the sum of all these.",
+      "required": ["setup", "initialRun", "mutation"],
       "properties": {
         "setup": {
           "type": "number",

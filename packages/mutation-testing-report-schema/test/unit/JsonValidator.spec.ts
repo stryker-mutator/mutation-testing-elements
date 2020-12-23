@@ -11,6 +11,7 @@ describe('JsonSchema', () => {
     schemaValidator = new Ajv({
       missingRefs: 'fail',
       strictKeywords: true,
+      allErrors: true,
     });
     schemaValidator.addSchema(schema, SCHEMA_NAME);
   });
@@ -26,10 +27,12 @@ describe('JsonSchema', () => {
     expect(valid, schemaValidator.errorsText(schemaValidator.errors)).true;
   }
 
-  function actAssertInvalid(testResourceFileName: string, expectedError: string) {
+  function actAssertInvalid(testResourceFileName: string, ...expectedErrors: string[]) {
     const valid = validate(testResourceFileName);
     expect(valid).false;
-    expect(schemaValidator.errorsText()).contain(expectedError);
+    for (const expectedError of expectedErrors) {
+      expect(schemaValidator.errorsText()).contain(expectedError);
+    }
   }
 
   it('should validate a report that strictly complies to the schema', () => {
@@ -83,6 +86,15 @@ describe('JsonSchema', () => {
 
   it('should invalidate a report when system.os.platform is missing', () => {
     actAssertInvalid('missing-system-os-platform', "data.system.os should have required property 'platform'");
+  });
+
+  it('should invalidate a report when performance.* is missing', () => {
+    actAssertInvalid(
+      'missing-performance-fields',
+      "data.performance should have required property 'setup'",
+      "data.performance should have required property 'initialRun'",
+      "data.performance should have required property 'mutation'"
+    );
   });
 
   it('should validate a report when the replacement is missing', () => {
