@@ -65,6 +65,26 @@ describe('JsonSchema', () => {
     actAssertInvalid('missing-tests', "data.testFiles['test/foo.spec.js'] should have required property 'tests'");
   });
 
+  it('should invalidate a report when system.ci is missing', () => {
+    actAssertInvalid('missing-system-ci', "data.system should have required property 'ci'");
+  });
+
+  it('should invalidate a report when system.cpu.logicalCores is missing', () => {
+    actAssertInvalid('missing-system-cpu-logical-cores', "data.system.cpu should have required property 'logicalCores'");
+  });
+
+  it('should invalidate a report when system.os.platform is missing', () => {
+    actAssertInvalid('missing-system-os-platform', "data.system.os should have required property 'platform'");
+  });
+
+  it('should invalidate a report when system.ram.total is missing', () => {
+    actAssertInvalid('missing-system-ram-total', "data.system.ram should have required property 'total'");
+  });
+
+  it('should invalidate a report when system.os.platform is missing', () => {
+    actAssertInvalid('missing-system-os-platform', "data.system.os should have required property 'platform'");
+  });
+
   it('should validate a report when the replacement is missing', () => {
     actAssertValid('missing-replacement-report');
   });

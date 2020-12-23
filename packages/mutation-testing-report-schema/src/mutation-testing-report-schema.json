@@ -233,6 +233,7 @@
       "type": "object",
       "title": "SystemInformation",
       "description": "Information about the system that performed mutation testing.",
+      "required": ["ci"],
       "properties": {
         "ci": {
           "description": "Did mutation testing run in a Continuous Integration environment (pipeline)? Note that there is no way of knowing this for sure. It's done on a best-effort basis.",
@@ -241,6 +242,7 @@
         "os": {
           "type": "object",
           "title": "OSInformation",
+          "required": ["platform"],
           "properties": {
             "description": {
               "type": "string",
@@ -262,6 +264,7 @@
         "cpu": {
           "type": "object",
           "title": "CpuInformation",
+          "required": ["logicalCores"],
           "properties": {
             "baseClock": {
               "type": "number",
@@ -279,6 +282,7 @@
         "ram": {
           "title": "RamInformation",
           "type": "object",
+          "required": ["total"],
           "properties": {
             "total": {
               "type": "number",

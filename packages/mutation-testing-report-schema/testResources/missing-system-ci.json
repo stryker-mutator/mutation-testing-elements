@@ -1,0 +1,11 @@
+{
+  "$schema": "../src/mutation-testing-report-schema.json",
+  "schemaVersion": "1.0",
+  "thresholds": {
+    "high": 80,
+    "low": 60
+  },
+  "system": {
+  },
+  "files": {}
+}
