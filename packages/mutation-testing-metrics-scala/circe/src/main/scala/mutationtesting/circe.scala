@@ -3,7 +3,9 @@ package mutationtesting
 import io.circe._
 import mutationtesting.CodecOps._
 
-object MutationReportCodec {
+/** Circe codecs for encoding and decoding `mutationtesting` report values
+  */
+object circe {
 
   implicit lazy val mutationTestResultCodec: Codec[MutationTestResult] =
     Codec

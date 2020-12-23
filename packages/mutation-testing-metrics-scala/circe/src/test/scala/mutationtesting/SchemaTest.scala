@@ -6,6 +6,7 @@ import java.nio.file.Paths
 import scala.io.Source
 
 import io.circe.parser.decode
+import mutationtesting.circe._
 import org.leadpony.justify.api.JsonValidationService
 
 class SchemaTest extends munit.FunSuite {
@@ -39,7 +40,6 @@ class SchemaTest extends munit.FunSuite {
   }
 
   test("decoded json report is without errors") {
-    import mutationtesting.MutationReportCodec._
     val report =
       Source.fromFile("../mutation-testing-elements/testResources/scala-example/mutation-report.json").mkString
 
@@ -106,14 +106,12 @@ class SchemaTest extends munit.FunSuite {
   }
 
   def decodeReport(fileName: String): Either[io.circe.Error, MutationTestResult] = {
-    import mutationtesting.MutationReportCodec._
     val reportString = Source.fromFile(s"../mutation-testing-report-schema/testResources/$fileName.json").mkString
 
     decode[MutationTestResult](reportString)
   }
 
   def toJsonString(report: MutationTestResult) = {
-    import mutationtesting.MutationReportCodec._
     import io.circe.syntax._
     report.asJson.noSpaces
   }

@@ -2,7 +2,7 @@ package mutationtesting
 
 import io.circe.{Codec, Decoder, Encoder}
 
-private[mutationtesting] object CodecOps {
+protected[mutationtesting] object CodecOps {
   implicit class CodecMapOps[A](codec: Codec[A]) {
 
     /** Create a new Codec by mapping both the Decoder and Encoder to a new type with the given functions and combining them

@@ -2,7 +2,7 @@ package mutationtesting
 
 /** Schema for a mutation testing report
   *
-  * @param `$schema` URL to the JSON schema.
+  * @param \$schema URL to the JSON schema.
   * @param schemaVersion Major version of this report. Used for compatibility.
   * @param thresholds Thresholds for the status of the reported application.
   * @param projectRoot The optional location of the project root.
