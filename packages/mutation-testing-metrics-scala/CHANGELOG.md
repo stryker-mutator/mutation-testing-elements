@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.5.0...v1.5.1) (2020-12-23)
+
+
+### Bug Fixes
+
+* **metrics-scala:** publish project in a single go ([932d05f](https://github.com/stryker-mutator/mutation-testing-elements/commit/932d05ff79dd570f986085bf4b30351f1478ccd9))
+
+
+
+
+
 # [1.5.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.4.4...v1.5.0) (2020-12-23)
 
 
