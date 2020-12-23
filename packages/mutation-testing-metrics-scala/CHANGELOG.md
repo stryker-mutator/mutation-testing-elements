@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.4.4...v1.5.0) (2020-12-23)
+
+
+### Features
+
+* **metrics-scala:** add support for test coverage and metadata ([#816](https://github.com/stryker-mutator/mutation-testing-elements/issues/816)) ([580f34a](https://github.com/stryker-mutator/mutation-testing-elements/commit/580f34abc1d9e01f055be8b42bc4fb6ee4d3cf3c))
+* **metrics-scala:** align naming of types with schema ([#810](https://github.com/stryker-mutator/mutation-testing-elements/issues/810)) ([f47af3e](https://github.com/stryker-mutator/mutation-testing-elements/commit/f47af3eb28beae9d4792c9360d40f1149d9e456f))
+
+
+### BREAKING CHANGES
+
+* **metrics-scala:** MutationTestReport was renamed to MutationTestResult
+* **metrics-scala:** MutationTestResult was renamed to FileResult
+
+
+
+
+
 ## [1.4.4](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.4.3...v1.4.4) (2020-11-04)
 
 

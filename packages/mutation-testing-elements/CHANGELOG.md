@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.4.4...v1.5.0) (2020-12-23)
+
+
+### Bug Fixes
+
+* **schema:** correctly use "title" and "description" ([#804](https://github.com/stryker-mutator/mutation-testing-elements/issues/804)) ([1834510](https://github.com/stryker-mutator/mutation-testing-elements/commit/1834510c6b6e880540a8eab0a5eb0e1efdebfae9))
+
+
+### Features
+
+* **report-schema:** generate TS types from schema ([#811](https://github.com/stryker-mutator/mutation-testing-elements/issues/811)) ([3aa4a95](https://github.com/stryker-mutator/mutation-testing-elements/commit/3aa4a95c3d59a0d74594e49dfdf62d862f861d3d))
+
+
+
+
+
 ## [1.4.3](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.4.2...v1.4.3) (2020-11-04)
 
 **Note:** Version bump only for package mutation-testing-elements
