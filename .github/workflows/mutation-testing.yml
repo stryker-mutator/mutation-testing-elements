@@ -1,10 +1,10 @@
 name: Mutation testing
 
-on: 
-  push: 
-    branches: 
-        - master
-        - test/**
+on:
+  push:
+    branches:
+      - master
+      - test/**
 
 jobs:
   metrics:
@@ -13,7 +13,9 @@ jobs:
       - uses: actions/checkout@v2
       - run: npm ci
       - name: Run Stryker
-        run: npx lerna run --stream --scope mutation-testing-metrics stryker
+        run: |
+          npm run generate
+          npx lerna run --stream --scope mutation-testing-metrics stryker
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
   elements:
@@ -23,18 +25,17 @@ jobs:
       - run: npm ci
       - run: npm run build
       - name: Run Stryker
-        run: npx lerna run --stream --scope mutation-testing-elements stryker
+        run: |
+          npm run generate
+          npx lerna run --stream --scope mutation-testing-elements stryker
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
-  
+
   metrics-scala:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Run Stryker
-        run: |
-          export JAVA_OPTS="-XX:+CMSClassUnloadingEnabled -Xmx6G $JAVA_OPTS"
-          npx lerna run --stream --scope mutation-testing-metrics-scala stryker
+        run: npx lerna run --stream --scope mutation-testing-metrics-scala stryker
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
-
