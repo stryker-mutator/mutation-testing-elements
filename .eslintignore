@@ -5,6 +5,7 @@ tsconfig-transpiler.js
 node_modules
 dist
 dist-test
+src-generated
 .stryker-tmp
 reports
 packages/*/testResources/**

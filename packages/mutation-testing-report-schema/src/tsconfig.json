@@ -3,7 +3,8 @@
   "compilerOptions": {
     "types": ["node"],
     "resolveJsonModule": true,
-    "outDir": "../dist/src"
+    "outDir": "../dist",
+    "rootDir": "../"
   },
-  "include": ["**/*", "**/*.json"]
+  "include": ["../src/**/*", "../src/**/*.json", "../src-generated/**/*"]
 }

@@ -24,7 +24,15 @@
         "kind": "build",
         "isDefault": true
       },
+      "dependsOn": "generate",
       "problemMatcher": "$tsc-watch"
+    },
+    {
+      "label": "generate",
+      "type": "npm",
+      "script": "generate",
+      "isBackground": true,
+      "group": "build"
     }
   ]
 }

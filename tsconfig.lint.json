@@ -5,5 +5,5 @@
     "allowJs": true,
     "checkJs": true
   },
-  "include": ["stryker.parent.js", ".eslintrc.js"]
+  "include": ["stryker.parent.js", ".eslintrc.js", "tasks/schema2ts.js"]
 }

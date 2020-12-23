@@ -93,6 +93,7 @@
                 },
                 "status": {
                   "type": "string",
+                  "title": "MutantStatus",
                   "description": "Result of the mutation.",
                   "enum": ["Killed", "Survived", "NoCoverage", "CompileError", "RuntimeError", "Timeout", "Ignored"]
                 }
