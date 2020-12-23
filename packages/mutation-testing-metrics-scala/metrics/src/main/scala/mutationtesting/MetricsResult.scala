@@ -1,7 +1,5 @@
 package mutationtesting
 
-import mutationtesting.MutantStatus._
-
 sealed trait MetricsResult {
 
   /** At least one test failed while this mutant was active. The mutant is killed. This is what you want, good job!

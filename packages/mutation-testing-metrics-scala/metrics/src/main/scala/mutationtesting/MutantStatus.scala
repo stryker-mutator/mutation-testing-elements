@@ -1,7 +1,16 @@
 package mutationtesting
 
-object MutantStatus extends Enumeration {
-  type MutantStatus = Value
+/** Result of the mutation. */
+sealed trait MutantStatus extends Product with Serializable
 
-  val Killed, Survived, NoCoverage, Timeout, CompileError, RuntimeError, Ignored = Value
+object MutantStatus {
+
+  case object Killed       extends MutantStatus
+  case object Survived     extends MutantStatus
+  case object NoCoverage   extends MutantStatus
+  case object Timeout      extends MutantStatus
+  case object CompileError extends MutantStatus
+  case object RuntimeError extends MutantStatus
+  case object Ignored      extends MutantStatus
+
 }

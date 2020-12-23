@@ -1,24 +1,28 @@
 package mutationtesting
 
-import mutationtesting.MutantStatus._
 import io.circe._
 
+@deprecated(message = "Use MutationReportCodec instead", since = "1.5.0")
 object MutationReportDecoder {
 
-  implicit val mutantStatusDecoder: Decoder[MutantStatus] = Decoder.decodeEnumeration(MutantStatus)
+  @deprecated(message = "Use MutationReportCodec instead", since = "1.5.0")
+  implicit lazy val mutantStatusDecoder: Decoder[MutantStatus] = MutationReportCodec.mutantStatusCodec
 
-  implicit val positionDecoder: Decoder[Position] = Decoder.forProduct2("line", "column")(Position.apply)
+  @deprecated(message = "Use MutationReportCodec instead", since = "1.5.0")
+  implicit lazy val positionDecoder: Decoder[Position] = MutationReportCodec.positionCodec
 
-  implicit val thresholdsDecoder: Decoder[Thresholds] = Decoder.forProduct2("high", "low")(Thresholds.apply)
+  @deprecated(message = "Use MutationReportCodec instead", since = "1.5.0")
+  implicit lazy val thresholdsDecoder: Decoder[Thresholds] = MutationReportCodec.thresholdsCodec
 
-  implicit val locationDecoder: Decoder[Location] = Decoder.forProduct2("start", "end")(Location.apply)
+  @deprecated(message = "Use MutationReportCodec instead", since = "1.5.0")
+  implicit lazy val locationDecoder: Decoder[Location] = MutationReportCodec.locationCodec
 
-  implicit val mutantResultDecoder: Decoder[MutantResult] =
-    Decoder.forProduct6("id", "mutatorName", "replacement", "location", "status", "description")(MutantResult.apply)
+  @deprecated(message = "Use MutationReportCodec instead", since = "1.5.0")
+  implicit lazy val mutantResultDecoder: Decoder[MutantResult] = MutationReportCodec.mutantResultCodec
 
-  implicit val fileResultDecoder: Decoder[FileResult] =
-    Decoder.forProduct3("source", "mutants", "language")(FileResult.apply)
+  @deprecated(message = "Use MutationReportCodec instead", since = "1.5.0")
+  implicit lazy val fileResultDecoder: Decoder[FileResult] = MutationReportCodec.fileResultCodec
 
-  implicit val mutationTestResultDecoder: Decoder[MutationTestResult] =
-    Decoder.forProduct5("$schema", "schemaVersion", "thresholds", "projectRoot", "files")(MutationTestResult.apply)
+  @deprecated(message = "Use MutationReportCodec instead", since = "1.5.0")
+  implicit lazy val mutationTestResultDecoder: Decoder[MutationTestResult] = MutationReportCodec.mutationTestResultCodec
 }
