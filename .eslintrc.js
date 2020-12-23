@@ -3,7 +3,7 @@ module.exports = {
   plugins: ['@typescript-eslint', 'prettier'],
   parserOptions: {
     tsconfigRootDir: __dirname,
-    project: ['tsconfig.lint.json', 'packages/*/tsconfig.test.json', 'packages/*/tsconfig.src.json'],
+    project: ['tsconfig.lint.json', 'packages/*/test/tsconfig.json', 'packages/*/src/tsconfig.json'],
   },
 
   rules: {
