@@ -12,8 +12,8 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: process.env.GITHUB_ACTIONS || process.env.TRAVIS ? ['ChromeHeadless'] : ['Chrome'],
-    singleRun: process.env.GITHUB_ACTIONS || process.env.TRAVIS ? true : false,
+    browsers: process.env.CI || process.env.HEADLESS ? ['ChromeHeadless'] : ['Chrome'],
+    singleRun: process.env.CI || process.env.HEADLESS ? true : false,
     concurrency: Infinity,
     webpack,
   });
