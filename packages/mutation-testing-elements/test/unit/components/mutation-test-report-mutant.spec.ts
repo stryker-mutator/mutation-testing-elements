@@ -141,8 +141,7 @@ describe(MutationTestReportMutantComponent.name, () => {
 
     // Assert
     expect(result).ok;
-    expect(result!.detail).ok;
-    expect(result!.detail).eq(mutant);
+    expect(result?.detail).eq(mutant);
   });
 
   it("should not display a show more button if the description isn't set", async () => {
