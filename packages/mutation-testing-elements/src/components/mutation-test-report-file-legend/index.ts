@@ -37,10 +37,18 @@ export class MutationTestReportFileLegendComponent extends LitElement {
   }
 
   private updateModel() {
-    this.filters = (['Killed', 'Survived', 'NoCoverage', 'Ignored', 'Timeout', 'CompileError', 'RuntimeError'] as const)
+    this.filters = [
+      MutantStatus.Killed,
+      MutantStatus.Survived,
+      MutantStatus.NoCoverage,
+      MutantStatus.Ignored,
+      MutantStatus.Timeout,
+      MutantStatus.CompileError,
+      MutantStatus.RuntimeError,
+    ]
       .filter((status) => this.mutants.some((mutant) => mutant.status === status))
       .map((status) => ({
-        enabled: ['Survived', 'NoCoverage', 'Timeout'].some((s) => s === status),
+        enabled: [MutantStatus.Survived, MutantStatus.NoCoverage, MutantStatus.Timeout].some((s) => s === status),
         numberOfMutants: this.mutants.filter((m) => m.status === status).length,
         status,
       }));

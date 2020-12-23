@@ -1,5 +1,5 @@
 import { compareNames, normalizeFileNames, flatMap } from './helpers';
-import type { FileResultDictionary, FileResult, MutantResult, MutantStatus } from 'mutation-testing-report-schema';
+import { FileResultDictionary, FileResult, MutantResult, MutantStatus } from 'mutation-testing-report-schema';
 import { groupBy } from './helpers';
 import { Metrics } from './api/Metrics';
 import { MetricsResult } from './api/MetricsResult';
@@ -54,13 +54,13 @@ function toChildModels(files: FileResultDictionary): MetricsResult[] {
 
 function countMetrics(mutants: Pick<MutantResult, 'status'>[]): Metrics {
   const count = (status: MutantStatus) => mutants.filter((_) => _.status === status).length;
-  const killed = count('Killed');
-  const timeout = count('Timeout');
-  const survived = count('Survived');
-  const noCoverage = count('NoCoverage');
-  const runtimeErrors = count('RuntimeError');
-  const compileErrors = count('CompileError');
-  const ignored = count('Ignored');
+  const killed = count(MutantStatus.Killed);
+  const timeout = count(MutantStatus.Timeout);
+  const survived = count(MutantStatus.Survived);
+  const noCoverage = count(MutantStatus.NoCoverage);
+  const runtimeErrors = count(MutantStatus.RuntimeError);
+  const compileErrors = count(MutantStatus.CompileError);
+  const ignored = count(MutantStatus.Ignored);
   const totalDetected = timeout + killed;
   const totalUndetected = survived + noCoverage;
   const totalCovered = totalDetected + survived;

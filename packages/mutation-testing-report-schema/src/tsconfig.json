@@ -1,0 +1,10 @@
+{
+  "extends": "../../../tsconfig.settings.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "resolveJsonModule": true,
+    "outDir": "../dist",
+    "rootDir": "../"
+  },
+  "include": ["../src/**/*", "../src/**/*.json", "../src-generated/**/*"]
+}

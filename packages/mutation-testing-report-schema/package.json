@@ -7,7 +7,7 @@
   "scripts": {
     "test": "mocha --forbid-only --forbid-pending -r source-map-support/register dist/test/**/*.js",
     "postpublish": "PUBLISH_SCHEMA=true ../mutation-testing-metrics-scala/npmProjPublish.sh dist/src",
-    "generate": "json2ts src/mutation-testing-report-schema.json src-generated/schema.ts"
+    "generate": "node ../../tasks/schema2ts.js src/mutation-testing-report-schema.json src-generated/schema.ts"
   },
   "repository": {
     "type": "git",

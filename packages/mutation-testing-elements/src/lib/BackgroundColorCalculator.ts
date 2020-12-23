@@ -22,19 +22,19 @@ export class BackgroundColorCalculator {
 
   private countMutant(valueToAdd: number, status: MutantStatus) {
     switch (status) {
-      case 'Killed':
+      case MutantStatus.Killed:
         this.killed += valueToAdd;
         break;
-      case 'Survived':
+      case MutantStatus.Survived:
         this.survived += valueToAdd;
         break;
-      case 'Timeout':
+      case MutantStatus.Timeout:
         this.timeout += valueToAdd;
         break;
-      case 'NoCoverage':
+      case MutantStatus.NoCoverage:
         this.noCoverage += valueToAdd;
         break;
-      case 'Ignored':
+      case MutantStatus.Ignored:
         this.ignored += valueToAdd;
         break;
     }
@@ -42,15 +42,15 @@ export class BackgroundColorCalculator {
 
   public determineBackground = () => {
     if (this.survived > 0) {
-      return getContextClassForStatus('Survived') + '-light';
+      return getContextClassForStatus(MutantStatus.Survived) + '-light';
     } else if (this.noCoverage > 0) {
-      return getContextClassForStatus('NoCoverage') + '-light';
+      return getContextClassForStatus(MutantStatus.NoCoverage) + '-light';
     } else if (this.timeout > 0) {
-      return getContextClassForStatus('Timeout') + '-light';
+      return getContextClassForStatus(MutantStatus.Timeout) + '-light';
     } else if (this.killed > 0) {
-      return getContextClassForStatus('Killed') + '-light';
+      return getContextClassForStatus(MutantStatus.Killed) + '-light';
     } else if (this.ignored > 0) {
-      return getContextClassForStatus('Ignored') + '-light';
+      return getContextClassForStatus(MutantStatus.Ignored) + '-light';
     }
     return null;
   };
