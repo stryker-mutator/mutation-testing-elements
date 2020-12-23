@@ -1,4 +1,4 @@
-import { FileResult, FileResultDictionary, Location, MutantResult, MutantStatus, MutationTestResult, Position, Thresholds } from '..';
+import { FileResult, FileResultDictionary, Location, MutantResult, MutantStatus, MutationTestResult, Position, Thresholds } from '../src';
 
 const mutantStatus = MutantStatus.Killed;
 const position: Position = {
