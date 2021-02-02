@@ -1,5 +1,5 @@
-import { MetricsResult } from './api/MetricsResult';
-import { FileResultDictionary } from 'mutation-testing-report-schema';
+import { FileResultDictionary, MutationTestResult } from 'mutation-testing-report-schema';
+import { MetricsResult } from './model/metrics-result';
 const SEPARATOR = '/';
 
 export function flatMap<T, R>(source: T[], fn: (input: T) => R[]) {
@@ -23,24 +23,24 @@ export function pathJoin(...parts: string[]) {
   return parts.reduce((prev, current) => (prev.length ? (current ? `${prev}/${current}` : prev) : current), '');
 }
 
-export function normalizeFileNames(input: FileResultDictionary): FileResultDictionary {
+export function normalize<TIn, TOut>(input: Record<string, TIn>, Constructor: { new (input: TIn): TOut }): Record<string, TOut> {
   const fileNames = Object.keys(input);
   const commonBasePath = determineCommonBasePath(fileNames);
-  const output: FileResultDictionary = {};
+  const output: Record<string, TOut> = Object.create(null);
   fileNames.forEach((fileName) => {
-    output[normalize(fileName.substr(commonBasePath.length))] = input[fileName];
+    output[normalizeName(fileName.substr(commonBasePath.length))] = new Constructor(input[fileName]);
   });
   return output;
 }
 
-function normalize(fileName: string) {
+function normalizeName(fileName: string) {
   return fileName
     .split(/\/|\\/)
     .filter((pathPart) => pathPart)
     .join('/');
 }
 
-function determineCommonBasePath(fileNames: ReadonlyArray<string>) {
+function determineCommonBasePath(fileNames: ReadonlyArray<string>): string {
   const directories = fileNames.map((fileName) => fileName.split(/\/|\\/).slice(0, -1));
   if (fileNames.length) {
     return directories.reduce(filterDirectories).join(SEPARATOR);
@@ -59,7 +59,7 @@ function determineCommonBasePath(fileNames: ReadonlyArray<string>) {
   }
 }
 
-export function compareNames(a: MetricsResult, b: MetricsResult) {
+export function compareNames(a: MetricsResult<any, any>, b: MetricsResult<any, any>) {
   const sortValue = (metricsResult: MetricsResult) => {
     // Directories first
     if (metricsResult.file) {
@@ -69,4 +69,10 @@ export function compareNames(a: MetricsResult, b: MetricsResult) {
     }
   };
   return sortValue(a).localeCompare(sortValue(b));
+}
+
+export function isMutationTestResult(
+  maybeMutationTestResult: FileResultDictionary | MutationTestResult
+): maybeMutationTestResult is MutationTestResult {
+  return 'schemaVersion' in maybeMutationTestResult && typeof maybeMutationTestResult.schemaVersion === 'string';
 }

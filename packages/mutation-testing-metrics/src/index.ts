@@ -1,6 +1,3 @@
-import { MetricsResult } from './api/MetricsResult';
-import { Metrics } from './api/Metrics';
-import { calculateMetrics } from './calculateMetrics';
-import { normalizeFileNames } from './helpers';
-
-export { MetricsResult, Metrics, calculateMetrics, normalizeFileNames };
+export { calculateMetrics, calculateMutationTestMetrics } from './calculateMetrics';
+export { normalize } from './helpers';
+export { MetricsResult, Metrics, TestMetrics, TestModel, FileUnderTestModel, TestFileModel, MutantModel } from './model';

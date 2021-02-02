@@ -1,8 +1,9 @@
 import { expect } from 'chai';
-import { normalizeFileNames } from '../../src/helpers';
+import { normalize } from '../../src/helpers';
 import { FileResultDictionary } from 'mutation-testing-report-schema';
+import { FileUnderTestModel } from '../../src/model';
 
-describe(normalizeFileNames.name, () => {
+describe(normalize.name, () => {
   it('should translate "\\" to "/"', () => {
     // Arrange
     const baz = {
@@ -21,7 +22,7 @@ describe(normalizeFileNames.name, () => {
     };
 
     // Act
-    const actual = normalizeFileNames(input);
+    const actual = normalize(input, FileUnderTestModel);
 
     // Assert
     expect(actual).deep.eq({

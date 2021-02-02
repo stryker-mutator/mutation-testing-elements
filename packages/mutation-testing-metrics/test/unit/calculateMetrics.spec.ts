@@ -59,7 +59,7 @@ describe(calculateMetrics.name, () => {
     expect(actual.childResults[0].name).eq('bar');
     expect(actual.childResults[0].file).undefined;
     expect(actual.childResults[0].childResults[0].name).eq('baz.js');
-    expect(actual.childResults[0].childResults[0].file).eq(baz);
+    expect(actual.childResults[0].childResults[0].file).deep.eq(baz);
     expect(actual.childResults[0].metrics).include({
       killed: 1,
       survived: 1,
