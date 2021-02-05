@@ -1,11 +1,14 @@
 import { LitElement, html, property, customElement, PropertyValues, unsafeCSS } from 'lit-element';
-import { MutationTestResult } from 'mutation-testing-report-schema';
-import { MetricsResult, calculateMetrics } from 'mutation-testing-metrics';
+import { MutantResult, MutationTestResult } from 'mutation-testing-report-schema';
+import { MetricsResult, calculateMutationTestMetrics } from 'mutation-testing-metrics';
 import { bootstrap } from '../../style';
 import { locationChange$ } from '../../lib/router';
 import { Subscription } from 'rxjs';
 import style from './index.scss';
 import theme from './theme.scss';
+import { createCustomEvent, MteCustomEvent } from '../../lib/custom-events';
+import { MutationTestMetricsResult } from 'mutation-testing-metrics/src/model';
+import { DrawerMode } from '../mutation-test-report-drawer/mutation-test-report-drawer.component';
 
 @customElement('mutation-test-report-app')
 export class MutationTestReportAppComponent extends LitElement {
@@ -13,7 +16,7 @@ export class MutationTestReportAppComponent extends LitElement {
   public report: MutationTestResult | undefined;
 
   @property({ attribute: false })
-  public rootModel: MetricsResult | undefined;
+  public rootModel: MutationTestMetricsResult | undefined;
 
   @property()
   public src: string | undefined;
@@ -22,7 +25,7 @@ export class MutationTestReportAppComponent extends LitElement {
   public errorMessage: string | undefined;
 
   @property({ attribute: false })
-  public context: MetricsResult | undefined;
+  public context: MetricsResult<any, any> | undefined;
 
   @property()
   public path: ReadonlyArray<string> = [];
@@ -32,6 +35,9 @@ export class MutationTestReportAppComponent extends LitElement {
 
   @property({ reflect: true })
   public theme: string | undefined;
+
+  @property()
+  public drawerMode: DrawerMode = 'closed';
 
   @property()
   public get title(): string {
@@ -45,6 +51,9 @@ export class MutationTestReportAppComponent extends LitElement {
       return '';
     }
   }
+
+  @property()
+  private selectedMutant?: MutantResult;
 
   public firstUpdated(): void {
     if (!this.theme) {
@@ -83,13 +92,13 @@ export class MutationTestReportAppComponent extends LitElement {
     if (changedProperties.has('src')) {
       await this.loadData();
     }
-    if (changedProperties.has('theme')) {
-      this.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme: this.theme } }));
+    if (changedProperties.has('theme') && this.theme) {
+      this.dispatchEvent(createCustomEvent('theme-changed', { theme: this.theme }));
     }
   }
 
   private updateModel(report: MutationTestResult) {
-    this.rootModel = calculateMetrics(report.files);
+    this.rootModel = calculateMutationTestMetrics(report);
   }
 
   private updateContext() {
@@ -97,7 +106,7 @@ export class MutationTestReportAppComponent extends LitElement {
       // Find the current selected file/directory based on the path
       this.context = this.path.reduce<MetricsResult | undefined>(
         (model, currentPathPart) => model && model.childResults.find((child) => child.name === currentPathPart),
-        this.rootModel
+        this.rootModel.systemUnderTestMetrics
       );
     }
   }
@@ -126,27 +135,27 @@ export class MutationTestReportAppComponent extends LitElement {
   }
 
   private renderTitle() {
-    const renderPostfix = () => {
-      if (this.titlePostfix) {
-        return html`<small class="text-muted"> - ${this.titlePostfix}</small>`;
-      } else {
-        return undefined;
-      }
-    };
-    if (this.context) {
-      if (this.titlePostfix) {
-        return html`<h1 class="display-4">${this.context.name}${renderPostfix()}</h1>`;
-      }
+    if (this.context && this.titlePostfix) {
+      return html`<h1 class="display-4">${this.context.name}${html`<small class="text-muted"> - ${this.titlePostfix}</small>`}</h1>`;
     }
     return undefined;
   }
 
+  private handleClick = () => {
+    // Close the drawer if the user clicks anywhere in the report (that didn't handle the click already)
+    this.drawerMode = 'closed';
+  };
+
   public render() {
     if (this.context || this.errorMessage) {
       return html`
-        <div class="container-fluid">
+        <div class="container-fluid" @click="${this.handleClick}">
           <div class="row">
-            <div class="col-md-12">${this.renderReport()} ${this.renderErrorMessage()}</div>
+            <div class="col-md-12">
+              <main>${this.renderReport()} ${this.renderErrorMessage()}</main>
+              <mutation-test-report-drawer-mutant .mode="${this.drawerMode}" .tests="${this.report?.testFiles}" .mutant="${this.selectedMutant}">
+              </mutation-test-report-drawer-mutant>
+            </div>
           </div>
         </div>
       `;
@@ -177,9 +186,15 @@ export class MutationTestReportAppComponent extends LitElement {
     }
   }
 
+  private handleMutantSelected = (event: MteCustomEvent<'mutant-selected'>) => {
+    this.selectedMutant = event.detail.mutant;
+    this.drawerMode = event.detail.selected ? 'half' : 'closed';
+  };
+
   private renderFileReport() {
     if (this.context && this.report && this.context.file) {
-      return html`<mutation-test-report-file .model="${this.context.file}"></mutation-test-report-file>`;
+      return html`<mutation-test-report-file @mutant-selected="${this.handleMutantSelected}" .model="${this.context.file}">
+      </mutation-test-report-file>`;
     } else {
       return undefined;
     }
@@ -190,6 +205,7 @@ export class MutationTestReportAppComponent extends LitElement {
       return html`
         <div class="row">
           <div class="totals col-sm-11">
+            <!-- <mutation-test-report-test-totals .currentPath="${this.path}" .model="${this.context}"> </mutation-test-report-test-totals> -->
             <mutation-test-report-totals .currentPath="${this.path}" .thresholds="${this.report.thresholds}" .model="${this.context}">
             </mutation-test-report-totals>
           </div>

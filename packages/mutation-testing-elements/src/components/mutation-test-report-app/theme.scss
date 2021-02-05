@@ -8,6 +8,12 @@
   --bs-breadcrumb-active-color: #{$breadcrumb-active-color};
   --bs-body-bg: #{$body-bg};
   --bs-body-color: #{$body-color};
+  --bs-card-bg: #{$card-bg};
+  --bs-card-border-color: #{$card-border-color};
+  --bs-card-cap-bg: #{$card-cap-bg};
+  --bs-list-group-hover-bg: #{$list-group-hover-bg};
+  --bs-list-group-bg: #{$list-group-bg};
+  --bs-list-group-border-color: #{$list-group-border-color};
   --bs-table-border-color: #{$table-border-color};
   --bs-table-hover-bg: #{$table-hover-bg};
   --bs-popover-bg: #{$popover-bg};
@@ -16,7 +22,7 @@
   --bs-modal-content-border-color: #{$modal-content-border-color};
   --bs-modal-header-border-color: #{$modal-header-border-color};
   --bs-progress-bg: #{$progress-bg};
-
+  
   @each $color, $value in $theme-colors {
     --bs-table-#{$color}-bg: #{theme-color-level($color, $table-bg-level)};
     --bs-table-#{$color}-hover-bg: #{darken($value, 5%)};
@@ -35,6 +41,12 @@
   --bs-breadcrumb-active-color: #{$darkly-breadcrumb-active-color};
   --bs-body-bg: #{$darkly-body-bg};
   --bs-body-color: #{$darkly-body-color};
+  --bs-card-bg: #{$darkly-card-bg};
+  --bs-card-border-color: #{$darkly-card-border-color};
+  --bs-card-cap-bg: #{$darkly-card-cap-bg};
+  --bs-list-group-hover-bg: #{$darkly-list-group-hover-bg};
+  --bs-list-group-bg: #{$darkly-list-group-bg};
+  --bs-list-group-border-color: #{$darkly-list-group-border-color};
   --bs-table-border-color: #{$darkly-table-border-color};
   --bs-table-hover-bg: #{$darkly-table-hover-bg};
   --bs-popover-bg: #{$darkly-popover-bg};
@@ -87,6 +99,7 @@
 // @see https://github.com/microsoft/vscode/blob/master/extensions/theme-seti/icons/vs-seti-icon-theme.json
 :host(:not([theme='dark'])) {
   --mut-file-ts-color: #498ba7;
+  --mut-file-ts-test-color: #b7b73b;
   --mut-file-scala-color: #b8383d;
   --mut-file-java-color: #b8383d;
   --mut-file-js-color: #b7b73b;
@@ -97,6 +110,7 @@
 }
 :host([theme='dark']) {
   --mut-file-ts-color: #519aba;
+  --mut-file-ts-test-color: #cbcb41;
   --mut-file-scala-color: #cc3e44;
   --mut-file-java-color: #cc3e44;
   --mut-file-js-color: #cbcb41;

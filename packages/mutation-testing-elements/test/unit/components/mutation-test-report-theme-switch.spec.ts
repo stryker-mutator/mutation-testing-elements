@@ -55,7 +55,7 @@ describe(MutationTestReportThemeSwitchComponent.name, () => {
       input.click();
     };
 
-    const result = await sut.catchEvent('theme-switch', act);
+    const result = await sut.catchCustomEvent('theme-switch', act);
     expect(result).ok;
   });
 
@@ -68,7 +68,7 @@ describe(MutationTestReportThemeSwitchComponent.name, () => {
     sut.element.setAttribute('theme', 'dark');
     await sut.whenStable();
 
-    const result = await sut.catchEvent('theme-switch', act);
+    const result = await sut.catchCustomEvent('theme-switch', act);
     expect(result).ok;
     expect(result).to.have.property('detail', 'light');
   });
@@ -82,7 +82,7 @@ describe(MutationTestReportThemeSwitchComponent.name, () => {
     sut.element.setAttribute('theme', 'light');
     await sut.whenStable();
 
-    const result = await sut.catchEvent('theme-switch', act);
+    const result = await sut.catchCustomEvent('theme-switch', act);
     expect(result).ok;
     expect(result).to.have.property('detail', 'dark');
   });

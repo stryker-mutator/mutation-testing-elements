@@ -3,6 +3,7 @@ import { MutantResult, MutantStatus } from 'mutation-testing-report-schema';
 import { bootstrap } from '../../style';
 import { getContextClassForStatus, getEmojiForStatus } from '../../lib/htmlHelpers';
 import style from './index.scss';
+import { createCustomEvent } from '../../lib/custom-events';
 
 export interface MutantFilter {
   status: MutantStatus;
@@ -61,15 +62,15 @@ export class MutationTestReportFileLegendComponent extends LitElement {
   }
 
   private dispatchFiltersChangedEvent() {
-    this.dispatchEvent(new CustomEvent('filters-changed', { detail: this.filters }));
+    this.dispatchEvent(createCustomEvent('filters-changed', this.filters));
   }
 
   private readonly toggleOpenAll = () => {
     this.collapsed = !this.collapsed;
     if (this.collapsed) {
-      this.dispatchEvent(new CustomEvent('collapse-all'));
+      this.dispatchEvent(createCustomEvent('collapse-all', undefined));
     } else {
-      this.dispatchEvent(new CustomEvent('expand-all'));
+      this.dispatchEvent(createCustomEvent('expand-all', undefined));
     }
   };
 

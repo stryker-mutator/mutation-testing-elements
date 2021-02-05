@@ -4,6 +4,7 @@ import { groupBy } from './helpers';
 import { FileUnderTestModel, Metrics, MetricsResult, MutantModel, MutationTestMetricsResult, TestFileModel, TestMetrics, TestModel } from './model';
 const DEFAULT_SCORE = NaN;
 const ROOT_NAME = 'All files';
+const ROOT_NAME_TESTS = 'All tests';
 
 /**
  * Calculates the metrics inside of a mutation testing report
@@ -19,13 +20,18 @@ export function calculateMutationTestMetrics({ files, testFiles }: MutationTestR
   const fileModelsUnderTest = normalize(files, FileUnderTestModel);
   if (testFiles) {
     const testFileModels = normalize(testFiles, TestFileModel);
+    const testFiles2 = Object.keys(testFileModels);
+    if (testFiles2.length === 1 && testFiles2[0].length === 0) {
+      testFileModels['tests'] = testFileModels[''];
+      delete testFileModels[''];
+    }
     relate(
       flatMap(Object.values(fileModelsUnderTest), (file) => file.mutants),
       flatMap(Object.values(testFileModels), (file) => file.tests)
     );
     return {
       systemUnderTestMetrics: calculateDirectoryMetrics(ROOT_NAME, fileModelsUnderTest, countFileMetrics),
-      testMetrics: calculateDirectoryMetrics(ROOT_NAME, testFileModels, countTestFileMetrics),
+      testMetrics: calculateDirectoryMetrics(ROOT_NAME_TESTS, testFileModels, countTestFileMetrics),
     };
   }
   return {
@@ -73,8 +79,7 @@ function toChildModels<TFileModel, TMetrics>(
         filesByDirectory[directoryName].forEach((file) => (directoryFiles[file[0].substr(directoryName.length + 1)] = file[1]));
         return calculateDirectoryMetrics(directoryName, directoryFiles, calculateMetrics);
       } else {
-        const fileName = filesByDirectory[directoryName][0][0];
-        const file = filesByDirectory[directoryName][0][1];
+        const [fileName, file] = filesByDirectory[directoryName][0];
         return calculateFileMetrics(fileName, file, calculateMetrics);
       }
     })
@@ -103,6 +108,7 @@ function countTestFileMetrics(testFile: TestFileModel[]): TestMetrics {
   return {
     total: tests.length,
     pacifist: tests.reduce((acc, test) => (test.isPasifist ? ++acc : acc), 0),
+    withoutCoverage: tests.reduce((acc, test) => (test.coveredMutants.length === 0 ? acc++ : acc), 0),
   };
 }
 

@@ -1,4 +1,4 @@
-import { MutationTestReportMutantComponent, SHOW_MORE_EVENT } from '../../../src/components/mutation-test-report-mutant';
+import { MutationTestReportMutantComponent } from '../../../src/components/mutation-test-report-mutant';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { expect } from 'chai';
 import { MutantStatus, MutantResult } from 'mutation-testing-report-schema';
@@ -124,24 +124,6 @@ describe(MutationTestReportMutantComponent.name, () => {
     // Assert
     expect(showMoreButton).ok;
     expect(showMoreButton.textContent).eq('📖 Show more');
-  });
-
-  it('should emit a show-more-click event if show more is clicked', async () => {
-    // Arrange
-    sut.element.show = true;
-    sut.element.showPopup = true;
-    const mutant = createMutantResult({ description: 'A description' });
-    sut.element.mutant = mutant;
-    await sut.whenStable();
-    const showMoreButton = sut.$('.show-more');
-
-    // Act
-    const act = () => showMoreButton.click();
-    const result = await sut.catchEvent<CustomEvent<MutantResult>>(SHOW_MORE_EVENT, act);
-
-    // Assert
-    expect(result).ok;
-    expect(result?.detail).eq(mutant);
   });
 
   it("should not display a show more button if the description isn't set", async () => {

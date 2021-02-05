@@ -1,8 +1,9 @@
 import { customElement, LitElement, property, html, unsafeCSS } from 'lit-element';
 import { MutantResult } from 'mutation-testing-report-schema';
 import { bootstrap } from '../../style';
-import { getContextClassForStatus, getEmojiForStatus } from '../../lib/htmlHelpers';
+import { getContextClassForStatus } from '../../lib/htmlHelpers';
 import style from './index.scss';
+import { createCustomEvent } from '../../lib/custom-events';
 
 @customElement('mutation-test-report-mutant')
 export class MutationTestReportMutantComponent extends LitElement {
@@ -15,16 +16,17 @@ export class MutationTestReportMutantComponent extends LitElement {
   @property()
   public expand = false;
 
-  @property()
-  public showPopup = false;
-
   public static styles = [bootstrap, unsafeCSS(style)];
 
   private readonly mutantClicked = (event: Event) => {
     this.expand = !this.expand;
-    this.showPopup = this.expand;
-    event.stopImmediatePropagation();
-    this.dispatchEvent(new CustomEvent('mutant-selected', { bubbles: true, detail: this, composed: true }));
+    event.preventDefault();
+    event.stopPropagation();
+    setTimeout(
+      () =>
+        this.dispatchEvent(createCustomEvent('mutant-selected', { selected: this.expand, mutant: this.mutant }, { bubbles: true, composed: true })),
+      0
+    );
   };
 
   public render() {
@@ -35,37 +37,15 @@ export class MutationTestReportMutantComponent extends LitElement {
 
   private renderButton() {
     if (this.show && this.mutant) {
-      return html`<mutation-test-report-popup
-        ?show="${this.showPopup}"
-        context="${getContextClassForStatus(this.mutant.status)}"
-        header="${this.mutant.mutatorName}"
-        >${this.renderPopupBody(this.mutant)}<span
-          class="mutant-toggle badge badge-${this.expand ? 'info' : getContextClassForStatus(this.mutant.status)}"
-          @click="${this.mutantClicked}"
-          title="${this.mutant.mutatorName}"
-          >${this.mutant.id}</span
-        ></mutation-test-report-popup
+      return html`<span
+        class="mutant-toggle badge badge-${this.expand ? 'info' : getContextClassForStatus(this.mutant.status)}"
+        @click="${this.mutantClicked}"
+        title="${this.mutant.mutatorName}"
+        >${this.mutant.id}</span
       >`;
     }
     return undefined;
   }
-
-  private renderPopupBody(mutant: MutantResult) {
-    return html`<div slot="popover-body">
-      <span class="btn">${getEmojiForStatus(mutant.status)} ${mutant.status}</span>${this.renderDescription(mutant)}
-    </div>`;
-  }
-
-  private renderDescription(mutant: MutantResult) {
-    if (mutant.description) {
-      return html` <button class="show-more btn btn-link" @click="${() => this.showMoreInfo(mutant)}">📖 Show more</button> `;
-    }
-    return undefined;
-  }
-
-  private readonly showMoreInfo = (mutant: MutantResult) => {
-    this.dispatchEvent(new CustomEvent(SHOW_MORE_EVENT, { bubbles: true, detail: mutant, composed: true }));
-  };
 
   private renderCode() {
     return html`${this.renderReplacement()}${this.renderActual()}`;
@@ -85,5 +65,3 @@ export class MutationTestReportMutantComponent extends LitElement {
     return undefined;
   }
 }
-
-export const SHOW_MORE_EVENT = 'show-more-click';

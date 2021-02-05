@@ -1,4 +1,5 @@
 import { customElement, LitElement, html, unsafeCSS, property } from 'lit-element';
+import { createCustomEvent } from '../../lib/custom-events';
 import { bootstrap } from '../../style';
 import style from './index.scss';
 
@@ -9,14 +10,14 @@ export class MutationTestReportThemeSwitchComponent extends LitElement {
 
   private readonly dispatchThemeChangedEvent = (e: MouseEvent) => {
     const checked = (e.target as HTMLInputElement).checked;
-    this.dispatchEvent(new CustomEvent('theme-switch', { detail: checked ? 'dark' : 'light' }));
+    this.dispatchEvent(createCustomEvent('theme-switch', checked ? 'dark' : 'light'));
   };
 
   public static styles = [bootstrap, unsafeCSS(style)];
 
   public render() {
     return html`
-      <div class="check-box-container">
+      <div class="check-box-container" @click="${(event: Event) => event.stopPropagation()}">
         <input type="checkbox" @click="${this.dispatchThemeChangedEvent}" ?checked="${this.theme == 'dark'}" id="darkTheme" />
         <label for="darkTheme">Dark</label>
       </div>

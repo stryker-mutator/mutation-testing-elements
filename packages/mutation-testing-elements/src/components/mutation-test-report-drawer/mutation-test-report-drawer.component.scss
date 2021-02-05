@@ -1,0 +1,22 @@
+:host {
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  background-color: var(--bs-body-bg);
+  transition: height .3s ease-out;
+  overflow: hidden;
+  height: 0;
+}
+
+:host([mode="closed"]) {
+  height: 0;
+}
+:host([mode="half"]) {
+  height: 150px;
+}
+:host([mode="open"]) {
+  height: 50%;
+  overflow: auto;
+}
+

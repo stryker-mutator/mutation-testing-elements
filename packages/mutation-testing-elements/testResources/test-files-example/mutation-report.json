@@ -1,0 +1,3792 @@
+{
+  "files": {
+    "/home/nicojs/github/stryker/packages/util/src/errors.ts": {
+      "language": "typescript",
+      "mutants": [
+        {
+          "id": "81",
+          "location": {
+            "end": {
+              "column": 4,
+              "line": 19
+            },
+            "start": {
+              "column": 10,
+              "line": 17
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "NoCoverage",
+          "testsCompleted": 0,
+          "static": false
+        },
+        {
+          "id": "57",
+          "location": {
+            "end": {
+              "column": 2,
+              "line": 3
+            },
+            "start": {
+              "column": 80,
+              "line": 1
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: errors errorToString should convert a nodejs Errno error to string",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["15", "16", "17", "70", "71"],
+          "killedBy": ["15"]
+        },
+        {
+          "id": "58",
+          "location": {
+            "end": {
+              "column": 67,
+              "line": 2
+            },
+            "start": {
+              "column": 10,
+              "line": 2
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: errors errorToString should convert a regular error to string",
+          "testsCompleted": 2,
+          "static": false,
+          "coveredBy": ["15", "16", "17", "70", "71"],
+          "killedBy": ["16"]
+        },
+        {
+          "id": "59",
+          "location": {
+            "end": {
+              "column": 67,
+              "line": 2
+            },
+            "start": {
+              "column": 10,
+              "line": 2
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "false",
+          "status": "Killed",
+          "description": "Killed by: errors errorToString should convert a nodejs Errno error to string",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["15", "16", "17", "70", "71"],
+          "killedBy": ["15"]
+        },
+        {
+          "id": "60",
+          "location": {
+            "end": {
+              "column": 67,
+              "line": 2
+            },
+            "start": {
+              "column": 10,
+              "line": 2
+            }
+          },
+          "mutatorName": "EqualityOperator",
+          "replacement": "typeof (error as NodeJS.ErrnoException).code !== 'string'",
+          "status": "Killed",
+          "description": "Killed by: errors errorToString should convert a nodejs Errno error to string",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["15", "16", "17", "70", "71"],
+          "killedBy": ["15"]
+        },
+        {
+          "id": "61",
+          "location": {
+            "end": {
+              "column": 67,
+              "line": 2
+            },
+            "start": {
+              "column": 59,
+              "line": 2
+            }
+          },
+          "mutatorName": "StringLiteral",
+          "replacement": "\"\"",
+          "status": "Killed",
+          "description": "Killed by: errors errorToString should convert a nodejs Errno error to string",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["15", "16", "17", "70", "71"],
+          "killedBy": ["15"]
+        },
+        {
+          "id": "62",
+          "location": {
+            "end": {
+              "column": 2,
+              "line": 20
+            },
+            "start": {
+              "column": 43,
+              "line": 5
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: errors errorToString should return empty string if error is undefined",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["14", "15", "16", "17", "70", "71"],
+          "killedBy": ["14"]
+        },
+        {
+          "id": "63",
+          "location": {
+            "end": {
+              "column": 13,
+              "line": 6
+            },
+            "start": {
+              "column": 7,
+              "line": 6
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: errors errorToString should convert a nodejs Errno error to string",
+          "testsCompleted": 2,
+          "static": false,
+          "coveredBy": ["14", "15", "16", "17", "70", "71"],
+          "killedBy": ["15"]
+        },
+        {
+          "id": "64",
+          "location": {
+            "end": {
+              "column": 13,
+              "line": 6
+            },
+            "start": {
+              "column": 7,
+              "line": 6
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "false",
+          "status": "Killed",
+          "description": "Killed by: errors errorToString should return empty string if error is undefined",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["14", "15", "16", "17", "70", "71"],
+          "killedBy": ["14"]
+        },
+        {
+          "id": "65",
+          "location": {
+            "end": {
+              "column": 13,
+              "line": 6
+            },
+            "start": {
+              "column": 7,
+              "line": 6
+            }
+          },
+          "mutatorName": "BooleanLiteral",
+          "replacement": "error",
+          "status": "Killed",
+          "description": "Killed by: errors errorToString should return empty string if error is undefined",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["14", "15", "16", "17", "70", "71"],
+          "killedBy": ["14"]
+        },
+        {
+          "id": "66",
+          "location": {
+            "end": {
+              "column": 4,
+              "line": 8
+            },
+            "start": {
+              "column": 15,
+              "line": 6
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: errors errorToString should return empty string if error is undefined",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["14"],
+          "killedBy": ["14"]
+        },
+        {
+          "id": "67",
+          "location": {
+            "end": {
+              "column": 14,
+              "line": 7
+            },
+            "start": {
+              "column": 12,
+              "line": 7
+            }
+          },
+          "mutatorName": "StringLiteral",
+          "replacement": "\"Stryker was here!\"",
+          "status": "Killed",
+          "description": "Killed by: errors errorToString should return empty string if error is undefined",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["14"],
+          "killedBy": ["14"]
+        },
+        {
+          "id": "68",
+          "location": {
+            "end": {
+              "column": 37,
+              "line": 8
+            },
+            "start": {
+              "column": 14,
+              "line": 8
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: errors errorToString should convert a regular error to string",
+          "testsCompleted": 2,
+          "static": false,
+          "coveredBy": ["15", "16", "17", "70", "71"],
+          "killedBy": ["16"]
+        },
+        {
+          "id": "69",
+          "location": {
+            "end": {
+              "column": 37,
+              "line": 8
+            },
+            "start": {
+              "column": 14,
+              "line": 8
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "false",
+          "status": "Killed",
+          "description": "Killed by: errors errorToString should convert a nodejs Errno error to string",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["15", "16", "17", "70", "71"],
+          "killedBy": ["15"]
+        },
+        {
+          "id": "70",
+          "location": {
+            "end": {
+              "column": 4,
+              "line": 10
+            },
+            "start": {
+              "column": 39,
+              "line": 8
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: errors errorToString should convert a nodejs Errno error to string",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["15"],
+          "killedBy": ["15"]
+        },
+        {
+          "id": "71",
+          "location": {
+            "end": {
+              "column": 76,
+              "line": 9
+            },
+            "start": {
+              "column": 12,
+              "line": 9
+            }
+          },
+          "mutatorName": "StringLiteral",
+          "replacement": "``",
+          "status": "Killed",
+          "description": "Killed by: errors errorToString should convert a nodejs Errno error to string",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["15"],
+          "killedBy": ["15"]
+        },
+        {
+          "id": "72",
+          "location": {
+            "end": {
+              "column": 36,
+              "line": 10
+            },
+            "start": {
+              "column": 14,
+              "line": 10
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "true",
+          "status": "Survived",
+          "testsCompleted": 4,
+          "static": false,
+          "coveredBy": ["16", "17", "70", "71"]
+        },
+        {
+          "id": "73",
+          "location": {
+            "end": {
+              "column": 36,
+              "line": 10
+            },
+            "start": {
+              "column": 14,
+              "line": 10
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "false",
+          "status": "Killed",
+          "description": "Killed by: errors errorToString should convert a regular error to string",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["16", "17", "70", "71"],
+          "killedBy": ["16"]
+        },
+        {
+          "id": "74",
+          "location": {
+            "end": {
+              "column": 4,
+              "line": 17
+            },
+            "start": {
+              "column": 38,
+              "line": 10
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: errors errorToString should convert a regular error to string",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["16", "17", "70", "71"],
+          "killedBy": ["16"]
+        },
+        {
+          "id": "75",
+          "location": {
+            "end": {
+              "column": 54,
+              "line": 11
+            },
+            "start": {
+              "column": 21,
+              "line": 11
+            }
+          },
+          "mutatorName": "StringLiteral",
+          "replacement": "``",
+          "status": "Killed",
+          "description": "Killed by: errors errorToString should convert a regular error to string",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["16", "17", "70", "71"],
+          "killedBy": ["16"]
+        },
+        {
+          "id": "76",
+          "location": {
+            "end": {
+              "column": 20,
+              "line": 12
+            },
+            "start": {
+              "column": 9,
+              "line": 12
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: errors errorToString should convert an error without a stack trace to string",
+          "testsCompleted": 2,
+          "static": false,
+          "coveredBy": ["16", "17", "70", "71"],
+          "killedBy": ["17"]
+        },
+        {
+          "id": "78",
+          "location": {
+            "end": {
+              "column": 6,
+              "line": 14
+            },
+            "start": {
+              "column": 22,
+              "line": 12
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: errors errorToString should convert a regular error to string",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["16", "70", "71"],
+          "killedBy": ["16"]
+        },
+        {
+          "id": "77",
+          "location": {
+            "end": {
+              "column": 20,
+              "line": 12
+            },
+            "start": {
+              "column": 9,
+              "line": 12
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "false",
+          "status": "Killed",
+          "description": "Killed by: errors errorToString should convert a regular error to string",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["16", "17", "70", "71"],
+          "killedBy": ["16"]
+        },
+        {
+          "id": "80",
+          "location": {
+            "end": {
+              "column": 6,
+              "line": 16
+            },
+            "start": {
+              "column": 12,
+              "line": 14
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: errors errorToString should convert an error without a stack trace to string",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["17"],
+          "killedBy": ["17"]
+        },
+        {
+          "id": "79",
+          "location": {
+            "end": {
+              "column": 53,
+              "line": 13
+            },
+            "start": {
+              "column": 14,
+              "line": 13
+            }
+          },
+          "mutatorName": "StringLiteral",
+          "replacement": "``",
+          "status": "Killed",
+          "description": "Killed by: errors errorToString should convert a regular error to string",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["16", "70", "71"],
+          "killedBy": ["16"]
+        }
+      ],
+      "source": "export function isErrnoException(error: Error): error is NodeJS.ErrnoException {\n  return typeof (error as NodeJS.ErrnoException).code === 'string';\n}\n\nexport function errorToString(error: any) {\n  if (!error) {\n    return '';\n  } else if (isErrnoException(error)) {\n    return `${error.name}: ${error.code} (${error.syscall}) ${error.stack}`;\n  } else if (error instanceof Error) {\n    const message = `${error.name}: ${error.message}`;\n    if (error.stack) {\n      return `${message}\\n${error.stack.toString()}`;\n    } else {\n      return message;\n    }\n  } else {\n    return error.toString();\n  }\n}\n"
+    },
+    "/home/nicojs/github/stryker/packages/util/src/require-resolve.ts": {
+      "language": "typescript",
+      "mutants": [
+        {
+          "id": "124",
+          "location": {
+            "end": {
+              "column": 2,
+              "line": 7
+            },
+            "start": {
+              "column": 75,
+              "line": 5
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "NoCoverage",
+          "testsCompleted": 0,
+          "static": false
+        },
+        {
+          "id": "125",
+          "location": {
+            "end": {
+              "column": 55,
+              "line": 6
+            },
+            "start": {
+              "column": 38,
+              "line": 6
+            }
+          },
+          "mutatorName": "ObjectLiteral",
+          "replacement": "{}",
+          "status": "NoCoverage",
+          "testsCompleted": 0,
+          "static": false
+        },
+        {
+          "id": "126",
+          "location": {
+            "end": {
+              "column": 53,
+              "line": 6
+            },
+            "start": {
+              "column": 47,
+              "line": 6
+            }
+          },
+          "mutatorName": "ArrayDeclaration",
+          "replacement": "[]",
+          "status": "NoCoverage",
+          "testsCompleted": 0,
+          "static": false
+        }
+      ],
+      "source": "/**\n * Require a module from the current working directory (or a different base dir)\n * @see https://nodejs.org/api/modules.html#modules_require_resolve_paths_request\n */\nexport function requireResolve(id: string, from = process.cwd()): unknown {\n  return require(require.resolve(id, { paths: [from] }));\n}\n"
+    },
+    "/home/nicojs/github/stryker/packages/util/src/child-process-as-promised.ts": {
+      "language": "typescript",
+      "mutants": [
+        {
+          "id": "0",
+          "location": {
+            "end": {
+              "column": 2,
+              "line": 6
+            },
+            "start": {
+              "column": 39,
+              "line": 4
+            }
+          },
+          "mutatorName": "ObjectLiteral",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: childProcessAsPromised should expose promisified exec",
+          "testsCompleted": 1,
+          "static": true,
+          "killedBy": ["0"]
+        }
+      ],
+      "source": "import * as childProcess from 'child_process';\nimport { promisify } from 'util';\n\nexport const childProcessAsPromised = {\n  exec: promisify(childProcess.exec),\n};\n"
+    },
+    "/home/nicojs/github/stryker/packages/util/src/deep-merge.ts": {
+      "language": "typescript",
+      "mutants": [
+        {
+          "id": "1",
+          "location": {
+            "end": {
+              "column": 2,
+              "line": 22
+            },
+            "start": {
+              "column": 76,
+              "line": 10
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: deepMerge should merge overrides into the target object",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["1", "2", "3", "4"],
+          "killedBy": ["1"]
+        },
+        {
+          "id": "2",
+          "location": {
+            "end": {
+              "column": 4,
+              "line": 21
+            },
+            "start": {
+              "column": 43,
+              "line": 11
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: deepMerge should merge overrides into the target object",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["1", "2", "3", "4"],
+          "killedBy": ["1"]
+        },
+        {
+          "id": "3",
+          "location": {
+            "end": {
+              "column": 36,
+              "line": 14
+            },
+            "start": {
+              "column": 9,
+              "line": 14
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: deepMerge should not override with `undefined`",
+          "testsCompleted": 4,
+          "static": false,
+          "coveredBy": ["1", "2", "3", "4"],
+          "killedBy": ["4"]
+        },
+        {
+          "id": "4",
+          "location": {
+            "end": {
+              "column": 36,
+              "line": 14
+            },
+            "start": {
+              "column": 9,
+              "line": 14
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "false",
+          "status": "Killed",
+          "description": "Killed by: deepMerge should merge overrides into the target object",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["1", "2", "3", "4"],
+          "killedBy": ["1"]
+        },
+        {
+          "id": "5",
+          "location": {
+            "end": {
+              "column": 36,
+              "line": 14
+            },
+            "start": {
+              "column": 9,
+              "line": 14
+            }
+          },
+          "mutatorName": "EqualityOperator",
+          "replacement": "overrideValue === undefined",
+          "status": "Killed",
+          "description": "Killed by: deepMerge should merge overrides into the target object",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["1", "2", "3", "4"],
+          "killedBy": ["1"]
+        },
+        {
+          "id": "6",
+          "location": {
+            "end": {
+              "column": 6,
+              "line": 20
+            },
+            "start": {
+              "column": 38,
+              "line": 14
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: deepMerge should merge overrides into the target object",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["1", "2", "3"],
+          "killedBy": ["1"]
+        },
+        {
+          "id": "8",
+          "location": {
+            "end": {
+              "column": 141,
+              "line": 15
+            },
+            "start": {
+              "column": 11,
+              "line": 15
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "false",
+          "status": "Killed",
+          "description": "Killed by: deepMerge should merge overrides into the target object",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["1", "2", "3"],
+          "killedBy": ["1"]
+        },
+        {
+          "id": "7",
+          "location": {
+            "end": {
+              "column": 141,
+              "line": 15
+            },
+            "start": {
+              "column": 11,
+              "line": 15
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: deepMerge should deep merge overrides into the target object",
+          "testsCompleted": 2,
+          "static": false,
+          "coveredBy": ["1", "2", "3"],
+          "killedBy": ["2"]
+        },
+        {
+          "id": "9",
+          "location": {
+            "end": {
+              "column": 141,
+              "line": 15
+            },
+            "start": {
+              "column": 11,
+              "line": 15
+            }
+          },
+          "mutatorName": "LogicalOperator",
+          "replacement": "(defaultValue === undefined || typeof defaultValue !== 'object' || typeof overrideValue !== 'object') && Array.isArray(defaultValue)",
+          "status": "Killed",
+          "description": "Killed by: deepMerge should merge overrides into the target object",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["1", "2", "3"],
+          "killedBy": ["1"]
+        },
+        {
+          "id": "10",
+          "location": {
+            "end": {
+              "column": 110,
+              "line": 15
+            },
+            "start": {
+              "column": 11,
+              "line": 15
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: deepMerge should deep merge overrides into the target object",
+          "testsCompleted": 2,
+          "static": false,
+          "coveredBy": ["1", "2", "3"],
+          "killedBy": ["2"]
+        },
+        {
+          "id": "11",
+          "location": {
+            "end": {
+              "column": 110,
+              "line": 15
+            },
+            "start": {
+              "column": 11,
+              "line": 15
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "false",
+          "status": "Killed",
+          "description": "Killed by: deepMerge should merge overrides into the target object",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["1", "2", "3"],
+          "killedBy": ["1"]
+        },
+        {
+          "id": "12",
+          "location": {
+            "end": {
+              "column": 110,
+              "line": 15
+            },
+            "start": {
+              "column": 11,
+              "line": 15
+            }
+          },
+          "mutatorName": "LogicalOperator",
+          "replacement": "(defaultValue === undefined || typeof defaultValue !== 'object') && typeof overrideValue !== 'object'",
+          "status": "Survived",
+          "testsCompleted": 3,
+          "static": false,
+          "coveredBy": ["1", "2", "3"]
+        },
+        {
+          "id": "14",
+          "location": {
+            "end": {
+              "column": 73,
+              "line": 15
+            },
+            "start": {
+              "column": 11,
+              "line": 15
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "false",
+          "status": "Survived",
+          "testsCompleted": 3,
+          "static": false,
+          "coveredBy": ["1", "2", "3"]
+        },
+        {
+          "id": "13",
+          "location": {
+            "end": {
+              "column": 73,
+              "line": 15
+            },
+            "start": {
+              "column": 11,
+              "line": 15
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: deepMerge should deep merge overrides into the target object",
+          "testsCompleted": 2,
+          "static": false,
+          "coveredBy": ["1", "2", "3"],
+          "killedBy": ["2"]
+        },
+        {
+          "id": "15",
+          "location": {
+            "end": {
+              "column": 73,
+              "line": 15
+            },
+            "start": {
+              "column": 11,
+              "line": 15
+            }
+          },
+          "mutatorName": "LogicalOperator",
+          "replacement": "defaultValue === undefined && typeof defaultValue !== 'object'",
+          "status": "Survived",
+          "testsCompleted": 3,
+          "static": false,
+          "coveredBy": ["1", "2", "3"]
+        },
+        {
+          "id": "16",
+          "location": {
+            "end": {
+              "column": 37,
+              "line": 15
+            },
+            "start": {
+              "column": 11,
+              "line": 15
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: deepMerge should deep merge overrides into the target object",
+          "testsCompleted": 2,
+          "static": false,
+          "coveredBy": ["1", "2", "3"],
+          "killedBy": ["2"]
+        },
+        {
+          "id": "17",
+          "location": {
+            "end": {
+              "column": 37,
+              "line": 15
+            },
+            "start": {
+              "column": 11,
+              "line": 15
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "false",
+          "status": "Survived",
+          "testsCompleted": 3,
+          "static": false,
+          "coveredBy": ["1", "2", "3"]
+        },
+        {
+          "id": "18",
+          "location": {
+            "end": {
+              "column": 37,
+              "line": 15
+            },
+            "start": {
+              "column": 11,
+              "line": 15
+            }
+          },
+          "mutatorName": "EqualityOperator",
+          "replacement": "defaultValue !== undefined",
+          "status": "Killed",
+          "description": "Killed by: deepMerge should deep merge overrides into the target object",
+          "testsCompleted": 2,
+          "static": false,
+          "coveredBy": ["1", "2", "3"],
+          "killedBy": ["2"]
+        },
+        {
+          "id": "20",
+          "location": {
+            "end": {
+              "column": 73,
+              "line": 15
+            },
+            "start": {
+              "column": 41,
+              "line": 15
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "false",
+          "status": "Survived",
+          "testsCompleted": 2,
+          "static": false,
+          "coveredBy": ["2", "3"]
+        },
+        {
+          "id": "19",
+          "location": {
+            "end": {
+              "column": 73,
+              "line": 15
+            },
+            "start": {
+              "column": 41,
+              "line": 15
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: deepMerge should deep merge overrides into the target object",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["2", "3"],
+          "killedBy": ["2"]
+        },
+        {
+          "id": "21",
+          "location": {
+            "end": {
+              "column": 73,
+              "line": 15
+            },
+            "start": {
+              "column": 41,
+              "line": 15
+            }
+          },
+          "mutatorName": "EqualityOperator",
+          "replacement": "typeof defaultValue === 'object'",
+          "status": "Killed",
+          "description": "Killed by: deepMerge should deep merge overrides into the target object",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["2", "3"],
+          "killedBy": ["2"]
+        },
+        {
+          "id": "22",
+          "location": {
+            "end": {
+              "column": 73,
+              "line": 15
+            },
+            "start": {
+              "column": 65,
+              "line": 15
+            }
+          },
+          "mutatorName": "StringLiteral",
+          "replacement": "\"\"",
+          "status": "Killed",
+          "description": "Killed by: deepMerge should deep merge overrides into the target object",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["2", "3"],
+          "killedBy": ["2"]
+        },
+        {
+          "id": "23",
+          "location": {
+            "end": {
+              "column": 110,
+              "line": 15
+            },
+            "start": {
+              "column": 77,
+              "line": 15
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: deepMerge should deep merge overrides into the target object",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["2", "3"],
+          "killedBy": ["2"]
+        },
+        {
+          "id": "24",
+          "location": {
+            "end": {
+              "column": 110,
+              "line": 15
+            },
+            "start": {
+              "column": 77,
+              "line": 15
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "false",
+          "status": "Survived",
+          "testsCompleted": 2,
+          "static": false,
+          "coveredBy": ["2", "3"]
+        },
+        {
+          "id": "25",
+          "location": {
+            "end": {
+              "column": 110,
+              "line": 15
+            },
+            "start": {
+              "column": 77,
+              "line": 15
+            }
+          },
+          "mutatorName": "EqualityOperator",
+          "replacement": "typeof overrideValue === 'object'",
+          "status": "Killed",
+          "description": "Killed by: deepMerge should deep merge overrides into the target object",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["2", "3"],
+          "killedBy": ["2"]
+        },
+        {
+          "id": "26",
+          "location": {
+            "end": {
+              "column": 110,
+              "line": 15
+            },
+            "start": {
+              "column": 102,
+              "line": 15
+            }
+          },
+          "mutatorName": "StringLiteral",
+          "replacement": "\"\"",
+          "status": "Killed",
+          "description": "Killed by: deepMerge should deep merge overrides into the target object",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["2", "3"],
+          "killedBy": ["2"]
+        },
+        {
+          "id": "27",
+          "location": {
+            "end": {
+              "column": 8,
+              "line": 17
+            },
+            "start": {
+              "column": 143,
+              "line": 15
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: deepMerge should merge overrides into the target object",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["1", "2", "3"],
+          "killedBy": ["1"]
+        },
+        {
+          "id": "28",
+          "location": {
+            "end": {
+              "column": 8,
+              "line": 19
+            },
+            "start": {
+              "column": 14,
+              "line": 17
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: deepMerge should deep merge overrides into the target object",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["2"],
+          "killedBy": ["2"]
+        }
+      ],
+      "source": "export type DeepPartial<T> = {\n  [P in keyof T]?: T[P] extends Record<string, any> ? DeepPartial<T[P]> : T[P];\n};\n\n/**\n *\n * @param defaults\n * @param overrides\n */\nexport function deepMerge<T>(defaults: T, overrides: DeepPartial<T>): void {\n  Object.keys(overrides).forEach((key) => {\n    const defaultValue = (defaults as any)[key];\n    const overrideValue = (overrides as any)[key];\n    if (overrideValue !== undefined) {\n      if (defaultValue === undefined || typeof defaultValue !== 'object' || typeof overrideValue !== 'object' || Array.isArray(defaultValue)) {\n        (defaults as any)[key] = overrideValue;\n      } else {\n        deepMerge(defaultValue, overrideValue);\n      }\n    }\n  });\n}\n"
+    },
+    "/home/nicojs/github/stryker/packages/util/src/directory-require-cache.ts": {
+      "language": "typescript",
+      "mutants": [
+        {
+          "id": "29",
+          "location": {
+            "end": {
+              "column": 4,
+              "line": 39
+            },
+            "start": {
+              "column": 19,
+              "line": 21
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "30",
+          "location": {
+            "end": {
+              "column": 20,
+              "line": 22
+            },
+            "start": {
+              "column": 9,
+              "line": 22
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should only record the first time (perf optimization)",
+          "testsCompleted": 2,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
+          "killedBy": ["6"]
+        },
+        {
+          "id": "32",
+          "location": {
+            "end": {
+              "column": 20,
+              "line": 22
+            },
+            "start": {
+              "column": 9,
+              "line": 22
+            }
+          },
+          "mutatorName": "BooleanLiteral",
+          "replacement": "this.cache",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "31",
+          "location": {
+            "end": {
+              "column": 20,
+              "line": 22
+            },
+            "start": {
+              "column": 9,
+              "line": 22
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "false",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "33",
+          "location": {
+            "end": {
+              "column": 6,
+              "line": 38
+            },
+            "start": {
+              "column": 22,
+              "line": 22
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "34",
+          "location": {
+            "end": {
+              "column": 127,
+              "line": 26
+            },
+            "start": {
+              "column": 17,
+              "line": 26
+            }
+          },
+          "mutatorName": "ArrowFunction",
+          "replacement": "() => undefined",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "36",
+          "location": {
+            "end": {
+              "column": 127,
+              "line": 26
+            },
+            "start": {
+              "column": 31,
+              "line": 26
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "false",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "35",
+          "location": {
+            "end": {
+              "column": 127,
+              "line": 26
+            },
+            "start": {
+              "column": 31,
+              "line": 26
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "37",
+          "location": {
+            "end": {
+              "column": 127,
+              "line": 26
+            },
+            "start": {
+              "column": 31,
+              "line": 26
+            }
+          },
+          "mutatorName": "LogicalOperator",
+          "replacement": "fileName.startsWith(`${cwd}${path.sep}`) || !fileName.startsWith(path.join(cwd, 'node_modules'))",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "38",
+          "location": {
+            "end": {
+              "column": 70,
+              "line": 26
+            },
+            "start": {
+              "column": 51,
+              "line": 26
+            }
+          },
+          "mutatorName": "StringLiteral",
+          "replacement": "``",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "39",
+          "location": {
+            "end": {
+              "column": 127,
+              "line": 26
+            },
+            "start": {
+              "column": 75,
+              "line": 26
+            }
+          },
+          "mutatorName": "BooleanLiteral",
+          "replacement": "fileName.startsWith(path.join(cwd, 'node_modules'))",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "41",
+          "location": {
+            "end": {
+              "column": 43,
+              "line": 27
+            },
+            "start": {
+              "column": 18,
+              "line": 27
+            }
+          },
+          "mutatorName": "ArrowFunction",
+          "replacement": "() => undefined",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "42",
+          "location": {
+            "end": {
+              "column": 71,
+              "line": 33
+            },
+            "start": {
+              "column": 16,
+              "line": 33
+            }
+          },
+          "mutatorName": "ArrowFunction",
+          "replacement": "() => undefined",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "43",
+          "location": {
+            "end": {
+              "column": 65,
+              "line": 36
+            },
+            "start": {
+              "column": 19,
+              "line": 36
+            }
+          },
+          "mutatorName": "ArrowFunction",
+          "replacement": "() => undefined",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "40",
+          "location": {
+            "end": {
+              "column": 125,
+              "line": 26
+            },
+            "start": {
+              "column": 111,
+              "line": 26
+            }
+          },
+          "mutatorName": "StringLiteral",
+          "replacement": "\"\"",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "44",
+          "location": {
+            "end": {
+              "column": 65,
+              "line": 36
+            },
+            "start": {
+              "column": 39,
+              "line": 36
+            }
+          },
+          "mutatorName": "BooleanLiteral",
+          "replacement": "cache.has(parentFileName)",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "45",
+          "location": {
+            "end": {
+              "column": 4,
+              "line": 52
+            },
+            "start": {
+              "column": 18,
+              "line": 41
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "46",
+          "location": {
+            "end": {
+              "column": 35,
+              "line": 42
+            },
+            "start": {
+              "column": 9,
+              "line": 42
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "47",
+          "location": {
+            "end": {
+              "column": 35,
+              "line": 42
+            },
+            "start": {
+              "column": 9,
+              "line": 42
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "false",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "48",
+          "location": {
+            "end": {
+              "column": 35,
+              "line": 42
+            },
+            "start": {
+              "column": 9,
+              "line": 42
+            }
+          },
+          "mutatorName": "LogicalOperator",
+          "replacement": "this.cache || this.parents",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "49",
+          "location": {
+            "end": {
+              "column": 6,
+              "line": 51
+            },
+            "start": {
+              "column": 37,
+              "line": 42
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "50",
+          "location": {
+            "end": {
+              "column": 8,
+              "line": 49
+            },
+            "start": {
+              "column": 40,
+              "line": 44
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "51",
+          "location": {
+            "end": {
+              "column": 25,
+              "line": 46
+            },
+            "start": {
+              "column": 13,
+              "line": 46
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "52",
+          "location": {
+            "end": {
+              "column": 25,
+              "line": 46
+            },
+            "start": {
+              "column": 13,
+              "line": 46
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "false",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "53",
+          "location": {
+            "end": {
+              "column": 10,
+              "line": 48
+            },
+            "start": {
+              "column": 27,
+              "line": 46
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "11", "12"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "54",
+          "location": {
+            "end": {
+              "column": 107,
+              "line": 47
+            },
+            "start": {
+              "column": 64,
+              "line": 47
+            }
+          },
+          "mutatorName": "ArrowFunction",
+          "replacement": "() => undefined",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "11", "12"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "55",
+          "location": {
+            "end": {
+              "column": 107,
+              "line": 47
+            },
+            "start": {
+              "column": 81,
+              "line": 47
+            }
+          },
+          "mutatorName": "BooleanLiteral",
+          "replacement": "cache.has(childModule.id)",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "11", "12"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "56",
+          "location": {
+            "end": {
+              "column": 65,
+              "line": 50
+            },
+            "start": {
+              "column": 21,
+              "line": 50
+            }
+          },
+          "mutatorName": "ArrowFunction",
+          "replacement": "() => undefined",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
+          "killedBy": ["5"]
+        }
+      ],
+      "source": "import path = require('path');\n\nimport { notEmpty } from './not-empty';\n\n/**\n * A helper class that can be used by test runners.\n * The first time you call `record`, it will fill the internal registry with the files required in the current working directory (excluding node_modules)\n * Then each time you call `clear` it will clear those files from the require cache\n *\n * It will also delete the `module.children` property of the root module.\n * @see https://github.com/stryker-mutator/stryker/issues/2461\n */\nexport class DirectoryRequireCache {\n  private cache: Set<string> | undefined;\n  private parents: Set<string> | undefined;\n\n  /**\n   * Records the files required in the current working directory (excluding node_modules)\n   * Only does so the first time, any subsequent calls will be ignored\n   */\n  public record() {\n    if (!this.cache) {\n      const cache = (this.cache = new Set());\n      const cwd = process.cwd();\n      Object.keys(require.cache)\n        .filter((fileName) => fileName.startsWith(`${cwd}${path.sep}`) && !fileName.startsWith(path.join(cwd, 'node_modules')))\n        .forEach((file) => cache.add(file));\n\n      this.parents = new Set(\n        Array.from(cache)\n          // `module.parent` is deprecated, but seems to work fine, might never be removed.\n          // See https://nodejs.org/api/modules.html#modules_module_parent\n          .map((fileName) => require.cache[fileName]?.parent?.filename)\n          .filter(notEmpty)\n          // Filter out any parents that are in the current cache, since they will be removed anyway\n          .filter((parentFileName) => !cache.has(parentFileName))\n      );\n    }\n  }\n\n  public clear() {\n    if (this.cache && this.parents) {\n      const cache = this.cache;\n      this.parents.forEach((parent) => {\n        const parentModule = require.cache[parent];\n        if (parentModule) {\n          parentModule.children = parentModule.children.filter((childModule) => !cache.has(childModule.id));\n        }\n      });\n      cache.forEach((fileName) => delete require.cache[fileName]);\n    }\n  }\n}\n"
+    },
+    "/home/nicojs/github/stryker/packages/util/src/immutable.ts": {
+      "language": "typescript",
+      "mutants": [
+        {
+          "id": "82",
+          "location": {
+            "end": {
+              "column": 2,
+              "line": 42
+            },
+            "start": {
+              "column": 56,
+              "line": 18
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: deepFreeze should freeze objects",
+          "testsCompleted": 2,
+          "static": false,
+          "coveredBy": ["18", "19", "20", "21", "22", "23", "24", "25"],
+          "killedBy": ["19"]
+        },
+        {
+          "id": "83",
+          "location": {
+            "end": {
+              "column": 10,
+              "line": 38
+            },
+            "start": {
+              "column": 5,
+              "line": 20
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "case 'object':",
+          "status": "Killed",
+          "description": "Killed by: deepFreeze should freeze objects",
+          "testsCompleted": 2,
+          "static": false,
+          "coveredBy": ["18", "19", "20", "22", "23", "24", "25"],
+          "killedBy": ["19"]
+        },
+        {
+          "id": "84",
+          "location": {
+            "end": {
+              "column": 18,
+              "line": 20
+            },
+            "start": {
+              "column": 10,
+              "line": 20
+            }
+          },
+          "mutatorName": "StringLiteral",
+          "replacement": "\"\"",
+          "status": "Killed",
+          "description": "Killed by: deepFreeze should freeze objects",
+          "testsCompleted": 2,
+          "static": false,
+          "coveredBy": ["18", "19", "20", "21", "22", "23", "24", "25"],
+          "killedBy": ["19"]
+        },
+        {
+          "id": "85",
+          "location": {
+            "end": {
+              "column": 32,
+              "line": 21
+            },
+            "start": {
+              "column": 11,
+              "line": 21
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: deepFreeze should not change the input object",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["18", "19", "20", "22", "23", "24", "25"],
+          "killedBy": ["18"]
+        },
+        {
+          "id": "86",
+          "location": {
+            "end": {
+              "column": 32,
+              "line": 21
+            },
+            "start": {
+              "column": 11,
+              "line": 21
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "false",
+          "status": "Killed",
+          "description": "Killed by: deepFreeze should work for Arrays",
+          "testsCompleted": 5,
+          "static": false,
+          "coveredBy": ["18", "19", "20", "22", "23", "24", "25"],
+          "killedBy": ["23"]
+        },
+        {
+          "id": "87",
+          "location": {
+            "end": {
+              "column": 8,
+              "line": 23
+            },
+            "start": {
+              "column": 34,
+              "line": 21
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: deepFreeze should work for Arrays",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["23"],
+          "killedBy": ["23"]
+        },
+        {
+          "id": "88",
+          "location": {
+            "end": {
+              "column": 32,
+              "line": 24
+            },
+            "start": {
+              "column": 11,
+              "line": 24
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: deepFreeze should not change the input object",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["18", "19", "20", "22", "23", "24", "25"],
+          "killedBy": ["18"]
+        },
+        {
+          "id": "89",
+          "location": {
+            "end": {
+              "column": 32,
+              "line": 24
+            },
+            "start": {
+              "column": 11,
+              "line": 24
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "false",
+          "status": "Killed",
+          "description": "Killed by: deepFreeze should work for Maps",
+          "testsCompleted": 6,
+          "static": false,
+          "coveredBy": ["18", "19", "20", "22", "23", "24", "25"],
+          "killedBy": ["24"]
+        },
+        {
+          "id": "90",
+          "location": {
+            "end": {
+              "column": 8,
+              "line": 26
+            },
+            "start": {
+              "column": 34,
+              "line": 24
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: deepFreeze should work for Maps",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["24"],
+          "killedBy": ["24"]
+        },
+        {
+          "id": "91",
+          "location": {
+            "end": {
+              "column": 26,
+              "line": 27
+            },
+            "start": {
+              "column": 11,
+              "line": 27
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: deepFreeze should freeze objects",
+          "testsCompleted": 2,
+          "static": false,
+          "coveredBy": ["18", "19", "20", "22", "23", "24", "25"],
+          "killedBy": ["19"]
+        },
+        {
+          "id": "92",
+          "location": {
+            "end": {
+              "column": 26,
+              "line": 27
+            },
+            "start": {
+              "column": 11,
+              "line": 27
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "false",
+          "status": "Killed",
+          "description": "Killed by: deepFreeze should work for `null` and `undefined`",
+          "testsCompleted": 3,
+          "static": false,
+          "coveredBy": ["18", "19", "20", "22", "23", "24", "25"],
+          "killedBy": ["20"]
+        },
+        {
+          "id": "93",
+          "location": {
+            "end": {
+              "column": 26,
+              "line": 27
+            },
+            "start": {
+              "column": 11,
+              "line": 27
+            }
+          },
+          "mutatorName": "EqualityOperator",
+          "replacement": "target !== null",
+          "status": "Killed",
+          "description": "Killed by: deepFreeze should freeze objects",
+          "testsCompleted": 2,
+          "static": false,
+          "coveredBy": ["18", "19", "20", "22", "23", "24", "25"],
+          "killedBy": ["19"]
+        },
+        {
+          "id": "94",
+          "location": {
+            "end": {
+              "column": 8,
+              "line": 29
+            },
+            "start": {
+              "column": 28,
+              "line": 27
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: deepFreeze should work for `null` and `undefined`",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["20"],
+          "killedBy": ["20"]
+        },
+        {
+          "id": "95",
+          "location": {
+            "end": {
+              "column": 32,
+              "line": 30
+            },
+            "start": {
+              "column": 11,
+              "line": 30
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: deepFreeze should not change the input object",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["18", "19", "22", "23", "24", "25"],
+          "killedBy": ["18"]
+        },
+        {
+          "id": "96",
+          "location": {
+            "end": {
+              "column": 32,
+              "line": 30
+            },
+            "start": {
+              "column": 11,
+              "line": 30
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "false",
+          "status": "Killed",
+          "description": "Killed by: deepFreeze should work for Sets",
+          "testsCompleted": 6,
+          "static": false,
+          "coveredBy": ["18", "19", "22", "23", "24", "25"],
+          "killedBy": ["25"]
+        },
+        {
+          "id": "97",
+          "location": {
+            "end": {
+              "column": 8,
+              "line": 32
+            },
+            "start": {
+              "column": 34,
+              "line": 30
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: deepFreeze should work for Sets",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["25"],
+          "killedBy": ["25"]
+        },
+        {
+          "id": "99",
+          "location": {
+            "end": {
+              "column": 10,
+              "line": 37
+            },
+            "start": {
+              "column": 67,
+              "line": 34
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: deepFreeze should freeze objects",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["19", "22", "23", "24", "25"],
+          "killedBy": ["19"]
+        },
+        {
+          "id": "98",
+          "location": {
+            "end": {
+              "column": 8,
+              "line": 38
+            },
+            "start": {
+              "column": 28,
+              "line": 33
+            }
+          },
+          "mutatorName": "ObjectLiteral",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: deepFreeze should freeze objects",
+          "testsCompleted": 2,
+          "static": false,
+          "coveredBy": ["18", "19", "22", "23", "24", "25"],
+          "killedBy": ["19"]
+        },
+        {
+          "id": "100",
+          "location": {
+            "end": {
+              "column": 37,
+              "line": 40
+            },
+            "start": {
+              "column": 5,
+              "line": 39
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "default:",
+          "status": "Killed",
+          "description": "Killed by: deepFreeze should freeze objects",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["19", "20", "21", "22", "23", "24", "25"],
+          "killedBy": ["19"]
+        }
+      ],
+      "source": "type ImmutablePrimitive = undefined | null | boolean | string | number | ((...args: any[]) => any);\n\nexport type Immutable<T> = T extends ImmutablePrimitive\n  ? T\n  : T extends Array<infer U>\n  ? ImmutableArray<U>\n  : T extends Map<infer K, infer V>\n  ? ImmutableMap<K, V>\n  : T extends Set<infer M>\n  ? ImmutableSet<M>\n  : ImmutableObject<T>;\n\nexport type ImmutableArray<T> = ReadonlyArray<Immutable<T>>;\nexport type ImmutableMap<K, V> = ReadonlyMap<Immutable<K>, Immutable<V>>;\nexport type ImmutableSet<T> = ReadonlySet<Immutable<T>>;\nexport type ImmutableObject<T> = { readonly [K in keyof T]: Immutable<T[K]> };\n\nexport function deepFreeze<T>(target: T): Immutable<T> {\n  switch (typeof target) {\n    case 'object':\n      if (Array.isArray(target)) {\n        return Object.freeze((target as any[]).map(deepFreeze)) as Immutable<T>;\n      }\n      if (target instanceof Map) {\n        return (Object.freeze(new Map([...target.entries()].map(([k, v]) => [deepFreeze(k), deepFreeze(v)]))) as unknown) as Immutable<T>;\n      }\n      if (target === null) {\n        return null as Immutable<T>;\n      }\n      if (target instanceof Set) {\n        return (Object.freeze(new Set([...target.values()].map(deepFreeze))) as unknown) as Immutable<T>;\n      }\n      return Object.freeze({\n        ...Object.entries(target).reduce((result, [prop, val]) => {\n          result[prop] = deepFreeze(val);\n          return result;\n        }, {} as any),\n      });\n    default:\n      return target as Immutable<T>;\n  }\n}\n"
+    },
+    "/home/nicojs/github/stryker/packages/util/src/noop-logger.ts": {
+      "language": "typescript",
+      "mutants": [
+        {
+          "id": "101",
+          "location": {
+            "end": {
+              "column": 2,
+              "line": 38
+            },
+            "start": {
+              "column": 27,
+              "line": 1
+            }
+          },
+          "mutatorName": "ObjectLiteral",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 6,
+          "static": true,
+          "killedBy": ["5"]
+        },
+        {
+          "id": "102",
+          "location": {
+            "end": {
+              "column": 4,
+              "line": 4
+            },
+            "start": {
+              "column": 20,
+              "line": 2
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: noopLogger should not enable any logging",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["26"],
+          "killedBy": ["26"]
+        },
+        {
+          "id": "103",
+          "location": {
+            "end": {
+              "column": 17,
+              "line": 3
+            },
+            "start": {
+              "column": 12,
+              "line": 3
+            }
+          },
+          "mutatorName": "BooleanLiteral",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: noopLogger should not enable any logging",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["26"],
+          "killedBy": ["26"]
+        },
+        {
+          "id": "104",
+          "location": {
+            "end": {
+              "column": 4,
+              "line": 7
+            },
+            "start": {
+              "column": 20,
+              "line": 5
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: noopLogger should not enable any logging",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["26"],
+          "killedBy": ["26"]
+        },
+        {
+          "id": "105",
+          "location": {
+            "end": {
+              "column": 17,
+              "line": 6
+            },
+            "start": {
+              "column": 12,
+              "line": 6
+            }
+          },
+          "mutatorName": "BooleanLiteral",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: noopLogger should not enable any logging",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["26"],
+          "killedBy": ["26"]
+        },
+        {
+          "id": "106",
+          "location": {
+            "end": {
+              "column": 4,
+              "line": 10
+            },
+            "start": {
+              "column": 19,
+              "line": 8
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: noopLogger should not enable any logging",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["26"],
+          "killedBy": ["26"]
+        },
+        {
+          "id": "107",
+          "location": {
+            "end": {
+              "column": 17,
+              "line": 9
+            },
+            "start": {
+              "column": 12,
+              "line": 9
+            }
+          },
+          "mutatorName": "BooleanLiteral",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: noopLogger should not enable any logging",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["26"],
+          "killedBy": ["26"]
+        },
+        {
+          "id": "108",
+          "location": {
+            "end": {
+              "column": 4,
+              "line": 13
+            },
+            "start": {
+              "column": 19,
+              "line": 11
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: noopLogger should not enable any logging",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["26"],
+          "killedBy": ["26"]
+        },
+        {
+          "id": "109",
+          "location": {
+            "end": {
+              "column": 17,
+              "line": 12
+            },
+            "start": {
+              "column": 12,
+              "line": 12
+            }
+          },
+          "mutatorName": "BooleanLiteral",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: noopLogger should not enable any logging",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["26"],
+          "killedBy": ["26"]
+        },
+        {
+          "id": "110",
+          "location": {
+            "end": {
+              "column": 4,
+              "line": 16
+            },
+            "start": {
+              "column": 20,
+              "line": 14
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: noopLogger should not enable any logging",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["26"],
+          "killedBy": ["26"]
+        },
+        {
+          "id": "111",
+          "location": {
+            "end": {
+              "column": 17,
+              "line": 15
+            },
+            "start": {
+              "column": 12,
+              "line": 15
+            }
+          },
+          "mutatorName": "BooleanLiteral",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: noopLogger should not enable any logging",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["26"],
+          "killedBy": ["26"]
+        },
+        {
+          "id": "112",
+          "location": {
+            "end": {
+              "column": 4,
+              "line": 19
+            },
+            "start": {
+              "column": 20,
+              "line": 17
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: noopLogger should not enable any logging",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["26"],
+          "killedBy": ["26"]
+        },
+        {
+          "id": "113",
+          "location": {
+            "end": {
+              "column": 17,
+              "line": 18
+            },
+            "start": {
+              "column": 12,
+              "line": 18
+            }
+          },
+          "mutatorName": "BooleanLiteral",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: noopLogger should not enable any logging",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["26"],
+          "killedBy": ["26"]
+        }
+      ],
+      "source": "export const noopLogger = {\n  isTraceEnabled() {\n    return false;\n  },\n  isDebugEnabled() {\n    return false;\n  },\n  isInfoEnabled() {\n    return false;\n  },\n  isWarnEnabled() {\n    return false;\n  },\n  isErrorEnabled() {\n    return false;\n  },\n  isFatalEnabled() {\n    return false;\n  },\n  trace() {\n    // noop\n  },\n  debug() {\n    // noop\n  },\n  info() {\n    // noop\n  },\n  warn() {\n    // noop\n  },\n  error() {\n    // noop\n  },\n  fatal() {\n    // noop\n  },\n};\n"
+    },
+    "/home/nicojs/github/stryker/packages/util/src/not-empty.ts": {
+      "language": "typescript",
+      "mutants": [
+        {
+          "id": "114",
+          "location": {
+            "end": {
+              "column": 2,
+              "line": 3
+            },
+            "start": {
+              "column": 68,
+              "line": 1
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13", "28", "29", "30"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "115",
+          "location": {
+            "end": {
+              "column": 45,
+              "line": 2
+            },
+            "start": {
+              "column": 10,
+              "line": 2
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13", "28", "29", "30"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "116",
+          "location": {
+            "end": {
+              "column": 45,
+              "line": 2
+            },
+            "start": {
+              "column": 10,
+              "line": 2
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "false",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13", "28", "29", "30"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "117",
+          "location": {
+            "end": {
+              "column": 45,
+              "line": 2
+            },
+            "start": {
+              "column": 10,
+              "line": 2
+            }
+          },
+          "mutatorName": "LogicalOperator",
+          "replacement": "item !== undefined || item !== null",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13", "28", "29", "30"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "118",
+          "location": {
+            "end": {
+              "column": 28,
+              "line": 2
+            },
+            "start": {
+              "column": 10,
+              "line": 2
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13", "28", "29", "30"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "119",
+          "location": {
+            "end": {
+              "column": 28,
+              "line": 2
+            },
+            "start": {
+              "column": 10,
+              "line": 2
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "false",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13", "28", "29", "30"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "120",
+          "location": {
+            "end": {
+              "column": 28,
+              "line": 2
+            },
+            "start": {
+              "column": 10,
+              "line": 2
+            }
+          },
+          "mutatorName": "EqualityOperator",
+          "replacement": "item === undefined",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13", "28", "29", "30"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "121",
+          "location": {
+            "end": {
+              "column": 45,
+              "line": 2
+            },
+            "start": {
+              "column": 32,
+              "line": 2
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "28", "29"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "122",
+          "location": {
+            "end": {
+              "column": 45,
+              "line": 2
+            },
+            "start": {
+              "column": 32,
+              "line": 2
+            }
+          },
+          "mutatorName": "ConditionalExpression",
+          "replacement": "false",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "28", "29"],
+          "killedBy": ["5"]
+        },
+        {
+          "id": "123",
+          "location": {
+            "end": {
+              "column": 45,
+              "line": 2
+            },
+            "start": {
+              "column": 32,
+              "line": 2
+            }
+          },
+          "mutatorName": "EqualityOperator",
+          "replacement": "item === null",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "28", "29"],
+          "killedBy": ["5"]
+        }
+      ],
+      "source": "export function notEmpty<T>(item: T | undefined | null): item is T {\n  return item !== undefined && item !== null;\n}\n"
+    },
+    "/home/nicojs/github/stryker/packages/util/src/string-utils.ts": {
+      "language": "typescript",
+      "mutants": [
+        {
+          "id": "127",
+          "location": {
+            "end": {
+              "column": 2,
+              "line": 9
+            },
+            "start": {
+              "column": 51,
+              "line": 7
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: stringUtils normalizeWhitespaces should not change strings without consecutive whitespaces",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["31", "32", "33"],
+          "killedBy": ["31"]
+        },
+        {
+          "id": "128",
+          "location": {
+            "end": {
+              "column": 28,
+              "line": 8
+            },
+            "start": {
+              "column": 22,
+              "line": 8
+            }
+          },
+          "mutatorName": "Regex",
+          "replacement": "/\\s/g",
+          "status": "Killed",
+          "description": "Killed by: stringUtils normalizeWhitespaces should normalize a string with multiple consecutive spaces",
+          "testsCompleted": 2,
+          "static": false,
+          "coveredBy": ["31", "32", "33"],
+          "killedBy": ["32"]
+        },
+        {
+          "id": "129",
+          "location": {
+            "end": {
+              "column": 28,
+              "line": 8
+            },
+            "start": {
+              "column": 22,
+              "line": 8
+            }
+          },
+          "mutatorName": "Regex",
+          "replacement": "/\\S+/g",
+          "status": "Killed",
+          "description": "Killed by: stringUtils normalizeWhitespaces should not change strings without consecutive whitespaces",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["31", "32", "33"],
+          "killedBy": ["31"]
+        },
+        {
+          "id": "130",
+          "location": {
+            "end": {
+              "column": 33,
+              "line": 8
+            },
+            "start": {
+              "column": 30,
+              "line": 8
+            }
+          },
+          "mutatorName": "StringLiteral",
+          "replacement": "\"\"",
+          "status": "Killed",
+          "description": "Killed by: stringUtils normalizeWhitespaces should not change strings without consecutive whitespaces",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["31", "32", "33"],
+          "killedBy": ["31"]
+        },
+        {
+          "id": "131",
+          "location": {
+            "end": {
+              "column": 2,
+              "line": 17
+            },
+            "start": {
+              "column": 76,
+              "line": 15
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: stringUtils propertyPath should be able to point to a path",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["35"],
+          "killedBy": ["35"]
+        },
+        {
+          "id": "132",
+          "location": {
+            "end": {
+              "column": 4,
+              "line": 31
+            },
+            "start": {
+              "column": 56,
+              "line": 29
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: stringUtils PropertyPathBuilder should be able to point to a path",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["34"],
+          "killedBy": ["34"]
+        },
+        {
+          "id": "133",
+          "location": {
+            "end": {
+              "column": 102,
+              "line": 30
+            },
+            "start": {
+              "column": 66,
+              "line": 30
+            }
+          },
+          "mutatorName": "ArrayDeclaration",
+          "replacement": "[]",
+          "status": "Killed",
+          "description": "Killed by: stringUtils PropertyPathBuilder should be able to point to a path",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["34"],
+          "killedBy": ["34"]
+        },
+        {
+          "id": "134",
+          "location": {
+            "end": {
+              "column": 4,
+              "line": 38
+            },
+            "start": {
+              "column": 26,
+              "line": 36
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: stringUtils PropertyPathBuilder should be able to point to a path",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["34"],
+          "killedBy": ["34"]
+        },
+        {
+          "id": "135",
+          "location": {
+            "end": {
+              "column": 35,
+              "line": 37
+            },
+            "start": {
+              "column": 32,
+              "line": 37
+            }
+          },
+          "mutatorName": "StringLiteral",
+          "replacement": "\"\"",
+          "status": "Killed",
+          "description": "Killed by: stringUtils PropertyPathBuilder should be able to point to a path",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["34"],
+          "killedBy": ["34"]
+        },
+        {
+          "id": "136",
+          "location": {
+            "end": {
+              "column": 4,
+              "line": 45
+            },
+            "start": {
+              "column": 29,
+              "line": 43
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: stringUtils PropertyPathBuilder should be able to point to a path",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["34"],
+          "killedBy": ["34"]
+        },
+        {
+          "id": "137",
+          "location": {
+            "end": {
+              "column": 41,
+              "line": 44
+            },
+            "start": {
+              "column": 39,
+              "line": 44
+            }
+          },
+          "mutatorName": "ArrayDeclaration",
+          "replacement": "[\"Stryker was here\"]",
+          "status": "Killed",
+          "description": "Killed by: stringUtils PropertyPathBuilder should be able to point to a path",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["34"],
+          "killedBy": ["34"]
+        },
+        {
+          "id": "138",
+          "location": {
+            "end": {
+              "column": 4,
+              "line": 49
+            },
+            "start": {
+              "column": 29,
+              "line": 47
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: stringUtils PropertyPathBuilder should be able to point to a path",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["34"],
+          "killedBy": ["34"]
+        },
+        {
+          "id": "139",
+          "location": {
+            "end": {
+              "column": 2,
+              "line": 57
+            },
+            "start": {
+              "column": 52,
+              "line": 55
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: stringUtils escapeRegExpLiteral should return input if no special chars are found",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52"],
+          "killedBy": ["36"]
+        },
+        {
+          "id": "141",
+          "location": {
+            "end": {
+              "column": 2,
+              "line": 64
+            },
+            "start": {
+              "column": 45,
+              "line": 62
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: stringUtils escapeRegExp should return input if no special chars are found",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69"],
+          "killedBy": ["53"]
+        },
+        {
+          "id": "140",
+          "location": {
+            "end": {
+              "column": 56,
+              "line": 56
+            },
+            "start": {
+              "column": 50,
+              "line": 56
+            }
+          },
+          "mutatorName": "StringLiteral",
+          "replacement": "\"\"",
+          "status": "Killed",
+          "description": "Killed by: stringUtils escapeRegExpLiteral should escape \".\"",
+          "testsCompleted": 2,
+          "static": false,
+          "coveredBy": ["36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52"],
+          "killedBy": ["37"]
+        },
+        {
+          "id": "142",
+          "location": {
+            "end": {
+              "column": 55,
+              "line": 63
+            },
+            "start": {
+              "column": 49,
+              "line": 63
+            }
+          },
+          "mutatorName": "StringLiteral",
+          "replacement": "\"\"",
+          "status": "Killed",
+          "description": "Killed by: stringUtils escapeRegExp should escape \".\"",
+          "testsCompleted": 3,
+          "static": false,
+          "coveredBy": ["53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69"],
+          "killedBy": ["55"]
+        }
+      ],
+      "source": "import { KnownKeys } from './known-keys';\n\n/**\n * Consolidates multiple consecutive white spaces into a single space.\n * @param str The string to be normalized\n */\nexport function normalizeWhitespaces(str: string) {\n  return str.replace(/\\s+/g, ' ').trim();\n}\n\n/**\n * Given a base type, allows type safe access to the name of a property.\n * @param prop The property name\n */\nexport function propertyPath<T>(prop: keyof Pick<T, KnownKeys<T>>): string {\n  return prop.toString();\n}\n\n/**\n * A helper class to allow you to get type safe access to the name of a deep property of `T`\n * @example\n * ```ts\n * PropertyPathBuilder<StrykerOptions>('warnings').prop('unknownOptions').build()\n * ```\n */\nexport class PropertyPathBuilder<T> {\n  constructor(private readonly pathSoFar: string[]) {}\n\n  public prop<TProp extends KnownKeys<T>>(prop: TProp) {\n    return new PropertyPathBuilder<Pick<T, KnownKeys<T>>[TProp]>([...this.pathSoFar, prop.toString()]);\n  }\n\n  /**\n   * Build the (deep) path to the property name\n   */\n  public build(): string {\n    return this.pathSoFar.join('.');\n  }\n\n  /**\n   * Creates a new `PropertyPathBuilder` for type T\n   */\n  public static create<T>() {\n    return new PropertyPathBuilder<T>([]);\n  }\n\n  public toString(): string {\n    return this.build();\n  }\n}\n\n/**\n * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Escaping\n */\nexport function escapeRegExpLiteral(input: string) {\n  return input.replace(/[.*+\\-?^${}()|[\\]\\\\/]/g, '\\\\$&'); // $& means the whole matched string\n}\n\n/**\n * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Escaping\n */\nexport function escapeRegExp(input: string) {\n  return input.replace(/[.*+\\-?^${}()|[\\]\\\\]/g, '\\\\$&'); // $& means the whole matched string\n}\n"
+    },
+    "/home/nicojs/github/stryker/packages/util/src/stryker-error.ts": {
+      "language": "typescript",
+      "mutants": [
+        {
+          "id": "143",
+          "location": {
+            "end": {
+              "column": 89,
+              "line": 5
+            },
+            "start": {
+              "column": 11,
+              "line": 5
+            }
+          },
+          "mutatorName": "StringLiteral",
+          "replacement": "``",
+          "status": "Killed",
+          "description": "Killed by: StrykerError should add inner error to the message",
+          "testsCompleted": 2,
+          "static": false,
+          "coveredBy": ["70", "71", "72"],
+          "killedBy": ["71"]
+        },
+        {
+          "id": "145",
+          "location": {
+            "end": {
+              "column": 87,
+              "line": 5
+            },
+            "start": {
+              "column": 85,
+              "line": 5
+            }
+          },
+          "mutatorName": "StringLiteral",
+          "replacement": "\"Stryker was here!\"",
+          "status": "Killed",
+          "description": "Killed by: StrykerError should work without an inner error",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["72"],
+          "killedBy": ["72"]
+        },
+        {
+          "id": "144",
+          "location": {
+            "end": {
+              "column": 82,
+              "line": 5
+            },
+            "start": {
+              "column": 37,
+              "line": 5
+            }
+          },
+          "mutatorName": "StringLiteral",
+          "replacement": "``",
+          "status": "Killed",
+          "description": "Killed by: StrykerError should add inner error to the message",
+          "testsCompleted": 2,
+          "static": false,
+          "coveredBy": ["70", "71"],
+          "killedBy": ["71"]
+        }
+      ],
+      "source": "import { errorToString } from './errors';\n\nexport class StrykerError extends Error {\n  constructor(message: string, public readonly innerError?: Error) {\n    super(`${message}${innerError ? `. Inner error: ${errorToString(innerError)}` : ''}`);\n  }\n}\n"
+    },
+    "/home/nicojs/github/stryker/packages/util/src/task.ts": {
+      "language": "typescript",
+      "mutants": [
+        {
+          "id": "147",
+          "location": {
+            "end": {
+              "column": 4,
+              "line": 15
+            },
+            "start": {
+              "column": 17,
+              "line": 10
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: Task should give access to underlying promise",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["73", "74", "75", "76", "77", "78", "79", "80"],
+          "killedBy": ["73"]
+        },
+        {
+          "id": "146",
+          "location": {
+            "end": {
+              "column": 31,
+              "line": 8
+            },
+            "start": {
+              "column": 26,
+              "line": 8
+            }
+          },
+          "mutatorName": "BooleanLiteral",
+          "replacement": "true",
+          "status": "Killed",
+          "description": "Killed by: Task should be able to reject the underlying promise",
+          "testsCompleted": 3,
+          "static": false,
+          "coveredBy": ["73", "74", "75", "76", "77", "78", "79", "80"],
+          "killedBy": ["75"]
+        },
+        {
+          "id": "149",
+          "location": {
+            "end": {
+              "column": 4,
+              "line": 19
+            },
+            "start": {
+              "column": 24,
+              "line": 17
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: Task should give access to underlying promise",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["73", "74", "75", "77", "78", "79", "80"],
+          "killedBy": ["73"]
+        },
+        {
+          "id": "148",
+          "location": {
+            "end": {
+              "column": 6,
+              "line": 14
+            },
+            "start": {
+              "column": 57,
+              "line": 11
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: Task should give access to underlying promise",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["73", "74", "75", "76", "77", "78", "79", "80"],
+          "killedBy": ["73"]
+        },
+        {
+          "id": "150",
+          "location": {
+            "end": {
+              "column": 4,
+              "line": 23
+            },
+            "start": {
+              "column": 28,
+              "line": 21
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: Task should be able to know if it isCompleted",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["76"],
+          "killedBy": ["76"]
+        },
+        {
+          "id": "152",
+          "location": {
+            "end": {
+              "column": 29,
+              "line": 26
+            },
+            "start": {
+              "column": 25,
+              "line": 26
+            }
+          },
+          "mutatorName": "BooleanLiteral",
+          "replacement": "false",
+          "status": "Killed",
+          "description": "Killed by: Task should be able to know if it isCompleted",
+          "testsCompleted": 3,
+          "static": false,
+          "coveredBy": ["73", "74", "76", "78", "80"],
+          "killedBy": ["76"]
+        },
+        {
+          "id": "153",
+          "location": {
+            "end": {
+              "column": 4,
+              "line": 33
+            },
+            "start": {
+              "column": 42,
+              "line": 30
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: Task should be able to reject the underlying promise",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["75", "79"],
+          "killedBy": ["75"]
+        },
+        {
+          "id": "154",
+          "location": {
+            "end": {
+              "column": 29,
+              "line": 31
+            },
+            "start": {
+              "column": 25,
+              "line": 31
+            }
+          },
+          "mutatorName": "BooleanLiteral",
+          "replacement": "false",
+          "status": "Killed",
+          "description": "Killed by: Task should be able to reject the underlying promise",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["75", "79"],
+          "killedBy": ["75"]
+        },
+        {
+          "id": "155",
+          "location": {
+            "end": {
+              "column": 81,
+              "line": 40
+            },
+            "start": {
+              "column": 65,
+              "line": 40
+            }
+          },
+          "mutatorName": "StringLiteral",
+          "replacement": "\"\"",
+          "status": "Killed",
+          "description": "Killed by: DirectoryRequireCache should clear recorded files",
+          "testsCompleted": 6,
+          "static": true,
+          "killedBy": ["5"]
+        },
+        {
+          "id": "156",
+          "location": {
+            "end": {
+              "column": 4,
+              "line": 61
+            },
+            "start": {
+              "column": 111,
+              "line": 47
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: ExpirableTask instance should timeout after set period",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["77", "78", "79", "80", "81"],
+          "killedBy": ["77"]
+        },
+        {
+          "id": "151",
+          "location": {
+            "end": {
+              "column": 4,
+              "line": 28
+            },
+            "start": {
+              "column": 58,
+              "line": 25
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Timeout",
+          "testsCompleted": 0,
+          "static": false,
+          "coveredBy": ["73", "74", "76", "78", "80"]
+        },
+        {
+          "id": "157",
+          "location": {
+            "end": {
+              "column": 6,
+              "line": 59
+            },
+            "start": {
+              "column": 86,
+              "line": 48
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Timeout",
+          "testsCompleted": 0,
+          "static": false,
+          "coveredBy": ["77", "78", "79", "80", "81"]
+        },
+        {
+          "id": "159",
+          "location": {
+            "end": {
+              "column": 10,
+              "line": 54
+            },
+            "start": {
+              "column": 27,
+              "line": 51
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: ExpirableTask instance should be able to resolve within time",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["78", "80", "81"],
+          "killedBy": ["78"]
+        },
+        {
+          "id": "160",
+          "location": {
+            "end": {
+              "column": 10,
+              "line": 58
+            },
+            "start": {
+              "column": 27,
+              "line": 55
+            }
+          },
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "status": "Killed",
+          "description": "Killed by: ExpirableTask instance should be able to reject within time",
+          "testsCompleted": 1,
+          "static": false,
+          "coveredBy": ["79"],
+          "killedBy": ["79"]
+        },
+        {
+          "id": "158",
+          "location": {
+            "end": {
+              "column": 71,
+              "line": 49
+            },
+            "start": {
+              "column": 32,
+              "line": 49
+            }
+          },
+          "mutatorName": "ArrowFunction",
+          "replacement": "() => undefined",
+          "status": "Timeout",
+          "testsCompleted": 0,
+          "static": false,
+          "coveredBy": ["77", "78", "79", "80", "81"]
+        }
+      ],
+      "source": "/**\n * Wraps a promise in a Task api for convenience.\n */\nexport class Task<T = void> {\n  protected _promise: Promise<T>;\n  private resolveFn!: (value: T | PromiseLike<T>) => void;\n  private rejectFn!: (reason: any) => void;\n  private _isCompleted = false;\n\n  constructor() {\n    this._promise = new Promise<T>((resolve, reject) => {\n      this.resolveFn = resolve;\n      this.rejectFn = reject;\n    });\n  }\n\n  public get promise() {\n    return this._promise;\n  }\n\n  public get isCompleted() {\n    return this._isCompleted;\n  }\n\n  public resolve = (result: T | PromiseLike<T>): void => {\n    this._isCompleted = true;\n    this.resolveFn(result);\n  };\n\n  public reject = (reason: any): void => {\n    this._isCompleted = true;\n    this.rejectFn(reason);\n  };\n}\n\n/**\n * A task that can expire after the given time.\n */\nexport class ExpirableTask<T = void> extends Task<T | typeof ExpirableTask.TimeoutExpired> {\n  public static readonly TimeoutExpired: unique symbol = Symbol('TimeoutExpired');\n\n  constructor(timeoutMS: number) {\n    super();\n    this._promise = ExpirableTask.timeout(this._promise, timeoutMS);\n  }\n\n  public static timeout<T>(promise: Promise<T>, ms: number): Promise<T | typeof ExpirableTask.TimeoutExpired> {\n    const sleep = new Promise<T | typeof ExpirableTask.TimeoutExpired>((res, rej) => {\n      const timer = setTimeout(() => res(ExpirableTask.TimeoutExpired), ms);\n      promise\n        .then((result) => {\n          clearTimeout(timer);\n          res(result);\n        })\n        .catch((error) => {\n          clearTimeout(timer);\n          rej(error);\n        });\n    });\n    return sleep;\n  }\n}\n"
+    }
+  },
+  "testFiles": {
+    "test/unit/child-process-as-promised.unit.ts": {
+      "tests": [
+        {
+          "id": "0",
+          "name": "childProcessAsPromised should expose promisified exec"
+        }
+      ]
+    },
+    "test/unit/deep-merge.unit.ts": {
+      "tests": [
+        {
+          "id": "1",
+          "name": "deepMerge should merge overrides into the target object"
+        },
+        {
+          "id": "2",
+          "name": "deepMerge should deep merge overrides into the target object"
+        },
+        {
+          "id": "3",
+          "name": "deepMerge should override arrays without merging them"
+        },
+        {
+          "id": "4",
+          "name": "deepMerge should not override with `undefined`"
+        }
+      ]
+    },
+    "test/unit/directory-require-cache.unit.ts": {
+      "tests": [
+        {
+          "id": "5",
+          "name": "DirectoryRequireCache should clear recorded files"
+        },
+        {
+          "id": "6",
+          "name": "DirectoryRequireCache should only record the first time (perf optimization)"
+        },
+        {
+          "id": "7",
+          "name": "DirectoryRequireCache should clear recorded children from their respective parent"
+        },
+        {
+          "id": "8",
+          "name": "DirectoryRequireCache should clear recorded separate unique parents"
+        },
+        {
+          "id": "9",
+          "name": "DirectoryRequireCache should not break when clearing a graph"
+        },
+        {
+          "id": "10",
+          "name": "DirectoryRequireCache should not throw when the parent module was unloaded"
+        },
+        {
+          "id": "11",
+          "name": "DirectoryRequireCache should not throw when the parent module is one of the modules to being cleared"
+        },
+        {
+          "id": "12",
+          "name": "DirectoryRequireCache should not clear files from node_modules"
+        },
+        {
+          "id": "13",
+          "name": "DirectoryRequireCache should not fail when recorded file doesn't have a parent"
+        }
+      ]
+    },
+    "test/unit/errors.unit.ts": {
+      "tests": [
+        {
+          "id": "14",
+          "name": "errors errorToString should return empty string if error is undefined"
+        },
+        {
+          "id": "15",
+          "name": "errors errorToString should convert a nodejs Errno error to string"
+        },
+        {
+          "id": "16",
+          "name": "errors errorToString should convert a regular error to string"
+        },
+        {
+          "id": "17",
+          "name": "errors errorToString should convert an error without a stack trace to string"
+        }
+      ]
+    },
+    "test/unit/deep-freeze.unit.ts": {
+      "tests": [
+        {
+          "id": "18",
+          "name": "deepFreeze should not change the input object"
+        },
+        {
+          "id": "19",
+          "name": "deepFreeze should freeze objects"
+        },
+        {
+          "id": "20",
+          "name": "deepFreeze should work for `null` and `undefined`"
+        },
+        {
+          "id": "21",
+          "name": "deepFreeze should work for primitives"
+        },
+        {
+          "id": "22",
+          "name": "deepFreeze should deeply freeze objects"
+        },
+        {
+          "id": "23",
+          "name": "deepFreeze should work for Arrays"
+        },
+        {
+          "id": "24",
+          "name": "deepFreeze should work for Maps"
+        },
+        {
+          "id": "25",
+          "name": "deepFreeze should work for Sets"
+        }
+      ]
+    },
+    "test/unit/noop-logger.unit.ts": {
+      "tests": [
+        {
+          "id": "26",
+          "name": "noopLogger should not enable any logging"
+        },
+        {
+          "id": "27",
+          "name": "noopLogger should not do any actual logging"
+        }
+      ]
+    },
+    "test/unit/not-empty.unit.ts": {
+      "tests": [
+        {
+          "id": "28",
+          "name": "notEmpty should return true when not null or undefined"
+        },
+        {
+          "id": "29",
+          "name": "notEmpty should return false when null"
+        },
+        {
+          "id": "30",
+          "name": "notEmpty should return false when undefined"
+        }
+      ]
+    },
+    "test/unit/string-utils.unit.ts": {
+      "tests": [
+        {
+          "id": "31",
+          "name": "stringUtils normalizeWhitespaces should not change strings without consecutive whitespaces"
+        },
+        {
+          "id": "32",
+          "name": "stringUtils normalizeWhitespaces should normalize a string with multiple consecutive spaces"
+        },
+        {
+          "id": "33",
+          "name": "stringUtils normalizeWhitespaces should normalize a string with multiple consecutive spaces, tabs and new lines"
+        },
+        {
+          "id": "34",
+          "name": "stringUtils PropertyPathBuilder should be able to point to a path"
+        },
+        {
+          "id": "35",
+          "name": "stringUtils propertyPath should be able to point to a path"
+        },
+        {
+          "id": "36",
+          "name": "stringUtils escapeRegExpLiteral should return input if no special chars are found"
+        },
+        {
+          "id": "37",
+          "name": "stringUtils escapeRegExpLiteral should escape \".\""
+        },
+        {
+          "id": "38",
+          "name": "stringUtils escapeRegExpLiteral should escape \"*\""
+        },
+        {
+          "id": "39",
+          "name": "stringUtils escapeRegExpLiteral should escape \"+\""
+        },
+        {
+          "id": "40",
+          "name": "stringUtils escapeRegExpLiteral should escape \"-\""
+        },
+        {
+          "id": "41",
+          "name": "stringUtils escapeRegExpLiteral should escape \"?\""
+        },
+        {
+          "id": "42",
+          "name": "stringUtils escapeRegExpLiteral should escape \"^\""
+        },
+        {
+          "id": "43",
+          "name": "stringUtils escapeRegExpLiteral should escape \"$\""
+        },
+        {
+          "id": "44",
+          "name": "stringUtils escapeRegExpLiteral should escape \"{\""
+        },
+        {
+          "id": "45",
+          "name": "stringUtils escapeRegExpLiteral should escape \"}\""
+        },
+        {
+          "id": "46",
+          "name": "stringUtils escapeRegExpLiteral should escape \"(\""
+        },
+        {
+          "id": "47",
+          "name": "stringUtils escapeRegExpLiteral should escape \")\""
+        },
+        {
+          "id": "48",
+          "name": "stringUtils escapeRegExpLiteral should escape \"|\""
+        },
+        {
+          "id": "49",
+          "name": "stringUtils escapeRegExpLiteral should escape \"[\""
+        },
+        {
+          "id": "50",
+          "name": "stringUtils escapeRegExpLiteral should escape \"]\""
+        },
+        {
+          "id": "51",
+          "name": "stringUtils escapeRegExpLiteral should escape \"\\\""
+        },
+        {
+          "id": "52",
+          "name": "stringUtils escapeRegExpLiteral should escape \"/\""
+        },
+        {
+          "id": "53",
+          "name": "stringUtils escapeRegExp should return input if no special chars are found"
+        },
+        {
+          "id": "54",
+          "name": "stringUtils escapeRegExp should not escape `/` (that's only needed for regex literals)"
+        },
+        {
+          "id": "55",
+          "name": "stringUtils escapeRegExp should escape \".\""
+        },
+        {
+          "id": "56",
+          "name": "stringUtils escapeRegExp should escape \"*\""
+        },
+        {
+          "id": "57",
+          "name": "stringUtils escapeRegExp should escape \"+\""
+        },
+        {
+          "id": "58",
+          "name": "stringUtils escapeRegExp should escape \"-\""
+        },
+        {
+          "id": "59",
+          "name": "stringUtils escapeRegExp should escape \"?\""
+        },
+        {
+          "id": "60",
+          "name": "stringUtils escapeRegExp should escape \"^\""
+        },
+        {
+          "id": "61",
+          "name": "stringUtils escapeRegExp should escape \"$\""
+        },
+        {
+          "id": "62",
+          "name": "stringUtils escapeRegExp should escape \"{\""
+        },
+        {
+          "id": "63",
+          "name": "stringUtils escapeRegExp should escape \"}\""
+        },
+        {
+          "id": "64",
+          "name": "stringUtils escapeRegExp should escape \"(\""
+        },
+        {
+          "id": "65",
+          "name": "stringUtils escapeRegExp should escape \")\""
+        },
+        {
+          "id": "66",
+          "name": "stringUtils escapeRegExp should escape \"|\""
+        },
+        {
+          "id": "67",
+          "name": "stringUtils escapeRegExp should escape \"[\""
+        },
+        {
+          "id": "68",
+          "name": "stringUtils escapeRegExp should escape \"]\""
+        },
+        {
+          "id": "69",
+          "name": "stringUtils escapeRegExp should escape \"\\\""
+        }
+      ]
+    },
+    "test/unit/stryker-error.unit.ts": {
+      "tests": [
+        {
+          "id": "70",
+          "name": "StrykerError should set inner error"
+        },
+        {
+          "id": "71",
+          "name": "StrykerError should add inner error to the message"
+        },
+        {
+          "id": "72",
+          "name": "StrykerError should work without an inner error"
+        }
+      ]
+    },
+    "test/unit/task.unit.ts": {
+      "tests": [
+        {
+          "id": "73",
+          "name": "Task should give access to underlying promise"
+        },
+        {
+          "id": "74",
+          "name": "Task should be able to resolve the underlying promise"
+        },
+        {
+          "id": "75",
+          "name": "Task should be able to reject the underlying promise"
+        },
+        {
+          "id": "76",
+          "name": "Task should be able to know if it isCompleted"
+        },
+        {
+          "id": "77",
+          "name": "ExpirableTask instance should timeout after set period"
+        },
+        {
+          "id": "78",
+          "name": "ExpirableTask instance should be able to resolve within time"
+        },
+        {
+          "id": "79",
+          "name": "ExpirableTask instance should be able to reject within time"
+        },
+        {
+          "id": "80",
+          "name": "ExpirableTask timeout should timeout a promise after a set period"
+        },
+        {
+          "id": "81",
+          "name": "ExpirableTask timeout should remove any nodejs timers when promise resolves"
+        }
+      ]
+    }
+  },
+  "schemaVersion": "1.5",
+  "thresholds": {
+    "high": 80,
+    "low": 60,
+    "break": null
+  }
+}

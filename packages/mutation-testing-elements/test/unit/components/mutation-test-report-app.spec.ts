@@ -4,6 +4,7 @@ import { MutationTestResult } from 'mutation-testing-report-schema';
 import * as sinon from 'sinon';
 import { MutationTestReportFileComponent } from '../../../src/components/mutation-test-report-file';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
+import { createCustomEvent } from '../../../src/lib/custom-events';
 
 describe(MutationTestReportAppComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportAppComponent>;
@@ -154,7 +155,7 @@ describe(MutationTestReportAppComponent.name, () => {
       await sut.whenStable();
 
       // Act
-      sut.$('mutation-test-report-theme-switch').dispatchEvent(new CustomEvent('theme-switch', { detail: 'dark' }));
+      sut.$('mutation-test-report-theme-switch').dispatchEvent(createCustomEvent('theme-switch', 'dark'));
       await sut.whenStable();
 
       // Assert
@@ -197,15 +198,15 @@ describe(MutationTestReportAppComponent.name, () => {
     it('should trigger a `theme-selected` event when the theme changes', async () => {
       sut.element.report = createReport();
       await sut.whenStable();
-      const event = await sut.catchEvent<CustomEvent<{ theme: string }>>('theme-changed', () => {
-        sut.$('mutation-test-report-theme-switch').dispatchEvent(new CustomEvent('theme-switch', { detail: 'dark' }));
+      const event = await sut.catchCustomEvent('theme-changed', () => {
+        sut.$('mutation-test-report-theme-switch').dispatchEvent(createCustomEvent('theme-switch', 'dark'));
       });
       expect(event?.detail.theme).eq('dark');
     });
 
     it('should trigger a `theme-selected` event when the theme changes during init', async () => {
       // Arrange
-      const event = await sut.catchEvent<CustomEvent<{ theme: string }>>('theme-changed', async () => {
+      const event = await sut.catchCustomEvent('theme-changed', async () => {
         matchMediaStub.returns({ matches: true } as MediaQueryList);
         sut.element.report = createReport();
         await sut.whenStable();
