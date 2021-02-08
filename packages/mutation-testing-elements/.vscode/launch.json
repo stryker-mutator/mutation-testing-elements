@@ -14,6 +14,19 @@
       "sourceMapPathOverrides": {
         "webpack:///./src/*": "${webRoot}/*"
       }
-    }
+    },
+    {
+      "type": "chrome",
+      "request": "attach",
+      "name": "Debug Unit Tests",
+      "address": "localhost",
+      "port": 9333,
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": true,
+      "sourceMapPathOverrides": {
+        "webpack:///./*": "${webRoot}/*"
+      },
+      "timeout": 30000,
+    },
   ]
 }

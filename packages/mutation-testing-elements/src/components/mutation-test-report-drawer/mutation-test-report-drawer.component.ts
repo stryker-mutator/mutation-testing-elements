@@ -39,19 +39,21 @@ export class MutationTestReportDrawer extends LitElement {
 
   render() {
     return html`<aside class="container-fluid" @click="${(event: Event) => event.stopPropagation()}">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-header">
+      <div class="row">
+        <header>
           <h5>
             <slot name="header"></slot>
-            ${renderIf(this.hasDetail, html`<button class="btn btn-link" @click="${this.toggleReadMore}">${this.toggleMoreLabel}</button>`)}
+            ${renderIf(
+              this.hasDetail,
+              html`<button data-testId="btnReadMoreToggle" class="btn btn-link" @click="${this.toggleReadMore}">${this.toggleMoreLabel}</button>`
+            )}
           </h5>
+        </header>
+        <div class="col-md-12">
+          <slot name="summary"></slot>
+          ${renderIf(this.hasDetail && this.mode === 'open', html`<slot name="detail"></slot>`)}
         </div>
-        <slot name="summary"></slot>
-        ${renderIf(this.hasDetail && this.mode === 'open', html`<slot name="detail"></slot>`)}
       </div>
-    </div>
-</aside>`;
+    </aside>`;
   }
 }

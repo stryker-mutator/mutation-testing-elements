@@ -22,11 +22,7 @@ export class MutationTestReportMutantComponent extends LitElement {
     this.expand = !this.expand;
     event.preventDefault();
     event.stopPropagation();
-    setTimeout(
-      () =>
-        this.dispatchEvent(createCustomEvent('mutant-selected', { selected: this.expand, mutant: this.mutant }, { bubbles: true, composed: true })),
-      0
-    );
+    this.dispatchEvent(createCustomEvent('mutant-selected', { selected: this.expand, mutant: this.mutant }, { bubbles: true, composed: true }));
   };
 
   public render() {

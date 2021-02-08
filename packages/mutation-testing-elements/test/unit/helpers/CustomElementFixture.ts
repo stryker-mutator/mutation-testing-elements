@@ -56,6 +56,10 @@ export class CustomElementFixture<TCustomElement extends LitElement> {
     return this.catchEvent(eventType, act);
   }
 
+  public async catchNativeEvent(eventType: string, act: () => Promise<void> | void): Promise<Event | undefined> {
+    return this.catchEvent(eventType, act);
+  }
+
   private async catchEvent<TEvent extends Event = Event>(eventType: string, act: () => Promise<void> | void): Promise<TEvent | undefined> {
     let actual: Event | undefined;
     const eventListener = (evt: Event) => (actual = evt);
