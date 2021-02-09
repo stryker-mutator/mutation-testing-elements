@@ -1,5 +1,5 @@
 import { MutantResult } from 'mutation-testing-report-schema';
-import { MutantFilter } from '../components/mutation-test-report-file-legend';
+import { MutantFilter } from '../components/mutation-test-report-file-legend/mutation-test-report-file-legend.component';
 
 export interface CustomEventMap {
   'mutant-selected': { selected: boolean; mutant: MutantResult | undefined };

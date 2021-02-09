@@ -2,7 +2,7 @@ import { customElement, LitElement, property, html, unsafeCSS } from 'lit-elemen
 import { MutantResult } from 'mutation-testing-report-schema';
 import { bootstrap } from '../../style';
 import { getContextClassForStatus } from '../../lib/htmlHelpers';
-import style from './index.scss';
+import style from './mutation-test-report-mutant.scss';
 import { createCustomEvent } from '../../lib/custom-events';
 
 @customElement('mutation-test-report-mutant')

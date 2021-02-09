@@ -2,7 +2,7 @@ import { customElement, LitElement, property, PropertyValues, html, unsafeCSS } 
 import { MutantResult, MutantStatus } from 'mutation-testing-report-schema';
 import { bootstrap } from '../../style';
 import { getContextClassForStatus, getEmojiForStatus } from '../../lib/htmlHelpers';
-import style from './index.scss';
+import style from './mutation-test-report-file-legend.scss';
 import { createCustomEvent } from '../../lib/custom-events';
 
 export interface MutantFilter {

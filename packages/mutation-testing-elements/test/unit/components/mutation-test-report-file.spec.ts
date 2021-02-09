@@ -1,9 +1,9 @@
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
-import { MutationTestReportFileComponent } from '../../../src/components/mutation-test-report-file';
+import { MutationTestReportFileComponent } from '../../../src/components/mutation-test-report-file/mutation-test-report-file.component';
 import { expect } from 'chai';
 import { FileResult, MutantStatus } from 'mutation-testing-report-schema';
-import { MutationTestReportMutantComponent } from '../../../src/components/mutation-test-report-mutant';
-import { MutationTestReportFileLegendComponent, MutantFilter } from '../../../dist/components/mutation-test-report-file-legend';
+import { MutationTestReportMutantComponent } from '../../../src/components/mutation-test-report-mutant/mutation-test-report-mutant.component';
+import { MutationTestReportFileLegendComponent, MutantFilter } from '../../../dist/components/mutation-test-report-file-legend/mutation-test-report-file-legend.component';
 import { createFileResult } from '../../helpers/factory';
 import { createCustomEvent } from '../../../src/lib/custom-events';
 

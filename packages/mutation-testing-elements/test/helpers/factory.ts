@@ -1,4 +1,4 @@
-import { MutantResult, MutantStatus, FileResult, Location, TestDefinition } from 'mutation-testing-report-schema';
+import { MutantResult, MutantStatus, FileResult, Location, TestDefinition, MutationTestResult } from 'mutation-testing-report-schema';
 import { Metrics, MetricsResult } from 'mutation-testing-metrics';
 
 export function createMutantResult(overrides?: Partial<MutantResult>): MutantResult {
@@ -72,4 +72,23 @@ export function createMetrics(overrides?: Metrics): Metrics {
     mutationScoreBasedOnCoveredCode: 0,
   };
   return { ...defaults, ...overrides };
+}
+
+export function createReport(overrides?: MutationTestResult): MutationTestResult {
+  return {
+    files: {
+      'foobar.js': {
+        language: 'javascript',
+        mutants: [],
+        source: 'foo = "bar";',
+      },
+    },
+    schemaVersion: '1.0',
+    thresholds: {
+      high: 80,
+      low: 60,
+    },
+    projectRoot: '/src/project',
+    ...overrides,
+  };
 }

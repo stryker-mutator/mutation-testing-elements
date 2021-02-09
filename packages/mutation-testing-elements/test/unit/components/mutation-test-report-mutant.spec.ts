@@ -1,4 +1,4 @@
-import { MutationTestReportMutantComponent } from '../../../src/components/mutation-test-report-mutant';
+import { MutationTestReportMutantComponent } from '../../../src/components/mutation-test-report-mutant/mutation-test-report-mutant.component';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { expect } from 'chai';
 import { MutantStatus, MutantResult } from 'mutation-testing-report-schema';

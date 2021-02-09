@@ -4,10 +4,10 @@ import { MetricsResult, calculateMutationTestMetrics } from 'mutation-testing-me
 import { bootstrap } from '../../style';
 import { locationChange$ } from '../../lib/router';
 import { Subscription } from 'rxjs';
-import style from './index.scss';
+import style from './mutation-test-report-app.scss';
 import theme from './theme.scss';
 import { createCustomEvent, MteCustomEvent } from '../../lib/custom-events';
-import { MutationTestMetricsResult } from 'mutation-testing-metrics/src/model';
+import { FileUnderTestModel, Metrics, MutationTestMetricsResult } from 'mutation-testing-metrics/src/model';
 import { DrawerMode } from '../mutation-test-report-drawer/mutation-test-report-drawer.component';
 
 @customElement('mutation-test-report-app')
@@ -25,7 +25,7 @@ export class MutationTestReportAppComponent extends LitElement {
   public errorMessage: string | undefined;
 
   @property({ attribute: false })
-  public context: MetricsResult<any, any> | undefined;
+  public context: MetricsResult<FileUnderTestModel, Metrics> | undefined;
 
   @property()
   public path: ReadonlyArray<string> = [];
@@ -152,7 +152,7 @@ export class MutationTestReportAppComponent extends LitElement {
         <div class="container-fluid" @click="${this.handleClick}">
           <div class="row">
             <div class="col-md-12">
-              <main>${this.renderReport()} ${this.renderErrorMessage()}</main>
+              <main>${this.renderMain()} ${this.renderErrorMessage()}</main>
               <mutation-test-report-drawer-mutant .mode="${this.drawerMode}" .tests="${this.report?.testFiles}" .mutant="${this.selectedMutant}">
               </mutation-test-report-drawer-mutant>
             </div>
@@ -172,7 +172,7 @@ export class MutationTestReportAppComponent extends LitElement {
     }
   }
 
-  private renderReport() {
+  private renderMain() {
     if (this.context) {
       return html`
         <mutation-test-report-theme-switch @theme-switch="${this.themeSwitch}" class="theme-switch" .theme="${this.theme}">
@@ -205,7 +205,6 @@ export class MutationTestReportAppComponent extends LitElement {
       return html`
         <div class="row">
           <div class="totals col-sm-11">
-            <!-- <mutation-test-report-test-totals .currentPath="${this.path}" .model="${this.context}"> </mutation-test-report-test-totals> -->
             <mutation-test-report-totals .currentPath="${this.path}" .thresholds="${this.report.thresholds}" .model="${this.context}">
             </mutation-test-report-totals>
           </div>

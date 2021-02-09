@@ -1,12 +1,12 @@
 import { LitElement, html, property, customElement, unsafeCSS } from 'lit-element';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html';
-import { MutationTestReportMutantComponent } from '../mutation-test-report-mutant';
-import { MutantFilter } from '../mutation-test-report-file-legend';
+import { MutationTestReportMutantComponent } from '../mutation-test-report-mutant/mutation-test-report-mutant.component';
+import { MutantFilter } from '../mutation-test-report-file-legend/mutation-test-report-file-legend.component';
 import { bootstrap, prismjs } from '../../style';
 import { renderCode } from '../../lib/codeHelpers';
 import { FileResult, TestDefinition } from 'mutation-testing-report-schema';
 import { highlightElement } from 'prismjs/components/prism-core';
-import style from './index.scss';
+import style from './mutation-test-report-file.scss';
 
 import 'prismjs/plugins/line-numbers/prism-line-numbers';
 // Order is important here! Scala depends on java, which depends on clike

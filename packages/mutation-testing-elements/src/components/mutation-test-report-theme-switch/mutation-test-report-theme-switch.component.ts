@@ -1,7 +1,7 @@
 import { customElement, LitElement, html, unsafeCSS, property } from 'lit-element';
 import { createCustomEvent } from '../../lib/custom-events';
 import { bootstrap } from '../../style';
-import style from './index.scss';
+import style from './mutation-test-report-theme-switch.scss';
 
 @customElement('mutation-test-report-theme-switch')
 export class MutationTestReportThemeSwitchComponent extends LitElement {

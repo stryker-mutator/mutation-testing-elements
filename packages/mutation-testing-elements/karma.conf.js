@@ -20,6 +20,11 @@ module.exports = function (config) {
         ]
       }
     },
+    client: {
+      mocha: {
+        // timeout: 0
+      }
+    },
     browsers: process.env.CI || process.env.HEADLESS ? ['ChromeHeadless'] : ['Chrome'],
     singleRun: false,
     concurrency: Infinity,

@@ -1,5 +1,5 @@
 import { FileUnderTestModel } from 'mutation-testing-metrics';
-import { MutationTestReportTotalsComponent } from '../../../src/components/mutation-test-report-totals';
+import { MutationTestReportTotalsComponent } from '../../../src/components/mutation-test-report-totals/mutation-test-report-totals.component';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { expect } from 'chai';
 import { createMetricsResult, createFileResult } from '../../helpers/factory';

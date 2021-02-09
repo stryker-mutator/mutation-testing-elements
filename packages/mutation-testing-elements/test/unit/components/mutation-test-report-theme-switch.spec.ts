@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { MutationTestReportThemeSwitchComponent } from '../../../src/components/mutation-test-report-theme-switch';
+import { MutationTestReportThemeSwitchComponent } from '../../../src/components/mutation-test-report-theme-switch/mutation-test-report-theme-switch.component';
 // import { expect } from 'chai';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 
