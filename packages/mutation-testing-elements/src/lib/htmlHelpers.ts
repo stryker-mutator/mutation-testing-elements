@@ -69,3 +69,10 @@ export function toAbsoluteUrl(fragment: string): string {
   const url = new URL(window.location.href);
   return new URL(`#${fragment}`, url).href;
 }
+
+export function plural(items: unknown[]): string {
+  if (items.length > 1) {
+    return 's';
+  }
+  return '';
+}

@@ -1,24 +1,38 @@
-import { MutantResult, MutantStatus, FileResult } from 'mutation-testing-report-schema';
+import { MutantResult, MutantStatus, FileResult, Location, TestDefinition } from 'mutation-testing-report-schema';
 import { Metrics, MetricsResult } from 'mutation-testing-metrics';
 
 export function createMutantResult(overrides?: Partial<MutantResult>): MutantResult {
   const defaults: MutantResult = {
     id: '1',
-    location: {
-      end: {
-        column: 3,
-        line: 1,
-      },
-      start: {
-        column: 1,
-        line: 1,
-      },
-    },
+    location: createLocation(),
     mutatorName: 'bazMutator',
     replacement: 'baz',
     status: MutantStatus.Killed,
   };
   return { ...defaults, ...overrides };
+}
+
+export function createTestDefinition(overrides?: Partial<TestDefinition>): TestDefinition {
+  return {
+    id: '23',
+    name: 'foo should bar',
+    location: createLocation(),
+    ...overrides,
+  };
+}
+
+export function createLocation(overrides?: Partial<Location>): Location {
+  return {
+    end: {
+      column: 3,
+      line: 1,
+    },
+    start: {
+      column: 1,
+      line: 1,
+    },
+    ...overrides,
+  };
 }
 
 export function createFileResult(overrides?: Partial<FileResult>): FileResult {

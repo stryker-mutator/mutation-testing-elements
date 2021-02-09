@@ -1,7 +1,7 @@
 import { customElement, html, LitElement, property } from 'lit-element';
 import { MutantModel } from 'mutation-testing-metrics';
 import { MutantStatus } from 'mutation-testing-report-schema';
-import { getEmojiForStatus, renderIf, renderIfPresent } from '../../lib/htmlHelpers';
+import { getEmojiForStatus, plural, renderIf, renderIfPresent } from '../../lib/htmlHelpers';
 import { bootstrap } from '../../style';
 import { DrawerMode } from '../mutation-test-report-drawer/mutation-test-report-drawer.component';
 
@@ -22,7 +22,7 @@ export class MutationTestReportDrawerMutant extends LitElement {
         (mutant) => html`
           <span slot="header"
             >${mutant.id} ${getEmojiForStatus(mutant.status)} ${mutant.mutatorName} ${mutant.status}
-            (${mutant.location.start.line}:${mutant.location.end.column})</span
+            (${mutant.location.start.line}:${mutant.location.start.column})</span
           >
           <span slot="summary">${this.renderSummary()}</span>
           <span slot="detail">${this.renderDetail()}</span>
@@ -47,7 +47,8 @@ export class MutationTestReportDrawerMutant extends LitElement {
             : renderIfPresent(
                 this.mutant?.coveredByTests,
                 (coveredTests) =>
-                  html`☂️ Covered by ${coveredTests.length} tests ${renderIf(this.mutant?.status === MutantStatus.Survived, '(yet still survived)')}`
+                  html`☂️ Covered by ${coveredTests.length} test${plural(coveredTests)}
+                  ${renderIf(this.mutant?.status === MutantStatus.Survived, '(yet still survived)')}`
               )}
         </h6>`
       )}
