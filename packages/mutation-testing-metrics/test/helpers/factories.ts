@@ -1,4 +1,4 @@
-import { FileResult, MutantResult, MutantStatus, MutationTestResult, TestDefinition, TestFile } from 'mutation-testing-report-schema';
+import { FileResult, MutantResult, MutantStatus, MutationTestResult, TestDefinition, TestFile, Location } from 'mutation-testing-report-schema';
 
 export function createMutationTestResult(overrides?: Partial<MutationTestResult>): MutationTestResult {
   return {
@@ -15,19 +15,24 @@ export function createMutationTestResult(overrides?: Partial<MutationTestResult>
 export function createMutantResult(overrides?: Partial<MutantResult>): MutantResult {
   return {
     id: '42',
-    location: {
-      end: {
-        column: 4,
-        line: 3,
-      },
-      start: {
-        column: 2,
-        line: 1,
-      },
-    },
+    location: createLocation(),
     mutatorName: 'FooMutator',
     replacement: '"foo"',
     status: MutantStatus.Killed,
+    ...overrides,
+  };
+}
+
+export function createLocation(overrides?: Partial<Location>): Location {
+  return {
+    end: {
+      column: 4,
+      line: 3,
+    },
+    start: {
+      column: 2,
+      line: 1,
+    },
     ...overrides,
   };
 }

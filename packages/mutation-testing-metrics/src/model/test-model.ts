@@ -6,8 +6,8 @@ export class TestModel implements TestDefinition {
   name!: string;
   location?: OpenEndLocation | undefined;
 
-  killedMutants: MutantModel[] | undefined = undefined;
-  coveredMutants: MutantModel[] | undefined = undefined;
+  killedMutants?: MutantModel[];
+  coveredMutants?: MutantModel[];
 
   public addCovered(mutant: MutantModel) {
     if (!this.coveredMutants) {

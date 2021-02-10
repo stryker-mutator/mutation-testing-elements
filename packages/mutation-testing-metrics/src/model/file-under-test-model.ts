@@ -20,10 +20,8 @@ export class FileUnderTestModel implements FileResult {
 
   constructor(input: FileResult) {
     Object.entries(input).forEach(([key, value]) => {
-      if (key !== 'mutants') {
-        // @ts-expect-error dynamic assignment so we won't forget to add new properties
-        this[key] = value;
-      }
+      // @ts-expect-error dynamic assignment so we won't forget to add new properties
+      this[key] = value;
     });
     this.mutants = input.mutants.map((mutant) => new MutantModel(mutant));
   }
