@@ -4,9 +4,17 @@ export interface TestMetrics {
    */
   total: number;
   /**
-   * The total number of tests that didn't kill any mutants.
+   * The total number of tests that did end up killing a mutant.
    */
-  pacifist: number;
+  killing: number;
 
-  withoutCoverage: number;
+  /**
+   * The total number of tests that didn't kill any mutants (this includes notCovering).
+   */
+  notKilling: number;
+
+  /**
+   * The total number of tests that didn't even cover a single mutant (useless tests?).
+   */
+  notCovering: number;
 }

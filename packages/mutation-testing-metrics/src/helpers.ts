@@ -1,12 +1,5 @@
-import { FileResultDictionary, MutationTestResult } from 'mutation-testing-report-schema';
 import { MetricsResult } from './model/metrics-result';
 const SEPARATOR = '/';
-
-export function flatMap<T, R>(source: T[], fn: (input: T) => R[]) {
-  const result: R[] = [];
-  source.map(fn).forEach((items) => result.push(...items));
-  return result;
-}
 
 export function groupBy<T>(arr: T[], criteria: (element: T) => string): Record<string, T[]> {
   return arr.reduce((acc: Record<string, T[]>, item) => {
@@ -19,25 +12,22 @@ export function groupBy<T>(arr: T[], criteria: (element: T) => string): Record<s
   }, {});
 }
 
-export function pathJoin(...parts: string[]) {
-  return parts.reduce((prev, current) => (prev.length ? (current ? `${prev}/${current}` : prev) : current), '');
+export function normalizeFileNames<TIn>(input: Record<string, TIn>): Record<string, TIn> {
+  return normalize(input, (input) => input);
 }
 
-export function normalize<TIn, TOut>(input: Record<string, TIn>, Constructor: { new (input: TIn): TOut }): Record<string, TOut> {
+export function normalize<TIn, TOut>(input: Record<string, TIn>, factory: (input: TIn) => TOut): Record<string, TOut> {
   const fileNames = Object.keys(input);
   const commonBasePath = determineCommonBasePath(fileNames);
   const output: Record<string, TOut> = Object.create(null);
   fileNames.forEach((fileName) => {
-    output[normalizeName(fileName.substr(commonBasePath.length))] = new Constructor(input[fileName]);
+    output[normalizeName(fileName.substr(commonBasePath.length))] = factory(input[fileName]);
   });
   return output;
 }
 
 function normalizeName(fileName: string) {
-  return fileName
-    .split(/\/|\\/)
-    .filter((pathPart) => pathPart)
-    .join('/');
+  return fileName.split(/\/|\\/).filter(Boolean).join('/');
 }
 
 function determineCommonBasePath(fileNames: ReadonlyArray<string>): string {
@@ -69,10 +59,4 @@ export function compareNames(a: MetricsResult<any, any>, b: MetricsResult<any, a
     }
   };
   return sortValue(a).localeCompare(sortValue(b));
-}
-
-export function isMutationTestResult(
-  maybeMutationTestResult: FileResultDictionary | MutationTestResult
-): maybeMutationTestResult is MutationTestResult {
-  return 'schemaVersion' in maybeMutationTestResult && typeof maybeMutationTestResult.schemaVersion === 'string';
 }

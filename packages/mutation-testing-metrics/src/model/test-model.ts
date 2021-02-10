@@ -6,11 +6,21 @@ export class TestModel implements TestDefinition {
   name!: string;
   location?: OpenEndLocation | undefined;
 
-  killedMutants: MutantModel[] = [];
-  coveredMutants: MutantModel[] = [];
+  killedMutants: MutantModel[] | undefined = undefined;
+  coveredMutants: MutantModel[] | undefined = undefined;
 
-  public get isPasifist(): boolean | undefined {
-    return this.killedMutants.length == 0;
+  public addCovered(mutant: MutantModel) {
+    if (!this.coveredMutants) {
+      this.coveredMutants = [];
+    }
+    this.coveredMutants.push(mutant);
+  }
+
+  public addKilled(mutant: MutantModel) {
+    if (!this.killedMutants) {
+      this.killedMutants = [];
+    }
+    this.killedMutants.push(mutant);
   }
 
   constructor(input: TestDefinition) {
