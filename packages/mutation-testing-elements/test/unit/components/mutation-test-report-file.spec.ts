@@ -3,7 +3,10 @@ import { MutationTestReportFileComponent } from '../../../src/components/mutatio
 import { expect } from 'chai';
 import { FileResult, MutantStatus } from 'mutation-testing-report-schema';
 import { MutationTestReportMutantComponent } from '../../../src/components/mutation-test-report-mutant/mutation-test-report-mutant.component';
-import { MutationTestReportFileLegendComponent, MutantFilter } from '../../../dist/components/mutation-test-report-file-legend/mutation-test-report-file-legend.component';
+import {
+  MutationTestReportFileLegendComponent,
+  MutantFilter,
+} from '../../../dist/components/mutation-test-report-file-legend/mutation-test-report-file-legend.component';
 import { createFileResult } from '../../helpers/factory';
 import { createCustomEvent } from '../../../src/lib/custom-events';
 
