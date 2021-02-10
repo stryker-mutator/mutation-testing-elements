@@ -5,6 +5,5 @@ import './components/mutation-test-report-breadcrumb';
 import './components/mutation-test-report-mutant/mutation-test-report-mutant.component';
 import './components/mutation-test-report-file-legend/mutation-test-report-file-legend.component';
 import './components/mutation-test-report-theme-switch/mutation-test-report-theme-switch.component';
-import './components/mutation-test-report-test-totals/mutation-test-report-test-totals.component';
 import './components/mutation-test-report-drawer/mutation-test-report-drawer.component';
 import './components/mutation-test-report-drawer-mutant/mutation-test-report-drawer-mutant.component';
