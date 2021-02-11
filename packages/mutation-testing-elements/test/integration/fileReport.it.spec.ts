@@ -65,8 +65,6 @@ describe('File report "install-local-example/Options.ts"', () => {
       expect(await page.mutant(15).isButtonVisible()).true;
     });
 
-    it('show details in the drawer', async () => {});
-
     describe('and a killed mutant is enabled', () => {
       let mutant: MutantComponent;
       beforeEach(async () => {
