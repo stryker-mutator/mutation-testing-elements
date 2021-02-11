@@ -91,6 +91,10 @@
                   "description": "Result of the mutation.",
                   "enum": ["Killed", "Survived", "NoCoverage", "CompileError", "RuntimeError", "Timeout", "Ignored"]
                 },
+                "statusReason": {
+                  "type": "string",
+                  "description": "The reason that this mutant has this status. In case of a killed mutant, this should be filled with the failure message(s) of the failing tests. In case of a error mutant, this should be filled with the error message."
+                },
                 "testsCompleted": {
                   "type": "number",
                   "description": "The number of tests actually completed in order to test this mutant. Can differ from \"coveredBy\" because of bailing a mutant test run after first failing test."
@@ -99,7 +103,7 @@
             }
           },
           "source": {
-            "description": "Full source code of the mutated file, this is used for highlighting.",
+            "description": "Full source code of the original file (without mutants), this is used to display exactly what was changed for each mutant.",
             "examples": ["using System; using....."],
             "type": "string"
           }
@@ -116,6 +120,10 @@
         "description": "A file containing one or more tests",
         "required": ["tests"],
         "properties": {
+          "source": {
+            "description": "Full source code of the test file, this can be used to display in the report.",
+            "type": "string"
+          },
           "tests": {
             "type": "array",
             "items": {
