@@ -93,7 +93,7 @@
                 },
                 "statusReason": {
                   "type": "string",
-                  "description": "The reason that this mutant has this status. In case of a killed mutant, this should be filled with the failure message(s) of the failing tests. In case of a error mutant, this should be filled with the error message."
+                  "description": "The reason that this mutant has this status. In the case of a killed mutant, this should be filled with the failure message(s) of the failing tests. In case of an error mutant, this should be filled with the error message."
                 },
                 "testsCompleted": {
                   "type": "number",
