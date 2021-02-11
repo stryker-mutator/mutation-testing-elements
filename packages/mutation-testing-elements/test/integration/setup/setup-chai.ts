@@ -28,7 +28,11 @@ chai.use(({ Assertion }) => {
 export const mochaHooks = {
   beforeEach(this: Context) {
     const { dir, name } = path.parse(this.currentTest!.file!);
-    currentSnapshotFile = path.join(dir, name, `${this.currentTest!.fullTitle().toLowerCase().replace(/\s/g, '-')}.${platform()}.snap.png`);
+    currentSnapshotFile = path.join(
+      dir,
+      name,
+      `${this.currentTest!.fullTitle().toLowerCase().replace(/\s/g, '-').replace(/"/g, '')}.${platform()}.snap.png`
+    );
   },
 };
 
