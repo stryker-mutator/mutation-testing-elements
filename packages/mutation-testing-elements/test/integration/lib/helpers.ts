@@ -1,5 +1,9 @@
+/// <reference types="../typings/globals-chai" />
+import { expect } from 'chai';
+import { Context } from 'mocha';
 import { WebElement, WebElementPromise } from 'selenium-webdriver';
-import { getCurrent } from './browser';
+import { ReportPage } from '../po/ReportPage';
+import { getCurrent, isHeadless } from './browser';
 
 export function selectShadowRoot(element: WebElement): WebElementPromise {
   return wrapInWebElementPromise(async () => {
@@ -8,7 +12,7 @@ export function selectShadowRoot(element: WebElement): WebElementPromise {
       return shadowRoot;
     } else {
       if (element.getTagName) {
-        const tagName = await element.getTagName();
+        const tagName = await element.getTagName().catch(() => 'unknown-tag');
         throw new Error(`Tag ${tagName} does not have a shadow root`);
       } else {
         throw new Error('No shadow root');
@@ -19,4 +23,25 @@ export function selectShadowRoot(element: WebElement): WebElementPromise {
 
 export function wrapInWebElementPromise(p: () => Promise<WebElement>) {
   return new WebElementPromise(getCurrent(), p());
+}
+
+export function sleep(n = 300) {
+  return new Promise((res) => setTimeout(res, n));
+}
+
+export function itShouldMatchScreenshot(title: string) {
+  it(title, async function () {
+    await actScreenshotMatch(this);
+  });
+}
+
+export async function actScreenshotMatch(context: Context) {
+  if (isHeadless()) {
+    const page = new ReportPage(getCurrent());
+    await sleep();
+    await expect(await page.takeScreenshot()).to.matchScreenshot();
+  } else {
+    console.log('[SKIP] skipping screenshot comparison, because not running in headless mode');
+    context.skip();
+  }
 }

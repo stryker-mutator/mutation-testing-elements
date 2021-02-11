@@ -1,20 +1,9 @@
-/// <reference types="./typings/globals-chai" />
 import { ReportPage } from './po/ReportPage';
 import { expect } from 'chai';
-import { getCurrent, isHeadless } from './lib/browser';
-import type { Context } from 'mocha';
+import { getCurrent } from './lib/browser';
+import { itShouldMatchScreenshot } from './lib/helpers';
 
 describe('Theming', () => {
-  async function actScreenshotMatching(this: Context) {
-    if (isHeadless()) {
-      const browser = getCurrent();
-      await browser.sleep(300); // wait for all animations to be done
-      await expect(await page.takeScreenshot()).to.matchScreenshot();
-    } else {
-      console.log('[SKIP] skipping screenshot comparison, because not running in headless mode');
-      this.skip();
-    }
-  }
   let page: ReportPage;
 
   beforeEach(async () => {
@@ -36,7 +25,7 @@ describe('Theming', () => {
       expect(await page.backgroundColor()).eq('rgba(34, 34, 34, 1)');
     });
 
-    it('should match the dark theme', actScreenshotMatching);
+    itShouldMatchScreenshot('should match the dark theme');
 
     it('should remain in dark theme after a page reload', async () => {
       await getCurrent().navigate().refresh();
@@ -52,7 +41,7 @@ describe('Theming', () => {
         expect(await page.codeBackgroundColor()).eq('rgba(45, 45, 45, 1)');
       });
 
-      it('should match the dark theme', actScreenshotMatching);
+      itShouldMatchScreenshot('should match the dark theme');
     });
   });
 
@@ -65,7 +54,7 @@ describe('Theming', () => {
       expect(await page.backgroundColor()).eq('rgba(255, 255, 255, 1)');
     });
 
-    it('should match the light theme', actScreenshotMatching);
+    itShouldMatchScreenshot('should match the light theme');
 
     describe('when opening a code file', () => {
       beforeEach(async () => {
@@ -75,7 +64,7 @@ describe('Theming', () => {
         expect(await page.codeBackgroundColor()).eq('rgba(245, 242, 240, 1)');
       });
 
-      it('should match the light theme', actScreenshotMatching);
+      itShouldMatchScreenshot('should match the light theme');
     });
   });
 });

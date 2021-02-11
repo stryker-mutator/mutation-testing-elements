@@ -1,6 +1,6 @@
 import { from } from 'rxjs';
 import { mergeMap, toArray } from 'rxjs/operators';
-import { constants, MAX_WEBDRIVER_CONCURRENCY } from '../lib/constants';
+import { constants, DEFAULT_TIMEOUT, MAX_WEBDRIVER_CONCURRENCY } from '../lib/constants';
 import Breadcrumb from './Breadcrumb.po';
 import { ElementSelector } from './ElementSelector.po';
 import { Legend } from './Legend.po';
@@ -9,6 +9,7 @@ import { ResultTable } from './ResultTable.po';
 import { selectShadowRoot } from '../lib/helpers';
 import { WebDriver } from 'selenium-webdriver';
 import { ThemeSelector } from './ThemeSelector.po';
+import { MutantDrawer } from './MutantDrawer.po';
 
 export class ReportPage extends ElementSelector {
   constructor(private readonly browser: WebDriver) {
@@ -21,6 +22,20 @@ export class ReportPage extends ElementSelector {
 
   public navigateTo(path: string) {
     return this.browser.get(constants.BASE_URL + path);
+  }
+
+  public whenFileReportLoaded() {
+    return this.browser.wait(async () => {
+      try {
+        await this.$('mutation-test-report-app >>> mutation-test-report-file');
+        return true;
+      } catch (err) {
+        if (err instanceof Error && err.message.includes('Unable to locate element')) {
+          return false;
+        }
+        throw err;
+      }
+    }, DEFAULT_TIMEOUT);
   }
 
   public async backgroundColor() {
@@ -79,5 +94,10 @@ export class ReportPage extends ElementSelector {
   public resultTable() {
     const context = selectShadowRoot(this.$('mutation-test-report-app >>> mutation-test-report-totals'));
     return new ResultTable(context, this.browser);
+  }
+
+  public mutantDrawer() {
+    const context = selectShadowRoot(this.$('mutation-test-report-app >>> mutation-test-report-drawer-mutant'));
+    return new MutantDrawer(context, this.browser);
   }
 }
