@@ -46,7 +46,7 @@ final case class TestFile(tests: Seq[TestDefinition], source: Option[String] = N
   * @param name Name of the test, used to display the test.
   * @param location A [[mutationtesting.Location]] where `end` is not required
   */
-final case class TestDefinition(id: String name: String, location: Option[OpenEndLocation])
+final case class TestDefinition(id: String, name: String, location: Option[OpenEndLocation])
 
 /** Single mutation.
   *
