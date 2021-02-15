@@ -45,7 +45,7 @@ export class MutationTestReportDrawer extends LitElement {
             <slot name="header"></slot>
             ${renderIf(
               this.hasDetail,
-              html`<button data-testId="btnReadMoreToggle" class="btn btn-link" @click="${this.toggleReadMore}">${this.toggleMoreLabel}</button>`
+              html`<button data-testId="btnReadMoreToggle" class="btn" @click="${this.toggleReadMore}">${this.toggleMoreLabel}</button>`
             )}
           </h5>
         </header>

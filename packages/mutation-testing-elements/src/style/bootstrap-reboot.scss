@@ -1,8 +1,12 @@
-@import "~bootstrap/scss/bootstrap-reboot.scss";
+@import 'bootstrap/scss/bootstrap-reboot.scss';
 $theme-colors: map-merge(
   (
-    "caution":    $orange, // Add custom warning color
+    // Add custom warning color
+    'caution': $orange
   ),
   $theme-colors
 );
-@import "./bootstrap/_darkly-variables.scss";
+$table-cell-padding-sm: 0.5rem;
+$list-group-bg: $gray-100;
+
+@import './bootstrap/_darkly-variables.scss';

@@ -1,7 +1,7 @@
 @import '../../style/bootstrap-reboot.scss'; // import the variables
 
 // Bootstrap theming =================================================
-:host(:not([theme='dark'])) {  
+:host(:not([theme='dark'])) {
   --bs-link-color: #{$link-color};
   --bs-link-hover-color: #{$link-hover-color};
   --bs-breadcrumb-bg: #{$breadcrumb-bg};
@@ -10,7 +10,7 @@
   --bs-body-color: #{$body-color};
   --bs-card-bg: #{$card-bg};
   --bs-card-border-color: #{$card-border-color};
-  --bs-card-cap-bg: #{$body-bg};
+  --bs-card-cap-bg: #{$gray-200};
   --bs-list-group-hover-bg: #{$list-group-hover-bg};
   --bs-list-group-bg: #{$list-group-bg};
   --bs-list-group-border-color: #{$list-group-border-color};
@@ -19,7 +19,7 @@
   --bs-popover-bg: #{$popover-bg};
   --bs-popover-header-bg: #{$popover-header-bg};
   --bs-progress-bg: #{$progress-bg};
-  
+
   @each $color, $value in $theme-colors {
     --bs-table-#{$color}-bg: #{theme-color-level($color, $table-bg-level)};
     --bs-table-#{$color}-hover-bg: #{darken($value, 5%)};
@@ -28,12 +28,13 @@
     --bs-btn-#{$color}-color: #{color-yiq($value)};
     --bs-btn-#{$color}-hover-color: #{color-yiq(darken($value, 7.5%))};
     --bs-#{$color}-bg: #{$value};
+    --bs-#{$color}-bg-light: #{rgba($value, 0.25)};
   }
   --bs-anchor: #{$darkly-white};
 }
 :host([theme='dark']) {
   --bs-link-color: #{$darkly-link-color};
-  --bs-link-hover-color: #{darken($darkly-white, 15%)};
+  --bs-link-hover-color: #{$darkly-link-hover-color};
   --bs-breadcrumb-bg: #{$darkly-breadcrumb-bg};
   --bs-breadcrumb-active-color: #{$darkly-breadcrumb-active-color};
   --bs-body-bg: #{$darkly-body-bg};
@@ -58,35 +59,69 @@
     --bs-btn-#{$color}-color: #{color-yiq($value)};
     --bs-btn-#{$color}-hover-color: #{color-yiq(darken($value, 7.5%))};
     --bs-#{$color}-bg: #{$value};
+    --bs-#{$color}-bg-light: #{rgba($value, 0.25)};
   }
 }
 
 // Prismjs theming (code highlighting) =====================================
 :host(:not([theme='dark'])) {
-  --prism-maintext: black;
-  --prism-background: #f5f2f0;
-  --prism-text: #999;
-  --prism-keywords: #07a;
-  --prism-punctuation: #999;
-  --prism-functions: #dd4a68;
-  --prism-strings: #690;
-  --prism-namespace: slategray;
-  --prism-names: #905;
-  --prism-symbol: #dd4a68;
-  --prism-url: #67cdcc;
+  --prism-maintext: #393a34;
+  --prism-background: #f6f8fa;
+  --prism-border: #ddd;
+
+  // from https://github.com/FormidableLabs/prism-react-renderer/blob/master/src/themes/dracula.js
+  --prism-atrule: #00a4db;
+  --prism-attr: var(--prism-atrule);
+  --prism-attr: var(--prism-string);
+  --prism-boolean: var(--prism-entity);
+  --prism-cdata: var(--prism-comment);
+  --prism-comment: #999988;
+  --prism-constant: var(--prism-entity);
+  --prism-deleted: var(--prism-function);
+  --prism-doctype: var(--prism-comment);
+  --prism-entity: #36acaa;
+  --prism-function: #6f42c1;
+  --prism-function: #d73a49;
+  --prism-inserted: var(--prism-entity);
+  --prism-keyword: var(--prism-tag);
+  --prism-number: var(--prism-entity);
+  --prism-operator: var(--prism-maintext);
+  --prism-prolog: var(--prism-comment);
+  --prism-property: var(--prism-entity);
+  --prism-punctuation: var(--prism-maintext);
+  --prism-regex: var(--prism-entity);
+  --prism-selector: var(--prism-atrule);
+  --prism-selector: var(--prism-tag);
+  --prism-string: #e3116c;
+  --prism-symbol: var(--prism-entity);
+  --prism-tag: #00009f;
+  --prism-tag: var(--prism-function);
+  --prism-url: var(--prism-entity);
+  --prism-variable: var(--prism-entity);
 }
 :host([theme='dark']) {
-  --prism-maintext: #ccc;
-  --prism-background: #2d2d2d;
-  --prism-text: #999;
-  --prism-keywords: #cc99cd;
-  --prism-punctuation: #ccc;
-  --prism-functions: #f08d49;
-  --prism-strings: #7ec699;
-  --prism-namespace: #e2777a;
-  --prism-names: #6196cc;
-  --prism-symbol: #f8c555;
-  --prism-url: #9a6e3a;
+  --prism-maintext: #bfc7d5;
+  --prism-background: #292d3e;
+  --prism-border: #30363d;
+
+  // from https://github.com/FormidableLabs/prism-react-renderer/blob/master/src/themes/github.js
+  --prism-attr-name: rgb(241, 250, 140);
+  --prism-builtin: rgb(189, 147, 249);
+  --prism-changed: rgb(255, 184, 108);
+  --prism-char: rgb(255, 121, 198);
+  --prism-comment: rgb(98, 114, 164);
+  --prism-constant: rgb(189, 147, 249);
+  --prism-deleted: rgb(255, 85, 85);
+  --prism-function: rgb(80, 250, 123);
+  --prism-inserted: rgb(80, 250, 123);
+  --prism-keyword: rgb(189, 147, 249);
+  --prism-prolog: rgb(189, 147, 249);
+  --prism-punctuation: rgb(248, 248, 242);
+  --prism-selector: rgb(255, 121, 198);
+  --prism-string: rgb(255, 121, 198);
+  --prism-symbol: rgb(248, 248, 242);
+  --prism-tag: rgb(255, 121, 198);
+  --prism-variable: rgb(189, 147, 249);
 }
 
 // File icon theming ================================
@@ -116,16 +151,8 @@
 
 // Mutation testing elements custom theming ================================
 :host(:not([theme='dark'])) {
-  --mut-danger-bg: #f2dede;
-  --mut-success-bg: #dff0d8;
-  --mut-warning-bg: #fcf8e3;
-  --mut-caution-bg: #{adjust-color($color: theme-color('caution'), $lightness: 40%)};
   --mut-table-icon-color: #498ba7;
 }
 :host([theme='dark']) {
-  --mut-danger-bg: #270c0c;
-  --mut-success-bg: #2f3d33;
-  --mut-warning-bg: #24200b;
-  --mut-caution-bg: #{adjust-color($color: darkly-theme-color('caution'), $lightness: -40%)};
   --mut-table-icon-color: #519aba;
 }

@@ -1,23 +1,17 @@
-@import "../../style/bootstrap-reboot.scss"; // import the variables
+@import '../../style/bootstrap-reboot.scss'; // import the variables
 
-.bg-danger-light {
-    background-color: var(--mut-danger-bg, #f2dede);
-}
-
-.bg-success-light {
-    background-color: var(--mut-success-bg, #dff0d8);
-}
-
-.bg-warning-light {
-    background-color: var(--mut-warning-bg, #fcf8e3);
-}
-
-.bg-caution-light {
-    background-color: var(--mut-caution-bg);
+@each $color, $value in $theme-colors {
+  .bg-#{$color}-light {
+    background-color: var(--bs-#{$color}-bg-light);
+  }
 }
 
 #report-code-block {
-    // Don't show scrollbar in code block, the page already scrolls
-    // Also let the popup appear outside the code block boundaries
-    overflow: visible;
-} 
+  // Don't show scrollbar in code block, the page already scrolls
+  // Also let the popup appear outside the code block boundaries
+  overflow: visible;
+}
+
+mutation-test-report-mutant {
+  background-color: transparent;
+}
