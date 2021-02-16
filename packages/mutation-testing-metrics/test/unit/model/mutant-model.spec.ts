@@ -16,6 +16,7 @@ describe(MutantModel.name, () => {
       replacement: '"bar"',
       static: true,
       status: MutantStatus.Killed,
+      statusReason: 'Foo should have been "bar" but was "baz"',
       testsCompleted: 45,
     };
     expect(new MutantModel(mutantResult)).deep.eq(mutantResult);

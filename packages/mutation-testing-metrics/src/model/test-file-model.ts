@@ -6,7 +6,9 @@ import { TestModel } from './test-model';
  */
 export class TestFileModel implements TestFile {
   tests: TestModel[];
+  source?: string;
   constructor(input: TestFile) {
+    this.source = input.source;
     this.tests = input.tests.map((testDefinition) => new TestModel(testDefinition));
   }
 }
