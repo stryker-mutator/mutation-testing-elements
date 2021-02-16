@@ -35,8 +35,10 @@ final case class MutationTestResult(
 final case class FileResult(source: String, mutants: Seq[MutantResult], language: String = "scala")
 
 /** A file containing one or more tests
+  * @param source Full source code of the test file. This can be used to display in the report.
+  * @param tests The tests contained in this test file.
   */
-final case class TestFile(tests: Seq[TestDefinition])
+final case class TestFile(tests: Seq[TestDefinition], source: Option[String] = None)
 
 /** A test in your test file.
   *
@@ -53,6 +55,7 @@ final case class TestDefinition(id: String, name: String, location: Option[OpenE
   * @param replacement Actual mutation that has been applied.
   * @param location A location with start and end. Start is inclusive, end is exclusive.
   * @param status Result of the mutation.
+  * @param statusReason The reason that this mutant has this status. In the case of a killed mutant, this should be filled with the failure message(s) of the failing tests. In case of an error mutant, this should be filled with the error message.
   * @param description Description of the applied mutation.
   * @param coveredBy The test ids that covered this mutant. If a mutation testing framework doesn't measure this information, it can simply be left out.
   * @param killedBy The test ids that killed this mutant. It is a best practice to "bail" on first failing test, in which case you can fill this array with that one test.
@@ -65,6 +68,7 @@ final case class MutantResult(
     replacement: String,
     location: Location,
     status: MutantStatus,
+    statusReason: Option[String] = None,
     description: Option[String] = None,
     coveredBy: Option[Seq[String]] = None,
     killedBy: Option[Seq[String]] = None,

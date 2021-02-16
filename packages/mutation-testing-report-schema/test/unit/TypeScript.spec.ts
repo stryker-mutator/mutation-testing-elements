@@ -39,6 +39,7 @@ const mutantResult: MutantResult = {
   status: mutantStatus,
   description: 'changed foo in bar',
   replacement: 'bar',
+  statusReason: 'Expected "foo" to be "bar"',
 
   // @ts-expect-error check to see if the index signature is missing
   alive: false,
@@ -138,6 +139,7 @@ const test: TestDefinition = {
 
 const testFiles: TestFileDefinitionDictionary = {
   'test/foo.spec.js': {
+    source: 'describe("foo", () => {})',
     tests: [test],
   },
 };

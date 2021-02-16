@@ -38,12 +38,13 @@ object circe {
     Codec.forProduct3("source", "mutants", "language")(FileResult.apply)(f => (f.source, f.mutants, f.language))
 
   implicit lazy val mutantResultCodec: Codec[MutantResult] =
-    Codec.forProduct10(
+    Codec.forProduct11(
       "id",
       "mutatorName",
       "replacement",
       "location",
       "status",
+      "statusReason",
       "description",
       "coveredBy",
       "killedBy",
@@ -56,6 +57,7 @@ object circe {
         m.replacement,
         m.location,
         m.status,
+        m.statusReason,
         m.description,
         m.coveredBy,
         m.killedBy,
@@ -68,7 +70,7 @@ object circe {
     .forProduct2("high", "low")(Thresholds.apply)(t => (t.high, t.low))
     .mapDecoder(_.emap(t => Thresholds.create(high = t.high, low = t.low)))
 
-  implicit lazy val testFileCodec: Codec[TestFile] = Codec.forProduct1("tests")(TestFile.apply)(t => t.tests)
+  implicit lazy val testFileCodec: Codec[TestFile] = Codec.forProduct2("tests", "source")(TestFile.apply)(t => (t.tests, t.source))
 
   implicit lazy val mutantStatusCodec: Codec[MutantStatus] =
     Codec

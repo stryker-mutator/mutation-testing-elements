@@ -60,6 +60,7 @@
             }
           },
           "status": "Killed",
+          "statusReason": "Expected 'foo' to be 'bar'",
           "coveredBy": ["test-1", "test-2", "test-3"],
           "killedBy": ["test-2"],
           "duration": 4,
@@ -93,6 +94,7 @@
   "projectRoot": "/home/user/projects/project-under-test",
   "testFiles": {
     "test/foo.spec.js": {
+      "source": "describe('add', () => {})",
       "tests": [
         {
           "id": "test-1",
