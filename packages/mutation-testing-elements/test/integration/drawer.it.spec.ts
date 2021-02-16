@@ -67,6 +67,7 @@ describe('Drawer', () => {
 
     describe('when "read more" is toggled', () => {
       beforeEach(async () => {
+        await drawer.whenHalfOpen();
         await drawer.toggleReadMore();
         await drawer.whenOpen();
       });
