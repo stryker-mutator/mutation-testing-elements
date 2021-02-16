@@ -22,7 +22,7 @@ module.exports = function (config) {
     },
     client: {
       mocha: {
-        // timeout: 0
+        timeout: 10000 // windows can be slow in the pipeline
       }
     },
     browsers: process.env.CI || process.env.HEADLESS ? ['ChromeHeadless'] : ['Chrome'],
