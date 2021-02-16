@@ -42,13 +42,30 @@
   }
 }
 
-// Modal ===============================
-.modal-content {
-  background-color: var(--bs-modal-content-bg);
-  border-color: var(--bs-modal-content-border-color);
+// Cards ==================================
+
+.card {
+  background-color: var(--bs-card-bg);
+  border-color: var(--bs-card-border-color)
 }
-.modal-header {
-  border-bottom: var(--bs-modal-header-border-color);
+.card-header {  
+  border-bottom-color: var(--bs-card-border-color);
+  background-color: var(--bs-card-cap-bg);
+}
+.card-footer {
+  background-color: var(--bs-card-cap-bg);
+  border-top-color: var(--bs-card-border-color);
+}
+.list-group-item-action:hover, .list-group-item-action:focus {
+  background-color: var(--bs-list-group-hover-bg);
+}
+
+
+// List group ==========================
+
+.list-group-item {
+  background-color: var(--bs-list-group-bg);
+  border-color: var(--bs-list-group-border-color);
 }
 
 // Typography ==================================================================

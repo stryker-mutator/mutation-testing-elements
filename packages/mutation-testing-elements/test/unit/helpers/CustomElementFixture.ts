@@ -1,4 +1,5 @@
 import { LitElement } from 'lit-element';
+import { CustomEventMap, MteCustomEvent } from '../../../src/lib/custom-events';
 
 export class CustomElementFixture<TCustomElement extends LitElement> {
   public readonly element: TCustomElement;
@@ -48,7 +49,18 @@ export class CustomElementFixture<TCustomElement extends LitElement> {
     return this.element.remove();
   }
 
-  public async catchEvent<TEvent extends Event = Event>(eventType: string, act: () => Promise<void> | void): Promise<TEvent | undefined> {
+  public async catchCustomEvent<TEvent extends keyof CustomEventMap>(
+    eventType: TEvent,
+    act: () => Promise<void> | void
+  ): Promise<MteCustomEvent<TEvent> | undefined> {
+    return this.catchEvent(eventType, act);
+  }
+
+  public async catchNativeEvent(eventType: string, act: () => Promise<void> | void): Promise<Event | undefined> {
+    return this.catchEvent(eventType, act);
+  }
+
+  private async catchEvent<TEvent extends Event = Event>(eventType: string, act: () => Promise<void> | void): Promise<TEvent | undefined> {
     let actual: Event | undefined;
     const eventListener = (evt: Event) => (actual = evt);
     this.element.addEventListener(eventType, eventListener);

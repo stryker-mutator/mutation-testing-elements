@@ -1,9 +1,10 @@
-import { MutationTestReportMutantComponent, SHOW_MORE_EVENT } from '../../../src/components/mutation-test-report-mutant';
+import { MutationTestReportMutantComponent } from '../../../src/components/mutation-test-report-mutant/mutation-test-report-mutant.component';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { expect } from 'chai';
 import { MutantStatus, MutantResult } from 'mutation-testing-report-schema';
 import { expectedMutantColors } from '../../helpers/helperFunctions';
 import { getContextClassForStatus } from '../../../src/lib/htmlHelpers';
+import { CustomEventMap } from '../../../src/lib/custom-events';
 
 describe(MutationTestReportMutantComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportMutantComponent>;
@@ -77,6 +78,35 @@ describe(MutationTestReportMutantComponent.name, () => {
     expect(actualReplacement.textContent).eq('foobar');
   });
 
+  it('should dispatch "mutant-selected" event with "selected" true when the mutant is opened', async () => {
+    // Arrange
+    const expectedEventDetail: CustomEventMap['mutant-selected'] = { selected: true, mutant: createMutantResult({ replacement: 'foobar' }) };
+    sut.element.mutant = expectedEventDetail.mutant;
+    sut.element.show = true;
+    await sut.whenStable();
+
+    // Act
+    const actualEvent = await sut.catchCustomEvent('mutant-selected', () => sut.$('span.badge').click());
+
+    // Assert
+    expect(actualEvent?.detail).deep.eq(expectedEventDetail);
+  });
+
+  it('should dispatch "mutant-selected" event with "selected" false when the mutant is opened', async () => {
+    // Arrange
+    const expectedEventDetail: CustomEventMap['mutant-selected'] = { selected: false, mutant: createMutantResult({ replacement: 'foobar' }) };
+    sut.element.mutant = expectedEventDetail.mutant;
+    sut.element.show = true;
+    sut.element.expand = true;
+    await sut.whenStable();
+
+    // Act
+    const actualEvent = await sut.catchCustomEvent('mutant-selected', () => sut.$('span.badge').click());
+
+    // Assert
+    expect(actualEvent?.detail).deep.eq(expectedEventDetail);
+  });
+
   it('should fill the replacement with mutator name if no replacement is defined', async () => {
     // Arrange
     sut.element.show = true;
@@ -108,55 +138,6 @@ describe(MutationTestReportMutantComponent.name, () => {
     // Assert
     expect(actualReplacement.hidden).true;
     expect(actualReplacement.textContent).eq('foobar');
-  });
-
-  it('should display a show more button if the description is set', async () => {
-    // Arrange
-    sut.element.show = true;
-    sut.element.showPopup = true;
-    sut.element.mutant = createMutantResult({ description: 'A description' });
-    await sut.whenStable();
-    const showMoreButton = sut.$('.show-more');
-
-    // Act
-    await sut.whenStable();
-
-    // Assert
-    expect(showMoreButton).ok;
-    expect(showMoreButton.textContent).eq('📖 Show more');
-  });
-
-  it('should emit a show-more-click event if show more is clicked', async () => {
-    // Arrange
-    sut.element.show = true;
-    sut.element.showPopup = true;
-    const mutant = createMutantResult({ description: 'A description' });
-    sut.element.mutant = mutant;
-    await sut.whenStable();
-    const showMoreButton = sut.$('.show-more');
-
-    // Act
-    const act = () => showMoreButton.click();
-    const result = await sut.catchEvent<CustomEvent<MutantResult>>(SHOW_MORE_EVENT, act);
-
-    // Assert
-    expect(result).ok;
-    expect(result?.detail).eq(mutant);
-  });
-
-  it("should not display a show more button if the description isn't set", async () => {
-    // Arrange
-    sut.element.show = true;
-    sut.element.showPopup = true;
-    sut.element.mutant = createMutantResult({ description: undefined });
-    await sut.whenStable();
-    const showMoreButton = sut.$('.show-more');
-
-    // Act
-    await sut.whenStable();
-
-    // Assert
-    expect(showMoreButton).null;
   });
 
   it('should line-through original code when the button is clicked', async () => {

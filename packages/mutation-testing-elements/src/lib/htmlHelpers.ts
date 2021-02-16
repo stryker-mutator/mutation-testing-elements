@@ -1,4 +1,29 @@
+import { TemplateResult } from 'lit-element';
 import { MutantStatus } from 'mutation-testing-report-schema';
+
+export function notNullish<T>(value: T | undefined | null): value is T {
+  return value !== null && value !== undefined;
+}
+
+export function renderIf(condition: unknown, consequence: (() => TemplateResult) | TemplateResult | string): string | TemplateResult | undefined {
+  if (condition) {
+    if (typeof consequence === 'function') {
+      return consequence();
+    } else {
+      return consequence;
+    }
+  } else {
+    return undefined;
+  }
+}
+
+export function renderIfPresent<T>(value: T | undefined | null, factory: (value: T) => TemplateResult): TemplateResult | undefined {
+  if (value === null || value === undefined) {
+    return undefined;
+  } else {
+    return factory(value);
+  }
+}
 
 export function getContextClassForStatus(status: MutantStatus) {
   switch (status) {
@@ -43,4 +68,11 @@ export function toAbsoluteUrl(fragment: string): string {
   // Use absolute url because of https://github.com/stryker-mutator/mutation-testing-elements/issues/53
   const url = new URL(window.location.href);
   return new URL(`#${fragment}`, url).href;
+}
+
+export function plural(items: unknown[]): string {
+  if (items.length > 1) {
+    return 's';
+  }
+  return '';
 }

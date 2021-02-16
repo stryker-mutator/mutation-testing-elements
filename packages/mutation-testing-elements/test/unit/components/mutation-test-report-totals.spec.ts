@@ -1,4 +1,5 @@
-import { MutationTestReportTotalsComponent } from '../../../src/components/mutation-test-report-totals';
+import { FileUnderTestModel } from 'mutation-testing-metrics';
+import { MutationTestReportTotalsComponent } from '../../../src/components/mutation-test-report-totals/mutation-test-report-totals.component';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { expect } from 'chai';
 import { createMetricsResult, createFileResult } from '../../helpers/factory';
@@ -21,7 +22,7 @@ describe(MutationTestReportTotalsComponent.name, () => {
 
   it('should show a table with a single row for a file result', async () => {
     sut.element.model = createMetricsResult({
-      file: createFileResult(),
+      file: new FileUnderTestModel(createFileResult()),
     });
     await sut.whenStable();
     const table = sut.$('table') as HTMLTableElement;
@@ -33,7 +34,7 @@ describe(MutationTestReportTotalsComponent.name, () => {
   it('should show a table with a 3 rows for a directory result with 2 directories and one file', async () => {
     const file = createMetricsResult({
       name: 'foo.js',
-      file: createFileResult(),
+      file: new FileUnderTestModel(createFileResult()),
     });
     sut.element.model = createMetricsResult({
       name: 'bar',
@@ -49,7 +50,7 @@ describe(MutationTestReportTotalsComponent.name, () => {
     // Arrange
     const file = createMetricsResult({
       name: 'foo.js',
-      file: createFileResult(),
+      file: new FileUnderTestModel(createFileResult()),
     });
     sut.element.model = createMetricsResult({
       name: 'bar',

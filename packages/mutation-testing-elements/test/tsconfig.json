@@ -5,8 +5,7 @@
       "mocha",
       "webpack-env"
     ],
-    "outDir": "../dist-test",
-    "target": "es2015"
+    "outDir": "../dist-test"
   },
   "references": [
     {

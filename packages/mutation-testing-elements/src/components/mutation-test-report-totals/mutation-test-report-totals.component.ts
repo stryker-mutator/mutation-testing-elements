@@ -5,7 +5,7 @@ import { pathJoin } from '../../lib/codeHelpers';
 import { MetricsResult } from 'mutation-testing-metrics';
 import { toAbsoluteUrl } from '../../lib/htmlHelpers';
 import { SvgService } from '../svg';
-import style from './index.scss';
+import style from './mutation-test-report-totals.scss';
 
 @customElement('mutation-test-report-totals')
 export class MutationTestReportTotalsComponent extends LitElement {

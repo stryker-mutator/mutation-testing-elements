@@ -6,10 +6,11 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "start": "webpack-dev-server --open --config webpack.dev.js",
+    "start": "webpack serve --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
     "test": "npm run test:unit && npm run test:integration",
     "test:unit": "karma start --singleRun true",
+    "test:unit:debug": "karma start --browsers ChromeHeadlessDebug",
     "test:integration": "mocha --forbid-only --config ./test/integration/.mocharc.jsonc",
     "test:integration:update": "cross-env UPDATE_ALL_SCREENSHOTS=true HEADLESS=true mocha --config ./test/integration/.mocharc.jsonc",
     "test:integration:headless": "cross-env HEADLESS=true mocha --config ./test/integration/.mocharc.jsonc",

@@ -1,12 +1,5 @@
-import { MetricsResult } from './api/MetricsResult';
-import { FileResultDictionary } from 'mutation-testing-report-schema';
+import { MetricsResult } from './model/metrics-result';
 const SEPARATOR = '/';
-
-export function flatMap<T, R>(source: T[], fn: (input: T) => R[]) {
-  const result: R[] = [];
-  source.map(fn).forEach((items) => result.push(...items));
-  return result;
-}
 
 export function groupBy<T>(arr: T[], criteria: (element: T) => string): Record<string, T[]> {
   return arr.reduce((acc: Record<string, T[]>, item) => {
@@ -19,28 +12,25 @@ export function groupBy<T>(arr: T[], criteria: (element: T) => string): Record<s
   }, {});
 }
 
-export function pathJoin(...parts: string[]) {
-  return parts.reduce((prev, current) => (prev.length ? (current ? `${prev}/${current}` : prev) : current), '');
+export function normalizeFileNames<TIn>(input: Record<string, TIn>): Record<string, TIn> {
+  return normalize(input, (input) => input);
 }
 
-export function normalizeFileNames(input: FileResultDictionary): FileResultDictionary {
+export function normalize<TIn, TOut>(input: Record<string, TIn>, factory: (input: TIn) => TOut): Record<string, TOut> {
   const fileNames = Object.keys(input);
   const commonBasePath = determineCommonBasePath(fileNames);
-  const output: FileResultDictionary = {};
+  const output: Record<string, TOut> = Object.create(null);
   fileNames.forEach((fileName) => {
-    output[normalize(fileName.substr(commonBasePath.length))] = input[fileName];
+    output[normalizeName(fileName.substr(commonBasePath.length))] = factory(input[fileName]);
   });
   return output;
 }
 
-function normalize(fileName: string) {
-  return fileName
-    .split(/\/|\\/)
-    .filter((pathPart) => pathPart)
-    .join('/');
+function normalizeName(fileName: string) {
+  return fileName.split(/\/|\\/).filter(Boolean).join('/');
 }
 
-function determineCommonBasePath(fileNames: ReadonlyArray<string>) {
+function determineCommonBasePath(fileNames: ReadonlyArray<string>): string {
   const directories = fileNames.map((fileName) => fileName.split(/\/|\\/).slice(0, -1));
   if (fileNames.length) {
     return directories.reduce(filterDirectories).join(SEPARATOR);
@@ -59,7 +49,7 @@ function determineCommonBasePath(fileNames: ReadonlyArray<string>) {
   }
 }
 
-export function compareNames(a: MetricsResult, b: MetricsResult) {
+export function compareNames(a: MetricsResult<any, any>, b: MetricsResult<any, any>) {
   const sortValue = (metricsResult: MetricsResult) => {
     // Directories first
     if (metricsResult.file) {

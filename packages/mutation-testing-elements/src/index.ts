@@ -1,9 +1,9 @@
-import './components/mutation-test-report-app';
-import './components/mutation-test-report-popup';
-import './components/mutation-test-report-file';
-import './components/mutation-test-report-totals';
+import './components/mutation-test-report-app/mutation-test-report-app.component';
+import './components/mutation-test-report-file/mutation-test-report-file.component';
+import './components/mutation-test-report-totals/mutation-test-report-totals.component';
 import './components/mutation-test-report-breadcrumb';
-import './components/mutation-test-report-mutant';
-import './components/mutation-test-report-modal-dialog';
-import './components/mutation-test-report-file-legend';
-import './components/mutation-test-report-theme-switch';
+import './components/mutation-test-report-mutant/mutation-test-report-mutant.component';
+import './components/mutation-test-report-file-legend/mutation-test-report-file-legend.component';
+import './components/mutation-test-report-theme-switch/mutation-test-report-theme-switch.component';
+import './components/mutation-test-report-drawer/mutation-test-report-drawer.component';
+import './components/mutation-test-report-drawer-mutant/mutation-test-report-drawer-mutant.component';

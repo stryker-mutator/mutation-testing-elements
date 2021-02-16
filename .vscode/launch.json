@@ -39,22 +39,6 @@
       "cwd": "${workspaceFolder}/packages/mutation-testing-elements",
       "internalConsoleOptions": "openOnSessionStart",
       "sourceMaps": true
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Karma unit tests (Mutation testing elements)",
-      "program": "${workspaceFolder}/node_modules/karma/bin/karma",
-      "args": [
-        "start"
-      ],
-      "cwd": "${workspaceFolder}/packages/mutation-testing-elements",
-      "internalConsoleOptions": "openOnSessionStart",
-      "sourceMaps": true,
-      "outFiles": [
-        "${workspaceFolder}/packages/mutation-testing-elements/dist-test/**/*.js",
-        "${workspaceFolder}/packages/mutation-testing-elements/dist/**/*.js"
-      ]
     }
   ]
 }

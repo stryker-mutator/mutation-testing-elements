@@ -1,24 +1,38 @@
-import { MutantResult, MutantStatus, FileResult } from 'mutation-testing-report-schema';
+import { MutantResult, MutantStatus, FileResult, Location, TestDefinition, MutationTestResult } from 'mutation-testing-report-schema';
 import { Metrics, MetricsResult } from 'mutation-testing-metrics';
 
 export function createMutantResult(overrides?: Partial<MutantResult>): MutantResult {
   const defaults: MutantResult = {
     id: '1',
-    location: {
-      end: {
-        column: 3,
-        line: 1,
-      },
-      start: {
-        column: 1,
-        line: 1,
-      },
-    },
+    location: createLocation(),
     mutatorName: 'bazMutator',
     replacement: 'baz',
     status: MutantStatus.Killed,
   };
   return { ...defaults, ...overrides };
+}
+
+export function createTestDefinition(overrides?: Partial<TestDefinition>): TestDefinition {
+  return {
+    id: '23',
+    name: 'foo should bar',
+    location: createLocation(),
+    ...overrides,
+  };
+}
+
+export function createLocation(overrides?: Partial<Location>): Location {
+  return {
+    end: {
+      column: 3,
+      line: 1,
+    },
+    start: {
+      column: 1,
+      line: 1,
+    },
+    ...overrides,
+  };
 }
 
 export function createFileResult(overrides?: Partial<FileResult>): FileResult {
@@ -58,4 +72,23 @@ export function createMetrics(overrides?: Metrics): Metrics {
     mutationScoreBasedOnCoveredCode: 0,
   };
   return { ...defaults, ...overrides };
+}
+
+export function createReport(overrides?: MutationTestResult): MutationTestResult {
+  return {
+    files: {
+      'foobar.js': {
+        language: 'javascript',
+        mutants: [],
+        source: 'foo = "bar";',
+      },
+    },
+    schemaVersion: '1.0',
+    thresholds: {
+      high: 80,
+      low: 60,
+    },
+    projectRoot: '/src/project',
+    ...overrides,
+  };
 }

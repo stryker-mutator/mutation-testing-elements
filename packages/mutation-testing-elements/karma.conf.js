@@ -12,8 +12,21 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
+    customLaunchers: {
+      ChromeHeadlessDebug: {
+        base: 'ChromeHeadless',
+        flags: [
+          '--remote-debugging-port=9333'
+        ]
+      }
+    },
+    client: {
+      mocha: {
+        timeout: 10000 // windows can be slow in the pipeline
+      }
+    },
     browsers: process.env.CI || process.env.HEADLESS ? ['ChromeHeadless'] : ['Chrome'],
-    singleRun: process.env.CI || process.env.HEADLESS ? true : false,
+    singleRun: false,
     concurrency: Infinity,
     webpack,
   });

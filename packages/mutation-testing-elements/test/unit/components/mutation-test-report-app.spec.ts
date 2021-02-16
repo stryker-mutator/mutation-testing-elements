@@ -1,9 +1,12 @@
-import { MutationTestReportAppComponent } from '../../../src/components/mutation-test-report-app';
-import { expect } from 'chai';
-import { MutationTestResult } from 'mutation-testing-report-schema';
 import * as sinon from 'sinon';
-import { MutationTestReportFileComponent } from '../../../src/components/mutation-test-report-file';
+import { MutationTestReportAppComponent } from '../../../src/components/mutation-test-report-app/mutation-test-report-app.component';
+import { expect } from 'chai';
+import { MutationTestReportFileComponent } from '../../../src/components/mutation-test-report-file/mutation-test-report-file.component';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
+import { createCustomEvent } from '../../../src/lib/custom-events';
+import { MutationTestReportDrawerMutant } from '../../../src/components/mutation-test-report-drawer-mutant/mutation-test-report-drawer-mutant.component';
+import { createMutantResult, createReport } from '../../helpers/factory';
+import { MutantModel } from 'mutation-testing-metrics';
 
 describe(MutationTestReportAppComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportAppComponent>;
@@ -22,24 +25,6 @@ describe(MutationTestReportAppComponent.name, () => {
     sut.dispose();
     localStorage.clear();
   });
-
-  function createReport(): MutationTestResult {
-    return {
-      files: {
-        'foobar.js': {
-          language: 'javascript',
-          mutants: [],
-          source: 'foo = "bar";',
-        },
-      },
-      schemaVersion: '1.0',
-      thresholds: {
-        high: 80,
-        low: 60,
-      },
-      projectRoot: '/src/project',
-    };
-  }
 
   describe('the title', () => {
     it('should not change without a report', () => {
@@ -154,7 +139,7 @@ describe(MutationTestReportAppComponent.name, () => {
       await sut.whenStable();
 
       // Act
-      sut.$('mutation-test-report-theme-switch').dispatchEvent(new CustomEvent('theme-switch', { detail: 'dark' }));
+      sut.$('mutation-test-report-theme-switch').dispatchEvent(createCustomEvent('theme-switch', 'dark'));
       await sut.whenStable();
 
       // Assert
@@ -197,20 +182,72 @@ describe(MutationTestReportAppComponent.name, () => {
     it('should trigger a `theme-selected` event when the theme changes', async () => {
       sut.element.report = createReport();
       await sut.whenStable();
-      const event = await sut.catchEvent<CustomEvent<{ theme: string }>>('theme-changed', () => {
-        sut.$('mutation-test-report-theme-switch').dispatchEvent(new CustomEvent('theme-switch', { detail: 'dark' }));
+      const event = await sut.catchCustomEvent('theme-changed', () => {
+        sut.$('mutation-test-report-theme-switch').dispatchEvent(createCustomEvent('theme-switch', 'dark'));
       });
       expect(event?.detail.theme).eq('dark');
     });
 
     it('should trigger a `theme-selected` event when the theme changes during init', async () => {
       // Arrange
-      const event = await sut.catchEvent<CustomEvent<{ theme: string }>>('theme-changed', async () => {
+      const event = await sut.catchCustomEvent('theme-changed', async () => {
         matchMediaStub.returns({ matches: true } as MediaQueryList);
         sut.element.report = createReport();
         await sut.whenStable();
       });
       expect(event?.detail.theme).eq('dark');
+    });
+  });
+
+  describe('the drawer', () => {
+    beforeEach(async () => {
+      sut.element.report = createReport();
+      await sut.whenStable();
+    });
+
+    function selectDrawer() {
+      return sut.$('mutation-test-report-drawer-mutant') as MutationTestReportDrawerMutant;
+    }
+
+    it('should be rendered closed to begin with', () => {
+      expect(selectDrawer().mode).eq('closed');
+    });
+
+    it('should half open when a mutant is selected', async () => {
+      // Arrange
+      const mutant = new MutantModel(createMutantResult());
+      const event = createCustomEvent('mutant-selected', { selected: true, mutant });
+      window.location.hash = '#foobar.js';
+      await tick();
+      await sut.whenStable();
+
+      // Act
+      sut.$('mutation-test-report-file').dispatchEvent(event);
+      await sut.whenStable();
+      const drawer = selectDrawer();
+
+      // Assert
+      expect(drawer.mode).eq('half');
+      expect(drawer.mutant).eq(mutant);
+    });
+
+    it('should close when a mutant is deselected', async () => {
+      // Arrange
+      const mutant = new MutantModel(createMutantResult());
+      window.location.hash = '#foobar.js';
+      await tick();
+      await sut.whenStable();
+      sut.$('mutation-test-report-file').dispatchEvent(createCustomEvent('mutant-selected', { selected: true, mutant }));
+      const drawer = selectDrawer();
+      await sut.whenStable();
+
+      // Act
+      sut.$('mutation-test-report-file').dispatchEvent(createCustomEvent('mutant-selected', { selected: false, mutant }));
+      await sut.whenStable();
+
+      // Assert
+      expect(drawer.mode).eq('closed');
+      expect(drawer.mutant).eq(mutant);
     });
   });
 

@@ -1,11 +1,14 @@
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
-import { MutationTestReportFileComponent } from '../../../src/components/mutation-test-report-file';
+import { MutationTestReportFileComponent } from '../../../src/components/mutation-test-report-file/mutation-test-report-file.component';
 import { expect } from 'chai';
-import { FileResult, MutantStatus, MutantResult } from 'mutation-testing-report-schema';
-import { MutationTestReportMutantComponent, SHOW_MORE_EVENT } from '../../../src/components/mutation-test-report-mutant';
-import { MutationTestReportFileLegendComponent, MutantFilter } from '../../../dist/components/mutation-test-report-file-legend';
+import { FileResult, MutantStatus } from 'mutation-testing-report-schema';
+import { MutationTestReportMutantComponent } from '../../../src/components/mutation-test-report-mutant/mutation-test-report-mutant.component';
+import {
+  MutationTestReportFileLegendComponent,
+  MutantFilter,
+} from '../../../dist/components/mutation-test-report-file-legend/mutation-test-report-file-legend.component';
 import { createFileResult } from '../../helpers/factory';
-import { MutationTestReportModalDialogComponent } from '../../../dist/components/mutation-test-report-modal-dialog';
+import { createCustomEvent } from '../../../src/lib/custom-events';
 
 describe(MutationTestReportFileComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportFileComponent>;
@@ -44,14 +47,14 @@ describe(MutationTestReportFileComponent.name, () => {
     });
 
     it('should expand `mutation-test-report-mutant` when the "expand-all" event is triggered', async () => {
-      legendComponent.dispatchEvent(new CustomEvent('expand-all'));
+      legendComponent.dispatchEvent(createCustomEvent('expand-all', undefined));
       await sut.whenStable();
       expect(mutantComponent.expand).true;
     });
 
     it('should collapse `mutation-test-report-mutant` when the "collapse-all" event is triggered', async () => {
       mutantComponent.expand = true;
-      legendComponent.dispatchEvent(new CustomEvent('collapse-all'));
+      legendComponent.dispatchEvent(createCustomEvent('collapse-all', undefined));
       await sut.whenStable();
       expect(mutantComponent.expand).false;
     });
@@ -68,121 +71,11 @@ describe(MutationTestReportFileComponent.name, () => {
       mutantComponent.show = true;
 
       // Act
-      legendComponent.dispatchEvent(new CustomEvent('filters-changed', { detail: filters }));
+      legendComponent.dispatchEvent(createCustomEvent('filters-changed', filters));
       await sut.whenStable();
 
       // Assert
       expect(mutantComponent.show).false;
     });
-
-    describe('the modal dialog', () => {
-      it('should not be shown when opening the page', () => {
-        mutantComponent.show = true;
-        const background = sut.$('.modal-backdrop');
-        const dialog = sut.$('mutation-test-report-modal-dialog');
-
-        expect(background).null;
-        expect(dialog).null;
-      });
-
-      it('should be shown when a show-more-click event is received', async () => {
-        // Arrange
-        mutantComponent.show = true;
-        const mutant = createMutantResult();
-
-        // Act
-        legendComponent.dispatchEvent(new CustomEvent(SHOW_MORE_EVENT, { detail: mutant, bubbles: true, composed: true }));
-        await sut.whenStable();
-        const dialog = sut.$('mutation-test-report-modal-dialog');
-
-        // Assert
-        expect(dialog).ok;
-      });
-
-      it('should show the correct header when the dialog is opened', async () => {
-        // Arrange
-        mutantComponent.show = true;
-        const mutant = createMutantResult({
-          id: '30',
-          mutatorName: 'testMutator',
-          status: MutantStatus.Killed,
-        });
-
-        // Act
-        await openDialog(mutant);
-        const dialog = sut.$('mutation-test-report-modal-dialog') as MutationTestReportModalDialogComponent;
-
-        // Assert
-        expect(dialog.header).eq(`30: testMutator - ✅ Killed`);
-      });
-
-      it("should display the description in the dialog when it's opened", async () => {
-        // Arrange
-        mutantComponent.show = true;
-        const mutant = createMutantResult({
-          description: 'This is a very weird mutant',
-        });
-
-        // Act
-        await openDialog(mutant);
-        const dialogContent = sut.$('mutation-test-report-modal-dialog p');
-
-        // Assert
-        expect(dialogContent.textContent).eq('This is a very weird mutant');
-      });
-
-      it('should show the background when the dialog is opened', async () => {
-        // Arrange
-        mutantComponent.show = true;
-
-        // Act
-        await openDialog();
-        const background = sut.$('.modal-backdrop');
-
-        // Assert
-        expect(background).ok;
-        expect(background.hidden).false;
-      });
-
-      it('should hide when a close-dialog event is received', async () => {
-        // Arrange
-        mutantComponent.show = true;
-
-        // Act
-        await openDialog();
-        legendComponent.dispatchEvent(new CustomEvent('close-dialog', { detail: undefined, bubbles: true, composed: true }));
-        await sut.whenStable();
-
-        const background = sut.$('.modal-backdrop');
-        const dialog = sut.$('mutation-test-report-modal-dialog');
-
-        // Assert
-        expect(background).null;
-        expect(dialog).null;
-      });
-    });
-
-    function createMutantResult(overrides?: Partial<MutantResult>) {
-      const defaults: MutantResult = {
-        id: '42',
-        location: {
-          end: { column: 3, line: 4 },
-          start: { line: 3, column: 4 },
-        },
-        mutatorName: 'fooMutator',
-        replacement: '+',
-        status: MutantStatus.Timeout,
-      };
-      return { ...defaults, ...overrides };
-    }
-
-    async function openDialog(mutant?: MutantResult) {
-      let detail = mutant;
-      if (!detail) {
-        detail = createMutantResult();
-      }
-      legendComponent.dispatchEvent(new CustomEvent(SHOW_MORE_EVENT, { detail, bubbles: true, composed: true }));
-      await sut.whenStable();
-    }
   });
 });
