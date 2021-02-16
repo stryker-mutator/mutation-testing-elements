@@ -18,9 +18,6 @@
   --bs-table-hover-bg: #{$table-hover-bg};
   --bs-popover-bg: #{$popover-bg};
   --bs-popover-header-bg: #{$popover-header-bg};
-  --bs-modal-content-bg: #{$modal-content-bg};
-  --bs-modal-content-border-color: #{$modal-content-border-color};
-  --bs-modal-header-border-color: #{$modal-header-border-color};
   --bs-progress-bg: #{$progress-bg};
   
   @each $color, $value in $theme-colors {
@@ -51,9 +48,6 @@
   --bs-table-hover-bg: #{$darkly-table-hover-bg};
   --bs-popover-bg: #{$darkly-popover-bg};
   --bs-popover-header-bg: #{$darkly-popover-header-bg};
-  --bs-modal-content-bg: #{$darkly-modal-content-bg};
-  --bs-modal-content-border-color: #{$darkly-modal-content-border-color};
-  --bs-modal-header-border-color: #{$darkly-modal-header-border-color};
   --bs-progress-bg: #{$darkly-progress-bg};
 
   @each $color, $value in $darkly-theme-colors {
