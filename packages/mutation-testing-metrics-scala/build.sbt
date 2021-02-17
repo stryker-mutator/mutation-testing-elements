@@ -121,5 +121,7 @@ def packageVersion(packageJsonDir: File): String = {
     case n if n contains "windows" => Seq("cmd", "/C") ++ command
     case _                         => command
   }
-  Process(panderToWindows, packageJsonDir).!!.linesIterator.toIterable.last
+  scala.util
+    .Try(Process(panderToWindows, packageJsonDir).!!.linesIterator.toIterable.last)
+    .getOrElse("0.0.0-NO-NODE-SNAPSHOT")
 }
