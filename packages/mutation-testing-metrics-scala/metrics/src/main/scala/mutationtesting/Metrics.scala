@@ -2,7 +2,7 @@ package mutationtesting
 
 object Metrics {
 
-  def calculateMetrics(mutationTestReport: MutationTestResult): MetricsResult =
+  def calculateMetrics(mutationTestReport: MutationTestResult[Any]): MetricsResult =
     calculateMetrics(mutationTestReport.files)
 
   def calculateMetrics(mutationTestResults: FileResultDictionary): MetricsResult =
