@@ -23,7 +23,9 @@ First create the mutation test report:
 
 ```scala
 import mutationtesting._
-val report = MutationTestResult(thresholds = Thresholds(high = 80, low = 10),
+import io.circe.JsonObject
+
+val report = MutationTestResult[JsonObject](thresholds = Thresholds(high = 80, low = 10),
   files = Map(
     "src/stryker4s/Stryker4s.scala" -> FileResult(
       source = "case class Stryker4s(foo: String)",
@@ -35,7 +37,7 @@ val report = MutationTestResult(thresholds = Thresholds(high = 80, low = 10),
 )
 ```
 
-The `MutationTestResult` case classes generate a JSON compliant with the [mutation-testing JSON schema](https://github.com/stryker-mutator/mutation-testing-elements/blob/master/packages/mutation-testing-report-schema/src/mutation-testing-report-schema.json).
+The `MutationTestResult` case classes generate a JSON compliant with the [mutation-testing JSON schema](https://github.com/stryker-mutator/mutation-testing-elements/blob/master/packages/mutation-testing-report-schema/src/mutation-testing-report-schema.json). It has a type parameter `[C]` for the type of the used configuration, which can be any JSON object.
 
 
 Then calculate and use metrics from that report:
@@ -73,7 +75,7 @@ import mutationtesting.circe._
 
 val encoded: io.circe.Json = report.asJson
 
-val decoded: Either[io.circe.Error, MutationTestResult] = decode[MutationTestResult](encoded.toString)
+val decoded: Either[io.circe.Error, MutationTestResult[JsonObject]] = decode[MutationTestResult[JsonObject]](encoded.toString)
 ```
 
 ## API reference

@@ -5,6 +5,7 @@ import java.nio.file.Paths
 
 import scala.io.Source
 
+import io.circe.JsonObject
 import io.circe.parser.decode
 import mutationtesting.circe._
 import org.leadpony.justify.api.JsonValidationService
@@ -12,7 +13,7 @@ import org.leadpony.justify.api.JsonValidationService
 class SchemaTest extends munit.FunSuite {
 
   test("encoded json should be valid for mutation-testing-report-schema") {
-    val sut = MutationTestResult(
+    val sut = MutationTestResult[JsonObject](
       thresholds = Thresholds(high = 80, low = 10),
       files = Map(
         "src/stryker4s/Stryker4s.scala" -> FileResult(
@@ -43,7 +44,7 @@ class SchemaTest extends munit.FunSuite {
     val report =
       Source.fromFile("../mutation-testing-elements/testResources/scala-example/mutation-report.json").mkString
 
-    decode[MutationTestResult](report) match {
+    decode[JsonConfigMutationTestResult](report) match {
       case Left(err) => throw err
       case Right(report) =>
         assert(report.`$schema`.isEmpty)
@@ -105,13 +106,13 @@ class SchemaTest extends munit.FunSuite {
     }
   }
 
-  def decodeReport(fileName: String): Either[io.circe.Error, MutationTestResult] = {
+  def decodeReport(fileName: String): Either[io.circe.Error, JsonConfigMutationTestResult] = {
     val reportString = Source.fromFile(s"../mutation-testing-report-schema/testResources/$fileName.json").mkString
 
-    decode[MutationTestResult](reportString)
+    decode[JsonConfigMutationTestResult](reportString)
   }
 
-  def toJsonString(report: MutationTestResult) = {
+  def toJsonString(report: JsonConfigMutationTestResult) = {
     import io.circe.syntax._
     report.asJson.noSpaces
   }

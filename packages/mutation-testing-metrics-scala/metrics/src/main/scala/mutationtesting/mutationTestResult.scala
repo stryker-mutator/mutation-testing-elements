@@ -11,8 +11,11 @@ package mutationtesting
   * @param performance The performance statistics per phase. Total time should be roughly equal to the sum of all these.
   * @param framework Extra information about the framework used.
   * @param system Information about the system that performed mutation testing.
+  * @param config Free-format object that represents the configuration used to run mutation testing.
+  *
+  * @tparam C type of the config object
   */
-final case class MutationTestResult(
+final case class MutationTestResult[+C](
     `$schema`: Option[String] = Some(
       "https://git.io/mutation-testing-report-schema"
     ),
@@ -23,7 +26,8 @@ final case class MutationTestResult(
     testFiles: Option[TestFileDefinitionDictionary] = None,
     performance: Option[PerformanceStatistics] = None,
     framework: Option[FrameworkInformation] = None,
-    system: Option[SystemInformation] = None
+    system: Option[SystemInformation] = None,
+    config: Option[C] = None
 )
 
 /** Mutated file

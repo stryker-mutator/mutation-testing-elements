@@ -7,9 +7,27 @@ import mutationtesting.CodecOps._
   */
 object circe {
 
-  implicit lazy val mutationTestResultCodec: Codec[MutationTestResult] =
-    Codec
-      .forProduct9(
+  /** A `MutationTestResult` with a json object as the config
+    */
+  type JsonConfigMutationTestResult = MutationTestResult[JsonObject]
+
+  implicit def mutationTestResultDecoder[C: Decoder]: Decoder[MutationTestResult[C]] =
+    Decoder.forProduct10(
+      "$schema",
+      "schemaVersion",
+      "thresholds",
+      "projectRoot",
+      "files",
+      "testFiles",
+      "performance",
+      "framework",
+      "system",
+      "config"
+    )(MutationTestResult.apply[C])
+
+  implicit def mutationTestResultEncoder[C: Encoder]: Encoder[MutationTestResult[C]] =
+    Encoder
+      .forProduct10(
         "$schema",
         "schemaVersion",
         "thresholds",
@@ -18,8 +36,9 @@ object circe {
         "testFiles",
         "performance",
         "framework",
-        "system"
-      )(MutationTestResult.apply)(m =>
+        "system",
+        "config"
+      )((m: MutationTestResult[C]) =>
         (
           m.`$schema`,
           m.schemaVersion,
@@ -29,10 +48,20 @@ object circe {
           m.testFiles,
           m.performance,
           m.framework,
-          m.system
+          m.system,
+          m.config
         )
       )
-      .mapEncoder(_.mapJson(_.deepDropNullValues))
+      .mapJson(_.deepDropNullValues)
+
+  /** Default `Codec` that de/encodes the MutationTestResult config as a Json object.
+    *
+    * For more specialized de/encoding the config, @see [[mutationTestResultDecoder]] or @see [[mutationTestResultEncoder]]
+    *
+    * @return
+    */
+  implicit def mutationTestResultCodec: Codec[JsonConfigMutationTestResult] = Codec
+    .from(mutationTestResultDecoder[JsonObject], mutationTestResultEncoder[JsonObject])
 
   implicit lazy val fileResultCodec: Codec[FileResult] =
     Codec.forProduct3("source", "mutants", "language")(FileResult.apply)(f => (f.source, f.mutants, f.language))
@@ -70,7 +99,8 @@ object circe {
     .forProduct2("high", "low")(Thresholds.apply)(t => (t.high, t.low))
     .mapDecoder(_.emap(t => Thresholds.create(high = t.high, low = t.low)))
 
-  implicit lazy val testFileCodec: Codec[TestFile] = Codec.forProduct2("tests", "source")(TestFile.apply)(t => (t.tests, t.source))
+  implicit lazy val testFileCodec: Codec[TestFile] =
+    Codec.forProduct2("tests", "source")(TestFile.apply)(t => (t.tests, t.source))
 
   implicit lazy val mutantStatusCodec: Codec[MutantStatus] =
     Codec
