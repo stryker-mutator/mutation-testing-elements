@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.5.2...v1.6.0) (2021-02-22)
+
+
+### Features
+
+* **metrics:** add test metrics ([#871](https://github.com/stryker-mutator/mutation-testing-elements/issues/871)) ([4758f39](https://github.com/stryker-mutator/mutation-testing-elements/commit/4758f39a3b08a9fd5828d6491d4d559ac38308d6))
+* **metrics-scala:** add config to MutationTestResult ([#911](https://github.com/stryker-mutator/mutation-testing-elements/issues/911)) ([0497733](https://github.com/stryker-mutator/mutation-testing-elements/commit/0497733a2501bbe817d765a82a695d7650bb78e4))
+* **schema:** add test file source and status reason ([#893](https://github.com/stryker-mutator/mutation-testing-elements/issues/893)) ([9666408](https://github.com/stryker-mutator/mutation-testing-elements/commit/96664081945c0903816623afdf73fbe9cb517591)), closes [#891](https://github.com/stryker-mutator/mutation-testing-elements/issues/891) [#892](https://github.com/stryker-mutator/mutation-testing-elements/issues/892)
+
+
+
+
+
 ## [1.5.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.5.0...v1.5.1) (2020-12-23)
 
 
