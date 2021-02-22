@@ -47,7 +47,7 @@ async function assertSnapshot(actualBase64Encoded: string) {
     `data:image/png;base64,${actualBase64Encoded}`,
     await fs.readFile(currentSnapshotFile)
   );
-  if (diff.misMatchPercentage >= 0.2) {
+  if (Number(diff.misMatchPercentage) >= 0.2) {
     const { name } = path.parse(currentSnapshotFile);
     await fs.mkdir(reportsDir, { recursive: true });
     const diffFileName = path.join(reportsDir, `${name}.diff.png`);
