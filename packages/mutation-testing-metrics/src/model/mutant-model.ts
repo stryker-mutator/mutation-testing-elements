@@ -17,6 +17,7 @@ export class MutantModel implements MutantResult {
   public replacement: string | undefined;
   public static: boolean | undefined;
   public status!: MutantStatus;
+  public statusReason?: string;
   public testsCompleted: number | undefined;
 
   constructor(input: MutantResult) {
