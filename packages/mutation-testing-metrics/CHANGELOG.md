@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.6.0...v1.6.1) (2021-02-23)
+
+
+### Bug Fixes
+
+* **mutant-model:** add missing `statusReason` field ([#916](https://github.com/stryker-mutator/mutation-testing-elements/issues/916)) ([80ffbec](https://github.com/stryker-mutator/mutation-testing-elements/commit/80ffbec023e860a7b64f8bd5dbf849ac2d5b76d2))
+
+
+
+
+
 # [1.6.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.5.2...v1.6.0) (2021-02-22)
 
 
