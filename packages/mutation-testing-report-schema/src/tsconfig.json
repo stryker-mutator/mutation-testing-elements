@@ -6,5 +6,5 @@
     "outDir": "../dist",
     "rootDir": "../"
   },
-  "include": ["../src/**/*", "../src/**/*.json", "../src-generated/**/*"]
+  "include": ["./**/*", "./mutation-testing-report-schema.json", "../src-generated/**/*"]
 }
