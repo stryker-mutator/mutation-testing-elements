@@ -1,5 +1,12 @@
 import { Location, MutantResult, MutantStatus } from 'mutation-testing-report-schema';
+import { FileUnderTestModel } from './file-under-test-model';
 import { TestModel } from './test-model';
+
+function assertSourceFileDefined(sourceFile: FileUnderTestModel | undefined): asserts sourceFile {
+  if (sourceFile === undefined) {
+    throw new Error('mutant.sourceFile was not defined');
+  }
+}
 
 /**
  * Represent a model of a mutant that contains its test relationship
@@ -19,6 +26,7 @@ export class MutantModel implements MutantResult {
   public status!: MutantStatus;
   public statusReason?: string;
   public testsCompleted: number | undefined;
+  public sourceFile: FileUnderTestModel | undefined;
 
   constructor(input: MutantResult) {
     Object.entries(input).forEach(([key, value]) => {
@@ -39,5 +47,15 @@ export class MutantModel implements MutantResult {
       this.killedByTests = [];
     }
     this.killedByTests.push(test);
+  }
+
+  public getMutatedLines() {
+    assertSourceFileDefined(this.sourceFile);
+    return this.sourceFile.getMutationLines(this);
+  }
+
+  public getOriginalLines() {
+    assertSourceFileDefined(this.sourceFile);
+    return this.sourceFile.getLines(this.location);
   }
 }

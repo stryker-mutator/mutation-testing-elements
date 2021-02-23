@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { MutantResult, MutantStatus } from 'mutation-testing-report-schema';
-import { MutantModel, TestModel } from '../../../src';
-import { createLocation, createMutantResult, createTestDefinition } from '../../helpers/factories';
+import { FileUnderTestModel, MutantModel, TestModel } from '../../../src';
+import { createFileResult, createLocation, createMutantResult, createTestDefinition } from '../../helpers/factories';
 
 describe(MutantModel.name, () => {
   it('should copy over all values from mutant result', () => {
@@ -47,6 +47,36 @@ describe(MutantModel.name, () => {
         actual[method](test2);
         expect(actual[property]).deep.eq([test, test2]);
       });
+    });
+  });
+
+  describe(MutantModel.prototype.getMutatedLines.name, () => {
+    it('should be able to show a mutant spanning 1 line', () => {
+      const sut = new MutantModel(
+        createMutantResult({ replacement: 'baz', location: { start: { line: 2, column: 5 }, end: { line: 2, column: 8 } } })
+      );
+      sut.sourceFile = new FileUnderTestModel(createFileResult({ source: '\nfoo.bar();\n qux()\n' }));
+      const actual = sut.getMutatedLines();
+      expect(actual).eq('foo.baz();\n');
+    });
+
+    it("should throw if the sourceFile wasn't set", () => {
+      const sut = new MutantModel(createMutantResult());
+      expect(() => sut.getMutatedLines()).throws('mutant.sourceFile was not defined');
+    });
+  });
+
+  describe(MutantModel.prototype.getOriginalLines.name, () => {
+    it('should be able to show a mutant spanning 1 line', () => {
+      const sut = new MutantModel(createMutantResult({ location: { start: { line: 3, column: 1 }, end: { line: 3, column: 2 } } }));
+      sut.sourceFile = new FileUnderTestModel(createFileResult({ source: '\nfoo.bar();\nbaz.qux()\n' }));
+      const actual = sut.getOriginalLines();
+      expect(actual).eq('baz.qux()\n');
+    });
+
+    it("should throw if the sourceFile wasn't set", () => {
+      const sut = new MutantModel(createMutantResult());
+      expect(() => sut.getOriginalLines()).throws('mutant.sourceFile was not defined');
     });
   });
 });

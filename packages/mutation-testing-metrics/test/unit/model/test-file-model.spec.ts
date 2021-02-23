@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { TestFile } from 'mutation-testing-report-schema';
 import { TestFileModel, TestModel } from '../../../src';
-import { createTestDefinition, createTestFile } from '../../helpers/factories';
+import { createLocation, createTestDefinition, createTestFile } from '../../helpers/factories';
 
 describe(TestFileModel.name, () => {
   it('should copy over all values from file result', () => {
@@ -18,5 +18,14 @@ describe(TestFileModel.name, () => {
     });
     const actual = new TestFileModel(testFile);
     expect(actual.tests[0]).instanceOf(TestModel);
+  });
+
+  describe(TestFileModel.prototype.getLines.name, () => {
+    // Implementation is tested in file-under-test-model.spec.ts
+
+    it('should throw when the source is undefined', () => {
+      const sut = new TestFileModel(createTestFile({ source: undefined }));
+      expect(() => sut.getLines(createLocation())).throws('sourceFile.source is undefined');
+    });
   });
 });
