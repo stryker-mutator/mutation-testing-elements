@@ -14,7 +14,7 @@ jobs:
       - run: npm ci
       - name: Run Stryker
         run: |
-          npm run generate
+          npm run build
           npx lerna run --stream --scope mutation-testing-metrics stryker
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
@@ -26,7 +26,7 @@ jobs:
       - run: npm run build
       - name: Run Stryker
         run: |
-          npm run generate
+          npm run build
           npx lerna run --stream --scope mutation-testing-elements stryker
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
