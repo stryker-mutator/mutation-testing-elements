@@ -5,4 +5,4 @@ addSbtPlugin("org.scalameta" % "sbt-mdoc" % "2.2.14")
 
 addSbtPlugin("io.github.davidgregory084" % "sbt-tpolecat" % "0.1.16")
 
-addSbtPlugin("io.stryker-mutator" % "sbt-stryker4s" % "0.10.0")
+addSbtPlugin("io.stryker-mutator" % "sbt-stryker4s" % "0.10.1")
