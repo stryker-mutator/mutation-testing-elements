@@ -48,7 +48,6 @@ export function computeLineStarts(text: string): number[] {
         }
         progressLineStart(pos);
         break;
-      // falls through
       case CharacterCodes.lineFeed:
         progressLineStart(pos);
         break;
