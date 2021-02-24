@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.2](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.6.1...v1.6.2) (2021-02-24)
+
+
+### Features
+
+* **file:** add methods to retrieve source content ([#928](https://github.com/stryker-mutator/mutation-testing-elements/issues/928)) ([0d3d851](https://github.com/stryker-mutator/mutation-testing-elements/commit/0d3d8518e546040c7f62b10b033a283f08d435b4))
+
+
+
+
+
 ## [1.6.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.6.0...v1.6.1) (2021-02-23)
 
 
