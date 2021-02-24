@@ -34,6 +34,11 @@ describe(FileUnderTestModel.name, () => {
       const actual = sut.getLines({ start: { line: 3, column: 8 }, end: { line: 5, column: 2 } });
       expect(actual).eq('const baz = () => {\n  qux();\n};\n');
     });
+    it('should retrieve the starting line if presented with an open end location', () => {
+      const sut = new FileUnderTestModel(createFileResult({ source: '\nfoo.bar();\nconst baz = () => {\n  qux();\n};\n' }));
+      const actual = sut.getLines({ start: { line: 3, column: 8 }, end: undefined });
+      expect(actual).eq('const baz = () => {\n');
+    });
   });
 
   describe(FileUnderTestModel.prototype.getMutationLines.name, () => {

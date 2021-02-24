@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { TestDefinition } from 'mutation-testing-report-schema';
-import { MutantModel, TestModel } from '../../../src';
-import { createLocation, createMutantResult, createTestDefinition } from '../../helpers/factories';
+import { MutantModel, TestFileModel, TestModel } from '../../../src';
+import { createLocation, createMutantResult, createTestDefinition, createTestFile } from '../../helpers/factories';
 
 describe(TestModel.name, () => {
   it('should copy over all values from mutant result', () => {
@@ -38,6 +38,25 @@ describe(TestModel.name, () => {
         actual[method](mutant2);
         expect(actual[property]).deep.eq([mutant, mutant2]);
       });
+    });
+  });
+
+  describe(TestModel.prototype.getLines.name, () => {
+    // Implementation of `getLines(location)` is tested in file-under-test-model.spec.ts
+
+    it('should return the line of the test', () => {
+      const sut = new TestModel(createTestDefinition({ location: { start: { line: 2, column: 1 } } }));
+      sut.sourceFile = new TestFileModel(createTestFile({ source: '\nit("should work", () => {\n  expect(foo()).eq("bar");\n});' }));
+      expect(sut.getLines()).eq('it("should work", () => {\n');
+    });
+    it('should throw when sourceFile is undefined', () => {
+      const sut = new TestModel(createTestDefinition({ location: { start: { line: 2, column: 1 } } }));
+      expect(() => sut.getLines()).throws('test.sourceFile was not defined');
+    });
+    it('should throw when location is undefined', () => {
+      const sut = new TestModel(createTestDefinition({ location: undefined }));
+      sut.sourceFile = new TestFileModel(createTestFile({ source: '\nit("should work", () => {\n  expect(foo()).eq("bar");\n});' }));
+      expect(() => sut.getLines()).throws('test.location was not defined');
     });
   });
 });

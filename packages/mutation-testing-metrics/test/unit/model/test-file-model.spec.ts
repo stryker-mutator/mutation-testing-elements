@@ -21,7 +21,7 @@ describe(TestFileModel.name, () => {
   });
 
   describe(TestFileModel.prototype.getLines.name, () => {
-    // Implementation is tested in file-under-test-model.spec.ts
+    // Implementation of `getLines(location)` is tested in file-under-test-model.spec.ts
 
     it('should throw when the source is undefined', () => {
       const sut = new TestFileModel(createTestFile({ source: undefined }));

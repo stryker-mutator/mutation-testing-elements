@@ -1,4 +1,4 @@
-import { Location } from 'mutation-testing-report-schema';
+import { OpenEndLocation } from 'mutation-testing-report-schema';
 import { computeLineStarts } from '../helpers';
 
 export function assertSourceDefined(source: string | undefined): asserts source {
@@ -16,9 +16,9 @@ export abstract class SourceFile {
     return this.lineMap || (this.lineMap = computeLineStarts(this.source));
   }
 
-  public getLines(location: Location): string {
+  public getLines(location: OpenEndLocation): string {
     assertSourceDefined(this.source);
     const lineMap = this.getLineMap();
-    return this.source.substring(lineMap[location.start.line], lineMap[location.end.line + 1]);
+    return this.source.substring(lineMap[location.start.line], lineMap[(location.end ?? location.start).line + 1]);
   }
 }
