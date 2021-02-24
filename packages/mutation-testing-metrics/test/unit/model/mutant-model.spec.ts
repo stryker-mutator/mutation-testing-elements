@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { MutantResult, MutantStatus } from 'mutation-testing-report-schema';
-import { FileUnderTestModel, MutantModel, TestModel } from '../../../src';
-import { createFileResult, createLocation, createMutantResult, createTestDefinition } from '../../helpers/factories';
+import { MutantModel, TestModel } from '../../../src';
+import { createFileUnderTestModel, createLocation, createMutantResult, createTestDefinition } from '../../helpers/factories';
 
 describe(MutantModel.name, () => {
   it('should copy over all values from mutant result', () => {
@@ -55,7 +55,7 @@ describe(MutantModel.name, () => {
       const sut = new MutantModel(
         createMutantResult({ replacement: 'baz', location: { start: { line: 2, column: 5 }, end: { line: 2, column: 8 } } })
       );
-      sut.sourceFile = new FileUnderTestModel(createFileResult({ source: '\nfoo.bar();\n qux()\n' }));
+      sut.sourceFile = createFileUnderTestModel({ source: '\nfoo.bar();\n qux()\n' });
       const actual = sut.getMutatedLines();
       expect(actual).eq('foo.baz();\n');
     });
@@ -69,7 +69,7 @@ describe(MutantModel.name, () => {
   describe(MutantModel.prototype.getOriginalLines.name, () => {
     it('should be able to show a mutant spanning 1 line', () => {
       const sut = new MutantModel(createMutantResult({ location: { start: { line: 3, column: 1 }, end: { line: 3, column: 2 } } }));
-      sut.sourceFile = new FileUnderTestModel(createFileResult({ source: '\nfoo.bar();\nbaz.qux()\n' }));
+      sut.sourceFile = createFileUnderTestModel({ source: '\nfoo.bar();\nbaz.qux()\n' });
       const actual = sut.getOriginalLines();
       expect(actual).eq('baz.qux()\n');
     });

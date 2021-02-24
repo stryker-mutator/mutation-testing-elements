@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { TestDefinition } from 'mutation-testing-report-schema';
-import { MutantModel, TestFileModel, TestModel } from '../../../src';
-import { createLocation, createMutantResult, createTestDefinition, createTestFile } from '../../helpers/factories';
+import { MutantModel, TestModel } from '../../../src';
+import { createLocation, createMutantResult, createTestDefinition, createTestFileModel } from '../../helpers/factories';
 
 describe(TestModel.name, () => {
   it('should copy over all values from mutant result', () => {
@@ -46,7 +46,7 @@ describe(TestModel.name, () => {
 
     it('should return the line of the test', () => {
       const sut = new TestModel(createTestDefinition({ location: { start: { line: 2, column: 1 } } }));
-      sut.sourceFile = new TestFileModel(createTestFile({ source: '\nit("should work", () => {\n  expect(foo()).eq("bar");\n});' }));
+      sut.sourceFile = createTestFileModel({ source: '\nit("should work", () => {\n  expect(foo()).eq("bar");\n});' });
       expect(sut.getLines()).eq('it("should work", () => {\n');
     });
     it('should throw when sourceFile is undefined', () => {
@@ -55,7 +55,7 @@ describe(TestModel.name, () => {
     });
     it('should throw when location is undefined', () => {
       const sut = new TestModel(createTestDefinition({ location: undefined }));
-      sut.sourceFile = new TestFileModel(createTestFile({ source: '\nit("should work", () => {\n  expect(foo()).eq("bar");\n});' }));
+      sut.sourceFile = createTestFileModel({ source: '\nit("should work", () => {\n  expect(foo()).eq("bar");\n});' });
       expect(() => sut.getLines()).throws('test.location was not defined');
     });
   });

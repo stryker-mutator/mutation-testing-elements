@@ -16,6 +16,9 @@ export abstract class SourceFile {
     return this.lineMap || (this.lineMap = computeLineStarts(this.source));
   }
 
+  /**
+   * Retrieves the source lines based on the `start.line` and `end.line` property.
+   */
   public getLines(location: OpenEndLocation): string {
     assertSourceDefined(this.source);
     const lineMap = this.getLineMap();

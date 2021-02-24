@@ -1,6 +1,6 @@
 import { FileResult, MutantResult } from 'mutation-testing-report-schema';
 import { MutantModel } from './mutant-model';
-import { assertSourceDefined, SourceFile } from './source-file';
+import { SourceFile } from './source-file';
 
 /**
  * Represents a file which was mutated (your production code).
@@ -9,22 +9,24 @@ export class FileUnderTestModel extends SourceFile implements FileResult {
   /**
    * Programming language that is used. Used for code highlighting, see https://prismjs.com/#examples.
    */
-  language!: string;
+  language: string;
   /**
    * Full source code of the mutated file, this is used for highlighting.
    */
-  source!: string;
+  source: string;
   /**
    * The mutants inside this file.
    */
   mutants: MutantModel[];
 
-  constructor(input: FileResult) {
+  /**
+   * @param input The file result content
+   * @param name The file name
+   */
+  constructor(input: FileResult, public name: string) {
     super();
-    Object.entries(input).forEach(([key, value]) => {
-      // @ts-expect-error dynamic assignment so we won't forget to add new properties
-      this[key] = value;
-    });
+    this.language = input.language;
+    this.source = input.source;
     this.mutants = input.mutants.map((mutantResult) => {
       const mutant = new MutantModel(mutantResult);
       mutant.sourceFile = this;
@@ -32,8 +34,10 @@ export class FileUnderTestModel extends SourceFile implements FileResult {
     });
   }
 
+  /**
+   * Retrieves the lines of code with the mutant applied to it, to be shown in a diff view.
+   */
   public getMutationLines(mutant: MutantResult): string {
-    assertSourceDefined(this.source);
     const lineMap = this.getLineMap();
     const start = lineMap[mutant.location.start.line];
     const startOfEndLine = lineMap[mutant.location.end.line];

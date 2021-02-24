@@ -10,32 +10,37 @@ describe(FileUnderTestModel.name, () => {
       mutants: [],
       source: 'foo(bar);',
     };
-    const actual = new FileUnderTestModel(fileResult);
+    const actual = new FileUnderTestModel(fileResult, '');
     expect(actual).deep.include(fileResult);
+  });
+
+  it('should set the file name', () => {
+    const sut = new FileUnderTestModel(createFileResult(), 'bar.spec.js');
+    expect(sut.name).deep.eq('bar.spec.js');
   });
 
   it('should create mutant model objects and relate itself to them', () => {
     const fileResult = createFileResult({
       mutants: [createMutantResult({ id: 'mut-1' })],
     });
-    const actual = new FileUnderTestModel(fileResult);
+    const actual = new FileUnderTestModel(fileResult, '');
     expect(actual.mutants[0]).instanceOf(MutantModel);
     expect(actual.mutants[0].sourceFile).eq(actual);
   });
 
   describe(FileUnderTestModel.prototype.getLines.name, () => {
     it('should retrieve a single line if the location spans a single line', () => {
-      const sut = new FileUnderTestModel(createFileResult({ source: '\nfoo.bar();\nbaz.qux()\n' }));
+      const sut = new FileUnderTestModel(createFileResult({ source: '\nfoo.bar();\nbaz.qux()\n' }), '');
       const actual = sut.getLines({ start: { line: 3, column: 1 }, end: { line: 3, column: 2 } });
       expect(actual).eq('baz.qux()\n');
     });
     it('should retrieve 3 lines if the location spans a 3 lines', () => {
-      const sut = new FileUnderTestModel(createFileResult({ source: '\nfoo.bar();\nconst baz = () => {\n  qux();\n};\n' }));
+      const sut = new FileUnderTestModel(createFileResult({ source: '\nfoo.bar();\nconst baz = () => {\n  qux();\n};\n' }), '');
       const actual = sut.getLines({ start: { line: 3, column: 8 }, end: { line: 5, column: 2 } });
       expect(actual).eq('const baz = () => {\n  qux();\n};\n');
     });
     it('should retrieve the starting line if presented with an open end location', () => {
-      const sut = new FileUnderTestModel(createFileResult({ source: '\nfoo.bar();\nconst baz = () => {\n  qux();\n};\n' }));
+      const sut = new FileUnderTestModel(createFileResult({ source: '\nfoo.bar();\nconst baz = () => {\n  qux();\n};\n' }), '');
       const actual = sut.getLines({ start: { line: 3, column: 8 }, end: undefined });
       expect(actual).eq('const baz = () => {\n');
     });
@@ -45,7 +50,7 @@ describe(FileUnderTestModel.name, () => {
     let sut: FileUnderTestModel;
 
     beforeEach(() => {
-      sut = new FileUnderTestModel(createFileResult({ source: '\nfoo.bar();\nconst baz = () => {\n  qux();\n};\n' }));
+      sut = new FileUnderTestModel(createFileResult({ source: '\nfoo.bar();\nconst baz = () => {\n  qux();\n};\n' }), '');
     });
 
     it('should be able to show a mutant spanning 1 line', () => {

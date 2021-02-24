@@ -43,9 +43,22 @@ export class TestModel implements TestDefinition {
     });
   }
 
+  /**
+   * Retrieves the original source lines where this test is defined.
+   * @throws if source file or location is not defined
+   */
   public getLines(): string {
     assertSourceFileDefined(this.sourceFile);
     assertLocationDefined(this.location);
     return this.sourceFile.getLines(this.location);
+  }
+
+  /**
+   * Helper property to retrieve the source file name
+   * @throws When the `sourceFile` is not defined.
+   */
+  public get fileName() {
+    assertSourceFileDefined(this.sourceFile);
+    return this.sourceFile.name;
   }
 }
