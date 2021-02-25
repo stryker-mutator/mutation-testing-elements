@@ -1,4 +1,13 @@
 import { FileResult, MutantResult, MutantStatus, MutationTestResult, TestDefinition, TestFile, Location } from 'mutation-testing-report-schema';
+import { FileUnderTestModel, TestFileModel } from '../../src';
+
+export function createTestFileModel(overrides?: Partial<TestFileModel>): TestFileModel {
+  return new TestFileModel(createTestFile(overrides), overrides?.name ?? 'foo.spec.js');
+}
+
+export function createFileUnderTestModel(overrides?: Partial<FileUnderTestModel>): FileUnderTestModel {
+  return new FileUnderTestModel(createFileResult(overrides), overrides?.name ?? 'foo.js');
+}
 
 export function createMutationTestResult(overrides?: Partial<MutationTestResult>): MutationTestResult {
   return {

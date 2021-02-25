@@ -12,7 +12,7 @@ const ROOT_NAME_TESTS = 'All tests';
  * @returns A MetricsResult containing the metrics for the entire report. See `childResults`
  */
 export function calculateMetrics(files: Record<string, FileResult>): MetricsResult<FileUnderTestModel, Metrics> {
-  const normalizedFiles = normalize(files, (input) => new FileUnderTestModel(input));
+  const normalizedFiles = normalize(files, (input, name) => new FileUnderTestModel(input, name));
   return calculateDirectoryMetrics(ROOT_NAME, normalizedFiles, countFileMetrics);
 }
 
@@ -23,9 +23,9 @@ export function calculateMetrics(files: Record<string, FileResult>): MetricsResu
  */
 export function calculateMutationTestMetrics(result: MutationTestResult): MutationTestMetricsResult {
   const { files, testFiles } = result;
-  const fileModelsUnderTest = normalize(files, (input) => new FileUnderTestModel(input));
+  const fileModelsUnderTest = normalize(files, (input, name) => new FileUnderTestModel(input, name));
   if (testFiles) {
-    const testFileModels = normalize(testFiles, (input) => new TestFileModel(input));
+    const testFileModels = normalize(testFiles, (input, name) => new TestFileModel(input, name));
     relate(
       Object.values(fileModelsUnderTest).flatMap((file) => file.mutants),
       Object.values(testFileModels).flatMap((file) => file.tests)

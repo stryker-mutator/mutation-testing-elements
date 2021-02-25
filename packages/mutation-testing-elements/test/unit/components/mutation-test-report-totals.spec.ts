@@ -22,7 +22,7 @@ describe(MutationTestReportTotalsComponent.name, () => {
 
   it('should show a table with a single row for a file result', async () => {
     sut.element.model = createMetricsResult({
-      file: new FileUnderTestModel(createFileResult()),
+      file: new FileUnderTestModel(createFileResult(), ''),
     });
     await sut.whenStable();
     const table = sut.$('table') as HTMLTableElement;
@@ -34,7 +34,7 @@ describe(MutationTestReportTotalsComponent.name, () => {
   it('should show a table with a 3 rows for a directory result with 2 directories and one file', async () => {
     const file = createMetricsResult({
       name: 'foo.js',
-      file: new FileUnderTestModel(createFileResult()),
+      file: new FileUnderTestModel(createFileResult(), ''),
     });
     sut.element.model = createMetricsResult({
       name: 'bar',
@@ -50,7 +50,7 @@ describe(MutationTestReportTotalsComponent.name, () => {
     // Arrange
     const file = createMetricsResult({
       name: 'foo.js',
-      file: new FileUnderTestModel(createFileResult()),
+      file: new FileUnderTestModel(createFileResult(), ''),
     });
     sut.element.model = createMetricsResult({
       name: 'bar',

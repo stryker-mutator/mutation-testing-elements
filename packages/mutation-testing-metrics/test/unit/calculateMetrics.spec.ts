@@ -33,7 +33,8 @@ describe(calculateMetrics.name, () => {
     expect(actual.childResults[0].name).eq('bar');
     expect(actual.childResults[0].file).undefined;
     expect(actual.childResults[0].childResults[0].name).eq('baz.js');
-    expect(actual.childResults[0].childResults[0].file).deep.eq(baz);
+    expect(actual.childResults[0].childResults[0].file!.name).deep.eq('bar/baz.js');
+    expect(actual.childResults[0].childResults[0].file!.source).deep.eq(baz.source);
     expect(actual.childResults[0].metrics).include({
       killed: 1,
       survived: 1,
@@ -90,6 +91,20 @@ describe(calculateMetrics.name, () => {
     expect(actual.childResults[1].name).eq('foo');
     expect(actual.childResults[1].childResults[0].name).eq('bar');
     expect(actual.childResults[1].childResults[0].childResults[0].name).eq('baz.js');
+  });
+
+  it('should relate mutants with their source files', () => {
+    // Arrange
+    const input = {
+      'foo.js': createFileResult({ mutants: [createMutantResult()] }),
+    };
+
+    // Act
+    const actual = calculateMetrics(input);
+
+    // Assert
+    const file = actual.childResults[0].file!;
+    expect(file.mutants[0].sourceFile).eq(file);
   });
 
   it('should determine and strip the common root directory', () => {

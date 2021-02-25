@@ -6,6 +6,9 @@
   "command": {
     "version": {
       "allowBranch": "master"
+    },
+    "publish": {
+      "preDistTag": "beta"
     }
   }
 }
