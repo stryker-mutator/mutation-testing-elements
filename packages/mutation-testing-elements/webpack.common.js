@@ -5,6 +5,7 @@ module.exports = {
   context,
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
+    fallback: { util: false },
   },
   module: {
     rules: [
@@ -17,14 +18,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: [
-          {
-            loader: 'css-loader',
-            options: { esModule: false }, // translates CSS into CommonJS
-          },
-          'postcss-loader',
-          'sass-loader',
-        ],
+        use: ['css-loader', 'postcss-loader', 'sass-loader'],
       },
     ],
   },

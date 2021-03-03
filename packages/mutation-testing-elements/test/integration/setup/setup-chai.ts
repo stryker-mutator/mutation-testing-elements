@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import path = require('path');
+import path from 'path';
 import { platform } from 'os';
 import { promises as fs, existsSync } from 'fs';
 import * as chai from 'chai';

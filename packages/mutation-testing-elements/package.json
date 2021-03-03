@@ -31,5 +31,9 @@
     "mutation-testing-metrics": "^1.6.2",
     "mutation-testing-report-schema": "^1.6.0",
     "prismjs": "^1.21.0"
-  }
+  },
+  "browserslist": [
+    "defaults and > 0.5%",
+    "not IE 11"
+  ]
 }
