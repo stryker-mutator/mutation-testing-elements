@@ -35,6 +35,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: olafurpg/setup-scala@v10
+        with:
+          java-version: openjdk@1.11
       - name: Run Stryker
         run: npx lerna run --stream --scope mutation-testing-metrics-scala stryker
         env:
