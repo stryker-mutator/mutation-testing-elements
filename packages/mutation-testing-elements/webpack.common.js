@@ -5,6 +5,7 @@ module.exports = {
   context,
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
+    fallback: { util: false },
   },
   module: {
     rules: [
