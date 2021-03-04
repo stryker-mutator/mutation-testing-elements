@@ -22,7 +22,7 @@ describe('Theming', () => {
     });
 
     it('should have a dark background', async () => {
-      expect(await page.backgroundColor()).eq('rgba(34, 34, 34, 1)');
+      expect(await page.backgroundColor()).eq('rgba(24, 25, 26, 1)');
     });
 
     itShouldMatchScreenshot('should match the dark theme');
@@ -38,7 +38,7 @@ describe('Theming', () => {
       });
 
       it('should show a dark code editor', async () => {
-        expect(await page.codeBackgroundColor()).eq('rgba(45, 45, 45, 1)');
+        expect(await page.codeBackgroundColor()).eq('rgba(41, 45, 62, 1)');
       });
 
       itShouldMatchScreenshot('should match the dark theme');
@@ -61,7 +61,7 @@ describe('Theming', () => {
         await page.resultTable().row('helpers.ts').navigate();
       });
       it('should show a light code editor', async () => {
-        expect(await page.codeBackgroundColor()).eq('rgba(245, 242, 240, 1)');
+        expect(await page.codeBackgroundColor()).eq('rgba(246, 248, 250, 1)');
       });
 
       itShouldMatchScreenshot('should match the light theme');
