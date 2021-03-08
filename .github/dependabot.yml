@@ -4,7 +4,7 @@ updates:
   directory: "/"
   schedule:
     interval: daily
-    commit_message:
-      prefix: "build"
-      prefix_development: "build"
-      include_scope: true
+  commit_message:
+    prefix: "build"
+    prefix_development: "build"
+    include_scope: true
