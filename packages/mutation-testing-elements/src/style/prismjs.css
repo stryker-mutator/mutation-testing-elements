@@ -145,3 +145,24 @@ pre[class*='language-'] {
 .token.variable {
   color: var(--prism-variable);
 }
+.token.placeholder {
+  color: var(--prism-placeholder);
+}
+.token.statement {
+  color: var(--prism-statement);
+}
+.token.attr-value {
+  color: var(--prism-attr-value);
+}
+.token.control {
+  color: var(--prism-control);
+}
+.token.directive {
+  color: var(--prism-directive);
+}
+.token.unit {
+  color: var(--prism-unit);
+}
+.token.important {
+  color: var(--prism-important);
+}

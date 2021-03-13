@@ -69,59 +69,81 @@
   --prism-background: #f6f8fa;
   --prism-border: #ddd;
 
-  // from https://github.com/FormidableLabs/prism-react-renderer/blob/master/src/themes/dracula.js
+  // from https://github.com/FormidableLabs/prism-react-renderer/blob/master/src/themes/github.js
+  --prism-operator: var(--prism-maintext);
+  --prism-punctuation: var(--prism-maintext);
+
   --prism-atrule: #00a4db;
   --prism-attr: var(--prism-atrule);
-  --prism-attr: var(--prism-string);
-  --prism-boolean: var(--prism-entity);
-  --prism-cdata: var(--prism-comment);
-  --prism-comment: #999988;
-  --prism-constant: var(--prism-entity);
-  --prism-deleted: var(--prism-function);
-  --prism-doctype: var(--prism-comment);
-  --prism-entity: #36acaa;
-  --prism-function: #6f42c1;
-  --prism-function: #d73a49;
-  --prism-inserted: var(--prism-entity);
-  --prism-keyword: var(--prism-tag);
-  --prism-number: var(--prism-entity);
-  --prism-operator: var(--prism-maintext);
-  --prism-prolog: var(--prism-comment);
-  --prism-property: var(--prism-entity);
-  --prism-punctuation: var(--prism-maintext);
-  --prism-regex: var(--prism-entity);
   --prism-selector: var(--prism-atrule);
-  --prism-selector: var(--prism-tag);
-  --prism-string: #e3116c;
-  --prism-symbol: var(--prism-entity);
-  --prism-tag: #00009f;
-  --prism-tag: var(--prism-function);
-  --prism-url: var(--prism-entity);
-  --prism-variable: var(--prism-entity);
+
+  --prism-cdata: #999988;
+  --prism-comment: var(--prism-cdata);
+  --prism-doctype: var(--prism-cdata);
+  --prism-prolog: var(--prism-cdata);
+
+  --prism-deleted: #6f42c1;
+  --prism-function: var(--prism-deleted);
+  --prism-tag: var(--prism-deleted);
+
+  --prism-boolean: #36acaa;
+  --prism-constant: var(--prism-boolean);
+  --prism-entity: var(--prism-boolean);
+  --prism-inserted: var(--prism-boolean);
+  --prism-number: var(--prism-boolean);
+  --prism-property: var(--prism-boolean);
+  --prism-regex: var(--prism-boolean);
+  --prism-symbol: var(--prism-boolean);
+  --prism-url: var(--prism-boolean);
+  --prism-variable: var(--prism-boolean);
+
+  --prism-attr: #e3116c;
+  --prism-string: var(--prism-attr);
+
+  --prism-keyword: #00009f;
+  --prism-selector: var(--prism-keyword);
+  --prism-tag: var(--prism-keyword);
 }
 :host([theme='dark']) {
-  --prism-maintext: #bfc7d5;
-  --prism-background: #292d3e;
-  --prism-border: #30363d;
+  // From https://atelierbram.github.io/syntax-highlighting/prism/demo/assets/css/prism-base16-eighties.dark.css
+  --prism-maintext: #d3d0c8;
+  --prism-background: #2d2d2d;
+  --prism-border: #393939;
 
-  // from https://github.com/FormidableLabs/prism-react-renderer/blob/master/src/themes/github.js
-  --prism-attr-name: rgb(241, 250, 140);
-  --prism-builtin: rgb(189, 147, 249);
-  --prism-changed: rgb(255, 184, 108);
-  --prism-char: rgb(255, 121, 198);
-  --prism-comment: rgb(98, 114, 164);
-  --prism-constant: rgb(189, 147, 249);
-  --prism-deleted: rgb(255, 85, 85);
-  --prism-function: rgb(80, 250, 123);
-  --prism-inserted: rgb(80, 250, 123);
-  --prism-keyword: rgb(189, 147, 249);
-  --prism-prolog: rgb(189, 147, 249);
-  --prism-punctuation: rgb(248, 248, 242);
-  --prism-selector: rgb(255, 121, 198);
-  --prism-string: rgb(255, 121, 198);
-  --prism-symbol: rgb(248, 248, 242);
-  --prism-tag: rgb(255, 121, 198);
-  --prism-variable: rgb(189, 147, 249);
+  --prism-cdata: #747369;
+  --prism-comment: var(--prism-cdata);
+  --prism-doctype: var(--prism-cdata);
+  --prism-prolog: var(--prism-cdata);
+
+  --prism-punctuation: #d3d0c8;
+
+  --prism-attr-name: #f99157;
+  --prism-boolean: var(--prism-attr-name);
+  --prism-number: var(--prism-attr-name);
+  --prism-operator: var(--prism-attr-name);
+
+  --prism-property: #ffcc66;
+
+  --prism-placeholder: #6699cc;
+  --prism-tag: var(--prism-placeholder);
+  --prism-variable: var(--prism-placeholder);
+
+  --prism-selector: #cc99cc;
+
+  --prism-atrule: #66cccc;
+  --prism-entity: var(--prism-atrule);
+  --prism-regex: var(--prism-atrule);
+  --prism-statement: var(--prism-atrule);
+  --prism-string: var(--prism-atrule);
+  --prism-url: var(--prism-atrule);
+
+  --prism-attr-value: #99cc99;
+  --prism-control: var(--prism-attr-value);
+  --prism-directive: var(--prism-attr-value);
+  --prism-keyword: var(--prism-attr-value);
+  --prism-unit: var(--prism-attr-value);
+
+  --prism-important: #ab4642;
 }
 
 // File icon theming ================================
