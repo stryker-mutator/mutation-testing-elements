@@ -72,6 +72,19 @@ Alternatively, you can use property binding directly:
 </script>
 ```
 
+Add this snippet to change the background color of the whole page when the theme is changed from light to dark:
+
+```html
+ <script>
+  const app = document.getElementsByTagName('mutation-test-report-app').item(0);
+  function updateTheme() {
+    document.body.style.backgroundColor = app.themeBackgroundColor;
+  }
+  app.addEventListener('theme-changed', updateTheme);
+  updateTheme();
+</script>
+```
+
 Feel free to use other ways to bind the `report` property. For example, you can use `<mutation-test-report-app [report]="myReport"></mutation-test-report-app>` to bind `report` to the `myReport` property in an Angular component.
 
 ## Mutation testing report schema
@@ -106,6 +119,10 @@ Default: _user preference (OS setting)_
 
 Specify in which theme the report needs to be shown. Possibilities: `'light'` or `'dark'`.
 
+### `themeBackgroundColor` [`string`]
+
+Read-only property with the hex code of the background-color from the current theme. 
+
 ### ⚡ `theme-changed` [`CustomEvent<{ theme: string }>`]
 
 Add an event listener that will raise an event when the theme is changed. 
@@ -114,7 +131,7 @@ Add an event listener that will raise an event when the theme is changed.
 const app = document.querySelector('mutation-test-report-app');
 app.addEventListener('theme-changed', (event) => {
     console.log('new theme is', event.detail.theme );
-    // You can also use `app.theme` here.
+    // You can also use `app.theme` or `app.themeBackgroundColor` here.
 });
 ```
 

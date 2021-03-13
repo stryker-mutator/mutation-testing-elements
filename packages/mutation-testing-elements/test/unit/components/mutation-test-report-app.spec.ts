@@ -147,6 +147,25 @@ describe(MutationTestReportAppComponent.name, () => {
       expect(localStorage.getItem('mutation-testing-elements-theme'), 'dark');
     });
 
+    describe('themeBackgroundColor', () => {
+      it('should show light theme-color on light theme', async () => {
+        // Arrange
+        sut.element.report = createReport();
+        await sut.whenStable();
+
+        expect(sut.element.themeBackgroundColor).eq('#fff');
+      });
+
+      it('should show dark theme-color on dark theme', async () => {
+        // Arrange
+        sut.element.report = createReport();
+        sut.element.theme = 'dark';
+        await sut.whenStable();
+
+        expect(sut.element.themeBackgroundColor).eq('#18191a');
+      });
+    });
+
     it('should choose attribute value over local storage', async () => {
       // Arrange
       localStorage.setItem('mutation-testing-elements-theme', 'dark');

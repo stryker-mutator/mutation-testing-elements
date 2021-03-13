@@ -39,6 +39,11 @@ export class MutationTestReportAppComponent extends LitElement {
   @property()
   public drawerMode: DrawerMode = 'closed';
 
+  @property({ attribute: false })
+  public get themeBackgroundColor(): string {
+    return getComputedStyle(this).getPropertyValue('--bs-body-bg');
+  }
+
   @property()
   public get title(): string {
     if (this.context) {

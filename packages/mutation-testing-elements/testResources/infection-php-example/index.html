@@ -7,7 +7,7 @@
     <script>
       const app = document.getElementsByTagName('mutation-test-report-app').item(0);
       function updateTheme() {
-        document.body.style.backgroundColor = app.theme === 'dark' ? '#18191a' : '#fff';
+        document.body.style.backgroundColor = app.themeBackgroundColor;
       }
       app.addEventListener('theme-changed', updateTheme);
       updateTheme();
