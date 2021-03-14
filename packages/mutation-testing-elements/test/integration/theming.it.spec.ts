@@ -38,7 +38,7 @@ describe('Theming', () => {
       });
 
       it('should show a dark code editor', async () => {
-        expect(await page.codeBackgroundColor()).eq('rgba(41, 45, 62, 1)');
+        expect(await page.codeBackgroundColor()).eq('rgba(45, 45, 45, 1)');
       });
 
       itShouldMatchScreenshot('should match the dark theme');
