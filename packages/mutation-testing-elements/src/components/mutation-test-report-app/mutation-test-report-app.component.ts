@@ -98,7 +98,7 @@ export class MutationTestReportAppComponent extends LitElement {
       await this.loadData();
     }
     if (changedProperties.has('theme') && this.theme) {
-      this.dispatchEvent(createCustomEvent('theme-changed', { theme: this.theme }));
+      this.dispatchEvent(createCustomEvent('theme-changed', { theme: this.theme, themeBackgroundColor: this.themeBackgroundColor }));
     }
   }
 

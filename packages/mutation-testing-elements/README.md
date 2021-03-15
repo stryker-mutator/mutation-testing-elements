@@ -123,7 +123,7 @@ Specify in which theme the report needs to be shown. Possibilities: `'light'` or
 
 Read-only property with the hex code of the background-color from the current theme. 
 
-### ⚡ `theme-changed` [`CustomEvent<{ theme: string }>`]
+### ⚡ `theme-changed` [`CustomEvent<{ theme: string, themeBackgroundColor: string }>`]
 
 Add an event listener that will raise an event when the theme is changed. 
 
@@ -131,6 +131,7 @@ Add an event listener that will raise an event when the theme is changed.
 const app = document.querySelector('mutation-test-report-app');
 app.addEventListener('theme-changed', (event) => {
     console.log('new theme is', event.detail.theme );
+    console.log('backgroundColor hex is', event.detail.themeBackgroundColor)
     // You can also use `app.theme` or `app.themeBackgroundColor` here.
 });
 ```

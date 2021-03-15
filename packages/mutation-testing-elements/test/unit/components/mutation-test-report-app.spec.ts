@@ -198,16 +198,17 @@ describe(MutationTestReportAppComponent.name, () => {
       expect(sut.element.theme).eq('dark');
     });
 
-    it('should trigger a `theme-selected` event when the theme changes', async () => {
+    it('should trigger a `theme-changed` event when the theme changes', async () => {
       sut.element.report = createReport();
       await sut.whenStable();
       const event = await sut.catchCustomEvent('theme-changed', () => {
         sut.$('mutation-test-report-theme-switch').dispatchEvent(createCustomEvent('theme-switch', 'dark'));
       });
       expect(event?.detail.theme).eq('dark');
+      expect(event?.detail.themeBackgroundColor).eq('#18191a');
     });
 
-    it('should trigger a `theme-selected` event when the theme changes during init', async () => {
+    it('should trigger a `theme-changed` event when the theme changes during init', async () => {
       // Arrange
       const event = await sut.catchCustomEvent('theme-changed', async () => {
         matchMediaStub.returns({ matches: true } as MediaQueryList);
@@ -215,6 +216,7 @@ describe(MutationTestReportAppComponent.name, () => {
         await sut.whenStable();
       });
       expect(event?.detail.theme).eq('dark');
+      expect(event?.detail.themeBackgroundColor).eq('#18191a');
     });
   });
 
