@@ -129,6 +129,7 @@
   --prism-variable: var(--prism-placeholder);
 
   --prism-selector: #cc99cc;
+  --prism-keyword: var(--prism-selector);
 
   --prism-atrule: #66cccc;
   --prism-entity: var(--prism-atrule);
@@ -140,7 +141,6 @@
   --prism-attr-value: #99cc99;
   --prism-control: var(--prism-attr-value);
   --prism-directive: var(--prism-attr-value);
-  --prism-keyword: var(--prism-attr-value);
   --prism-unit: var(--prism-attr-value);
 
   --prism-important: #ab4642;
