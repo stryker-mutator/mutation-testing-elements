@@ -78,7 +78,7 @@ export class MutationTestReportFileLegendComponent extends LitElement {
 
   public render() {
     return html`
-      <div class="legend col-md-12">
+      <div class="legend col-md-12 d-flex align-items-center">
         ${this.filters.map(
           (filter) => html`
             <div data-status="${filter.status}" class="form-check form-check-inline">

@@ -3,7 +3,7 @@ import { MutantFilter } from '../components/mutation-test-report-file-legend/mut
 
 export interface CustomEventMap {
   'mutant-selected': { selected: boolean; mutant: MutantResult | undefined };
-  'theme-changed': { theme: string };
+  'theme-changed': { theme: string; themeBackgroundColor: string };
   'theme-switch': 'dark' | 'light';
   'filters-changed': MutantFilter[];
   'collapse-all': void;

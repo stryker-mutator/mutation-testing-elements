@@ -3,19 +3,17 @@
 }
 th.rotate {
   /* Something you can count on */
-  height: 80px;
+  height: 96px;
   white-space: nowrap;
   padding-bottom: 10px;
 }
 
 th.rotate > div {
-  transform:
-  translate(27px, 0px)
-  rotate(325deg);
+  transform: translate(27px, 0px) rotate(325deg);
   width: 30px;
 }
 
-.table-no-top>thead>tr>th {
+.table-no-top > thead > tr > th {
   border-width: 0;
 }
 
@@ -41,7 +39,8 @@ table td.icon {
   fill: currentColor;
 }
 
-table th.vertical-middle, table td.vertical-middle {
+table th.vertical-middle,
+table td.vertical-middle {
   vertical-align: middle;
 }
 
