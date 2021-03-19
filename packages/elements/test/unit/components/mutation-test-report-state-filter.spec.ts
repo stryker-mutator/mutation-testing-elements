@@ -1,6 +1,6 @@
 import { MutationTestReportFileStateFilterComponent, StateFilter } from '../../../src/components/state-filter/state-filter.component';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
-import { MutantStatus } from 'mutation-testing-report-schema';
+import { MutantStatus } from 'mutation-testing-report-schema/api';
 import { expect } from 'chai';
 import { normalizeWhitespace, expectedMutantColors } from '../../helpers/helperFunctions';
 import { getContextClassForStatus, getEmojiForStatus } from '../../../src/lib/htmlHelpers';

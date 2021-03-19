@@ -1,5 +1,5 @@
 import { determineLanguage, lines, markMutants, markTests, ProgrammingLanguage } from '../../../src/lib/code-helpers';
-import { MutantStatus, FileResult } from 'mutation-testing-report-schema';
+import { MutantStatus, FileResult } from 'mutation-testing-report-schema/api';
 import { expect } from 'chai';
 import { TestModel } from 'mutation-testing-metrics';
 import { createTestDefinition } from '../../helpers/factory';

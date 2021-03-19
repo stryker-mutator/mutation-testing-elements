@@ -1,5 +1,5 @@
 import { customElement, LitElement, property, html, unsafeCSS } from 'lit-element';
-import { MutantResult } from 'mutation-testing-report-schema';
+import { MutantResult } from 'mutation-testing-report-schema/api';
 import { bootstrap } from '../../style';
 import { getContextClassForStatus } from '../../lib/htmlHelpers';
 import style from './mutant.scss';

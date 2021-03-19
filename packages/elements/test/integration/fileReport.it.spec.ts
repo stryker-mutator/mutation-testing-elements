@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { ReportPage } from './po/ReportPage';
-import { MutantStatus } from 'mutation-testing-report-schema';
+import { MutantStatus } from 'mutation-testing-report-schema/api';
 import { MutantComponent } from './po/MutantComponent.po';
 import { getCurrent } from './lib/browser';
 

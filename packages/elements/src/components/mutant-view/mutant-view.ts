@@ -1,6 +1,6 @@
 import { customElement, html, LitElement, property, PropertyValues, unsafeCSS } from 'lit-element';
 import { FileUnderTestModel, Metrics, MetricsResult } from 'mutation-testing-metrics';
-import { MutantResult as MutantModel, Thresholds } from 'mutation-testing-report-schema';
+import { MutantResult as MutantModel, Thresholds } from 'mutation-testing-report-schema/api';
 import { MteCustomEvent } from '../../lib/custom-events';
 import { bootstrap } from '../../style';
 import { DrawerMode } from '../drawer/drawer.component';

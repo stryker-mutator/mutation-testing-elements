@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { FileResult } from 'mutation-testing-report-schema';
+import { FileResult } from 'mutation-testing-report-schema/api';
 import { FileUnderTestModel, MutantModel } from '../../../src';
 import { createFileResult, createMutantResult } from '../../helpers/factories';
 

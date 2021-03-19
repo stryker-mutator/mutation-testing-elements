@@ -1,6 +1,6 @@
 import { TemplateResult } from 'lit-element';
 import { TestStatus } from 'mutation-testing-metrics';
-import { MutantStatus, OpenEndLocation } from 'mutation-testing-report-schema';
+import { MutantStatus, OpenEndLocation } from 'mutation-testing-report-schema/api';
 
 export function notNullish<T>(value: T | undefined | null): value is T {
   return value !== null && value !== undefined;

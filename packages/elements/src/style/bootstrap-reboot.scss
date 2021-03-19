@@ -1,4 +1,6 @@
-@import 'bootstrap/scss/bootstrap-reboot.scss';
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+
 $theme-colors: map-merge(
   (
     // Add custom warning color

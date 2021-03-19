@@ -1,6 +1,6 @@
 import { escapeHtml, getContextClassForStatus, toAbsoluteUrl } from '../../../src/lib/htmlHelpers';
 import { expect } from 'chai';
-import { MutantStatus } from 'mutation-testing-report-schema';
+import { MutantStatus } from 'mutation-testing-report-schema/api';
 
 describe(getContextClassForStatus.name, () => {
   function actArrangeAssert(expected: string, input: MutantStatus) {

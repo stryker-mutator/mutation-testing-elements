@@ -4,7 +4,7 @@ import { MutationTestReportMutantComponent } from '../mutant/mutant.component';
 import { StateFilter } from '../state-filter/state-filter.component';
 import { bootstrap, prismjs } from '../../style';
 import { markMutants } from '../../lib/code-helpers';
-import { FileResult, MutantStatus } from 'mutation-testing-report-schema';
+import { FileResult, MutantStatus } from 'mutation-testing-report-schema/api';
 import { highlightElement } from 'prismjs/components/prism-core';
 import style from './file.scss';
 import { getContextClassForStatus, getEmojiForStatus } from '../../lib/htmlHelpers';

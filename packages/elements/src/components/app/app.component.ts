@@ -1,5 +1,5 @@
 import { LitElement, html, property, customElement, PropertyValues, unsafeCSS } from 'lit-element';
-import { MutationTestResult } from 'mutation-testing-report-schema';
+import { MutationTestResult } from 'mutation-testing-report-schema/api';
 import { MetricsResult, calculateMutationTestMetrics } from 'mutation-testing-metrics';
 import { bootstrap, globals } from '../../style';
 import { locationChange$, View } from '../../lib/router';

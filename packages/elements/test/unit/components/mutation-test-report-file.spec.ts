@@ -1,7 +1,7 @@
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { MutationTestReportFileComponent } from '../../../src/components/file/file.component';
 import { expect } from 'chai';
-import { FileResult, MutantStatus } from 'mutation-testing-report-schema';
+import { FileResult, MutantStatus } from 'mutation-testing-report-schema/api';
 import { MutationTestReportMutantComponent } from '../../../src/components/mutant/mutant.component';
 import { MutationTestReportFileStateFilterComponent, StateFilter } from '../../../src/components/state-filter/state-filter.component';
 import { createFileResult } from '../../helpers/factory';

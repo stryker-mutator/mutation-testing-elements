@@ -1,4 +1,4 @@
-import { MutantResult, Position, FileResult } from 'mutation-testing-report-schema';
+import { MutantResult, Position, FileResult } from 'mutation-testing-report-schema/api';
 import { TestModel } from 'mutation-testing-metrics';
 import { BackgroundColorCalculator } from './BackgroundColorCalculator';
 import { escapeHtml } from './htmlHelpers';

@@ -1,4 +1,4 @@
-import { MutantResult, MutantStatus, FileResult, Location, TestDefinition, MutationTestResult, TestFile } from 'mutation-testing-report-schema';
+import { MutantResult, MutantStatus, FileResult, Location, TestDefinition, MutationTestResult, TestFile } from 'mutation-testing-report-schema/api';
 import { Metrics, MetricsResult, TestFileModel, TestMetrics } from 'mutation-testing-metrics';
 import { StateFilter } from '../../src/components/state-filter/state-filter.component';
 
