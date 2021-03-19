@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.7.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.6.2...v1.7.0) (2021-03-19)
+
+
+### Features
+
+* **dark-mode:** update dark mode colors ([#947](https://github.com/stryker-mutator/mutation-testing-elements/issues/947)) ([9ee0053](https://github.com/stryker-mutator/mutation-testing-elements/commit/9ee00531eda325bc62bbaf5ace4427e47258e975))
+
+
+
+
+
 ## [1.6.2](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.6.1...v1.6.2) (2021-02-24)
 
 
