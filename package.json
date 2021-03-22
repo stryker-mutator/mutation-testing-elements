@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/stryker-mutator/mutation-testing-elements#readme",
   "devDependencies": {
-    "@fullhuman/postcss-purgecss": "^3.0.0",
+    "@fullhuman/postcss-purgecss": "^4.0.3",
     "@stryker-mutator/core": "^4.1.0",
     "@stryker-mutator/karma-runner": "^4.1.0",
     "@stryker-mutator/mocha-runner": "^4.1.0",
