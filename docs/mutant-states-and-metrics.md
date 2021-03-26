@@ -54,3 +54,17 @@ Based on these states, we can calculate the following metrics:
   The total percentage of mutants that were killed.
 - **Mutation score based on covered code** `detected / covered * 100`  
   The total percentage of mutants that were killed based on the code coverage results.
+  
+## Test states and metrics
+
+A _test_ can also have state with regards to mutation testing.
+
+- **Killing**
+  The test is killing at least one mutant. This is what you want.
+- **Not killing**
+  The test is covering mutants, but not killing any of them. The coverage information should be available per test to provide this test state.
+- **Not covering**
+  The test is not even covering any mutants (and thus not killing any of them).
+- **Total** `not covering + not killing + killing`
+  Total number of tests.
+
