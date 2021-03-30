@@ -1,4 +1,5 @@
 import { TemplateResult } from 'lit-element';
+import { TestStatus } from 'mutation-testing-metrics/src/model/test-model';
 import { MutantStatus } from 'mutation-testing-report-schema';
 
 export function notNullish<T>(value: T | undefined | null): value is T {
@@ -39,6 +40,28 @@ export function getContextClassForStatus(status: MutantStatus) {
     case MutantStatus.RuntimeError:
     case MutantStatus.CompileError:
       return 'secondary';
+  }
+}
+
+export function getContextClassForTestStatus(status: TestStatus) {
+  switch (status) {
+    case TestStatus.Killing:
+      return 'success';
+    case TestStatus.NotKilling:
+      return 'warning';
+    case TestStatus.NotCovering:
+      return 'danger';
+  }
+}
+
+export function getEmojiForTestStatus(status: TestStatus) {
+  switch (status) {
+    case TestStatus.Killing:
+      return '✅';
+    case TestStatus.NotKilling:
+      return '❗';
+    case TestStatus.NotCovering:
+      return '❌';
   }
 }
 

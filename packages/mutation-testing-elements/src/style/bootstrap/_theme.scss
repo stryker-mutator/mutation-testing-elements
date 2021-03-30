@@ -204,6 +204,23 @@ a {
   }
 }
 
+.nav-tabs {
+  border-color: var(--bs-nav-tabs-border-color);
+  .nav-link {
+    @include hover-focus() {
+      border-color: var(--bs-nav-tabs-link-hover-border-color);
+    }
+  }
+
+  .nav-link.active,
+  .nav-link.active:focus,
+  .nav-item.show .nav-link {
+    color: var(--bs-nav-tabs-link-active-color);
+    background-color: var(--bs-nav-tabs-link-active-bg);
+    border-color: var(--bs-nav-tabs-link-active-border-color);
+  }
+}
+
 .breadcrumb a {
   color: var(--bs-link-color);
 }

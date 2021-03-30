@@ -1,18 +1,19 @@
 import { customElement, LitElement, property, PropertyValues, html, unsafeCSS } from 'lit-element';
-import { MutantResult, MutantStatus } from 'mutation-testing-report-schema';
+import { MutantResult } from 'mutation-testing-report-schema';
 import { bootstrap } from '../../style';
-import { getContextClassForStatus, getEmojiForStatus } from '../../lib/htmlHelpers';
-import style from './mutation-test-report-file-legend.scss';
+import style from './mutation-test-report-state-filter.scss';
 import { createCustomEvent } from '../../lib/custom-events';
 
-export interface MutantFilter {
-  status: MutantStatus;
-  numberOfMutants: number;
+export interface StateFilter<TStatus> {
+  status: TStatus;
+  count: number;
   enabled: boolean;
+  label: string;
+  context: string;
 }
 
-@customElement('mutation-test-report-file-legend')
-export class MutationTestReportFileLegendComponent extends LitElement {
+@customElement('mutation-test-report-state-filter')
+export class MutationTestReportFileStateFilterComponent<TStatus> extends LitElement {
   @property()
   public mutants: ReadonlyArray<Pick<MutantResult, 'status'>> = [];
 
@@ -29,34 +30,15 @@ export class MutationTestReportFileLegendComponent extends LitElement {
   private collapsed = true;
 
   @property()
-  private filters: MutantFilter[] = [];
+  public filters!: StateFilter<TStatus>[];
 
   public updated(changedProperties: PropertyValues) {
-    if (changedProperties.has('mutants')) {
-      this.updateModel();
+    if (changedProperties.has('filters')) {
+      this.dispatchFiltersChangedEvent();
     }
   }
 
-  private updateModel() {
-    this.filters = [
-      MutantStatus.Killed,
-      MutantStatus.Survived,
-      MutantStatus.NoCoverage,
-      MutantStatus.Ignored,
-      MutantStatus.Timeout,
-      MutantStatus.CompileError,
-      MutantStatus.RuntimeError,
-    ]
-      .filter((status) => this.mutants.some((mutant) => mutant.status === status))
-      .map((status) => ({
-        enabled: [MutantStatus.Survived, MutantStatus.NoCoverage, MutantStatus.Timeout].some((s) => s === status),
-        numberOfMutants: this.mutants.filter((m) => m.status === status).length,
-        status,
-      }));
-    this.dispatchFiltersChangedEvent();
-  }
-
-  private checkboxClicked(filter: MutantFilter) {
+  private checkboxClicked(filter: StateFilter<TStatus>) {
     filter.enabled = !filter.enabled;
     this.dispatchFiltersChangedEvent();
   }
@@ -90,9 +72,7 @@ export class MutationTestReportFileLegendComponent extends LitElement {
                   value="${filter.status}"
                   @input="${() => this.checkboxClicked(filter)}"
                 />
-                <span class="badge badge-${getContextClassForStatus(filter.status)}"
-                  >${getEmojiForStatus(filter.status)} ${filter.status} (${filter.numberOfMutants})</span
-                >
+                <span class="badge badge-${filter.context}">${filter.label} (${filter.count})</span>
               </label>
             </div>
           `

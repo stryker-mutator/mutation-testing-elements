@@ -5,19 +5,6 @@
   "tasks": [
     {
       "type": "npm",
-      "script": "start",
-      "label": "Run webpack in watch mode",
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
-      "options": {
-        "cwd": "${workspaceFolder}/packages/mutation-testing-elements"
-      },
-      "problemMatcher": []
-    },
-    {
-      "type": "npm",
       "script": "start:tsc",
       "label": "Run typescript compiler in watch mode",
       "group": {

@@ -1,15 +1,15 @@
 import {
-  MutationTestReportFileLegendComponent,
-  MutantFilter,
-} from '../../../src/components/mutation-test-report-file-legend/mutation-test-report-file-legend.component';
+  MutationTestReportFileStateFilterComponent,
+  StateFilter,
+} from '../../../src/components/mutation-test-report-state-filter/mutation-test-report-state-filter.component';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { MutantStatus } from 'mutation-testing-report-schema';
 import { expect } from 'chai';
 import { normalizeWhitespace, expectedMutantColors } from '../../helpers/helperFunctions';
 import { getContextClassForStatus } from '../../../src/lib/htmlHelpers';
 
-describe(MutationTestReportFileLegendComponent.name, () => {
-  let sut: CustomElementFixture<MutationTestReportFileLegendComponent>;
+describe(MutationTestReportFileStateFilterComponent.name, () => {
+  let sut: CustomElementFixture<MutationTestReportFileStateFilterComponent>;
 
   beforeEach(async () => {
     sut = new CustomElementFixture('mutation-test-report-file-legend');
@@ -81,7 +81,7 @@ describe(MutationTestReportFileLegendComponent.name, () => {
         { status: MutantStatus.Timeout },
         { status: MutantStatus.Ignored },
       ];
-      const expected: MutantFilter[] = [
+      const expected: StateFilter[] = [
         { enabled: false, numberOfMutants: 1, status: MutantStatus.Killed },
         { enabled: true, numberOfMutants: 1, status: MutantStatus.Survived },
         { enabled: true, numberOfMutants: 1, status: MutantStatus.NoCoverage },
@@ -103,7 +103,7 @@ describe(MutationTestReportFileLegendComponent.name, () => {
       sut.element.addEventListener('filters-changed', (ev: any) => {
         actualEvent = ev;
       });
-      const expected: MutantFilter[] = [
+      const expected: StateFilter[] = [
         { enabled: false, numberOfMutants: 1, status: MutantStatus.Survived },
         { enabled: false, numberOfMutants: 1, status: MutantStatus.CompileError },
       ];

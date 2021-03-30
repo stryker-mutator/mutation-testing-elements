@@ -1,4 +1,4 @@
-import { lines, renderCode } from '../../../src/lib/codeHelpers';
+import { lines, markMutants } from '../../../src/lib/codeHelpers';
 import { MutantStatus, FileResult } from 'mutation-testing-report-schema';
 import { expect } from 'chai';
 
@@ -12,7 +12,7 @@ describe(lines.name, () => {
   });
 });
 
-describe(renderCode.name, () => {
+describe(markMutants.name, () => {
   it('should insert mutation-test-report-mutant and color spans whitespace significant', () => {
     const input: FileResult = {
       language: 'javascript',
@@ -33,7 +33,7 @@ describe(renderCode.name, () => {
         .replace(/ {6}/g, '')
         .trim(), // strip the padding left
     };
-    const actualCode = renderCode(input);
+    const actualCode = markMutants(input);
     expect(actualCode).eq(
       '<span>const foo = &#039;</span><mutation-test-report-mutant mutant-id="1"><span class="bg-success-light">bar</span></mutation-test-report-mutant><span class="bg-">&#039;;\n\nfunction add(a, b) {\n  return a + b;\n}</span>'
     );
@@ -66,7 +66,7 @@ describe(renderCode.name, () => {
         .replace(/ {6}/g, '')
         .trim(), // strip the padding left
     };
-    const actualCode = renderCode(input);
+    const actualCode = markMutants(input);
     expect(actualCode).include('<mutation-test-report-mutant mutant-id="1"><span class="bg-success-light">add</span></mutation-test-report-mutant>');
     expect(actualCode).include('<mutation-test-report-mutant mutant-id="2"><span class="bg-danger-light">;\n</span></mutation-test-report-mutant>');
   });

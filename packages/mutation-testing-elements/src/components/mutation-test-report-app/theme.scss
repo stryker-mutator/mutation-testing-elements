@@ -31,6 +31,11 @@
     --bs-#{$color}-bg-light: #{rgba($value, 0.25)};
   }
   --bs-anchor: #{$darkly-white};
+  --bs-nav-tabs-link-hover-border-color: #{$nav-tabs-link-hover-border-color};
+  --bs-nav-tabs-link-active-color: #{$nav-tabs-link-active-color};
+  --bs-nav-tabs-link-active-bg: #{$nav-tabs-link-active-bg};
+  --bs-nav-tabs-link-active-border-color: #{$nav-tabs-link-active-border-color};
+  --bs-nav-tabs-border-color: #{$nav-tabs-border-color};
 }
 :host([theme='dark']) {
   --bs-link-color: #{$darkly-link-color};
@@ -61,6 +66,11 @@
     --bs-#{$color}-bg: #{$value};
     --bs-#{$color}-bg-light: #{rgba($value, 0.25)};
   }
+  --bs-nav-tabs-link-hover-border-color: #{$darkly-nav-tabs-link-hover-border-color};
+  --bs-nav-tabs-link-active-color: #{$darkly-nav-tabs-link-active-color};
+  --bs-nav-tabs-link-active-bg: #{$darkly-toast-background-color};
+  --bs-nav-tabs-link-active-border-color: #{$darkly-nav-tabs-link-active-border-color};
+  --bs-nav-tabs-border-color: #{$darkly-nav-tabs-border-color};
 }
 
 // Prismjs theming (code highlighting) =====================================
@@ -154,6 +164,7 @@
   --mut-file-scala-color: #b8383d;
   --mut-file-java-color: #b8383d;
   --mut-file-js-color: #b7b73b;
+  --mut-file-js-test-color: #cc6d2e;
   --mut-file-php-color: #9068b0;
   --mut-file-html-color: #498ba7;
   --mut-file-csharp-color: #498ba7;
@@ -165,6 +176,7 @@
   --mut-file-scala-color: #cc3e44;
   --mut-file-java-color: #cc3e44;
   --mut-file-js-color: #cbcb41;
+  --mut-file-js-test-color: #e37933;
   --mut-file-php-color: #a074c4;
   --mut-file-html-color: #519aba;
   --mut-file-csharp-color: #519aba;
@@ -173,8 +185,8 @@
 
 // Mutation testing elements custom theming ================================
 :host(:not([theme='dark'])) {
-  --mut-table-icon-color: #498ba7;
+  --mut-octicon-icon-color: #498ba7;
 }
 :host([theme='dark']) {
-  --mut-table-icon-color: #519aba;
+  --mut-octicon-icon-color: #519aba;
 }

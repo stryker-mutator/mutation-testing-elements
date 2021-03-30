@@ -1,4 +1,4 @@
-import { MutantResult, Position, FileResult } from 'mutation-testing-report-schema';
+import { MutantResult, Position, FileResult, TestFile } from 'mutation-testing-report-schema';
 import { BackgroundColorCalculator } from './BackgroundColorCalculator';
 import { escapeHtml } from './htmlHelpers';
 
@@ -12,7 +12,7 @@ export function pathJoin(...parts: string[]) {
  * It also adds the background color using
  * `<span class="bg-danger-light">` and friends.
  */
-export function renderCode(model: FileResult): string {
+export function markMutants(model: FileResult): string {
   const backgroundState = new BackgroundColorCalculator();
   const startedMutants: MutantResult[] = [];
   const walker = (char: string, pos: Position): string => {
@@ -48,6 +48,16 @@ export function renderCode(model: FileResult): string {
     return builder.join('');
   };
   return `<span>${walkString(model.source, walker)}</span>`;
+}
+
+export function markTests(model: TestFile): string {
+  return `<span>${walkString(model.source!, (char, pos) => {
+    const builder = model.tests
+      .filter((test) => eq(test.location!.start, pos))
+      .map((test) => `<mutation-test-report-test test-id="${test.id}"></mutation-test-report-test>`);
+    builder.push(escapeHtml(char));
+    return builder.join('');
+  })}</span>`;
 }
 
 export const COLUMN_START_INDEX = 1;

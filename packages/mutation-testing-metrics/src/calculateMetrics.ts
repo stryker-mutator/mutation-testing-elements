@@ -2,6 +2,7 @@ import { compareNames, normalize } from './helpers';
 import { FileResult, MutantStatus, MutationTestResult } from 'mutation-testing-report-schema';
 import { groupBy } from './helpers';
 import { FileUnderTestModel, Metrics, MetricsResult, MutantModel, MutationTestMetricsResult, TestFileModel, TestMetrics, TestModel } from './model';
+import { TestStatus } from './model/test-model';
 const DEFAULT_SCORE = NaN;
 const ROOT_NAME = 'All files';
 const ROOT_NAME_TESTS = 'All tests';
@@ -106,11 +107,13 @@ function relate(mutants: MutantModel[], tests: TestModel[]) {
 
 function countTestFileMetrics(testFile: TestFileModel[]): TestMetrics {
   const tests = testFile.flatMap((_) => _.tests);
+  const count = (status: TestStatus) => tests.filter((_) => _.status === status).length;
+
   return {
     total: tests.length,
-    killing: tests.reduce((acc, test) => (test.killedMutants?.length ? ++acc : acc), 0),
-    notKilling: tests.reduce((acc, test) => (!test.killedMutants?.length ? ++acc : acc), 0),
-    notCovering: tests.reduce((acc, test) => (!test.coveredMutants?.length ? ++acc : acc), 0),
+    killing: count(TestStatus.Killing),
+    notKilling: count(TestStatus.NotKilling),
+    notCovering: count(TestStatus.NotCovering),
   };
 }
 

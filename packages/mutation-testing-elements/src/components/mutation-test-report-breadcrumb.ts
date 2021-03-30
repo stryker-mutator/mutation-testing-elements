@@ -13,27 +13,27 @@ export class MutationTestReportBreadcrumbComponent extends LitElement {
   public render() {
     return html`
       <ol class="breadcrumb">
-        ${this.renderRootItem()} ${this.renderBreadcrumbItems()}
+        ${this.renderBreadcrumbItems()}
       </ol>
     `;
   }
 
-  private renderRootItem() {
-    if (this.path && this.path.length) {
-      return this.renderLink(ROOT_NAME, '');
-    } else {
-      return this.renderActiveItem(ROOT_NAME);
-    }
-  }
+  // private renderRootItem() {
+  //   if (this.path && this.path.length) {
+  //     return this.renderLink(ROOT_NAME, '');
+  //   } else {
+  //     return this.renderActiveItem(ROOT_NAME);
+  //   }
+  // }
 
   private renderBreadcrumbItems() {
     if (this.path) {
       const path = this.path;
       return path.map((item, index) => {
         if (index === path.length - 1) {
-          return this.renderActiveItem(item);
+          return this.renderActiveItem(index === 0 ? ROOT_NAME : item);
         } else {
-          return this.renderLink(item, `${path.filter((_, i) => i <= index).join('/')}`);
+          return this.renderLink(index === 0 ? ROOT_NAME : item, `${path.filter((_, i) => i <= index).join('/')}`);
         }
       });
     }
