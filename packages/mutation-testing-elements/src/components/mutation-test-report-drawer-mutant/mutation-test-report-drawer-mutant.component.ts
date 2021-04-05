@@ -1,9 +1,12 @@
-import { customElement, html, LitElement, property } from 'lit-element';
-import { MutantModel } from 'mutation-testing-metrics';
+import { customElement, html, LitElement, property, unsafeCSS } from 'lit-element';
+import { MutantModel, TestModel } from 'mutation-testing-metrics';
 import { MutantStatus } from 'mutation-testing-report-schema';
-import { getEmojiForStatus, plural, renderIf, renderIfPresent } from '../../lib/htmlHelpers';
+import { describeLocation, getEmojiForStatus, plural, renderIf, renderIfPresent } from '../../lib/htmlHelpers';
 import { bootstrap } from '../../style';
 import { DrawerMode } from '../mutation-test-report-drawer/mutation-test-report-drawer.component';
+import style from './mutation-test-report-drawer-mutant.scss';
+
+const describeTest = (test: TestModel) => html`${test.name}${test.fileName ? ` (${describeLocation(test)})` : ''}`;
 
 @customElement('mutation-test-report-drawer-mutant')
 export class MutationTestReportDrawerMutant extends LitElement {
@@ -13,7 +16,7 @@ export class MutationTestReportDrawerMutant extends LitElement {
   @property({ reflect: true })
   public mode: DrawerMode = 'closed';
 
-  public static styles = [bootstrap];
+  public static styles = [bootstrap, unsafeCSS(style)];
 
   public render() {
     return html`<mutation-test-report-drawer ?hasDetail="${this.mutant?.killedByTests || this.mutant?.coveredByTests}" .mode="${this.mode}">
@@ -58,10 +61,12 @@ export class MutationTestReportDrawerMutant extends LitElement {
 
   private renderDetail() {
     return html`<ul class="list-group">
-      ${this.mutant?.killedByTests?.map((test) => html`<li title="This mutant was killed by this test" class="list-group-item">🎯 ${test.name}</li>`)}
+      ${this.mutant?.killedByTests?.map(
+        (test) => html`<li title="This mutant was killed by this test" class="list-group-item">🎯 ${describeTest(test)}</li>`
+      )}
       ${this.mutant?.coveredByTests
         ?.filter((test) => !this.mutant?.killedByTests?.includes(test))
-        .map((test) => html`<li class="list-group-item" title="This mutant was covered by this test">☂️ ${test.name}</li>`)}
+        .map((test) => html`<li class="list-group-item" title="This mutant was covered by this test">☂️ ${describeTest(test)}</li>`)}
     </ul>`;
   }
 }

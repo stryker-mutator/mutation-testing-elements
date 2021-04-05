@@ -6,6 +6,7 @@
   transition: height 0.2s cubic-bezier(.4,0,.2,1);
   overflow: hidden;
   background-color: var(--bs-card-cap-bg);
+  z-index: 3;
 }
 
 header {
@@ -27,5 +28,8 @@ header {
 }
 :host([mode='open']) {
   height: 50%;
+}
+
+.summary {
   overflow: auto;
 }

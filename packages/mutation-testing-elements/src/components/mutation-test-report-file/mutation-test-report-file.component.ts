@@ -1,4 +1,4 @@
-import { LitElement, html, property, customElement, unsafeCSS } from 'lit-element';
+import { LitElement, html, property, customElement, unsafeCSS, PropertyValues } from 'lit-element';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 import { MutationTestReportMutantComponent } from '../mutation-test-report-mutant/mutation-test-report-mutant.component';
 import { StateFilter } from '../mutation-test-report-state-filter/mutation-test-report-state-filter.component';
@@ -7,11 +7,13 @@ import { markMutants } from '../../lib/codeHelpers';
 import { FileResult, MutantStatus } from 'mutation-testing-report-schema';
 import { highlightElement } from 'prismjs/components/prism-core';
 import style from './mutation-test-report-file.scss';
-import { createCustomEvent } from '../../lib/custom-events';
 import { getContextClassForStatus, getEmojiForStatus } from '../../lib/htmlHelpers';
 
 @customElement('mutation-test-report-file')
 export class MutationTestReportFileComponent extends LitElement {
+  @property()
+  private filters: StateFilter<MutantStatus>[] = [];
+
   @property()
   public model!: FileResult;
 
@@ -24,12 +26,8 @@ export class MutationTestReportFileComponent extends LitElement {
     this.forEachMutantComponent((mutantComponent) => (mutantComponent.expand = false));
   };
 
-  public disconnectedCallback() {
-    this.dispatchEvent(createCustomEvent('mutant-selected', { selected: false, mutant: undefined }, { bubbles: true, composed: true }));
-  }
-
-  private forEachMutantComponent(action: (mutant: MutationTestReportMutantComponent) => void, host = this.root) {
-    for (const mutantComponent of host.querySelectorAll('mutation-test-report-mutant')) {
+  private forEachMutantComponent(action: (mutant: MutationTestReportMutantComponent) => void) {
+    for (const mutantComponent of this.shadowRoot!.querySelectorAll('mutation-test-report-mutant')) {
       if (mutantComponent instanceof MutationTestReportMutantComponent) {
         action(mutantComponent);
       }
@@ -44,28 +42,12 @@ export class MutationTestReportFileComponent extends LitElement {
   };
 
   public render() {
-    const filters: StateFilter<MutantStatus>[] = [
-      MutantStatus.Killed,
-      MutantStatus.Survived,
-      MutantStatus.NoCoverage,
-      MutantStatus.Ignored,
-      MutantStatus.Timeout,
-      MutantStatus.CompileError,
-      MutantStatus.RuntimeError,
-    ]
-      .filter((status) => this.model.mutants.some((mutant) => mutant.status === status))
-      .map((status) => ({
-        enabled: [MutantStatus.Survived, MutantStatus.NoCoverage, MutantStatus.Timeout].some((s) => s === status),
-        count: this.model.mutants.filter((m) => m.status === status).length,
-        status,
-        label: `${getEmojiForStatus(status)} ${status}`,
-        context: getContextClassForStatus(status),
-      }));
     return html`
       <div class="row">
         <div class="col-md-12">
           <mutation-test-report-state-filter
-            .filters="${filters}"
+            allow-toggle-all
+            .filters="${this.filters}"
             @filters-changed="${this.filtersChanged}"
             @expand-all="${this.expandAll}"
             @collapse-all="${this.collapseAll}"
@@ -79,7 +61,7 @@ export class MutationTestReportFileComponent extends LitElement {
   }
 
   public firstUpdated() {
-    const code = this.root.querySelector('code');
+    const code = this.shadowRoot!.querySelector('code');
     if (code) {
       highlightElement(code);
 
@@ -87,11 +69,29 @@ export class MutationTestReportFileComponent extends LitElement {
       // Now that the code is highlighted, we can bind the mutants
       this.forEachMutantComponent((mutantComponent) => {
         mutantComponent.mutant = this.model.mutants.find((mutant) => mutant.id === mutantComponent.getAttribute('mutant-id'));
-      }, code);
+      });
     }
   }
 
-  private get root(): ParentNode {
-    return this.shadowRoot || this;
+  public updated(changes: PropertyValues) {
+    if (changes.has('model') && this.model) {
+      this.filters = [
+        MutantStatus.Killed,
+        MutantStatus.Survived,
+        MutantStatus.NoCoverage,
+        MutantStatus.Ignored,
+        MutantStatus.Timeout,
+        MutantStatus.CompileError,
+        MutantStatus.RuntimeError,
+      ]
+        .filter((status) => this.model.mutants.some((mutant) => mutant.status === status))
+        .map((status) => ({
+          enabled: [MutantStatus.Survived, MutantStatus.NoCoverage, MutantStatus.Timeout].some((s) => s === status),
+          count: this.model.mutants.filter((m) => m.status === status).length,
+          status,
+          label: `${getEmojiForStatus(status)} ${status}`,
+          context: getContextClassForStatus(status),
+        }));
+    }
   }
 }

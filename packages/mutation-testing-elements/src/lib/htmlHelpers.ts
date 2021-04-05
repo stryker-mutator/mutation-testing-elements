@@ -1,6 +1,6 @@
 import { TemplateResult } from 'lit-element';
 import { TestStatus } from 'mutation-testing-metrics/src/model/test-model';
-import { MutantStatus } from 'mutation-testing-report-schema';
+import { MutantStatus, OpenEndLocation } from 'mutation-testing-report-schema';
 
 export function notNullish<T>(value: T | undefined | null): value is T {
   return value !== null && value !== undefined;
@@ -98,4 +98,8 @@ export function plural(items: unknown[]): string {
     return 's';
   }
   return '';
+}
+
+export function describeLocation({ fileName, location }: { fileName: string; location?: OpenEndLocation | undefined }) {
+  return fileName ? `${fileName}${location ? `:${location.start.line}:${location.start.column}` : ''}` : '';
 }

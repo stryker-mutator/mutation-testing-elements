@@ -12,7 +12,7 @@ export class MutationTestReportTestComponent extends LitElement {
   public test: TestModel | undefined;
 
   @property()
-  public expand = false;
+  public active = false;
 
   @property()
   public show = true;
@@ -20,16 +20,20 @@ export class MutationTestReportTestComponent extends LitElement {
   public static styles = [bootstrap, unsafeCSS(style)];
 
   private readonly testClicked = (event: Event) => {
-    this.expand = !this.expand;
+    this.active = !this.active;
     event.stopPropagation();
-    this.dispatchEvent(createCustomEvent('test-selected', { selected: this.expand, test: this.test }, { bubbles: true, composed: true }));
+    this.dispatchTestSelected();
   };
+
+  private dispatchTestSelected() {
+    this.dispatchEvent(createCustomEvent('test-selected', { selected: this.active, test: this.test }, { bubbles: true, composed: true }));
+  }
 
   public render() {
     // This part is newline significant, as it is rendered in a <code> block.
     // No unnecessary new lines
     return this.test && this.show
-      ? html`<span class="badge badge-${this.expand ? 'info' : getContextClassForTestStatus(this.test.status)}" @click="${this.testClicked}"
+      ? html`<span class="badge badge-${this.active ? 'info' : getContextClassForTestStatus(this.test.status)}" @click="${this.testClicked}"
           >${this.test.id}</span
         >`
       : nothing;

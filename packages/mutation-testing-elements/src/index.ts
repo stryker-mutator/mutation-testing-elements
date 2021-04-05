@@ -12,3 +12,4 @@ import './components/mutation-test-report-metrics-table/mutation-test-report-met
 import './components/mutation-test-report-test-file/mutation-test-report-test-file.component';
 import './components/mutation-test-report-drawer-test/mutation-test-report-drawer-test.component';
 import './components/mutation-test-report-file-icon/mutation-test-report-file-icon.component';
+import './components/mutation-test-report-test-list-item/mutation-test-report-test-list-item.component';

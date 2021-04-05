@@ -3,6 +3,7 @@ import { MutantResult } from 'mutation-testing-report-schema';
 import { bootstrap } from '../../style';
 import style from './mutation-test-report-state-filter.scss';
 import { createCustomEvent } from '../../lib/custom-events';
+import { repeat } from 'lit-html/directives/repeat';
 
 export interface StateFilter<TStatus> {
   status: TStatus;
@@ -29,8 +30,11 @@ export class MutationTestReportFileStateFilterComponent<TStatus> extends LitElem
   @property()
   private collapsed = true;
 
-  @property()
+  @property({ type: Array })
   public filters!: StateFilter<TStatus>[];
+
+  @property({ type: Boolean, attribute: 'allow-toggle-all', reflect: true })
+  public allowToggleAll = false;
 
   public updated(changedProperties: PropertyValues) {
     if (changedProperties.has('filters')) {
@@ -38,8 +42,8 @@ export class MutationTestReportFileStateFilterComponent<TStatus> extends LitElem
     }
   }
 
-  private checkboxClicked(filter: StateFilter<TStatus>) {
-    filter.enabled = !filter.enabled;
+  private checkboxChanged(filter: StateFilter<TStatus>, enabled: boolean) {
+    filter.enabled = enabled;
     this.dispatchFiltersChangedEvent();
   }
 
@@ -61,23 +65,27 @@ export class MutationTestReportFileStateFilterComponent<TStatus> extends LitElem
   public render() {
     return html`
       <div class="legend col-md-12 d-flex align-items-center">
-        ${this.filters.map(
-          (filter) => html`
-            <div data-status="${filter.status}" class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  ?checked="${filter.enabled}"
-                  value="${filter.status}"
-                  @input="${() => this.checkboxClicked(filter)}"
-                />
-                <span class="badge badge-${filter.context}">${filter.label} (${filter.count})</span>
-              </label>
-            </div>
-          `
+        ${repeat(
+          this.filters,
+          // Key function. I super duper want that all properties are weighed here,
+          // see https://lit-html.polymer-project.org/guide/writing-templates#repeating-templates-with-the-repeat-directive
+          (filter) => JSON.stringify(filter),
+          (filter) => html`<div data-status="${filter.status}" class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                ?checked="${filter.enabled}"
+                value="${filter.status}"
+                @input="${(el: Event) => this.checkboxChanged(filter, (el.target as HTMLInputElement).checked)}"
+              />
+              <span class="badge badge-${filter.context}">${filter.label} (${filter.count})</span>
+            </label>
+          </div>`
         )}
-        <button @click="${this.toggleOpenAll}" class="btn btn-sm btn-secondary" type="button">${this.collapseButtonText}</button>
+        ${this.allowToggleAll
+          ? html`<button @click="${this.toggleOpenAll}" class="btn btn-sm btn-secondary" type="button">${this.collapseButtonText}</button>`
+          : ''}
       </div>
     `;
   }

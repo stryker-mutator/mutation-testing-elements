@@ -1,4 +1,5 @@
-import { MutantResult, Position, FileResult, TestFile } from 'mutation-testing-report-schema';
+import { MutantResult, Position, FileResult } from 'mutation-testing-report-schema';
+import { TestModel } from 'mutation-testing-metrics';
 import { BackgroundColorCalculator } from './BackgroundColorCalculator';
 import { escapeHtml } from './htmlHelpers';
 
@@ -50,11 +51,30 @@ export function markMutants(model: FileResult): string {
   return `<span>${walkString(model.source, walker)}</span>`;
 }
 
-export function markTests(model: TestFile): string {
-  return `<span>${walkString(model.source!, (char, pos) => {
-    const builder = model.tests
-      .filter((test) => eq(test.location!.start, pos))
-      .map((test) => `<mutation-test-report-test test-id="${test.id}"></mutation-test-report-test>`);
+export function isAlfaNumeric(char: string) {
+  // We could use a regex here, but what's the fun in that?
+  const alfaNumeric = 'azAZ09';
+
+  const charCode = char.charCodeAt(0);
+  const between = (from: number, to: number) => charCode >= alfaNumeric.charCodeAt(from) && charCode <= alfaNumeric.charCodeAt(to);
+  return between(0, 1) || between(2, 3) || between(4, 5);
+}
+
+export function markTests(source: string, tests: TestModel[]): string {
+  // work with a copy, so we can mutate the array
+  const testsToPlace = [...tests];
+  return `<span>${walkString(source, (char, pos) => {
+    const builder: string[] = [];
+
+    // Test columns can be flaky. Let's prevent tests from appearing in the middle of words at least.
+    if (!isAlfaNumeric(char)) {
+      // Determine the test starts using `gte`. That way, if a flaky line/column results in a non-existing location, it will still appear on the next line
+      const startingTests = testsToPlace.filter((test) => test.location && gte(pos, test.location.start));
+      builder.push(...startingTests.map((test) => `<mutation-test-report-test test-id="${test.id}"></mutation-test-report-test>`));
+
+      // Remove the test from the tests to place
+      startingTests.forEach((test) => testsToPlace.splice(testsToPlace.indexOf(test), 1));
+    }
     builder.push(escapeHtml(char));
     return builder.join('');
   })}</span>`;

@@ -1,4 +1,4 @@
-import { customElement, html, LitElement, property } from 'lit-element';
+import { customElement, html, LitElement, property, PropertyValues } from 'lit-element';
 import { MetricsResult, TestFileModel, TestMetrics, TestModel } from 'mutation-testing-metrics';
 import { MteCustomEvent } from '../lib/custom-events';
 import { bootstrap } from '../style';
@@ -37,6 +37,12 @@ export class MutationTestReportTestViewComponent extends LitElement {
     this.selectedTest = event.detail.test;
     this.drawerMode = event.detail.selected ? 'half' : 'closed';
   };
+
+  public updated(changes: PropertyValues) {
+    if (changes.has('result') && !this.result.file) {
+      this.drawerMode = 'closed';
+    }
+  }
 
   public render() {
     return html`
