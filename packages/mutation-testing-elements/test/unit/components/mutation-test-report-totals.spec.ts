@@ -1,11 +1,11 @@
 import { FileUnderTestModel, Metrics } from 'mutation-testing-metrics';
-import { MutationTestReportTestTotalsTable } from '../../../src/components/mutation-test-report-metrics-table/mutation-test-report-metrics-table.component';
+import { MutationTestReportTestMetricsTable } from '../../../src/components/mutation-test-report-metrics-table/mutation-test-report-metrics-table.component';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { expect } from 'chai';
 import { createMetricsResult, createFileResult } from '../../helpers/factory';
 
-describe(MutationTestReportTestTotalsTable.name, () => {
-  let sut: CustomElementFixture<MutationTestReportTestTotalsTable<FileUnderTestModel, Metrics>>;
+describe(MutationTestReportTestMetricsTable.name, () => {
+  let sut: CustomElementFixture<MutationTestReportTestMetricsTable<FileUnderTestModel, Metrics>>;
 
   beforeEach(async () => {
     sut = new CustomElementFixture('mutation-test-report-metrics-table');

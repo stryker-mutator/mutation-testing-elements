@@ -1,6 +1,6 @@
 import { customElement, html, LitElement, property, PropertyValues } from 'lit-element';
 import { FileUnderTestModel, Metrics, MetricsResult } from 'mutation-testing-metrics';
-import { MutantResult, Thresholds } from 'mutation-testing-report-schema';
+import { MutantResult as MutantModel, Thresholds } from 'mutation-testing-report-schema';
 import { MteCustomEvent } from '../lib/custom-events';
 import { bootstrap } from '../style';
 import { DrawerMode } from './mutation-test-report-drawer/mutation-test-report-drawer.component';
@@ -26,7 +26,7 @@ export class MutationTestReportMutantViewComponent extends LitElement {
   public drawerMode: DrawerMode = 'closed';
 
   @property()
-  private selectedMutant?: MutantResult;
+  private selectedMutant?: MutantModel;
 
   public static styles = [bootstrap];
 

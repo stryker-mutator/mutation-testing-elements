@@ -20,7 +20,7 @@ export interface Column<TMetric> {
 }
 
 @customElement('mutation-test-report-metrics-table')
-export class MutationTestReportTestTotalsTable<TFile, TMetric> extends LitElement {
+export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitElement {
   @property()
   public model?: MetricsResult<TFile, TMetric>;
 

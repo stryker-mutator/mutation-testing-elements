@@ -6,6 +6,7 @@ import { createCustomEvent } from '../../../src/lib/custom-events';
 import { createReport } from '../../helpers/factory';
 import { MutationTestReportMutantViewComponent } from '../../../src/components/mutation-test-report-mutant-view';
 import { MutationTestReportTestViewComponent } from '../../../src/components/mutation-test-report-test-view';
+import { tick } from '../helpers/tick';
 
 describe(MutationTestReportAppComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportAppComponent>;
@@ -253,9 +254,5 @@ describe(MutationTestReportAppComponent.name, () => {
 
   function getColor(element: HTMLElement) {
     return getComputedStyle(element).color;
-  }
-
-  function tick() {
-    return new Promise((res) => setTimeout(res, 0));
   }
 });
