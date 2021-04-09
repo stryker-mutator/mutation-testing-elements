@@ -1,7 +1,6 @@
 import { customElement, html, LitElement, property, unsafeCSS } from 'lit-element';
 import { MetricsResult } from 'mutation-testing-metrics';
 import { Thresholds } from 'mutation-testing-report-schema';
-import { pathJoin } from '../../lib/codeHelpers';
 import { toAbsoluteUrl } from '../../lib/htmlHelpers';
 import { bootstrap } from '../../style';
 import style from './mutation-test-report-metrics-table.scss';
@@ -10,8 +9,10 @@ export type TableWidth = 'normal' | 'large';
 
 export type ColumnCategory = 'percentage' | 'number';
 
+export type Numbers<TMetrics> = { [Prop in keyof TMetrics as TMetrics[Prop] extends number ? Prop : never]: TMetrics[Prop] };
+
 export interface Column<TMetric> {
-  key: keyof TMetric;
+  key: keyof Numbers<TMetric> & keyof TMetric;
   label: string;
   width?: TableWidth;
   category: ColumnCategory;
@@ -19,9 +20,9 @@ export interface Column<TMetric> {
 }
 
 @customElement('mutation-test-report-metrics-table')
-export class MutationTestReportTestTotalsTable<TFile, TMetric extends Record<string, number>> extends LitElement {
+export class MutationTestReportTestTotalsTable<TFile, TMetric> extends LitElement {
   @property()
-  public model!: MetricsResult<TFile, TMetric>;
+  public model?: MetricsResult<TFile, TMetric>;
 
   @property()
   public currentPath: string[] = [];
@@ -38,7 +39,11 @@ export class MutationTestReportTestTotalsTable<TFile, TMetric extends Record<str
   };
 
   public render() {
-    return html`<table class="table table-sm table-hover table-bordered table-no-top">${this.renderTableHeadRow()}${this.renderTableBody()}</table>`;
+    return html`${this.model
+      ? html`<table class="table table-sm table-hover table-bordered table-no-top"
+          >${this.renderTableHeadRow()}${this.renderTableBody(this.model)}</table
+        >`
+      : ''}`;
   }
 
   private renderTableHeadRow() {
@@ -59,38 +64,36 @@ export class MutationTestReportTestTotalsTable<TFile, TMetric extends Record<str
     </th>`;
   }
 
-  private renderTableBody() {
+  private renderTableBody(model: MetricsResult<TFile, TMetric>) {
     const renderChildren = () => {
-      if (this.model.file) {
+      if (model.file) {
         return undefined;
       } else {
-        return this.model.childResults.map((childResult) => {
-          let fullName: string = childResult.name;
+        return model.childResults.map((childResult) => {
+          const nameParts: string[] = [childResult.name];
           while (!childResult.file && childResult.childResults.length === 1) {
             childResult = childResult.childResults[0];
-            fullName = pathJoin(fullName, childResult.name);
+            nameParts.push(childResult.name);
           }
-          return this.renderRow(fullName, childResult, pathJoin(...this.currentPath, fullName));
+          return this.renderRow(nameParts.join('/'), childResult, ...this.currentPath, ...nameParts);
         });
       }
     };
-    return html`<tbody>${this.renderRow(this.model.name, this.model, undefined)} ${renderChildren()}</tbody>`;
+    return html`<tbody>${this.renderRow(model.name, model)} ${renderChildren()}</tbody>`;
   }
 
-  private renderRow(name: string, row: MetricsResult<TFile, TMetric>, path: string | undefined) {
+  private renderRow(name: string, row: MetricsResult<TFile, TMetric>, ...path: string[]) {
     return html`<tr title="${row.name}">
       <td style="width: 32px;" class="icon no-border-right"
         ><mutation-test-report-file-icon file-name="${row.name}" ?file="${row.file}"></mutation-test-report-file-icon
       ></td>
-      <td class="no-border-left"
-        >${typeof path === 'string' ? html`<a href="${toAbsoluteUrl(path)}">${name}</a>` : html`<span>${row.name}</span>`}</td
-      >
+      <td class="no-border-left">${path.length > 0 ? html`<a href="${toAbsoluteUrl(...path)}">${name}</a>` : html`<span>${row.name}</span>`}</td>
       ${this.columns.map((column) => this.renderCell(column, row.metrics))}
     </tr>`;
   }
 
   private renderCell(column: Column<TMetric>, metrics: TMetric) {
-    const value = metrics[column.key];
+    const value = (metrics[column.key] as unknown) as number;
 
     if (column.category === 'percentage') {
       const valueIsPresent = !isNaN(value);

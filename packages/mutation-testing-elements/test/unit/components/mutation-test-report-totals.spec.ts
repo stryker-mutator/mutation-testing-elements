@@ -1,14 +1,27 @@
-import { FileUnderTestModel } from 'mutation-testing-metrics';
-import { MutationTestReportTotalsComponent } from '../../../src/components/mutation-test-report-totals/mutation-test-report-totals.component';
+import { FileUnderTestModel, Metrics } from 'mutation-testing-metrics';
+import { MutationTestReportTestTotalsTable } from '../../../src/components/mutation-test-report-metrics-table/mutation-test-report-metrics-table.component';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { expect } from 'chai';
 import { createMetricsResult, createFileResult } from '../../helpers/factory';
 
-describe(MutationTestReportTotalsComponent.name, () => {
-  let sut: CustomElementFixture<MutationTestReportTotalsComponent>;
+describe(MutationTestReportTestTotalsTable.name, () => {
+  let sut: CustomElementFixture<MutationTestReportTestTotalsTable<FileUnderTestModel, Metrics>>;
 
   beforeEach(async () => {
-    sut = new CustomElementFixture('mutation-test-report-totals');
+    sut = new CustomElementFixture('mutation-test-report-metrics-table');
+    sut.element.columns = [
+      { key: 'mutationScore', label: 'Mutation score', category: 'percentage' },
+      { key: 'killed', label: '# Killed', category: 'number' },
+      { key: 'survived', label: '# Survived', category: 'number' },
+      { key: 'timeout', label: '# Timeout', category: 'number' },
+      { key: 'noCoverage', label: '# No coverage', category: 'number' },
+      { key: 'ignored', label: '# Ignored', category: 'number' },
+      { key: 'runtimeErrors', label: '# Runtime errors', category: 'number' },
+      { key: 'compileErrors', label: '# Compile errors', category: 'number' },
+      { key: 'totalDetected', label: 'Total detected', category: 'number', width: 'large', isHeader: true },
+      { key: 'totalUndetected', label: 'Total undetected', category: 'number', width: 'large', isHeader: true },
+      { key: 'totalMutants', label: 'Total mutants', category: 'number', width: 'large', isHeader: true },
+    ];
     await sut.whenStable();
   });
 

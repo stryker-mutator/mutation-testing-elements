@@ -1,11 +1,15 @@
+import { AssertionError } from 'chai';
 import { LitElement } from 'lit-element';
 import { CustomEventMap, MteCustomEvent } from '../../../src/lib/custom-events';
 
 export class CustomElementFixture<TCustomElement extends LitElement> {
   public readonly element: TCustomElement;
 
-  constructor(nodeName: string) {
-    this.element = document.createElement(nodeName) as TCustomElement;
+  constructor(customElementName: string) {
+    if (!customElements.get(customElementName)) {
+      throw new AssertionError(`Custom element "${customElementName}" is not defined. Is it a typo on your end?`);
+    }
+    this.element = document.createElement(customElementName) as TCustomElement;
     document.body.append(this.element);
   }
 

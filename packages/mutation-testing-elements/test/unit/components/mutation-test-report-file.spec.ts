@@ -35,11 +35,11 @@ describe(MutationTestReportFileComponent.name, () => {
 
   describe('with `mutation-test-report-mutant`', () => {
     let mutantComponent: MutationTestReportMutantComponent;
-    let legendComponent: MutationTestReportFileStateFilterComponent;
+    let legendComponent: MutationTestReportFileStateFilterComponent<MutantStatus>;
 
     beforeEach(() => {
       mutantComponent = sut.$('mutation-test-report-mutant') as MutationTestReportMutantComponent;
-      legendComponent = sut.$('mutation-test-report-file-legend') as MutationTestReportFileStateFilterComponent;
+      legendComponent = sut.$('mutation-test-report-state-filter') as MutationTestReportFileStateFilterComponent<MutantStatus>;
     });
 
     it('should populate `mutation-test-report-mutant` elements with mutants', () => {
@@ -61,11 +61,13 @@ describe(MutationTestReportFileComponent.name, () => {
 
     it('should update hide a mutant if it is filtered', async () => {
       // Arrange
-      const filters: StateFilter[] = [
+      const filters: StateFilter<MutantStatus>[] = [
         {
           enabled: false,
-          numberOfMutants: 1,
+          count: 1,
           status: MutantStatus.Killed,
+          context: 'success',
+          label: '✅ Killed',
         },
       ];
       mutantComponent.show = true;

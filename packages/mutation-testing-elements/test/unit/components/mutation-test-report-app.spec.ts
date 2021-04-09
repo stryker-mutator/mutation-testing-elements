@@ -1,12 +1,11 @@
 import * as sinon from 'sinon';
 import { MutationTestReportAppComponent } from '../../../src/components/mutation-test-report-app/mutation-test-report-app.component';
 import { expect } from 'chai';
-import { MutationTestReportFileComponent } from '../../../src/components/mutation-test-report-file/mutation-test-report-file.component';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { createCustomEvent } from '../../../src/lib/custom-events';
-import { MutationTestReportDrawerMutant } from '../../../src/components/mutation-test-report-drawer-mutant/mutation-test-report-drawer-mutant.component';
-import { createMutantResult, createReport } from '../../helpers/factory';
-import { MutantModel } from 'mutation-testing-metrics';
+import { createReport } from '../../helpers/factory';
+import { MutationTestReportMutantViewComponent } from '../../../src/components/mutation-test-report-mutant-view';
+import { MutationTestReportTestViewComponent } from '../../../src/components/mutation-test-report-test-view';
 
 describe(MutationTestReportAppComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportAppComponent>;
@@ -82,33 +81,65 @@ describe(MutationTestReportAppComponent.name, () => {
     });
   });
 
-  describe('report property', () => {
+  describe('`report` property', () => {
     it('should load the breadcrumb', async () => {
       sut.element.report = createReport();
       await sut.whenStable();
       expect(sut.$('mutation-test-report-breadcrumb')).ok;
     });
 
-    it('should load the totals', async () => {
+    it('should load mutant view by default', async () => {
       sut.element.report = createReport();
       await sut.whenStable();
-      expect(sut.$('mutation-test-report-totals')).ok;
+      expect(sut.$('mutation-test-report-mutant-view')).ok;
     });
+  });
 
-    it('should render a file when navigating to a file', async () => {
+  describe('on locationChanged', () => {
+    it('should pass the correct mutantResult to the mutant view', async () => {
       // Arrange
-      sut.element.report = createReport();
+      sut.element.report = createReport({
+        files: {
+          'foobar.js': {
+            language: 'javascript',
+            mutants: [],
+            source: 'foo = "bar";',
+          },
+        },
+      });
       await sut.whenStable();
 
       // Act
-      window.location.hash = '#' + Object.keys(sut.element.report.files)[0];
+      window.location.hash = '#mutant/foobar.js';
       await tick(); // give routing a change (happens next tick)
       await sut.whenStable();
 
       // Assert
-      const file = sut.$('mutation-test-report-file') as MutationTestReportFileComponent;
+      const file = sut.$('mutation-test-report-mutant-view') as MutationTestReportMutantViewComponent;
       expect(file).ok;
-      expect(file.model).ok;
+      expect(file.result.file!.name).eq('foobar.js');
+    });
+
+    it('should pass the correct testResult to the test view', async () => {
+      // Arrange
+      sut.element.report = createReport({
+        testFiles: {
+          'foobar.spec.js': {
+            tests: [],
+          },
+        },
+      });
+      await sut.whenStable();
+
+      // Act
+      window.location.hash = '#test/foobar.spec.js';
+      await tick(); // give routing a change (happens next tick)
+      await sut.whenStable();
+
+      // Assert
+      const file = sut.$('mutation-test-report-test-view') as MutationTestReportTestViewComponent;
+      expect(file).ok;
+      expect(file.result.file!.name).eq('foobar.spec.js');
     });
   });
 
@@ -217,58 +248,6 @@ describe(MutationTestReportAppComponent.name, () => {
       });
       expect(event?.detail.theme).eq('dark');
       expect(event?.detail.themeBackgroundColor).eq('#18191a');
-    });
-  });
-
-  describe('the drawer', () => {
-    beforeEach(async () => {
-      sut.element.report = createReport();
-      await sut.whenStable();
-    });
-
-    function selectDrawer() {
-      return sut.$('mutation-test-report-drawer-mutant') as MutationTestReportDrawerMutant;
-    }
-
-    it('should be rendered closed to begin with', () => {
-      expect(selectDrawer().mode).eq('closed');
-    });
-
-    it('should half open when a mutant is selected', async () => {
-      // Arrange
-      const mutant = new MutantModel(createMutantResult());
-      const event = createCustomEvent('mutant-selected', { selected: true, mutant });
-      window.location.hash = '#foobar.js';
-      await tick();
-      await sut.whenStable();
-
-      // Act
-      sut.$('mutation-test-report-file').dispatchEvent(event);
-      await sut.whenStable();
-      const drawer = selectDrawer();
-
-      // Assert
-      expect(drawer.mode).eq('half');
-      expect(drawer.mutant).eq(mutant);
-    });
-
-    it('should close when a mutant is deselected', async () => {
-      // Arrange
-      const mutant = new MutantModel(createMutantResult());
-      window.location.hash = '#foobar.js';
-      await tick();
-      await sut.whenStable();
-      sut.$('mutation-test-report-file').dispatchEvent(createCustomEvent('mutant-selected', { selected: true, mutant }));
-      const drawer = selectDrawer();
-      await sut.whenStable();
-
-      // Act
-      sut.$('mutation-test-report-file').dispatchEvent(createCustomEvent('mutant-selected', { selected: false, mutant }));
-      await sut.whenStable();
-
-      // Assert
-      expect(drawer.mode).eq('closed');
-      expect(drawer.mutant).eq(mutant);
     });
   });
 

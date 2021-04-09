@@ -74,7 +74,7 @@ export function createMetrics(overrides?: Metrics): Metrics {
   return { ...defaults, ...overrides };
 }
 
-export function createReport(overrides?: MutationTestResult): MutationTestResult {
+export function createReport(overrides?: Partial<MutationTestResult>): MutationTestResult {
   return {
     files: {
       'foobar.js': {

@@ -1,5 +1,4 @@
 import { customElement, LitElement, property, PropertyValues, html, unsafeCSS } from 'lit-element';
-import { MutantResult } from 'mutation-testing-report-schema';
 import { bootstrap } from '../../style';
 import style from './mutation-test-report-state-filter.scss';
 import { createCustomEvent } from '../../lib/custom-events';
@@ -16,9 +15,6 @@ export interface StateFilter<TStatus> {
 @customElement('mutation-test-report-state-filter')
 export class MutationTestReportFileStateFilterComponent<TStatus> extends LitElement {
   @property()
-  public mutants: ReadonlyArray<Pick<MutantResult, 'status'>> = [];
-
-  @property()
   private get collapseButtonText() {
     if (this.collapsed) {
       return 'Expand all';
@@ -31,7 +27,7 @@ export class MutationTestReportFileStateFilterComponent<TStatus> extends LitElem
   private collapsed = true;
 
   @property({ type: Array })
-  public filters!: StateFilter<TStatus>[];
+  public filters?: StateFilter<TStatus>[];
 
   @property({ type: Boolean, attribute: 'allow-toggle-all', reflect: true })
   public allowToggleAll = false;
@@ -48,7 +44,7 @@ export class MutationTestReportFileStateFilterComponent<TStatus> extends LitElem
   }
 
   private dispatchFiltersChangedEvent() {
-    this.dispatchEvent(createCustomEvent('filters-changed', this.filters));
+    this.dispatchEvent(createCustomEvent('filters-changed', this.filters as StateFilter<any>[]));
   }
 
   private readonly toggleOpenAll = () => {
@@ -65,7 +61,8 @@ export class MutationTestReportFileStateFilterComponent<TStatus> extends LitElem
   public render() {
     return html`
       <div class="legend col-md-12 d-flex align-items-center">
-        ${repeat(
+        ${this.filters &&
+        repeat(
           this.filters,
           // Key function. I super duper want that all properties are weighed here,
           // see https://lit-html.polymer-project.org/guide/writing-templates#repeating-templates-with-the-repeat-directive

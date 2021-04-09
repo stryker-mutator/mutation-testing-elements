@@ -87,10 +87,10 @@ export function escapeHtml(unsafe: string) {
   return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
 }
 
-export function toAbsoluteUrl(fragment: string): string {
+export function toAbsoluteUrl(...fragments: string[]): string {
   // Use absolute url because of https://github.com/stryker-mutator/mutation-testing-elements/issues/53
   const url = new URL(window.location.href);
-  return new URL(`#${fragment}`, url).href;
+  return new URL(`#${fragments.filter(Boolean).join('/')}`, url).href;
 }
 
 export function plural(items: unknown[]): string {

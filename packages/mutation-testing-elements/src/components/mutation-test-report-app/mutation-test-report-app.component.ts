@@ -2,7 +2,7 @@ import { LitElement, html, property, customElement, PropertyValues, unsafeCSS } 
 import { MutationTestResult } from 'mutation-testing-report-schema';
 import { MetricsResult, calculateMutationTestMetrics } from 'mutation-testing-metrics';
 import { bootstrap } from '../../style';
-import { locationChange$ } from '../../lib/router';
+import { locationChange$, View } from '../../lib/router';
 import { Subscription } from 'rxjs';
 import style from './mutation-test-report-app.scss';
 import theme from './theme.scss';
@@ -10,13 +10,17 @@ import { createCustomEvent } from '../../lib/custom-events';
 import { FileUnderTestModel, Metrics, MutationTestMetricsResult, TestFileModel, TestMetrics } from 'mutation-testing-metrics/src/model';
 import { toAbsoluteUrl } from '../../lib/htmlHelpers';
 
-interface MutantContext {
-  view: 'mutant';
+interface BaseContext {
+  path: string[];
+}
+
+interface MutantContext extends BaseContext {
+  view: View.mutant;
   result?: MetricsResult<FileUnderTestModel, Metrics>;
 }
 
-interface TestContext {
-  view: 'test';
+interface TestContext extends BaseContext {
+  view: View.test;
   result?: MetricsResult<TestFileModel, TestMetrics>;
 }
 
@@ -37,7 +41,7 @@ export class MutationTestReportAppComponent extends LitElement {
   public errorMessage: string | undefined;
 
   @property({ attribute: false })
-  public context: Context = { view: 'mutant' };
+  public context: Context = { view: View.mutant, path: [] };
 
   @property()
   public path: ReadonlyArray<string> = [];
@@ -83,8 +87,8 @@ export class MutationTestReportAppComponent extends LitElement {
     }
 
     // Set the default view to "mutant" when no route is selected
-    if (this.path.length === 0 || (this.path[0] !== 'mutant' && this.path[0] !== 'test')) {
-      window.location.hash = '#mutant';
+    if (this.path.length === 0 || (this.path[0] !== View.mutant && this.path[0] !== View.test)) {
+      window.location.hash = `#${View.mutant}`;
     }
   }
 
@@ -126,14 +130,17 @@ export class MutationTestReportAppComponent extends LitElement {
           root
         );
       };
-      if (this.path[0] === 'test' && this.rootModel.testMetrics) {
+      const path = this.path.slice(1);
+      if (this.path[0] === (View.test as string) && this.rootModel.testMetrics) {
         this.context = {
-          view: 'test',
+          view: View.test,
+          path,
           result: findResult(this.rootModel.testMetrics, this.path.slice(1)),
         };
       } else {
         this.context = {
-          view: 'mutant',
+          view: View.mutant,
+          path,
           result: findResult(this.rootModel.systemUnderTestMetrics, this.path.slice(1)),
         };
       }
@@ -182,7 +189,7 @@ export class MutationTestReportAppComponent extends LitElement {
               <mutation-test-report-theme-switch @theme-switch="${this.themeSwitch}" class="theme-switch" .theme="${this.theme}">
               </mutation-test-report-theme-switch>
               ${this.renderTitle()} ${this.renderTabs()}
-              <mutation-test-report-breadcrumb .path="${this.path}"></mutation-test-report-breadcrumb>
+              <mutation-test-report-breadcrumb .view="${this.context.view}" .path="${this.context.path}"></mutation-test-report-breadcrumb>
               ${this.context.view === 'mutant' && this.context.result
                 ? html`<mutation-test-report-mutant-view
                     .result="${this.context.result}"

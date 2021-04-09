@@ -3,10 +3,6 @@ import { TestModel } from 'mutation-testing-metrics';
 import { BackgroundColorCalculator } from './BackgroundColorCalculator';
 import { escapeHtml } from './htmlHelpers';
 
-export function pathJoin(...parts: string[]) {
-  return parts.reduce((prev, current) => (prev.length ? (current ? `${prev}/${current}` : prev) : current), '');
-}
-
 /**
  * Walks over the code in model.source and adds the
  * `<mutation-test-report-mutant>` elements.

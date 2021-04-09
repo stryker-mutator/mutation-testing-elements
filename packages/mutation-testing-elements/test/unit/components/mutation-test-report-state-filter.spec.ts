@@ -6,13 +6,23 @@ import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { MutantStatus } from 'mutation-testing-report-schema';
 import { expect } from 'chai';
 import { normalizeWhitespace, expectedMutantColors } from '../../helpers/helperFunctions';
-import { getContextClassForStatus } from '../../../src/lib/htmlHelpers';
+import { getContextClassForStatus, getEmojiForStatus } from '../../../src/lib/htmlHelpers';
+
+function createStateFilter(status: MutantStatus): StateFilter<MutantStatus> {
+  return {
+    count: 1,
+    context: getContextClassForStatus(status),
+    enabled: [MutantStatus.Survived, MutantStatus.NoCoverage, MutantStatus.Timeout].includes(status),
+    label: `${getEmojiForStatus(status)} ${status}`,
+    status,
+  };
+}
 
 describe(MutationTestReportFileStateFilterComponent.name, () => {
-  let sut: CustomElementFixture<MutationTestReportFileStateFilterComponent>;
+  let sut: CustomElementFixture<MutationTestReportFileStateFilterComponent<MutantStatus>>;
 
   beforeEach(async () => {
-    sut = new CustomElementFixture('mutation-test-report-file-legend');
+    sut = new CustomElementFixture('mutation-test-report-state-filter');
     await sut.whenStable();
   });
 
@@ -21,21 +31,26 @@ describe(MutationTestReportFileStateFilterComponent.name, () => {
   });
 
   describe('filter buttons', () => {
-    it('should display no checkboxes without mutants', () => {
+    it('should display no checkboxes without filters', () => {
       expect(sut.$$('input[checkbox]')).lengthOf(0);
     });
 
     it('should display checkboxes for all states', async () => {
-      sut.element.mutants = [
-        { status: MutantStatus.CompileError },
-        { status: MutantStatus.Killed },
-        { status: MutantStatus.NoCoverage },
-        { status: MutantStatus.RuntimeError },
-        { status: MutantStatus.Survived },
-        { status: MutantStatus.Timeout },
-        { status: MutantStatus.Ignored },
-      ];
+      // Arrange
+      sut.element.filters = [
+        MutantStatus.Killed,
+        MutantStatus.Survived,
+        MutantStatus.NoCoverage,
+        MutantStatus.Ignored,
+        MutantStatus.Timeout,
+        MutantStatus.CompileError,
+        MutantStatus.RuntimeError,
+      ].map(createStateFilter);
+
+      // Act
       await sut.whenStable();
+
+      // Assert
       const actualCheckboxes = sut.$$('.form-check.form-check-inline');
       expect(actualCheckboxes).lengthOf(7);
       const checkboxTexts = actualCheckboxes.map((checkbox) => normalizeWhitespace(checkbox.textContent as string));
@@ -56,7 +71,7 @@ describe(MutationTestReportFileStateFilterComponent.name, () => {
         const mutantStatus = status as MutantStatus;
         sut.element.style.cssText = `--bs-badge-${getContextClassForStatus(mutantStatus)}-bg: ${expectedMutantColors[mutantStatus]};`;
         const expectedColor = expectedMutantColors[mutantStatus];
-        sut.element.mutants = [{ status: mutantStatus }];
+        sut.element.filters = [createStateFilter(mutantStatus)];
 
         // Act
         await sut.whenStable();
@@ -68,63 +83,60 @@ describe(MutationTestReportFileStateFilterComponent.name, () => {
     });
 
     it('should dispatch the "filters-changed" event for the initial state', async () => {
-      let actualEvent: CustomEvent | undefined;
-      sut.element.addEventListener('filters-changed', (ev: any) => {
-        actualEvent = ev;
+      const expectedFilters = [
+        MutantStatus.CompileError,
+        MutantStatus.Killed,
+        MutantStatus.NoCoverage,
+        MutantStatus.RuntimeError,
+        MutantStatus.Survived,
+        MutantStatus.Timeout,
+        MutantStatus.Ignored,
+      ].map(createStateFilter);
+      const actualEvent = await sut.catchCustomEvent('filters-changed', () => {
+        sut.element.filters = expectedFilters;
       });
-      sut.element.mutants = [
-        { status: MutantStatus.CompileError },
-        { status: MutantStatus.Killed },
-        { status: MutantStatus.NoCoverage },
-        { status: MutantStatus.RuntimeError },
-        { status: MutantStatus.Survived },
-        { status: MutantStatus.Timeout },
-        { status: MutantStatus.Ignored },
-      ];
-      const expected: StateFilter[] = [
-        { enabled: false, numberOfMutants: 1, status: MutantStatus.Killed },
-        { enabled: true, numberOfMutants: 1, status: MutantStatus.Survived },
-        { enabled: true, numberOfMutants: 1, status: MutantStatus.NoCoverage },
-        { enabled: false, numberOfMutants: 1, status: MutantStatus.Ignored },
-        { enabled: true, numberOfMutants: 1, status: MutantStatus.Timeout },
-        { enabled: false, numberOfMutants: 1, status: MutantStatus.CompileError },
-        { enabled: false, numberOfMutants: 1, status: MutantStatus.RuntimeError },
-      ];
-      await sut.whenStable();
       expect(actualEvent).ok;
-      expect((actualEvent as CustomEvent).detail).deep.eq(expected);
+      expect(actualEvent!.detail).deep.eq(expectedFilters);
     });
 
     it('should dispatch the "filters-changed" event when a checkbox is checked', async () => {
       // Arrange
-      sut.element.mutants = [{ status: MutantStatus.CompileError }, { status: MutantStatus.Survived }];
+      const inputFilters = [MutantStatus.CompileError, MutantStatus.Survived].map(createStateFilter);
+      inputFilters[0].enabled = false;
+      inputFilters[1].enabled = true;
+      sut.element.filters = inputFilters;
       await sut.whenStable();
-      let actualEvent: CustomEvent | undefined;
-      sut.element.addEventListener('filters-changed', (ev: any) => {
-        actualEvent = ev;
-      });
-      const expected: StateFilter[] = [
-        { enabled: false, numberOfMutants: 1, status: MutantStatus.Survived },
-        { enabled: false, numberOfMutants: 1, status: MutantStatus.CompileError },
-      ];
+      const expected = [MutantStatus.CompileError, MutantStatus.Survived].map(createStateFilter);
+      expected[0].enabled = false;
+      expected[1].enabled = false;
 
       // Act
-      sut.$(`input[type="checkbox"][value="${MutantStatus.Survived}"]`).click();
-      await sut.whenStable();
+      const actualEvent = await sut.catchCustomEvent('filters-changed', () => {
+        sut.$(`input[type="checkbox"][value="${MutantStatus.Survived}"]`).click();
+      });
 
       // Assert
       expect(actualEvent).ok;
-      expect((actualEvent as CustomEvent).detail).deep.eq(expected);
+      expect(actualEvent!.detail).deep.eq(expected);
     });
   });
 
   describe('Collapse/expand button', () => {
     let collapseButton: HTMLElement;
-    beforeEach(() => {
+    beforeEach(async () => {
+      sut.element.allowToggleAll = true;
+      await sut.whenStable();
       collapseButton = sut.$('button.btn-secondary');
     });
 
-    it('should show "Expand all" button', () => {
+    it('should not show "Expand all" when "allowToggleAll" is false', async () => {
+      sut.element.allowToggleAll = false;
+      await sut.whenStable();
+      collapseButton = sut.$('button.btn-secondary');
+      expect(collapseButton).null;
+    });
+
+    it('should show "Expand all" button when "allowToggleAll" is true', () => {
       expect(collapseButton.textContent).eq('Expand all');
     });
 
