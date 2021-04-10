@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { FileUnderTestModel, Metrics, MutantModel } from 'mutation-testing-metrics';
+import { FileUnderTestModel, Metrics, MetricsResult, MutantModel } from 'mutation-testing-metrics';
 import { MutationTestReportDrawerMutant } from '../../../src/components/mutation-test-report-drawer-mutant/mutation-test-report-drawer-mutant.component';
 import {
   Column,
@@ -12,15 +12,23 @@ import { CustomElementFixture } from '../helpers/CustomElementFixture';
 
 describe(MutationTestReportMutantViewComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportMutantViewComponent>;
+  let result: MetricsResult<FileUnderTestModel, Metrics>;
 
   beforeEach(async () => {
     sut = new CustomElementFixture('mutation-test-report-mutant-view');
-    sut.element.result = createMetricsResult({ file: new FileUnderTestModel(createFileResult(), 'foo.js') });
+    result = createMetricsResult({ file: new FileUnderTestModel(createFileResult(), 'foo.js') });
+    sut.element.result = result;
     await sut.whenStable();
   });
 
   describe('the metrics table', () => {
-    it('should bind the correct columns', () => {
+    let metricsTable: MutationTestReportTestMetricsTable<FileUnderTestModel, Metrics>;
+
+    beforeEach(() => {
+      metricsTable = sut.$('mutation-test-report-metrics-table') as MutationTestReportTestMetricsTable<FileUnderTestModel, Metrics>;
+    });
+
+    it('should pass the correct columns', () => {
       const expectedColumns: Column<Metrics>[] = [
         { key: 'mutationScore', label: 'Mutation score', category: 'percentage' },
         { key: 'killed', label: '# Killed', category: 'number' },
@@ -34,8 +42,25 @@ describe(MutationTestReportMutantViewComponent.name, () => {
         { key: 'totalUndetected', label: 'Total undetected', category: 'number', width: 'large', isHeader: true },
         { key: 'totalMutants', label: 'Total mutants', category: 'number', width: 'large', isHeader: true },
       ];
-      const actualColumns = (sut.$('mutation-test-report-metrics-table') as MutationTestReportTestMetricsTable<FileUnderTestModel, Metrics>).columns;
-      expect(actualColumns).deep.eq(expectedColumns);
+      expect(metricsTable.columns).deep.eq(expectedColumns);
+    });
+
+    it('should pass the current path', async () => {
+      const path = ['some', 'path'];
+      sut.element.path = path;
+      await sut.whenStable();
+      expect(metricsTable.currentPath).eq(path);
+    });
+
+    it('should pass thresholds', async () => {
+      const thresholds = { high: 67, low: 57 };
+      sut.element.thresholds = thresholds;
+      await sut.whenStable();
+      expect(metricsTable.thresholds).eq(thresholds);
+    });
+
+    it('should pass the result', () => {
+      expect(metricsTable.model).eq(result);
     });
   });
 

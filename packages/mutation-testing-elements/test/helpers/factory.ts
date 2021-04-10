@@ -1,5 +1,5 @@
-import { MutantResult, MutantStatus, FileResult, Location, TestDefinition, MutationTestResult } from 'mutation-testing-report-schema';
-import { Metrics, MetricsResult } from 'mutation-testing-metrics';
+import { MutantResult, MutantStatus, FileResult, Location, TestDefinition, MutationTestResult, TestFile } from 'mutation-testing-report-schema';
+import { Metrics, MetricsResult, TestFileModel, TestMetrics } from 'mutation-testing-metrics';
 
 export function createMutantResult(overrides?: Partial<MutantResult>): MutantResult {
   const defaults: MutantResult = {
@@ -51,6 +51,32 @@ export function createMetricsResult(overrides?: Partial<MetricsResult>): Metrics
     name: 'foo',
   };
   return { ...defaults, ...overrides };
+}
+
+export function createTestMetricsResult(overrides?: Partial<MetricsResult<TestFileModel, TestMetrics>>): MetricsResult<TestFileModel, TestMetrics> {
+  const defaults: MetricsResult<TestFileModel, TestMetrics> = {
+    childResults: [],
+    metrics: createTestMetrics(),
+    name: 'foo',
+  };
+  return { ...defaults, ...overrides };
+}
+
+export function createTestFile(overrides?: Partial<TestFile>): TestFile {
+  return {
+    tests: [],
+    ...overrides,
+  };
+}
+
+export function createTestMetrics(overrides?: TestMetrics): TestMetrics {
+  return {
+    killing: 0,
+    notCovering: 0,
+    notKilling: 0,
+    total: 0,
+    ...overrides,
+  };
 }
 
 export function createMetrics(overrides?: Metrics): Metrics {
