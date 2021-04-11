@@ -7,7 +7,7 @@ import style from './mutation-test-report-test-file.scss';
 
 import '../../style/prism-plugins';
 import { bootstrap, prismjs } from '../../style';
-import { markTests } from '../../lib/codeHelpers';
+import { determineLanguage, markTests } from '../../lib/code-helpers';
 import { MutationTestReportTestComponent } from '../mutation-test-report-test/mutation-test-report-test.component';
 import { MteCustomEvent } from '../../lib/custom-events';
 import { TestStatus } from 'mutation-testing-metrics/src/model/test-model';
@@ -18,7 +18,7 @@ import { MutationTestReportTestListItemComponent } from '../mutation-test-report
 @customElement('mutation-test-report-test-file')
 export class MutationTestReportTestFile extends LitElement {
   @property()
-  public model!: TestFileModel;
+  public model: TestFileModel | undefined;
 
   public static styles = [prismjs, bootstrap, unsafeCSS(style)];
 
@@ -63,7 +63,7 @@ export class MutationTestReportTestFile extends LitElement {
   }
 
   private renderTestList() {
-    const testsToRenderInTheList = this.model.source ? this.model.tests.filter((test) => !test.location) : this.model.tests;
+    const testsToRenderInTheList = this.model?.source ? this.model.tests.filter((test) => !test.location) : this.model?.tests ?? [];
     if (testsToRenderInTheList.length) {
       return html`<div class="list-group">
         ${testsToRenderInTheList.map(
@@ -79,15 +79,15 @@ export class MutationTestReportTestFile extends LitElement {
   }
 
   private renderCode() {
-    if (this.model.source) {
-      return html`<pre id="report-code-block" class="line-numbers"><code class="language-typescript">${unsafeHTML(
+    if (this.model?.source) {
+      return html`<pre id="report-code-block" class="line-numbers"><code class="language-${determineLanguage(this.model.name)}">${unsafeHTML(
         markTests(this.model.source, this.model.tests)
       )}</code></pre>`;
     }
     return;
   }
 
-  public firstUpdated() {
+  private highlightCode() {
     const code = this.shadowRoot?.querySelector('code');
     if (code) {
       highlightElement(code);
@@ -95,22 +95,24 @@ export class MutationTestReportTestFile extends LitElement {
       // Prism-js's `highlightElement` creates a copy of the DOM tree to do its magic.
       // Now that the code is highlighted, we can bind the test components
       this.forEachTestComponent((testComponent) => {
-        testComponent.test = this.model.tests.find((test) => test.id === testComponent.getAttribute('test-id'));
+        testComponent.test = this.model?.tests.find((test) => test.id === testComponent.getAttribute('test-id'));
       });
     }
   }
 
   public updated(changes: PropertyValues) {
     if (changes.has('model') && this.model) {
+      const model = this.model;
       this.filters = [TestStatus.Killing, TestStatus.NotKilling, TestStatus.NotCovering]
-        .filter((status) => this.model.tests.some((test) => test.status === status))
+        .filter((status) => model.tests.some((test) => test.status === status))
         .map((status) => ({
           enabled: true,
-          count: this.model.tests.filter((m) => m.status === status).length,
+          count: model.tests.filter((m) => m.status === status).length,
           status,
           label: `${getEmojiForTestStatus(status)} ${status}`,
           context: getContextClassForTestStatus(status),
         }));
+      this.highlightCode();
     }
   }
 }

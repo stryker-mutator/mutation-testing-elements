@@ -3,6 +3,55 @@ import { TestModel } from 'mutation-testing-metrics';
 import { BackgroundColorCalculator } from './BackgroundColorCalculator';
 import { escapeHtml } from './htmlHelpers';
 
+export enum ProgrammingLanguage {
+  csharp = 'cs',
+  java = 'java',
+  javascript = 'javascript',
+  html = 'html',
+  php = 'php',
+  scala = 'scala',
+  typescript = 'typescript',
+  vue = 'vue',
+}
+
+/**
+ * Returns the lower case extension without the `.`.
+ * @param fileName The file name
+ * @returns File extension
+ */
+export function getExtension(fileName: string): string {
+  return fileName.substr(fileName.lastIndexOf('.') + 1).toLocaleLowerCase();
+}
+
+/**
+ * Determines the programming language based on file extension.
+ */
+export function determineLanguage(fileName: string): ProgrammingLanguage | undefined {
+  switch (getExtension(fileName)) {
+    case 'cs':
+      return ProgrammingLanguage.csharp;
+    case 'html':
+      return ProgrammingLanguage.html;
+    case 'java':
+      return ProgrammingLanguage.java;
+    case 'js':
+    case 'cjs':
+    case 'mjs':
+      return ProgrammingLanguage.javascript;
+    case 'ts':
+    case 'tsx':
+      return ProgrammingLanguage.typescript;
+    case 'scala':
+      return ProgrammingLanguage.scala;
+    case 'php':
+      return ProgrammingLanguage.php;
+    case 'vue':
+      return ProgrammingLanguage.vue;
+    default:
+      return undefined;
+  }
+}
+
 /**
  * Walks over the code in model.source and adds the
  * `<mutation-test-report-mutant>` elements.
@@ -57,6 +106,8 @@ export function isAlfaNumeric(char: string) {
 }
 
 export function markTests(source: string, tests: TestModel[]): string {
+  const toComponent = (test: TestModel): string => `<mutation-test-report-test test-id="${test.id}"></mutation-test-report-test>`;
+
   // work with a copy, so we can mutate the array
   const testsToPlace = [...tests];
   return `<span>${walkString(source, (char, pos) => {
@@ -66,14 +117,14 @@ export function markTests(source: string, tests: TestModel[]): string {
     if (!isAlfaNumeric(char)) {
       // Determine the test starts using `gte`. That way, if a flaky line/column results in a non-existing location, it will still appear on the next line
       const startingTests = testsToPlace.filter((test) => test.location && gte(pos, test.location.start));
-      builder.push(...startingTests.map((test) => `<mutation-test-report-test test-id="${test.id}"></mutation-test-report-test>`));
+      builder.push(...startingTests.map(toComponent));
 
       // Remove the test from the tests to place
       startingTests.forEach((test) => testsToPlace.splice(testsToPlace.indexOf(test), 1));
     }
     builder.push(escapeHtml(char));
     return builder.join('');
-  })}</span>`;
+  })}${testsToPlace.map(toComponent).join('')}</span>`;
 }
 
 export const COLUMN_START_INDEX = 1;

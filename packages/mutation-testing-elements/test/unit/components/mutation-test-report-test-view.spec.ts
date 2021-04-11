@@ -10,7 +10,7 @@ import { createCustomEvent } from '../../../src/lib/custom-events';
 import { createTestDefinition, createTestFile, createTestMetricsResult } from '../../helpers/factory';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 
-describe.only(MutationTestReportTestViewComponent.name, () => {
+describe(MutationTestReportTestViewComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportTestViewComponent>;
   let result: MetricsResult<TestFileModel, TestMetrics>;
 

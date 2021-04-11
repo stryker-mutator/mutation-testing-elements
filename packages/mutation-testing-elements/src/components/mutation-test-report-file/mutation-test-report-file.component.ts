@@ -3,7 +3,7 @@ import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 import { MutationTestReportMutantComponent } from '../mutation-test-report-mutant/mutation-test-report-mutant.component';
 import { StateFilter } from '../mutation-test-report-state-filter/mutation-test-report-state-filter.component';
 import { bootstrap, prismjs } from '../../style';
-import { markMutants } from '../../lib/codeHelpers';
+import { markMutants } from '../../lib/code-helpers';
 import { FileResult, MutantStatus } from 'mutation-testing-report-schema';
 import { highlightElement } from 'prismjs/components/prism-core';
 import style from './mutation-test-report-file.scss';
