@@ -54,7 +54,7 @@
     "chromedriver": "^89.0.0",
     "cross-env": "^7.0.0",
     "css-loader": "^5.0.0",
-    "cssnano": "^4.1.10",
+    "cssnano": "^5.0.0",
     "eslint": "^7.11.0",
     "eslint-config-prettier": "~8.1.0",
     "eslint-plugin-import": "~2.22.0",
