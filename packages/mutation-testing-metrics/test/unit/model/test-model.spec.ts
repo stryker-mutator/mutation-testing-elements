@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { TestDefinition } from 'mutation-testing-report-schema';
 import { MutantModel, TestModel } from '../../../src';
+import { TestStatus } from '../../../src/model/test-model';
 import { createLocation, createMutantResult, createTestDefinition, createTestFileModel } from '../../helpers/factories';
 
 describe(TestModel.name, () => {
@@ -38,6 +39,26 @@ describe(TestModel.name, () => {
         actual[method](mutant2);
         expect(actual[property]).deep.eq([mutant, mutant2]);
       });
+    });
+  });
+
+  describe('state', () => {
+    it(`should be "${TestStatus.NotCovering}" when not covering any mutants`, () => {
+      const actual = new TestModel(createTestDefinition());
+      expect(actual.status).eq(TestStatus.NotCovering);
+    });
+
+    it(`should be "${TestStatus.NotKilling}" when covering mutants, but not killing them`, () => {
+      const actual = new TestModel(createTestDefinition());
+      actual.addCovered(new MutantModel(createMutantResult()));
+      expect(actual.status).eq(TestStatus.NotKilling);
+    });
+
+    it(`should be "${TestStatus.Killing}" when killing mutants`, () => {
+      const actual = new TestModel(createTestDefinition());
+      actual.addCovered(new MutantModel(createMutantResult()));
+      actual.addKilled(new MutantModel(createMutantResult()));
+      expect(actual.status).eq(TestStatus.Killing);
     });
   });
 
