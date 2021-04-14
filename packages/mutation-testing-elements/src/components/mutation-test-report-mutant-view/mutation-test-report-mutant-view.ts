@@ -1,10 +1,11 @@
-import { customElement, html, LitElement, property, PropertyValues } from 'lit-element';
+import { customElement, html, LitElement, property, PropertyValues, unsafeCSS } from 'lit-element';
 import { FileUnderTestModel, Metrics, MetricsResult } from 'mutation-testing-metrics';
 import { MutantResult as MutantModel, Thresholds } from 'mutation-testing-report-schema';
-import { MteCustomEvent } from '../lib/custom-events';
-import { bootstrap } from '../style';
-import { DrawerMode } from './mutation-test-report-drawer/mutation-test-report-drawer.component';
-import { Column } from './mutation-test-report-metrics-table/mutation-test-report-metrics-table.component';
+import { MteCustomEvent } from '../../lib/custom-events';
+import { bootstrap } from '../../style';
+import { DrawerMode } from '../mutation-test-report-drawer/mutation-test-report-drawer.component';
+import { Column } from '../mutation-test-report-metrics-table/mutation-test-report-metrics-table.component';
+import style from './mutation-test-report-mutant-view.scss';
 
 const COLUMNS: Column<Metrics>[] = [
   { key: 'mutationScore', label: 'Mutation score', category: 'percentage' },
@@ -28,7 +29,7 @@ export class MutationTestReportMutantViewComponent extends LitElement {
   @property()
   private selectedMutant?: MutantModel;
 
-  public static styles = [bootstrap];
+  public static styles = [bootstrap, unsafeCSS(style)];
 
   @property()
   public result!: MetricsResult<FileUnderTestModel, Metrics>;
@@ -60,23 +61,18 @@ export class MutationTestReportMutantViewComponent extends LitElement {
       <main @click="${this.handleClick}">
         <div class="row">
           <div class="totals col-sm-11">
-            <mutation-test-report-metrics-table 
-            .columns="${COLUMNS}" 
-            .currentPath="${this.path}"
-            .thresholds="${this.thresholds}"
-            .model="${this.result}">
+            <mutation-test-report-metrics-table
+              .columns="${COLUMNS}"
+              .currentPath="${this.path}"
+              .thresholds="${this.thresholds}"
+              .model="${this.result}"
+            >
             </mutation-test-report-metrics-table>
           </div>
         </div>
-        ${
-          this.result.file
-            ? html`<mutation-test-report-file
-                @mutant-selected="${this.handleMutantSelected}"
-                .model="${this.result.file}"
-              ></mutation-test-report-file>`
-            : ''
-        }
-      </mutation-test-report-file>
+        ${this.result.file
+          ? html`<mutation-test-report-file @mutant-selected="${this.handleMutantSelected}" .model="${this.result.file}"></mutation-test-report-file>`
+          : ''}
       </main>
       <mutation-test-report-drawer-mutant .mode="${this.drawerMode}" .mutant="${this.selectedMutant}"></mutation-test-report-drawer-mutant>
     `;

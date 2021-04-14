@@ -4,8 +4,8 @@ import { expect } from 'chai';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { createCustomEvent } from '../../../src/lib/custom-events';
 import { createReport } from '../../helpers/factory';
-import { MutationTestReportMutantViewComponent } from '../../../src/components/mutation-test-report-mutant-view';
-import { MutationTestReportTestViewComponent } from '../../../src/components/mutation-test-report-test-view';
+import { MutationTestReportMutantViewComponent } from '../../../src/components/mutation-test-report-mutant-view/mutation-test-report-mutant-view';
+import { MutationTestReportTestViewComponent } from '../../../src/components/mutation-test-report-test-view/mutation-test-report-test-view';
 import { tick } from '../helpers/tick';
 
 describe(MutationTestReportAppComponent.name, () => {

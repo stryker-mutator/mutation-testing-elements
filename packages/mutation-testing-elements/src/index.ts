@@ -6,8 +6,8 @@ import './components/mutation-test-report-state-filter/mutation-test-report-stat
 import './components/mutation-test-report-theme-switch/mutation-test-report-theme-switch.component';
 import './components/mutation-test-report-drawer/mutation-test-report-drawer.component';
 import './components/mutation-test-report-drawer-mutant/mutation-test-report-drawer-mutant.component';
-import './components/mutation-test-report-mutant-view';
-import './components/mutation-test-report-test-view';
+import './components/mutation-test-report-mutant-view/mutation-test-report-mutant-view';
+import './components/mutation-test-report-test-view/mutation-test-report-test-view';
 import './components/mutation-test-report-metrics-table/mutation-test-report-metrics-table.component';
 import './components/mutation-test-report-test-file/mutation-test-report-test-file.component';
 import './components/mutation-test-report-drawer-test/mutation-test-report-drawer-test.component';

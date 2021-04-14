@@ -5,7 +5,7 @@ import {
   Column,
   MutationTestReportTestMetricsTable,
 } from '../../../src/components/mutation-test-report-metrics-table/mutation-test-report-metrics-table.component';
-import { MutationTestReportMutantViewComponent } from '../../../src/components/mutation-test-report-mutant-view';
+import { MutationTestReportMutantViewComponent } from '../../../src/components/mutation-test-report-mutant-view/mutation-test-report-mutant-view';
 import { createCustomEvent } from '../../../src/lib/custom-events';
 import { createFileResult, createMetricsResult, createMutantResult } from '../../helpers/factory';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';

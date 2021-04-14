@@ -1,9 +1,10 @@
-import { customElement, html, LitElement, property, PropertyValues } from 'lit-element';
+import { customElement, html, LitElement, property, PropertyValues, unsafeCSS } from 'lit-element';
 import { MetricsResult, TestFileModel, TestMetrics, TestModel } from 'mutation-testing-metrics';
-import { MteCustomEvent } from '../lib/custom-events';
-import { bootstrap } from '../style';
-import { DrawerMode } from './mutation-test-report-drawer/mutation-test-report-drawer.component';
-import { Column } from './mutation-test-report-metrics-table/mutation-test-report-metrics-table.component';
+import { MteCustomEvent } from '../../lib/custom-events';
+import { bootstrap } from '../../style';
+import { DrawerMode } from '../mutation-test-report-drawer/mutation-test-report-drawer.component';
+import { Column } from '../mutation-test-report-metrics-table/mutation-test-report-metrics-table.component';
+import style from './mutation-test-report-test-view.scss';
 
 const COLUMNS: Column<TestMetrics>[] = [
   { key: 'killing', label: '# Killing', width: 'normal', category: 'number' },
@@ -26,7 +27,7 @@ export class MutationTestReportTestViewComponent extends LitElement {
   @property()
   private selectedTest?: TestModel;
 
-  public static styles = [bootstrap];
+  public static styles = [bootstrap, unsafeCSS(style)];
 
   private handleClick = () => {
     // Close the drawer if the user clicks anywhere in the report (that didn't handle the click already)
