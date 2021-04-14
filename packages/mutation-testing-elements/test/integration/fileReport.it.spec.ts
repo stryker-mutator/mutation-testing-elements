@@ -11,6 +11,7 @@ describe('File report "install-local-example/Options.ts"', () => {
     page = new ReportPage(getCurrent());
     await page.navigateTo('');
     await page.navigateTo('install-local-example/#mutant/Options.ts');
+    await page.whenFileReportLoaded();
   });
 
   it('should show title "Options.ts"', async () => {

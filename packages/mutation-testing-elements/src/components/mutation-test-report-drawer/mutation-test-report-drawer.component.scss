@@ -24,7 +24,7 @@ header {
   height: 0;
 }
 :host([mode='half']) {
-  height: 120px; // Leave room for 2 lines of text
+  height: var(--mut-drawer-height-half-open);
 }
 :host([mode='open']) {
   height: 50%;

@@ -11,26 +11,30 @@ export class ReportPage extends ElementSelector {
     super(browser);
   }
 
+  public whenFileReportLoaded() {
+    return this.browser.wait(
+      async () => {
+        try {
+          await this.$('mutation-test-report-app >>> mutation-test-report-mutant-view >>> mutation-test-report-file');
+          return true;
+        } catch (err) {
+          if (err instanceof Error && err.message.includes('Unable to locate element')) {
+            return false;
+          }
+          throw err;
+        }
+      },
+      DEFAULT_TIMEOUT,
+      'Waiting for file report to load'
+    );
+  }
+
   public takeScreenshot(): Promise<string> {
     return this.$('mutation-test-report-app >>> .container-fluid').takeScreenshot();
   }
 
   public navigateTo(path: string) {
     return this.browser.get(constants.BASE_URL + path);
-  }
-
-  public whenFileReportLoaded() {
-    return this.browser.wait(async () => {
-      try {
-        await this.$('mutation-test-report-app >>> mutation-test-report-file');
-        return true;
-      } catch (err) {
-        if (err instanceof Error && err.message.includes('Unable to locate element')) {
-          return false;
-        }
-        throw err;
-      }
-    }, DEFAULT_TIMEOUT);
   }
 
   public async backgroundColor() {

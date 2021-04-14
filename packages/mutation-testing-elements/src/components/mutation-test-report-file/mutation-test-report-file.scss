@@ -10,6 +10,9 @@
   // Don't show scrollbar in code block, the page already scrolls
   // Also let the popup appear outside the code block boundaries
   overflow: visible;
+
+  // Allow room for a half-open drawer
+  margin-bottom: var(--mut-drawer-height-half-open);
 }
 
 mutation-test-report-mutant {

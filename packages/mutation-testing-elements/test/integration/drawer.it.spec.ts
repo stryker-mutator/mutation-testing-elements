@@ -23,6 +23,7 @@ describe('Drawer', () => {
       mutant = page.mutantView.mutant(20);
       await mutant.toggleMutant();
       drawer = page.mutantView.mutantDrawer();
+      await page.mutantView.scrollToCode();
     });
 
     it('should show a summary in the drawer when a mutant is clicked', async () => {

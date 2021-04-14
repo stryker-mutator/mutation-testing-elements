@@ -1,7 +1,7 @@
 import { LitElement, html, property, customElement, PropertyValues, unsafeCSS } from 'lit-element';
 import { MutationTestResult } from 'mutation-testing-report-schema';
 import { MetricsResult, calculateMutationTestMetrics } from 'mutation-testing-metrics';
-import { bootstrap } from '../../style';
+import { bootstrap, globals } from '../../style';
 import { locationChange$, View } from '../../lib/router';
 import { Subscription } from 'rxjs';
 import style from './mutation-test-report-app.scss';
@@ -157,7 +157,7 @@ export class MutationTestReportAppComponent extends LitElement {
     localStorage.setItem('mutation-testing-elements-theme', this.theme);
   };
 
-  public static styles = [unsafeCSS(theme), bootstrap, unsafeCSS(style)];
+  public static styles = [globals, unsafeCSS(theme), bootstrap, unsafeCSS(style)];
 
   public readonly subscriptions: Subscription[] = [];
   public connectedCallback() {
