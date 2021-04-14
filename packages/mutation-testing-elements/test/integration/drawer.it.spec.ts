@@ -12,7 +12,7 @@ describe('Drawer', () => {
   beforeEach(async () => {
     page = new ReportPage(getCurrent());
     await page.navigateTo('');
-    await page.navigateTo('test-files-example/#deep-merge.ts');
+    await page.navigateTo('test-files-example/#mutant/deep-merge.ts');
     await page.whenFileReportLoaded();
   });
 
@@ -20,9 +20,9 @@ describe('Drawer', () => {
     let drawer: MutantDrawer;
     let mutant: MutantComponent;
     beforeEach(async () => {
-      mutant = page.mutant(20);
+      mutant = page.mutantView.mutant(20);
       await mutant.toggleMutant();
-      drawer = page.mutantDrawer();
+      drawer = page.mutantView.mutantDrawer();
     });
 
     it('should show a summary in the drawer when a mutant is clicked', async () => {
@@ -47,14 +47,14 @@ describe('Drawer', () => {
     });
 
     it('should show the details of the next mutant when another mutant is selected', async () => {
-      await page.mutant(24).toggleMutant();
+      await page.mutantView.mutant(24).toggleMutant();
       await sleep();
       expect(await drawer.isHalfOpen()).true;
       expect(await drawer.headerText()).eq('24 👽 ConditionalExpression Survived (15:77)');
     });
 
     it('should hide the drawer when the user clicks somewhere else', async () => {
-      await page.clickOnCode();
+      await page.mutantView.clickOnCode();
       await drawer.whenClosed();
     });
 

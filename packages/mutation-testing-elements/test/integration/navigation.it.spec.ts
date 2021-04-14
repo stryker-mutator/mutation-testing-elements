@@ -24,7 +24,7 @@ describe('Navigation', () => {
 
     describe('-> "config"', () => {
       beforeEach(async () => {
-        await page.resultTable().row('config').navigate();
+        await page.mutantView.resultTable().row('config').navigate();
       });
 
       it('should show "config" page', async () => {
@@ -37,7 +37,7 @@ describe('Navigation', () => {
       });
 
       it('should show "Config.Scala" after navigating to Config.scala', async () => {
-        await page.resultTable().row('Config.scala').navigate();
+        await page.mutantView.resultTable().row('Config.scala').navigate();
         expect(await page.breadcrumb().items()).deep.equal(['All files', 'config', 'Config.scala']);
       });
 
