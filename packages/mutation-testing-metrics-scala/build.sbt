@@ -37,7 +37,7 @@ lazy val elements = project
     version := packageVersion(file("../mutation-testing-elements")),
     name := "mutation-testing-elements",
     description := "A suite of web components for a mutation testing report.",
-    skip in publish := skipElementsPublish
+    publish / skip := skipElementsPublish
   )
 
 lazy val schema = project
@@ -47,15 +47,15 @@ lazy val schema = project
     version := packageVersion(file("../mutation-testing-report-schema")),
     name := "mutation-testing-report-schema",
     description := "The json schema for a mutation testing report.",
-    skip in publish := skipSchemaPublish
+    publish / skip := skipSchemaPublish
   )
 
 lazy val sharedSettings = Seq(
-  libraryDependencies += "org.scalameta" %% "munit" % "0.7.22" % Test,
+  libraryDependencies += "org.scalameta" %% "munit" % "0.7.23" % Test,
   testFrameworks := List(new TestFramework("munit.Framework")),
   scalaVersion := Scala213,
   crossScalaVersions := Seq(Scala213, Scala212),
-  skip in publish := skipNormalProjectPublish,
+  publish / skip := skipNormalProjectPublish,
   publishTo := sonatypePublishToBundle.value
 )
 
@@ -75,7 +75,7 @@ lazy val npmProjectSettings = Seq(
 inThisBuild(
   Seq(
     // Don't publish root project
-    skip in publish := true,
+    publish / skip := true,
     version := packageVersion(file(".")),
     organization := "io.stryker-mutator",
     homepage := Some(url("https://stryker-mutator.io/")),
