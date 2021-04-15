@@ -1,29 +1,15 @@
 import { from } from 'rxjs';
 import { mergeMap, toArray } from 'rxjs/operators';
 import { WebElementPromise } from 'selenium-webdriver';
-import { DEFAULT_TIMEOUT, MAX_WEBDRIVER_CONCURRENCY } from '../lib/constants';
+import { MAX_WEBDRIVER_CONCURRENCY } from '../lib/constants';
 import { selectShadowRoot } from '../lib/helpers';
-import { Legend } from './Legend.po';
+import { StateFilter } from './StateFilter.po';
 import { MutantComponent } from './MutantComponent.po';
-import { MutantDrawer } from './MutantDrawer.po';
-import { PageObject } from './PageObject.po';
-import { ResultTable } from './ResultTable.po';
+import { Drawer } from './Drawer.po';
+import { View } from './View.po';
 
-export class MutantView extends PageObject {
-  public clickOnCode() {
-    return this.$('mutation-test-report-file >>> code').click();
-  }
-
-  public async whenCodeIsHighlighted(): Promise<void> {
-    await this.browser.wait(() => this.isPresent('mutation-test-report-file >>> code span.token'), DEFAULT_TIMEOUT);
-  }
-
-  public async codeBackgroundColor(): Promise<string> {
-    const codeElement = await this.codeElement();
-    return codeElement.getCssValue('background-color');
-  }
-
-  private codeElement(): WebElementPromise {
+export class MutantView extends View {
+  protected codeElement(): WebElementPromise {
     return this.$('mutation-test-report-file >>> pre');
   }
 
@@ -42,23 +28,13 @@ export class MutantView extends PageObject {
     return new MutantComponent(shadowRoot, this.browser);
   }
 
-  public async scrollToCode() {
-    const codeElement = await this.codeElement();
-    await this.browser.executeScript(`window.scrollTo(0, ${(await codeElement.getRect()).y})`);
-  }
-
-  public legend() {
+  public stateFilter() {
     const context = selectShadowRoot(this.$('mutation-test-report-file >>> mutation-test-report-state-filter'));
-    return new Legend(context, this.browser);
-  }
-
-  public resultTable() {
-    const context = selectShadowRoot(this.$('mutation-test-report-metrics-table'));
-    return new ResultTable(context, this.browser);
+    return new StateFilter(context, this.browser);
   }
 
   public mutantDrawer() {
     const context = selectShadowRoot(this.$('mutation-test-report-drawer-mutant'));
-    return new MutantDrawer(context, this.browser);
+    return new Drawer(context, this.browser);
   }
 }

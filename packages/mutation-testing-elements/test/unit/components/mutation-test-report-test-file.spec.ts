@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { MutantModel, TestFileModel } from 'mutation-testing-metrics';
-import { TestStatus } from 'mutation-testing-metrics/src/model/test-model';
+import { TestStatus } from 'mutation-testing-metrics';
 import {
   MutationTestReportFileStateFilterComponent,
   StateFilter,

@@ -1,7 +1,7 @@
 import { customElement, html, LitElement, property, PropertyValues, unsafeCSS } from 'lit-element';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 
-import { TestFileModel } from 'mutation-testing-metrics';
+import { TestFileModel, TestStatus } from 'mutation-testing-metrics';
 import { highlightElement } from 'prismjs/components/prism-core';
 import style from './mutation-test-report-test-file.scss';
 
@@ -10,7 +10,6 @@ import { bootstrap, prismjs } from '../../style';
 import { determineLanguage, markTests } from '../../lib/code-helpers';
 import { MutationTestReportTestComponent } from '../mutation-test-report-test/mutation-test-report-test.component';
 import { MteCustomEvent } from '../../lib/custom-events';
-import { TestStatus } from 'mutation-testing-metrics/src/model/test-model';
 import { getContextClassForTestStatus, getEmojiForTestStatus } from '../../lib/htmlHelpers';
 import { StateFilter } from '../mutation-test-report-state-filter/mutation-test-report-state-filter.component';
 import { MutationTestReportTestListItemComponent } from '../mutation-test-report-test-list-item/mutation-test-report-test-list-item.component';

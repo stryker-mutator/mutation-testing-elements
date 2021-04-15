@@ -9,13 +9,8 @@ describe('File report "install-local-example/Options.ts"', () => {
 
   beforeEach(async () => {
     page = new ReportPage(getCurrent());
-    await page.navigateTo('');
     await page.navigateTo('install-local-example/#mutant/Options.ts');
     await page.whenFileReportLoaded();
-  });
-
-  it('should show title "Options.ts"', async () => {
-    expect(await page.title()).eq('Options.ts');
   });
 
   it('should show 51 mutants in the file', async () => {
@@ -34,11 +29,11 @@ describe('File report "install-local-example/Options.ts"', () => {
   });
 
   it('should only filter Survived and NoCoverage mutants by default', async () => {
-    const legend = page.mutantView.legend();
-    expect(await legend.displayButton(MutantStatus.Killed).isChecked()).false;
-    expect(await legend.displayButton(MutantStatus.Survived).isChecked()).true;
-    expect(await legend.displayButton(MutantStatus.NoCoverage).isChecked()).true;
-    expect(await legend.displayButton(MutantStatus.CompileError).isChecked()).false;
+    const filter = page.mutantView.stateFilter();
+    expect(await filter.state(MutantStatus.Killed).isChecked()).false;
+    expect(await filter.state(MutantStatus.Survived).isChecked()).true;
+    expect(await filter.state(MutantStatus.NoCoverage).isChecked()).true;
+    expect(await filter.state(MutantStatus.CompileError).isChecked()).false;
   });
 
   it('should hide killed mutants', async () => {
@@ -58,7 +53,7 @@ describe('File report "install-local-example/Options.ts"', () => {
 
   describe('when "Killed" is enabled', () => {
     beforeEach(async () => {
-      await page.mutantView.legend().displayButton(MutantStatus.Killed).click();
+      await page.mutantView.stateFilter().state(MutantStatus.Killed).click();
     });
 
     it('should also show the killed mutants', async () => {
@@ -79,7 +74,7 @@ describe('File report "install-local-example/Options.ts"', () => {
 
       describe('and later "Killed" is disabled', () => {
         beforeEach(async () => {
-          await page.mutantView.legend().displayButton(MutantStatus.Killed).click();
+          await page.mutantView.stateFilter().state(MutantStatus.Killed).click();
         });
 
         it('should have removed the "line-through" from the mutant\'s original code', async () => {

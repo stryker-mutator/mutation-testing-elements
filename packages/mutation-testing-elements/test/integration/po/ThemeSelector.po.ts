@@ -1,4 +1,3 @@
-import { Checkbox } from './Checkbox.po';
 import { PageObject } from './PageObject.po';
 
 export type Theme = 'dark' | 'light';
@@ -12,11 +11,11 @@ export class ThemeSelector extends PageObject {
   }
 
   async selectedTheme(): Promise<Theme> {
-    const darkModeSelected = await this.darkModeCheckbox.isChecked();
+    const darkModeSelected = !!(await this.darkModeCheckbox.getAttribute('checked'));
     return darkModeSelected ? 'dark' : 'light';
   }
 
   private get darkModeCheckbox() {
-    return new Checkbox(this.$('input[type="checkbox"]'), this.browser);
+    return this.$('input[type="checkbox"]');
   }
 }

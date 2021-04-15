@@ -1,10 +1,11 @@
 import { DEFAULT_TIMEOUT } from '../lib/constants';
+import { isElementVisible } from '../lib/helpers';
 import { PageObject } from './PageObject.po';
 
 const HALF_OPEN_SIZE = 120;
 const CLOSED_SIZE = 0;
 
-export class MutantDrawer extends PageObject {
+export class Drawer extends PageObject {
   private get header() {
     return this.$('[slot="header"]');
   }

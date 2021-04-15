@@ -25,6 +25,18 @@ export function wrapInWebElementPromise(p: () => Promise<WebElement>) {
   return new WebElementPromise(getCurrent(), p());
 }
 
+export async function isElementVisible(element: WebElementPromise) {
+  try {
+    const isDisplayed = await element.isDisplayed();
+    return isDisplayed;
+  } catch (err) {
+    if (err instanceof Error && err.message.includes('no such element')) {
+      return false;
+    }
+    throw err;
+  }
+}
+
 export function sleep(n = 300) {
   return new Promise((res) => setTimeout(res, n));
 }

@@ -7,13 +7,13 @@ svg.html {
 svg.java {
   fill: var(--mut-file-java-color);
 }
-svg.js {
+svg.javascript {
   fill: var(--mut-file-js-color);
 }
 svg.scala {
   fill: var(--mut-file-scala-color);
 }
-svg.ts {
+svg.typescript {
   fill: var(--mut-file-ts-color);
 }
 svg.php {
@@ -26,10 +26,10 @@ svg.octicon {
   fill: var(--mut-octicon-icon-color);
 }
 
-svg.js.test {
+svg.javascript.test {
   fill: var(--mut-file-js-test-color);
 }
-svg.ts.test {
+svg.typescript.test {
   fill: var(--mut-file-js-test-color);
 }
 

@@ -1,6 +1,5 @@
 import { customElement, html, LitElement, property, unsafeCSS } from 'lit-element';
-import { MutantModel, TestModel } from 'mutation-testing-metrics';
-import { TestStatus } from 'mutation-testing-metrics/src/model/test-model';
+import { MutantModel, TestModel, TestStatus } from 'mutation-testing-metrics';
 import { renderIfPresent, getEmojiForTestStatus, renderIf, plural, describeLocation } from '../../lib/htmlHelpers';
 import { bootstrap } from '../../style';
 import { DrawerMode } from '../mutation-test-report-drawer/mutation-test-report-drawer.component';

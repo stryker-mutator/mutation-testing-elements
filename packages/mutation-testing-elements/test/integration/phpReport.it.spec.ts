@@ -7,7 +7,6 @@ describe('File report "infection-php-example/TextFileLogger.php"', () => {
 
   before(async () => {
     page = new ReportPage(getCurrent());
-    await page.navigateTo('');
     await page.navigateTo('infection-php-example/#mutant/TextFileLogger.php');
     await page.whenFileReportLoaded();
   });
