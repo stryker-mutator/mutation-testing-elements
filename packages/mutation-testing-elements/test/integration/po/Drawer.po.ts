@@ -1,5 +1,4 @@
 import { DEFAULT_TIMEOUT } from '../lib/constants';
-import { isElementVisible } from '../lib/helpers';
 import { PageObject } from './PageObject.po';
 
 const HALF_OPEN_SIZE = 120;

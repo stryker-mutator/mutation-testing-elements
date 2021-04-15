@@ -1,4 +1,4 @@
-import { constants, DEFAULT_TIMEOUT } from '../lib/constants';
+import { constants } from '../lib/constants';
 import Breadcrumb from './Breadcrumb.po';
 import { ElementSelector } from './ElementSelector.po';
 import { selectShadowRoot, sleep } from '../lib/helpers';
