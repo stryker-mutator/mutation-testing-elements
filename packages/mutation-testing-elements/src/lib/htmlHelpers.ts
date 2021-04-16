@@ -50,7 +50,7 @@ export function getContextClassForTestStatus(status: TestStatus) {
     case TestStatus.NotKilling:
       return 'warning';
     case TestStatus.NotCovering:
-      return 'danger';
+      return 'caution';
   }
 }
 
@@ -59,9 +59,9 @@ export function getEmojiForTestStatus(status: TestStatus) {
     case TestStatus.Killing:
       return '✅';
     case TestStatus.NotKilling:
-      return '❗';
+      return '🕊';
     case TestStatus.NotCovering:
-      return '❌';
+      return '🌧';
   }
 }
 
