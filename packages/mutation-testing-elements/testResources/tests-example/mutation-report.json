@@ -39,8 +39,16 @@
           "description": "Killed by: errors errorToString should convert a nodejs Errno error to string",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["15", "16", "17", "70", "71"],
-          "killedBy": ["15"]
+          "coveredBy": [
+            "15",
+            "16",
+            "17",
+            "70",
+            "71"
+          ],
+          "killedBy": [
+            "15"
+          ]
         },
         {
           "id": "58",
@@ -60,8 +68,16 @@
           "description": "Killed by: errors errorToString should convert a regular error to string",
           "testsCompleted": 2,
           "static": false,
-          "coveredBy": ["15", "16", "17", "70", "71"],
-          "killedBy": ["16"]
+          "coveredBy": [
+            "15",
+            "16",
+            "17",
+            "70",
+            "71"
+          ],
+          "killedBy": [
+            "16"
+          ]
         },
         {
           "id": "59",
@@ -81,8 +97,16 @@
           "description": "Killed by: errors errorToString should convert a nodejs Errno error to string",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["15", "16", "17", "70", "71"],
-          "killedBy": ["15"]
+          "coveredBy": [
+            "15",
+            "16",
+            "17",
+            "70",
+            "71"
+          ],
+          "killedBy": [
+            "15"
+          ]
         },
         {
           "id": "60",
@@ -102,8 +126,16 @@
           "description": "Killed by: errors errorToString should convert a nodejs Errno error to string",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["15", "16", "17", "70", "71"],
-          "killedBy": ["15"]
+          "coveredBy": [
+            "15",
+            "16",
+            "17",
+            "70",
+            "71"
+          ],
+          "killedBy": [
+            "15"
+          ]
         },
         {
           "id": "61",
@@ -123,8 +155,16 @@
           "description": "Killed by: errors errorToString should convert a nodejs Errno error to string",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["15", "16", "17", "70", "71"],
-          "killedBy": ["15"]
+          "coveredBy": [
+            "15",
+            "16",
+            "17",
+            "70",
+            "71"
+          ],
+          "killedBy": [
+            "15"
+          ]
         },
         {
           "id": "62",
@@ -144,8 +184,17 @@
           "description": "Killed by: errors errorToString should return empty string if error is undefined",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["14", "15", "16", "17", "70", "71"],
-          "killedBy": ["14"]
+          "coveredBy": [
+            "14",
+            "15",
+            "16",
+            "17",
+            "70",
+            "71"
+          ],
+          "killedBy": [
+            "14"
+          ]
         },
         {
           "id": "63",
@@ -165,8 +214,17 @@
           "description": "Killed by: errors errorToString should convert a nodejs Errno error to string",
           "testsCompleted": 2,
           "static": false,
-          "coveredBy": ["14", "15", "16", "17", "70", "71"],
-          "killedBy": ["15"]
+          "coveredBy": [
+            "14",
+            "15",
+            "16",
+            "17",
+            "70",
+            "71"
+          ],
+          "killedBy": [
+            "15"
+          ]
         },
         {
           "id": "64",
@@ -186,8 +244,17 @@
           "description": "Killed by: errors errorToString should return empty string if error is undefined",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["14", "15", "16", "17", "70", "71"],
-          "killedBy": ["14"]
+          "coveredBy": [
+            "14",
+            "15",
+            "16",
+            "17",
+            "70",
+            "71"
+          ],
+          "killedBy": [
+            "14"
+          ]
         },
         {
           "id": "65",
@@ -207,8 +274,17 @@
           "description": "Killed by: errors errorToString should return empty string if error is undefined",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["14", "15", "16", "17", "70", "71"],
-          "killedBy": ["14"]
+          "coveredBy": [
+            "14",
+            "15",
+            "16",
+            "17",
+            "70",
+            "71"
+          ],
+          "killedBy": [
+            "14"
+          ]
         },
         {
           "id": "66",
@@ -228,8 +304,12 @@
           "description": "Killed by: errors errorToString should return empty string if error is undefined",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["14"],
-          "killedBy": ["14"]
+          "coveredBy": [
+            "14"
+          ],
+          "killedBy": [
+            "14"
+          ]
         },
         {
           "id": "67",
@@ -249,8 +329,12 @@
           "description": "Killed by: errors errorToString should return empty string if error is undefined",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["14"],
-          "killedBy": ["14"]
+          "coveredBy": [
+            "14"
+          ],
+          "killedBy": [
+            "14"
+          ]
         },
         {
           "id": "68",
@@ -270,8 +354,16 @@
           "description": "Killed by: errors errorToString should convert a regular error to string",
           "testsCompleted": 2,
           "static": false,
-          "coveredBy": ["15", "16", "17", "70", "71"],
-          "killedBy": ["16"]
+          "coveredBy": [
+            "15",
+            "16",
+            "17",
+            "70",
+            "71"
+          ],
+          "killedBy": [
+            "16"
+          ]
         },
         {
           "id": "69",
@@ -291,8 +383,16 @@
           "description": "Killed by: errors errorToString should convert a nodejs Errno error to string",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["15", "16", "17", "70", "71"],
-          "killedBy": ["15"]
+          "coveredBy": [
+            "15",
+            "16",
+            "17",
+            "70",
+            "71"
+          ],
+          "killedBy": [
+            "15"
+          ]
         },
         {
           "id": "70",
@@ -312,8 +412,12 @@
           "description": "Killed by: errors errorToString should convert a nodejs Errno error to string",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["15"],
-          "killedBy": ["15"]
+          "coveredBy": [
+            "15"
+          ],
+          "killedBy": [
+            "15"
+          ]
         },
         {
           "id": "71",
@@ -333,8 +437,12 @@
           "description": "Killed by: errors errorToString should convert a nodejs Errno error to string",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["15"],
-          "killedBy": ["15"]
+          "coveredBy": [
+            "15"
+          ],
+          "killedBy": [
+            "15"
+          ]
         },
         {
           "id": "72",
@@ -353,7 +461,12 @@
           "status": "Survived",
           "testsCompleted": 4,
           "static": false,
-          "coveredBy": ["16", "17", "70", "71"]
+          "coveredBy": [
+            "16",
+            "17",
+            "70",
+            "71"
+          ]
         },
         {
           "id": "73",
@@ -373,8 +486,15 @@
           "description": "Killed by: errors errorToString should convert a regular error to string",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["16", "17", "70", "71"],
-          "killedBy": ["16"]
+          "coveredBy": [
+            "16",
+            "17",
+            "70",
+            "71"
+          ],
+          "killedBy": [
+            "16"
+          ]
         },
         {
           "id": "74",
@@ -394,8 +514,15 @@
           "description": "Killed by: errors errorToString should convert a regular error to string",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["16", "17", "70", "71"],
-          "killedBy": ["16"]
+          "coveredBy": [
+            "16",
+            "17",
+            "70",
+            "71"
+          ],
+          "killedBy": [
+            "16"
+          ]
         },
         {
           "id": "75",
@@ -415,8 +542,15 @@
           "description": "Killed by: errors errorToString should convert a regular error to string",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["16", "17", "70", "71"],
-          "killedBy": ["16"]
+          "coveredBy": [
+            "16",
+            "17",
+            "70",
+            "71"
+          ],
+          "killedBy": [
+            "16"
+          ]
         },
         {
           "id": "76",
@@ -436,8 +570,15 @@
           "description": "Killed by: errors errorToString should convert an error without a stack trace to string",
           "testsCompleted": 2,
           "static": false,
-          "coveredBy": ["16", "17", "70", "71"],
-          "killedBy": ["17"]
+          "coveredBy": [
+            "16",
+            "17",
+            "70",
+            "71"
+          ],
+          "killedBy": [
+            "17"
+          ]
         },
         {
           "id": "78",
@@ -457,8 +598,14 @@
           "description": "Killed by: errors errorToString should convert a regular error to string",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["16", "70", "71"],
-          "killedBy": ["16"]
+          "coveredBy": [
+            "16",
+            "70",
+            "71"
+          ],
+          "killedBy": [
+            "16"
+          ]
         },
         {
           "id": "77",
@@ -478,8 +625,15 @@
           "description": "Killed by: errors errorToString should convert a regular error to string",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["16", "17", "70", "71"],
-          "killedBy": ["16"]
+          "coveredBy": [
+            "16",
+            "17",
+            "70",
+            "71"
+          ],
+          "killedBy": [
+            "16"
+          ]
         },
         {
           "id": "80",
@@ -499,8 +653,12 @@
           "description": "Killed by: errors errorToString should convert an error without a stack trace to string",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["17"],
-          "killedBy": ["17"]
+          "coveredBy": [
+            "17"
+          ],
+          "killedBy": [
+            "17"
+          ]
         },
         {
           "id": "79",
@@ -520,8 +678,14 @@
           "description": "Killed by: errors errorToString should convert a regular error to string",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["16", "70", "71"],
-          "killedBy": ["16"]
+          "coveredBy": [
+            "16",
+            "70",
+            "71"
+          ],
+          "killedBy": [
+            "16"
+          ]
         }
       ],
       "source": "export function isErrnoException(error: Error): error is NodeJS.ErrnoException {\n  return typeof (error as NodeJS.ErrnoException).code === 'string';\n}\n\nexport function errorToString(error: any) {\n  if (!error) {\n    return '';\n  } else if (isErrnoException(error)) {\n    return `${error.name}: ${error.code} (${error.syscall}) ${error.stack}`;\n  } else if (error instanceof Error) {\n    const message = `${error.name}: ${error.message}`;\n    if (error.stack) {\n      return `${message}\\n${error.stack.toString()}`;\n    } else {\n      return message;\n    }\n  } else {\n    return error.toString();\n  }\n}\n"
@@ -607,7 +771,9 @@
           "description": "Killed by: childProcessAsPromised should expose promisified exec",
           "testsCompleted": 1,
           "static": true,
-          "killedBy": ["0"]
+          "killedBy": [
+            "0"
+          ]
         }
       ],
       "source": "import * as childProcess from 'child_process';\nimport { promisify } from 'util';\n\nexport const childProcessAsPromised = {\n  exec: promisify(childProcess.exec),\n};\n"
@@ -633,8 +799,15 @@
           "description": "Killed by: deepMerge should merge overrides into the target object",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["1", "2", "3", "4"],
-          "killedBy": ["1"]
+          "coveredBy": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "killedBy": [
+            "1"
+          ]
         },
         {
           "id": "2",
@@ -654,8 +827,15 @@
           "description": "Killed by: deepMerge should merge overrides into the target object",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["1", "2", "3", "4"],
-          "killedBy": ["1"]
+          "coveredBy": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "killedBy": [
+            "1"
+          ]
         },
         {
           "id": "3",
@@ -675,8 +855,15 @@
           "description": "Killed by: deepMerge should not override with `undefined`",
           "testsCompleted": 4,
           "static": false,
-          "coveredBy": ["1", "2", "3", "4"],
-          "killedBy": ["4"]
+          "coveredBy": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "killedBy": [
+            "4"
+          ]
         },
         {
           "id": "4",
@@ -696,8 +883,15 @@
           "description": "Killed by: deepMerge should merge overrides into the target object",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["1", "2", "3", "4"],
-          "killedBy": ["1"]
+          "coveredBy": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "killedBy": [
+            "1"
+          ]
         },
         {
           "id": "5",
@@ -717,8 +911,15 @@
           "description": "Killed by: deepMerge should merge overrides into the target object",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["1", "2", "3", "4"],
-          "killedBy": ["1"]
+          "coveredBy": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "killedBy": [
+            "1"
+          ]
         },
         {
           "id": "6",
@@ -738,8 +939,14 @@
           "description": "Killed by: deepMerge should merge overrides into the target object",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["1", "2", "3"],
-          "killedBy": ["1"]
+          "coveredBy": [
+            "1",
+            "2",
+            "3"
+          ],
+          "killedBy": [
+            "1"
+          ]
         },
         {
           "id": "8",
@@ -759,8 +966,14 @@
           "description": "Killed by: deepMerge should merge overrides into the target object",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["1", "2", "3"],
-          "killedBy": ["1"]
+          "coveredBy": [
+            "1",
+            "2",
+            "3"
+          ],
+          "killedBy": [
+            "1"
+          ]
         },
         {
           "id": "7",
@@ -780,8 +993,14 @@
           "description": "Killed by: deepMerge should deep merge overrides into the target object",
           "testsCompleted": 2,
           "static": false,
-          "coveredBy": ["1", "2", "3"],
-          "killedBy": ["2"]
+          "coveredBy": [
+            "1",
+            "2",
+            "3"
+          ],
+          "killedBy": [
+            "2"
+          ]
         },
         {
           "id": "9",
@@ -801,8 +1020,14 @@
           "description": "Killed by: deepMerge should merge overrides into the target object",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["1", "2", "3"],
-          "killedBy": ["1"]
+          "coveredBy": [
+            "1",
+            "2",
+            "3"
+          ],
+          "killedBy": [
+            "1"
+          ]
         },
         {
           "id": "10",
@@ -822,8 +1047,14 @@
           "description": "Killed by: deepMerge should deep merge overrides into the target object",
           "testsCompleted": 2,
           "static": false,
-          "coveredBy": ["1", "2", "3"],
-          "killedBy": ["2"]
+          "coveredBy": [
+            "1",
+            "2",
+            "3"
+          ],
+          "killedBy": [
+            "2"
+          ]
         },
         {
           "id": "11",
@@ -843,8 +1074,14 @@
           "description": "Killed by: deepMerge should merge overrides into the target object",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["1", "2", "3"],
-          "killedBy": ["1"]
+          "coveredBy": [
+            "1",
+            "2",
+            "3"
+          ],
+          "killedBy": [
+            "1"
+          ]
         },
         {
           "id": "12",
@@ -863,7 +1100,11 @@
           "status": "Survived",
           "testsCompleted": 3,
           "static": false,
-          "coveredBy": ["1", "2", "3"]
+          "coveredBy": [
+            "1",
+            "2",
+            "3"
+          ]
         },
         {
           "id": "14",
@@ -882,7 +1123,11 @@
           "status": "Survived",
           "testsCompleted": 3,
           "static": false,
-          "coveredBy": ["1", "2", "3"]
+          "coveredBy": [
+            "1",
+            "2",
+            "3"
+          ]
         },
         {
           "id": "13",
@@ -902,8 +1147,14 @@
           "description": "Killed by: deepMerge should deep merge overrides into the target object",
           "testsCompleted": 2,
           "static": false,
-          "coveredBy": ["1", "2", "3"],
-          "killedBy": ["2"]
+          "coveredBy": [
+            "1",
+            "2",
+            "3"
+          ],
+          "killedBy": [
+            "2"
+          ]
         },
         {
           "id": "15",
@@ -922,7 +1173,11 @@
           "status": "Survived",
           "testsCompleted": 3,
           "static": false,
-          "coveredBy": ["1", "2", "3"]
+          "coveredBy": [
+            "1",
+            "2",
+            "3"
+          ]
         },
         {
           "id": "16",
@@ -942,8 +1197,14 @@
           "description": "Killed by: deepMerge should deep merge overrides into the target object",
           "testsCompleted": 2,
           "static": false,
-          "coveredBy": ["1", "2", "3"],
-          "killedBy": ["2"]
+          "coveredBy": [
+            "1",
+            "2",
+            "3"
+          ],
+          "killedBy": [
+            "2"
+          ]
         },
         {
           "id": "17",
@@ -962,7 +1223,11 @@
           "status": "Survived",
           "testsCompleted": 3,
           "static": false,
-          "coveredBy": ["1", "2", "3"]
+          "coveredBy": [
+            "1",
+            "2",
+            "3"
+          ]
         },
         {
           "id": "18",
@@ -982,8 +1247,14 @@
           "description": "Killed by: deepMerge should deep merge overrides into the target object",
           "testsCompleted": 2,
           "static": false,
-          "coveredBy": ["1", "2", "3"],
-          "killedBy": ["2"]
+          "coveredBy": [
+            "1",
+            "2",
+            "3"
+          ],
+          "killedBy": [
+            "2"
+          ]
         },
         {
           "id": "20",
@@ -1002,7 +1273,10 @@
           "status": "Survived",
           "testsCompleted": 2,
           "static": false,
-          "coveredBy": ["2", "3"]
+          "coveredBy": [
+            "2",
+            "3"
+          ]
         },
         {
           "id": "19",
@@ -1022,8 +1296,13 @@
           "description": "Killed by: deepMerge should deep merge overrides into the target object",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["2", "3"],
-          "killedBy": ["2"]
+          "coveredBy": [
+            "2",
+            "3"
+          ],
+          "killedBy": [
+            "2"
+          ]
         },
         {
           "id": "21",
@@ -1043,8 +1322,13 @@
           "description": "Killed by: deepMerge should deep merge overrides into the target object",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["2", "3"],
-          "killedBy": ["2"]
+          "coveredBy": [
+            "2",
+            "3"
+          ],
+          "killedBy": [
+            "2"
+          ]
         },
         {
           "id": "22",
@@ -1064,8 +1348,13 @@
           "description": "Killed by: deepMerge should deep merge overrides into the target object",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["2", "3"],
-          "killedBy": ["2"]
+          "coveredBy": [
+            "2",
+            "3"
+          ],
+          "killedBy": [
+            "2"
+          ]
         },
         {
           "id": "23",
@@ -1085,8 +1374,13 @@
           "description": "Killed by: deepMerge should deep merge overrides into the target object",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["2", "3"],
-          "killedBy": ["2"]
+          "coveredBy": [
+            "2",
+            "3"
+          ],
+          "killedBy": [
+            "2"
+          ]
         },
         {
           "id": "24",
@@ -1105,7 +1399,10 @@
           "status": "Survived",
           "testsCompleted": 2,
           "static": false,
-          "coveredBy": ["2", "3"]
+          "coveredBy": [
+            "2",
+            "3"
+          ]
         },
         {
           "id": "25",
@@ -1125,8 +1422,13 @@
           "description": "Killed by: deepMerge should deep merge overrides into the target object",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["2", "3"],
-          "killedBy": ["2"]
+          "coveredBy": [
+            "2",
+            "3"
+          ],
+          "killedBy": [
+            "2"
+          ]
         },
         {
           "id": "26",
@@ -1146,8 +1448,13 @@
           "description": "Killed by: deepMerge should deep merge overrides into the target object",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["2", "3"],
-          "killedBy": ["2"]
+          "coveredBy": [
+            "2",
+            "3"
+          ],
+          "killedBy": [
+            "2"
+          ]
         },
         {
           "id": "27",
@@ -1167,8 +1474,14 @@
           "description": "Killed by: deepMerge should merge overrides into the target object",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["1", "2", "3"],
-          "killedBy": ["1"]
+          "coveredBy": [
+            "1",
+            "2",
+            "3"
+          ],
+          "killedBy": [
+            "1"
+          ]
         },
         {
           "id": "28",
@@ -1188,8 +1501,12 @@
           "description": "Killed by: deepMerge should deep merge overrides into the target object",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["2"],
-          "killedBy": ["2"]
+          "coveredBy": [
+            "2"
+          ],
+          "killedBy": [
+            "2"
+          ]
         }
       ],
       "source": "export type DeepPartial<T> = {\n  [P in keyof T]?: T[P] extends Record<string, any> ? DeepPartial<T[P]> : T[P];\n};\n\n/**\n *\n * @param defaults\n * @param overrides\n */\nexport function deepMerge<T>(defaults: T, overrides: DeepPartial<T>): void {\n  Object.keys(overrides).forEach((key) => {\n    const defaultValue = (defaults as any)[key];\n    const overrideValue = (overrides as any)[key];\n    if (overrideValue !== undefined) {\n      if (defaultValue === undefined || typeof defaultValue !== 'object' || typeof overrideValue !== 'object' || Array.isArray(defaultValue)) {\n        (defaults as any)[key] = overrideValue;\n      } else {\n        deepMerge(defaultValue, overrideValue);\n      }\n    }\n  });\n}\n"
@@ -1215,8 +1532,20 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "30",
@@ -1236,8 +1565,20 @@
           "description": "Killed by: DirectoryRequireCache should only record the first time (perf optimization)",
           "testsCompleted": 2,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
-          "killedBy": ["6"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13"
+          ],
+          "killedBy": [
+            "6"
+          ]
         },
         {
           "id": "32",
@@ -1257,8 +1598,20 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "31",
@@ -1278,8 +1631,20 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "33",
@@ -1299,8 +1664,20 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "34",
@@ -1320,8 +1697,20 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "36",
@@ -1341,8 +1730,20 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "35",
@@ -1362,8 +1763,20 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "37",
@@ -1383,8 +1796,20 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "38",
@@ -1404,8 +1829,20 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "39",
@@ -1425,8 +1862,20 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "41",
@@ -1446,8 +1895,20 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "42",
@@ -1467,8 +1928,20 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "43",
@@ -1488,8 +1961,20 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "40",
@@ -1509,8 +1994,20 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "44",
@@ -1530,8 +2027,19 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "45",
@@ -1551,8 +2059,20 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "46",
@@ -1572,8 +2092,20 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "47",
@@ -1593,8 +2125,20 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "48",
@@ -1614,8 +2158,20 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "49",
@@ -1635,8 +2191,20 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "50",
@@ -1656,8 +2224,19 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "51",
@@ -1677,8 +2256,19 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "52",
@@ -1698,8 +2288,19 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "53",
@@ -1719,8 +2320,18 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "11", "12"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "11",
+            "12"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "54",
@@ -1740,8 +2351,18 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "11", "12"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "11",
+            "12"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "55",
@@ -1761,8 +2382,18 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "11", "12"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "11",
+            "12"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "56",
@@ -1782,8 +2413,20 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13"
+          ],
+          "killedBy": [
+            "5"
+          ]
         }
       ],
       "source": "import path = require('path');\n\nimport { notEmpty } from './not-empty';\n\n/**\n * A helper class that can be used by test runners.\n * The first time you call `record`, it will fill the internal registry with the files required in the current working directory (excluding node_modules)\n * Then each time you call `clear` it will clear those files from the require cache\n *\n * It will also delete the `module.children` property of the root module.\n * @see https://github.com/stryker-mutator/stryker/issues/2461\n */\nexport class DirectoryRequireCache {\n  private cache: Set<string> | undefined;\n  private parents: Set<string> | undefined;\n\n  /**\n   * Records the files required in the current working directory (excluding node_modules)\n   * Only does so the first time, any subsequent calls will be ignored\n   */\n  public record() {\n    if (!this.cache) {\n      const cache = (this.cache = new Set());\n      const cwd = process.cwd();\n      Object.keys(require.cache)\n        .filter((fileName) => fileName.startsWith(`${cwd}${path.sep}`) && !fileName.startsWith(path.join(cwd, 'node_modules')))\n        .forEach((file) => cache.add(file));\n\n      this.parents = new Set(\n        Array.from(cache)\n          // `module.parent` is deprecated, but seems to work fine, might never be removed.\n          // See https://nodejs.org/api/modules.html#modules_module_parent\n          .map((fileName) => require.cache[fileName]?.parent?.filename)\n          .filter(notEmpty)\n          // Filter out any parents that are in the current cache, since they will be removed anyway\n          .filter((parentFileName) => !cache.has(parentFileName))\n      );\n    }\n  }\n\n  public clear() {\n    if (this.cache && this.parents) {\n      const cache = this.cache;\n      this.parents.forEach((parent) => {\n        const parentModule = require.cache[parent];\n        if (parentModule) {\n          parentModule.children = parentModule.children.filter((childModule) => !cache.has(childModule.id));\n        }\n      });\n      cache.forEach((fileName) => delete require.cache[fileName]);\n    }\n  }\n}\n"
@@ -1809,8 +2452,19 @@
           "description": "Killed by: deepFreeze should freeze objects",
           "testsCompleted": 2,
           "static": false,
-          "coveredBy": ["18", "19", "20", "21", "22", "23", "24", "25"],
-          "killedBy": ["19"]
+          "coveredBy": [
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25"
+          ],
+          "killedBy": [
+            "19"
+          ]
         },
         {
           "id": "83",
@@ -1830,8 +2484,18 @@
           "description": "Killed by: deepFreeze should freeze objects",
           "testsCompleted": 2,
           "static": false,
-          "coveredBy": ["18", "19", "20", "22", "23", "24", "25"],
-          "killedBy": ["19"]
+          "coveredBy": [
+            "18",
+            "19",
+            "20",
+            "22",
+            "23",
+            "24",
+            "25"
+          ],
+          "killedBy": [
+            "19"
+          ]
         },
         {
           "id": "84",
@@ -1851,8 +2515,19 @@
           "description": "Killed by: deepFreeze should freeze objects",
           "testsCompleted": 2,
           "static": false,
-          "coveredBy": ["18", "19", "20", "21", "22", "23", "24", "25"],
-          "killedBy": ["19"]
+          "coveredBy": [
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25"
+          ],
+          "killedBy": [
+            "19"
+          ]
         },
         {
           "id": "85",
@@ -1872,8 +2547,18 @@
           "description": "Killed by: deepFreeze should not change the input object",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["18", "19", "20", "22", "23", "24", "25"],
-          "killedBy": ["18"]
+          "coveredBy": [
+            "18",
+            "19",
+            "20",
+            "22",
+            "23",
+            "24",
+            "25"
+          ],
+          "killedBy": [
+            "18"
+          ]
         },
         {
           "id": "86",
@@ -1893,8 +2578,18 @@
           "description": "Killed by: deepFreeze should work for Arrays",
           "testsCompleted": 5,
           "static": false,
-          "coveredBy": ["18", "19", "20", "22", "23", "24", "25"],
-          "killedBy": ["23"]
+          "coveredBy": [
+            "18",
+            "19",
+            "20",
+            "22",
+            "23",
+            "24",
+            "25"
+          ],
+          "killedBy": [
+            "23"
+          ]
         },
         {
           "id": "87",
@@ -1914,8 +2609,12 @@
           "description": "Killed by: deepFreeze should work for Arrays",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["23"],
-          "killedBy": ["23"]
+          "coveredBy": [
+            "23"
+          ],
+          "killedBy": [
+            "23"
+          ]
         },
         {
           "id": "88",
@@ -1935,8 +2634,18 @@
           "description": "Killed by: deepFreeze should not change the input object",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["18", "19", "20", "22", "23", "24", "25"],
-          "killedBy": ["18"]
+          "coveredBy": [
+            "18",
+            "19",
+            "20",
+            "22",
+            "23",
+            "24",
+            "25"
+          ],
+          "killedBy": [
+            "18"
+          ]
         },
         {
           "id": "89",
@@ -1956,8 +2665,18 @@
           "description": "Killed by: deepFreeze should work for Maps",
           "testsCompleted": 6,
           "static": false,
-          "coveredBy": ["18", "19", "20", "22", "23", "24", "25"],
-          "killedBy": ["24"]
+          "coveredBy": [
+            "18",
+            "19",
+            "20",
+            "22",
+            "23",
+            "24",
+            "25"
+          ],
+          "killedBy": [
+            "24"
+          ]
         },
         {
           "id": "90",
@@ -1977,8 +2696,12 @@
           "description": "Killed by: deepFreeze should work for Maps",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["24"],
-          "killedBy": ["24"]
+          "coveredBy": [
+            "24"
+          ],
+          "killedBy": [
+            "24"
+          ]
         },
         {
           "id": "91",
@@ -1998,8 +2721,18 @@
           "description": "Killed by: deepFreeze should freeze objects",
           "testsCompleted": 2,
           "static": false,
-          "coveredBy": ["18", "19", "20", "22", "23", "24", "25"],
-          "killedBy": ["19"]
+          "coveredBy": [
+            "18",
+            "19",
+            "20",
+            "22",
+            "23",
+            "24",
+            "25"
+          ],
+          "killedBy": [
+            "19"
+          ]
         },
         {
           "id": "92",
@@ -2019,8 +2752,18 @@
           "description": "Killed by: deepFreeze should work for `null` and `undefined`",
           "testsCompleted": 3,
           "static": false,
-          "coveredBy": ["18", "19", "20", "22", "23", "24", "25"],
-          "killedBy": ["20"]
+          "coveredBy": [
+            "18",
+            "19",
+            "20",
+            "22",
+            "23",
+            "24",
+            "25"
+          ],
+          "killedBy": [
+            "20"
+          ]
         },
         {
           "id": "93",
@@ -2040,8 +2783,18 @@
           "description": "Killed by: deepFreeze should freeze objects",
           "testsCompleted": 2,
           "static": false,
-          "coveredBy": ["18", "19", "20", "22", "23", "24", "25"],
-          "killedBy": ["19"]
+          "coveredBy": [
+            "18",
+            "19",
+            "20",
+            "22",
+            "23",
+            "24",
+            "25"
+          ],
+          "killedBy": [
+            "19"
+          ]
         },
         {
           "id": "94",
@@ -2061,8 +2814,12 @@
           "description": "Killed by: deepFreeze should work for `null` and `undefined`",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["20"],
-          "killedBy": ["20"]
+          "coveredBy": [
+            "20"
+          ],
+          "killedBy": [
+            "20"
+          ]
         },
         {
           "id": "95",
@@ -2082,8 +2839,17 @@
           "description": "Killed by: deepFreeze should not change the input object",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["18", "19", "22", "23", "24", "25"],
-          "killedBy": ["18"]
+          "coveredBy": [
+            "18",
+            "19",
+            "22",
+            "23",
+            "24",
+            "25"
+          ],
+          "killedBy": [
+            "18"
+          ]
         },
         {
           "id": "96",
@@ -2103,8 +2869,17 @@
           "description": "Killed by: deepFreeze should work for Sets",
           "testsCompleted": 6,
           "static": false,
-          "coveredBy": ["18", "19", "22", "23", "24", "25"],
-          "killedBy": ["25"]
+          "coveredBy": [
+            "18",
+            "19",
+            "22",
+            "23",
+            "24",
+            "25"
+          ],
+          "killedBy": [
+            "25"
+          ]
         },
         {
           "id": "97",
@@ -2124,8 +2899,12 @@
           "description": "Killed by: deepFreeze should work for Sets",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["25"],
-          "killedBy": ["25"]
+          "coveredBy": [
+            "25"
+          ],
+          "killedBy": [
+            "25"
+          ]
         },
         {
           "id": "99",
@@ -2145,8 +2924,16 @@
           "description": "Killed by: deepFreeze should freeze objects",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["19", "22", "23", "24", "25"],
-          "killedBy": ["19"]
+          "coveredBy": [
+            "19",
+            "22",
+            "23",
+            "24",
+            "25"
+          ],
+          "killedBy": [
+            "19"
+          ]
         },
         {
           "id": "98",
@@ -2166,8 +2953,17 @@
           "description": "Killed by: deepFreeze should freeze objects",
           "testsCompleted": 2,
           "static": false,
-          "coveredBy": ["18", "19", "22", "23", "24", "25"],
-          "killedBy": ["19"]
+          "coveredBy": [
+            "18",
+            "19",
+            "22",
+            "23",
+            "24",
+            "25"
+          ],
+          "killedBy": [
+            "19"
+          ]
         },
         {
           "id": "100",
@@ -2187,8 +2983,18 @@
           "description": "Killed by: deepFreeze should freeze objects",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["19", "20", "21", "22", "23", "24", "25"],
-          "killedBy": ["19"]
+          "coveredBy": [
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25"
+          ],
+          "killedBy": [
+            "19"
+          ]
         }
       ],
       "source": "type ImmutablePrimitive = undefined | null | boolean | string | number | ((...args: any[]) => any);\n\nexport type Immutable<T> = T extends ImmutablePrimitive\n  ? T\n  : T extends Array<infer U>\n  ? ImmutableArray<U>\n  : T extends Map<infer K, infer V>\n  ? ImmutableMap<K, V>\n  : T extends Set<infer M>\n  ? ImmutableSet<M>\n  : ImmutableObject<T>;\n\nexport type ImmutableArray<T> = ReadonlyArray<Immutable<T>>;\nexport type ImmutableMap<K, V> = ReadonlyMap<Immutable<K>, Immutable<V>>;\nexport type ImmutableSet<T> = ReadonlySet<Immutable<T>>;\nexport type ImmutableObject<T> = { readonly [K in keyof T]: Immutable<T[K]> };\n\nexport function deepFreeze<T>(target: T): Immutable<T> {\n  switch (typeof target) {\n    case 'object':\n      if (Array.isArray(target)) {\n        return Object.freeze((target as any[]).map(deepFreeze)) as Immutable<T>;\n      }\n      if (target instanceof Map) {\n        return (Object.freeze(new Map([...target.entries()].map(([k, v]) => [deepFreeze(k), deepFreeze(v)]))) as unknown) as Immutable<T>;\n      }\n      if (target === null) {\n        return null as Immutable<T>;\n      }\n      if (target instanceof Set) {\n        return (Object.freeze(new Set([...target.values()].map(deepFreeze))) as unknown) as Immutable<T>;\n      }\n      return Object.freeze({\n        ...Object.entries(target).reduce((result, [prop, val]) => {\n          result[prop] = deepFreeze(val);\n          return result;\n        }, {} as any),\n      });\n    default:\n      return target as Immutable<T>;\n  }\n}\n"
@@ -2214,7 +3020,9 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 6,
           "static": true,
-          "killedBy": ["5"]
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "102",
@@ -2234,8 +3042,12 @@
           "description": "Killed by: noopLogger should not enable any logging",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["26"],
-          "killedBy": ["26"]
+          "coveredBy": [
+            "26"
+          ],
+          "killedBy": [
+            "26"
+          ]
         },
         {
           "id": "103",
@@ -2255,8 +3067,12 @@
           "description": "Killed by: noopLogger should not enable any logging",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["26"],
-          "killedBy": ["26"]
+          "coveredBy": [
+            "26"
+          ],
+          "killedBy": [
+            "26"
+          ]
         },
         {
           "id": "104",
@@ -2276,8 +3092,12 @@
           "description": "Killed by: noopLogger should not enable any logging",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["26"],
-          "killedBy": ["26"]
+          "coveredBy": [
+            "26"
+          ],
+          "killedBy": [
+            "26"
+          ]
         },
         {
           "id": "105",
@@ -2297,8 +3117,12 @@
           "description": "Killed by: noopLogger should not enable any logging",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["26"],
-          "killedBy": ["26"]
+          "coveredBy": [
+            "26"
+          ],
+          "killedBy": [
+            "26"
+          ]
         },
         {
           "id": "106",
@@ -2318,8 +3142,12 @@
           "description": "Killed by: noopLogger should not enable any logging",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["26"],
-          "killedBy": ["26"]
+          "coveredBy": [
+            "26"
+          ],
+          "killedBy": [
+            "26"
+          ]
         },
         {
           "id": "107",
@@ -2339,8 +3167,12 @@
           "description": "Killed by: noopLogger should not enable any logging",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["26"],
-          "killedBy": ["26"]
+          "coveredBy": [
+            "26"
+          ],
+          "killedBy": [
+            "26"
+          ]
         },
         {
           "id": "108",
@@ -2360,8 +3192,12 @@
           "description": "Killed by: noopLogger should not enable any logging",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["26"],
-          "killedBy": ["26"]
+          "coveredBy": [
+            "26"
+          ],
+          "killedBy": [
+            "26"
+          ]
         },
         {
           "id": "109",
@@ -2381,8 +3217,12 @@
           "description": "Killed by: noopLogger should not enable any logging",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["26"],
-          "killedBy": ["26"]
+          "coveredBy": [
+            "26"
+          ],
+          "killedBy": [
+            "26"
+          ]
         },
         {
           "id": "110",
@@ -2402,8 +3242,12 @@
           "description": "Killed by: noopLogger should not enable any logging",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["26"],
-          "killedBy": ["26"]
+          "coveredBy": [
+            "26"
+          ],
+          "killedBy": [
+            "26"
+          ]
         },
         {
           "id": "111",
@@ -2423,8 +3267,12 @@
           "description": "Killed by: noopLogger should not enable any logging",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["26"],
-          "killedBy": ["26"]
+          "coveredBy": [
+            "26"
+          ],
+          "killedBy": [
+            "26"
+          ]
         },
         {
           "id": "112",
@@ -2444,8 +3292,12 @@
           "description": "Killed by: noopLogger should not enable any logging",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["26"],
-          "killedBy": ["26"]
+          "coveredBy": [
+            "26"
+          ],
+          "killedBy": [
+            "26"
+          ]
         },
         {
           "id": "113",
@@ -2465,8 +3317,12 @@
           "description": "Killed by: noopLogger should not enable any logging",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["26"],
-          "killedBy": ["26"]
+          "coveredBy": [
+            "26"
+          ],
+          "killedBy": [
+            "26"
+          ]
         }
       ],
       "source": "export const noopLogger = {\n  isTraceEnabled() {\n    return false;\n  },\n  isDebugEnabled() {\n    return false;\n  },\n  isInfoEnabled() {\n    return false;\n  },\n  isWarnEnabled() {\n    return false;\n  },\n  isErrorEnabled() {\n    return false;\n  },\n  isFatalEnabled() {\n    return false;\n  },\n  trace() {\n    // noop\n  },\n  debug() {\n    // noop\n  },\n  info() {\n    // noop\n  },\n  warn() {\n    // noop\n  },\n  error() {\n    // noop\n  },\n  fatal() {\n    // noop\n  },\n};\n"
@@ -2492,8 +3348,23 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13", "28", "29", "30"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "28",
+            "29",
+            "30"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "115",
@@ -2513,8 +3384,23 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13", "28", "29", "30"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "28",
+            "29",
+            "30"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "116",
@@ -2534,8 +3420,23 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13", "28", "29", "30"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "28",
+            "29",
+            "30"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "117",
@@ -2555,8 +3456,23 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13", "28", "29", "30"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "28",
+            "29",
+            "30"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "118",
@@ -2576,8 +3492,23 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13", "28", "29", "30"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "28",
+            "29",
+            "30"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "119",
@@ -2597,8 +3528,23 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13", "28", "29", "30"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "28",
+            "29",
+            "30"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "120",
@@ -2618,8 +3564,23 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "13", "28", "29", "30"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "28",
+            "29",
+            "30"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "121",
@@ -2639,8 +3600,21 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "28", "29"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "28",
+            "29"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "122",
@@ -2660,8 +3634,21 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "28", "29"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "28",
+            "29"
+          ],
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "123",
@@ -2681,8 +3668,21 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["5", "6", "7", "8", "9", "10", "11", "12", "28", "29"],
-          "killedBy": ["5"]
+          "coveredBy": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "28",
+            "29"
+          ],
+          "killedBy": [
+            "5"
+          ]
         }
       ],
       "source": "export function notEmpty<T>(item: T | undefined | null): item is T {\n  return item !== undefined && item !== null;\n}\n"
@@ -2708,8 +3708,14 @@
           "description": "Killed by: stringUtils normalizeWhitespaces should not change strings without consecutive whitespaces",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["31", "32", "33"],
-          "killedBy": ["31"]
+          "coveredBy": [
+            "31",
+            "32",
+            "33"
+          ],
+          "killedBy": [
+            "31"
+          ]
         },
         {
           "id": "128",
@@ -2729,8 +3735,14 @@
           "description": "Killed by: stringUtils normalizeWhitespaces should normalize a string with multiple consecutive spaces",
           "testsCompleted": 2,
           "static": false,
-          "coveredBy": ["31", "32", "33"],
-          "killedBy": ["32"]
+          "coveredBy": [
+            "31",
+            "32",
+            "33"
+          ],
+          "killedBy": [
+            "32"
+          ]
         },
         {
           "id": "129",
@@ -2750,8 +3762,14 @@
           "description": "Killed by: stringUtils normalizeWhitespaces should not change strings without consecutive whitespaces",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["31", "32", "33"],
-          "killedBy": ["31"]
+          "coveredBy": [
+            "31",
+            "32",
+            "33"
+          ],
+          "killedBy": [
+            "31"
+          ]
         },
         {
           "id": "130",
@@ -2771,8 +3789,14 @@
           "description": "Killed by: stringUtils normalizeWhitespaces should not change strings without consecutive whitespaces",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["31", "32", "33"],
-          "killedBy": ["31"]
+          "coveredBy": [
+            "31",
+            "32",
+            "33"
+          ],
+          "killedBy": [
+            "31"
+          ]
         },
         {
           "id": "131",
@@ -2792,8 +3816,12 @@
           "description": "Killed by: stringUtils propertyPath should be able to point to a path",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["35"],
-          "killedBy": ["35"]
+          "coveredBy": [
+            "35"
+          ],
+          "killedBy": [
+            "35"
+          ]
         },
         {
           "id": "132",
@@ -2813,8 +3841,12 @@
           "description": "Killed by: stringUtils PropertyPathBuilder should be able to point to a path",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["34"],
-          "killedBy": ["34"]
+          "coveredBy": [
+            "34"
+          ],
+          "killedBy": [
+            "34"
+          ]
         },
         {
           "id": "133",
@@ -2834,8 +3866,12 @@
           "description": "Killed by: stringUtils PropertyPathBuilder should be able to point to a path",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["34"],
-          "killedBy": ["34"]
+          "coveredBy": [
+            "34"
+          ],
+          "killedBy": [
+            "34"
+          ]
         },
         {
           "id": "134",
@@ -2855,8 +3891,12 @@
           "description": "Killed by: stringUtils PropertyPathBuilder should be able to point to a path",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["34"],
-          "killedBy": ["34"]
+          "coveredBy": [
+            "34"
+          ],
+          "killedBy": [
+            "34"
+          ]
         },
         {
           "id": "135",
@@ -2876,8 +3916,12 @@
           "description": "Killed by: stringUtils PropertyPathBuilder should be able to point to a path",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["34"],
-          "killedBy": ["34"]
+          "coveredBy": [
+            "34"
+          ],
+          "killedBy": [
+            "34"
+          ]
         },
         {
           "id": "136",
@@ -2897,8 +3941,12 @@
           "description": "Killed by: stringUtils PropertyPathBuilder should be able to point to a path",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["34"],
-          "killedBy": ["34"]
+          "coveredBy": [
+            "34"
+          ],
+          "killedBy": [
+            "34"
+          ]
         },
         {
           "id": "137",
@@ -2918,8 +3966,12 @@
           "description": "Killed by: stringUtils PropertyPathBuilder should be able to point to a path",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["34"],
-          "killedBy": ["34"]
+          "coveredBy": [
+            "34"
+          ],
+          "killedBy": [
+            "34"
+          ]
         },
         {
           "id": "138",
@@ -2939,8 +3991,12 @@
           "description": "Killed by: stringUtils PropertyPathBuilder should be able to point to a path",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["34"],
-          "killedBy": ["34"]
+          "coveredBy": [
+            "34"
+          ],
+          "killedBy": [
+            "34"
+          ]
         },
         {
           "id": "139",
@@ -2960,8 +4016,28 @@
           "description": "Killed by: stringUtils escapeRegExpLiteral should return input if no special chars are found",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52"],
-          "killedBy": ["36"]
+          "coveredBy": [
+            "36",
+            "37",
+            "38",
+            "39",
+            "40",
+            "41",
+            "42",
+            "43",
+            "44",
+            "45",
+            "46",
+            "47",
+            "48",
+            "49",
+            "50",
+            "51",
+            "52"
+          ],
+          "killedBy": [
+            "36"
+          ]
         },
         {
           "id": "141",
@@ -2981,8 +4057,28 @@
           "description": "Killed by: stringUtils escapeRegExp should return input if no special chars are found",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69"],
-          "killedBy": ["53"]
+          "coveredBy": [
+            "53",
+            "54",
+            "55",
+            "56",
+            "57",
+            "58",
+            "59",
+            "60",
+            "61",
+            "62",
+            "63",
+            "64",
+            "65",
+            "66",
+            "67",
+            "68",
+            "69"
+          ],
+          "killedBy": [
+            "53"
+          ]
         },
         {
           "id": "140",
@@ -3002,8 +4098,28 @@
           "description": "Killed by: stringUtils escapeRegExpLiteral should escape \".\"",
           "testsCompleted": 2,
           "static": false,
-          "coveredBy": ["36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52"],
-          "killedBy": ["37"]
+          "coveredBy": [
+            "36",
+            "37",
+            "38",
+            "39",
+            "40",
+            "41",
+            "42",
+            "43",
+            "44",
+            "45",
+            "46",
+            "47",
+            "48",
+            "49",
+            "50",
+            "51",
+            "52"
+          ],
+          "killedBy": [
+            "37"
+          ]
         },
         {
           "id": "142",
@@ -3023,8 +4139,28 @@
           "description": "Killed by: stringUtils escapeRegExp should escape \".\"",
           "testsCompleted": 3,
           "static": false,
-          "coveredBy": ["53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69"],
-          "killedBy": ["55"]
+          "coveredBy": [
+            "53",
+            "54",
+            "55",
+            "56",
+            "57",
+            "58",
+            "59",
+            "60",
+            "61",
+            "62",
+            "63",
+            "64",
+            "65",
+            "66",
+            "67",
+            "68",
+            "69"
+          ],
+          "killedBy": [
+            "55"
+          ]
         }
       ],
       "source": "import { KnownKeys } from './known-keys';\n\n/**\n * Consolidates multiple consecutive white spaces into a single space.\n * @param str The string to be normalized\n */\nexport function normalizeWhitespaces(str: string) {\n  return str.replace(/\\s+/g, ' ').trim();\n}\n\n/**\n * Given a base type, allows type safe access to the name of a property.\n * @param prop The property name\n */\nexport function propertyPath<T>(prop: keyof Pick<T, KnownKeys<T>>): string {\n  return prop.toString();\n}\n\n/**\n * A helper class to allow you to get type safe access to the name of a deep property of `T`\n * @example\n * ```ts\n * PropertyPathBuilder<StrykerOptions>('warnings').prop('unknownOptions').build()\n * ```\n */\nexport class PropertyPathBuilder<T> {\n  constructor(private readonly pathSoFar: string[]) {}\n\n  public prop<TProp extends KnownKeys<T>>(prop: TProp) {\n    return new PropertyPathBuilder<Pick<T, KnownKeys<T>>[TProp]>([...this.pathSoFar, prop.toString()]);\n  }\n\n  /**\n   * Build the (deep) path to the property name\n   */\n  public build(): string {\n    return this.pathSoFar.join('.');\n  }\n\n  /**\n   * Creates a new `PropertyPathBuilder` for type T\n   */\n  public static create<T>() {\n    return new PropertyPathBuilder<T>([]);\n  }\n\n  public toString(): string {\n    return this.build();\n  }\n}\n\n/**\n * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Escaping\n */\nexport function escapeRegExpLiteral(input: string) {\n  return input.replace(/[.*+\\-?^${}()|[\\]\\\\/]/g, '\\\\$&'); // $& means the whole matched string\n}\n\n/**\n * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Escaping\n */\nexport function escapeRegExp(input: string) {\n  return input.replace(/[.*+\\-?^${}()|[\\]\\\\]/g, '\\\\$&'); // $& means the whole matched string\n}\n"
@@ -3050,8 +4186,14 @@
           "description": "Killed by: StrykerError should add inner error to the message",
           "testsCompleted": 2,
           "static": false,
-          "coveredBy": ["70", "71", "72"],
-          "killedBy": ["71"]
+          "coveredBy": [
+            "70",
+            "71",
+            "72"
+          ],
+          "killedBy": [
+            "71"
+          ]
         },
         {
           "id": "145",
@@ -3071,8 +4213,12 @@
           "description": "Killed by: StrykerError should work without an inner error",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["72"],
-          "killedBy": ["72"]
+          "coveredBy": [
+            "72"
+          ],
+          "killedBy": [
+            "72"
+          ]
         },
         {
           "id": "144",
@@ -3092,8 +4238,13 @@
           "description": "Killed by: StrykerError should add inner error to the message",
           "testsCompleted": 2,
           "static": false,
-          "coveredBy": ["70", "71"],
-          "killedBy": ["71"]
+          "coveredBy": [
+            "70",
+            "71"
+          ],
+          "killedBy": [
+            "71"
+          ]
         }
       ],
       "source": "import { errorToString } from './errors';\n\nexport class StrykerError extends Error {\n  constructor(message: string, public readonly innerError?: Error) {\n    super(`${message}${innerError ? `. Inner error: ${errorToString(innerError)}` : ''}`);\n  }\n}\n"
@@ -3119,8 +4270,19 @@
           "description": "Killed by: Task should give access to underlying promise",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["73", "74", "75", "76", "77", "78", "79", "80"],
-          "killedBy": ["73"]
+          "coveredBy": [
+            "73",
+            "74",
+            "75",
+            "76",
+            "77",
+            "78",
+            "79",
+            "80"
+          ],
+          "killedBy": [
+            "73"
+          ]
         },
         {
           "id": "146",
@@ -3140,8 +4302,19 @@
           "description": "Killed by: Task should be able to reject the underlying promise",
           "testsCompleted": 3,
           "static": false,
-          "coveredBy": ["73", "74", "75", "76", "77", "78", "79", "80"],
-          "killedBy": ["75"]
+          "coveredBy": [
+            "73",
+            "74",
+            "75",
+            "76",
+            "77",
+            "78",
+            "79",
+            "80"
+          ],
+          "killedBy": [
+            "75"
+          ]
         },
         {
           "id": "149",
@@ -3161,8 +4334,18 @@
           "description": "Killed by: Task should give access to underlying promise",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["73", "74", "75", "77", "78", "79", "80"],
-          "killedBy": ["73"]
+          "coveredBy": [
+            "73",
+            "74",
+            "75",
+            "77",
+            "78",
+            "79",
+            "80"
+          ],
+          "killedBy": [
+            "73"
+          ]
         },
         {
           "id": "148",
@@ -3182,8 +4365,19 @@
           "description": "Killed by: Task should give access to underlying promise",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["73", "74", "75", "76", "77", "78", "79", "80"],
-          "killedBy": ["73"]
+          "coveredBy": [
+            "73",
+            "74",
+            "75",
+            "76",
+            "77",
+            "78",
+            "79",
+            "80"
+          ],
+          "killedBy": [
+            "73"
+          ]
         },
         {
           "id": "150",
@@ -3203,8 +4397,12 @@
           "description": "Killed by: Task should be able to know if it isCompleted",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["76"],
-          "killedBy": ["76"]
+          "coveredBy": [
+            "76"
+          ],
+          "killedBy": [
+            "76"
+          ]
         },
         {
           "id": "152",
@@ -3224,8 +4422,16 @@
           "description": "Killed by: Task should be able to know if it isCompleted",
           "testsCompleted": 3,
           "static": false,
-          "coveredBy": ["73", "74", "76", "78", "80"],
-          "killedBy": ["76"]
+          "coveredBy": [
+            "73",
+            "74",
+            "76",
+            "78",
+            "80"
+          ],
+          "killedBy": [
+            "76"
+          ]
         },
         {
           "id": "153",
@@ -3245,8 +4451,13 @@
           "description": "Killed by: Task should be able to reject the underlying promise",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["75", "79"],
-          "killedBy": ["75"]
+          "coveredBy": [
+            "75",
+            "79"
+          ],
+          "killedBy": [
+            "75"
+          ]
         },
         {
           "id": "154",
@@ -3266,8 +4477,13 @@
           "description": "Killed by: Task should be able to reject the underlying promise",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["75", "79"],
-          "killedBy": ["75"]
+          "coveredBy": [
+            "75",
+            "79"
+          ],
+          "killedBy": [
+            "75"
+          ]
         },
         {
           "id": "155",
@@ -3287,7 +4503,9 @@
           "description": "Killed by: DirectoryRequireCache should clear recorded files",
           "testsCompleted": 6,
           "static": true,
-          "killedBy": ["5"]
+          "killedBy": [
+            "5"
+          ]
         },
         {
           "id": "156",
@@ -3307,8 +4525,16 @@
           "description": "Killed by: ExpirableTask instance should timeout after set period",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["77", "78", "79", "80", "81"],
-          "killedBy": ["77"]
+          "coveredBy": [
+            "77",
+            "78",
+            "79",
+            "80",
+            "81"
+          ],
+          "killedBy": [
+            "77"
+          ]
         },
         {
           "id": "151",
@@ -3327,7 +4553,13 @@
           "status": "Timeout",
           "testsCompleted": 0,
           "static": false,
-          "coveredBy": ["73", "74", "76", "78", "80"]
+          "coveredBy": [
+            "73",
+            "74",
+            "76",
+            "78",
+            "80"
+          ]
         },
         {
           "id": "157",
@@ -3346,7 +4578,13 @@
           "status": "Timeout",
           "testsCompleted": 0,
           "static": false,
-          "coveredBy": ["77", "78", "79", "80", "81"]
+          "coveredBy": [
+            "77",
+            "78",
+            "79",
+            "80",
+            "81"
+          ]
         },
         {
           "id": "159",
@@ -3366,8 +4604,14 @@
           "description": "Killed by: ExpirableTask instance should be able to resolve within time",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["78", "80", "81"],
-          "killedBy": ["78"]
+          "coveredBy": [
+            "78",
+            "80",
+            "81"
+          ],
+          "killedBy": [
+            "78"
+          ]
         },
         {
           "id": "160",
@@ -3387,8 +4631,12 @@
           "description": "Killed by: ExpirableTask instance should be able to reject within time",
           "testsCompleted": 1,
           "static": false,
-          "coveredBy": ["79"],
-          "killedBy": ["79"]
+          "coveredBy": [
+            "79"
+          ],
+          "killedBy": [
+            "79"
+          ]
         },
         {
           "id": "158",
@@ -3407,23 +4655,25 @@
           "status": "Timeout",
           "testsCompleted": 0,
           "static": false,
-          "coveredBy": ["77", "78", "79", "80", "81"]
+          "coveredBy": [
+            "77",
+            "78",
+            "79",
+            "80",
+            "81"
+          ]
         }
       ],
       "source": "/**\n * Wraps a promise in a Task api for convenience.\n */\nexport class Task<T = void> {\n  protected _promise: Promise<T>;\n  private resolveFn!: (value: T | PromiseLike<T>) => void;\n  private rejectFn!: (reason: any) => void;\n  private _isCompleted = false;\n\n  constructor() {\n    this._promise = new Promise<T>((resolve, reject) => {\n      this.resolveFn = resolve;\n      this.rejectFn = reject;\n    });\n  }\n\n  public get promise() {\n    return this._promise;\n  }\n\n  public get isCompleted() {\n    return this._isCompleted;\n  }\n\n  public resolve = (result: T | PromiseLike<T>): void => {\n    this._isCompleted = true;\n    this.resolveFn(result);\n  };\n\n  public reject = (reason: any): void => {\n    this._isCompleted = true;\n    this.rejectFn(reason);\n  };\n}\n\n/**\n * A task that can expire after the given time.\n */\nexport class ExpirableTask<T = void> extends Task<T | typeof ExpirableTask.TimeoutExpired> {\n  public static readonly TimeoutExpired: unique symbol = Symbol('TimeoutExpired');\n\n  constructor(timeoutMS: number) {\n    super();\n    this._promise = ExpirableTask.timeout(this._promise, timeoutMS);\n  }\n\n  public static timeout<T>(promise: Promise<T>, ms: number): Promise<T | typeof ExpirableTask.TimeoutExpired> {\n    const sleep = new Promise<T | typeof ExpirableTask.TimeoutExpired>((res, rej) => {\n      const timer = setTimeout(() => res(ExpirableTask.TimeoutExpired), ms);\n      promise\n        .then((result) => {\n          clearTimeout(timer);\n          res(result);\n        })\n        .catch((error) => {\n          clearTimeout(timer);\n          rej(error);\n        });\n    });\n    return sleep;\n  }\n}\n"
     }
   },
   "testFiles": {
-    "test/unit/child-process-as-promised.unit.ts": {
+    "": {
       "tests": [
         {
           "id": "0",
           "name": "childProcessAsPromised should expose promisified exec"
-        }
-      ]
-    },
-    "test/unit/deep-merge.unit.ts": {
-      "tests": [
+        },
         {
           "id": "1",
           "name": "deepMerge should merge overrides into the target object"
@@ -3439,11 +4689,7 @@
         {
           "id": "4",
           "name": "deepMerge should not override with `undefined`"
-        }
-      ]
-    },
-    "test/unit/directory-require-cache.unit.ts": {
-      "tests": [
+        },
         {
           "id": "5",
           "name": "DirectoryRequireCache should clear recorded files"
@@ -3479,11 +4725,7 @@
         {
           "id": "13",
           "name": "DirectoryRequireCache should not fail when recorded file doesn't have a parent"
-        }
-      ]
-    },
-    "test/unit/errors.unit.ts": {
-      "tests": [
+        },
         {
           "id": "14",
           "name": "errors errorToString should return empty string if error is undefined"
@@ -3499,11 +4741,7 @@
         {
           "id": "17",
           "name": "errors errorToString should convert an error without a stack trace to string"
-        }
-      ]
-    },
-    "test/unit/deep-freeze.unit.ts": {
-      "tests": [
+        },
         {
           "id": "18",
           "name": "deepFreeze should not change the input object"
@@ -3535,11 +4773,7 @@
         {
           "id": "25",
           "name": "deepFreeze should work for Sets"
-        }
-      ]
-    },
-    "test/unit/noop-logger.unit.ts": {
-      "tests": [
+        },
         {
           "id": "26",
           "name": "noopLogger should not enable any logging"
@@ -3547,11 +4781,7 @@
         {
           "id": "27",
           "name": "noopLogger should not do any actual logging"
-        }
-      ]
-    },
-    "test/unit/not-empty.unit.ts": {
-      "tests": [
+        },
         {
           "id": "28",
           "name": "notEmpty should return true when not null or undefined"
@@ -3563,11 +4793,7 @@
         {
           "id": "30",
           "name": "notEmpty should return false when undefined"
-        }
-      ]
-    },
-    "test/unit/string-utils.unit.ts": {
-      "tests": [
+        },
         {
           "id": "31",
           "name": "stringUtils normalizeWhitespaces should not change strings without consecutive whitespaces"
@@ -3723,11 +4949,7 @@
         {
           "id": "69",
           "name": "stringUtils escapeRegExp should escape \"\\\""
-        }
-      ]
-    },
-    "test/unit/stryker-error.unit.ts": {
-      "tests": [
+        },
         {
           "id": "70",
           "name": "StrykerError should set inner error"
@@ -3739,11 +4961,7 @@
         {
           "id": "72",
           "name": "StrykerError should work without an inner error"
-        }
-      ]
-    },
-    "test/unit/task.unit.ts": {
-      "tests": [
+        },
         {
           "id": "73",
           "name": "Task should give access to underlying promise"

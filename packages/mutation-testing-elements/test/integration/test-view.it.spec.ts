@@ -87,4 +87,17 @@ describe('Test view', () => {
       });
     });
   });
+
+  describe('test report without files', () => {
+    beforeEach(async () => {
+      await page.navigateTo('tests-example/#test');
+    });
+
+    it('should simply list all tests in a list box', async () => {
+      const tests = await page.testView.tests();
+      const testListItems = await page.testView.testListItems();
+      expect(tests).lengthOf(0);
+      expect(testListItems).lengthOf(82);
+    });
+  });
 });
