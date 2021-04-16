@@ -1,6 +1,6 @@
 name: Update screenshots
 on: 
-    workflow_dispatch:
+  workflow_dispatch:
 jobs:
   update:
     runs-on: ${{ matrix.os }}
