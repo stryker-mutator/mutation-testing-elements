@@ -1,8 +1,5 @@
-import { from } from 'rxjs';
-import { mergeMap, toArray } from 'rxjs/operators';
 import { WebElementPromise } from 'selenium-webdriver';
-import { MAX_WEBDRIVER_CONCURRENCY } from '../lib/constants';
-import { selectShadowRoot } from '../lib/helpers';
+import { mapShadowRootConcurrent, selectShadowRoot } from '../lib/helpers';
 import { StateFilter } from './StateFilter.po';
 import { Drawer } from './Drawer.po';
 import { View } from './View.po';
@@ -15,18 +12,17 @@ export class TestView extends View {
   }
 
   public async tests(): Promise<TestComponent[]> {
-    const test$ = from(await this.$$('mutation-test-report-test-file >>> mutation-test-report-test'));
-    return test$
-      .pipe(
-        mergeMap(async (host) => new TestComponent(await selectShadowRoot(host), this.browser), MAX_WEBDRIVER_CONCURRENCY),
-        toArray()
-      )
-      .toPromise();
+    return mapShadowRootConcurrent(
+      this.$$('mutation-test-report-test-file >>> mutation-test-report-test'),
+      (el) => new TestComponent(el, this.browser)
+    );
   }
 
   public async testListItems(): Promise<TestListItem[]> {
-    const tests = await this.$$('mutation-test-report-test-file >>> mutation-test-report-test-list-item');
-    return tests.map((host) => new TestListItem(selectShadowRoot(host), this.browser));
+    return mapShadowRootConcurrent(
+      this.$$('mutation-test-report-test-file >>> mutation-test-report-test-list-item'),
+      (host) => new TestListItem(host, this.browser)
+    );
   }
 
   public test(testId: number | string) {

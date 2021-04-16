@@ -1,9 +1,12 @@
 /// <reference types="../typings/globals-chai" />
 import { expect } from 'chai';
 import { Context } from 'mocha';
+import { from } from 'rxjs';
+import { mergeMap, toArray } from 'rxjs/operators';
 import { WebElement, WebElementPromise } from 'selenium-webdriver';
 import { ReportPage } from '../po/ReportPage';
 import { getCurrent, isHeadless } from './browser';
+import { MAX_WEBDRIVER_CONCURRENCY } from './constants';
 
 export function selectShadowRoot(element: WebElement): WebElementPromise {
   return wrapInWebElementPromise(async () => {
@@ -56,4 +59,18 @@ export async function actScreenshotMatch(context: Context) {
     console.log('[SKIP] skipping screenshot comparison, because not running in headless mode');
     context.skip();
   }
+}
+
+/**
+ * Maps the shadow root from a possibly big list of elements using the provided `fn`,
+ * while limiting the number of concurrent operations, so web driver is still able to handle the load.
+ */
+export async function mapShadowRootConcurrent<T>(elements: Promise<WebElement[]>, fn: (el: WebElement) => T): Promise<T[]> {
+  const element$ = from(await elements);
+  return element$
+    .pipe(
+      mergeMap(async (host) => fn(await selectShadowRoot(host)), MAX_WEBDRIVER_CONCURRENCY),
+      toArray()
+    )
+    .toPromise();
 }

@@ -1,8 +1,5 @@
-import { from } from 'rxjs';
-import { mergeMap, toArray } from 'rxjs/operators';
 import { WebElementPromise } from 'selenium-webdriver';
-import { MAX_WEBDRIVER_CONCURRENCY } from '../lib/constants';
-import { selectShadowRoot } from '../lib/helpers';
+import { mapShadowRootConcurrent, selectShadowRoot } from '../lib/helpers';
 import { StateFilter } from './StateFilter.po';
 import { MutantComponent } from './MutantComponent.po';
 import { Drawer } from './Drawer.po';
@@ -13,14 +10,11 @@ export class MutantView extends View {
     return this.$('mutation-test-report-file >>> pre');
   }
 
-  public async mutants(): Promise<MutantComponent[]> {
-    const mutantElement$ = from(await this.$$('mutation-test-report-file >>> mutation-test-report-mutant'));
-    return mutantElement$
-      .pipe(
-        mergeMap(async (host) => new MutantComponent(await selectShadowRoot(host), this.browser), MAX_WEBDRIVER_CONCURRENCY),
-        toArray()
-      )
-      .toPromise();
+  public mutants(): Promise<MutantComponent[]> {
+    return mapShadowRootConcurrent(
+      this.$$('mutation-test-report-file >>> mutation-test-report-mutant'),
+      (host) => new MutantComponent(host, this.browser)
+    );
   }
 
   public mutant(mutantId: number | string) {
