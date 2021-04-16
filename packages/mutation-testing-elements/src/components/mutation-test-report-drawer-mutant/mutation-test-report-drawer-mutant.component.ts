@@ -6,7 +6,7 @@ import { bootstrap } from '../../style';
 import { DrawerMode } from '../mutation-test-report-drawer/mutation-test-report-drawer.component';
 import style from './mutation-test-report-drawer-mutant.scss';
 
-const describeTest = (test: TestModel) => html`${test.name}${test.sourceFile ? ` (${describeLocation(test)})` : ''}`;
+const describeTest = (test: TestModel) => html`${test.name}${test.sourceFile && test.location ? ` (${describeLocation(test)})` : ''}`;
 
 @customElement('mutation-test-report-drawer-mutant')
 export class MutationTestReportDrawerMutant extends LitElement {
