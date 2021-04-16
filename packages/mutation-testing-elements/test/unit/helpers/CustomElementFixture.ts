@@ -12,8 +12,9 @@ const defaultOptions: Readonly<CustomElementFixtureOptions> = Object.freeze({
 
 export class CustomElementFixture<TCustomElement extends LitElement> {
   public readonly element: TCustomElement;
+  private isConnected = false;
 
-  constructor(customElementName: string, options?: Partial<CustomElementFixtureOptions>) {
+  constructor(private customElementName: string, options?: Partial<CustomElementFixtureOptions>) {
     if (!customElements.get(customElementName)) {
       throw new AssertionError(`Custom element "${customElementName}" is not defined. Is it a typo on your end?`);
     }
@@ -29,7 +30,11 @@ export class CustomElementFixture<TCustomElement extends LitElement> {
    * Only call this manually if you construct the fixture with `{ autoConnect: false }`
    */
   public connect() {
+    if (this.isConnected) {
+      throw new Error(`Element ${this.customElementName} is already connected to the DOM. Cannot connect a second time.`);
+    }
     document.body.append(this.element);
+    this.isConnected = true;
   }
 
   public async whenStable(): Promise<void> {

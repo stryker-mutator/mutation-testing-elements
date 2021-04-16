@@ -28,7 +28,7 @@ export class MutationTestReportTestListItemComponent extends LitElement {
     return this.show
       ? html`<button type="button" @click="${this.dispatchTestSelected}" class="list-group-item list-group-item-action${this.active ? ' active' : ''}"
           ><span class="emblem">${getEmojiForTestStatus(this.test.status)}</span> ${this.test.name}${this.test.location
-            ? html`(${this.test.location.start.line}:${this.test.location.start.column})`
+            ? html` (${this.test.location.start.line}:${this.test.location.start.column})`
             : ''}
           [${this.test.status}]</button
         >`
