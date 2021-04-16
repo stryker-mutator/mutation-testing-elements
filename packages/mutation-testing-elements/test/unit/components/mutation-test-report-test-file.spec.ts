@@ -59,7 +59,7 @@ describe(MutationTestReportTestFile.name, () => {
       const expectedFilters: StateFilter<TestStatus>[] = [
         { enabled: true, count: 2, status: TestStatus.Killing, label: '✅ Killing', context: 'success' },
         { enabled: true, count: 1, status: TestStatus.NotKilling, label: '🕊 NotKilling', context: 'warning' },
-        { enabled: true, count: 1, status: TestStatus.NotCovering, label: '🌧 NotCovering', context: 'danger' },
+        { enabled: true, count: 1, status: TestStatus.NotCovering, label: '🌧 NotCovering', context: 'caution' },
       ];
       expect(selectStateFilter().filters).deep.eq(expectedFilters);
     });
@@ -84,7 +84,7 @@ describe(MutationTestReportTestFile.name, () => {
 
       // Assert
       const expectedFilters: StateFilter<TestStatus>[] = [
-        { enabled: true, count: 4, status: TestStatus.NotCovering, label: '🌧 NotCovering', context: 'danger' },
+        { enabled: true, count: 4, status: TestStatus.NotCovering, label: '🌧 NotCovering', context: 'caution' },
       ];
       expect(selectStateFilter().filters).deep.eq(expectedFilters);
     });
@@ -106,7 +106,7 @@ describe(MutationTestReportTestFile.name, () => {
 
       // Act
       const eventDetail: StateFilter<TestStatus>[] = [
-        { enabled: false, count: 4, status: TestStatus.NotCovering, label: '❌ NotCovering', context: 'danger' },
+        { enabled: false, count: 4, status: TestStatus.NotCovering, label: '🌧 NotCovering', context: 'caution' },
       ];
       selectStateFilter().dispatchEvent(createCustomEvent('filters-changed', eventDetail));
       await sut.whenStable();
