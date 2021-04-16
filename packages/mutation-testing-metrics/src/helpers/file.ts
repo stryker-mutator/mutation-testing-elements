@@ -1,16 +1,21 @@
 import { MetricsResult } from '../model/metrics-result';
 const SEPARATOR = '/';
 
-export function normalizeFileNames<TIn>(input: Record<string, TIn>): Record<string, TIn> {
-  return normalize(input, (input) => input);
+export function normalizeFileNames<TIn>(input: Record<string, TIn>, projectRoot = ''): Record<string, TIn> {
+  return normalize(input, projectRoot, (input) => input);
 }
 
-export function normalize<TIn, TOut>(input: Record<string, TIn>, factory: (input: TIn, fileName: string) => TOut): Record<string, TOut> {
+export function normalize<TIn, TOut>(
+  input: Record<string, TIn>,
+  projectRoot: string,
+  factory: (input: TIn, relativeFileName: string) => TOut
+): Record<string, TOut> {
   const fileNames = Object.keys(input);
   const commonBasePath = determineCommonBasePath(fileNames);
   const output: Record<string, TOut> = Object.create(null);
   fileNames.forEach((fileName) => {
-    output[normalizeName(fileName.substr(commonBasePath.length))] = factory(input[fileName], fileName);
+    const relativeFileName = normalizeName(fileName.startsWith(projectRoot) ? fileName.substr(projectRoot.length) : fileName);
+    output[normalizeName(fileName.substr(commonBasePath.length))] = factory(input[fileName], relativeFileName);
   });
   return output;
 }

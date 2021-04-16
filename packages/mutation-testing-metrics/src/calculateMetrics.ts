@@ -13,7 +13,7 @@ const ROOT_NAME_TESTS = 'All tests';
  * @returns A MetricsResult containing the metrics for the entire report. See `childResults`
  */
 export function calculateMetrics(files: Record<string, FileResult>): MetricsResult<FileUnderTestModel, Metrics> {
-  const normalizedFiles = normalize(files, (input, name) => new FileUnderTestModel(input, name));
+  const normalizedFiles = normalize(files, '', (input, name) => new FileUnderTestModel(input, name));
   return calculateDirectoryMetrics(ROOT_NAME, normalizedFiles, countFileMetrics);
 }
 
@@ -23,23 +23,40 @@ export function calculateMetrics(files: Record<string, FileResult>): MetricsResu
  * @returns A MutationTestMetricsResult that contains both the `systemUnderTestMetrics` as well as the `testMetrics`
  */
 export function calculateMutationTestMetrics(result: MutationTestResult): MutationTestMetricsResult {
-  const { files, testFiles } = result;
-  const fileModelsUnderTest = normalize(files, (input, name) => new FileUnderTestModel(input, name));
+  const { files, testFiles, projectRoot = '' } = result;
+  const fileModelsUnderTest = normalize(files, projectRoot, (input, name) => new FileUnderTestModel(input, name));
   if (testFiles) {
-    const testFileModels = normalize(testFiles, (input, name) => new TestFileModel(input, name));
+    const testFileModels = normalize(testFiles, projectRoot, (input, name) => new TestFileModel(input, name));
     relate(
       Object.values(fileModelsUnderTest).flatMap((file) => file.mutants),
       Object.values(testFileModels).flatMap((file) => file.tests)
     );
     return {
-      systemUnderTestMetrics: calculateDirectoryMetrics(ROOT_NAME, fileModelsUnderTest, countFileMetrics),
-      testMetrics: calculateDirectoryMetrics(ROOT_NAME_TESTS, testFileModels, countTestFileMetrics),
+      systemUnderTestMetrics: calculateRootMetrics(ROOT_NAME, fileModelsUnderTest, countFileMetrics),
+      testMetrics: calculateRootMetrics(ROOT_NAME_TESTS, testFileModels, countTestFileMetrics),
     };
   }
   return {
-    systemUnderTestMetrics: calculateDirectoryMetrics(ROOT_NAME, fileModelsUnderTest, countFileMetrics),
+    systemUnderTestMetrics: calculateRootMetrics(ROOT_NAME, fileModelsUnderTest, countFileMetrics),
     testMetrics: undefined,
   };
+}
+
+function calculateRootMetrics<TFileModel, TMetrics>(
+  name: string,
+  files: Record<string, TFileModel>,
+  calculateMetrics: (files: TFileModel[]) => TMetrics
+) {
+  const fileNames = Object.keys(files);
+  /**
+   * When a mutation testing framework doesn't report test files, but _does want to report a list of tests_,
+   * it will put those tests in a 'dummy' file with an empty string as name.
+   */
+  if (fileNames.length === 1 && fileNames[0] === '') {
+    return calculateFileMetrics(name, files[fileNames[0]], calculateMetrics);
+  } else {
+    return calculateDirectoryMetrics(name, files, calculateMetrics);
+  }
 }
 
 function calculateDirectoryMetrics<TFileModel, TMetrics>(

@@ -2,7 +2,7 @@
 import { calculateMetrics, calculateMutationTestMetrics } from '../../src/calculateMetrics';
 import { expect } from 'chai';
 import { MutantStatus, FileResultDictionary } from 'mutation-testing-report-schema';
-import { TestMetrics } from '../../src/model';
+import { FileUnderTestModel, Metrics, MetricsResult, TestFileModel, TestMetrics } from '../../src/model';
 import { createFileResult, createMutantResult, createMutationTestResult, createTestDefinition, createTestFile } from '../helpers/factories';
 
 describe(calculateMetrics.name, () => {
@@ -232,5 +232,90 @@ describe(calculateMutationTestMetrics.name, () => {
       killing: 1,
     };
     expect(output.testMetrics?.metrics).deep.eq(expected);
+  });
+
+  it('should allow for a single test file', () => {
+    // Arrange
+    const input = createMutationTestResult({
+      files: {},
+      testFiles: {
+        'foo.spec.js': createTestFile({
+          tests: [createTestDefinition({ id: 'test-1' })],
+        }),
+      },
+    });
+
+    // Act
+    const output = calculateMutationTestMetrics(input);
+
+    // Assert
+    expect(output.testMetrics!.file).undefined;
+    expect(output.testMetrics!.childResults).lengthOf(1);
+  });
+
+  /**
+   * When a mutation testing framework doesn't report test files, but _does want to report a list of tests_,
+   * it will put those tests in a 'dummy' file with an empty string as name.
+   */
+  it('should remove a dummy test file from the results', () => {
+    // Arrange
+    const testFile = createTestFile({
+      tests: [createTestDefinition({ id: 'test-1' }), createTestDefinition({ id: 'test-2' }), createTestDefinition({ id: 'test-3' })],
+    });
+    const input = createMutationTestResult({
+      files: {},
+      testFiles: {
+        '': testFile,
+      },
+    });
+
+    // Act
+    const output = calculateMutationTestMetrics(input);
+
+    // Assert
+    expect(output.testMetrics?.file).deep.eq(new TestFileModel(testFile, ''));
+  });
+
+  it('should make files relative to common base path', () => {
+    // Arrange
+    const input = createMutationTestResult({
+      files: {
+        // absolute path inside the project root
+        '/home/nicojs/github/stryker/packages/util/src/deep-merge.ts': createFileResult(),
+        // relative path
+        'src/immutable.ts': createFileResult(),
+        // absolute path outside of project root
+        '/home/nicojs/github/stryker/packages/core/src/app.ts': createFileResult(),
+      },
+      testFiles: {
+        // absolute path inside the project root
+        '/home/nicojs/github/stryker/packages/util/test/deep-merge.spec.ts': createTestFile(),
+        // relative path
+        'test/immutable.spec.ts': createTestFile(),
+        // absolute path outside of project root
+        '/home/nicojs/github/stryker/packages/core/test/app.spec.ts': createTestFile(),
+      },
+      projectRoot: '/home/nicojs/github/stryker/packages/util',
+    });
+
+    // Act
+    const output = calculateMutationTestMetrics(input);
+
+    // Assert
+    function collectFileNames(metricsResult: MetricsResult<FileUnderTestModel | TestFileModel, Metrics | TestMetrics>): string[] {
+      if (metricsResult.file) {
+        return [metricsResult.file.name];
+      } else {
+        return metricsResult.childResults.flatMap((child) => collectFileNames(child));
+      }
+    }
+    const actualSystemUnderTestFileNames = collectFileNames(output.systemUnderTestMetrics);
+    const actualTestFileNames = collectFileNames(output.testMetrics!);
+    expect(actualSystemUnderTestFileNames).deep.eq(['home/nicojs/github/stryker/packages/core/src/app.ts', 'src/deep-merge.ts', 'src/immutable.ts']);
+    expect(actualTestFileNames).deep.eq([
+      'home/nicojs/github/stryker/packages/core/test/app.spec.ts',
+      'test/deep-merge.spec.ts',
+      'test/immutable.spec.ts',
+    ]);
   });
 });
