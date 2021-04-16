@@ -8,7 +8,7 @@
   "scripts": {
     "start": "webpack serve --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
-    "test": "npm run test:integration",
+    "test": "npm run test:unit && npm run test:integration",
     "test:unit": "karma start --singleRun true",
     "test:unit:debug": "karma start --browsers ChromeHeadlessDebug",
     "test:integration": "mocha --forbid-only --config ./test/integration/.mocharc.jsonc",
