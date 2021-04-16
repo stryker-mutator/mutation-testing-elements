@@ -2,10 +2,10 @@ const webpack = require('./webpack.dev');
 module.exports = function (config) {
   config.set({
     basePath: '',
-    frameworks: ['mocha'],
-    files: ['test/unit/index.js'],
+    frameworks: ['mocha', 'webpack'],
+    files: ['test/unit/**/*.spec.ts'],
     preprocessors: {
-      'test/unit/index.js': ['webpack', 'sourcemap'],
+      'test/unit/**/*.spec.ts': ['webpack', 'sourcemap'],
     },
     reporters: ['progress'],
     port: 9876,
@@ -15,18 +15,15 @@ module.exports = function (config) {
     customLaunchers: {
       ChromeHeadlessDebug: {
         base: 'ChromeHeadless',
-        flags: [
-          '--remote-debugging-port=9333'
-        ]
-      }
+        flags: ['--remote-debugging-port=9333'],
+      },
     },
     client: {
       mocha: {
-        timeout: 10000 // windows can be slow in the pipeline
-      }
+        timeout: 10000, // windows can be slow in the pipeline
+      },
     },
     browsers: process.env.CI || process.env.HEADLESS ? ['ChromeHeadless'] : ['Chrome'],
-    singleRun: false,
     concurrency: Infinity,
     webpack,
   });
