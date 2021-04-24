@@ -219,14 +219,16 @@ export class MutationTestReportAppComponent extends LitElement {
 
   private renderTabs() {
     if (this.rootModel?.testMetrics) {
-      return html`<ul class="nav nav-tabs">
-        <li class="nav-item">
-          <a class="nav-link ${this.context.view === 'mutant' ? 'active' : ''}" href="${toAbsoluteUrl('mutant')}">👽 Mutants</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link ${this.context.view === 'test' ? 'active' : ''}" href="${toAbsoluteUrl('test')}">🧪 Tests</a>
-        </li>
-      </ul>`;
+      return html`<nav>
+        <ul class="nav nav-tabs border-bottom-0" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link ${this.context.view === 'mutant' ? 'active' : ''}" role="tab" href="${toAbsoluteUrl('mutant')}">👽 Mutants</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link ${this.context.view === 'test' ? 'active' : ''}" role="tab" href="${toAbsoluteUrl('test')}">🧪 Tests</a>
+          </li>
+        </ul>
+      </nav>`;
     } else {
       return undefined;
     }
