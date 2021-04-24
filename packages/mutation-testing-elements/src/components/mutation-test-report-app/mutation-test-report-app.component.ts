@@ -88,7 +88,7 @@ export class MutationTestReportAppComponent extends LitElement {
 
     // Set the default view to "mutant" when no route is selected
     if (this.path.length === 0 || (this.path[0] !== View.mutant && this.path[0] !== View.test)) {
-      window.location.hash = `#${View.mutant}`;
+      window.location.replace(toAbsoluteUrl(`${View.mutant}`));
     }
   }
 
