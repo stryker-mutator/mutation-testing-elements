@@ -1,11 +1,13 @@
+import { TestModel } from 'mutation-testing-metrics';
 import { MutantResult } from 'mutation-testing-report-schema';
-import { MutantFilter } from '../components/mutation-test-report-file-legend/mutation-test-report-file-legend.component';
+import { StateFilter } from '../components/mutation-test-report-state-filter/mutation-test-report-state-filter.component';
 
 export interface CustomEventMap {
   'mutant-selected': { selected: boolean; mutant: MutantResult | undefined };
+  'test-selected': { selected: boolean; test: TestModel | undefined };
   'theme-changed': { theme: string; themeBackgroundColor: string };
   'theme-switch': 'dark' | 'light';
-  'filters-changed': MutantFilter[];
+  'filters-changed': StateFilter<any>[];
   'collapse-all': void;
   'expand-all': void;
 }

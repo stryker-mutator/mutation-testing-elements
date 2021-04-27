@@ -1,5 +1,6 @@
 import { TemplateResult } from 'lit-element';
-import { MutantStatus } from 'mutation-testing-report-schema';
+import { TestStatus } from 'mutation-testing-metrics';
+import { MutantStatus, OpenEndLocation } from 'mutation-testing-report-schema';
 
 export function notNullish<T>(value: T | undefined | null): value is T {
   return value !== null && value !== undefined;
@@ -42,6 +43,28 @@ export function getContextClassForStatus(status: MutantStatus) {
   }
 }
 
+export function getContextClassForTestStatus(status: TestStatus) {
+  switch (status) {
+    case TestStatus.Killing:
+      return 'success';
+    case TestStatus.NotKilling:
+      return 'warning';
+    case TestStatus.NotCovering:
+      return 'caution';
+  }
+}
+
+export function getEmojiForTestStatus(status: TestStatus) {
+  switch (status) {
+    case TestStatus.Killing:
+      return '✅';
+    case TestStatus.NotKilling:
+      return '🕊';
+    case TestStatus.NotCovering:
+      return '🌧';
+  }
+}
+
 export function getEmojiForStatus(status: MutantStatus) {
   switch (status) {
     case MutantStatus.Killed:
@@ -64,10 +87,10 @@ export function escapeHtml(unsafe: string) {
   return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
 }
 
-export function toAbsoluteUrl(fragment: string): string {
+export function toAbsoluteUrl(...fragments: string[]): string {
   // Use absolute url because of https://github.com/stryker-mutator/mutation-testing-elements/issues/53
   const url = new URL(window.location.href);
-  return new URL(`#${fragment}`, url).href;
+  return new URL(`#${fragments.filter(Boolean).join('/')}`, url).href;
 }
 
 export function plural(items: unknown[]): string {
@@ -75,4 +98,8 @@ export function plural(items: unknown[]): string {
     return 's';
   }
   return '';
+}
+
+export function describeLocation({ fileName, location }: { fileName: string; location?: OpenEndLocation | undefined }) {
+  return fileName ? `${fileName}${location ? `:${location.start.line}:${location.start.column}` : ''}` : '';
 }

@@ -1,12 +1,40 @@
+import { AssertionError } from 'chai';
 import { LitElement } from 'lit-element';
 import { CustomEventMap, MteCustomEvent } from '../../../src/lib/custom-events';
 
+interface CustomElementFixtureOptions {
+  autoConnect: boolean;
+}
+
+const defaultOptions: Readonly<CustomElementFixtureOptions> = Object.freeze({
+  autoConnect: true,
+});
+
 export class CustomElementFixture<TCustomElement extends LitElement> {
   public readonly element: TCustomElement;
+  private isConnected = false;
 
-  constructor(nodeName: string) {
-    this.element = document.createElement(nodeName) as TCustomElement;
+  constructor(private customElementName: string, options?: Partial<CustomElementFixtureOptions>) {
+    if (!customElements.get(customElementName)) {
+      throw new AssertionError(`Custom element "${customElementName}" is not defined. Is it a typo on your end?`);
+    }
+    options = { ...defaultOptions, ...options };
+    this.element = document.createElement(customElementName) as TCustomElement;
+    if (options.autoConnect) {
+      this.connect();
+    }
+  }
+
+  /**
+   * Connects the custom element to the DOM.
+   * Only call this manually if you construct the fixture with `{ autoConnect: false }`
+   */
+  public connect() {
+    if (this.isConnected) {
+      throw new Error(`Element ${this.customElementName} is already connected to the DOM. Cannot connect a second time.`);
+    }
     document.body.append(this.element);
+    this.isConnected = true;
   }
 
   public async whenStable(): Promise<void> {

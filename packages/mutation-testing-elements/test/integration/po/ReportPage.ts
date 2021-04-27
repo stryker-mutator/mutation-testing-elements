@@ -1,41 +1,33 @@
-import { from } from 'rxjs';
-import { mergeMap, toArray } from 'rxjs/operators';
-import { constants, DEFAULT_TIMEOUT, MAX_WEBDRIVER_CONCURRENCY } from '../lib/constants';
+import { constants } from '../lib/constants';
 import Breadcrumb from './Breadcrumb.po';
 import { ElementSelector } from './ElementSelector.po';
-import { Legend } from './Legend.po';
-import { MutantComponent } from './MutantComponent.po';
-import { ResultTable } from './ResultTable.po';
-import { selectShadowRoot } from '../lib/helpers';
+import { selectShadowRoot, sleep } from '../lib/helpers';
 import { WebDriver } from 'selenium-webdriver';
 import { ThemeSelector } from './ThemeSelector.po';
-import { MutantDrawer } from './MutantDrawer.po';
+import { MutantView } from './MutantView.po';
+import { TestView } from './TestView.po';
+import { NavTab } from './NavTab.po';
 
 export class ReportPage extends ElementSelector {
   constructor(private readonly browser: WebDriver) {
     super(browser);
   }
 
+  public whenFileReportLoaded() {
+    return Promise.resolve();
+  }
+
   public takeScreenshot(): Promise<string> {
     return this.$('mutation-test-report-app >>> .container-fluid').takeScreenshot();
   }
 
-  public navigateTo(path: string) {
-    return this.browser.get(constants.BASE_URL + path);
-  }
+  public async navigateTo(path: string) {
+    await this.browser.get(constants.BASE_URL + path);
 
-  public whenFileReportLoaded() {
-    return this.browser.wait(async () => {
-      try {
-        await this.$('mutation-test-report-app >>> mutation-test-report-file');
-        return true;
-      } catch (err) {
-        if (err instanceof Error && err.message.includes('Unable to locate element')) {
-          return false;
-        }
-        throw err;
-      }
-    }, DEFAULT_TIMEOUT);
+    // Navigating to fragments (#...) resolve almost immediately. We currently don't have
+    // a good way to determine that the app is fully loaded. We throw an arbitrary sleep after each navigation.
+    // TODO: find a better way to determine that the page is fully loaded...
+    await sleep();
   }
 
   public async backgroundColor() {
@@ -47,57 +39,29 @@ export class ReportPage extends ElementSelector {
     return this.browser.getTitle();
   }
 
+  public currentUrl() {
+    return this.browser.getCurrentUrl();
+  }
+
   public breadcrumb(): Breadcrumb {
     const host = this.$('mutation-test-report-app >>> mutation-test-report-breadcrumb');
     return new Breadcrumb(selectShadowRoot(host), this.browser);
+  }
+
+  public async navigationTabs() {
+    const elements = await this.$$('mutation-test-report-app >>> .nav-tabs li');
+    return elements.map((li) => new NavTab(li, this.browser));
   }
 
   public get themeSelector(): ThemeSelector {
     return new ThemeSelector(selectShadowRoot(this.$('mutation-test-report-app >>> mutation-test-report-theme-switch')), this.browser);
   }
 
-  public clickOnCode() {
-    return this.$('mutation-test-report-app >>> mutation-test-report-file >>> code').click();
+  get mutantView(): MutantView {
+    return new MutantView(selectShadowRoot(this.$('mutation-test-report-app >>> mutation-test-report-mutant-view')), this.browser);
   }
 
-  public async isCodeHighlighted(): Promise<boolean> {
-    return this.isPresent('mutation-test-report-app >>> mutation-test-report-file >>> code span.token');
-  }
-
-  public async codeBackgroundColor(): Promise<string> {
-    const codeElement = await this.$('mutation-test-report-app >>> mutation-test-report-file >>> pre');
-    return codeElement.getCssValue('background-color');
-  }
-
-  public async mutants(): Promise<MutantComponent[]> {
-    const mutantElement$ = from(await this.$$('mutation-test-report-app >>> mutation-test-report-file >>> mutation-test-report-mutant'));
-    return mutantElement$
-      .pipe(
-        mergeMap(async (host) => new MutantComponent(await selectShadowRoot(host), this.browser), MAX_WEBDRIVER_CONCURRENCY),
-        toArray()
-      )
-      .toPromise();
-  }
-
-  public mutant(mutantId: number | string) {
-    const shadowRoot = selectShadowRoot(
-      this.$(`mutation-test-report-app >>> mutation-test-report-file >>> mutation-test-report-mutant[mutant-id="${mutantId}"]`)
-    );
-    return new MutantComponent(shadowRoot, this.browser);
-  }
-
-  public legend() {
-    const context = selectShadowRoot(this.$('mutation-test-report-app >>> mutation-test-report-file >>> mutation-test-report-file-legend'));
-    return new Legend(context, this.browser);
-  }
-
-  public resultTable() {
-    const context = selectShadowRoot(this.$('mutation-test-report-app >>> mutation-test-report-totals'));
-    return new ResultTable(context, this.browser);
-  }
-
-  public mutantDrawer() {
-    const context = selectShadowRoot(this.$('mutation-test-report-app >>> mutation-test-report-drawer-mutant'));
-    return new MutantDrawer(context, this.browser);
+  get testView(): TestView {
+    return new TestView(selectShadowRoot(this.$('mutation-test-report-app >>> mutation-test-report-test-view')), this.browser);
   }
 }

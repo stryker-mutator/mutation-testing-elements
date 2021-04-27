@@ -7,17 +7,16 @@ describe('File report "infection-php-example/TextFileLogger.php"', () => {
 
   before(async () => {
     page = new ReportPage(getCurrent());
-    await page.navigateTo('');
-    await page.navigateTo('infection-php-example/#TextFileLogger.php');
+    await page.navigateTo('infection-php-example/#mutant/TextFileLogger.php');
+    await page.whenFileReportLoaded();
   });
 
   it('should highlight the code', async () => {
-    expect(await page.isCodeHighlighted()).true;
+    await page.mutantView.whenCodeIsHighlighted();
   });
 
   it('should show mutants', async () => {
-    // Wait for code to be highted first
-    expect(await page.isCodeHighlighted()).true;
-    expect(await page.mutant('ebf143eb565188ddd7959bfbe70f631f').isButtonVisible()).true;
+    await page.mutantView.whenCodeIsHighlighted();
+    expect(await page.mutantView.mutant('ebf143eb565188ddd7959bfbe70f631f').isButtonVisible()).true;
   });
 });

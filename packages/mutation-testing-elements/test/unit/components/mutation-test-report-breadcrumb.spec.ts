@@ -1,12 +1,14 @@
 import { MutationTestReportBreadcrumbComponent } from '../../../src/components/mutation-test-report-breadcrumb';
 import { expect } from 'chai';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
+import { View } from '../../../src/lib/router';
 
 describe(MutationTestReportBreadcrumbComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportBreadcrumbComponent>;
 
   beforeEach(async () => {
     sut = new CustomElementFixture('mutation-test-report-breadcrumb');
+    sut.element.view = View.mutant;
     await sut.whenStable();
   });
 
@@ -14,10 +16,19 @@ describe(MutationTestReportBreadcrumbComponent.name, () => {
     sut.dispose();
   });
 
-  it('should show the root item', () => {
+  it('should show the root item as "All files" for the "mutant" view', () => {
     const elements = sut.$$('li');
     expect(elements).lengthOf(1);
     expect(elements[0].textContent).eq('All files');
+    expect(elements[0].querySelector('a')).eq(null);
+  });
+
+  it('should show the root item as "All tests" for the "test" view', async () => {
+    sut.element.view = View.test;
+    await sut.whenStable();
+    const elements = sut.$$('li');
+    expect(elements).lengthOf(1);
+    expect(elements[0].textContent).eq('All tests');
     expect(elements[0].querySelector('a')).eq(null);
   });
 
@@ -28,7 +39,7 @@ describe(MutationTestReportBreadcrumbComponent.name, () => {
     expect(elements).lengthOf(2);
     const anchor = elements[0].querySelector('a') as HTMLAnchorElement;
     expect(anchor).ok;
-    expect(anchor.href).eq(href('#'));
+    expect(anchor.href).eq(href('#mutant'));
     expect(elements[1].textContent).eq('foo.js');
     expect(elements[1].querySelector('a')).null;
   });
@@ -40,11 +51,11 @@ describe(MutationTestReportBreadcrumbComponent.name, () => {
     expect(elements).lengthOf(3);
     const rootLink = elements[0].querySelector('a') as HTMLAnchorElement;
     expect(rootLink).ok;
-    expect(rootLink.href).eq(href('#'));
+    expect(rootLink.href).eq(href('#mutant'));
     expect(elements[1].textContent).eq('bar');
     const barAnchor = elements[1].querySelector('a') as HTMLAnchorElement;
     expect(barAnchor).ok;
-    expect(barAnchor.href).eq(href('#bar'));
+    expect(barAnchor.href).eq(href('#mutant/bar'));
     expect(elements[2].textContent).eq('foo.js');
     expect(elements[2].querySelector('a')).null;
   });

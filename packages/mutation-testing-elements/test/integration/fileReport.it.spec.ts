@@ -9,20 +9,16 @@ describe('File report "install-local-example/Options.ts"', () => {
 
   beforeEach(async () => {
     page = new ReportPage(getCurrent());
-    await page.navigateTo('');
-    await page.navigateTo('install-local-example/#Options.ts');
-  });
-
-  it('should show title "Options.ts"', async () => {
-    expect(await page.title()).eq('Options.ts');
+    await page.navigateTo('install-local-example/#mutant/Options.ts');
+    await page.whenFileReportLoaded();
   });
 
   it('should show 51 mutants in the file', async () => {
-    expect(await page.mutants()).lengthOf(51);
+    expect(await page.mutantView.mutants()).lengthOf(51);
   });
 
   it('should not "line-through" any of the original code lines', async () => {
-    for await (const mutant of await page.mutants()) {
+    for await (const mutant of await page.mutantView.mutants()) {
       const [decoration, isMutantReplacementVisible] = await Promise.all([
         mutant.originalCodeTextDecoration(),
         mutant.isMutantReplacementCodeVisible(),
@@ -33,42 +29,42 @@ describe('File report "install-local-example/Options.ts"', () => {
   });
 
   it('should only filter Survived and NoCoverage mutants by default', async () => {
-    const legend = page.legend();
-    expect(await legend.displayButton(MutantStatus.Killed).isChecked()).false;
-    expect(await legend.displayButton(MutantStatus.Survived).isChecked()).true;
-    expect(await legend.displayButton(MutantStatus.NoCoverage).isChecked()).true;
-    expect(await legend.displayButton(MutantStatus.CompileError).isChecked()).false;
+    const filter = page.mutantView.stateFilter();
+    expect(await filter.state(MutantStatus.Killed).isChecked()).false;
+    expect(await filter.state(MutantStatus.Survived).isChecked()).true;
+    expect(await filter.state(MutantStatus.NoCoverage).isChecked()).true;
+    expect(await filter.state(MutantStatus.CompileError).isChecked()).false;
   });
 
   it('should hide killed mutants', async () => {
-    expect(await page.mutant(1).isButtonVisible()).false;
-    expect(await page.mutant(21).isButtonVisible()).false;
+    expect(await page.mutantView.mutant(1).isButtonVisible()).false;
+    expect(await page.mutantView.mutant(21).isButtonVisible()).false;
   });
 
   it('should show Survived mutants', async () => {
-    expect(await page.mutant(20).isButtonVisible()).true;
-    expect(await page.mutant(32).isButtonVisible()).true;
+    expect(await page.mutantView.mutant(20).isButtonVisible()).true;
+    expect(await page.mutantView.mutant(32).isButtonVisible()).true;
   });
 
   it('should show NoCoverage mutants', async () => {
-    expect(await page.mutant(37).isButtonVisible()).true;
-    expect(await page.mutant(38).isButtonVisible()).true;
+    expect(await page.mutantView.mutant(37).isButtonVisible()).true;
+    expect(await page.mutantView.mutant(38).isButtonVisible()).true;
   });
 
   describe('when "Killed" is enabled', () => {
     beforeEach(async () => {
-      await page.legend().displayButton(MutantStatus.Killed).click();
+      await page.mutantView.stateFilter().state(MutantStatus.Killed).click();
     });
 
     it('should also show the killed mutants', async () => {
-      expect(await page.mutant(1).isButtonVisible()).true;
-      expect(await page.mutant(15).isButtonVisible()).true;
+      expect(await page.mutantView.mutant(1).isButtonVisible()).true;
+      expect(await page.mutantView.mutant(15).isButtonVisible()).true;
     });
 
     describe('and a killed mutant is enabled', () => {
       let mutant: MutantComponent;
       beforeEach(async () => {
-        mutant = page.mutant(1);
+        mutant = page.mutantView.mutant(1);
         await mutant.toggleMutant();
       });
 
@@ -78,7 +74,7 @@ describe('File report "install-local-example/Options.ts"', () => {
 
       describe('and later "Killed" is disabled', () => {
         beforeEach(async () => {
-          await page.legend().displayButton(MutantStatus.Killed).click();
+          await page.mutantView.stateFilter().state(MutantStatus.Killed).click();
         });
 
         it('should have removed the "line-through" from the mutant\'s original code', async () => {
@@ -96,7 +92,7 @@ describe('File report "install-local-example/Options.ts"', () => {
     let mutant: MutantComponent;
 
     beforeEach(async () => {
-      mutant = page.mutant(20);
+      mutant = page.mutantView.mutant(20);
       await mutant.toggleMutant();
     });
 
@@ -105,7 +101,7 @@ describe('File report "install-local-example/Options.ts"', () => {
     });
 
     it('should show the drawer', async () => {
-      await page.mutantDrawer().whenHalfOpen();
+      await page.mutantView.mutantDrawer().whenHalfOpen();
     });
 
     it('should show the mutated code', async () => {
@@ -122,7 +118,7 @@ describe('File report "install-local-example/Options.ts"', () => {
       });
 
       it('should hide the drawer', async () => {
-        await page.mutantDrawer().whenClosed();
+        await page.mutantView.mutantDrawer().whenClosed();
       });
 
       it('should hide the mutated code', async () => {

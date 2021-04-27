@@ -20,7 +20,6 @@ export class MutationTestReportMutantComponent extends LitElement {
 
   private readonly mutantClicked = (event: Event) => {
     this.expand = !this.expand;
-    event.preventDefault();
     event.stopPropagation();
     this.dispatchEvent(createCustomEvent('mutant-selected', { selected: this.expand, mutant: this.mutant }, { bubbles: true, composed: true }));
   };

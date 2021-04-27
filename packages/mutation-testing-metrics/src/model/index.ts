@@ -5,4 +5,4 @@ export { MutantModel } from './mutant-model';
 export { MutationTestMetricsResult } from './mutation-test-metrics-result';
 export { TestFileModel } from './test-file-model';
 export { TestMetrics } from './test-metrics';
-export { TestModel } from './test-model';
+export { TestModel, TestStatus } from './test-model';

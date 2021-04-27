@@ -8,7 +8,7 @@ export function isHeadless(): boolean {
 }
 
 export async function init() {
-  const baseOptions = new chrome.Options().windowSize({ width: 1400, height: 900 });
+  const baseOptions = new chrome.Options().windowSize({ width: 1400, height: 1000 });
   const chromeOptions = isHeadless() ? baseOptions.headless() : baseOptions;
   browser = await new Builder().forBrowser('chrome').setChromeOptions(chromeOptions).build();
 }

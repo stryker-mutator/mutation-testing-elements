@@ -1,0 +1,5 @@
+@import '../../style/globals.scss';
+main {
+  // Allow room for a half-open drawer
+  padding-bottom: $mte-drawer-height-half-open;
+}

@@ -12,6 +12,9 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-unsafe-assignment': 'off',
+
+    // Not useful for a lot of stuff, but mainly `.shadowRoot`
+    '@typescript-eslint/no-non-null-assertion': 'off',
     'prettier/prettier': 'error',
   },
   extends: [
