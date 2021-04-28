@@ -7,7 +7,7 @@ describe(TestFileModel.name, () => {
   it('should copy over all values from file result', () => {
     const fileResult: Required<TestFile> = {
       source: 'describe("foo")',
-      tests: [createTestDefinition({ id: 'mut-1' })],
+      tests: [],
     };
     expect(new TestFileModel(fileResult, '')).deep.contains(fileResult);
   });

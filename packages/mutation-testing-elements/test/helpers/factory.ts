@@ -1,5 +1,6 @@
-import { MutantResult, MutantStatus, FileResult, Location, TestDefinition, MutationTestResult } from 'mutation-testing-report-schema';
-import { Metrics, MetricsResult } from 'mutation-testing-metrics';
+import { MutantResult, MutantStatus, FileResult, Location, TestDefinition, MutationTestResult, TestFile } from 'mutation-testing-report-schema';
+import { Metrics, MetricsResult, TestFileModel, TestMetrics } from 'mutation-testing-metrics';
+import { StateFilter } from '../../src/components/mutation-test-report-state-filter/mutation-test-report-state-filter.component';
 
 export function createMutantResult(overrides?: Partial<MutantResult>): MutantResult {
   const defaults: MutantResult = {
@@ -17,6 +18,17 @@ export function createTestDefinition(overrides?: Partial<TestDefinition>): TestD
     id: '23',
     name: 'foo should bar',
     location: createLocation(),
+    ...overrides,
+  };
+}
+
+export function createStateFilter<T>(status: T, overrides?: Partial<Omit<StateFilter<T>, 'status'>>): StateFilter<T> {
+  return {
+    context: 'info',
+    count: 1,
+    enabled: true,
+    label: 'Foo',
+    status,
     ...overrides,
   };
 }
@@ -53,6 +65,32 @@ export function createMetricsResult(overrides?: Partial<MetricsResult>): Metrics
   return { ...defaults, ...overrides };
 }
 
+export function createTestMetricsResult(overrides?: Partial<MetricsResult<TestFileModel, TestMetrics>>): MetricsResult<TestFileModel, TestMetrics> {
+  const defaults: MetricsResult<TestFileModel, TestMetrics> = {
+    childResults: [],
+    metrics: createTestMetrics(),
+    name: 'foo',
+  };
+  return { ...defaults, ...overrides };
+}
+
+export function createTestFile(overrides?: Partial<TestFile>): TestFile {
+  return {
+    tests: [],
+    ...overrides,
+  };
+}
+
+export function createTestMetrics(overrides?: TestMetrics): TestMetrics {
+  return {
+    killing: 0,
+    notCovering: 0,
+    notKilling: 0,
+    total: 0,
+    ...overrides,
+  };
+}
+
 export function createMetrics(overrides?: Metrics): Metrics {
   const defaults: Metrics = {
     killed: 0,
@@ -74,7 +112,7 @@ export function createMetrics(overrides?: Metrics): Metrics {
   return { ...defaults, ...overrides };
 }
 
-export function createReport(overrides?: MutationTestResult): MutationTestResult {
+export function createReport(overrides?: Partial<MutationTestResult>): MutationTestResult {
   return {
     files: {
       'foobar.js': {

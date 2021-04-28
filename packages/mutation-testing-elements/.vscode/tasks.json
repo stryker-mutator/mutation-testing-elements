@@ -5,6 +5,16 @@
   "tasks": [
     {
       "type": "npm",
+      "script": "start",
+      "label": "Run webpack in watch mode",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "type": "npm",
       "script": "test:unit:debug",
       "label": "Karma chrome debug",
       "isBackground": true,

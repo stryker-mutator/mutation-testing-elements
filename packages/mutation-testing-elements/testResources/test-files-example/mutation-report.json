@@ -3783,6 +3783,7 @@
       ]
     }
   },
+  "projectRoot": "/home/nicojs/github/stryker/packages/util/",
   "schemaVersion": "1.5",
   "thresholds": {
     "high": 80,

@@ -13,6 +13,12 @@ function assertLocationDefined(location: OpenEndLocation | undefined): asserts l
   }
 }
 
+export enum TestStatus {
+  Killing = 'Killing',
+  NotKilling = 'NotKilling',
+  NotCovering = 'NotCovering',
+}
+
 export class TestModel implements TestDefinition {
   public id!: string;
   public name!: string;
@@ -60,5 +66,15 @@ export class TestModel implements TestDefinition {
   public get fileName() {
     assertSourceFileDefined(this.sourceFile);
     return this.sourceFile.name;
+  }
+
+  public get status(): TestStatus {
+    if (this.killedMutants?.length) {
+      return TestStatus.Killing;
+    } else if (this.coveredMutants?.length) {
+      return TestStatus.NotKilling;
+    } else {
+      return TestStatus.NotCovering;
+    }
   }
 }

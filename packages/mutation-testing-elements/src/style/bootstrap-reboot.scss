@@ -7,6 +7,5 @@ $theme-colors: map-merge(
   $theme-colors
 );
 $table-cell-padding-sm: 0.5rem;
-$list-group-bg: $gray-100;
 
 @import './bootstrap/_darkly-variables.scss';

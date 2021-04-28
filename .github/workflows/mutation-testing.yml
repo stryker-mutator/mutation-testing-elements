@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - test/**
+  workflow_dispatch:
 
 jobs:
   metrics:
@@ -35,6 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: coursier/cache-action@v6
       - name: Run Stryker
         run: npx lerna run --stream --scope mutation-testing-metrics-scala stryker
         env:

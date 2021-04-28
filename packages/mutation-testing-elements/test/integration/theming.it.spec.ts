@@ -34,11 +34,11 @@ describe('Theming', () => {
 
     describe('when opening a code file', () => {
       beforeEach(async () => {
-        await page.resultTable().row('helpers.ts').navigate();
+        await page.mutantView.resultTable().row('helpers.ts').navigate();
       });
 
       it('should show a dark code editor', async () => {
-        expect(await page.codeBackgroundColor()).eq('rgba(45, 45, 45, 1)');
+        expect(await page.mutantView.codeBackgroundColor()).eq('rgba(45, 45, 45, 1)');
       });
 
       itShouldMatchScreenshot('should match the dark theme');
@@ -58,10 +58,10 @@ describe('Theming', () => {
 
     describe('when opening a code file', () => {
       beforeEach(async () => {
-        await page.resultTable().row('helpers.ts').navigate();
+        await page.mutantView.resultTable().row('helpers.ts').navigate();
       });
       it('should show a light code editor', async () => {
-        expect(await page.codeBackgroundColor()).eq('rgba(246, 248, 250, 1)');
+        expect(await page.mutantView.codeBackgroundColor()).eq('rgba(246, 248, 250, 1)');
       });
 
       itShouldMatchScreenshot('should match the light theme');

@@ -1,38 +1,21 @@
-import { LitElement, html, property, customElement, unsafeCSS } from 'lit-element';
+import { LitElement, html, property, customElement, unsafeCSS, PropertyValues } from 'lit-element';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 import { MutationTestReportMutantComponent } from '../mutation-test-report-mutant/mutation-test-report-mutant.component';
-import { MutantFilter } from '../mutation-test-report-file-legend/mutation-test-report-file-legend.component';
+import { StateFilter } from '../mutation-test-report-state-filter/mutation-test-report-state-filter.component';
 import { bootstrap, prismjs } from '../../style';
-import { renderCode } from '../../lib/codeHelpers';
-import { FileResult, TestDefinition } from 'mutation-testing-report-schema';
+import { markMutants } from '../../lib/code-helpers';
+import { FileResult, MutantStatus } from 'mutation-testing-report-schema';
 import { highlightElement } from 'prismjs/components/prism-core';
 import style from './mutation-test-report-file.scss';
-
-import 'prismjs/plugins/line-numbers/prism-line-numbers';
-// Order is important here! Scala depends on java, which depends on clike
-import 'prismjs/components/prism-clike';
-import 'prismjs/components/prism-javascript';
-import 'prismjs/components/prism-typescript';
-import 'prismjs/components/prism-csharp';
-import 'prismjs/components/prism-java';
-import 'prismjs/components/prism-scala';
-
-// Markup and markup-templating are needed for php
-import 'prismjs/components/prism-markup';
-import 'prismjs/components/prism-markup-templating';
-import 'prismjs/components/prism-php';
-
-// Don't strip pre-existing HTML to keep the popups and badges working
-import 'prismjs/plugins/keep-markup/prism-keep-markup';
-// Removed auto-loader plugin because of https://github.com/stryker-mutator/mutation-testing-elements/issues/393
+import { getContextClassForStatus, getEmojiForStatus } from '../../lib/htmlHelpers';
 
 @customElement('mutation-test-report-file')
 export class MutationTestReportFileComponent extends LitElement {
   @property()
-  public model!: FileResult;
+  private filters: StateFilter<MutantStatus>[] = [];
 
   @property()
-  public tests!: Record<string, TestDefinition & { fileName: string }>;
+  public model!: FileResult;
 
   public static styles = [prismjs, bootstrap, unsafeCSS(style)];
 
@@ -43,15 +26,15 @@ export class MutationTestReportFileComponent extends LitElement {
     this.forEachMutantComponent((mutantComponent) => (mutantComponent.expand = false));
   };
 
-  private forEachMutantComponent(action: (mutant: MutationTestReportMutantComponent) => void, host = this.root) {
-    for (const mutantComponent of host.querySelectorAll('mutation-test-report-mutant')) {
+  private forEachMutantComponent(action: (mutant: MutationTestReportMutantComponent) => void) {
+    for (const mutantComponent of this.shadowRoot!.querySelectorAll('mutation-test-report-mutant')) {
       if (mutantComponent instanceof MutationTestReportMutantComponent) {
         action(mutantComponent);
       }
     }
   }
 
-  private readonly filtersChanged = (event: CustomEvent<MutantFilter[]>) => {
+  private readonly filtersChanged = (event: CustomEvent<StateFilter<MutantStatus>[]>) => {
     const enabledMutantStates = event.detail.filter((mutantFilter) => mutantFilter.enabled).map((mutantFilter) => mutantFilter.status);
     this.forEachMutantComponent((mutantComponent) => {
       mutantComponent.show = enabledMutantStates.some((state) => mutantComponent.mutant !== undefined && mutantComponent.mutant.status === state);
@@ -59,38 +42,56 @@ export class MutationTestReportFileComponent extends LitElement {
   };
 
   public render() {
-    if (this.model) {
-      return html`
-        <div class="row">
-          <div class="col-md-12">
-            <mutation-test-report-file-legend
-              @filters-changed="${this.filtersChanged}"
-              @expand-all="${this.expandAll}"
-              @collapse-all="${this.collapseAll}"
-              .mutants="${this.model.mutants}"
-            ></mutation-test-report-file-legend>
-            <pre id="report-code-block" class="line-numbers"><code class="language-${this.model.language}">${unsafeHTML(
-              renderCode(this.model)
-            )}</code></pre>
-          </div>
+    return html`
+      <div class="row">
+        <div class="col-md-12">
+          <mutation-test-report-state-filter
+            allow-toggle-all
+            .filters="${this.filters}"
+            @filters-changed="${this.filtersChanged}"
+            @expand-all="${this.expandAll}"
+            @collapse-all="${this.collapseAll}"
+          ></mutation-test-report-state-filter>
+          <pre id="report-code-block" class="line-numbers"><code class="language-${this.model.language}">${unsafeHTML(
+            markMutants(this.model)
+          )}</code></pre>
         </div>
-      `;
-    }
-    return undefined;
+      </div>
+    `;
   }
 
   public firstUpdated() {
-    const code = this.root.querySelector('code');
+    const code = this.shadowRoot!.querySelector('code');
     if (code) {
       highlightElement(code);
+
+      // Prism-js's `highlightElement` creates a copy of the DOM tree to do its magic.
+      // Now that the code is highlighted, we can bind the mutants
       this.forEachMutantComponent((mutantComponent) => {
-        mutantComponent.mutant = this.model.mutants.find((mutant) => mutant.id.toString() === mutantComponent.getAttribute('mutant-id'));
-        // mutantComponent.tests = this.tests;
-      }, code);
+        mutantComponent.mutant = this.model.mutants.find((mutant) => mutant.id === mutantComponent.getAttribute('mutant-id'));
+      });
     }
   }
 
-  private get root(): ParentNode {
-    return this.shadowRoot || this;
+  public updated(changes: PropertyValues) {
+    if (changes.has('model') && this.model) {
+      this.filters = [
+        MutantStatus.Killed,
+        MutantStatus.Survived,
+        MutantStatus.NoCoverage,
+        MutantStatus.Ignored,
+        MutantStatus.Timeout,
+        MutantStatus.CompileError,
+        MutantStatus.RuntimeError,
+      ]
+        .filter((status) => this.model.mutants.some((mutant) => mutant.status === status))
+        .map((status) => ({
+          enabled: [MutantStatus.Survived, MutantStatus.NoCoverage, MutantStatus.Timeout].includes(status),
+          count: this.model.mutants.filter((m) => m.status === status).length,
+          status,
+          label: `${getEmojiForStatus(status)} ${status}`,
+          context: getContextClassForStatus(status),
+        }));
+    }
   }
 }

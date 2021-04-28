@@ -11,15 +11,15 @@ describe('Directory report page', () => {
 
   describe('the results table', () => {
     it('should show 11 rows in the result table', async () => {
-      expect(await page.resultTable().rows()).lengthOf(11);
+      expect(await page.mutantView.resultTable().rows()).lengthOf(11);
     });
 
     it('should show "all files" with "78.57%" mutation score', async () => {
-      expect(await page.resultTable().row('All files').progressBar().percentageText()).eq('78.57%');
+      expect(await page.mutantView.resultTable().row('All files').progressBar().percentageText()).eq('78.57%');
     });
 
     it('should show expected totals for cli.ts', async () => {
-      const row = page.resultTable().row('cli.ts');
+      const row = page.mutantView.resultTable().row('cli.ts');
       return Promise.all([
         expect(await row.progressBar().percentageText()).eq('8.70%'),
         expect(await row.mutationScore()).eq('8.70'),

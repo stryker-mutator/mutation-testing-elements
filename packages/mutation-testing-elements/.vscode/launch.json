@@ -9,10 +9,10 @@
       "request": "launch",
       "name": "Launch Chrome",
       "url": "http://localhost:8080",
-      "webRoot": "${workspaceFolder}/src",
+      "webRoot": "${workspaceFolder}",
       "sourceMaps": true,
       "sourceMapPathOverrides": {
-        "webpack:///./src/*": "${webRoot}/*"
+        "webpack://mutation-testing-elements/*": "${webRoot}/*"
       }
     },
     {
@@ -24,9 +24,9 @@
       "webRoot": "${workspaceFolder}",
       "sourceMaps": true,
       "sourceMapPathOverrides": {
-        "webpack:///./*": "${webRoot}/*"
+        "webpack://mutation-testing-elements/*": "${webRoot}/*"
       },
-      "timeout": 30000,
-    },
+      "timeout": 30000
+    }
   ]
 }

@@ -4,4 +4,4 @@ export const constants = Object.freeze({
 
 export const MAX_WEBDRIVER_CONCURRENCY = 5;
 
-export const DEFAULT_TIMEOUT = 2000;
+export const DEFAULT_TIMEOUT = 4000;

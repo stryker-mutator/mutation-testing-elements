@@ -16,6 +16,10 @@ export class TestFileModel extends SourceFile implements TestFile {
   constructor(input: TestFile, public name: string) {
     super();
     this.source = input.source;
-    this.tests = input.tests.map((testDefinition) => new TestModel(testDefinition));
+    this.tests = input.tests.map((testDefinition) => {
+      const test = new TestModel(testDefinition);
+      test.sourceFile = this;
+      return test;
+    });
   }
 }

@@ -1,3 +1,5 @@
+@import '../../style/globals.scss';
+
 :host {
   width: 100%;
   bottom: 0;
@@ -6,6 +8,7 @@
   transition: height 0.2s cubic-bezier(.4,0,.2,1);
   overflow: hidden;
   background-color: var(--bs-card-cap-bg);
+  z-index: 3;
 }
 
 header {
@@ -23,9 +26,12 @@ header {
   height: 0;
 }
 :host([mode='half']) {
-  height: 120px; // Leave room for 2 lines of text
+  height: $mte-drawer-height-half-open;
 }
 :host([mode='open']) {
   height: 50%;
+}
+
+.summary {
   overflow: auto;
 }

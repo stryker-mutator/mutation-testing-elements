@@ -86,7 +86,7 @@ $darkly-text-muted: $darkly-gray-600 !default;
 
 $darkly-table-accent-bg: $darkly-gray-800 !default;
 $darkly-table-border-color: $darkly-gray-600 !default;
-$darkly-table-hover-bg: rgba($darkly-black, 0.075) !default;
+$darkly-table-hover-bg: $darkly-gray-700;
 
 // Forms
 
@@ -174,7 +174,17 @@ $darkly-progress-bg: $darkly-gray-700 !default;
 
 $darkly-list-group-bg: $darkly-gray-700 !default;
 $darkly-list-group-border-color: $darkly-gray-800 !default;
-$darkly-list-group-hover-bg: $darkly-gray-700 !default;
+$darkly-list-group-hover-bg: $darkly-gray-600 !default;
+
+$darkly-list-group-action-color: $darkly-white;
+$darkly-list-group-action-hover-color: $darkly-white;
+
+$darkly-list-group-action-active-color: $darkly-white !default;
+$darkly-list-group-action-active-bg: $darkly-gray-600 !default;
+
+$darkly-list-group-active-color: $darkly-white !default;
+$darkly-list-group-active-bg: $darkly-primary !default;
+$darkly-list-group-active-border-color: $darkly-list-group-active-bg !default;
 
 // Breadcrumbs
 
