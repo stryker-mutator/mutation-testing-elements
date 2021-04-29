@@ -1,11 +1,11 @@
 import * as sinon from 'sinon';
-import { MutationTestReportAppComponent } from '../../../src/components/mutation-test-report-app/mutation-test-report-app.component';
+import { MutationTestReportAppComponent } from '../../../src/components/app/app.component';
 import { expect } from 'chai';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { createCustomEvent } from '../../../src/lib/custom-events';
 import { createReport } from '../../helpers/factory';
-import { MutationTestReportMutantViewComponent } from '../../../src/components/mutation-test-report-mutant-view/mutation-test-report-mutant-view';
-import { MutationTestReportTestViewComponent } from '../../../src/components/mutation-test-report-test-view/mutation-test-report-test-view';
+import { MutationTestReportMutantViewComponent } from '../../../src/components/mutant-view/mutant-view';
+import { MutationTestReportTestViewComponent } from '../../../src/components/test-view/test-view';
 import { tick } from '../helpers/tick';
 
 describe(MutationTestReportAppComponent.name, () => {
@@ -86,13 +86,13 @@ describe(MutationTestReportAppComponent.name, () => {
     it('should load the breadcrumb', async () => {
       sut.element.report = createReport();
       await sut.whenStable();
-      expect(sut.$('mutation-test-report-breadcrumb')).ok;
+      expect(sut.$('mte-breadcrumb')).ok;
     });
 
     it('should load mutant view by default', async () => {
       sut.element.report = createReport();
       await sut.whenStable();
-      expect(sut.$('mutation-test-report-mutant-view')).ok;
+      expect(sut.$('mte-mutant-view')).ok;
     });
   });
 
@@ -116,7 +116,7 @@ describe(MutationTestReportAppComponent.name, () => {
       await sut.whenStable();
 
       // Assert
-      const file = sut.$('mutation-test-report-mutant-view') as MutationTestReportMutantViewComponent;
+      const file = sut.$('mte-mutant-view') as MutationTestReportMutantViewComponent;
       expect(file).ok;
       expect(file.result.file!.name).eq('foobar.js');
     });
@@ -138,7 +138,7 @@ describe(MutationTestReportAppComponent.name, () => {
       await sut.whenStable();
 
       // Assert
-      const file = sut.$('mutation-test-report-test-view') as MutationTestReportTestViewComponent;
+      const file = sut.$('mte-test-view') as MutationTestReportTestViewComponent;
       expect(file).ok;
       expect(file.result.file!.name).eq('foobar.spec.js');
     });
@@ -171,7 +171,7 @@ describe(MutationTestReportAppComponent.name, () => {
       await sut.whenStable();
 
       // Act
-      sut.$('mutation-test-report-theme-switch').dispatchEvent(createCustomEvent('theme-switch', 'dark'));
+      sut.$('mte-theme-switch').dispatchEvent(createCustomEvent('theme-switch', 'dark'));
       await sut.whenStable();
 
       // Assert
@@ -234,7 +234,7 @@ describe(MutationTestReportAppComponent.name, () => {
       sut.element.report = createReport();
       await sut.whenStable();
       const event = await sut.catchCustomEvent('theme-changed', () => {
-        sut.$('mutation-test-report-theme-switch').dispatchEvent(createCustomEvent('theme-switch', 'dark'));
+        sut.$('mte-theme-switch').dispatchEvent(createCustomEvent('theme-switch', 'dark'));
       });
       expect(event?.detail.theme).eq('dark');
       expect(event?.detail.themeBackgroundColor).eq('#18191a');

@@ -1,5 +1,5 @@
 import { FileUnderTestModel, Metrics } from 'mutation-testing-metrics';
-import { MutationTestReportTestMetricsTable } from '../../../src/components/mutation-test-report-metrics-table/mutation-test-report-metrics-table.component';
+import { MutationTestReportTestMetricsTable } from '../../../src/components/metrics-table/metrics-table.component';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { expect } from 'chai';
 import { createMetricsResult, createFileResult } from '../../helpers/factory';
@@ -8,7 +8,7 @@ describe(MutationTestReportTestMetricsTable.name, () => {
   let sut: CustomElementFixture<MutationTestReportTestMetricsTable<FileUnderTestModel, Metrics>>;
 
   beforeEach(async () => {
-    sut = new CustomElementFixture('mutation-test-report-metrics-table');
+    sut = new CustomElementFixture('mte-metrics-table');
     sut.element.columns = [
       { key: 'mutationScore', label: 'Mutation score', category: 'percentage' },
       { key: 'killed', label: '# Killed', category: 'number' },

@@ -1,12 +1,12 @@
 import { expect } from 'chai';
-import { MutationTestReportDrawer } from '../../../src/components/mutation-test-report-drawer/mutation-test-report-drawer.component';
+import { MutationTestReportDrawer } from '../../../src/components/drawer/drawer.component';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 
 describe(MutationTestReportDrawer.name, () => {
   let sut: CustomElementFixture<MutationTestReportDrawer>;
 
   beforeEach(async () => {
-    sut = new CustomElementFixture('mutation-test-report-drawer');
+    sut = new CustomElementFixture('mte-drawer');
     await sut.whenStable();
   });
 

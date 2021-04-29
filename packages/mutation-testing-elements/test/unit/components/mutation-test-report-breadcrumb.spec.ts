@@ -1,4 +1,4 @@
-import { MutationTestReportBreadcrumbComponent } from '../../../src/components/mutation-test-report-breadcrumb';
+import { MutationTestReportBreadcrumbComponent } from '../../../src/components/breadcrumb';
 import { expect } from 'chai';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { View } from '../../../src/lib/router';
@@ -7,7 +7,7 @@ describe(MutationTestReportBreadcrumbComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportBreadcrumbComponent>;
 
   beforeEach(async () => {
-    sut = new CustomElementFixture('mutation-test-report-breadcrumb');
+    sut = new CustomElementFixture('mte-breadcrumb');
     sut.element.view = View.mutant;
     await sut.whenStable();
   });

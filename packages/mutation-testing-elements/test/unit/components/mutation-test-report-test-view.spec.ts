@@ -1,11 +1,8 @@
 import { expect } from 'chai';
 import { MetricsResult, TestFileModel, TestMetrics, TestModel } from 'mutation-testing-metrics';
-import { MutationTestReportDrawerTestComponent } from '../../../src/components/mutation-test-report-drawer-test/mutation-test-report-drawer-test.component';
-import {
-  Column,
-  MutationTestReportTestMetricsTable,
-} from '../../../src/components/mutation-test-report-metrics-table/mutation-test-report-metrics-table.component';
-import { MutationTestReportTestViewComponent } from '../../../src/components/mutation-test-report-test-view/mutation-test-report-test-view';
+import { MutationTestReportDrawerTestComponent } from '../../../src/components/drawer-test/drawer-test.component';
+import { Column, MutationTestReportTestMetricsTable } from '../../../src/components/metrics-table/metrics-table.component';
+import { MutationTestReportTestViewComponent } from '../../../src/components/test-view/test-view';
 import { createCustomEvent } from '../../../src/lib/custom-events';
 import { createTestDefinition, createTestFile, createTestMetricsResult } from '../../helpers/factory';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
@@ -15,7 +12,7 @@ describe(MutationTestReportTestViewComponent.name, () => {
   let result: MetricsResult<TestFileModel, TestMetrics>;
 
   beforeEach(async () => {
-    sut = new CustomElementFixture('mutation-test-report-test-view');
+    sut = new CustomElementFixture('mte-test-view');
     result = createTestMetricsResult({ file: new TestFileModel(createTestFile(), 'foo.js') });
     sut.element.result = result;
     await sut.whenStable();
@@ -25,7 +22,7 @@ describe(MutationTestReportTestViewComponent.name, () => {
     let metricsTable: MutationTestReportTestMetricsTable<TestFileModel, TestMetrics>;
 
     beforeEach(() => {
-      metricsTable = sut.$('mutation-test-report-metrics-table') as MutationTestReportTestMetricsTable<TestFileModel, TestMetrics>;
+      metricsTable = sut.$('mte-metrics-table') as MutationTestReportTestMetricsTable<TestFileModel, TestMetrics>;
     });
 
     it('should pass the correct columns', () => {
@@ -52,7 +49,7 @@ describe(MutationTestReportTestViewComponent.name, () => {
 
   describe('the drawer', () => {
     function selectDrawer(): MutationTestReportDrawerTestComponent {
-      return sut.$('mutation-test-report-drawer-test') as MutationTestReportDrawerTestComponent;
+      return sut.$('mte-drawer-test') as MutationTestReportDrawerTestComponent;
     }
 
     it('should be rendered closed to begin with', () => {
@@ -66,7 +63,7 @@ describe(MutationTestReportTestViewComponent.name, () => {
       await sut.whenStable();
 
       // Act
-      sut.$('mutation-test-report-test-file').dispatchEvent(event);
+      sut.$('mte-test-file').dispatchEvent(event);
       await sut.whenStable();
       const drawer = selectDrawer();
 
@@ -79,12 +76,12 @@ describe(MutationTestReportTestViewComponent.name, () => {
       // Arrange
       const test = new TestModel(createTestDefinition());
       await sut.whenStable();
-      sut.$('mutation-test-report-test-file').dispatchEvent(createCustomEvent('test-selected', { selected: true, test }));
+      sut.$('mte-test-file').dispatchEvent(createCustomEvent('test-selected', { selected: true, test }));
       const drawer = selectDrawer();
       await sut.whenStable();
 
       // Act
-      sut.$('mutation-test-report-test-file').dispatchEvent(createCustomEvent('test-selected', { selected: false, test }));
+      sut.$('mte-test-file').dispatchEvent(createCustomEvent('test-selected', { selected: false, test }));
       await sut.whenStable();
 
       // Assert

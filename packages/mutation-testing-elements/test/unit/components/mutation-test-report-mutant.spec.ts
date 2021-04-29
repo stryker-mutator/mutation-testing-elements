@@ -1,4 +1,4 @@
-import { MutationTestReportMutantComponent } from '../../../src/components/mutation-test-report-mutant/mutation-test-report-mutant.component';
+import { MutationTestReportMutantComponent } from '../../../src/components/mutant/mutant.component';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { expect } from 'chai';
 import { MutantStatus, MutantResult } from 'mutation-testing-report-schema';
@@ -9,7 +9,7 @@ import { CustomEventMap } from '../../../src/lib/custom-events';
 describe(MutationTestReportMutantComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportMutantComponent>;
   beforeEach(async () => {
-    sut = new CustomElementFixture('mutation-test-report-mutant');
+    sut = new CustomElementFixture('mte-mutant');
     await sut.whenStable();
   });
 

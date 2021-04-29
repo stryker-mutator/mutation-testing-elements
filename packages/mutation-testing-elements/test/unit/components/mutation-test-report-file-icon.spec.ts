@@ -1,4 +1,4 @@
-import { MutationTestReportFileIconComponent } from '../../../src/components/mutation-test-report-file-icon/mutation-test-report-file-icon.component';
+import { MutationTestReportFileIconComponent } from '../../../src/components/file-icon/file-icon.component';
 import { expect } from 'chai';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { ProgrammingLanguage } from '../../../src/lib/code-helpers';
@@ -7,7 +7,7 @@ describe(MutationTestReportFileIconComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportFileIconComponent>;
 
   beforeEach(() => {
-    sut = new CustomElementFixture('mutation-test-report-file-icon', { autoConnect: false });
+    sut = new CustomElementFixture('mte-file-icon', { autoConnect: false });
   });
 
   it('should show a directory svg for directories', async () => {

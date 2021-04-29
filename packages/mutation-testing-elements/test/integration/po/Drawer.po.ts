@@ -10,7 +10,7 @@ export class Drawer extends PageObject {
   }
 
   private get readMoreToggle() {
-    return this.$('mutation-test-report-drawer >>> [data-testId="btnReadMoreToggle"]');
+    return this.$('mte-drawer >>> [data-testId="btnReadMoreToggle"]');
   }
 
   public toggleReadMore() {
@@ -19,7 +19,7 @@ export class Drawer extends PageObject {
 
   public async detailsVisible() {
     try {
-      await this.$('mutation-test-report-drawer >>> slot[name="detail"]');
+      await this.$('mte-drawer >>> slot[name="detail"]');
       return true;
     } catch (err) {
       if (err instanceof Error && err.message.includes('no such element')) {
@@ -34,7 +34,7 @@ export class Drawer extends PageObject {
   }
 
   public async height() {
-    const { height } = await this.$('mutation-test-report-drawer').getRect();
+    const { height } = await this.$('mte-drawer').getRect();
     return height;
   }
 

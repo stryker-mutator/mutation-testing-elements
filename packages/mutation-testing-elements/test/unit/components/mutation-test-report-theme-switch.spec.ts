@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { MutationTestReportThemeSwitchComponent } from '../../../src/components/mutation-test-report-theme-switch/mutation-test-report-theme-switch.component';
+import { MutationTestReportThemeSwitchComponent } from '../../../src/components/theme-switch/theme-switch.component';
 // import { expect } from 'chai';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 
@@ -7,7 +7,7 @@ describe(MutationTestReportThemeSwitchComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportThemeSwitchComponent>;
 
   beforeEach(async () => {
-    sut = new CustomElementFixture('mutation-test-report-theme-switch');
+    sut = new CustomElementFixture('mte-theme-switch');
     await sut.whenStable();
   });
 

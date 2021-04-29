@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import { FileUnderTestModel, MutantModel, TestModel } from 'mutation-testing-metrics';
 import { MutantResult } from 'mutation-testing-report-schema';
-import { MutationTestReportDrawerTestComponent } from '../../../src/components/mutation-test-report-drawer-test/mutation-test-report-drawer-test.component';
-import { MutationTestReportDrawer } from '../../../src/components/mutation-test-report-drawer/mutation-test-report-drawer.component';
+import { MutationTestReportDrawerTestComponent } from '../../../src/components/drawer-test/drawer-test.component';
+import { MutationTestReportDrawer } from '../../../src/components/drawer/drawer.component';
 import { createFileResult, createLocation, createMutantResult, createTestDefinition } from '../../helpers/factory';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 
@@ -20,7 +20,7 @@ describe(MutationTestReportDrawerTestComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportDrawerTestComponent>;
 
   beforeEach(async () => {
-    sut = new CustomElementFixture('mutation-test-report-drawer-test');
+    sut = new CustomElementFixture('mte-drawer-test');
     await sut.whenStable();
   });
   afterEach(() => {
@@ -144,6 +144,6 @@ describe(MutationTestReportDrawerTestComponent.name, () => {
   });
 
   function selectDrawer() {
-    return sut.$('mutation-test-report-drawer') as MutationTestReportDrawer;
+    return sut.$('mte-drawer') as MutationTestReportDrawer;
   }
 });
