@@ -85,7 +85,7 @@ export function createTestMetrics(overrides?: TestMetrics): TestMetrics {
   return {
     killing: 0,
     notCovering: 0,
-    notKilling: 0,
+    covering: 0,
     total: 0,
     ...overrides,
   };

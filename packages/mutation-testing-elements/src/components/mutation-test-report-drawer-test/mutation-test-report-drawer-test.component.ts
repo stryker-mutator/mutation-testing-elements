@@ -46,7 +46,7 @@ export class MutationTestReportDrawerTestComponent extends LitElement {
         (coveredMutants) =>
           html`<h6 class="pr-4">
             ☂️ Covered ${coveredMutants.length} mutant${plural(coveredMutants)}
-            ${renderIf(this.test?.status === TestStatus.NotKilling, "(yet didn't kill any of them)")}
+            ${renderIf(this.test?.status === TestStatus.Covering, "(yet didn't kill any of them)")}
           </h6>`
       )}
     </div>`;

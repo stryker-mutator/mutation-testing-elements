@@ -129,7 +129,7 @@ function countTestFileMetrics(testFile: TestFileModel[]): TestMetrics {
   return {
     total: tests.length,
     killing: count(TestStatus.Killing),
-    notKilling: count(TestStatus.NotKilling),
+    covering: count(TestStatus.Covering),
     notCovering: count(TestStatus.NotCovering),
   };
 }

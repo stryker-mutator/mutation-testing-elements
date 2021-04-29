@@ -26,11 +26,11 @@ describe('Test view', () => {
     it('should show test filters', async () => {
       const states = await page.testView.stateFilter.states();
       const labels = await Promise.all(states.map((state) => state.text()));
-      expect(labels).deep.eq(['✅ Killing (1)', '🕊 NotKilling (1)']);
+      expect(labels).deep.eq(['✅ Killing (1)', '☂ Covering (1)']);
     });
 
     it('should hide tests that are filtered out', async () => {
-      await page.testView.stateFilter.state(TestStatus.NotKilling).click();
+      await page.testView.stateFilter.state(TestStatus.Covering).click();
       const tests = await page.testView.tests();
       expect(await tests[1].isVisible()).false;
     });
@@ -56,7 +56,7 @@ describe('Test view', () => {
     it('should show test filters', async () => {
       const states = await page.testView.stateFilter.states();
       const labels = await Promise.all(states.map((state) => state.text()));
-      expect(labels).deep.eq(['✅ Killing (2)', '🕊 NotKilling (1)']);
+      expect(labels).deep.eq(['✅ Killing (2)', '☂ Covering (1)']);
     });
 
     describe('when selecting a test', () => {

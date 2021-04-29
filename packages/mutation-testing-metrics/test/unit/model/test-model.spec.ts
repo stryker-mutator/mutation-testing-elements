@@ -48,10 +48,10 @@ describe(TestModel.name, () => {
       expect(actual.status).eq(TestStatus.NotCovering);
     });
 
-    it(`should be "${TestStatus.NotKilling}" when covering mutants, but not killing them`, () => {
+    it(`should be "${TestStatus.Covering}" when covering mutants, but not killing them`, () => {
       const actual = new TestModel(createTestDefinition());
       actual.addCovered(new MutantModel(createMutantResult()));
-      expect(actual.status).eq(TestStatus.NotKilling);
+      expect(actual.status).eq(TestStatus.Covering);
     });
 
     it(`should be "${TestStatus.Killing}" when killing mutants`, () => {

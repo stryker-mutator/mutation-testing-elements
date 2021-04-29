@@ -61,10 +61,10 @@ A _test_ can also have state with regards to mutation testing.
 
 - **Killing**
   The test is killing at least one mutant. This is what you want.
-- **Not killing**
+- **Covering**
   The test is covering mutants, but not killing any of them. The coverage information should be available per test to provide this test state.
 - **Not covering**
   The test is not even covering any mutants (and thus not killing any of them).
-- **Total** `not covering + not killing + killing`
+- **Total** `not covering + covering + killing`
   Total number of tests.
 

@@ -15,7 +15,7 @@ function assertLocationDefined(location: OpenEndLocation | undefined): asserts l
 
 export enum TestStatus {
   Killing = 'Killing',
-  NotKilling = 'NotKilling',
+  Covering = 'Covering',
   NotCovering = 'NotCovering',
 }
 
@@ -72,7 +72,7 @@ export class TestModel implements TestDefinition {
     if (this.killedMutants?.length) {
       return TestStatus.Killing;
     } else if (this.coveredMutants?.length) {
-      return TestStatus.NotKilling;
+      return TestStatus.Covering;
     } else {
       return TestStatus.NotCovering;
     }

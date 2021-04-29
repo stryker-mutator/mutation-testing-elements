@@ -47,7 +47,7 @@ export function getContextClassForTestStatus(status: TestStatus) {
   switch (status) {
     case TestStatus.Killing:
       return 'success';
-    case TestStatus.NotKilling:
+    case TestStatus.Covering:
       return 'warning';
     case TestStatus.NotCovering:
       return 'caution';
@@ -58,8 +58,8 @@ export function getEmojiForTestStatus(status: TestStatus) {
   switch (status) {
     case TestStatus.Killing:
       return '✅';
-    case TestStatus.NotKilling:
-      return '🕊';
+    case TestStatus.Covering:
+      return '☂';
     case TestStatus.NotCovering:
       return '🌧';
   }
