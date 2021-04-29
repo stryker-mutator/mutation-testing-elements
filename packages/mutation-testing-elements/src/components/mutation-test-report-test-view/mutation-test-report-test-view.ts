@@ -8,7 +8,7 @@ import style from './mutation-test-report-test-view.scss';
 
 const COLUMNS: Column<TestMetrics>[] = [
   { key: 'killing', label: '# Killing', width: 'normal', category: 'number' },
-  { key: 'notKilling', label: '# Not Killing', width: 'normal', category: 'number' },
+  { key: 'covering', label: '# Covering', width: 'normal', category: 'number' },
   { key: 'notCovering', label: '# Not Covering', width: 'normal', category: 'number' },
   { key: 'total', label: 'Total tests', width: 'large', category: 'number', isHeader: true },
 ];

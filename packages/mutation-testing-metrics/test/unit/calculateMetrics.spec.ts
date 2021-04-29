@@ -226,7 +226,7 @@ describe(calculateMutationTestMetrics.name, () => {
 
     // Assert
     const expected: TestMetrics = {
-      notKilling: 1,
+      covering: 1,
       total: 3,
       notCovering: 1,
       killing: 1,

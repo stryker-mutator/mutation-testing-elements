@@ -47,7 +47,7 @@ describe(MutationTestReportTestFile.name, () => {
       // test-1, test-2: Killing
       model.tests[0].addKilled(new MutantModel(createMutantResult()));
       model.tests[1].addKilled(new MutantModel(createMutantResult()));
-      // test-3: NotKilling
+      // test-3: Covering
       model.tests[2].addCovered(new MutantModel(createMutantResult()));
       // test-4 is NotCovering
 
@@ -58,7 +58,7 @@ describe(MutationTestReportTestFile.name, () => {
       // Assert
       const expectedFilters: StateFilter<TestStatus>[] = [
         { enabled: true, count: 2, status: TestStatus.Killing, label: '✅ Killing', context: 'success' },
-        { enabled: true, count: 1, status: TestStatus.NotKilling, label: '🕊 NotKilling', context: 'warning' },
+        { enabled: true, count: 1, status: TestStatus.Covering, label: '☂ Covering', context: 'warning' },
         { enabled: true, count: 1, status: TestStatus.NotCovering, label: '🌧 NotCovering', context: 'caution' },
       ];
       expect(selectStateFilter().filters).deep.eq(expectedFilters);

@@ -102,7 +102,7 @@ export class MutationTestReportTestFile extends LitElement {
   public updated(changes: PropertyValues) {
     if (changes.has('model') && this.model) {
       const model = this.model;
-      this.filters = [TestStatus.Killing, TestStatus.NotKilling, TestStatus.NotCovering]
+      this.filters = [TestStatus.Killing, TestStatus.Covering, TestStatus.NotCovering]
         .filter((status) => model.tests.some((test) => test.status === status))
         .map((status) => ({
           enabled: true,
