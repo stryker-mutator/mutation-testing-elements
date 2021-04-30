@@ -1,0 +1,21 @@
+{
+  "name": "mutation-testing-report-schema",
+  "version": "1.6.0",
+  "description": "The json schema for a mutation testing report.",
+  "main": "dist/src/index.js",
+  "typings": "dist/src/index.d.ts",
+  "scripts": {
+    "test": "mocha --forbid-only --forbid-pending -r source-map-support/register dist/test/**/*.js",
+    "postpublish": "PUBLISH_SCHEMA=true ../metrics-scala/npmProjPublish.sh dist/src",
+    "generate": "node ../../tasks/schema2ts.js src/mutation-testing-report-schema.json src-generated/schema.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stryker-mutator/mutation-testing-elements.git"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/stryker-mutator/mutation-testing-elements/issues"
+  },
+  "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/elements#readme"
+}

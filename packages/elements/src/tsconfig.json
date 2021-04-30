@@ -1,0 +1,18 @@
+{
+  "extends": "../../../tsconfig.settings.json",
+  "compilerOptions": {
+    "types": ["webpack-env"],
+    "outDir": "../dist",
+    "module": "es2015",
+    "moduleResolution": "node",
+    "lib": ["es2019", "dom", "dom.iterable"]
+  },
+  "references": [
+    {
+      "path": "../../report-schema/src"
+    },
+    {
+      "path": "../../metrics/src"
+    }
+  ]
+}

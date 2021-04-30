@@ -1,19 +1,19 @@
 {
   "folders": [
     {
-      "path": "packages/mutation-testing-report-schema",
+      "path": "packages/report-schema",
       "name": "schema"
     },
     {
-      "path": "packages/mutation-testing-metrics",
+      "path": "packages/metrics",
       "name": "metrics"
     },
     {
-      "path": "packages/mutation-testing-metrics-scala",
+      "path": "packages/metrics-scala",
       "name": "metrics-scala"
     },
     {
-      "path": "packages/mutation-testing-elements",
+      "path": "packages/elements",
       "name": "elements"
     },
     {

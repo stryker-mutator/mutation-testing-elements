@@ -1,0 +1,20 @@
+{
+  "name": "mutation-testing-metrics-scala",
+  "version": "1.7.0",
+  "description": "Zero-dependency library to calculate mutation testing metrics in Scala.",
+  "scripts": {
+    "test": "sbt \"+compile; test; docs/mdoc --check\"",
+    "publish": "sbt \"sonatypeBundleClean; +publishSigned; sonatypeBundleRelease;\"",
+    "get-version": "echo $npm_package_version",
+    "stryker": "sbt 'project metrics; stryker'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stryker-mutator/mutation-testing-elements.git"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/stryker-mutator/mutation-testing-elements/issues"
+  },
+  "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/metrics-scala#readme"
+}
