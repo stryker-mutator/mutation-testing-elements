@@ -9,7 +9,7 @@
   },
   "references": [
     {
-      "path": "../../mutation-testing-report-schema/src"
+      "path": "../../report-schema/src"
     },
     {
       "path": "../../metrics/src"

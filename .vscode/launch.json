@@ -15,7 +15,7 @@
         "--timeout",
         "999999",
         "--colors",
-        "${workspaceFolder}/packages/mutation-testing-report-schema/dist/test/**/*.js",
+        "${workspaceFolder}/packages/report-schema/dist/test/**/*.js",
         "${workspaceFolder}/packages/metrics/dist/test/**/*.js"
       ],
       "internalConsoleOptions": "openOnSessionStart"

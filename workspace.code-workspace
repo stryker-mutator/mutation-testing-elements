@@ -1,7 +1,7 @@
 {
   "folders": [
     {
-      "path": "packages/mutation-testing-report-schema",
+      "path": "packages/report-schema",
       "name": "schema"
     },
     {
