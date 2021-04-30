@@ -42,7 +42,7 @@ class SchemaTest extends munit.FunSuite {
 
   test("decoded json report is without errors") {
     val report =
-      Source.fromFile("../mutation-testing-elements/testResources/scala-example/mutation-report.json").mkString
+      Source.fromFile("../elements/testResources/scala-example/mutation-report.json").mkString
 
     decode[JsonConfigMutationTestResult](report) match {
       case Left(err) => throw err

@@ -8,14 +8,14 @@ A suite of elements designed to display a mutation testing report.
 <table>
 <tbody>
 <tr>
- <td><img alt="Directory result example" width="300" src="https://raw.githubusercontent.com/stryker-mutator/mutation-testing-elements/master/packages/mutation-testing-elements/docs/directory-result-example.png"></td>
- <td><img alt="File result example" width="300" src="https://raw.githubusercontent.com/stryker-mutator/mutation-testing-elements/master/packages/mutation-testing-elements/docs/file-result-example.png"></td>
- <td><img alt="File result example dark" width="300" src="https://raw.githubusercontent.com/stryker-mutator/mutation-testing-elements/master/packages/mutation-testing-elements/docs/file-result-example-dark.png"></td>
+ <td><img alt="Directory result example" width="300" src="https://raw.githubusercontent.com/stryker-mutator/mutation-testing-elements/master/packages/elements/docs/directory-result-example.png"></td>
+ <td><img alt="File result example" width="300" src="https://raw.githubusercontent.com/stryker-mutator/mutation-testing-elements/master/packages/elements/docs/file-result-example.png"></td>
+ <td><img alt="File result example dark" width="300" src="https://raw.githubusercontent.com/stryker-mutator/mutation-testing-elements/master/packages/elements/docs/file-result-example-dark.png"></td>
 </tr>
 </tbody>
 </table>
 
-***Note:** Please see https://stryker-mutator.io for an introduction to mutation testing.*
+**\*Note:** Please see https://stryker-mutator.io for an introduction to mutation testing.\*
 
 ## Features
 
@@ -45,7 +45,7 @@ Add to your page:
 <script defer src="mutation-test-elements/dist/mutation-test-elements.js"></script>
 ```
 
-Or you can use the unpkg as your CDN: 
+Or you can use the unpkg as your CDN:
 
 ```html
 <script defer src="https://www.unpkg.com/mutation-testing-elements"></script>
@@ -59,23 +59,23 @@ Use the `mutation-test-report-app` element to load the mutation test report.
 <mutation-test-report-app src="mutation-report.json" title-postfix="Mutation Test Report"></mutation-test-report-app>
 ```
 
-This loads the report from the source (`src`) and displays it. 
+This loads the report from the source (`src`) and displays it.
 
 Alternatively, you can use property binding directly:
 
 ```html
 <mutation-test-report-app></mutation-test-report-app>
 <script>
-    document.getElementsByTagName('mutation-test-report-app').item(0).report = {
-        /* ... */
-    }
+  document.getElementsByTagName('mutation-test-report-app').item(0).report = {
+    /* ... */
+  };
 </script>
 ```
 
 Add this snippet to change the background color of the whole page when the theme is changed from light to dark:
 
 ```html
- <script>
+<script>
   const app = document.getElementsByTagName('mutation-test-report-app').item(0);
   function updateTheme() {
     document.body.style.backgroundColor = app.themeBackgroundColor;
@@ -89,9 +89,9 @@ Feel free to use other ways to bind the `report` property. For example, you can 
 
 ## Mutation testing report schema
 
-The mutation testing report data is expected to be in the format of a the [mutation-testing-report-schema](https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/mutation-testing-report-schema#readme). Please view that readme to understand the structure.
+The mutation testing report data is expected to be in the format of a the [mutation-testing-report-schema](https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/report-schema#readme). Please view that readme to understand the structure.
 
-For some examples, please see the [testResources](https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/mutation-testing-elements/testResources).
+For some examples, please see the [testResources](https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/elements/testResources).
 
 ## API Reference
 
@@ -121,18 +121,18 @@ Specify in which theme the report needs to be shown. Possibilities: `'light'` or
 
 ### `themeBackgroundColor` [`string`]
 
-Read-only property with the hex code of the background-color from the current theme. 
+Read-only property with the hex code of the background-color from the current theme.
 
 ### ⚡ `theme-changed` [`CustomEvent<{ theme: string, themeBackgroundColor: string }>`]
 
-Add an event listener that will raise an event when the theme is changed. 
+Add an event listener that will raise an event when the theme is changed.
 
 ```js
 const app = document.querySelector('mutation-test-report-app');
 app.addEventListener('theme-changed', (event) => {
-    console.log('new theme is', event.detail.theme );
-    console.log('backgroundColor hex is', event.detail.themeBackgroundColor)
-    // You can also use `app.theme` or `app.themeBackgroundColor` here.
+  console.log('new theme is', event.detail.theme);
+  console.log('backgroundColor hex is', event.detail.themeBackgroundColor);
+  // You can also use `app.theme` or `app.themeBackgroundColor` here.
 });
 ```
 
@@ -146,6 +146,6 @@ For compatibility with older browsers and Edge, load the Web Components polyfill
 
 There are unit tests with karma and integration tests using selenium-webdriver. You can run them with `npm test` or by running `npm run test:unit` or `npm run test:integration` respectively. There is also a launch configuration so you can debug from vscode.
 
-The integration tests also do screenshot comparisons. Currently, they only run when you're running in a headless browser, because the screenshots differ ever so slightly with the snapshots. You can run `npm run test:integration:headless` to run locally with screenshot comparison. It will compare and show you a diff file if the diff is deemed to large. Screenshot tests can be updated for your environment with `npm run test:integration:update`. 
+The integration tests also do screenshot comparisons. Currently, they only run when you're running in a headless browser, because the screenshots differ ever so slightly with the snapshots. You can run `npm run test:integration:headless` to run locally with screenshot comparison. It will compare and show you a diff file if the diff is deemed to large. Screenshot tests can be updated for your environment with `npm run test:integration:update`.
 
 Screenshot snapshots are OS dependent, because, again, the screenshots differ ever so slightly on linux vs windows. You can update the screenshot for both linux and windows by running the "Update screenshots" workflow on your branch (with github). _Use with caution_ always double check the diff before updating!

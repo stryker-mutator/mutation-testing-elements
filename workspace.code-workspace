@@ -13,7 +13,7 @@
       "name": "metrics-scala"
     },
     {
-      "path": "packages/mutation-testing-elements",
+      "path": "packages/elements",
       "name": "elements"
     },
     {

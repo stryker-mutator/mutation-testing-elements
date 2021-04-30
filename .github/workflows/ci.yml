@@ -35,4 +35,4 @@ jobs:
         if: failure()
         with:
           name: image-diffs
-          path: packages/mutation-testing-elements/reports/diff/
+          path: packages/elements/reports/diff/

@@ -34,7 +34,7 @@ lazy val elements = project
   .in(file("mutation-testing-elements"))
   .settings(
     npmProjectSettings,
-    version := packageVersion(file("../mutation-testing-elements")),
+    version := packageVersion(file("../elements")),
     name := "mutation-testing-elements",
     description := "A suite of web components for a mutation testing report.",
     publish / skip := skipElementsPublish
@@ -44,7 +44,7 @@ lazy val schema = project
   .in(file("mutation-testing-report-schema"))
   .settings(
     npmProjectSettings,
-    version := packageVersion(file("../mutation-testing-report-schema")),
+    version := packageVersion(file("../report-schema")),
     name := "mutation-testing-report-schema",
     description := "The json schema for a mutation testing report.",
     publish / skip := skipSchemaPublish

@@ -3,7 +3,7 @@
   "extends": "./tsconfig.settings.json",
   "references": [
     {
-      "path": "packages/mutation-testing-elements"
+      "path": "packages/elements"
     },
     {
       "path": "packages/report-schema"

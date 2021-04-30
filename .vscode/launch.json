@@ -30,8 +30,8 @@
         // "HEADLESS": "true",
         // "UPDATE_ALL_SCREENSHOTS": "true",
       },
-      "args": ["--no-timeout", "--colors", "--config", "${workspaceFolder}/packages/mutation-testing-elements/test/integration/.mocharc.jsonc"],
-      "cwd": "${workspaceFolder}/packages/mutation-testing-elements",
+      "args": ["--no-timeout", "--colors", "--config", "${workspaceFolder}/packages/elements/test/integration/.mocharc.jsonc"],
+      "cwd": "${workspaceFolder}/packages/elements",
       "internalConsoleOptions": "openOnSessionStart",
       "sourceMaps": true
     }
