@@ -5,7 +5,7 @@
       "name": "schema"
     },
     {
-      "path": "packages/mutation-testing-metrics",
+      "path": "packages/metrics",
       "name": "metrics"
     },
     {

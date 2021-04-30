@@ -9,7 +9,7 @@
       "path": "packages/mutation-testing-report-schema"
     },
     {
-      "path": "packages/mutation-testing-metrics"
+      "path": "packages/metrics"
     }
   ]
 }

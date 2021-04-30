@@ -12,7 +12,7 @@
       "path": "../../mutation-testing-report-schema/src"
     },
     {
-      "path": "../../mutation-testing-metrics/src"
+      "path": "../../metrics/src"
     }
   ]
 }
