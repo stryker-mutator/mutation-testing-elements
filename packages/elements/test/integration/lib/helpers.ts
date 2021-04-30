@@ -72,5 +72,5 @@ export async function mapShadowRootConcurrent<T>(elements: Promise<WebElement[]>
       mergeMap(async (host) => fn(await selectShadowRoot(host)), MAX_WEBDRIVER_CONCURRENCY),
       toArray()
     )
-    .toPromise();
+    .toPromise() as Promise<T[]>;
 }
