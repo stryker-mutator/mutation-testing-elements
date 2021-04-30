@@ -1,7 +1,4 @@
-import {
-  MutationTestReportFileStateFilterComponent,
-  StateFilter,
-} from '../../../src/components/mutation-test-report-state-filter/mutation-test-report-state-filter.component';
+import { MutationTestReportFileStateFilterComponent, StateFilter } from '../../../src/components/state-filter/state-filter.component';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { MutantStatus } from 'mutation-testing-report-schema';
 import { expect } from 'chai';
@@ -22,7 +19,7 @@ describe(MutationTestReportFileStateFilterComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportFileStateFilterComponent<MutantStatus>>;
 
   beforeEach(async () => {
-    sut = new CustomElementFixture('mutation-test-report-state-filter');
+    sut = new CustomElementFixture('mte-state-filter');
     await sut.whenStable();
   });
 

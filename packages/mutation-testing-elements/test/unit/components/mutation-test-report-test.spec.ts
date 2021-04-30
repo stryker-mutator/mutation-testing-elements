@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { MutantModel, TestModel } from 'mutation-testing-metrics';
-import { MutationTestReportTestComponent } from '../../../src/components/mutation-test-report-test/mutation-test-report-test.component';
+import { MutationTestReportTestComponent } from '../../../src/components/test/test.component';
 import { CustomEventMap } from '../../../src/lib/custom-events';
 import { createMutantResult, createTestDefinition } from '../../helpers/factory';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
@@ -10,7 +10,7 @@ describe(MutationTestReportTestComponent.name, () => {
   let test: TestModel;
 
   beforeEach(async () => {
-    sut = new CustomElementFixture('mutation-test-report-test');
+    sut = new CustomElementFixture('mte-test');
     test = new TestModel(createTestDefinition({ name: 'foo should bar', location: { start: { line: 4, column: 5 } } }));
     // Set status to "Killing"
     test.addKilled(new MutantModel(createMutantResult()));

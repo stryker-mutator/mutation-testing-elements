@@ -1,0 +1,17 @@
+@import '../../style/bootstrap-reboot.scss'; // import the variables
+
+@each $color, $value in $theme-colors {
+  .bg-#{$color}-light {
+    background-color: var(--bs-#{$color}-bg-light);
+  }
+}
+
+#report-code-block {
+  // Don't show scrollbar in code block, the page already scrolls
+  // Also let the popup appear outside the code block boundaries
+  overflow: visible;
+}
+
+mte-mutant {
+  background-color: transparent;
+}

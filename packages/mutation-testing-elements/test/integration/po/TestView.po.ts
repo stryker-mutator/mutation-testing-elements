@@ -8,35 +8,29 @@ import { TestListItem } from './TestListItem.po';
 
 export class TestView extends View {
   protected codeElement(): WebElementPromise {
-    return this.$('mutation-test-report-test-file >>> pre');
+    return this.$('mte-test-file >>> pre');
   }
 
   public async tests(): Promise<TestComponent[]> {
-    return mapShadowRootConcurrent(
-      this.$$('mutation-test-report-test-file >>> mutation-test-report-test'),
-      (el) => new TestComponent(el, this.browser)
-    );
+    return mapShadowRootConcurrent(this.$$('mte-test-file >>> mte-test'), (el) => new TestComponent(el, this.browser));
   }
 
   public async testListItems(): Promise<TestListItem[]> {
-    return mapShadowRootConcurrent(
-      this.$$('mutation-test-report-test-file >>> mutation-test-report-test-list-item'),
-      (host) => new TestListItem(host, this.browser)
-    );
+    return mapShadowRootConcurrent(this.$$('mte-test-file >>> mte-test-list-item'), (host) => new TestListItem(host, this.browser));
   }
 
   public test(testId: number | string) {
-    const shadowRoot = selectShadowRoot(this.$(`mutation-test-report-test-file >>> mutation-test-report-test[test-id="${testId}"]`));
+    const shadowRoot = selectShadowRoot(this.$(`mte-test-file >>> mte-test[test-id="${testId}"]`));
     return new TestComponent(shadowRoot, this.browser);
   }
 
   public get stateFilter() {
-    const context = selectShadowRoot(this.$('mutation-test-report-test-file >>> mutation-test-report-state-filter'));
+    const context = selectShadowRoot(this.$('mte-test-file >>> mte-state-filter'));
     return new StateFilter(context, this.browser);
   }
 
   public get testDrawer() {
-    const context = selectShadowRoot(this.$('mutation-test-report-drawer-test'));
+    const context = selectShadowRoot(this.$('mte-drawer-test'));
     return new Drawer(context, this.browser);
   }
 }

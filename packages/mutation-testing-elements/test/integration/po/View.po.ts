@@ -30,7 +30,7 @@ export abstract class View extends PageObject {
   }
 
   public resultTable() {
-    const context = selectShadowRoot(this.$('mutation-test-report-metrics-table'));
+    const context = selectShadowRoot(this.$('mte-metrics-table'));
     return new ResultTable(context, this.browser);
   }
 }

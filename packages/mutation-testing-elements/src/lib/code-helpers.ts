@@ -54,7 +54,7 @@ export function determineLanguage(fileName: string): ProgrammingLanguage | undef
 
 /**
  * Walks over the code in model.source and adds the
- * `<mutation-test-report-mutant>` elements.
+ * `<mte-mutant>` elements.
  * It also adds the background color using
  * `<span class="bg-danger-light">` and friends.
  */
@@ -80,10 +80,10 @@ export function markMutants(model: FileResult): string {
       builder.push('</span>');
 
       // End mutants
-      mutantsEnding.forEach(() => builder.push('</mutation-test-report-mutant>'));
+      mutantsEnding.forEach(() => builder.push('</mte-mutant>'));
 
       // Start mutants
-      currentMutants.forEach((mutant) => builder.push(`<mutation-test-report-mutant mutant-id="${mutant.id}">`));
+      currentMutants.forEach((mutant) => builder.push(`<mte-mutant mutant-id="${mutant.id}">`));
 
       // Start new color span
       builder.push(`<span class="bg-${backgroundState.determineBackground() || ''}">`);
@@ -106,7 +106,7 @@ export function isAlfaNumeric(char: string) {
 }
 
 export function markTests(source: string, tests: TestModel[]): string {
-  const toComponent = (test: TestModel): string => `<mutation-test-report-test test-id="${test.id}"></mutation-test-report-test>`;
+  const toComponent = (test: TestModel): string => `<mte-test test-id="${test.id}"></mte-test>`;
 
   // work with a copy, so we can mutate the array
   const testsToPlace = [...tests];

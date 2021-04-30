@@ -1,6 +1,6 @@
 import { TestModel } from 'mutation-testing-metrics';
 import { MutantResult } from 'mutation-testing-report-schema';
-import { StateFilter } from '../components/mutation-test-report-state-filter/mutation-test-report-state-filter.component';
+import { StateFilter } from '../components/state-filter/state-filter.component';
 
 export interface CustomEventMap {
   'mutant-selected': { selected: boolean; mutant: MutantResult | undefined };

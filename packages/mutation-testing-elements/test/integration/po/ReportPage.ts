@@ -44,7 +44,7 @@ export class ReportPage extends ElementSelector {
   }
 
   public breadcrumb(): Breadcrumb {
-    const host = this.$('mutation-test-report-app >>> mutation-test-report-breadcrumb');
+    const host = this.$('mutation-test-report-app >>> mte-breadcrumb');
     return new Breadcrumb(selectShadowRoot(host), this.browser);
   }
 
@@ -54,14 +54,14 @@ export class ReportPage extends ElementSelector {
   }
 
   public get themeSelector(): ThemeSelector {
-    return new ThemeSelector(selectShadowRoot(this.$('mutation-test-report-app >>> mutation-test-report-theme-switch')), this.browser);
+    return new ThemeSelector(selectShadowRoot(this.$('mutation-test-report-app >>> mte-theme-switch')), this.browser);
   }
 
   get mutantView(): MutantView {
-    return new MutantView(selectShadowRoot(this.$('mutation-test-report-app >>> mutation-test-report-mutant-view')), this.browser);
+    return new MutantView(selectShadowRoot(this.$('mutation-test-report-app >>> mte-mutant-view')), this.browser);
   }
 
   get testView(): TestView {
-    return new TestView(selectShadowRoot(this.$('mutation-test-report-app >>> mutation-test-report-test-view')), this.browser);
+    return new TestView(selectShadowRoot(this.$('mutation-test-report-app >>> mte-test-view')), this.browser);
   }
 }

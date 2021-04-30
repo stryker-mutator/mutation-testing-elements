@@ -7,28 +7,25 @@ import { View } from './View.po';
 
 export class MutantView extends View {
   protected codeElement(): WebElementPromise {
-    return this.$('mutation-test-report-file >>> pre');
+    return this.$('mte-file >>> pre');
   }
 
   public mutants(): Promise<MutantComponent[]> {
-    return mapShadowRootConcurrent(
-      this.$$('mutation-test-report-file >>> mutation-test-report-mutant'),
-      (host) => new MutantComponent(host, this.browser)
-    );
+    return mapShadowRootConcurrent(this.$$('mte-file >>> mte-mutant'), (host) => new MutantComponent(host, this.browser));
   }
 
   public mutant(mutantId: number | string) {
-    const shadowRoot = selectShadowRoot(this.$(`mutation-test-report-file >>> mutation-test-report-mutant[mutant-id="${mutantId}"]`));
+    const shadowRoot = selectShadowRoot(this.$(`mte-file >>> mte-mutant[mutant-id="${mutantId}"]`));
     return new MutantComponent(shadowRoot, this.browser);
   }
 
   public stateFilter() {
-    const context = selectShadowRoot(this.$('mutation-test-report-file >>> mutation-test-report-state-filter'));
+    const context = selectShadowRoot(this.$('mte-file >>> mte-state-filter'));
     return new StateFilter(context, this.browser);
   }
 
   public mutantDrawer() {
-    const context = selectShadowRoot(this.$('mutation-test-report-drawer-mutant'));
+    const context = selectShadowRoot(this.$('mte-drawer-mutant'));
     return new Drawer(context, this.browser);
   }
 }

@@ -1,13 +1,10 @@
 import { expect } from 'chai';
 import { MutantModel, TestFileModel } from 'mutation-testing-metrics';
 import { TestStatus } from 'mutation-testing-metrics';
-import {
-  MutationTestReportFileStateFilterComponent,
-  StateFilter,
-} from '../../../src/components/mutation-test-report-state-filter/mutation-test-report-state-filter.component';
-import { MutationTestReportTestFile } from '../../../src/components/mutation-test-report-test-file/mutation-test-report-test-file.component';
-import { MutationTestReportTestListItemComponent } from '../../../src/components/mutation-test-report-test-list-item/mutation-test-report-test-list-item.component';
-import { MutationTestReportTestComponent } from '../../../src/components/mutation-test-report-test/mutation-test-report-test.component';
+import { MutationTestReportFileStateFilterComponent, StateFilter } from '../../../src/components/state-filter/state-filter.component';
+import { MutationTestReportTestFile } from '../../../src/components/test-file/test-file.component';
+import { MutationTestReportTestListItemComponent } from '../../../src/components/test-list-item/test-list-item.component';
+import { MutationTestReportTestComponent } from '../../../src/components/test/test.component';
 import { createCustomEvent } from '../../../src/lib/custom-events';
 import { createMutantResult, createStateFilter, createTestDefinition } from '../../helpers/factory';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
@@ -16,18 +13,18 @@ describe(MutationTestReportTestFile.name, () => {
   let sut: CustomElementFixture<MutationTestReportTestFile>;
 
   beforeEach(() => {
-    sut = new CustomElementFixture('mutation-test-report-test-file');
+    sut = new CustomElementFixture('mte-test-file');
   });
 
   function selectStateFilter(): MutationTestReportFileStateFilterComponent<TestStatus> {
-    return sut.$('mutation-test-report-state-filter') as MutationTestReportFileStateFilterComponent<TestStatus>;
+    return sut.$('mte-state-filter') as MutationTestReportFileStateFilterComponent<TestStatus>;
   }
 
   function selectTestListItems(): MutationTestReportTestListItemComponent[] {
-    return sut.$$('mutation-test-report-test-list-item') as MutationTestReportTestListItemComponent[];
+    return sut.$$('mte-test-list-item') as MutationTestReportTestListItemComponent[];
   }
   function selectTests(): MutationTestReportTestComponent[] {
-    return sut.$$('mutation-test-report-test') as MutationTestReportTestComponent[];
+    return sut.$$('mte-test') as MutationTestReportTestComponent[];
   }
 
   describe('state filter', () => {
@@ -144,7 +141,7 @@ describe(MutationTestReportTestFile.name, () => {
     });
   });
 
-  describe('with `mutation-test-report-test`', () => {
+  describe('with `mte-test`', () => {
     let testComponents: MutationTestReportTestComponent[];
     let filterComponent: MutationTestReportFileStateFilterComponent<TestStatus>;
 
@@ -162,8 +159,8 @@ describe(MutationTestReportTestFile.name, () => {
       model.tests[0].addKilled(new MutantModel(createMutantResult()));
       sut.element.model = model;
       await sut.whenStable();
-      testComponents = sut.$$('mutation-test-report-test') as MutationTestReportTestComponent[];
-      filterComponent = sut.$('mutation-test-report-state-filter') as MutationTestReportFileStateFilterComponent<TestStatus>;
+      testComponents = sut.$$('mte-test') as MutationTestReportTestComponent[];
+      filterComponent = sut.$('mte-state-filter') as MutationTestReportFileStateFilterComponent<TestStatus>;
     });
 
     it('should bind the tests to the components', () => {

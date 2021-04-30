@@ -15,7 +15,7 @@ describe(lines.name, () => {
 });
 
 describe(markMutants.name, () => {
-  it('should insert mutation-test-report-mutant and color spans whitespace significant', () => {
+  it('should insert mte-mutant and color spans whitespace significant', () => {
     const input: FileResult = {
       language: 'javascript',
       mutants: [
@@ -37,11 +37,11 @@ describe(markMutants.name, () => {
     };
     const actualCode = markMutants(input);
     expect(actualCode).eq(
-      '<span>const foo = &#039;</span><mutation-test-report-mutant mutant-id="1"><span class="bg-success-light">bar</span></mutation-test-report-mutant><span class="bg-">&#039;;\n\nfunction add(a, b) {\n  return a + b;\n}</span>'
+      '<span>const foo = &#039;</span><mte-mutant mutant-id="1"><span class="bg-success-light">bar</span></mte-mutant><span class="bg-">&#039;;\n\nfunction add(a, b) {\n  return a + b;\n}</span>'
     );
   });
 
-  it('should insert mutation-test-report-mutant elements in correct locations', () => {
+  it('should insert mte-mutant elements in correct locations', () => {
     const input: FileResult = {
       language: 'javascript',
       mutants: [
@@ -69,37 +69,33 @@ describe(markMutants.name, () => {
         .trim(), // strip the padding left
     };
     const actualCode = markMutants(input);
-    expect(actualCode).include('<mutation-test-report-mutant mutant-id="1"><span class="bg-success-light">add</span></mutation-test-report-mutant>');
-    expect(actualCode).include('<mutation-test-report-mutant mutant-id="2"><span class="bg-danger-light">;\n</span></mutation-test-report-mutant>');
+    expect(actualCode).include('<mte-mutant mutant-id="1"><span class="bg-success-light">add</span></mte-mutant>');
+    expect(actualCode).include('<mte-mutant mutant-id="2"><span class="bg-danger-light">;\n</span></mte-mutant>');
   });
 });
 
 describe(markTests.name, () => {
-  it('should insert <mutation-test-report-test> elements whitespace significant', () => {
+  it('should insert <mte-test> elements whitespace significant', () => {
     const actualCode = markTests('\nit("should work", () => {})', [
       new TestModel(createTestDefinition({ id: 'spec-1', location: { start: { line: 2, column: 3 } } })),
     ]);
-    expect(actualCode).eq(
-      '<span>\nit<mutation-test-report-test test-id="spec-1"></mutation-test-report-test>(&quot;should work&quot;, () =&gt; {})</span>'
-    );
+    expect(actualCode).eq('<span>\nit<mte-test test-id="spec-1"></mte-test>(&quot;should work&quot;, () =&gt; {})</span>');
   });
 
-  it('should insert the  <mutation-test-report-test> elements in the correct locations', () => {
+  it('should insert the  <mte-test> elements in the correct locations', () => {
     const actualCode = markTests('\nit("should work", () => {})\nit("is great", () => {})', [
       new TestModel(createTestDefinition({ id: 'spec-1', location: { start: { line: 2, column: 3 } } })),
       new TestModel(createTestDefinition({ id: 'spec-2', location: { start: { line: 3, column: 14 } } })),
     ]);
-    expect(actualCode).include('it<mutation-test-report-test test-id="spec-1"></mutation-test-report-test>(&quot;should work&quot;');
-    expect(actualCode).include('it(&quot;is great&quot;<mutation-test-report-test test-id="spec-2"></mutation-test-report-test>');
+    expect(actualCode).include('it<mte-test test-id="spec-1"></mte-test>(&quot;should work&quot;');
+    expect(actualCode).include('it(&quot;is great&quot;<mte-test test-id="spec-2"></mte-test>');
   });
 
   it('should place a test in the first free non-alfa-numeric character (because columns can be deceiving)', () => {
     const source = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890()\n';
     const tests = [new TestModel(createTestDefinition({ id: 'spec-1', location: { start: { line: 1, column: 1 } } }))];
     const actualCode = markTests(source, tests);
-    expect(actualCode).include(
-      'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890<mutation-test-report-test test-id="spec-1"></mutation-test-report-test>()'
-    );
+    expect(actualCode).include('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890<mte-test test-id="spec-1"></mte-test>()');
   });
 
   it('should place tests on a non-existing column on the next line', () => {
@@ -107,7 +103,7 @@ describe(markTests.name, () => {
     const source = '  it("foo")\n  it("bar")';
     const tests = [new TestModel(createTestDefinition({ id: 'spec-1', location: { start: { line: 1, column: 20 } } }))];
     const actualCode = markTests(source, tests);
-    expect(actualCode).include('it(&quot;foo&quot;)\n<mutation-test-report-test test-id="spec-1"></mutation-test-report-test>  it(&quot;bar&quot;)');
+    expect(actualCode).include('it(&quot;foo&quot;)\n<mte-test test-id="spec-1"></mte-test>  it(&quot;bar&quot;)');
   });
 
   it('should place remaining tests at the end', () => {
@@ -115,7 +111,7 @@ describe(markTests.name, () => {
     const source = '  it("foo")\n  it("bar")';
     const tests = [new TestModel(createTestDefinition({ id: 'spec-1', location: { start: { line: 3, column: 1 } } }))];
     const actualCode = markTests(source, tests);
-    expect(actualCode).include('it(&quot;bar&quot;)<mutation-test-report-test test-id="spec-1"></mutation-test-report-test>');
+    expect(actualCode).include('it(&quot;bar&quot;)<mte-test test-id="spec-1"></mte-test>');
   });
 });
 

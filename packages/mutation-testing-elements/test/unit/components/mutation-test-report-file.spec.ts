@@ -1,12 +1,9 @@
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
-import { MutationTestReportFileComponent } from '../../../src/components/mutation-test-report-file/mutation-test-report-file.component';
+import { MutationTestReportFileComponent } from '../../../src/components/file/file.component';
 import { expect } from 'chai';
 import { FileResult, MutantStatus } from 'mutation-testing-report-schema';
-import { MutationTestReportMutantComponent } from '../../../src/components/mutation-test-report-mutant/mutation-test-report-mutant.component';
-import {
-  MutationTestReportFileStateFilterComponent,
-  StateFilter,
-} from '../../../dist/components/mutation-test-report-state-filter/mutation-test-report-state-filter.component';
+import { MutationTestReportMutantComponent } from '../../../src/components/mutant/mutant.component';
+import { MutationTestReportFileStateFilterComponent, StateFilter } from '../../../src/components/state-filter/state-filter.component';
 import { createFileResult } from '../../helpers/factory';
 import { createCustomEvent } from '../../../src/lib/custom-events';
 
@@ -16,7 +13,7 @@ describe(MutationTestReportFileComponent.name, () => {
 
   beforeEach(async () => {
     fileResult = createFileResult();
-    sut = new CustomElementFixture('mutation-test-report-file');
+    sut = new CustomElementFixture('mte-file');
     sut.element.model = fileResult;
     await sut.whenStable();
   });
@@ -33,26 +30,26 @@ describe(MutationTestReportFileComponent.name, () => {
     expect(sut.$('code .token')).ok;
   });
 
-  describe('with `mutation-test-report-mutant`', () => {
+  describe('with `mte-mutant`', () => {
     let mutantComponent: MutationTestReportMutantComponent;
     let legendComponent: MutationTestReportFileStateFilterComponent<MutantStatus>;
 
     beforeEach(() => {
-      mutantComponent = sut.$('mutation-test-report-mutant') as MutationTestReportMutantComponent;
-      legendComponent = sut.$('mutation-test-report-state-filter') as MutationTestReportFileStateFilterComponent<MutantStatus>;
+      mutantComponent = sut.$('mte-mutant') as MutationTestReportMutantComponent;
+      legendComponent = sut.$('mte-state-filter') as MutationTestReportFileStateFilterComponent<MutantStatus>;
     });
 
-    it('should populate `mutation-test-report-mutant` elements with mutants', () => {
+    it('should populate `mte-mutant` elements with mutants', () => {
       expect(mutantComponent.mutant).eq(sut.element.model.mutants[0]);
     });
 
-    it('should expand `mutation-test-report-mutant` when the "expand-all" event is triggered', async () => {
+    it('should expand `mte-mutant` when the "expand-all" event is triggered', async () => {
       legendComponent.dispatchEvent(createCustomEvent('expand-all', undefined));
       await sut.whenStable();
       expect(mutantComponent.expand).true;
     });
 
-    it('should collapse `mutation-test-report-mutant` when the "collapse-all" event is triggered', async () => {
+    it('should collapse `mte-mutant` when the "collapse-all" event is triggered', async () => {
       mutantComponent.expand = true;
       legendComponent.dispatchEvent(createCustomEvent('collapse-all', undefined));
       await sut.whenStable();
