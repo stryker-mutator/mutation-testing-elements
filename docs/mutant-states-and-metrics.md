@@ -5,6 +5,8 @@ custom_edit_url: https://github.com/stryker-mutator/mutation-testing-elements/ed
 
 This page should shed some light on the different outcomes a mutant can have and the different metrics you'll find in any given mutation testing report.
 
+_Are you new to mutation testing, see [what is mutation testing?](https://stryker-mutator.io/docs/)_.
+
 ## Mutant states
 
 A mutant can have one of the following states:
@@ -14,7 +16,7 @@ A mutant can have one of the following states:
 - **Survived**
   When all tests passed while this mutant was active, the mutant survived. You're missing a test for it.
 - **No coverage**
-  No tests were executed for this mutant. It probably is located in a part of the code not hit by any of your tests. This means the mutant survived and you are missing a test case for it.
+  The mutant isn't covered by one of your tests and survived as a result.
 - **Timeout**
   The running of tests with this mutant active resulted in a timeout.
   For example, the mutant resulted in an infinite loop in your code.
@@ -23,15 +25,15 @@ A mutant can have one of the following states:
   your CI build would detect it because the tests will never complete.
 - **Runtime error**
   The running of the tests resulted in an error (rather than a failed test).
-  This can happen when the testrunner fails. For example, when a testrunner throws an `OutOfMemoryError` or for dynamic languages where the mutant resulted in unparsable code.
+  This can happen when the test runner fails. For example, when a test runner throws an `OutOfMemoryError` or for dynamic languages where the mutant resulted in unparsable code.
   Don't spend too much attention looking at this mutant. It is not represented in your mutation score.
 - **Compile error**
-  The mutant resulted in a compiler error.
+  The mutant caused a compile error.
   This can happen in compiled languages.
   Don't spend too much attention looking at this mutant.
   It is not represented in your mutation score.
 - **Ignored**
-  The mutant was not tested because the config of the user asked for it to be ignored.
+  The mutant wasn't tested because it is ignored. Either by user action, or for another reason.
   This will not count against your mutation score but will show up in reports.
 
 ## Metrics
@@ -51,9 +53,9 @@ Based on these states, we can calculate the following metrics:
 - **Total mutants** `valid + invalid + ignored`  
   All mutants.
 - **Mutation score** `detected / valid * 100`  
-  The total percentage of mutants that were killed.
+  The total percentage of mutants that were detected. The higher, the better!
 - **Mutation score based on covered code** `detected / covered * 100`  
-  The total percentage of mutants that were killed based on the code coverage results.
+  The total percentage of mutants that were detected based on the code coverage results.
   
 ## Test states and metrics
 

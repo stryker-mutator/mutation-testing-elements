@@ -13,3 +13,4 @@ import './components/test-file/test-file.component';
 import './components/drawer-test/drawer-test.component';
 import './components/file-icon/file-icon.component';
 import './components/test-list-item/test-list-item.component';
+import './components/tooltip/tooltip.component';
