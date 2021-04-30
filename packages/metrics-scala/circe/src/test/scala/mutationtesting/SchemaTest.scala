@@ -107,7 +107,7 @@ class SchemaTest extends munit.FunSuite {
   }
 
   def decodeReport(fileName: String): Either[io.circe.Error, JsonConfigMutationTestResult] = {
-    val reportString = Source.fromFile(s"../mutation-testing-report-schema/testResources/$fileName.json").mkString
+    val reportString = Source.fromFile(s"../report-schema/testResources/$fileName.json").mkString
 
     decode[JsonConfigMutationTestResult](reportString)
   }
@@ -120,7 +120,7 @@ class SchemaTest extends munit.FunSuite {
   def createJsonReader(jsonString: String) = {
     val service = JsonValidationService.newInstance();
     val schema = service.readSchema(
-      Paths.get("../mutation-testing-report-schema/src/mutation-testing-report-schema.json")
+      Paths.get("../report-schema/src/mutation-testing-report-schema.json")
     )
     val byteStream = new ByteArrayInputStream(jsonString.getBytes())
     val handler    = service.createProblemPrinter(fail(_))

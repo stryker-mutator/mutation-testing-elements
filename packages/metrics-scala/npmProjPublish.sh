@@ -10,7 +10,7 @@ PROJ_BASE=$(basename `pwd`)
 
 echo "Deploying $PROJ_BASE $PACKAGE_VERSION..."
 
-cd ../mutation-testing-metrics-scala
+cd ../metrics-scala
 
 SBT_RESOURCES_DIR=$PROJ_BASE/src/main/resources
 mkdir -p $SBT_RESOURCES_DIR

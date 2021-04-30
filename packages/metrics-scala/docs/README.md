@@ -37,7 +37,7 @@ val report = MutationTestResult[JsonObject](thresholds = Thresholds(high = 80, l
 )
 ```
 
-The `MutationTestResult` case classes generate a JSON compliant with the [mutation-testing JSON schema](https://github.com/stryker-mutator/mutation-testing-elements/blob/master/packages/mutation-testing-report-schema/src/mutation-testing-report-schema.json). It has a type parameter `[C]` for the type of the used configuration, which can be any JSON object.
+The `MutationTestResult` case classes generate a JSON compliant with the [mutation-testing JSON schema](https://github.com/stryker-mutator/mutation-testing-elements/blob/master/packages/report-schema/src/mutation-testing-report-schema.json). It has a type parameter `[C]` for the type of the used configuration, which can be any JSON object.
 
 ```scala mdoc:reset:invisible
 // Read actual json for more interesting metrics
@@ -46,7 +46,7 @@ import io.circe.parser.decode
 import io.circe.JsonObject
 import mutationtesting._
 import mutationtesting.circe._
-val json = Source.fromFile("../mutation-testing-elements/testResources/scala-example/mutation-report.json").mkString
+val json = Source.fromFile("../elements/testResources/scala-example/mutation-report.json").mkString
 
 val report = decode[MutationTestResult[JsonObject]](json) match {
   case Left(err)  => throw err

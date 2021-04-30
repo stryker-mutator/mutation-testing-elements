@@ -17,7 +17,7 @@ package mutationtesting
   */
 final case class MutationTestResult[+C](
     `$schema`: Option[String] = Some(
-      "https://git.io/mutation-testing-report-schema"
+      "https://git.io/mutation-testing-schema"
     ),
     schemaVersion: String = "1",
     thresholds: Thresholds,

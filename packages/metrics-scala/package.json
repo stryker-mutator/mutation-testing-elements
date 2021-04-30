@@ -16,5 +16,5 @@
   "bugs": {
     "url": "https://github.com/stryker-mutator/mutation-testing-elements/issues"
   },
-  "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/mutation-testing-metrics-scala#readme"
+  "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/metrics-scala#readme"
 }
