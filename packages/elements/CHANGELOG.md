@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.0...v1.7.1) (2021-05-02)
+
+
+### Features
+
+* **info:** add tooltip information about states ([#1069](https://github.com/stryker-mutator/mutation-testing-elements/issues/1069)) ([af88c1e](https://github.com/stryker-mutator/mutation-testing-elements/commit/af88c1e355400855ff7001acd81b1c018bfec5ef))
+
+
+
+
+
 # [1.7.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.6.2...v1.7.0) (2021-03-19)
 
 
