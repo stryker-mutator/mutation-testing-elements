@@ -14,6 +14,7 @@ export type Numbers<TMetrics> = { [Prop in keyof TMetrics as TMetrics[Prop] exte
 export interface Column<TMetric> {
   key: keyof Numbers<TMetric> & keyof TMetric;
   label: string;
+  tooltip?: string;
   width?: TableWidth;
   category: ColumnCategory;
   isHeader?: true;
@@ -49,18 +50,28 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
   private renderTableHeadRow() {
     return html`<thead>
       <th colspan="2" style="width: 217px">
-        <div><span>File / Directory</span></div>
+        <div
+          ><span>File / Directory</span
+          ><a
+            href="https://stryker-mutator.io/docs/mutation-testing-elements/mutant-states-and-metrics"
+            target="_blank"
+            class="info-icon"
+            title="What does this all mean?"
+            >ℹ</a
+          ></div
+        >
       </th>
       ${this.columns.map((column) => this.renderTableHead(column))}
     </thead>`;
   }
 
   private renderTableHead(column: Column<TMetric>) {
+    const header = column.tooltip ? html`<mte-tooltip title="${column.tooltip}">${column.label}</mte-tooltip>` : html`<span>${column.label}</span>`;
     if (column.category === 'percentage') {
-      return html` <th colspan="2"> ${column.label} </th>`;
+      return html` <th colspan="2"> ${header} </th>`;
     }
     return html`<th class="rotate text-center" style="width: ${column.width === 'large' ? 70 : 50}px">
-      <div><span>${column.label}</span></div>
+      <div>${header}</div>
     </th>`;
   }
 

@@ -7,20 +7,6 @@ import { DrawerMode } from '../drawer/drawer.component';
 import { Column } from '../metrics-table/metrics-table.component';
 import style from './mutant-view.scss';
 
-const COLUMNS: Column<Metrics>[] = [
-  { key: 'mutationScore', label: 'Mutation score', category: 'percentage' },
-  { key: 'killed', label: '# Killed', category: 'number' },
-  { key: 'survived', label: '# Survived', category: 'number' },
-  { key: 'timeout', label: '# Timeout', category: 'number' },
-  { key: 'noCoverage', label: '# No coverage', category: 'number' },
-  { key: 'ignored', label: '# Ignored', category: 'number' },
-  { key: 'runtimeErrors', label: '# Runtime errors', category: 'number' },
-  { key: 'compileErrors', label: '# Compile errors', category: 'number' },
-  { key: 'totalDetected', label: 'Total detected', category: 'number', width: 'large', isHeader: true },
-  { key: 'totalUndetected', label: 'Total undetected', category: 'number', width: 'large', isHeader: true },
-  { key: 'totalMutants', label: 'Total mutants', category: 'number', width: 'large', isHeader: true },
-];
-
 @customElement('mte-mutant-view')
 export class MutationTestReportMutantViewComponent extends LitElement {
   @property()
@@ -71,3 +57,73 @@ export class MutationTestReportMutantViewComponent extends LitElement {
     `;
   }
 }
+
+const COLUMNS: Column<Metrics>[] = [
+  {
+    key: 'mutationScore',
+    label: 'Mutation score',
+    tooltip: 'The percentage of mutants that were detected. The higher, the better!',
+    category: 'percentage',
+  },
+  {
+    key: 'killed',
+    label: '# Killed',
+    tooltip: 'At least one test failed while these mutants were active. This is what you want!',
+    category: 'number',
+  },
+  {
+    key: 'survived',
+    label: '# Survived',
+    tooltip: "All tests passed while these mutants were active. You're missing a test for them.",
+    category: 'number',
+  },
+  {
+    key: 'timeout',
+    label: '# Timeout',
+    tooltip: 'Running the tests while these mutants were active resulted in a timeout. For example, an infinite loop.',
+    category: 'number',
+  },
+  {
+    key: 'noCoverage',
+    label: '# No coverage',
+    tooltip: "These mutants aren't covered by one of your tests and survived as a result.",
+    category: 'number',
+  },
+  {
+    key: 'ignored',
+    label: '# Ignored',
+    tooltip: "These mutants weren't tested because they are ignored. Either by user action, or for another reason.",
+    category: 'number',
+  },
+  {
+    key: 'runtimeErrors',
+    label: '# Runtime errors',
+    tooltip: 'Running tests when these mutants are active resulted in an error (rather than a failed test). For example: an out of memory error.',
+    category: 'number',
+  },
+  { key: 'compileErrors', label: '# Compile errors', tooltip: 'Mutants that caused a compile error.', category: 'number' },
+  {
+    key: 'totalDetected',
+    label: 'Total detected',
+    tooltip: 'The number of mutants detected by your tests (killed + timeout).',
+    category: 'number',
+    width: 'large',
+    isHeader: true,
+  },
+  {
+    key: 'totalUndetected',
+    label: 'Total undetected',
+    tooltip: 'The number of mutants that are not detected by your tests (survived + no coverage).',
+    category: 'number',
+    width: 'large',
+    isHeader: true,
+  },
+  {
+    key: 'totalMutants',
+    label: 'Total mutants',
+    tooltip: 'All mutants (valid + invalid + ignored)',
+    category: 'number',
+    width: 'large',
+    isHeader: true,
+  },
+];

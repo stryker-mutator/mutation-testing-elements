@@ -27,9 +27,21 @@ describe(MutationTestReportTestViewComponent.name, () => {
 
     it('should pass the correct columns', () => {
       const expectedColumns: Column<TestMetrics>[] = [
-        { key: 'killing', label: '# Killing', width: 'normal', category: 'number' },
-        { key: 'covering', label: '# Covering', width: 'normal', category: 'number' },
-        { key: 'notCovering', label: '# Not Covering', width: 'normal', category: 'number' },
+        { key: 'killing', label: '# Killing', tooltip: 'These tests killed at least one mutant', width: 'normal', category: 'number' },
+        {
+          key: 'covering',
+          label: '# Covering',
+          tooltip: 'These tests are covering at least one mutant, but not killing any of them.',
+          width: 'normal',
+          category: 'number',
+        },
+        {
+          key: 'notCovering',
+          label: '# Not Covering',
+          tooltip: 'These tests were not covering a mutant (and thus not killing any of them).',
+          width: 'normal',
+          category: 'number',
+        },
         { key: 'total', label: 'Total tests', width: 'large', category: 'number', isHeader: true },
       ];
       expect(metricsTable.columns).deep.eq(expectedColumns);

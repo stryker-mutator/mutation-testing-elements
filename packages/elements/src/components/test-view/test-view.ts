@@ -6,13 +6,6 @@ import { DrawerMode } from '../drawer/drawer.component';
 import { Column } from '../metrics-table/metrics-table.component';
 import style from './test-view.scss';
 
-const COLUMNS: Column<TestMetrics>[] = [
-  { key: 'killing', label: '# Killing', width: 'normal', category: 'number' },
-  { key: 'covering', label: '# Covering', width: 'normal', category: 'number' },
-  { key: 'notCovering', label: '# Not Covering', width: 'normal', category: 'number' },
-  { key: 'total', label: 'Total tests', width: 'large', category: 'number', isHeader: true },
-];
-
 @customElement('mte-test-view')
 export class MutationTestReportTestViewComponent extends LitElement {
   @property()
@@ -59,3 +52,22 @@ export class MutationTestReportTestViewComponent extends LitElement {
     `;
   }
 }
+
+const COLUMNS: Column<TestMetrics>[] = [
+  { key: 'killing', label: '# Killing', tooltip: 'These tests killed at least one mutant', width: 'normal', category: 'number' },
+  {
+    key: 'covering',
+    label: '# Covering',
+    tooltip: 'These tests are covering at least one mutant, but not killing any of them.',
+    width: 'normal',
+    category: 'number',
+  },
+  {
+    key: 'notCovering',
+    label: '# Not Covering',
+    tooltip: 'These tests were not covering a mutant (and thus not killing any of them).',
+    width: 'normal',
+    category: 'number',
+  },
+  { key: 'total', label: 'Total tests', width: 'large', category: 'number', isHeader: true },
+];
