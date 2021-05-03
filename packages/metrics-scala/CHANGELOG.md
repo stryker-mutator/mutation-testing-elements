@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.2](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.1...v1.7.2) (2021-05-03)
+
+
+### Bug Fixes
+
+* **sonatype:** incorrect project folder for elements and report-schema Sonatype release ([#1072](https://github.com/stryker-mutator/mutation-testing-elements/issues/1072)) ([4b2358d](https://github.com/stryker-mutator/mutation-testing-elements/commit/4b2358d5f43696fc3fd99a8de898f1ea93093b79))
+
+
+
+
+
 ## [1.7.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.0...v1.7.1) (2021-05-02)
 
 **Note:** Version bump only for package mutation-testing-metrics-scala

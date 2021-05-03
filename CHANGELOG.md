@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.2](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.1...v1.7.2) (2021-05-03)
+
+
+### Bug Fixes
+
+* **elements:** add check if localStorage is available ([#1073](https://github.com/stryker-mutator/mutation-testing-elements/issues/1073)) ([9e57c0a](https://github.com/stryker-mutator/mutation-testing-elements/commit/9e57c0abaa0ea49c61c9f592516616b286722def))
+* **sonatype:** incorrect project folder for elements and report-schema Sonatype release ([#1072](https://github.com/stryker-mutator/mutation-testing-elements/issues/1072)) ([4b2358d](https://github.com/stryker-mutator/mutation-testing-elements/commit/4b2358d5f43696fc3fd99a8de898f1ea93093b79))
+
+
+
+
+
 ## [1.7.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.0...v1.7.1) (2021-05-02)
 
 
