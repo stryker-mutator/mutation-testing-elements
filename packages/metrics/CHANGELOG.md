@@ -5,9 +5,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [1.7.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.0...v1.7.1) (2021-05-02)
 
-**Note:** Version bump only for package mutation-testing-metrics
-
-
+* **test-view:** add test view with test details ([#1014](https://github.com/stryker-mutator/mutation-testing-elements/issues/1014)) ([33bb646](https://github.com/stryker-mutator/mutation-testing-elements/commit/33bb6467d74fd730347fbe715219e79569745222))
 
 
 
