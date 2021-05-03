@@ -179,6 +179,21 @@ describe(MutationTestReportAppComponent.name, () => {
       expect(localStorage.getItem('mutation-testing-elements-theme'), 'dark');
     });
 
+    it('should not set theme to local storage if localStorage is not available', async () => {
+      // Arrange
+      sut.element.report = createReport();
+      const setItemStub = sinon.stub(localStorage, 'setItem').throws(new Error());
+      await sut.whenStable();
+
+      // Act
+      sut.$('mte-theme-switch').dispatchEvent(createCustomEvent('theme-switch', 'dark'));
+      await sut.whenStable();
+
+      // Assert
+      expect(sut.element.theme).eq('dark');
+      expect(setItemStub.notCalled).false;
+    });
+
     describe('themeBackgroundColor', () => {
       it('should show light theme-color on light theme', async () => {
         // Arrange
@@ -196,6 +211,16 @@ describe(MutationTestReportAppComponent.name, () => {
 
         expect(sut.element.themeBackgroundColor).eq('#18191a');
       });
+    });
+
+    it('should use fallbacks if localStorage is not available', async () => {
+      sinon.stub(localStorage, 'setItem').throws(new Error());
+      matchMediaStub.withArgs('(prefers-color-scheme: dark)').returns({ matches: true } as MediaQueryList);
+      sut.element.report = createReport();
+      await sut.whenStable();
+
+      // Assert
+      expect(sut.element.theme).eq('dark');
     });
 
     it('should choose attribute value over local storage', async () => {

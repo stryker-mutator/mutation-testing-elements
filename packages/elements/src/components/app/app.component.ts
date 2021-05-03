@@ -9,6 +9,7 @@ import theme from './theme.scss';
 import { createCustomEvent } from '../../lib/custom-events';
 import { FileUnderTestModel, Metrics, MutationTestMetricsResult, TestFileModel, TestMetrics } from 'mutation-testing-metrics/src/model';
 import { toAbsoluteUrl } from '../../lib/htmlHelpers';
+import { isLocalStorageAvailable } from '../../lib/browser';
 
 interface BaseContext {
   path: string[];
@@ -74,7 +75,7 @@ export class MutationTestReportAppComponent extends LitElement {
     // Set the theme when no theme is selected (light vs dark)
     if (!this.theme) {
       // 1. check local storage
-      const theme = localStorage.getItem('mutation-testing-elements-theme');
+      const theme = isLocalStorageAvailable() && localStorage.getItem('mutation-testing-elements-theme');
       if (theme) {
         this.theme = theme;
         // 2. check for user's OS preference
@@ -154,7 +155,7 @@ export class MutationTestReportAppComponent extends LitElement {
   public themeSwitch = (event: CustomEvent<string>) => {
     this.theme = event.detail;
 
-    localStorage.setItem('mutation-testing-elements-theme', this.theme);
+    isLocalStorageAvailable() && localStorage.setItem('mutation-testing-elements-theme', this.theme);
   };
 
   public static styles = [globals, unsafeCSS(theme), bootstrap, unsafeCSS(style)];
