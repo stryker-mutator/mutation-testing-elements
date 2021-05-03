@@ -1,5 +1,5 @@
-mutation-testing-elements/
-mutation-testing-report-schema/
+elements/
+report-schema/
 
 project/metals.sbt
 project/project/

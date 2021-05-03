@@ -31,7 +31,7 @@ lazy val docs = project
   .enablePlugins(MdocPlugin)
 
 lazy val elements = project
-  .in(file("mutation-testing-elements"))
+  .in(file("elements"))
   .settings(
     npmProjectSettings,
     version := packageVersion(file("../elements")),
@@ -41,7 +41,7 @@ lazy val elements = project
   )
 
 lazy val schema = project
-  .in(file("mutation-testing-report-schema"))
+  .in(file("report-schema"))
   .settings(
     npmProjectSettings,
     version := packageVersion(file("../report-schema")),
