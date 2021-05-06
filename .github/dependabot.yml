@@ -12,3 +12,7 @@ updates:
     directory: '/'
     schedule:
       interval: daily
+    commit-message:
+      prefix: 'build'
+      prefix-development: 'build'
+      include: 'scope'
