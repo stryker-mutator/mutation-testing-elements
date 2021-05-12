@@ -24,7 +24,7 @@ describe(isLocalStorageAvailable.name, () => {
   });
 
   it(`should be false if localStorage is undefined`, () => {
-    sinon.replaceGetter(window, 'localStorage', () => (undefined as unknown) as Storage);
+    sinon.replaceGetter(window, 'localStorage', () => undefined as unknown as Storage);
 
     expect(isLocalStorageAvailable()).to.be.false;
   });

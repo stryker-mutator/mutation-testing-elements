@@ -116,19 +116,21 @@ describe(markTests.name, () => {
 });
 
 describe(determineLanguage.name, () => {
-  ([
-    ['cs', ProgrammingLanguage.csharp],
-    ['html', ProgrammingLanguage.html],
-    ['java', ProgrammingLanguage.java],
-    ['js', ProgrammingLanguage.javascript],
-    ['cjs', ProgrammingLanguage.javascript],
-    ['mjs', ProgrammingLanguage.javascript],
-    ['ts', ProgrammingLanguage.typescript],
-    ['tsx', ProgrammingLanguage.typescript],
-    ['scala', ProgrammingLanguage.scala],
-    ['php', ProgrammingLanguage.php],
-    ['vue', ProgrammingLanguage.vue],
-  ] as const).forEach(([extension, expected]) => {
+  (
+    [
+      ['cs', ProgrammingLanguage.csharp],
+      ['html', ProgrammingLanguage.html],
+      ['java', ProgrammingLanguage.java],
+      ['js', ProgrammingLanguage.javascript],
+      ['cjs', ProgrammingLanguage.javascript],
+      ['mjs', ProgrammingLanguage.javascript],
+      ['ts', ProgrammingLanguage.typescript],
+      ['tsx', ProgrammingLanguage.typescript],
+      ['scala', ProgrammingLanguage.scala],
+      ['php', ProgrammingLanguage.php],
+      ['vue', ProgrammingLanguage.vue],
+    ] as const
+  ).forEach(([extension, expected]) => {
     it(`should recognize file.${extension} as language ${expected}`, () => {
       expect(determineLanguage(`file.${extension}`)).eq(expected);
     });
