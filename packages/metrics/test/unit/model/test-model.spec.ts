@@ -20,10 +20,12 @@ describe(TestModel.name, () => {
     expect(actual.killedMutants).undefined;
   });
 
-  ([
-    ['addCovered', 'coveredMutants'],
-    ['addKilled', 'killedMutants'],
-  ] as const).forEach(([method, property]) => {
+  (
+    [
+      ['addCovered', 'coveredMutants'],
+      ['addKilled', 'killedMutants'],
+    ] as const
+  ).forEach(([method, property]) => {
     describe(TestModel.prototype[method].name, () => {
       it('should create an array if not exists', () => {
         const actual = new TestModel(createTestDefinition());

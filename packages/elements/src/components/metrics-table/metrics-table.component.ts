@@ -102,7 +102,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
   }
 
   private renderCell(column: Column<TMetric>, metrics: TMetric) {
-    const value = (metrics[column.key] as unknown) as number;
+    const value = metrics[column.key] as unknown as number;
 
     if (column.category === 'percentage') {
       const valueIsPresent = !isNaN(value);

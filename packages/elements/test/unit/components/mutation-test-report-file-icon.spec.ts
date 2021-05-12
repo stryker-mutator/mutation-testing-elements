@@ -36,19 +36,21 @@ describe(MutationTestReportFileIconComponent.name, () => {
     expectSvgClass('octicon-file');
   });
 
-  ([
-    ['cs', ProgrammingLanguage.csharp],
-    ['html', ProgrammingLanguage.html],
-    ['java', ProgrammingLanguage.java],
-    ['js', ProgrammingLanguage.javascript],
-    ['cjs', ProgrammingLanguage.javascript],
-    ['mjs', ProgrammingLanguage.javascript],
-    ['ts', ProgrammingLanguage.typescript],
-    ['tsx', ProgrammingLanguage.typescript],
-    ['scala', ProgrammingLanguage.scala],
-    ['php', ProgrammingLanguage.php],
-    ['vue', ProgrammingLanguage.vue],
-  ] as const).forEach(([extension, expected]) => {
+  (
+    [
+      ['cs', ProgrammingLanguage.csharp],
+      ['html', ProgrammingLanguage.html],
+      ['java', ProgrammingLanguage.java],
+      ['js', ProgrammingLanguage.javascript],
+      ['cjs', ProgrammingLanguage.javascript],
+      ['mjs', ProgrammingLanguage.javascript],
+      ['ts', ProgrammingLanguage.typescript],
+      ['tsx', ProgrammingLanguage.typescript],
+      ['scala', ProgrammingLanguage.scala],
+      ['php', ProgrammingLanguage.php],
+      ['vue', ProgrammingLanguage.vue],
+    ] as const
+  ).forEach(([extension, expected]) => {
     it(`should choose show a ${expected} svg file for foo.${extension}`, async () => {
       // Arrange
       sut.element.setAttribute('file', '');

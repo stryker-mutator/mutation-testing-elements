@@ -28,10 +28,12 @@ describe(MutantModel.name, () => {
     expect(actual.coveredByTests).undefined;
   });
 
-  ([
-    ['addCoveredBy', 'coveredByTests'],
-    ['addKilledBy', 'killedByTests'],
-  ] as const).forEach(([method, property]) => {
+  (
+    [
+      ['addCoveredBy', 'coveredByTests'],
+      ['addKilledBy', 'killedByTests'],
+    ] as const
+  ).forEach(([method, property]) => {
     describe(MutantModel.prototype[method].name, () => {
       it('should create an array if not exists', () => {
         const actual = new MutantModel(createMutantResult());
