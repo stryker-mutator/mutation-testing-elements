@@ -67,7 +67,7 @@ export class MutationTestReportFileStateFilterComponent<TStatus> extends LitElem
           // Key function. I super duper want that all properties are weighed here,
           // see https://lit-html.polymer-project.org/guide/writing-templates#repeating-templates-with-the-repeat-directive
           (filter) => JSON.stringify(filter),
-          (filter) => html`<div data-status="${filter.status}" class="form-check form-check-inline align-middle">
+          (filter) => html`<div data-status="${filter.status}" class="form-check form-check-inline">
             <label class="form-check-label">
               <input
                 class="form-check-input"
