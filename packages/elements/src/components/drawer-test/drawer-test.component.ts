@@ -36,7 +36,7 @@ export class MutationTestReportDrawerTestComponent extends LitElement {
   private renderSummary() {
     return html`<div class="d-flex mx-2">
       ${this.test?.killedMutants?.[0]
-        ? html`<h6 class="pr-4"
+        ? html`<h6 class="pe-4"
             >🎯 Killed: ${describeMutant(this.test.killedMutants?.[0])}
             ${this.test.killedMutants.length > 1 ? html`(and ${this.test.killedMutants.length - 1} more)` : ''}</h6
           >`
@@ -44,7 +44,7 @@ export class MutationTestReportDrawerTestComponent extends LitElement {
       ${renderIfPresent(
         this.test?.coveredMutants,
         (coveredMutants) =>
-          html`<h6 class="pr-4">
+          html`<h6 class="pe-4">
             ☂️ Covered ${coveredMutants.length} mutant${plural(coveredMutants)}
             ${renderIf(this.test?.status === TestStatus.Covering, "(yet didn't kill any of them)")}
           </h6>`

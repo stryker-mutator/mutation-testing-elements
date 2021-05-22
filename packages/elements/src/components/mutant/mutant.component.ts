@@ -33,7 +33,7 @@ export class MutationTestReportMutantComponent extends LitElement {
   private renderButton() {
     if (this.show && this.mutant) {
       return html`<span
-        class="mutant-toggle badge badge-${this.expand ? 'info' : getContextClassForStatus(this.mutant.status)}"
+        class="mutant-toggle badge bg-${this.expand ? 'info' : getContextClassForStatus(this.mutant.status)}"
         @click="${this.mutantClicked}"
         title="${this.mutant.mutatorName}"
         >${this.mutant.id}</span
@@ -53,7 +53,7 @@ export class MutationTestReportMutantComponent extends LitElement {
 
   private renderReplacement() {
     if (this.mutant) {
-      return html`<span class="replacement badge badge-info" @click="${this.mutantClicked}" ?hidden="${!this.expand || !this.show}"
+      return html`<span class="replacement badge bg-info" @click="${this.mutantClicked}" ?hidden="${!this.expand || !this.show}"
         >${this.mutant.replacement || this.mutant.mutatorName}</span
       >`;
     }

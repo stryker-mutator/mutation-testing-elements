@@ -67,7 +67,7 @@ export class MutationTestReportFileStateFilterComponent<TStatus> extends LitElem
           // Key function. I super duper want that all properties are weighed here,
           // see https://lit-html.polymer-project.org/guide/writing-templates#repeating-templates-with-the-repeat-directive
           (filter) => JSON.stringify(filter),
-          (filter) => html`<div data-status="${filter.status}" class="form-check form-check-inline">
+          (filter) => html`<div data-status="${filter.status}" class="form-check form-check-inline align-middle">
             <label class="form-check-label">
               <input
                 class="form-check-input"
@@ -76,7 +76,7 @@ export class MutationTestReportFileStateFilterComponent<TStatus> extends LitElem
                 value="${filter.status}"
                 @input="${(el: Event) => this.checkboxChanged(filter, (el.target as HTMLInputElement).checked)}"
               />
-              <span class="badge badge-${filter.context}">${filter.label} (${filter.count})</span>
+              <span class="badge bg-${filter.context}">${filter.label} (${filter.count})</span>
             </label>
           </div>`
         )}

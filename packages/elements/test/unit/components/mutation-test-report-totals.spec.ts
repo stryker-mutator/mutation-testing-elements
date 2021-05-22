@@ -96,7 +96,7 @@ describe(MutationTestReportTestMetricsTable.name, () => {
     await sut.whenStable();
     const table = sut.$('table') as HTMLTableElement;
     expect(table).ok;
-    expect(table.querySelectorAll('td span.font-weight-bold')[0].textContent).contains('N/A');
+    expect(table.querySelectorAll('td span.fw-bold')[0].textContent).contains('N/A');
   });
 
   it('should show a progress bar when there is a score', async () => {

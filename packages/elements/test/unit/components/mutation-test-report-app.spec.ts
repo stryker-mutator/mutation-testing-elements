@@ -65,7 +65,7 @@ describe(MutationTestReportAppComponent.name, () => {
 
     it('should report error when fetch fails', async () => {
       // Arrange
-      const redAlert = 'rgb(114, 28, 36)';
+      const redAlert = 'rgb(132, 32, 41)';
       const expectedError = new Error('report did not exist - 404');
       const expectedErrorMessage = 'Error: report did not exist - 404';
       fetchStub.rejects(expectedError);
