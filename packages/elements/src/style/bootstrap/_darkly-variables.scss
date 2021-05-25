@@ -54,12 +54,6 @@ $darkly-theme-colors: map-merge(
   $darkly-theme-colors
 );
 
-@function darkly-theme-color($key: 'primary') {
-  @return map-get($darkly-theme-colors, $key);
-}
-
-$darkly-yiq-contrasted-threshold: 175 !default;
-
 // Body
 
 $darkly-body-bg: $darkly-gray-900 !default;
@@ -131,7 +125,7 @@ $darkly-pagination-bg: $darkly-success !default;
 $darkly-pagination-border-width: 0 !default;
 $darkly-pagination-border-color: transparent !default;
 $darkly-pagination-hover-color: $darkly-white !default;
-$darkly-pagination-hover-bg: lighten($darkly-success, 10%) !default;
+$darkly-pagination-hover-bg: tint-color($darkly-success, 10%) !default;
 $darkly-pagination-hover-border-color: transparent !default;
 $darkly-pagination-active-bg: $darkly-pagination-hover-bg !default;
 $darkly-pagination-active-border-color: transparent !default;
@@ -149,11 +143,6 @@ $darkly-card-cap-bg: $darkly-gray-800 !default;
 $darkly-card-bg: $darkly-gray-800 !default;
 $darkly-card-border-color: $card-border-color !default;
 $card-color: null !default;
-
-// Popovers
-
-$darkly-popover-bg: $darkly-gray-800 !default;
-$darkly-popover-header-bg: $darkly-gray-700 !default;
 
 // Toasts
 

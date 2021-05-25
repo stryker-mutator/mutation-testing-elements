@@ -76,7 +76,7 @@ export class MutationTestReportFileStateFilterComponent<TStatus> extends LitElem
                 value="${filter.status}"
                 @input="${(el: Event) => this.checkboxChanged(filter, (el.target as HTMLInputElement).checked)}"
               />
-              <span class="badge badge-${filter.context}">${filter.label} (${filter.count})</span>
+              <span class="badge bg-${filter.context}">${filter.label} (${filter.count})</span>
             </label>
           </div>`
         )}

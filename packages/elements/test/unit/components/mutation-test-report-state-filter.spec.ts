@@ -62,19 +62,18 @@ describe(MutationTestReportFileStateFilterComponent.name, () => {
       ]);
     });
 
-    Object.keys(expectedMutantColors).forEach((status) => {
+    Object.entries(expectedMutantColors).forEach(([status, expectedColor]) => {
       it(`should render correct badge color for ${status} mutant`, async () => {
         // Arrange
         const mutantStatus = status as MutantStatus;
-        sut.element.style.cssText = `--bs-badge-${getContextClassForStatus(mutantStatus)}-bg: ${expectedMutantColors[mutantStatus]};`;
-        const expectedColor = expectedMutantColors[mutantStatus];
+        sut.element.style.cssText = `--bs-${getContextClassForStatus(mutantStatus)}-bg: ${expectedColor};`;
         sut.element.filters = [createStateFilter(mutantStatus)];
 
         // Act
         await sut.whenStable();
 
         // Assert
-        const badge = sut.$(`[data-status=${status}] .badge`);
+        const badge = sut.$(`[data-status=${mutantStatus}] .badge`);
         expect(getComputedStyle(badge).backgroundColor).eq(expectedColor);
       });
     });

@@ -41,15 +41,13 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
 
   public render() {
     return html`${this.model
-      ? html`<table class="table table-sm table-hover table-bordered table-no-top"
-          >${this.renderTableHeadRow()}${this.renderTableBody(this.model)}</table
-        >`
+      ? html`<table class="table table-hover table-no-top">${this.renderTableHeadRow()}${this.renderTableBody(this.model)}</table>`
       : ''}`;
   }
 
   private renderTableHeadRow() {
     return html`<thead>
-      <th colspan="2" style="width: 217px">
+      <th scope="col" colspan="2" style="width: 217px">
         <div
           ><span>File / Directory</span
           ><a
@@ -94,9 +92,9 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
   }
 
   private renderRow(name: string, row: MetricsResult<TFile, TMetric>, ...path: string[]) {
-    return html`<tr title="${row.name}">
-      <td style="width: 32px;" class="icon no-border-right"><mte-file-icon file-name="${row.name}" ?file="${row.file}"></mte-file-icon></td>
-      <td class="no-border-left">${path.length > 0 ? html`<a href="${toAbsoluteUrl(...path)}">${name}</a>` : html`<span>${row.name}</span>`}</td>
+    return html`<tr title="${row.name}" class="align-middle">
+      <td style="width: 32px;" class="icon"><mte-file-icon file-name="${row.name}" ?file="${row.file}"></mte-file-icon></td>
+      <td>${path.length > 0 ? html`<a href="${toAbsoluteUrl(...path)}">${name}</a>` : html`<span>${row.name}</span>`}</td>
       ${this.columns.map((column) => this.renderCell(column, row.metrics))}
     </tr>`;
   }
@@ -110,7 +108,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
       const mutationScoreRounded = value.toFixed(2);
       const progressBarStyle = `width: ${value}%`;
 
-      return html`<td class="no-border-right vertical-middle">
+      return html`<td>
           ${valueIsPresent
             ? html` <div class="progress">
                 <div
@@ -124,11 +122,9 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
                   ${mutationScoreRounded}%
                 </div>
               </div>`
-            : html` <span class="font-weight-bold text-muted">N/A</span> `}
+            : html` <span class="fw-bold text-muted">N/A</span> `}
         </td>
-        <td style="width: 50px;" class="no-border-left font-weight-bold text-center text-${coloringClass}">
-          ${valueIsPresent ? mutationScoreRounded : undefined}
-        </td>`;
+        <td style="width: 50px;" class="fw-bold text-center text-${coloringClass}">${valueIsPresent ? mutationScoreRounded : undefined}</td>`;
     }
     return column.isHeader ? html`<th class="text-center">${value}</th>` : html`<td class="text-center">${value}</td>`;
   }

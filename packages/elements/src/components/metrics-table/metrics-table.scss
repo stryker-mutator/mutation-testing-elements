@@ -1,6 +1,7 @@
 .table a {
   display: block;
 }
+
 th.rotate {
   /* Something you can count on */
   height: 96px;
@@ -13,37 +14,16 @@ th.rotate > div {
   width: 30px;
 }
 
-.table-no-top > thead > tr > th {
-  border-width: 0;
-}
-
-.table-no-top {
-  border-width: 0;
-  margin-bottom: 0;
-}
-
-.table .no-border-right {
-  border-right: none;
-}
-.table .no-border-left {
-  border-left: none;
-}
-
 table td.icon {
   padding-left: 10px;
   padding-right: 2px;
 }
 
-table th.vertical-middle,
-table td.vertical-middle {
-  vertical-align: middle;
-}
-
-.text-default {
-  color: #777;
-}
-
 a.info-icon {
   text-decoration: none;
   float: right;
+}
+
+a:not(:hover) {
+  text-decoration: none;
 }
