@@ -25,8 +25,8 @@ lazy val circe = projectMatrix
     sharedSettings,
     name := "mutation-testing-metrics-circe",
     libraryDependencies ++= Seq(
-      "io.circe" %%% "circe-core"   % "0.14.0",
-      "io.circe" %%% "circe-parser" % "0.14.0"
+      "io.circe" %%% "circe-core"   % "0.14.1",
+      "io.circe" %%% "circe-parser" % "0.14.1"
     )
   )
   .jvmPlatform(
