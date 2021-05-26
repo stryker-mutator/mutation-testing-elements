@@ -1,33 +1,53 @@
 val Scala212 = "2.12.13"
 val Scala213 = "2.13.6"
+val Scala3   = "3.0.0"
+
+val CrossScalaVersions = Seq(Scala213, Scala212, Scala3)
 
 scalaVersion := Scala213
 
-lazy val metrics = project
+lazy val metrics = projectMatrix
   .in(file("metrics"))
   .settings(
     sharedSettings,
     name := "mutation-testing-metrics"
   )
+  .jvmPlatform(scalaVersions = CrossScalaVersions)
+  .jsPlatform(
+    scalaVersions = CrossScalaVersions,
+    settings = Seq(Test / scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) })
+  )
 
-lazy val circe = project
+lazy val circe = projectMatrix
   .in(file("circe"))
   .dependsOn(metrics)
   .settings(
     sharedSettings,
     name := "mutation-testing-metrics-circe",
     libraryDependencies ++= Seq(
-      "io.circe"            %% "circe-core"   % "0.14.0",
-      "io.circe"            %% "circe-parser" % "0.14.0",
-      "org.leadpony.justify" % "justify"      % "3.1.0" % Test,
-      "org.leadpony.joy"     % "joy-classic"  % "2.1.0" % Test
+      "io.circe" %%% "circe-core"   % "0.14.0",
+      "io.circe" %%% "circe-parser" % "0.14.0"
     )
+  )
+  .jvmPlatform(
+    scalaVersions = CrossScalaVersions,
+    settings = Seq(
+      libraryDependencies ++= Seq(
+        // This schema validator is JVM-only, so we can only run tests on the JVM and not Scala.js
+        "org.leadpony.justify" % "justify"     % "3.1.0" % Test,
+        "org.leadpony.joy"     % "joy-classic" % "2.1.0" % Test
+      )
+    )
+  )
+  .jsPlatform(
+    scalaVersions = CrossScalaVersions,
+    settings = Seq(Test / scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) })
   )
 
 lazy val docs = project
   .in(file("metrics-docs")) // important: it must not be docs/
-  .settings(scalaVersion := Scala213, mdocOut := file("."), mdocExtraArguments += "--no-link-hygiene")
-  .dependsOn(circe)
+  .settings(scalaVersion := Scala3, mdocOut := file("."), mdocExtraArguments += "--no-link-hygiene")
+  .dependsOn(circe.jvm(Scala3))
   .enablePlugins(MdocPlugin)
 
 lazy val elements = project
@@ -51,10 +71,8 @@ lazy val schema = project
   )
 
 lazy val sharedSettings = Seq(
-  libraryDependencies += "org.scalameta" %% "munit" % "0.7.26" % Test,
+  libraryDependencies += "org.scalameta" %%% "munit" % "0.7.26" % Test,
   testFrameworks := List(new TestFramework("munit.Framework")),
-  scalaVersion := Scala213,
-  crossScalaVersions := Seq(Scala213, Scala212),
   publish / skip := skipNormalProjectPublish,
   publishTo := sonatypePublishToBundle.value
 )

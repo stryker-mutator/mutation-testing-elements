@@ -2,7 +2,7 @@ package mutationtesting
 
 import io.circe.parser.decode
 import io.circe.syntax._
-import io.circe.{Codec, JsonObject}
+import io.circe.{Codec, Encoder, JsonObject}
 import mutationtesting.circe._
 
 class EncoderTest extends munit.FunSuite {
@@ -27,8 +27,9 @@ class EncoderTest extends munit.FunSuite {
   }
 
   test("config encoder is used") {
-    val customConfig           = CustomConfig("foovalue", 42)
-    implicit val reportEncoder = mutationTestResultEncoder[CustomConfig]
+    implicit val reportEncoder: Encoder[MutationTestResult[CustomConfig]] = mutationTestResultEncoder[CustomConfig]
+
+    val customConfig = CustomConfig("foovalue", 42)
     val sut: MutationTestResult[CustomConfig] =
       MutationTestResult(thresholds = Thresholds(80, 60), files = Map.empty, config = Some(customConfig))
 
