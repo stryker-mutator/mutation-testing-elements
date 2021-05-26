@@ -4,7 +4,7 @@
 :host(:not([theme='dark'])) {
   --bs-link-color: #{$link-color};
   --bs-link-hover-color: #{$link-hover-color};
-  --bs-breadcrumb-bg: #{$breadcrumb-bg};
+  --bs-breadcrumb-bg: #{$gray-200};
   --bs-breadcrumb-active-color: #{$breadcrumb-active-color};
   --bs-body-bg: #{$body-bg};
   --bs-body-color: #{$body-color};
@@ -22,18 +22,14 @@
   --bs-list-group-active-bg: #{$list-group-active-bg};
   --bs-list-group-active-border-color: #{$list-group-active-border-color};
   --bs-table-border-color: #{$table-border-color};
-  --bs-table-hover-bg: #{$table-hover-bg};
-  --bs-popover-bg: #{$popover-bg};
-  --bs-popover-header-bg: #{$popover-header-bg};
+  --bs-table-bg-hover: #{$table-hover-bg};
   --bs-progress-bg: #{$progress-bg};
 
   @each $color, $value in $theme-colors {
-    --bs-table-#{$color}-bg: #{theme-color-level($color, $table-bg-level)};
     --bs-table-#{$color}-hover-bg: #{darken($value, 5%)};
-    --bs-badge-#{$color}-color: #{color-yiq($value)};
-    --bs-badge-#{$color}-bg: #{$value};
-    --bs-btn-#{$color}-color: #{color-yiq($value)};
-    --bs-btn-#{$color}-hover-color: #{color-yiq(darken($value, 7.5%))};
+    --bs-badge-#{$color}-color: #{color-contrast($value)};
+    --bs-btn-#{$color}-color: #{color-contrast($value)};
+    --bs-btn-#{$color}-hover-color: #{color-contrast(darken($value, 7.5%))};
     --bs-#{$color}-bg: #{$value};
     --bs-#{$color}-bg-light: #{rgba($value, 0.25)};
   }
@@ -65,18 +61,15 @@
   --bs-list-group-active-bg: #{$darkly-list-group-active-bg};
   --bs-list-group-active-border-color: #{$darkly-list-group-active-border-color};
   --bs-table-border-color: #{$darkly-table-border-color};
-  --bs-table-hover-bg: #{$darkly-table-hover-bg};
-  --bs-popover-bg: #{$darkly-popover-bg};
-  --bs-popover-header-bg: #{$darkly-popover-header-bg};
+  --bs-table-bg-hover: #{$darkly-table-hover-bg};
   --bs-progress-bg: #{$darkly-progress-bg};
 
   @each $color, $value in $darkly-theme-colors {
     --bs-table-#{$color}-bg: #{$value};
     --bs-table-#{$color}-hover-bg: #{darken($value, 5%)};
-    --bs-badge-#{$color}-color: #{color-yiq($value)};
-    --bs-badge-#{$color}-bg: #{$value};
-    --bs-btn-#{$color}-color: #{color-yiq($value)};
-    --bs-btn-#{$color}-hover-color: #{color-yiq(darken($value, 7.5%))};
+    --bs-badge-#{$color}-color: #{color-contrast($value)};
+    --bs-btn-#{$color}-color: #{color-contrast($value)};
+    --bs-btn-#{$color}-hover-color: #{color-contrast(darken($value, 7.5%))};
     --bs-#{$color}-bg: #{$value};
     --bs-#{$color}-bg-light: #{rgba($value, 0.25)};
   }

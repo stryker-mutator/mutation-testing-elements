@@ -37,14 +37,14 @@ export class MutationTestReportDrawerMutant extends LitElement {
   private renderSummary() {
     return html`<div class="d-flex mx-2">
       ${this.mutant?.killedByTests?.[0]
-        ? html`<h6 class="pr-4"
+        ? html`<h6 class="pe-4"
             >🎯 Killed by: ${this.mutant.killedByTests?.[0].name}
             ${this.mutant.killedByTests.length > 1 ? html`(and ${this.mutant.killedByTests.length - 1} more)` : undefined}</h6
           >`
         : undefined}
       ${renderIf(
         this.mutant?.static || this.mutant?.coveredByTests,
-        html`<h6 class="pr-4">
+        html`<h6 class="pe-4">
           ${this.mutant?.static
             ? html`🗿 Static mutant`
             : renderIfPresent(

@@ -19,7 +19,7 @@
 // Buttons ==================================================================
 .btn {
   color: var(--bs-body-color);
-  @include hover() {
+  &:hover {
     color: var(--bs-body-color);
     text-decoration: none;
   }
@@ -27,7 +27,7 @@
 @each $color, $value in $theme-colors {
   .btn-#{$color} {
     color: var(--bs-btn-#{$color}-color);
-    @include hover() {
+    &:hover {
       color: var(--bs-btn-#{$color}-hover-color);
     }
   }
@@ -36,9 +36,8 @@
 // Badge ==================================
 
 @each $color, $value in $theme-colors {
-  .badge-#{$color} {
+  .badge.bg-#{$color} {
     color: var(--bs-badge-#{$color}-color);
-    background-color: var(--bs-badge-#{$color}-bg);
   }
 }
 
@@ -90,14 +89,9 @@
 a {
   color: var(--bs-link-color);
 
-  @include hover() {
+  &:hover {
     color: var(--bs-link-hover-color);
   }
-}
-
-// Popovers
-.popover {
-  background-color: var(--bs-popover-bg);
 }
 
 // Tables ======================================================================
@@ -107,9 +101,9 @@ a {
 
   &-hover {
     tbody tr {
-      @include hover() {
+      &:hover {
         color: var(--bs-body-color);
-        background-color: var(--bs-table-hover-bg);
+        background-color: var(--bs-table-bg-hover);
       }
     }
 
@@ -224,7 +218,7 @@ a {
 .nav-tabs {
   border-color: var(--bs-nav-tabs-border-color);
   .nav-link {
-    @include hover-focus() {
+    &:hover:focus {
       border-color: var(--bs-nav-tabs-link-hover-border-color);
     }
   }
@@ -243,6 +237,7 @@ a {
 }
 
 .breadcrumb {
+  padding: 0.75rem 1rem;
   background-color: var(--bs-breadcrumb-bg);
 }
 

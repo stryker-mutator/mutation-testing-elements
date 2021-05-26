@@ -19,14 +19,14 @@ describe(MutationTestReportTestComponent.name, () => {
   });
 
   it('should render a badge with correct context', () => {
-    expect([...sut.$('.badge').classList]).includes('badge-success');
+    expect([...sut.$('.badge').classList]).includes('bg-success');
   });
 
   it('should toggle selected on click', async () => {
     const badge = sut.$('.badge');
     badge.click();
     await sut.whenStable();
-    expect([...badge.classList]).includes('badge-info');
+    expect([...badge.classList]).includes('bg-info');
   });
 
   it('should dispatch "test-selected" when clicked', async () => {

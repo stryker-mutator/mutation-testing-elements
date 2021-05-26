@@ -33,7 +33,7 @@ export class MutationTestReportTestComponent extends LitElement {
     // This part is newline significant, as it is rendered in a <code> block.
     // No unnecessary new lines
     return this.test && this.show
-      ? html`<span class="badge badge-${this.active ? 'info' : getContextClassForTestStatus(this.test.status)}" @click="${this.testClicked}"
+      ? html`<span class="badge bg-${this.active ? 'info' : getContextClassForTestStatus(this.test.status)}" @click="${this.testClicked}"
           >${this.test.id}</span
         >`
       : nothing;

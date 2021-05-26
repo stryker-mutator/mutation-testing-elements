@@ -24,7 +24,7 @@ export class MutationTestReportBreadcrumbComponent extends LitElement {
 
   public render() {
     return html`
-      <ol class="breadcrumb">
+      <ol class="breadcrumb rounded">
         ${this.path && this.path.length > 0 ? this.renderLink(this.rootName, []) : this.renderActiveItem(this.rootName)}
         ${this.renderBreadcrumbItems()}
       </ol>

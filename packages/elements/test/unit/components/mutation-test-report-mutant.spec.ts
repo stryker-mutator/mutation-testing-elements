@@ -49,15 +49,15 @@ describe(MutationTestReportMutantComponent.name, () => {
     expect(sut.$('.replacement').hidden).true;
   });
 
-  Object.keys(expectedMutantColors).forEach((status) => {
+  Object.entries(expectedMutantColors).forEach(([status, expectedColor]) => {
     it(`should render correct badge color for ${status} mutant`, async () => {
       const actualMutantStatus = status as MutantStatus;
-      sut.element.style.cssText = `--bs-badge-${getContextClassForStatus(actualMutantStatus)}-bg: ${expectedMutantColors[actualMutantStatus]};`;
+      sut.element.style.cssText = `--bs-${getContextClassForStatus(actualMutantStatus)}-bg: ${expectedColor};`;
       sut.element.show = true;
       sut.element.mutant = createMutantResult({ status: actualMutantStatus });
       await sut.whenStable();
       const badge = sut.$('span.badge');
-      expect(getComputedStyle(badge).backgroundColor).eq(expectedMutantColors[actualMutantStatus]);
+      expect(getComputedStyle(badge).backgroundColor).eq(expectedColor);
       expect(badge.innerText).eq(sut.element.mutant.id);
     });
   });
@@ -67,7 +67,7 @@ describe(MutationTestReportMutantComponent.name, () => {
     sut.element.show = true;
     sut.element.mutant = createMutantResult({ replacement: 'foobar' });
     await sut.whenStable();
-    const actualReplacement = sut.$('.badge-info');
+    const actualReplacement = sut.$('.bg-info');
 
     // Act
     sut.$('span.badge').click();
@@ -112,7 +112,7 @@ describe(MutationTestReportMutantComponent.name, () => {
     sut.element.show = true;
     sut.element.mutant = createMutantResult({ mutatorName: 'FooMutator', replacement: undefined });
     await sut.whenStable();
-    const actualReplacement = sut.$('.badge-info');
+    const actualReplacement = sut.$('.bg-info');
 
     // Act
     sut.$('span.badge').click();
@@ -128,7 +128,7 @@ describe(MutationTestReportMutantComponent.name, () => {
     sut.element.show = true;
     sut.element.mutant = createMutantResult({ replacement: 'foobar' });
     await sut.whenStable();
-    const actualReplacement = sut.$('.badge-info');
+    const actualReplacement = sut.$('.bg-info');
 
     // Act
     sut.$('span.badge').click(); // Open
