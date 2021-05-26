@@ -17,8 +17,8 @@ lazy val circe = project
     sharedSettings,
     name := "mutation-testing-metrics-circe",
     libraryDependencies ++= Seq(
-      "io.circe"            %% "circe-core"   % "0.13.0",
-      "io.circe"            %% "circe-parser" % "0.13.0",
+      "io.circe"            %% "circe-core"   % "0.14.0",
+      "io.circe"            %% "circe-parser" % "0.14.0",
       "org.leadpony.justify" % "justify"      % "3.1.0" % Test,
       "org.leadpony.joy"     % "joy-classic"  % "2.1.0" % Test
     )
