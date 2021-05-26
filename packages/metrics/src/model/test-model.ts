@@ -1,4 +1,4 @@
-import { OpenEndLocation, TestDefinition } from 'mutation-testing-report-schema';
+import { OpenEndLocation, TestDefinition } from 'mutation-testing-report-schema/api';
 import { MutantModel } from './mutant-model';
 import { TestFileModel } from './test-file-model';
 

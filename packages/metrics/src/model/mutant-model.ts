@@ -1,4 +1,4 @@
-import { Location, MutantResult, MutantStatus } from 'mutation-testing-report-schema';
+import { Location, MutantResult, MutantStatus } from 'mutation-testing-report-schema/api';
 import { FileUnderTestModel } from './file-under-test-model';
 import { TestModel } from './test-model';
 

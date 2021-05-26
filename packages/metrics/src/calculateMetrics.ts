@@ -1,5 +1,5 @@
 import { compareNames, normalize } from './helpers';
-import { FileResult, MutantStatus, MutationTestResult } from 'mutation-testing-report-schema';
+import { FileResult, MutantStatus, MutationTestResult } from 'mutation-testing-report-schema/api';
 import { groupBy } from './helpers';
 import { FileUnderTestModel, Metrics, MetricsResult, MutantModel, MutationTestMetricsResult, TestFileModel, TestMetrics, TestModel } from './model';
 import { TestStatus } from './model/test-model';

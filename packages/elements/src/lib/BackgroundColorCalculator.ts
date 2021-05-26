@@ -1,4 +1,4 @@
-import { MutantResult, MutantStatus } from 'mutation-testing-report-schema';
+import { MutantResult, MutantStatus } from 'mutation-testing-report-schema/api';
 import { getContextClassForStatus } from './htmlHelpers';
 
 /**

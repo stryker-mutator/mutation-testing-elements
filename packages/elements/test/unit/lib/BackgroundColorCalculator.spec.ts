@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { MutantStatus } from 'mutation-testing-report-schema';
+import { MutantStatus } from 'mutation-testing-report-schema/api';
 import { BackgroundColorCalculator } from '../../../src/lib/BackgroundColorCalculator';
 import { getContextClassForStatus } from '../../../src/lib/htmlHelpers';
 

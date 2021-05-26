@@ -1,3 +1,5 @@
+@use "sass:math";
+
 $d: 1.5em;
 $s: 1.2em;
 $p: 0.15em;
@@ -13,7 +15,7 @@ $width: 2.9em;
     }
   } @else if $exp < 0 {
     @for $i from 1 through -$exp {
-      $value: $value / $number;
+      $value: math.div($value, $number);
     }
   }
   @return $value;
@@ -35,10 +37,10 @@ $width: 2.9em;
 
 @function rad($angle) {
   $unit: unit($angle);
-  $unitless: $angle / ($angle * 0 + 1);
+  $unitless: math.div($angle, $angle * 0 + 1);
   // If the angle has 'deg' as unit, convert to radians.
   @if $unit == deg {
-    $unitless: $unitless / 180 * pi();
+    $unitless: math.div($unitless, 180) * pi();
   }
   @return $unitless;
 }
@@ -48,7 +50,7 @@ $width: 2.9em;
   $angle: rad($angle);
   // Iterate a bunch of times.
   @for $i from 0 through 10 {
-    $sin: $sin + pow(-1, $i) * pow($angle, (2 * $i + 1)) / fact(2 * $i + 1);
+    $sin: $sin + math.div(pow(-1, $i) * pow($angle, (2 * $i + 1)), fact(2 * $i + 1));
   }
   @return $sin;
 }
@@ -58,20 +60,20 @@ $width: 2.9em;
   $angle: rad($angle);
   // Iterate a bunch of times.
   @for $i from 0 through 10 {
-    $cos: $cos + pow(-1, $i) * pow($angle, 2 * $i) / fact(2 * $i);
+    $cos: $cos + math.div(pow(-1, $i) * pow($angle, 2 * $i), fact(2 * $i));
   }
   @return $cos;
 }
 
 @function tan($angle) {
-  @return sin($angle) / cos($angle);
+  @return math.div(sin($angle), cos($angle));
 }
 
 /* Star */
 @mixin star($n: 5, $k: .65, $p: 3) {
 	$m: 2*$n;
-	$ba: 360deg/$m;
-	$la: $ba/$p;
+	$ba: math.div(360deg, $m);
+	$la: math.div($ba, $p);
 	$ro: 50%;
 	$ri: $k*$ro;
 	$plist: ();

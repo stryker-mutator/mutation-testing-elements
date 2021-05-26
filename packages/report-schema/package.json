@@ -4,6 +4,16 @@
   "description": "The json schema for a mutation testing report.",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
+  "exports": {
+    "./api": "./dist/src-generated/schema.js"
+  },
+  "typesVersions": {
+    "*": {
+      "api": [
+        "dist/src-generated/schema.d.ts"
+      ]
+    }
+  },
   "scripts": {
     "test": "mocha --forbid-only --forbid-pending -r source-map-support/register dist/test/**/*.js",
     "postpublish": "PUBLISH_SCHEMA=true ../metrics-scala/npmProjPublish.sh dist/src",

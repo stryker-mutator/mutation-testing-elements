@@ -1,4 +1,4 @@
-import { MutantStatus } from 'mutation-testing-report-schema';
+import { MutantStatus } from 'mutation-testing-report-schema/api';
 
 export function normalizeWhitespace(pseudoHtml: string) {
   return pseudoHtml.replace(/\s+/g, ' ').trim();

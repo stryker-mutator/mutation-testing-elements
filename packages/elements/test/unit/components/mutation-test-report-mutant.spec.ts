@@ -1,7 +1,7 @@
 import { MutationTestReportMutantComponent } from '../../../src/components/mutant/mutant.component';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { expect } from 'chai';
-import { MutantStatus, MutantResult } from 'mutation-testing-report-schema';
+import { MutantStatus, MutantResult } from 'mutation-testing-report-schema/api';
 import { expectedMutantColors } from '../../helpers/helperFunctions';
 import { getContextClassForStatus } from '../../../src/lib/htmlHelpers';
 import { CustomEventMap } from '../../../src/lib/custom-events';

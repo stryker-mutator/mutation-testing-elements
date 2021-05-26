@@ -1,5 +1,5 @@
 import { PageObject } from './PageObject.po';
-import { MutantStatus } from 'mutation-testing-report-schema';
+import { MutantStatus } from 'mutation-testing-report-schema/api';
 import { TestStatus } from 'mutation-testing-metrics';
 import { StateFilterCheckbox } from './StateFilterCheckbox.po';
 

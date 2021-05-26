@@ -1,4 +1,4 @@
-import { FileResult, MutantResult, MutantStatus, MutationTestResult, TestDefinition, TestFile, Location } from 'mutation-testing-report-schema';
+import { FileResult, MutantResult, MutantStatus, MutationTestResult, TestDefinition, TestFile, Location } from 'mutation-testing-report-schema/api';
 import { FileUnderTestModel, TestFileModel } from '../../src';
 
 export function createTestFileModel(overrides?: Partial<TestFileModel>): TestFileModel {

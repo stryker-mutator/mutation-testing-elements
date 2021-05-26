@@ -1,4 +1,4 @@
-import { TestFile as TestFile } from 'mutation-testing-report-schema';
+import { TestFile as TestFile } from 'mutation-testing-report-schema/api';
 import { SourceFile } from './source-file';
 import { TestModel } from './test-model';
 

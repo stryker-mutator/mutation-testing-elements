@@ -1,6 +1,6 @@
 import { customElement, html, LitElement, property, unsafeCSS } from 'lit-element';
 import { MetricsResult } from 'mutation-testing-metrics';
-import { Thresholds } from 'mutation-testing-report-schema';
+import { Thresholds } from 'mutation-testing-report-schema/api';
 import { toAbsoluteUrl } from '../../lib/htmlHelpers';
 import { bootstrap } from '../../style';
 import style from './metrics-table.scss';

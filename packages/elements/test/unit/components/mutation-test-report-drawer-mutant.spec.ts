@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { MutantModel, TestModel } from 'mutation-testing-metrics';
-import { MutantStatus } from 'mutation-testing-report-schema';
+import { MutantStatus } from 'mutation-testing-report-schema/api';
 import { MutationTestReportDrawerMutant } from '../../../src/components/drawer-mutant/drawer-mutant.component';
 import { MutationTestReportDrawer } from '../../../src/components/drawer/drawer.component';
 import { createLocation, createMutantResult, createTestDefinition } from '../../helpers/factory';

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { calculateMetrics, calculateMutationTestMetrics } from '../../src/calculateMetrics';
 import { expect } from 'chai';
-import { MutantStatus, FileResultDictionary } from 'mutation-testing-report-schema';
+import { MutantStatus, FileResultDictionary } from 'mutation-testing-report-schema/api';
 import { FileUnderTestModel, Metrics, MetricsResult, TestFileModel, TestMetrics } from '../../src/model';
 import { createFileResult, createMutantResult, createMutationTestResult, createTestDefinition, createTestFile } from '../helpers/factories';
 

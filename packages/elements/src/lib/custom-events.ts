@@ -1,5 +1,5 @@
 import { TestModel } from 'mutation-testing-metrics';
-import { MutantResult } from 'mutation-testing-report-schema';
+import { MutantResult } from 'mutation-testing-report-schema/api';
 import { StateFilter } from '../components/state-filter/state-filter.component';
 
 export interface CustomEventMap {

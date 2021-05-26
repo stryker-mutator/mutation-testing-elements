@@ -1,4 +1,4 @@
-import { FileResult, MutantResult } from 'mutation-testing-report-schema';
+import { FileResult, MutantResult } from 'mutation-testing-report-schema/api';
 import { MutantModel } from './mutant-model';
 import { SourceFile } from './source-file';
 
