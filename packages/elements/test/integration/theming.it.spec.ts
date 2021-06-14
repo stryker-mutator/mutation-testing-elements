@@ -46,6 +46,9 @@ describe('Theming', () => {
   });
 
   describe('light theme', () => {
+    beforeEach(async () => {
+      await page.themeSelector.select('light');
+    });
     it('should have "light" theme selected', async () => {
       expect(await page.themeSelector.selectedTheme()).eq('light');
     });
