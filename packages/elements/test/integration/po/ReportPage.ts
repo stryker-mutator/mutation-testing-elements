@@ -1,4 +1,4 @@
-import { constants } from '../lib/constants';
+import { constants, DEFAULT_TIMEOUT } from '../lib/constants';
 import Breadcrumb from './Breadcrumb.po';
 import { ElementSelector } from './ElementSelector.po';
 import { selectShadowRoot, sleep } from '../lib/helpers';
@@ -14,7 +14,17 @@ export class ReportPage extends ElementSelector {
   }
 
   public whenFileReportLoaded() {
-    return Promise.resolve();
+    return this.browser.wait(async () => {
+      try {
+        await this.$('mutation-test-report-app >>> :is(mte-test-view, mte-mutant-view)');
+        return true;
+      } catch (err) {
+        if (err instanceof Error && err.message.includes('Unable to locate element')) {
+          return false;
+        }
+        throw err;
+      }
+    }, DEFAULT_TIMEOUT);
   }
 
   public takeScreenshot(): Promise<string> {
