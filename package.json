@@ -71,7 +71,7 @@
     "lit-element": "^2.2.0",
     "mocha": "^8.2.0",
     "postcss": "^8.2.13",
-    "postcss-loader": "^5.0.0",
+    "postcss-loader": "^6.1.0",
     "prettier": "~2.3.0",
     "resemblejs": "^3.2.5",
     "rimraf": "^3.0.0",
