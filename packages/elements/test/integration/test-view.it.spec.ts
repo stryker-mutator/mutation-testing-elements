@@ -32,8 +32,8 @@ describe('Test view', () => {
 
     it('should hide tests that are filtered out', async () => {
       await page.testView.stateFilter.state(TestStatus.Covering).click();
-      const tests = await page.testView.tests();
       await tick();
+      const tests = await page.testView.tests();
       expect(await tests[1].isVisible()).false;
     });
 
