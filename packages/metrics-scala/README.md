@@ -39,6 +39,7 @@ val report = MutationTestResult[JsonObject](thresholds = Thresholds(high = 80, l
 
 The `MutationTestResult` case classes generate a JSON compliant with the [mutation-testing JSON schema](https://github.com/stryker-mutator/mutation-testing-elements/blob/master/packages/report-schema/src/mutation-testing-report-schema.json). It has a type parameter `[C]` for the type of the used configuration, which can be any JSON object.
 
+
 Then calculate and use metrics from that report:
 
 ```scala
