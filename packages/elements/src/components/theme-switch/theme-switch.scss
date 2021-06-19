@@ -3,7 +3,7 @@
 $d: 1.5em;
 $s: 1.2em;
 $p: 0.15em;
-$g: .06em;
+$g: 0.06em;
 $width: 2.9em;
 
 /* Math */
@@ -70,84 +70,83 @@ $width: 2.9em;
 }
 
 /* Star */
-@mixin star($n: 5, $k: .65, $p: 3) {
-	$m: 2*$n;
-	$ba: math.div(360deg, $m);
-	$la: math.div($ba, $p);
-	$ro: 50%;
-	$ri: $k*$ro;
-	$plist: ();
-	
-	@for $i from 0 to $m {
-		$sa: ($i - .5)*$ba - 90deg;
-		
-		@if $i%2 == 0 { // pointy part
-			$ma: $sa + .5*$ba;
-			
-			$plist: $plist, 
-				$ro + $ri*cos($sa) $ro + $ri*sin($sa), 
-				$ro + $ro*cos($ma) $ro + $ro*sin($ma)
-		}
-		@else { // round part
-			@for $j from 0 to $p {
-				$ca: $sa + $j*$la;
-				
-				$plist: $plist, 
-					$ro + $ri*cos($ca) $ro + $ri*sin($ca)
-			}
-		}
-	}
-	
-	--poly: #{polygon($plist)};
-	-webkit-clip-path: var(--poly);
-					clip-path: var(--poly);
+@mixin star($n: 5, $k: 0.65, $p: 3) {
+  $m: 2 * $n;
+  $ba: math.div(360deg, $m);
+  $la: math.div($ba, $p);
+  $ro: 50%;
+  $ri: $k * $ro;
+  $plist: ();
+
+  @for $i from 0 to $m {
+    $sa: ($i - 0.5) * $ba - 90deg;
+
+    @if $i%2 == 0 {
+      // pointy part
+      $ma: $sa + 0.5 * $ba;
+
+      $plist: $plist, $ro + $ri * cos($sa) $ro + $ri * sin($sa), $ro + $ro * cos($ma) $ro + $ro * sin($ma);
+    } @else {
+      // round part
+      @for $j from 0 to $p {
+        $ca: $sa + $j * $la;
+
+        $plist: $plist, $ro + $ri * cos($ca) $ro + $ri * sin($ca);
+      }
+    }
+  }
+
+  --poly: #{polygon($plist)};
+  -webkit-clip-path: var(--poly);
+  clip-path: var(--poly);
 }
 
 /* Checkbox */
 #darkTheme {
-	position: absolute;
+  position: absolute;
   right: 100vw;
-	
-	+ label {
-		--i: 0;
-		--j: calc(1 - var(--i));		
-		display: grid;
-		grid-gap: $p $g;
-		overflow: hidden;
-		padding: $p;
-		height: $d;
-		border-radius: .5*$s + $p;
-		background: hsl(199, 98%, calc(var(--j)*48%));
-		color: transparent;
-		user-select: none;
-		transition: .3s;
-		cursor: pointer;
-		
-		&:before, &:after {
-			width: $s; height: $s;
-			transition: inherit;
-			content: ''
-		}
-		
-		&:before {
-			transform-origin: 20%	20%;
-			transform: translate(calc(var(--i)*(100% + #{$g}))) 
-								 scale(calc(1 - var(--i)*.8));
-			background: hsl(60, 100%, 50%);
-			@include star(10, .75)
-		}
-		
-		&:after {
-			grid-column: 2;
-			border-radius: 50%;
-			transform: translatey(calc(var(--i)*(-130% - #{$p})));
-			background: 
-				radial-gradient(circle at 19% 19%, 
-						transparent 41%, #fff 43%)
-		}
-	}
-	
-	&:checked + label { --i: 1 }
+
+  + label {
+    --i: 0;
+    --j: calc(1 - var(--i));
+    display: grid;
+    grid-gap: $p $g;
+    overflow: hidden;
+    padding: $p;
+    height: $d;
+    border-radius: 0.5 * $s + $p;
+    background: hsl(199, 98%, calc(var(--j) * 48%));
+    color: transparent;
+    user-select: none;
+    transition: 0.3s;
+    cursor: pointer;
+
+    &:before,
+    &:after {
+      width: $s;
+      height: $s;
+      transition: inherit;
+      content: '';
+    }
+
+    &:before {
+      transform-origin: 20% 20%;
+      transform: translate(calc(var(--i) * (100% + #{$g}))) scale(calc(1 - var(--i) * 0.8));
+      background: hsl(60, 100%, 50%);
+      @include star(10, 0.75);
+    }
+
+    &:after {
+      grid-column: 2;
+      border-radius: 50%;
+      transform: translatey(calc(var(--i) * (-130% - #{$p})));
+      background: radial-gradient(circle at 19% 19%, transparent 41%, #fff 43%);
+    }
+  }
+
+  &:checked + label {
+    --i: 1;
+  }
 }
 
 .check-box-container {

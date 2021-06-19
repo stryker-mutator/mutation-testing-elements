@@ -56,7 +56,7 @@ Based on these states, we can calculate the following metrics:
   The total percentage of mutants that were detected. The higher, the better!
 - **Mutation score based on covered code** `detected / covered * 100`  
   The total percentage of mutants that were detected based on the code coverage results.
-  
+
 ## Test states and metrics
 
 A _test_ can also have state with regards to mutation testing.
@@ -69,4 +69,3 @@ A _test_ can also have state with regards to mutation testing.
   The test is not even covering any mutants (and thus not killing any of them).
 - **Total** `not covering + covering + killing`
   Total number of tests.
-

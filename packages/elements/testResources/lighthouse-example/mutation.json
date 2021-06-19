@@ -550,9 +550,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 1,
-          "killedBy": [
-            "640"
-          ],
+          "killedBy": ["640"],
           "location": {
             "end": {
               "column": 6,
@@ -573,12 +571,8 @@
           "estimatedNetTime": 65,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "640"
-          ],
-          "coveredBy": [
-            "640"
-          ],
+          "killedBy": ["640"],
+          "coveredBy": ["640"],
           "location": {
             "end": {
               "column": 83,
@@ -599,12 +593,8 @@
           "estimatedNetTime": 65,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "640"
-          ],
-          "coveredBy": [
-            "640"
-          ],
+          "killedBy": ["640"],
+          "coveredBy": ["640"],
           "location": {
             "end": {
               "column": 4,
@@ -625,9 +615,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 1,
-          "killedBy": [
-            "640"
-          ],
+          "killedBy": ["640"],
           "location": {
             "end": {
               "column": 4,
@@ -648,12 +636,8 @@
           "estimatedNetTime": 65,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "640"
-          ],
-          "coveredBy": [
-            "640"
-          ],
+          "killedBy": ["640"],
+          "coveredBy": ["640"],
           "location": {
             "end": {
               "column": 6,
@@ -674,12 +658,8 @@
           "estimatedNetTime": 65,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "640"
-          ],
-          "coveredBy": [
-            "640"
-          ],
+          "killedBy": ["640"],
+          "coveredBy": ["640"],
           "location": {
             "end": {
               "column": 67,
@@ -699,9 +679,7 @@
           "estimatedNetTime": 65,
           "static": false,
           "testsCompleted": 1,
-          "coveredBy": [
-            "640"
-          ],
+          "coveredBy": ["640"],
           "location": {
             "end": {
               "column": 33,
@@ -722,12 +700,8 @@
           "estimatedNetTime": 65,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "640"
-          ],
-          "coveredBy": [
-            "640"
-          ],
+          "killedBy": ["640"],
+          "coveredBy": ["640"],
           "location": {
             "end": {
               "column": 76,
@@ -925,9 +899,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 1,
-          "killedBy": [
-            "639"
-          ],
+          "killedBy": ["639"],
           "location": {
             "end": {
               "column": 4,
@@ -948,9 +920,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 1,
-          "killedBy": [
-            "639"
-          ],
+          "killedBy": ["639"],
           "location": {
             "end": {
               "column": 6,
@@ -971,12 +941,8 @@
           "estimatedNetTime": 103,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "639"
-          ],
-          "coveredBy": [
-            "639"
-          ],
+          "killedBy": ["639"],
+          "coveredBy": ["639"],
           "location": {
             "end": {
               "column": 4,
@@ -997,12 +963,8 @@
           "estimatedNetTime": 103,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "639"
-          ],
-          "coveredBy": [
-            "639"
-          ],
+          "killedBy": ["639"],
+          "coveredBy": ["639"],
           "location": {
             "end": {
               "column": 65,
@@ -1023,12 +985,8 @@
           "estimatedNetTime": 103,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "639"
-          ],
-          "coveredBy": [
-            "639"
-          ],
+          "killedBy": ["639"],
+          "coveredBy": ["639"],
           "location": {
             "end": {
               "column": 96,
@@ -1049,12 +1007,8 @@
           "estimatedNetTime": 103,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "639"
-          ],
-          "coveredBy": [
-            "639"
-          ],
+          "killedBy": ["639"],
+          "coveredBy": ["639"],
           "location": {
             "end": {
               "column": 72,
@@ -1075,12 +1029,8 @@
           "estimatedNetTime": 103,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "639"
-          ],
-          "coveredBy": [
-            "639"
-          ],
+          "killedBy": ["639"],
+          "coveredBy": ["639"],
           "location": {
             "end": {
               "column": 6,
@@ -1101,12 +1051,8 @@
           "estimatedNetTime": 103,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "639"
-          ],
-          "coveredBy": [
-            "639"
-          ],
+          "killedBy": ["639"],
+          "coveredBy": ["639"],
           "location": {
             "end": {
               "column": 67,
@@ -1126,9 +1072,7 @@
           "estimatedNetTime": 103,
           "static": false,
           "testsCompleted": 1,
-          "coveredBy": [
-            "639"
-          ],
+          "coveredBy": ["639"],
           "location": {
             "end": {
               "column": 51,
@@ -1148,9 +1092,7 @@
           "estimatedNetTime": 103,
           "static": false,
           "testsCompleted": 1,
-          "coveredBy": [
-            "639"
-          ],
+          "coveredBy": ["639"],
           "location": {
             "end": {
               "column": 33,
@@ -1367,9 +1309,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 1,
-          "killedBy": [
-            "647"
-          ],
+          "killedBy": ["647"],
           "location": {
             "end": {
               "column": 6,
@@ -1390,9 +1330,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 1,
-          "killedBy": [
-            "647"
-          ],
+          "killedBy": ["647"],
           "location": {
             "end": {
               "column": 4,
@@ -1413,9 +1351,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 1,
-          "killedBy": [
-            "647"
-          ],
+          "killedBy": ["647"],
           "location": {
             "end": {
               "column": 8,
@@ -1436,9 +1372,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 1,
-          "killedBy": [
-            "647"
-          ],
+          "killedBy": ["647"],
           "location": {
             "end": {
               "column": 10,
@@ -1497,12 +1431,8 @@
           "estimatedNetTime": 70,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "647"
-          ],
-          "coveredBy": [
-            "647"
-          ],
+          "killedBy": ["647"],
+          "coveredBy": ["647"],
           "location": {
             "end": {
               "column": 4,
@@ -1523,12 +1453,8 @@
           "estimatedNetTime": 70,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "647"
-          ],
-          "coveredBy": [
-            "647"
-          ],
+          "killedBy": ["647"],
+          "coveredBy": ["647"],
           "location": {
             "end": {
               "column": 83,
@@ -1548,9 +1474,7 @@
           "estimatedNetTime": 70,
           "static": false,
           "testsCompleted": 1,
-          "coveredBy": [
-            "647"
-          ],
+          "coveredBy": ["647"],
           "location": {
             "end": {
               "column": 63,
@@ -1570,9 +1494,7 @@
           "estimatedNetTime": 70,
           "static": false,
           "testsCompleted": 1,
-          "coveredBy": [
-            "647"
-          ],
+          "coveredBy": ["647"],
           "location": {
             "end": {
               "column": 63,
@@ -1592,9 +1514,7 @@
           "estimatedNetTime": 70,
           "static": false,
           "testsCompleted": 1,
-          "coveredBy": [
-            "647"
-          ],
+          "coveredBy": ["647"],
           "location": {
             "end": {
               "column": 63,
@@ -1614,9 +1534,7 @@
           "estimatedNetTime": 70,
           "static": false,
           "testsCompleted": 1,
-          "coveredBy": [
-            "647"
-          ],
+          "coveredBy": ["647"],
           "location": {
             "end": {
               "column": 63,
@@ -1637,12 +1555,8 @@
           "estimatedNetTime": 70,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "647"
-          ],
-          "coveredBy": [
-            "647"
-          ],
+          "killedBy": ["647"],
+          "coveredBy": ["647"],
           "location": {
             "end": {
               "column": 6,
@@ -1662,9 +1576,7 @@
           "estimatedNetTime": 70,
           "static": false,
           "testsCompleted": 1,
-          "coveredBy": [
-            "647"
-          ],
+          "coveredBy": ["647"],
           "location": {
             "end": {
               "column": 33,
@@ -1685,12 +1597,8 @@
           "estimatedNetTime": 70,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "647"
-          ],
-          "coveredBy": [
-            "647"
-          ],
+          "killedBy": ["647"],
+          "coveredBy": ["647"],
           "location": {
             "end": {
               "column": 81,
@@ -2388,9 +2296,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 2,
-          "killedBy": [
-            "610"
-          ],
+          "killedBy": ["610"],
           "location": {
             "end": {
               "column": 4,
@@ -2411,9 +2317,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 2,
-          "killedBy": [
-            "610"
-          ],
+          "killedBy": ["610"],
           "location": {
             "end": {
               "column": 6,
@@ -2434,9 +2338,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 2,
-          "killedBy": [
-            "610"
-          ],
+          "killedBy": ["610"],
           "location": {
             "end": {
               "column": 8,
@@ -2457,9 +2359,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 2,
-          "killedBy": [
-            "610"
-          ],
+          "killedBy": ["610"],
           "location": {
             "end": {
               "column": 10,
@@ -2518,13 +2418,8 @@
           "estimatedNetTime": 169,
           "static": false,
           "testsCompleted": 2,
-          "killedBy": [
-            "610"
-          ],
-          "coveredBy": [
-            "610",
-            "611"
-          ],
+          "killedBy": ["610"],
+          "coveredBy": ["610", "611"],
           "location": {
             "end": {
               "column": 4,
@@ -2545,13 +2440,8 @@
           "estimatedNetTime": 169,
           "static": false,
           "testsCompleted": 2,
-          "killedBy": [
-            "610"
-          ],
-          "coveredBy": [
-            "610",
-            "611"
-          ],
+          "killedBy": ["610"],
+          "coveredBy": ["610", "611"],
           "location": {
             "end": {
               "column": 83,
@@ -2572,13 +2462,8 @@
           "estimatedNetTime": 169,
           "static": false,
           "testsCompleted": 2,
-          "killedBy": [
-            "610"
-          ],
-          "coveredBy": [
-            "610",
-            "611"
-          ],
+          "killedBy": ["610"],
+          "coveredBy": ["610", "611"],
           "location": {
             "end": {
               "column": 63,
@@ -2598,10 +2483,7 @@
           "estimatedNetTime": 169,
           "static": false,
           "testsCompleted": 2,
-          "coveredBy": [
-            "610",
-            "611"
-          ],
+          "coveredBy": ["610", "611"],
           "location": {
             "end": {
               "column": 63,
@@ -2622,13 +2504,8 @@
           "estimatedNetTime": 169,
           "static": false,
           "testsCompleted": 2,
-          "killedBy": [
-            "610"
-          ],
-          "coveredBy": [
-            "610",
-            "611"
-          ],
+          "killedBy": ["610"],
+          "coveredBy": ["610", "611"],
           "location": {
             "end": {
               "column": 63,
@@ -2649,13 +2526,8 @@
           "estimatedNetTime": 169,
           "static": false,
           "testsCompleted": 2,
-          "killedBy": [
-            "610"
-          ],
-          "coveredBy": [
-            "610",
-            "611"
-          ],
+          "killedBy": ["610"],
+          "coveredBy": ["610", "611"],
           "location": {
             "end": {
               "column": 6,
@@ -2675,10 +2547,7 @@
           "estimatedNetTime": 169,
           "static": false,
           "testsCompleted": 2,
-          "coveredBy": [
-            "610",
-            "611"
-          ],
+          "coveredBy": ["610", "611"],
           "location": {
             "end": {
               "column": 63,
@@ -2698,10 +2567,7 @@
           "estimatedNetTime": 169,
           "static": false,
           "testsCompleted": 2,
-          "coveredBy": [
-            "610",
-            "611"
-          ],
+          "coveredBy": ["610", "611"],
           "location": {
             "end": {
               "column": 33,
@@ -2722,13 +2588,8 @@
           "estimatedNetTime": 169,
           "static": false,
           "testsCompleted": 2,
-          "killedBy": [
-            "610"
-          ],
-          "coveredBy": [
-            "610",
-            "611"
-          ],
+          "killedBy": ["610"],
+          "coveredBy": ["610", "611"],
           "location": {
             "end": {
               "column": 81,
@@ -2945,9 +2806,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 2,
-          "killedBy": [
-            "597"
-          ],
+          "killedBy": ["597"],
           "location": {
             "end": {
               "column": 4,
@@ -2968,9 +2827,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 2,
-          "killedBy": [
-            "597"
-          ],
+          "killedBy": ["597"],
           "location": {
             "end": {
               "column": 6,
@@ -2991,9 +2848,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 2,
-          "killedBy": [
-            "597"
-          ],
+          "killedBy": ["597"],
           "location": {
             "end": {
               "column": 10,
@@ -3033,9 +2888,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 2,
-          "killedBy": [
-            "597"
-          ],
+          "killedBy": ["597"],
           "location": {
             "end": {
               "column": 8,
@@ -3075,13 +2928,8 @@
           "estimatedNetTime": 132,
           "static": false,
           "testsCompleted": 2,
-          "killedBy": [
-            "597"
-          ],
-          "coveredBy": [
-            "597",
-            "598"
-          ],
+          "killedBy": ["597"],
+          "coveredBy": ["597", "598"],
           "location": {
             "end": {
               "column": 4,
@@ -3102,13 +2950,8 @@
           "estimatedNetTime": 132,
           "static": false,
           "testsCompleted": 2,
-          "killedBy": [
-            "597"
-          ],
-          "coveredBy": [
-            "597",
-            "598"
-          ],
+          "killedBy": ["597"],
+          "coveredBy": ["597", "598"],
           "location": {
             "end": {
               "column": 83,
@@ -3129,13 +2972,8 @@
           "estimatedNetTime": 132,
           "static": false,
           "testsCompleted": 2,
-          "killedBy": [
-            "597"
-          ],
-          "coveredBy": [
-            "597",
-            "598"
-          ],
+          "killedBy": ["597"],
+          "coveredBy": ["597", "598"],
           "location": {
             "end": {
               "column": 63,
@@ -3155,10 +2993,7 @@
           "estimatedNetTime": 132,
           "static": false,
           "testsCompleted": 2,
-          "coveredBy": [
-            "597",
-            "598"
-          ],
+          "coveredBy": ["597", "598"],
           "location": {
             "end": {
               "column": 63,
@@ -3178,10 +3013,7 @@
           "estimatedNetTime": 132,
           "static": false,
           "testsCompleted": 2,
-          "coveredBy": [
-            "597",
-            "598"
-          ],
+          "coveredBy": ["597", "598"],
           "location": {
             "end": {
               "column": 63,
@@ -3202,13 +3034,8 @@
           "estimatedNetTime": 132,
           "static": false,
           "testsCompleted": 2,
-          "killedBy": [
-            "597"
-          ],
-          "coveredBy": [
-            "597",
-            "598"
-          ],
+          "killedBy": ["597"],
+          "coveredBy": ["597", "598"],
           "location": {
             "end": {
               "column": 63,
@@ -3229,13 +3056,8 @@
           "estimatedNetTime": 132,
           "static": false,
           "testsCompleted": 2,
-          "killedBy": [
-            "597"
-          ],
-          "coveredBy": [
-            "597",
-            "598"
-          ],
+          "killedBy": ["597"],
+          "coveredBy": ["597", "598"],
           "location": {
             "end": {
               "column": 6,
@@ -3255,10 +3077,7 @@
           "estimatedNetTime": 132,
           "static": false,
           "testsCompleted": 2,
-          "coveredBy": [
-            "597",
-            "598"
-          ],
+          "coveredBy": ["597", "598"],
           "location": {
             "end": {
               "column": 33,
@@ -3279,13 +3098,8 @@
           "estimatedNetTime": 132,
           "static": false,
           "testsCompleted": 2,
-          "killedBy": [
-            "597"
-          ],
-          "coveredBy": [
-            "597",
-            "598"
-          ],
+          "killedBy": ["597"],
+          "coveredBy": ["597", "598"],
           "location": {
             "end": {
               "column": 60,
@@ -3483,9 +3297,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 2,
-          "killedBy": [
-            "541"
-          ],
+          "killedBy": ["541"],
           "location": {
             "end": {
               "column": 6,
@@ -3525,9 +3337,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 2,
-          "killedBy": [
-            "541"
-          ],
+          "killedBy": ["541"],
           "location": {
             "end": {
               "column": 4,
@@ -3567,9 +3377,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 2,
-          "killedBy": [
-            "541"
-          ],
+          "killedBy": ["541"],
           "location": {
             "end": {
               "column": 8,
@@ -3590,9 +3398,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 2,
-          "killedBy": [
-            "541"
-          ],
+          "killedBy": ["541"],
           "location": {
             "end": {
               "column": 10,
@@ -3613,9 +3419,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 2,
-          "killedBy": [
-            "541"
-          ],
+          "killedBy": ["541"],
           "location": {
             "end": {
               "column": 8,
@@ -3636,9 +3440,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 2,
-          "killedBy": [
-            "541"
-          ],
+          "killedBy": ["541"],
           "location": {
             "end": {
               "column": 10,
@@ -3659,13 +3461,8 @@
           "estimatedNetTime": 137,
           "static": false,
           "testsCompleted": 2,
-          "killedBy": [
-            "541"
-          ],
-          "coveredBy": [
-            "541",
-            "542"
-          ],
+          "killedBy": ["541"],
+          "coveredBy": ["541", "542"],
           "location": {
             "end": {
               "column": 4,
@@ -3686,13 +3483,8 @@
           "estimatedNetTime": 137,
           "static": false,
           "testsCompleted": 2,
-          "killedBy": [
-            "541"
-          ],
-          "coveredBy": [
-            "541",
-            "542"
-          ],
+          "killedBy": ["541"],
+          "coveredBy": ["541", "542"],
           "location": {
             "end": {
               "column": 83,
@@ -3713,13 +3505,8 @@
           "estimatedNetTime": 137,
           "static": false,
           "testsCompleted": 2,
-          "killedBy": [
-            "541"
-          ],
-          "coveredBy": [
-            "541",
-            "542"
-          ],
+          "killedBy": ["541"],
+          "coveredBy": ["541", "542"],
           "location": {
             "end": {
               "column": 6,
@@ -3740,12 +3527,8 @@
           "estimatedNetTime": 124,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "542"
-          ],
-          "coveredBy": [
-            "542"
-          ],
+          "killedBy": ["542"],
+          "coveredBy": ["542"],
           "location": {
             "end": {
               "column": 6,
@@ -3766,12 +3549,8 @@
           "estimatedNetTime": 124,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "542"
-          ],
-          "coveredBy": [
-            "542"
-          ],
+          "killedBy": ["542"],
+          "coveredBy": ["542"],
           "location": {
             "end": {
               "column": 66,
@@ -3792,12 +3571,8 @@
           "estimatedNetTime": 124,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "542"
-          ],
-          "coveredBy": [
-            "542"
-          ],
+          "killedBy": ["542"],
+          "coveredBy": ["542"],
           "location": {
             "end": {
               "column": 66,
@@ -3818,12 +3593,8 @@
           "estimatedNetTime": 124,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "542"
-          ],
-          "coveredBy": [
-            "542"
-          ],
+          "killedBy": ["542"],
+          "coveredBy": ["542"],
           "location": {
             "end": {
               "column": 17,
@@ -3843,9 +3614,7 @@
           "estimatedNetTime": 124,
           "static": false,
           "testsCompleted": 1,
-          "coveredBy": [
-            "542"
-          ],
+          "coveredBy": ["542"],
           "location": {
             "end": {
               "column": 17,
@@ -3866,12 +3635,8 @@
           "estimatedNetTime": 124,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "542"
-          ],
-          "coveredBy": [
-            "542"
-          ],
+          "killedBy": ["542"],
+          "coveredBy": ["542"],
           "location": {
             "end": {
               "column": 17,
@@ -3892,12 +3657,8 @@
           "estimatedNetTime": 124,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "542"
-          ],
-          "coveredBy": [
-            "542"
-          ],
+          "killedBy": ["542"],
+          "coveredBy": ["542"],
           "location": {
             "end": {
               "column": 50,
@@ -3918,12 +3679,8 @@
           "estimatedNetTime": 124,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "542"
-          ],
-          "coveredBy": [
-            "542"
-          ],
+          "killedBy": ["542"],
+          "coveredBy": ["542"],
           "location": {
             "end": {
               "column": 50,
@@ -3944,12 +3701,8 @@
           "estimatedNetTime": 124,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "542"
-          ],
-          "coveredBy": [
-            "542"
-          ],
+          "killedBy": ["542"],
+          "coveredBy": ["542"],
           "location": {
             "end": {
               "column": 50,
@@ -3970,12 +3723,8 @@
           "estimatedNetTime": 124,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "542"
-          ],
-          "coveredBy": [
-            "542"
-          ],
+          "killedBy": ["542"],
+          "coveredBy": ["542"],
           "location": {
             "end": {
               "column": 25,
@@ -3995,9 +3744,7 @@
           "estimatedNetTime": 124,
           "static": false,
           "testsCompleted": 1,
-          "coveredBy": [
-            "542"
-          ],
+          "coveredBy": ["542"],
           "location": {
             "end": {
               "column": 25,
@@ -4018,12 +3765,8 @@
           "estimatedNetTime": 124,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "542"
-          ],
-          "coveredBy": [
-            "542"
-          ],
+          "killedBy": ["542"],
+          "coveredBy": ["542"],
           "location": {
             "end": {
               "column": 25,
@@ -4044,12 +3787,8 @@
           "estimatedNetTime": 124,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "542"
-          ],
-          "coveredBy": [
-            "542"
-          ],
+          "killedBy": ["542"],
+          "coveredBy": ["542"],
           "location": {
             "end": {
               "column": 25,
@@ -4070,12 +3809,8 @@
           "estimatedNetTime": 124,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "542"
-          ],
-          "coveredBy": [
-            "542"
-          ],
+          "killedBy": ["542"],
+          "coveredBy": ["542"],
           "location": {
             "end": {
               "column": 50,
@@ -4096,12 +3831,8 @@
           "estimatedNetTime": 124,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "542"
-          ],
-          "coveredBy": [
-            "542"
-          ],
+          "killedBy": ["542"],
+          "coveredBy": ["542"],
           "location": {
             "end": {
               "column": 50,
@@ -4121,9 +3852,7 @@
           "estimatedNetTime": 124,
           "static": false,
           "testsCompleted": 1,
-          "coveredBy": [
-            "542"
-          ],
+          "coveredBy": ["542"],
           "location": {
             "end": {
               "column": 50,
@@ -4144,12 +3873,8 @@
           "estimatedNetTime": 124,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "542"
-          ],
-          "coveredBy": [
-            "542"
-          ],
+          "killedBy": ["542"],
+          "coveredBy": ["542"],
           "location": {
             "end": {
               "column": 50,
@@ -4170,12 +3895,8 @@
           "estimatedNetTime": 124,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "542"
-          ],
-          "coveredBy": [
-            "542"
-          ],
+          "killedBy": ["542"],
+          "coveredBy": ["542"],
           "location": {
             "end": {
               "column": 8,
@@ -4196,12 +3917,8 @@
           "estimatedNetTime": 124,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "542"
-          ],
-          "coveredBy": [
-            "542"
-          ],
+          "killedBy": ["542"],
+          "coveredBy": ["542"],
           "location": {
             "end": {
               "column": 52,
@@ -4221,9 +3938,7 @@
           "estimatedNetTime": 124,
           "static": false,
           "testsCompleted": 1,
-          "coveredBy": [
-            "542"
-          ],
+          "coveredBy": ["542"],
           "location": {
             "end": {
               "column": 51,
@@ -4244,12 +3959,8 @@
           "estimatedNetTime": 13,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "541"
-          ],
-          "coveredBy": [
-            "541"
-          ],
+          "killedBy": ["541"],
+          "coveredBy": ["541"],
           "location": {
             "end": {
               "column": 63,
@@ -4270,12 +3981,8 @@
           "estimatedNetTime": 13,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "541"
-          ],
-          "coveredBy": [
-            "541"
-          ],
+          "killedBy": ["541"],
+          "coveredBy": ["541"],
           "location": {
             "end": {
               "column": 63,
@@ -4296,12 +4003,8 @@
           "estimatedNetTime": 13,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "541"
-          ],
-          "coveredBy": [
-            "541"
-          ],
+          "killedBy": ["541"],
+          "coveredBy": ["541"],
           "location": {
             "end": {
               "column": 63,
@@ -4322,12 +4025,8 @@
           "estimatedNetTime": 13,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "541"
-          ],
-          "coveredBy": [
-            "541"
-          ],
+          "killedBy": ["541"],
+          "coveredBy": ["541"],
           "location": {
             "end": {
               "column": 63,
@@ -4348,12 +4047,8 @@
           "estimatedNetTime": 13,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "541"
-          ],
-          "coveredBy": [
-            "541"
-          ],
+          "killedBy": ["541"],
+          "coveredBy": ["541"],
           "location": {
             "end": {
               "column": 6,
@@ -4374,12 +4069,8 @@
           "estimatedNetTime": 13,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "541"
-          ],
-          "coveredBy": [
-            "541"
-          ],
+          "killedBy": ["541"],
+          "coveredBy": ["541"],
           "location": {
             "end": {
               "column": 81,
@@ -4399,9 +4090,7 @@
           "estimatedNetTime": 13,
           "static": false,
           "testsCompleted": 1,
-          "coveredBy": [
-            "541"
-          ],
+          "coveredBy": ["541"],
           "location": {
             "end": {
               "column": 33,
@@ -4947,9 +4636,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 1,
-          "killedBy": [
-            "711"
-          ],
+          "killedBy": ["711"],
           "location": {
             "end": {
               "column": 4,
@@ -4970,9 +4657,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 1,
-          "killedBy": [
-            "711"
-          ],
+          "killedBy": ["711"],
           "location": {
             "end": {
               "column": 6,
@@ -4993,9 +4678,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 1,
-          "killedBy": [
-            "711"
-          ],
+          "killedBy": ["711"],
           "location": {
             "end": {
               "column": 10,
@@ -5016,9 +4699,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 1,
-          "killedBy": [
-            "711"
-          ],
+          "killedBy": ["711"],
           "location": {
             "end": {
               "column": 8,
@@ -5058,12 +4739,8 @@
           "estimatedNetTime": 1204,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "711"
-          ],
-          "coveredBy": [
-            "711"
-          ],
+          "killedBy": ["711"],
+          "coveredBy": ["711"],
           "location": {
             "end": {
               "column": 4,
@@ -5103,12 +4780,8 @@
           "estimatedNetTime": 1204,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "711"
-          ],
-          "coveredBy": [
-            "711"
-          ],
+          "killedBy": ["711"],
+          "coveredBy": ["711"],
           "location": {
             "end": {
               "column": 83,
@@ -5128,9 +4801,7 @@
           "estimatedNetTime": 1204,
           "static": false,
           "testsCompleted": 1,
-          "coveredBy": [
-            "711"
-          ],
+          "coveredBy": ["711"],
           "location": {
             "end": {
               "column": 63,
@@ -5150,9 +4821,7 @@
           "estimatedNetTime": 1204,
           "static": false,
           "testsCompleted": 1,
-          "coveredBy": [
-            "711"
-          ],
+          "coveredBy": ["711"],
           "location": {
             "end": {
               "column": 63,
@@ -5172,9 +4841,7 @@
           "estimatedNetTime": 1204,
           "static": false,
           "testsCompleted": 1,
-          "coveredBy": [
-            "711"
-          ],
+          "coveredBy": ["711"],
           "location": {
             "end": {
               "column": 63,
@@ -5194,9 +4861,7 @@
           "estimatedNetTime": 1204,
           "static": false,
           "testsCompleted": 1,
-          "coveredBy": [
-            "711"
-          ],
+          "coveredBy": ["711"],
           "location": {
             "end": {
               "column": 63,
@@ -5217,12 +4882,8 @@
           "estimatedNetTime": 1204,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "711"
-          ],
-          "coveredBy": [
-            "711"
-          ],
+          "killedBy": ["711"],
+          "coveredBy": ["711"],
           "location": {
             "end": {
               "column": 6,
@@ -5242,9 +4903,7 @@
           "estimatedNetTime": 1204,
           "static": false,
           "testsCompleted": 1,
-          "coveredBy": [
-            "711"
-          ],
+          "coveredBy": ["711"],
           "location": {
             "end": {
               "column": 33,
@@ -5265,12 +4924,8 @@
           "estimatedNetTime": 1204,
           "static": false,
           "testsCompleted": 1,
-          "killedBy": [
-            "711"
-          ],
-          "coveredBy": [
-            "711"
-          ],
+          "killedBy": ["711"],
+          "coveredBy": ["711"],
           "location": {
             "end": {
               "column": 81,
@@ -5487,9 +5142,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 2,
-          "killedBy": [
-            "571"
-          ],
+          "killedBy": ["571"],
           "location": {
             "end": {
               "column": 4,
@@ -5510,9 +5163,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 2,
-          "killedBy": [
-            "571"
-          ],
+          "killedBy": ["571"],
           "location": {
             "end": {
               "column": 6,
@@ -5533,9 +5184,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 2,
-          "killedBy": [
-            "571"
-          ],
+          "killedBy": ["571"],
           "location": {
             "end": {
               "column": 8,
@@ -5556,9 +5205,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 2,
-          "killedBy": [
-            "571"
-          ],
+          "killedBy": ["571"],
           "location": {
             "end": {
               "column": 10,
@@ -5579,9 +5226,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 2,
-          "killedBy": [
-            "572"
-          ],
+          "killedBy": ["572"],
           "location": {
             "end": {
               "column": 8,
@@ -5602,9 +5247,7 @@
           "estimatedNetTime": 17044,
           "static": true,
           "testsCompleted": 2,
-          "killedBy": [
-            "572"
-          ],
+          "killedBy": ["572"],
           "location": {
             "end": {
               "column": 10,
@@ -5625,13 +5268,8 @@
           "estimatedNetTime": 92,
           "static": false,
           "testsCompleted": 2,
-          "killedBy": [
-            "571"
-          ],
-          "coveredBy": [
-            "571",
-            "572"
-          ],
+          "killedBy": ["571"],
+          "coveredBy": ["571", "572"],
           "location": {
             "end": {
               "column": 4,
@@ -5652,13 +5290,8 @@
           "estimatedNetTime": 92,
           "static": false,
           "testsCompleted": 2,
-          "killedBy": [
-            "571"
-          ],
-          "coveredBy": [
-            "571",
-            "572"
-          ],
+          "killedBy": ["571"],
+          "coveredBy": ["571", "572"],
           "location": {
             "end": {
               "column": 83,
@@ -5679,13 +5312,8 @@
           "estimatedNetTime": 92,
           "static": false,
           "testsCompleted": 2,
-          "killedBy": [
-            "572"
-          ],
-          "coveredBy": [
-            "571",
-            "572"
-          ],
+          "killedBy": ["572"],
+          "coveredBy": ["571", "572"],
           "location": {
             "end": {
               "column": 63,
@@ -5706,13 +5334,8 @@
           "estimatedNetTime": 92,
           "static": false,
           "testsCompleted": 2,
-          "killedBy": [
-            "572"
-          ],
-          "coveredBy": [
-            "571",
-            "572"
-          ],
+          "killedBy": ["572"],
+          "coveredBy": ["571", "572"],
           "location": {
             "end": {
               "column": 63,
@@ -5733,13 +5356,8 @@
           "estimatedNetTime": 92,
           "static": false,
           "testsCompleted": 2,
-          "killedBy": [
-            "572"
-          ],
-          "coveredBy": [
-            "571",
-            "572"
-          ],
+          "killedBy": ["572"],
+          "coveredBy": ["571", "572"],
           "location": {
             "end": {
               "column": 63,
@@ -5760,13 +5378,8 @@
           "estimatedNetTime": 92,
           "static": false,
           "testsCompleted": 2,
-          "killedBy": [
-            "571"
-          ],
-          "coveredBy": [
-            "571",
-            "572"
-          ],
+          "killedBy": ["571"],
+          "coveredBy": ["571", "572"],
           "location": {
             "end": {
               "column": 6,
@@ -5787,13 +5400,8 @@
           "estimatedNetTime": 92,
           "static": false,
           "testsCompleted": 2,
-          "killedBy": [
-            "572"
-          ],
-          "coveredBy": [
-            "571",
-            "572"
-          ],
+          "killedBy": ["572"],
+          "coveredBy": ["571", "572"],
           "location": {
             "end": {
               "column": 63,
@@ -5814,13 +5422,8 @@
           "estimatedNetTime": 92,
           "static": false,
           "testsCompleted": 2,
-          "killedBy": [
-            "571"
-          ],
-          "coveredBy": [
-            "571",
-            "572"
-          ],
+          "killedBy": ["571"],
+          "coveredBy": ["571", "572"],
           "location": {
             "end": {
               "column": 76,
@@ -5840,10 +5443,7 @@
           "estimatedNetTime": 92,
           "static": false,
           "testsCompleted": 2,
-          "coveredBy": [
-            "571",
-            "572"
-          ],
+          "coveredBy": ["571", "572"],
           "location": {
             "end": {
               "column": 33,
@@ -13756,21 +13356,12 @@
   "config": {
     "$schema": "../../../packages/core/schema/stryker-schema.json",
     "packageManager": "yarn",
-    "reporters": [
-      "html",
-      "clear-text",
-      "progress",
-      "json"
-    ],
+    "reporters": ["html", "clear-text", "progress", "json"],
     "concurrency": 4,
     "jest": {
       "config": {
-        "testMatch": [
-          "**/lighthouse-core/test/audits/**/*-test.js"
-        ],
-        "setupFilesAfterEnv": [
-          "./lighthouse-core/test/test-utils.js"
-        ],
+        "testMatch": ["**/lighthouse-core/test/audits/**/*-test.js"],
+        "setupFilesAfterEnv": ["./lighthouse-core/test/test-utils.js"],
         "testEnvironment": "node",
         "transform": {},
         "collectCoverage": false
@@ -13779,9 +13370,7 @@
       "enableFindRelatedTests": true,
       "enableBail": true
     },
-    "mutate": [
-      "lighthouse-core/audits/metrics/**/*.js"
-    ],
+    "mutate": ["lighthouse-core/audits/metrics/**/*.js"],
     "testRunner": "jest",
     "coverageAnalysis": "perTest",
     "allowConsoleColors": true,
@@ -13810,10 +13399,7 @@
       "plugins": null,
       "excludedMutations": []
     },
-    "plugins": [
-      "/home/nicojs/github/stryker-js/packages/jest-runner/",
-      "/home/nicojs/github/stryker-js/packages/core/dist/src/reporters/index.js"
-    ],
+    "plugins": ["/home/nicojs/github/stryker-js/packages/jest-runner/", "/home/nicojs/github/stryker-js/packages/core/dist/src/reporters/index.js"],
     "appendPlugins": [],
     "jsonReporter": {
       "fileName": "reports/mutation/mutation.json"

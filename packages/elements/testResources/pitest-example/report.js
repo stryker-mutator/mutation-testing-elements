@@ -13,14 +13,14 @@ document.querySelector('mutation-test-report-app').report = {
           mutatorName: 'NegateConditionalsMutator',
           description: 'negated conditional',
           location: { start: { line: 20, column: 1 }, end: { line: 20, column: 27 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 18,
           mutatorName: 'VoidMethodCallMutator',
           description: 'removed call to org/pitest/elements/models/MutationTestSummaryData::addTestSummary',
           location: { start: { line: 23, column: 1 }, end: { line: 23, column: 36 } },
-          status: 'Survived'
+          status: 'Survived',
         },
         {
           id: 19,
@@ -28,16 +28,16 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/models/PackageSummaryData::getSummaryData to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 28, column: 1 }, end: { line: 28, column: 64 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 20,
           mutatorName: 'ReturnValsMutator',
           description: 'replaced return of integer sized value with (x == 0 ? 1 : 0)',
           location: { start: { line: 33, column: 1 }, end: { line: 33, column: 56 } },
-          status: 'Killed'
-        }
-      ]
+          status: 'Killed',
+        },
+      ],
     },
     'org/pitest/elements/MutationTestingElementsReportFactory.java': {
       source:
@@ -50,7 +50,7 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/MutationTestingElementsReportFactory::getListener to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 29, column: 1 }, end: { line: 29, column: 57 } },
-          status: 'NoCoverage'
+          status: 'NoCoverage',
         },
         {
           id: 1,
@@ -58,7 +58,7 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/MutationTestingElementsReportFactory::name to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 35, column: 1 }, end: { line: 35, column: 19 } },
-          status: 'NoCoverage'
+          status: 'NoCoverage',
         },
         {
           id: 2,
@@ -66,9 +66,9 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/MutationTestingElementsReportFactory::description to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 40, column: 1 }, end: { line: 40, column: 58 } },
-          status: 'NoCoverage'
-        }
-      ]
+          status: 'NoCoverage',
+        },
+      ],
     },
     'org/pitest/elements/utils/InputStreamLineIterable.java': {
       source:
@@ -80,14 +80,14 @@ document.querySelector('mutation-test-report-app').report = {
           mutatorName: 'VoidMethodCallMutator',
           description: 'removed call to org/pitest/elements/utils/InputStreamLineIterable::advance',
           location: { start: { line: 15, column: 1 }, end: { line: 15, column: 14 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 57,
           mutatorName: 'VoidMethodCallMutator',
           description: 'removed call to org/pitest/elements/utils/InputStreamLineIterable::advance',
           location: { start: { line: 28, column: 1 }, end: { line: 28, column: 14 } },
-          status: 'RuntimeError'
+          status: 'RuntimeError',
         },
         {
           id: 58,
@@ -95,7 +95,7 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/utils/InputStreamLineIterable::next to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 29, column: 1 }, end: { line: 29, column: 13 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 59,
@@ -103,21 +103,21 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/utils/InputStreamLineIterable::iterator to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 34, column: 1 }, end: { line: 34, column: 35 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 60,
           mutatorName: 'NegateConditionalsMutator',
           description: 'negated conditional',
           location: { start: { line: 38, column: 1 }, end: { line: 38, column: 57 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 61,
           mutatorName: 'ReturnValsMutator',
           description: 'replaced return of integer sized value with (x == 0 ? 1 : 0)',
           location: { start: { line: 38, column: 1 }, end: { line: 38, column: 57 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 62,
@@ -125,9 +125,9 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/utils/InputStreamLineIterable$1::next to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 43, column: 1 }, end: { line: 43, column: 51 } },
-          status: 'Killed'
-        }
-      ]
+          status: 'Killed',
+        },
+      ],
     },
     'org/pitest/elements/utils/MutationIdCounter.java': {
       source:
@@ -139,16 +139,16 @@ document.querySelector('mutation-test-report-app').report = {
           mutatorName: 'MathMutator',
           description: 'Replaced integer addition with subtraction',
           location: { start: { line: 7, column: 1 }, end: { line: 7, column: 21 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 64,
           mutatorName: 'ReturnValsMutator',
           description: 'replaced return of integer sized value with (x == 0 ? 1 : 0)',
           location: { start: { line: 7, column: 1 }, end: { line: 7, column: 21 } },
-          status: 'Killed'
-        }
-      ]
+          status: 'Killed',
+        },
+      ],
     },
     'org/pitest/elements/models/json/JsonFile.java': {
       source:
@@ -160,16 +160,16 @@ document.querySelector('mutation-test-report-app').report = {
           mutatorName: 'VoidMethodCallMutator',
           description: 'removed call to java/util/Collection::forEach',
           location: { start: { line: 13, column: 1 }, end: { line: 13, column: 37 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 38,
           mutatorName: 'NegateConditionalsMutator',
           description: 'negated conditional',
           location: { start: { line: 21, column: 1 }, end: { line: 21, column: 32 } },
-          status: 'Killed'
-        }
-      ]
+          status: 'Killed',
+        },
+      ],
     },
     'org/pitest/elements/utils/JsonParser.java': {
       source:
@@ -181,21 +181,21 @@ document.querySelector('mutation-test-report-app').report = {
           mutatorName: 'VoidMethodCallMutator',
           description: 'removed call to org/pitest/elements/utils/MutationIdCounter::reset',
           location: { start: { line: 32, column: 1 }, end: { line: 32, column: 30 } },
-          status: 'Survived'
+          status: 'Survived',
         },
         {
           id: 66,
           mutatorName: 'VoidMethodCallMutator',
           description: 'removed call to java/util/Collections::sort',
           location: { start: { line: 36, column: 1 }, end: { line: 36, column: 40 } },
-          status: 'Survived'
+          status: 'Survived',
         },
         {
           id: 67,
           mutatorName: 'VoidMethodCallMutator',
           description: 'removed call to org/pitest/elements/utils/JsonParser::addToJsonFiles',
           location: { start: { line: 40, column: 1 }, end: { line: 40, column: 58 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 68,
@@ -203,35 +203,35 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/utils/JsonParser::toJson to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 44, column: 1 }, end: { line: 44, column: 49 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 69,
           mutatorName: 'NegateConditionalsMutator',
           description: 'negated conditional',
           location: { start: { line: 55, column: 1 }, end: { line: 55, column: 51 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 70,
           mutatorName: 'VoidMethodCallMutator',
           description: 'removed call to org/pitest/elements/models/json/JsonFile::addSource',
           location: { start: { line: 61, column: 1 }, end: { line: 61, column: 51 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 71,
           mutatorName: 'VoidMethodCallMutator',
           description: 'removed call to org/pitest/elements/models/json/JsonFile::addMutants',
           location: { start: { line: 62, column: 1 }, end: { line: 62, column: 59 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 72,
           mutatorName: 'NegateConditionalsMutator',
           description: 'negated conditional',
           location: { start: { line: 68, column: 1 }, end: { line: 68, column: 26 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 73,
@@ -239,14 +239,14 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/utils/JsonParser::getMutantsFromLines to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 81, column: 1 }, end: { line: 81, column: 23 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 74,
           mutatorName: 'NegateConditionalsMutator',
           description: 'negated conditional',
           location: { start: { line: 85, column: 1 }, end: { line: 85, column: 26 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 75,
@@ -254,7 +254,7 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/utils/JsonParser::getSourceFromLines to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 86, column: 1 }, end: { line: 86, column: 19 } },
-          status: 'NoCoverage'
+          status: 'NoCoverage',
         },
         {
           id: 76,
@@ -262,14 +262,14 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/utils/JsonParser::getSourceFromLines to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 93, column: 1 }, end: { line: 93, column: 30 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 77,
           mutatorName: 'NegateConditionalsMutator',
           description: 'negated conditional',
           location: { start: { line: 101, column: 1 }, end: { line: 101, column: 29 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 78,
@@ -277,7 +277,7 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/utils/JsonParser::getLines to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 103, column: 1 }, end: { line: 103, column: 47 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 79,
@@ -285,14 +285,14 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/utils/JsonParser::getLines to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 105, column: 1 }, end: { line: 105, column: 35 } },
-          status: 'NoCoverage'
+          status: 'NoCoverage',
         },
         {
           id: 80,
           mutatorName: 'NegateConditionalsMutator',
           description: 'negated conditional',
           location: { start: { line: 113, column: 1 }, end: { line: 113, column: 28 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 81,
@@ -300,7 +300,7 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/utils/JsonParser::findReaderForSource to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 114, column: 1 }, end: { line: 114, column: 21 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 82,
@@ -308,7 +308,7 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/utils/JsonParser::findReaderForSource to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 116, column: 1 }, end: { line: 116, column: 28 } },
-          status: 'NoCoverage'
+          status: 'NoCoverage',
         },
         {
           id: 83,
@@ -316,7 +316,7 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/utils/JsonParser::classInfoToNames to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 121, column: 1 }, end: { line: 121, column: 67 } },
-          status: 'Survived'
+          status: 'Survived',
         },
         {
           id: 84,
@@ -324,14 +324,14 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/utils/JsonParser::lambda$classInfoToNames$0 to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 121, column: 1 }, end: { line: 121, column: 67 } },
-          status: 'Survived'
+          status: 'Survived',
         },
         {
           id: 85,
           mutatorName: 'MathMutator',
           description: 'Replaced integer addition with subtraction',
           location: { start: { line: 129, column: 1 }, end: { line: 129, column: 57 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 86,
@@ -339,9 +339,9 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/utils/JsonParser::mapToJsonMutant to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 133, column: 1 }, end: { line: 133, column: 64 } },
-          status: 'Killed'
-        }
-      ]
+          status: 'Killed',
+        },
+      ],
     },
     'org/pitest/elements/models/json/JsonMutantStatus.java': {
       source:
@@ -354,7 +354,7 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/models/json/JsonMutantStatus::fromPitestStatus to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 12, column: 1 }, end: { line: 12, column: 37 } },
-          status: 'NoCoverage'
+          status: 'NoCoverage',
         },
         {
           id: 40,
@@ -362,7 +362,7 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/models/json/JsonMutantStatus::fromPitestStatus to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 14, column: 1 }, end: { line: 14, column: 43 } },
-          status: 'NoCoverage'
+          status: 'NoCoverage',
         },
         {
           id: 41,
@@ -370,7 +370,7 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/models/json/JsonMutantStatus::fromPitestStatus to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 16, column: 1 }, end: { line: 16, column: 41 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 42,
@@ -378,7 +378,7 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/models/json/JsonMutantStatus::fromPitestStatus to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 18, column: 1 }, end: { line: 18, column: 43 } },
-          status: 'NoCoverage'
+          status: 'NoCoverage',
         },
         {
           id: 43,
@@ -386,7 +386,7 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/models/json/JsonMutantStatus::fromPitestStatus to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 20, column: 1 }, end: { line: 20, column: 39 } },
-          status: 'NoCoverage'
+          status: 'NoCoverage',
         },
         {
           id: 44,
@@ -394,7 +394,7 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/models/json/JsonMutantStatus::fromPitestStatus to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 22, column: 1 }, end: { line: 22, column: 38 } },
-          status: 'NoCoverage'
+          status: 'NoCoverage',
         },
         {
           id: 45,
@@ -402,9 +402,9 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/models/json/JsonMutantStatus::fromPitestStatus to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 28, column: 1 }, end: { line: 28, column: 43 } },
-          status: 'NoCoverage'
-        }
-      ]
+          status: 'NoCoverage',
+        },
+      ],
     },
     'org/pitest/elements/models/PackageSummaryMap.java': {
       source:
@@ -416,7 +416,7 @@ document.querySelector('mutation-test-report-app').report = {
           mutatorName: 'NegateConditionalsMutator',
           description: 'negated conditional',
           location: { start: { line: 10, column: 1 }, end: { line: 10, column: 59 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 31,
@@ -424,7 +424,7 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/models/PackageSummaryMap::getPackageSummaryData to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 11, column: 1 }, end: { line: 11, column: 54 } },
-          status: 'NoCoverage'
+          status: 'NoCoverage',
         },
         {
           id: 32,
@@ -432,14 +432,14 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/models/PackageSummaryMap::getPackageSummaryData to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 15, column: 1 }, end: { line: 15, column: 20 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 33,
           mutatorName: 'VoidMethodCallMutator',
           description: 'removed call to org/pitest/elements/models/PackageSummaryData::addSummaryData',
           location: { start: { line: 22, column: 1 }, end: { line: 22, column: 29 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 34,
@@ -447,9 +447,9 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/models/PackageSummaryMap::valuesList to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 26, column: 1 }, end: { line: 26, column: 61 } },
-          status: 'Killed'
-        }
-      ]
+          status: 'Killed',
+        },
+      ],
     },
     'org/pitest/elements/models/Line.java': {
       source:
@@ -461,7 +461,7 @@ document.querySelector('mutation-test-report-app').report = {
           mutatorName: 'ReturnValsMutator',
           description: 'replaced return of long value with value + 1 for org/pitest/elements/models/Line::getNumber',
           location: { start: { line: 33, column: 1 }, end: { line: 33, column: 23 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 22,
@@ -469,7 +469,7 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/models/Line::getText to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 37, column: 1 }, end: { line: 37, column: 21 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 23,
@@ -477,9 +477,9 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/models/Line::getMutations to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 41, column: 1 }, end: { line: 41, column: 26 } },
-          status: 'Killed'
-        }
-      ]
+          status: 'Killed',
+        },
+      ],
     },
     'org/pitest/elements/utils/MutationTestSummaryDataFileNameComparator.java': {
       source:
@@ -491,9 +491,9 @@ document.querySelector('mutation-test-report-app').report = {
           mutatorName: 'ReturnValsMutator',
           description: 'replaced return of integer sized value with (x == 0 ? 1 : 0)',
           location: { start: { line: 16, column: 1 }, end: { line: 16, column: 60 } },
-          status: 'Killed'
-        }
-      ]
+          status: 'Killed',
+        },
+      ],
     },
     'org/pitest/elements/MutationReportListener.java': {
       source:
@@ -506,7 +506,7 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/MutationReportListener::loadHtml to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 51, column: 1 }, end: { line: 51, column: 70 } },
-          status: 'Survived'
+          status: 'Survived',
         },
         {
           id: 4,
@@ -514,49 +514,49 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/MutationReportListener::loadHtml to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 55, column: 1 }, end: { line: 55, column: 14 } },
-          status: 'NoCoverage'
+          status: 'NoCoverage',
         },
         {
           id: 5,
           mutatorName: 'VoidMethodCallMutator',
           description: 'removed call to java/io/Writer::write',
           location: { start: { line: 63, column: 1 }, end: { line: 63, column: 28 } },
-          status: 'Survived'
+          status: 'Survived',
         },
         {
           id: 6,
           mutatorName: 'VoidMethodCallMutator',
           description: 'removed call to java/io/Writer::close',
           location: { start: { line: 64, column: 1 }, end: { line: 64, column: 21 } },
-          status: 'Survived'
+          status: 'Survived',
         },
         {
           id: 7,
           mutatorName: 'VoidMethodCallMutator',
           description: 'removed call to java/io/IOException::printStackTrace',
           location: { start: { line: 66, column: 1 }, end: { line: 66, column: 26 } },
-          status: 'NoCoverage'
+          status: 'NoCoverage',
         },
         {
           id: 8,
           mutatorName: 'VoidMethodCallMutator',
           description: 'removed call to java/io/Writer::write',
           location: { start: { line: 76, column: 1 }, end: { line: 76, column: 28 } },
-          status: 'Survived'
+          status: 'Survived',
         },
         {
           id: 9,
           mutatorName: 'VoidMethodCallMutator',
           description: 'removed call to java/io/Writer::close',
           location: { start: { line: 77, column: 1 }, end: { line: 77, column: 21 } },
-          status: 'Survived'
+          status: 'Survived',
         },
         {
           id: 10,
           mutatorName: 'VoidMethodCallMutator',
           description: 'removed call to java/io/IOException::printStackTrace',
           location: { start: { line: 79, column: 1 }, end: { line: 79, column: 26 } },
-          status: 'NoCoverage'
+          status: 'NoCoverage',
         },
         {
           id: 11,
@@ -564,44 +564,44 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/MutationReportListener::createSummaryData to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 85, column: 1 }, end: { line: 85, column: 58 } },
-          status: 'NoCoverage'
+          status: 'NoCoverage',
         },
         {
           id: 12,
           mutatorName: 'VoidMethodCallMutator',
           description: 'removed call to org/pitest/elements/models/PackageSummaryMap::update',
           location: { start: { line: 93, column: 1 }, end: { line: 93, column: 47 } },
-          status: 'NoCoverage'
+          status: 'NoCoverage',
         },
         {
           id: 13,
           mutatorName: 'VoidMethodCallMutator',
           description: 'removed call to org/pitest/elements/MutationReportListener::updatePackageSummary',
           location: { start: { line: 104, column: 1 }, end: { line: 104, column: 35 } },
-          status: 'NoCoverage'
+          status: 'NoCoverage',
         },
         {
           id: 14,
           mutatorName: 'VoidMethodCallMutator',
           description: 'removed call to org/pitest/elements/MutationReportListener::createHtml',
           location: { start: { line: 111, column: 1 }, end: { line: 111, column: 19 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 15,
           mutatorName: 'VoidMethodCallMutator',
           description: 'removed call to org/pitest/elements/MutationReportListener::createJs',
           location: { start: { line: 112, column: 1 }, end: { line: 112, column: 21 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 16,
           mutatorName: 'VoidMethodCallMutator',
           description: 'removed call to java/io/IOException::printStackTrace',
           location: { start: { line: 114, column: 1 }, end: { line: 114, column: 26 } },
-          status: 'NoCoverage'
-        }
-      ]
+          status: 'NoCoverage',
+        },
+      ],
     },
     'org/pitest/elements/models/MutationTestSummaryData.java': {
       source:
@@ -613,14 +613,14 @@ document.querySelector('mutation-test-report-app').report = {
           mutatorName: 'ConditionalsBoundaryMutator',
           description: 'changed conditional boundary',
           location: { start: { line: 43, column: 1 }, end: { line: 43, column: 75 } },
-          status: 'Survived'
+          status: 'Survived',
         },
         {
           id: 25,
           mutatorName: 'NegateConditionalsMutator',
           description: 'negated conditional',
           location: { start: { line: 43, column: 1 }, end: { line: 43, column: 75 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 26,
@@ -628,7 +628,7 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/models/MutationTestSummaryData::getPackageName to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 43, column: 1 }, end: { line: 43, column: 75 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 27,
@@ -636,7 +636,7 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/models/MutationTestSummaryData::getFileName to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 52, column: 1 }, end: { line: 52, column: 25 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 28,
@@ -644,7 +644,7 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/models/MutationTestSummaryData::getResults to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 56, column: 1 }, end: { line: 56, column: 26 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 29,
@@ -652,9 +652,9 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/models/MutationTestSummaryData::getClasses to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 60, column: 1 }, end: { line: 60, column: 24 } },
-          status: 'Killed'
-        }
-      ]
+          status: 'Killed',
+        },
+      ],
     },
     'org/pitest/elements/models/json/JsonLocation.java': {
       source:
@@ -667,7 +667,7 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/models/json/JsonLocation::ofLine to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 17, column: 1 }, end: { line: 17, column: 40 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 36,
@@ -675,9 +675,9 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/models/json/JsonLocation::empty to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 21, column: 1 }, end: { line: 21, column: 78 } },
-          status: 'NoCoverage'
-        }
-      ]
+          status: 'NoCoverage',
+        },
+      ],
     },
     'org/pitest/elements/utils/LineFactory.java': {
       source:
@@ -690,14 +690,14 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/utils/LineFactory::convert to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 40, column: 1 }, end: { line: 40, column: 61 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 48,
           mutatorName: 'VoidMethodCallMutator',
           description: 'removed call to java/io/Reader::close',
           location: { start: { line: 42, column: 1 }, end: { line: 42, column: 21 } },
-          status: 'Survived'
+          status: 'Survived',
         },
         {
           id: 49,
@@ -705,14 +705,14 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/utils/LineFactory::stringToAnnotatedLine to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 47, column: 1 }, end: { line: 47, column: 41 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 50,
           mutatorName: 'MathMutator',
           description: 'Replaced integer addition with subtraction',
           location: { start: { line: 54, column: 1 }, end: { line: 54, column: 26 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 51,
@@ -720,7 +720,7 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/utils/LineFactory$1::apply to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 55, column: 1 }, end: { line: 55, column: 17 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 52,
@@ -728,7 +728,7 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/utils/LineFactory::getMutationsForLine to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 61, column: 1 }, end: { line: 61, column: 69 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 53,
@@ -736,23 +736,23 @@ document.querySelector('mutation-test-report-app').report = {
           description:
             'mutated return of Object value for org/pitest/elements/utils/LineFactory::isAtLineNumber to ( if (x != null) null else throw new RuntimeException )',
           location: { start: { line: 66, column: 1 }, end: { line: 66, column: 71 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 54,
           mutatorName: 'NegateConditionalsMutator',
           description: 'negated conditional',
           location: { start: { line: 66, column: 1 }, end: { line: 66, column: 71 } },
-          status: 'Killed'
+          status: 'Killed',
         },
         {
           id: 55,
           mutatorName: 'ReturnValsMutator',
           description: 'replaced return of integer sized value with (x == 0 ? 1 : 0)',
           location: { start: { line: 66, column: 1 }, end: { line: 66, column: 71 } },
-          status: 'Killed'
-        }
-      ]
-    }
-  }
+          status: 'Killed',
+        },
+      ],
+    },
+  },
 };

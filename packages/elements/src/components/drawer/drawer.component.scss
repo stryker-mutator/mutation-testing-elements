@@ -5,7 +5,7 @@
   bottom: 0;
   left: 0;
   position: fixed;
-  transition: height 0.2s cubic-bezier(.4,0,.2,1);
+  transition: height 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
   background-color: var(--bs-card-cap-bg);
   z-index: 3;

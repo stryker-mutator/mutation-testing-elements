@@ -1,13 +1,11 @@
 {
   "require": [
-     "ts-node/register",
-     "chromedriver",
-     "./test/integration/setup/setup-browser.ts",
-     "./test/integration/setup/setup-chai.ts",
-     "./test/integration/setup/setup-server.ts"
+    "ts-node/register",
+    "chromedriver",
+    "./test/integration/setup/setup-browser.ts",
+    "./test/integration/setup/setup-chai.ts",
+    "./test/integration/setup/setup-server.ts"
   ],
   "timeout": 60000,
-  "spec": [
-    "test/integration/**/*.it.spec.ts"
-  ]
+  "spec": ["test/integration/**/*.it.spec.ts"]
 }
