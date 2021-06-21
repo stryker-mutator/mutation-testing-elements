@@ -51,4 +51,3 @@ Below you will find a graph of the component tree of a mutation testing elements
                           │ mte-drawer │
                           └────────────┘
 ```
-

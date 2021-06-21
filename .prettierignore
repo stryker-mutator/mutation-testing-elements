@@ -3,3 +3,13 @@ package.json
 package-lock.json
 # Handled by lerna
 lerna.json
+CHANGELOG.md
+
+# Other generated files
+dist
+dist-test
+src-generated
+.stryker-tmp
+reports
+target/
+packages/metrics-scala/README.md

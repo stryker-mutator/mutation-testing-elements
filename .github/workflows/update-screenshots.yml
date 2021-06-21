@@ -1,5 +1,5 @@
 name: Update screenshots
-on: 
+on:
   workflow_dispatch:
 jobs:
   update:
