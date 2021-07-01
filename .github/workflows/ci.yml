@@ -28,6 +28,7 @@ jobs:
         uses: actions/setup-node@v2.2.0
         with:
           node-version: ${{ matrix.node-version }}
+          cache: 'npm'
       - run: npm ci
       - name: Lint & Build & Test
         run: npm run all
