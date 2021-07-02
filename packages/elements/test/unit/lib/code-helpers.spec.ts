@@ -129,6 +129,7 @@ describe(determineLanguage.name, () => {
       ['scala', ProgrammingLanguage.scala],
       ['php', ProgrammingLanguage.php],
       ['vue', ProgrammingLanguage.vue],
+      ['feature', ProgrammingLanguage.gherkin],
     ] as const
   ).forEach(([extension, expected]) => {
     it(`should recognize file.${extension} as language ${expected}`, () => {
