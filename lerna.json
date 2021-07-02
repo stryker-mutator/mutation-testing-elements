@@ -5,7 +5,10 @@
   "version": "1.7.3",
   "command": {
     "version": {
-      "allowBranch": "master"
+      "allowBranch": "master",
+      "conventionalCommits": true,
+      "createRelease": "github",
+      "exact": true
     },
     "publish": {
       "preDistTag": "beta"

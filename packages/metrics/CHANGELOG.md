@@ -3,11 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.3](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.2...v1.7.3) (2021-07-02)
+
+### Features
+
+* **cucumber:** add gherkin file type ([#1224](https://github.com/stryker-mutator/mutation-testing-elements/pull/1224)) ([9a7fcfd](https://github.com/stryker-mutator/mutation-testing-elements/commit/9a7fcfd1313fcb94081a8311adb8a47eaf431ae2)
+
+
+
 ## [1.7.2](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.1...v1.7.2) (2021-05-03)
 
 **Note:** Version bump only for package mutation-testing-metrics
-
-
 
 
 

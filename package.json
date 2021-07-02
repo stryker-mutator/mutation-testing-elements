@@ -17,9 +17,9 @@
     "test": "lerna run test --stream",
     "start": "webpack-dev-server --open",
     "start:tsc": "tsc --build --watch",
-    "lerna:version:patch": "lerna version --conventional-commits patch",
-    "lerna:version:minor": "lerna version --conventional-commits minor",
-    "lerna:version:major": "lerna version --conventional-commits major",
+    "lerna:version:patch": "lerna version patch",
+    "lerna:version:minor": "lerna version minor",
+    "lerna:version:major": "lerna version major",
     "lerna:publish": "lerna publish from-git --yes"
   },
   "repository": {
