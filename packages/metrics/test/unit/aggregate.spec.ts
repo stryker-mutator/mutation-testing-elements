@@ -3,7 +3,7 @@ import { MutationTestResult } from 'mutation-testing-report-schema/api';
 import { aggregateResultsByModule } from '../../src';
 import { createFileResult, createMutationTestResult, createTestFile } from '../helpers/factories';
 
-describe.only(aggregateResultsByModule.name, () => {
+describe(aggregateResultsByModule.name, () => {
   it('should result in an empty report when an empty object is provided', () => {
     const expectedReport: MutationTestResult = {
       files: {},
