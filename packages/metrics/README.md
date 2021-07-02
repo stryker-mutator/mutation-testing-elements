@@ -26,6 +26,10 @@ console.log('Mutation score', result.metrics.mutationScore);
 
 ## API Reference
 
+### `calculateMutationTestMetrics` [`(MutationTestResult) => MutationTestMetricsResult`]
+
+Calculates the metrics for a MutatioNTest
+
 ### `calculateMetrics` [`(MutationTestResult) => MetricsResult`]
 
 Calculates the metrics for a MutationTestResult. This result must be valid according to the [https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/report-schema#readme].
