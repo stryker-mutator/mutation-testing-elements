@@ -2,8 +2,8 @@ import { MutationTestResult, TestFileDefinitionDictionary } from 'mutation-testi
 import { determineCommonBasePath, isNotNullish, normalizeFileNames } from './helpers';
 
 /**
- * Merges multiple reports together into a single report, grouped by module.
- * Does best guesses regarding `system`, `framework` and `projectRoot`
+ * Aggregates multiple reports together into a single report, grouped by module.
+ *
  * @param resultsByModule The MutationTestResult objects by module name
  * @returns An aggregated result of all provided reports.
  */
