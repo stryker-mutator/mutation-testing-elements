@@ -24,7 +24,7 @@ function normalizeName(fileName: string) {
   return fileName.split(/\/|\\/).filter(Boolean).join('/');
 }
 
-function determineCommonBasePath(fileNames: ReadonlyArray<string>): string {
+export function determineCommonBasePath(fileNames: ReadonlyArray<string>): string {
   const directories = fileNames.map((fileName) => fileName.split(/\/|\\/).slice(0, -1));
   if (fileNames.length) {
     return directories.reduce(filterDirectories).join(SEPARATOR);
