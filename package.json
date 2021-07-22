@@ -39,7 +39,7 @@
     "@stryker-mutator/typescript-checker": "^4.1.0",
     "@types/chai": "^4.1.7",
     "@types/express": "^4.17.0",
-    "@types/mocha": "^8.0.0",
+    "@types/mocha": "^9.0.0",
     "@types/node": "^16.0.1",
     "@types/resemblejs": "^3.2.0",
     "@types/selenium-webdriver": "^4.0.11",
