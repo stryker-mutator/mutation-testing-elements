@@ -42,6 +42,10 @@ export class Drawer extends PageObject {
     return this.header.getText();
   }
 
+  public summaryText() {
+    return this.$('[slot="summary"]').getText();
+  }
+
   public whenOpen() {
     return this.browser.wait(() => this.isOpen(), DEFAULT_TIMEOUT);
   }

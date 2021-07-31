@@ -960,6 +960,7 @@
           "mutatorName": "ConditionalExpression",
           "replacement": "false",
           "status": "Survived",
+          "statusReason": "Survived despite covered by 3 tests",
           "testsCompleted": 3,
           "static": false,
           "coveredBy": ["1", "2", "3"]
@@ -979,7 +980,6 @@
           "mutatorName": "EqualityOperator",
           "replacement": "defaultValue !== undefined",
           "status": "Killed",
-          "description": "Killed by: deepMerge should deep merge overrides into the target object",
           "testsCompleted": 2,
           "static": false,
           "coveredBy": ["1", "2", "3"],
