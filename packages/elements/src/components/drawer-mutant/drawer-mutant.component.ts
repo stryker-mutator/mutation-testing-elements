@@ -42,19 +42,17 @@ export class MutationTestReportDrawerMutant extends LitElement {
             ${this.mutant.killedByTests.length > 1 ? html`(and ${this.mutant.killedByTests.length - 1} more)` : undefined}</h6
           >`
         : undefined}
-      ${renderIf(
-        this.mutant?.static || this.mutant?.coveredByTests || this.mutant?.statusReason,
-        html`<h6 class="pe-4">
-          ${this.mutant?.static && html`🗿 Static mutant`} ${renderIfPresent(this.mutant?.statusReason, (reason) => html`🕵️ ${reason}`)}
-          ${renderIfPresent(
-            this.mutant?.coveredByTests,
-            (coveredTests) =>
-              html`☂️ Covered by ${coveredTests.length} test${plural(coveredTests)}
-              ${renderIf(this.mutant?.status === MutantStatus.Survived, '(yet still survived)')}`
-          )}
-        </h6>`
+      ${renderIf(this.mutant?.static, html`<h6 class="pe-4">🗿 Static mutant</h6>`)}
+      ${renderIfPresent(
+        this.mutant?.coveredByTests,
+        (coveredTests) =>
+          html`<h6 class="pe-4"
+            >☂️ Covered by ${coveredTests.length} test${plural(coveredTests)}
+            ${renderIf(this.mutant?.status === MutantStatus.Survived, '(yet still survived)')}</h6
+          >`
       )}
-      ${renderIfPresent(this.mutant?.description, (description) => html`<h6>📖 ${description}</h6>`)}
+      ${renderIfPresent(this.mutant?.statusReason, (reason) => html`<h6 class="pe-4">🕵️ ${reason}</h6>`)}
+      ${renderIfPresent(this.mutant?.description, (description) => html`<h6 class="pe-4">📖 ${description}</h6>`)}
     </div>`;
   }
 
