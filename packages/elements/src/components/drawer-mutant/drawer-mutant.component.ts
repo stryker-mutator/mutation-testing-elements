@@ -51,7 +51,10 @@ export class MutationTestReportDrawerMutant extends LitElement {
             ${renderIf(this.mutant?.status === MutantStatus.Survived, '(yet still survived)')}</h6
           >`
       )}
-      ${renderIfPresent(this.mutant?.statusReason, (reason) => html`<h6 class="pe-4">🕵️ ${reason}</h6>`)}
+      ${renderIfPresent(
+        this.mutant?.statusReason,
+        (reason) => html`<h6 class="pe-4" title="Reason for the ${this.mutant!.status} status">🕵️ ${reason}</h6>`
+      )}
       ${renderIfPresent(this.mutant?.description, (description) => html`<h6 class="pe-4">📖 ${description}</h6>`)}
     </div>`;
   }
