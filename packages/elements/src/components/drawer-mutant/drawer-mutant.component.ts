@@ -43,16 +43,15 @@ export class MutationTestReportDrawerMutant extends LitElement {
           >`
         : undefined}
       ${renderIf(
-        this.mutant?.static || this.mutant?.coveredByTests,
+        this.mutant?.static || this.mutant?.coveredByTests || this.mutant?.statusReason,
         html`<h6 class="pe-4">
-          ${this.mutant?.static
-            ? html`🗿 Static mutant`
-            : renderIfPresent(
-                this.mutant?.coveredByTests,
-                (coveredTests) =>
-                  html`☂️ Covered by ${coveredTests.length} test${plural(coveredTests)}
-                  ${renderIf(this.mutant?.status === MutantStatus.Survived, '(yet still survived)')}`
-              )}
+          ${this.mutant?.static && html`🗿 Static mutant`} ${renderIfPresent(this.mutant?.statusReason, (reason) => html`🕵️ ${reason}`)}
+          ${renderIfPresent(
+            this.mutant?.coveredByTests,
+            (coveredTests) =>
+              html`☂️ Covered by ${coveredTests.length} test${plural(coveredTests)}
+              ${renderIf(this.mutant?.status === MutantStatus.Survived, '(yet still survived)')}`
+          )}
         </h6>`
       )}
       ${renderIfPresent(this.mutant?.description, (description) => html`<h6>📖 ${description}</h6>`)}
