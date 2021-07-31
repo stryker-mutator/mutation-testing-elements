@@ -43,6 +43,15 @@ describe('Drawer', () => {
         await actScreenshotMatch(this);
       });
 
+      it('should show the statusReason', async function () {
+        // Mutant 17 has a statusReason
+        await page.mutantView.mutant(17).toggleMutant();
+        await drawer.whenHalfOpen();
+        const summary = await drawer.summaryText();
+        expect(summary).contains('Survived despite covered by 3 tests');
+        await actScreenshotMatch(this);
+      });
+
       it('should close the drawer when deselecting the mutant', async () => {
         await mutant.toggleMutant();
         await drawer.whenClosed();

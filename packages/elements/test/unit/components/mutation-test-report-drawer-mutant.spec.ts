@@ -104,6 +104,15 @@ describe(MutationTestReportDrawerMutant.name, () => {
         expect(summary).contains('📖 Replaced "foo" with "bar"');
       });
 
+      it('should contain the status reason', async () => {
+        mutant.status = MutantStatus.Timeout;
+        mutant.statusReason = 'Hit limit reached (501 > 500)';
+        sut.element.mutant = mutant;
+        await sut.whenStable();
+        const summary = summaryText();
+        expect(summary).contains('🕵️ Hit limit reached (501 > 500)');
+      });
+
       function summaryText() {
         return sut.$('[slot="summary"]').innerText;
       }
