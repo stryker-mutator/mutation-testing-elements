@@ -13,6 +13,7 @@ describe(aggregateResultsByModule.name, () => {
       projectRoot: undefined,
     };
     expect(aggregateResultsByModule(Object.create(null))).deep.eq(expectedReport);
+    expect(aggregateResultsByModule(Object.create({}))).deep.eq(expectedReport);
   });
 
   describe('projectRoot', () => {
