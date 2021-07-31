@@ -12,42 +12,40 @@ See [mutant states and metrics in the Stryker handbook](https://github.com/stryk
 See the below example (uses TypeScript):
 
 ```ts
-import { MetricsResult, calculateMetrics } from 'mutation-testing-metrics';
+import { MetricsResult, calculateMutationTestMetrics } from 'mutation-testing-metrics';
 import { MutationTestResult } from 'mutation-testing-report-schema';
 
 const mutationTestReport: MutationTestResult = {
   /*... Get a holds of mutation test results somehow */
 };
 
-const result: MetricsResult = calculateMetrics(mutationTestReport);
+const result: MetricsResult = calculateMutationTestMetrics(mutationTestReport);
 
 console.log('Mutation score', result.metrics.mutationScore);
 ```
 
 ## API Reference
 
+### `calculateMutationTestMetrics` [`(MutationTestResult) => MutationTestMetricsResult`]
+
+Calculates the full mutation test metrics from both the files-under-test as well as (optionally) the test files.
+
+The input is a mutation test result valid according to the [https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/report-schema#readme]
+
+Returns A `MutationTestMetricsResult` that contains both the `systemUnderTestMetrics` as well as the `testMetrics`
+
 ### `calculateMetrics` [`(MutationTestResult) => MetricsResult`]
 
-Calculates the metrics for a MutationTestResult. This result must be valid according to the [https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/report-schema#readme].
+Calculates the files-under-test metrics inside of a mutation testing report.
 
-### `MetricsResult`
+The input is a mutation test result valid according to the [https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/report-schema#readme]
 
-A `MetricsResult` has a `metrics` property containing the following metrics:
+### `aggregateResultsByModule` [`(Record<string, MutationTestResult>) => MutationTestResult`]
 
-- `killed`
-- `timeout`
-- `survived`
-- `noCoverage`
-- `runtimeErrors`
-- `compileErrors`
-- `ignored`
-- `totalDetected`
-- `totalUndetected`
-- `totalValid`
-- `totalInvalid`
-- `mutationScore`
-- `totalMutants`
-- `mutationScoreBasedOnCoveredCode`
+Aggregates multiple reports together into a single report, grouped by module.
 
-It optionally has a `file` property which points to a `FileResult` (mutation-testing-report-schema) or one or more `childResults`
-if it represents a directory.
+Input: `resultsByModule` The MutationTestResult objects by module name.
+
+### Types
+
+Types are included and documented with TypeScript.
