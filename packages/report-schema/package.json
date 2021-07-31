@@ -1,10 +1,11 @@
 {
   "name": "mutation-testing-report-schema",
-  "version": "1.7.1",
+  "version": "1.7.4",
   "description": "The json schema for a mutation testing report.",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
   "exports": {
+    ".": "./dist/src/index.js",
     "./api": "./dist/src-generated/schema.js"
   },
   "typesVersions": {

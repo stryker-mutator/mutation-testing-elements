@@ -2,10 +2,13 @@
   "packages": [
     "packages/*"
   ],
-  "version": "1.7.2",
+  "version": "1.7.4",
   "command": {
     "version": {
-      "allowBranch": "master"
+      "allowBranch": "master",
+      "conventionalCommits": true,
+      "createRelease": "github",
+      "exact": true
     },
     "publish": {
       "preDistTag": "beta"

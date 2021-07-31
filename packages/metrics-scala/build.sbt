@@ -1,6 +1,6 @@
 val Scala212 = "2.12.14"
 val Scala213 = "2.13.6"
-val Scala3   = "3.0.0"
+val Scala3   = "3.0.1"
 
 val CrossScalaVersions = Seq(Scala213, Scala212, Scala3)
 
@@ -71,7 +71,7 @@ lazy val schema = project
   )
 
 lazy val sharedSettings = Seq(
-  libraryDependencies += "org.scalameta" %%% "munit" % "0.7.26" % Test,
+  libraryDependencies += "org.scalameta" %%% "munit" % "0.7.27" % Test,
   testFrameworks := List(new TestFramework("munit.Framework")),
   publish / skip := skipNormalProjectPublish,
   publishTo := sonatypePublishToBundle.value

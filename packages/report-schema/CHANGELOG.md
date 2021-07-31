@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.4](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.3...v1.7.4) (2021-07-13)
+
+
+### Bug Fixes
+
+* **exports:** add default export for the schema ([#1255](https://github.com/stryker-mutator/mutation-testing-elements/issues/1255)) ([d516054](https://github.com/stryker-mutator/mutation-testing-elements/commit/d516054bae9a1d4311be05da02a1d73b6ca2999f))
+* package.json from package report-schema ([0233173](https://github.com/stryker-mutator/mutation-testing-elements/commit/02331735992b8498f43a809990b095a655d6fd93))
+
+
+
+
+
 ## [1.7.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.0...v1.7.1) (2021-05-02)
 
 **Note:** Version bump only for package mutation-testing-report-schema

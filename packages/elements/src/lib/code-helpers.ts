@@ -12,6 +12,7 @@ export enum ProgrammingLanguage {
   scala = 'scala',
   typescript = 'typescript',
   vue = 'vue',
+  gherkin = 'gherkin',
 }
 
 /**
@@ -47,6 +48,8 @@ export function determineLanguage(fileName: string): ProgrammingLanguage | undef
       return ProgrammingLanguage.php;
     case 'vue':
       return ProgrammingLanguage.vue;
+    case 'feature':
+      return ProgrammingLanguage.gherkin;
     default:
       return undefined;
   }

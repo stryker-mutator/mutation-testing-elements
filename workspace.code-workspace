@@ -31,7 +31,8 @@
       "**/*.code-search": true,
       "**/dist": true,
       "**/dist-test": true,
-      "**/*.tsbuildinfo": true
+      "**/*.tsbuildinfo": true,
+      "**/reports/mutation": true,
     },
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": true
