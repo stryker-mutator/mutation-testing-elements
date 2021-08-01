@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.5](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.4...v1.7.5) (2021-08-01)
+
+
+### Features
+
+* **metrics:** add `aggregateResultsByModule` function ([#1225](https://github.com/stryker-mutator/mutation-testing-elements/issues/1225)) ([bb690b8](https://github.com/stryker-mutator/mutation-testing-elements/commit/bb690b8ce8588a42ab8b0d4967b2b52e2c769b7a))
+
+
+
+
+
 ## [1.7.4](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.3...v1.7.4) (2021-07-13)
 
 **Note:** Version bump only for package mutation-testing-metrics
