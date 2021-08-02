@@ -11,7 +11,8 @@
       "exact": true
     },
     "publish": {
-      "preDistTag": "beta"
+      "preDistTag": "beta",
+      "concurrency": 1
     }
   }
 }
