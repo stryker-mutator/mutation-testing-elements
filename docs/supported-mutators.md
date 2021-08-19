@@ -7,7 +7,7 @@ All Stryker versions support a variety of different mutators. We've aligned on a
 
 ## Support
 
-| Mutator                                           | [Stryker](https://github.com/stryker-mutator/stryker) | [Stryker.NET](../stryker-net/docs/Configuration.md) | [Stryker4s](../stryker4s/getting-started.md) |
+| Mutator                                           | [Stryker](https://github.com/stryker-mutator/stryker) | [Stryker.NET](/docs/stryker-net/Configuration.md) | [Stryker4s](../stryker4s/getting-started.md) |
 | ------------------------------------------------- | :---------------------------------------------------: | :--------------------------------------------: | :------------------------------------------: |
 | [Arithmetic Operator](#arithmetic-operator)       |                          ✅                           |                       ✅                       |                      ❌                      |
 | [Array Declaration](#array-declaration)           |                          ✅                           |                       ✅                       |                      ❌                      |
