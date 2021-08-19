@@ -2,10 +2,14 @@ package mutationtesting
 
 object Metrics {
 
-  def calculateMetrics(mutationTestReport: MutationTestResult[Any]): MetricsResult =
+  def calculateMetrics(
+      mutationTestReport: MutationTestResult[Any]
+  ): MetricsResult =
     calculateMetrics(mutationTestReport.files)
 
-  def calculateMetrics(mutationTestResults: FileResultDictionary): MetricsResult =
+  def calculateMetrics(
+      mutationTestResults: FileResultDictionary
+  ): MetricsResult =
     MetricsResultRoot(
       parseMutationTestResults(
         mutationTestResults
@@ -13,7 +17,9 @@ object Metrics {
       )
     )
 
-  private def parseMutationTestResults(results: Map[Seq[String], FileResult]): Seq[MetricsResult] = {
+  private def parseMutationTestResults(
+      results: Map[Seq[String], FileResult]
+  ): Seq[MetricsResult] = {
     val (rootFiles, directories) = results.partition(_._1.size == 1)
 
     directories

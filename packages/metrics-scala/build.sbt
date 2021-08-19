@@ -1,6 +1,6 @@
 val Scala212 = "2.12.14"
 val Scala213 = "2.13.6"
-val Scala3   = "3.0.1"
+val Scala3 = "3.0.1"
 
 val CrossScalaVersions = Seq(Scala213, Scala212, Scala3)
 
@@ -15,7 +15,9 @@ lazy val metrics = projectMatrix
   .jvmPlatform(scalaVersions = CrossScalaVersions)
   .jsPlatform(
     scalaVersions = CrossScalaVersions,
-    settings = Seq(Test / scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) })
+    settings = Seq(Test / scalaJSLinkerConfig ~= {
+      _.withModuleKind(ModuleKind.CommonJSModule)
+    })
   )
 
 lazy val circe = projectMatrix
@@ -25,7 +27,7 @@ lazy val circe = projectMatrix
     sharedSettings,
     name := "mutation-testing-metrics-circe",
     libraryDependencies ++= Seq(
-      "io.circe" %%% "circe-core"   % "0.14.1",
+      "io.circe" %%% "circe-core" % "0.14.1",
       "io.circe" %%% "circe-parser" % "0.14.1"
     )
   )
@@ -34,19 +36,25 @@ lazy val circe = projectMatrix
     settings = Seq(
       libraryDependencies ++= Seq(
         // This schema validator is JVM-only, so we can only run tests on the JVM and not Scala.js
-        "org.leadpony.justify" % "justify"     % "3.1.0" % Test,
-        "org.leadpony.joy"     % "joy-classic" % "2.1.0" % Test
+        "org.leadpony.justify" % "justify" % "3.1.0" % Test,
+        "org.leadpony.joy" % "joy-classic" % "2.1.0" % Test
       )
     )
   )
   .jsPlatform(
     scalaVersions = CrossScalaVersions,
-    settings = Seq(Test / scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) })
+    settings = Seq(Test / scalaJSLinkerConfig ~= {
+      _.withModuleKind(ModuleKind.CommonJSModule)
+    })
   )
 
 lazy val docs = project
   .in(file("metrics-docs")) // important: it must not be docs/
-  .settings(scalaVersion := Scala3, mdocOut := file("."), mdocExtraArguments += "--no-link-hygiene")
+  .settings(
+    scalaVersion := Scala3,
+    mdocOut := file("."),
+    mdocExtraArguments += "--no-link-hygiene"
+  )
   .dependsOn(circe.jvm(Scala3))
   .enablePlugins(MdocPlugin)
 
@@ -97,7 +105,9 @@ inThisBuild(
     version := packageVersion(file(".")),
     organization := "io.stryker-mutator",
     homepage := Some(url("https://stryker-mutator.io/")),
-    licenses += "Apache-2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0"),
+    licenses += "Apache-2.0" -> url(
+      "https://www.apache.org/licenses/LICENSE-2.0"
+    ),
     scmInfo := Some(
       ScmInfo(
         url("https://github.com/stryker-mutator/mutation-testing-elements"),
@@ -134,12 +144,14 @@ def packageVersion(packageJsonDir: File): String = {
   import scala.sys.process._
 
   val command = Seq("node", "-p", "require('./package.json').version")
-  val os      = sys.props("os.name").toLowerCase
+  val os = sys.props("os.name").toLowerCase
   val panderToWindows = os match {
     case n if n contains "windows" => Seq("cmd", "/C") ++ command
     case _                         => command
   }
   scala.util
-    .Try(Process(panderToWindows, packageJsonDir).!!.linesIterator.toIterable.last)
+    .Try(
+      Process(panderToWindows, packageJsonDir).!!.linesIterator.toIterable.last
+    )
     .getOrElse("0.0.0-NO-NODE-SNAPSHOT")
 }

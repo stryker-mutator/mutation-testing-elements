@@ -30,7 +30,8 @@ class MetricsResultTest extends munit.FunSuite {
     }
   }
 
-  private lazy val expectedSet: List[(String, MetricsResult => Number, Number)] = List(
+  private lazy val expectedSet
+      : List[(String, MetricsResult => Number, Number)] = List(
     ("killed", _.killed, 2),
     ("survived", _.survived, 2),
     ("timeout", _.timeout, 2),
@@ -45,7 +46,11 @@ class MetricsResultTest extends munit.FunSuite {
     ("totalInvalid", _.totalInvalid, 2),
     ("totalMutants", _.totalMutants, 12),
     ("mutationScore", _.mutationScore, (4d / 9d) * 100),
-    ("mutationScoreBasedOnCoveredCode", _.mutationScoreBasedOnCoveredCode, (4d / 6d) * 100)
+    (
+      "mutationScoreBasedOnCoveredCode",
+      _.mutationScoreBasedOnCoveredCode,
+      (4d / 6d) * 100
+    )
   )
 
   private lazy val testSet = MetricsResultRoot(

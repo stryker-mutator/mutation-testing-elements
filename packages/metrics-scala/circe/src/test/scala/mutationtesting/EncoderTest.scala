@@ -27,23 +27,32 @@ class EncoderTest extends munit.FunSuite {
   }
 
   test("config encoder is used") {
-    implicit val reportEncoder: Encoder[MutationTestResult[CustomConfig]] = mutationTestResultEncoder[CustomConfig]
+    implicit val reportEncoder: Encoder[MutationTestResult[CustomConfig]] =
+      mutationTestResultEncoder[CustomConfig]
 
     val customConfig = CustomConfig("foovalue", 42)
     val sut: MutationTestResult[CustomConfig] =
-      MutationTestResult(thresholds = Thresholds(80, 60), files = Map.empty, config = Some(customConfig))
+      MutationTestResult(
+        thresholds = Thresholds(80, 60),
+        files = Map.empty,
+        config = Some(customConfig)
+      )
 
     val result = sut.asJson
 
-    assertEquals(result.\\("config").head.noSpaces, """{"foo":"foovalue","bar":42}""")
+    assertEquals(
+      result.\\("config").head.noSpaces,
+      """{"foo":"foovalue","bar":42}"""
+    )
   }
 
   test("config decoder is used") {
     val report =
       """{"thresholds":{"high":80,"low":10},"files":{},"schemaVersion":"1","config":{"foo":"foovalue","bar":42}}"""
     decode[MutationTestResult[CustomConfig]](report) match {
-      case Left(value)  => fail(s"Expected valid decoding, got: $value")
-      case Right(value) => assertEquals(value.config.get, CustomConfig("foovalue", 42))
+      case Left(value) => fail(s"Expected valid decoding, got: $value")
+      case Right(value) =>
+        assertEquals(value.config.get, CustomConfig("foovalue", 42))
     }
   }
 
