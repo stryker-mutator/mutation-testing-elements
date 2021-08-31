@@ -19,7 +19,7 @@ All Stryker versions support a variety of different mutators. We've aligned on a
 | [Equality Operator](#equality-operator)           |                             ✅                             |                       ✅                       |                      ✅                      |
 | [Logical Operator](#logical-operator)             |                             ✅                             |                       ✅                       |                      ✅                      |
 | [Method Expression](#method-expression)           |                             ❌                             |                       ✅                       |                      ✅                      |
-| [Object literal](#object-literal)                 |                             ✅                             |                       ❌                       |                      ❌                      |
+| [Object literal](#object-literal)                 |                             ✅                             |                      n/a                       |                     n/a                      |
 | [Optional chaining](#optional-chaining)           |                             ✅                             |                       ❌                       |                     n/a                      |
 | [Regex](#regex)                                   |                             ✅                             |                       ✅                       |                      ✅                      |
 | [String Literal](#string-literal)                 |                             ✅                             |                       ✅                       |                      ✅                      |
