@@ -7,21 +7,24 @@ All Stryker versions support a variety of different mutators. We've aligned on a
 
 ## Support
 
-| Mutator                                           | [Stryker](https://github.com/stryker-mutator/stryker) | [Stryker.NET](../stryker-net/Configuration.md) | [Stryker4s](../stryker4s/getting-started.md) |
-| ------------------------------------------------- | :---------------------------------------------------: | :--------------------------------------------: | :------------------------------------------: |
-| [Arithmetic Operator](#arithmetic-operator)       |                          ✅                           |                       ✅                       |                      ❌                      |
-| [Array Declaration](#array-declaration)           |                          ✅                           |                       ✅                       |                      ❌                      |
-| [Assignment Expression](#assignment-expression)   |                          ❌                           |                       ✅                       |                     n/a                      |
-| [Block Statement](#block-statement)               |                          ✅                           |                       ❌                       |                      ❌                      |
-| [Boolean Literal](#boolean-literal)               |                          ✅                           |                       ✅                       |                     ️✅                      |
-| [Checked Statement](#checked-statement)           |                          n/a                          |                       ✅                       |                     n/a                      |
-| [Conditional Expression](#conditional-expression) |                          ✅                           |                       ✅                       |                      ✅                      |
-| [Equality Operator](#equality-operator)           |                          ✅                           |                       ✅                       |                      ✅                      |
-| [Logical Operator](#logical-operator)             |                          ✅                           |                       ✅                       |                      ✅                      |
-| [Method Expression](#method-expression)           |                          ❌                           |                       ✅                       |                      ✅                      |
-| [String Literal](#string-literal)                 |                          ✅                           |                       ✅                       |                      ✅                      |
-| [Unary Operator](#unary-operator)                 |                          ✅                           |                       ✅                       |                      ❌                      |
-| [Update Operator](#update-operator)               |                          ✅                           |                       ✅                       |                     n/a                      |
+| Mutator                                           | [StrykerJS](../stryker-js/introduction.md) | [Stryker.NET](../stryker-net/Configuration.md) | [Stryker4s](../stryker4s/getting-started.md) |
+| ------------------------------------------------- | :----------------------------------------: | :--------------------------------------------: | :------------------------------------------: |
+| [Arithmetic Operator](#arithmetic-operator)       |                     ✅                     |                       ✅                       |                      ❌                      |
+| [Array Declaration](#array-declaration)           |                     ✅                     |                       ✅                       |                      ❌                      |
+| [Assignment Expression](#assignment-expression)   |                     ❌                     |                       ✅                       |                     n/a                      |
+| [Block Statement](#block-statement)               |                     ✅                     |                       ❌                       |                      ❌                      |
+| [Boolean Literal](#boolean-literal)               |                     ✅                     |                       ✅                       |                     ️✅                      |
+| [Checked Statement](#checked-statement)           |                    n/a                     |                       ✅                       |                     n/a                      |
+| [Conditional Expression](#conditional-expression) |                     ✅                     |                       ✅                       |                      ✅                      |
+| [Equality Operator](#equality-operator)           |                     ✅                     |                       ✅                       |                      ✅                      |
+| [Logical Operator](#logical-operator)             |                     ✅                     |                       ✅                       |                      ✅                      |
+| [Method Expression](#method-expression)           |                     ❌                     |                       ✅                       |                      ✅                      |
+| [Object literal](#object-literal)                 |                     ✅                     |                      n/a                       |                     n/a                      |
+| [Optional chaining](#optional-chaining)           |                     ✅                     |                       ❌                       |                     n/a                      |
+| [Regex](#regex)                                   |                     ✅                     |                       ✅                       |                      ✅                      |
+| [String Literal](#string-literal)                 |                     ✅                     |                       ✅                       |                      ✅                      |
+| [Unary Operator](#unary-operator)                 |                     ✅                     |                       ✅                       |                      ❌                      |
+| [Update Operator](#update-operator)               |                     ✅                     |                       ✅                       |                     n/a                      |
 
 ## Arithmetic Operator
 
@@ -139,10 +142,11 @@ Stryker.NET _specific mutator_
 
 ## Logical Operator
 
-| Original   | Mutated    |
-| ---------- | ---------- |
-| `a && b`   | `a \|\| b` |
-| `a \|\| b` | `a && b`   |
+| Original                      | Mutated                       |
+| ----------------------------- | ----------------------------- |
+| `a && b`                      | <code>a &vert;&vert; b</code> |
+| <code>a &vert;&vert; b</code> | `a && b`                      |
+| `a ?? b`                      | `a && b`                      |
 
 [🔝 Back to Top](#supported-mutators)
 
@@ -195,6 +199,67 @@ Due to differences in language syntax, method expressions are implemented differ
 | `a.min`            | `a.max`            |
 | `a.maxBy(b)`       | `a.minBy(b)`       |
 | `a.minBy(b)`       | `a.maxBy(b)`       |
+
+[🔝 Back to Top](#supported-mutators)
+
+## Object literal
+
+| Original         | Mutated |
+| ---------------- | ------- |
+| `{ foo: 'bar' }` | `{ }`   |
+
+[🔝 Back to Top](#supported-mutators)
+
+## Optional chaining
+
+| Original   | Mutated   |
+| ---------- | --------- |
+| `foo?.bar` | `foo.bar` |
+| `foo?.[1]` | `foo[1]`  |
+| `foo?.()`  | `foo()`   |
+
+[🔝 Back to Top](#supported-mutators)
+
+## Regex
+
+Regular expressions are parsed and mutated separately. This is done by recognizing `new Regex("...")` call signatures in each language. Scala and JavaScript also have shorthand syntax, `/regex/` and `"regex".r` respectively, which are mutated as well.
+
+StrykerJS and Stryker4s use the awesome [⚔ weapon-regex](https://github.com/stryker-mutator/weapon-regex#weapon-regex) to mutate their regular expressions. All Level 1 mutations are generated.
+
+Strings and literals identified to a regex are mutated in the following way:
+
+| Original    | Mutated       |
+| ----------- | ------------- |
+| `^abc`      | `abc`         |
+| `abc$`      | `abc`         |
+| `[abc]`     | `[^abc]`      |
+| `[^abc]`    | `[abc]`       |
+| `\d`        | `\D`          |
+| `\D`        | `\d`          |
+| `\s`        | `\S`          |
+| `\S`        | `\s`          |
+| `\w`        | `\W`          |
+| `\W`        | `\w`          |
+| `a?`        | `a`           |
+| `a*`        | `a`           |
+| `a+`        | `a`           |
+| `a{1,3}`    | `a`           |
+| `a*?`       | `a`           |
+| `a+?`       | `a`           |
+| `a{1,3}?`   | `a`           |
+| `a?+`       | `a`           |
+| `a*+`       | `a`           |
+| `a++`       | `a`           |
+| `a{1,3}+`   | `a`           |
+| `(?=abc)`   | `(?!abc)`     |
+| `(?!abc)`   | `(?=abc)`     |
+| `(?<=abc)`  | `(?<!abc)`    |
+| `(?<!abc)`  | `(?<=abc)`    |
+| `\p{Alpha}` | `\P{Alpha}` ¹ |
+| `\P{Alpha}` | `\p{Alpha}` ¹ |
+| `\P{Alpha}` | `\p{Alpha}` ¹ |
+
+¹ JVM only.
 
 [🔝 Back to Top](#supported-mutators)
 
