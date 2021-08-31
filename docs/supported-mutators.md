@@ -21,6 +21,7 @@ All Stryker versions support a variety of different mutators. We've aligned on a
 | [Method Expression](#method-expression)           |                             ❌                             |                       ✅                       |                      ✅                      |
 | [Object literal](#object-literal)                 |                             ✅                             |                       ❌                       |                      ❌                      |
 | [Optional chaining](#optional-chaining)           |                             ✅                             |                       ❌                       |                     n/a                      |
+| [Regex](#regex)                                   |                             ✅                             |                       ✅                       |                      ✅                      |
 | [String Literal](#string-literal)                 |                             ✅                             |                       ✅                       |                      ✅                      |
 | [Unary Operator](#unary-operator)                 |                             ✅                             |                       ✅                       |                      ❌                      |
 | [Update Operator](#update-operator)               |                             ✅                             |                       ✅                       |                     n/a                      |
@@ -141,11 +142,11 @@ Stryker.NET _specific mutator_
 
 ## Logical Operator
 
-| Original | Mutated  |
-| -------- | -------- | --- | -------- |
-| `a && b` | `a       |     | b`       |
-| `a       |          | b`  | `a && b` |
-| `a ?? b` | `a && b` |
+| Original                      | Mutated                       |
+| ----------------------------- | ----------------------------- |
+| `a && b`                      | <code>a &vert;&vert; b</code> |
+| <code>a &vert;&vert; b</code> | `a && b`                      |
+| `a ?? b`                      | `a && b`                      |
 
 [🔝 Back to Top](#supported-mutators)
 
