@@ -220,13 +220,13 @@ Due to differences in language syntax, method expressions are implemented differ
 
 [🔝 Back to Top](#supported-mutators)
 
-## Regex Literal
+## Regex
 
-Regexes are parsed and mutated separatly. This is done by recognizing `new Regex("...")` call signatures in each language. Scala and JavaScript also have shorthand syntax, `/regex/` and `"regex".r` respectively, which are mutated as well.
+Regular expressions are parsed and mutated separately. This is done by recognizing `new Regex("...")` call signatures in each language. Scala and JavaScript also have shorthand syntax, `/regex/` and `"regex".r` respectively, which are mutated as well.
 
-StrykerJS and Stryker4s use the awesome [⚔ weapon-regex](https://github.com/stryker-mutator/weapon-regex#weapon-regex) to mutate their regexes. All Level 1 mutations are generated.
+StrykerJS and Stryker4s use the awesome [⚔ weapon-regex](https://github.com/stryker-mutator/weapon-regex#weapon-regex) to mutate their regular expressions. All Level 1 mutations are generated.
 
-Strings and literals idetified to be regexes are mutated in the following way:
+Strings and literals identified to a regex are mutated in the following way:
 
 | Original    | Mutated       |
 | ----------- | ------------- |
