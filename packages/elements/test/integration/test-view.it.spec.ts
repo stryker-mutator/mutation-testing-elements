@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { TestStatus } from 'mutation-testing-metrics';
-import { tick } from '../unit/helpers/tick';
 import { getCurrent } from './lib/browser';
+import { sleep } from './lib/helpers';
 import { ReportPage } from './po/ReportPage';
 import { TestListItem } from './po/TestListItem.po';
 
@@ -32,7 +32,7 @@ describe('Test view', () => {
 
     it('should hide tests that are filtered out', async () => {
       await page.testView.stateFilter.state(TestStatus.Covering).click();
-      await tick();
+      await sleep();
       const tests = await page.testView.tests();
       expect(await tests[1].isVisible()).false;
     });
