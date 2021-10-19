@@ -40,7 +40,7 @@ export async function isElementVisible(element: WebElementPromise) {
   }
 }
 
-export function sleep(n = 300) {
+export function sleep(n = 1000) {
   return new Promise((res) => setTimeout(res, n));
 }
 
