@@ -280,10 +280,10 @@ Strings and literals identified to a regex are mutated in the following way:
 
 ## Unary Operator
 
-| Mutant operator              | Original | Mutated |
-| ---------------------------- | -------- | ------- |
-| UnaryPlusOperatorNegation    | `+a`     | `-a`    |
-| UnaryMinOperatorNegation`-a` | `+a`     |
+| Mutant operator           | Original | Mutated |
+| ------------------------- | -------- | ------- |
+| UnaryPlusOperatorNegation | `+a`     | `-a`    |
+| UnaryMinOperatorNegation  | `-a`     | `+a`    |
 
 [🔝 Back to Top](#supported-mutators)
 
