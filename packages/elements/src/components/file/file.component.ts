@@ -4,10 +4,12 @@ import { MutationTestReportMutantComponent } from '../mutant/mutant.component';
 import { StateFilter } from '../state-filter/state-filter.component';
 import { bootstrap, prismjs } from '../../style';
 import { markMutants } from '../../lib/code-helpers';
-import { FileResult, MutantStatus } from 'mutation-testing-report-schema/api';
-import { highlightElement } from 'prismjs/components/prism-core';
+import { MutantStatus } from 'mutation-testing-report-schema/api';
+import { highlightElement, highlight, languages } from 'prismjs/components/prism-core';
 import style from './file.scss';
 import { getContextClassForStatus, getEmojiForStatus } from '../../lib/htmlHelpers';
+import { FileUnderTestModel } from 'mutation-testing-metrics';
+import { MteCustomEvent } from '../../lib/custom-events';
 
 @customElement('mte-file')
 export class MutationTestReportFileComponent extends LitElement {
@@ -15,7 +17,7 @@ export class MutationTestReportFileComponent extends LitElement {
   private filters: StateFilter<MutantStatus>[] = [];
 
   @property()
-  public model!: FileResult;
+  public model!: FileUnderTestModel;
 
   public static styles = [prismjs, bootstrap, unsafeCSS(style)];
 
@@ -69,6 +71,17 @@ export class MutationTestReportFileComponent extends LitElement {
       // Now that the code is highlighted, we can bind the mutants
       this.forEachMutantComponent((mutantComponent) => {
         mutantComponent.mutant = this.model.mutants.find((mutant) => mutant.id === mutantComponent.getAttribute('mutant-id'));
+        mutantComponent.addEventListener('mutant-selected', (ev: Event) => {
+          const mutant = (ev as MteCustomEvent<'mutant-selected'>).detail.mutant;
+          if (mutant) {
+            const lines = code.querySelectorAll('span.mte-line');
+            for (let i = mutant.location.start.line - 1; i < mutant.location.end.line; i++) {
+              lines.item(i).classList.add('diff-old');
+            }
+            const mutatedHighlighted = highlight(mutant.getMutatedLines(), languages[this.model.language], this.model.language);
+            lines.item(mutant.location.end.line - 1).insertAdjacentHTML('afterend', `<span class="diff-new">${mutatedHighlighted}</span>`);
+          }
+        });
       });
     }
   }

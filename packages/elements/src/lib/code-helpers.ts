@@ -75,6 +75,7 @@ export function markMutants(model: FileResult): string {
     startedMutants.push(...currentMutants);
 
     const builder: string[] = [];
+
     if (currentMutants.length || mutantsEnding.length) {
       currentMutants.forEach(backgroundState.markMutantStart);
       mutantsEnding.forEach(backgroundState.markMutantEnd);
@@ -82,21 +83,27 @@ export function markMutants(model: FileResult): string {
       // End previous color span
       builder.push('</span>');
 
-      // End mutants
-      mutantsEnding.forEach(() => builder.push('</mte-mutant>'));
-
       // Start mutants
-      currentMutants.forEach((mutant) => builder.push(`<mte-mutant mutant-id="${mutant.id}">`));
+      currentMutants.forEach((mutant) => builder.push(`<mte-mutant mutant-id="${mutant.id}"></mte-mutant>`));
 
       // Start new color span
-      builder.push(`<span class="bg-${backgroundState.determineBackground() || ''}">`);
+      builder.push(`<span class="bg-${backgroundState.determineBackground() ?? ''}">`);
     }
 
     // Append the code character
     builder.push(escapeHtml(char));
     return builder.join('');
   };
-  return `<span>${walkString(model.source, walker)}</span>`;
+  const onNewLine = () => {
+    // End previous color span
+    // End previous line span
+    // Start line span
+    // Start new color span
+    return `</span></span><span class="mte-line"><span class="bg-${backgroundState.determineBackground() ?? ''}">`;
+  };
+
+  const html = `<span><span>${walkString(model.source, walker, onNewLine)}</span></span>`;
+  return html;
 }
 
 export function isAlfaNumeric(char: string) {
@@ -143,10 +150,10 @@ export function lines(content: string) {
  * @param source the string to walk
  * @param fn The function to execute on each character of the string
  */
-function walkString(source: string, fn: (char: string, position: Position) => string): string {
+function walkString(source: string, fn: (char: string, position: Position) => string, fnNewLine: () => string = () => ''): string {
   let column = COLUMN_START_INDEX;
   let line = LINE_START_INDEX;
-  const builder: string[] = [];
+  const builder: string[] = [fnNewLine()];
 
   for (const currentChar of source) {
     if (column === COLUMN_START_INDEX && currentChar === CARRIAGE_RETURN) {
@@ -156,6 +163,7 @@ function walkString(source: string, fn: (char: string, position: Position) => st
       line++;
       column = COLUMN_START_INDEX;
       builder.push(NEW_LINE);
+      builder.push(fnNewLine());
       continue;
     }
     builder.push(fn(currentChar, { line, column: column++ }));

@@ -1,14 +1,14 @@
 import { customElement, LitElement, property, html, unsafeCSS } from 'lit-element';
-import { MutantResult } from 'mutation-testing-report-schema/api';
 import { bootstrap } from '../../style';
 import { getContextClassForStatus } from '../../lib/htmlHelpers';
 import style from './mutant.scss';
 import { createCustomEvent } from '../../lib/custom-events';
+import { MutantModel } from 'mutation-testing-metrics';
 
 @customElement('mte-mutant')
 export class MutationTestReportMutantComponent extends LitElement {
   @property()
-  public mutant: MutantResult | undefined;
+  public mutant: MutantModel | undefined;
 
   @property()
   public show = true;
@@ -27,7 +27,7 @@ export class MutationTestReportMutantComponent extends LitElement {
   public render() {
     // This part is newline significant, as it is rendered in a <code> block.
     // No unnecessary new lines
-    return html`${this.renderButton()}${this.renderCode()}`;
+    return html`${this.renderButton()}`;
   }
 
   private renderButton() {
@@ -37,24 +37,6 @@ export class MutationTestReportMutantComponent extends LitElement {
         @click="${this.mutantClicked}"
         title="${this.mutant.mutatorName}"
         >${this.mutant.id}</span
-      >`;
-    }
-    return undefined;
-  }
-
-  private renderCode() {
-    return html`${this.renderReplacement()}${this.renderActual()}`;
-  }
-
-  private renderActual() {
-    const actualCodeSlot = html`<slot></slot>`;
-    return html`<span class="original-code ${this.expand && this.show ? 'disabled-code' : ''}">${actualCodeSlot}</span>`;
-  }
-
-  private renderReplacement() {
-    if (this.mutant) {
-      return html`<span class="replacement badge bg-info" @click="${this.mutantClicked}" ?hidden="${!this.expand || !this.show}"
-        >${this.mutant.replacement || this.mutant.mutatorName}</span
       >`;
     }
     return undefined;
