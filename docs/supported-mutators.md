@@ -60,6 +60,9 @@ All Stryker versions support a variety of different mutators. We've aligned on a
 | `>>=`    | `<<=`   |
 | `&=`     | `\|=`   |
 | `\|=`    | `&=`    |
+| `??=`    | `&&=`¹  |
+
+- ¹: Only supported by Stryker-JS
 
 [🔝 Back to Top](#supported-mutators)
 
