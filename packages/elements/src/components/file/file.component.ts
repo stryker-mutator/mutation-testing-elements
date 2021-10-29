@@ -27,6 +27,7 @@ export class MutationTestReportFileComponent extends LitElement {
   private readonly collapseAll = () => {
     this.forEachMutantComponent((mutantComponent) => (mutantComponent.expand = false));
   };
+  private currentMutantId: string | undefined = undefined;
 
   private forEachMutantComponent(action: (mutant: MutationTestReportMutantComponent) => void) {
     for (const mutantComponent of this.shadowRoot!.querySelectorAll('mte-mutant')) {
@@ -63,6 +64,9 @@ export class MutationTestReportFileComponent extends LitElement {
   }
 
   public firstUpdated() {
+    const diffOldClass = 'diff-old';
+    const diffNewClass = 'diff-new';
+
     const code = this.shadowRoot!.querySelector('code');
     if (code) {
       highlightElement(code);
@@ -74,16 +78,42 @@ export class MutationTestReportFileComponent extends LitElement {
         mutantComponent.addEventListener('mutant-selected', (ev: Event) => {
           const mutant = (ev as MteCustomEvent<'mutant-selected'>).detail.mutant;
           if (mutant) {
+            this.removeCurrentDiff(code, diffOldClass, diffNewClass);
+            if (this.currentMutantId === mutant.id) {
+              this.currentMutantId = undefined;
+              return;
+            }
+
+            if (this.currentMutantId) {
+              const currentMutant = code.querySelectorAll(`mte-mutant[mutant-id="${this.currentMutantId}"]`)[0];
+              if (currentMutant instanceof MutationTestReportMutantComponent) {
+                currentMutant.expand = !currentMutant.expand;
+              }
+            }
+
+            this.currentMutantId = mutant.id;
             const lines = code.querySelectorAll('span.mte-line');
             for (let i = mutant.location.start.line - 1; i < mutant.location.end.line; i++) {
-              lines.item(i).classList.add('diff-old');
+              lines.item(i).classList.add(diffOldClass);
             }
             const mutatedHighlighted = highlight(mutant.getMutatedLines(), languages[this.model.language], this.model.language);
-            lines.item(mutant.location.end.line - 1).insertAdjacentHTML('afterend', `<span class="diff-new">${mutatedHighlighted}</span>`);
+            lines.item(mutant.location.end.line - 1).insertAdjacentHTML('afterend', `<span class="${diffNewClass}">${mutatedHighlighted}</span>`);
           }
         });
       });
     }
+  }
+
+  private removeCurrentDiff(code: HTMLElement, diffOldClass: string, diffNewClass: string) {
+    const oldDiffLines = code.querySelectorAll(`.${diffOldClass}`);
+    if (!oldDiffLines) {
+      return;
+    }
+
+    oldDiffLines.forEach((oldDiffLine) => oldDiffLine.classList.remove(diffOldClass));
+
+    const newDiffLines = code.querySelectorAll(`.${diffNewClass}`);
+    newDiffLines.forEach((newDiffLine) => newDiffLine.remove());
   }
 
   public updated(changes: PropertyValues) {
