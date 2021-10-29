@@ -1,4 +1,4 @@
-import { unsafeCSS } from 'lit-element';
+import { unsafeCSS } from 'lit';
 import bootstrapCss from './bootstrap.scss';
 import prismjsCss from './prismjs.scss';
 import globalsCss from './globals.scss';

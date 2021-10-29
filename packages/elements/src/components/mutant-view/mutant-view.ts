@@ -1,4 +1,5 @@
-import { customElement, html, LitElement, property, PropertyValues, unsafeCSS } from 'lit-element';
+import { html, LitElement, PropertyValues, unsafeCSS } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 import { FileUnderTestModel, Metrics, MetricsResult } from 'mutation-testing-metrics';
 import { MutantResult as MutantModel, Thresholds } from 'mutation-testing-report-schema/api';
 import { MteCustomEvent } from '../../lib/custom-events';

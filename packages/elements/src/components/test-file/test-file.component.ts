@@ -1,5 +1,6 @@
-import { customElement, html, LitElement, property, PropertyValues, unsafeCSS } from 'lit-element';
-import { unsafeHTML } from 'lit-html/directives/unsafe-html';
+import { html, LitElement, PropertyValues, unsafeCSS } from 'lit';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+import { customElement, property } from 'lit/decorators.js';
 
 import { TestFileModel, TestStatus } from 'mutation-testing-metrics';
 import { highlightElement } from 'prismjs/components/prism-core';
@@ -75,9 +76,9 @@ export class MutationTestReportTestFile extends LitElement {
 
   private renderCode() {
     if (this.model?.source) {
-      return html`<pre id="report-code-block" class="line-numbers"><code class="language-${determineLanguage(this.model.name)}">${unsafeHTML(
+      return html`<pre id="report-code-block" class="line-numbers"><code class="language-${determineLanguage(this.model.name)}"><span>${unsafeHTML(
         markTests(this.model.source, this.model.tests)
-      )}</code></pre>`;
+      )}</span></code></pre>`;
     }
     return;
   }
@@ -95,7 +96,7 @@ export class MutationTestReportTestFile extends LitElement {
     }
   }
 
-  public updated(changes: PropertyValues) {
+  override update(changes: PropertyValues) {
     if (changes.has('model') && this.model) {
       const model = this.model;
       this.filters = [TestStatus.Killing, TestStatus.Covering, TestStatus.NotCovering]
@@ -107,6 +108,12 @@ export class MutationTestReportTestFile extends LitElement {
           label: `${getEmojiForTestStatus(status)} ${status}`,
           context: getContextClassForTestStatus(status),
         }));
+    }
+    super.update(changes);
+  }
+
+  public updated(changes: PropertyValues) {
+    if (changes.has('model') && this.model) {
       this.highlightCode();
     }
   }

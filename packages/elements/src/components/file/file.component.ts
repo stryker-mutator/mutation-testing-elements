@@ -1,5 +1,7 @@
-import { LitElement, html, property, customElement, unsafeCSS, PropertyValues } from 'lit-element';
-import { unsafeHTML } from 'lit-html/directives/unsafe-html';
+import { LitElement, html, unsafeCSS, PropertyValues } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { createRef, ref } from 'lit/directives/ref.js';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { MutationTestReportMutantComponent } from '../mutant/mutant.component';
 import { StateFilter } from '../state-filter/state-filter.component';
 import { bootstrap, prismjs } from '../../style';
@@ -18,6 +20,8 @@ export class MutationTestReportFileComponent extends LitElement {
   public model!: FileResult;
 
   public static styles = [prismjs, bootstrap, unsafeCSS(style)];
+
+  private codeRef = createRef();
 
   private readonly expandAll = () => {
     this.forEachMutantComponent((mutantComponent) => (mutantComponent.expand = true));
@@ -52,18 +56,17 @@ export class MutationTestReportFileComponent extends LitElement {
             @expand-all="${this.expandAll}"
             @collapse-all="${this.collapseAll}"
           ></mte-state-filter>
-          <pre id="report-code-block" class="line-numbers"><code class="language-${this.model.language}">${unsafeHTML(
+          <pre id="report-code-block" class="line-numbers"><code ${ref(this.codeRef)} class="language-${this.model.language}"><span>${unsafeHTML(
             markMutants(this.model)
-          )}</code></pre>
+          )}</span></code></pre>
         </div>
       </div>
     `;
   }
 
   public firstUpdated() {
-    const code = this.shadowRoot!.querySelector('code');
-    if (code) {
-      highlightElement(code);
+    if (this.codeRef.value && this.model) {
+      highlightElement(this.codeRef.value);
 
       // Prism-js's `highlightElement` creates a copy of the DOM tree to do its magic.
       // Now that the code is highlighted, we can bind the mutants
@@ -73,7 +76,7 @@ export class MutationTestReportFileComponent extends LitElement {
     }
   }
 
-  public updated(changes: PropertyValues) {
+  public update(changes: PropertyValues) {
     if (changes.has('model') && this.model) {
       this.filters = [
         MutantStatus.Killed,
@@ -93,5 +96,6 @@ export class MutationTestReportFileComponent extends LitElement {
           context: getContextClassForStatus(status),
         }));
     }
+    super.update(changes);
   }
 }

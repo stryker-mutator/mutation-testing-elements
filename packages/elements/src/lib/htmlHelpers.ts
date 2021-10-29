@@ -1,4 +1,4 @@
-import { TemplateResult } from 'lit-element';
+import { TemplateResult } from 'lit';
 import { TestStatus } from 'mutation-testing-metrics';
 import { MutantStatus, OpenEndLocation } from 'mutation-testing-report-schema/api';
 

@@ -1,4 +1,5 @@
-import { LitElement, html, property, customElement } from 'lit-element';
+import { LitElement, html } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 import { bootstrap } from '../style';
 import { toAbsoluteUrl } from '../lib/htmlHelpers';
 import { View } from '../lib/router';

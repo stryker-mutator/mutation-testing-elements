@@ -1,4 +1,5 @@
-import { LitElement, html, property, customElement, PropertyValues, unsafeCSS } from 'lit-element';
+import { LitElement, html, PropertyValues, unsafeCSS } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 import { MutationTestResult } from 'mutation-testing-report-schema/api';
 import { MetricsResult, calculateMutationTestMetrics } from 'mutation-testing-metrics';
 import { bootstrap, globals } from '../../style';
