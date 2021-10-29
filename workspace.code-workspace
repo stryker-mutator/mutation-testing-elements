@@ -22,7 +22,7 @@
     }
   ],
   "extensions": {
-    "recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
+    "recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode", "bierner.lit-html"]
   },
   "settings": {
     "search.exclude": {
