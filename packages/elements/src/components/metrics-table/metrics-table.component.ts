@@ -1,4 +1,5 @@
-import { customElement, html, LitElement, property, unsafeCSS } from 'lit-element';
+import { html, LitElement, unsafeCSS } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 import { MetricsResult } from 'mutation-testing-metrics';
 import { Thresholds } from 'mutation-testing-report-schema/api';
 import { toAbsoluteUrl } from '../../lib/htmlHelpers';

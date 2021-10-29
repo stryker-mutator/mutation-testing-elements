@@ -1,5 +1,5 @@
-import { customElement, html, LitElement, property, unsafeCSS } from 'lit-element';
-import { nothing } from 'lit-html';
+import { html, LitElement, unsafeCSS, nothing } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 import { TestModel } from 'mutation-testing-metrics';
 import { getContextClassForTestStatus } from '../../lib/htmlHelpers';
 import style from './test.scss';

@@ -13,8 +13,9 @@ describe(MutationTestReportFileComponent.name, () => {
 
   beforeEach(async () => {
     fileResult = createFileResult();
-    sut = new CustomElementFixture('mte-file');
+    sut = new CustomElementFixture('mte-file', { autoConnect: false });
     sut.element.model = fileResult;
+    sut.connect();
     await sut.whenStable();
   });
 

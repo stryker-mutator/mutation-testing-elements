@@ -1,4 +1,5 @@
-import { customElement, html, LitElement, property, PropertyValues, unsafeCSS } from 'lit-element';
+import { html, LitElement, PropertyValues, unsafeCSS } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 import { MetricsResult, TestFileModel, TestMetrics, TestModel } from 'mutation-testing-metrics';
 import { MteCustomEvent } from '../../lib/custom-events';
 import { bootstrap } from '../../style';

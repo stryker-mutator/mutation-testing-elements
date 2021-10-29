@@ -1,5 +1,5 @@
 import { AssertionError } from 'chai';
-import { LitElement } from 'lit-element';
+import { LitElement } from 'lit';
 import { CustomEventMap, MteCustomEvent } from '../../../src/lib/custom-events';
 
 interface CustomElementFixtureOptions {

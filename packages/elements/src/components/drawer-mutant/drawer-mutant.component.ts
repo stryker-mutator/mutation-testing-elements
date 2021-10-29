@@ -1,4 +1,5 @@
-import { customElement, html, LitElement, property, unsafeCSS } from 'lit-element';
+import { html, LitElement, unsafeCSS } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 import { MutantModel, TestModel } from 'mutation-testing-metrics';
 import { MutantStatus } from 'mutation-testing-report-schema/api';
 import { describeLocation, getEmojiForStatus, plural, renderIf, renderIfPresent } from '../../lib/htmlHelpers';
