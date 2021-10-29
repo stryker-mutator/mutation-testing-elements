@@ -1,4 +1,5 @@
-import { customElement, LitElement, property, html, unsafeCSS } from 'lit-element';
+import { LitElement, html, unsafeCSS } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 import { bootstrap } from '../../style';
 import { getContextClassForStatus } from '../../lib/htmlHelpers';
 import style from './mutant.scss';

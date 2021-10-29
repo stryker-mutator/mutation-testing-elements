@@ -1,8 +1,9 @@
-import { customElement, LitElement, property, PropertyValues, html, unsafeCSS } from 'lit-element';
+import { LitElement, PropertyValues, html, unsafeCSS } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { repeat } from 'lit/directives/repeat.js';
 import { bootstrap } from '../../style';
 import style from './state-filter.scss';
 import { createCustomEvent } from '../../lib/custom-events';
-import { repeat } from 'lit-html/directives/repeat';
 
 export interface StateFilter<TStatus> {
   status: TStatus;

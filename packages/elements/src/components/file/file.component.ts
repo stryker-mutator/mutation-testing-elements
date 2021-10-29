@@ -1,5 +1,7 @@
-import { LitElement, html, property, customElement, unsafeCSS, PropertyValues } from 'lit-element';
-import { unsafeHTML } from 'lit-html/directives/unsafe-html';
+import { LitElement, html, unsafeCSS, PropertyValues } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { createRef, ref } from 'lit/directives/ref.js';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { MutationTestReportMutantComponent } from '../mutant/mutant.component';
 import { StateFilter } from '../state-filter/state-filter.component';
 import { bootstrap, prismjs } from '../../style';
@@ -20,6 +22,8 @@ export class MutationTestReportFileComponent extends LitElement {
   public model!: FileUnderTestModel;
 
   public static styles = [prismjs, bootstrap, unsafeCSS(style)];
+
+  private codeRef = createRef<HTMLElement>();
 
   private readonly expandAll = () => {
     this.forEachMutantComponent((mutantComponent) => (mutantComponent.expand = true));
@@ -55,9 +59,9 @@ export class MutationTestReportFileComponent extends LitElement {
             @expand-all="${this.expandAll}"
             @collapse-all="${this.collapseAll}"
           ></mte-state-filter>
-          <pre id="report-code-block" class="mte-line-numbers"><code class="language-${this.model.language}">${unsafeHTML(
+          <pre id="report-code-block" class="mte-line-numbers"><code ${ref(this.codeRef)} class="language-${this.model.language}"><span>${unsafeHTML(
             markMutants(this.model)
-          )}</code></pre>
+          )}</span></code></pre>
         </div>
       </div>
     `;
@@ -67,9 +71,9 @@ export class MutationTestReportFileComponent extends LitElement {
     const diffOldClass = 'diff-old';
     const diffNewClass = 'diff-new';
 
-    const code = this.shadowRoot!.querySelector('code');
-    if (code) {
-      highlightElement(code);
+    if (this.codeRef.value && this.model) {
+      const codeElement = this.codeRef.value;
+      highlightElement(codeElement);
 
       // Prism-js's `highlightElement` creates a copy of the DOM tree to do its magic.
       // Now that the code is highlighted, we can bind the mutants
@@ -78,21 +82,21 @@ export class MutationTestReportFileComponent extends LitElement {
         mutantComponent.addEventListener('mutant-selected', (ev: Event) => {
           const mutant = (ev as MteCustomEvent<'mutant-selected'>).detail.mutant;
           if (mutant) {
-            this.removeCurrentDiff(code, diffOldClass, diffNewClass);
+            this.removeCurrentDiff(codeElement, diffOldClass, diffNewClass);
             if (this.currentMutantId === mutant.id) {
               this.currentMutantId = undefined;
               return;
             }
 
             if (this.currentMutantId) {
-              const currentMutant = code.querySelectorAll(`mte-mutant[mutant-id="${this.currentMutantId}"]`)[0];
+              const currentMutant = codeElement.querySelectorAll(`mte-mutant[mutant-id="${this.currentMutantId}"]`)[0];
               if (currentMutant instanceof MutationTestReportMutantComponent) {
                 currentMutant.expand = !currentMutant.expand;
               }
             }
 
             this.currentMutantId = mutant.id;
-            const lines = code.querySelectorAll('span.mte-line');
+            const lines = codeElement.querySelectorAll('span.mte-line');
             for (let i = mutant.location.start.line - 1; i < mutant.location.end.line; i++) {
               lines.item(i).classList.add(diffOldClass);
             }
@@ -116,7 +120,7 @@ export class MutationTestReportFileComponent extends LitElement {
     newDiffLines.forEach((newDiffLine) => newDiffLine.remove());
   }
 
-  public updated(changes: PropertyValues) {
+  public update(changes: PropertyValues) {
     if (changes.has('model') && this.model) {
       this.filters = [
         MutantStatus.Killed,
@@ -136,5 +140,6 @@ export class MutationTestReportFileComponent extends LitElement {
           context: getContextClassForStatus(status),
         }));
     }
+    super.update(changes);
   }
 }

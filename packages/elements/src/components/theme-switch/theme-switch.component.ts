@@ -1,4 +1,5 @@
-import { customElement, LitElement, html, unsafeCSS, property } from 'lit-element';
+import { LitElement, html, unsafeCSS } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 import { createCustomEvent } from '../../lib/custom-events';
 import { bootstrap } from '../../style';
 import style from './theme-switch.scss';
