@@ -55,7 +55,7 @@ export class MutationTestReportFileComponent extends LitElement {
             @expand-all="${this.expandAll}"
             @collapse-all="${this.collapseAll}"
           ></mte-state-filter>
-          <pre id="report-code-block" class="line-numbers"><code class="language-${this.model.language}">${unsafeHTML(
+          <pre id="report-code-block" class="mte-line-numbers"><code class="language-${this.model.language}">${unsafeHTML(
             markMutants(this.model)
           )}</code></pre>
         </div>

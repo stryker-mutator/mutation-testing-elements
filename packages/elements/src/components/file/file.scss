@@ -10,10 +10,16 @@
   // Don't show scrollbar in code block, the page already scrolls
   // Also let the popup appear outside the code block boundaries
   overflow: visible;
+  padding-left: 3.8em;
 }
 
 mte-mutant {
   background-color: transparent;
+}
+
+.mte-line::before {
+  counter-increment: mte-line-number;
+  content: counter(mte-line-number);
 }
 
 .diff-old {
@@ -21,4 +27,13 @@ mte-mutant {
 }
 .diff-new {
   background-color: darkslategray;
+}
+
+.mte-line-numbers {
+  counter-reset: mte-line-number;
+}
+
+code {
+  
+  border-right: 1px solid white;
 }
