@@ -7,7 +7,7 @@ All Stryker versions support a variety of different mutators. We've aligned on a
 
 ## Support
 
-| Mutator                                           | [StrykerJS](../stryker-js/introduction.md) | [Stryker.NET](../stryker-net/Configuration.md) | [Stryker4s](../stryker4s/getting-started.md) |
+| Mutator                                           | [StrykerJS](../stryker-js/introduction.md) | [Stryker.NET](../stryker-net/getting-started.md) | [Stryker4s](../stryker4s/getting-started.md) |
 | ------------------------------------------------- | :----------------------------------------: | :--------------------------------------------: | :------------------------------------------: |
 | [Arithmetic Operator](#arithmetic-operator)       |                     ✅                     |                       ✅                       |                      ❌                      |
 | [Array Declaration](#array-declaration)           |                     ✅                     |                       ✅                       |                      ❌                      |
