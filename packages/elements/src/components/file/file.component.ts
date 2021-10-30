@@ -61,7 +61,7 @@ export class MutationTestReportFileComponent extends LitElement {
             @collapse-all="${this.collapseAll}"
           ></mte-state-filter>
           <pre id="report-code-block" class="mte-line-numbers"><code ${ref(this.codeRef)} class="language-${this.model
-            .language}"><span class="innerCode" ${ref(this.innerCodeRef)}>${unsafeHTML(markMutants2(this.model))}</span></code></pre>
+            .language}"><table class="innerCode" ${ref(this.innerCodeRef)}>${unsafeHTML(markMutants2(this.model))}</table></code></pre>
         </div>
       </div>
     `;
@@ -96,12 +96,17 @@ export class MutationTestReportFileComponent extends LitElement {
             }
 
             this.currentMutantId = mutant.id;
-            const lines = codeElement.querySelectorAll('span.mte-line');
+            const lines = codeElement.querySelectorAll('tr');
             for (let i = mutant.location.start.line - 1; i < mutant.location.end.line; i++) {
               lines.item(i).classList.add(diffOldClass);
             }
             const mutatedHighlighted = highlight(mutant.getMutatedLines(), languages[this.model.language], this.model.language);
-            lines.item(mutant.location.end.line - 1).insertAdjacentHTML('afterend', `<span class="${diffNewClass}">${mutatedHighlighted}</span>`);
+            lines
+              .item(mutant.location.end.line - 1)
+              .insertAdjacentHTML(
+                'afterend',
+                `<tr class="${diffNewClass}"><td class="empty-line-number"></td><td class="line-marker"></td><td>${mutatedHighlighted}</td></tr>`
+              );
           }
         });
       });

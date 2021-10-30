@@ -10,41 +10,65 @@
   // Don't show scrollbar in code block, the page already scrolls
   // Also let the popup appear outside the code block boundaries
   overflow: visible;
-  // padding-left: 3.8em;
+  background: var(--prism-background);
+  border: 1px solid var(--prism-border);
 }
 
 mte-mutant {
   background-color: transparent;
+  margin-left: 1px;
 }
 
-// .mte-line::before {
-//   counter-increment: mte-line-number;
-//   content: counter(mte-line-number);
-//   color: #999;
-//   text-decoration: none;
-//   font-style: normal;
-//   border-right: #999 1px solid;
-//   line-height: 1em;
-// }
-// .innerCode {
-//   display: grid;
-// }
+.innerCode {
+  border-spacing: 0;
+}
 
 .mte-line {
   display: block;
-}
-
-.diff-old {
-  background-color: darkred;
-}
-.diff-new {
-  background-color: darkslategray;
 }
 
 .mte-line-numbers {
   counter-reset: mte-line-number;
 }
 
-code {
-  border-right: 1px solid white;
+.line-number {
+  text-align: right;
+  padding: 0px 10px 0px 15px;
+  color: var(--mut-line-number);
+  counter-increment: mte-line-number;
+}
+
+.line-number::before {
+  content: counter(mte-line-number);
+}
+
+.line-marker::before {
+  content: ' ';
+  padding: 0px 5px;
+}
+
+.diff-old {
+  background-color: var(--mut-diff-del-bg);
+}
+
+.diff-old .line-number {
+  background-color: var(--mut-diff-del-bg-line-number);
+  color: var(--mut-diff-del-line-number);
+}
+
+.diff-old .line-marker::before {
+  content: '-';
+}
+
+.diff-new {
+  background-color: var(--mut-diff-add-bg);
+}
+
+.diff-new .empty-line-number {
+  background-color: var(--mut-diff-add-bg-line-number);
+  color: var(--mut-diff-add-line-number);
+}
+
+.diff-new .line-marker::before {
+  content: '+';
 }
