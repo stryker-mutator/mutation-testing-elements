@@ -58,7 +58,7 @@ export function determineLanguage(fileName: string): ProgrammingLanguage | undef
 
 export function markMutants3(model: FileResult): string {
   const source = highlight(model.source, languages[model.language], model.language);
-  const lineStart = '<tr><td class="mte-line-number"></td><td class="mte-code">';
+  const lineStart = '<tr><td class="line-number"></td><td class="line-marker"></td><td class="mte-code">';
   const lineEnd = '</td></tr>';
   const startedMutants = new Set<MutantResult>();
   const mutantsToPlace = new Set(model.mutants);

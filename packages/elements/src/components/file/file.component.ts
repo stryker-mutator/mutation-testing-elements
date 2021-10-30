@@ -5,7 +5,7 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { MutationTestReportMutantComponent } from '../mutant/mutant.component';
 import { StateFilter } from '../state-filter/state-filter.component';
 import { bootstrap, prismjs } from '../../style';
-import { markMutants2 } from '../../lib/code-helpers';
+import { markMutants3 } from '../../lib/code-helpers';
 import { MutantStatus } from 'mutation-testing-report-schema/api';
 import { highlight, languages } from 'prismjs/components/prism-core';
 import style from './file.scss';
@@ -61,7 +61,7 @@ export class MutationTestReportFileComponent extends LitElement {
             @collapse-all="${this.collapseAll}"
           ></mte-state-filter>
           <pre id="report-code-block" class="mte-line-numbers"><code ${ref(this.codeRef)} class="language-${this.model
-            .language}"><table class="innerCode" ${ref(this.innerCodeRef)}>${unsafeHTML(markMutants2(this.model))}</table></code></pre>
+            .language}"><table class="innerCode" ${ref(this.innerCodeRef)}>${unsafeHTML(markMutants3(this.model))}</table></code></pre>
         </div>
       </div>
     `;
@@ -73,7 +73,6 @@ export class MutationTestReportFileComponent extends LitElement {
 
     if (this.codeRef.value && this.model) {
       const codeElement = this.codeRef.value;
-      // highlightElement(codeElement);
 
       // Prism-js's `highlightElement` creates a copy of the DOM tree to do its magic.
       // Now that the code is highlighted, we can bind the mutants
