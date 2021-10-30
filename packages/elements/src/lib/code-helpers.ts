@@ -61,7 +61,7 @@ export function markMutants2(model: FileResult): string {
   const lines = highlightedCode.split('\n');
   return lines.reduce(
     ({ classes, result }, line, lineNr) => {
-      result += '<span class="mte-line">';
+      result += '<tr><td class="line-number"></td><td class="line-marker"></td><td class="mte-line">';
       if (classes.length) {
         result += `<span class="${classes}">`;
       }
@@ -95,7 +95,7 @@ export function markMutants2(model: FileResult): string {
       mutants.forEach((mutant) => {
         result += `<mte-mutant mutant-id="${mutant.id}"></mte-mutant>`;
       });
-      result += '</span>';
+      result += '</td></tr>';
       return { classes, result };
     },
     { classes: '', result: '' }
