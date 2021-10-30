@@ -2,6 +2,7 @@ import { MutantResult, Position, FileResult } from 'mutation-testing-report-sche
 import { TestModel } from 'mutation-testing-metrics';
 import { BackgroundColorCalculator } from './BackgroundColorCalculator';
 import { escapeHtml } from './htmlHelpers';
+import { highlight, languages } from 'prismjs/components/prism-core';
 
 export enum ProgrammingLanguage {
   csharp = 'cs',
@@ -53,6 +54,58 @@ export function determineLanguage(fileName: string): ProgrammingLanguage | undef
     default:
       return undefined;
   }
+}
+
+export function markMutants2(model: FileResult): string {
+  const highlightedCode = highlight(model.source, languages[model.language], model.language);
+  const lines = highlightedCode.split('\n');
+  return lines.reduce(
+    ({ classes, result }, line, lineNr) => {
+      result += '<span class="mte-line">';
+      if (classes.length) {
+        result += `<span class="${classes}">`;
+      }
+      let spanOpenMatch: RegExpExecArray | null;
+      let spanCloseMatch: RegExpExecArray | null = null;
+      let offset = 0;
+      while ((spanOpenMatch = /<span\s+class="([^"]+)">/.exec(line.substr(offset)))) {
+        offset += spanOpenMatch.index + spanOpenMatch[0].length;
+        spanCloseMatch = /<\/\s*span>/.exec(line.substr(offset));
+        if (spanCloseMatch) {
+          // Search for new open tag
+          spanOpenMatch = null;
+          offset += spanCloseMatch.index + spanCloseMatch[0].length;
+        } else {
+          break;
+        }
+      }
+      result += line;
+      if (spanOpenMatch) {
+        const [, newClasses] = spanOpenMatch;
+        result += '</span>';
+        classes = newClasses;
+      } else if (!spanCloseMatch && classes.length) {
+        if (/<\/\s*span>/.exec(line.substr(offset))) {
+          classes = '';
+        } else {
+          result += '</span>';
+        }
+      }
+      const mutants = model.mutants.filter((mutant) => mutant.location.start.line === lineNr + 1);
+      mutants.forEach((mutant) => {
+        result += `<mte-mutant mutant-id="${mutant.id}"></mte-mutant>`;
+      });
+      result += '</span>';
+      return { classes, result };
+    },
+    { classes: '', result: '' }
+  ).result;
+  // return lines
+  //   .map((line, lineNr) => {
+  //     const mutants = model.mutants.filter((mutant) => mutant.location.start.line === lineNr + 1);
+  //     return `<span class="mte-line">${line}${mutants.map((mutant) => `<mte-mutant mutant-id="${mutant.id}"></mte-mutant>`).join('')}</span>`;
+  //   })
+  //   .join('');
 }
 
 /**
@@ -162,7 +215,7 @@ function walkString(source: string, fn: (char: string, position: Position) => st
     if (currentChar === NEW_LINE) {
       line++;
       column = COLUMN_START_INDEX;
-      builder.push(NEW_LINE);
+      // builder.push(NEW_LINE);
       builder.push(fnNewLine());
       continue;
     }

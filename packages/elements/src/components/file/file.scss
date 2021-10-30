@@ -10,16 +10,28 @@
   // Don't show scrollbar in code block, the page already scrolls
   // Also let the popup appear outside the code block boundaries
   overflow: visible;
-  padding-left: 3.8em;
+  // padding-left: 3.8em;
 }
 
 mte-mutant {
   background-color: transparent;
 }
 
-.mte-line::before {
-  counter-increment: mte-line-number;
-  content: counter(mte-line-number);
+// .mte-line::before {
+//   counter-increment: mte-line-number;
+//   content: counter(mte-line-number);
+//   color: #999;
+//   text-decoration: none;
+//   font-style: normal;
+//   border-right: #999 1px solid;
+//   line-height: 1em;
+// }
+// .innerCode {
+//   display: grid;
+// }
+
+.mte-line {
+  display: block;
 }
 
 .diff-old {
@@ -34,6 +46,5 @@ mte-mutant {
 }
 
 code {
-  
   border-right: 1px solid white;
 }
