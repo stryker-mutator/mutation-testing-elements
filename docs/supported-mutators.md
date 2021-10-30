@@ -7,24 +7,24 @@ All Stryker versions support a variety of different mutators. We've aligned on a
 
 ## Support
 
-| Mutator                                           | [StrykerJS](../stryker-js/introduction.md) | [Stryker.NET](../stryker-net/Configuration.md) | [Stryker4s](../stryker4s/getting-started.md) |
-| ------------------------------------------------- | :----------------------------------------: | :--------------------------------------------: | :------------------------------------------: |
-| [Arithmetic Operator](#arithmetic-operator)       |                     ✅                     |                       ✅                       |                      ❌                      |
-| [Array Declaration](#array-declaration)           |                     ✅                     |                       ✅                       |                      ❌                      |
-| [Assignment Expression](#assignment-expression)   |                     ❌                     |                       ✅                       |                     n/a                      |
-| [Block Statement](#block-statement)               |                     ✅                     |                       ❌                       |                      ❌                      |
-| [Boolean Literal](#boolean-literal)               |                     ✅                     |                       ✅                       |                     ️✅                      |
-| [Checked Statement](#checked-statement)           |                    n/a                     |                       ✅                       |                     n/a                      |
-| [Conditional Expression](#conditional-expression) |                     ✅                     |                       ✅                       |                      ✅                      |
-| [Equality Operator](#equality-operator)           |                     ✅                     |                       ✅                       |                      ✅                      |
-| [Logical Operator](#logical-operator)             |                     ✅                     |                       ✅                       |                      ✅                      |
-| [Method Expression](#method-expression)           |                     ❌                     |                       ✅                       |                      ✅                      |
-| [Object literal](#object-literal)                 |                     ✅                     |                      n/a                       |                     n/a                      |
-| [Optional chaining](#optional-chaining)           |                     ✅                     |                       ❌                       |                     n/a                      |
-| [Regex](#regex)                                   |                     ✅                     |                       ✅                       |                      ✅                      |
-| [String Literal](#string-literal)                 |                     ✅                     |                       ✅                       |                      ✅                      |
-| [Unary Operator](#unary-operator)                 |                     ✅                     |                       ✅                       |                      ❌                      |
-| [Update Operator](#update-operator)               |                     ✅                     |                       ✅                       |                     n/a                      |
+| Mutator                                           | [StrykerJS](../stryker-js/introduction.md) | [Stryker.NET](../stryker-net/getting-started.md) | [Stryker4s](../stryker4s/getting-started.md) |
+| ------------------------------------------------- | :----------------------------------------: | :----------------------------------------------: | :------------------------------------------: |
+| [Arithmetic Operator](#arithmetic-operator)       |                     ✅                     |                        ✅                        |                      ❌                      |
+| [Array Declaration](#array-declaration)           |                     ✅                     |                        ✅                        |                      ❌                      |
+| [Assignment Expression](#assignment-expression)   |                     ❌                     |                        ✅                        |                     n/a                      |
+| [Block Statement](#block-statement)               |                     ✅                     |                        ❌                        |                      ❌                      |
+| [Boolean Literal](#boolean-literal)               |                     ✅                     |                        ✅                        |                     ️✅                      |
+| [Checked Statement](#checked-statement)           |                    n/a                     |                        ✅                        |                     n/a                      |
+| [Conditional Expression](#conditional-expression) |                     ✅                     |                        ✅                        |                      ✅                      |
+| [Equality Operator](#equality-operator)           |                     ✅                     |                        ✅                        |                      ✅                      |
+| [Logical Operator](#logical-operator)             |                     ✅                     |                        ✅                        |                      ✅                      |
+| [Method Expression](#method-expression)           |                     ❌                     |                        ✅                        |                      ✅                      |
+| [Object literal](#object-literal)                 |                     ✅                     |                       n/a                        |                     n/a                      |
+| [Optional chaining](#optional-chaining)           |                     ✅                     |                        ❌                        |                     n/a                      |
+| [Regex](#regex)                                   |                     ✅                     |                        ✅                        |                      ✅                      |
+| [String Literal](#string-literal)                 |                     ✅                     |                        ✅                        |                      ✅                      |
+| [Unary Operator](#unary-operator)                 |                     ✅                     |                        ✅                        |                      ❌                      |
+| [Update Operator](#update-operator)               |                     ✅                     |                        ✅                        |                     n/a                      |
 
 ## Arithmetic Operator
 
