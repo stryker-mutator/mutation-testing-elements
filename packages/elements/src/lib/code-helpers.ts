@@ -56,6 +56,161 @@ export function determineLanguage(fileName: string): ProgrammingLanguage | undef
   }
 }
 
+export function markMutants3(model: FileResult): string {
+  const source = highlight(model.source, languages[model.language], model.language);
+  const lineStart = '<tr><td class="mte-line-number"></td><td class="mte-code">';
+  const lineEnd = '</td></tr>';
+  const startedMutants = new Set<MutantResult>();
+  const mutantsToPlace = new Set(model.mutants);
+  let result = `<table>${lineStart}`;
+  const currentPosition: Position = {
+    column: 1,
+    line: 1,
+  };
+  let currentHighlightClasses = '';
+  const backgroundColorCalculator = new BackgroundColorCalculator();
+  let nrOfSpans = 0;
+  for (let i = 0; i < source.length; i++) {
+    const char = source[i];
+    registerMutants();
+    switch (char) {
+      case CARRIAGE_RETURN:
+        break;
+      case NEW_LINE:
+        {
+          result += new Array(nrOfSpans).fill('</span>').join('');
+          model.mutants
+            .filter((mutant) => mutant.location.start.line === currentPosition.line)
+            .forEach((mutant) => {
+              result += `<mte-mutant mutant-id="${mutant.id}"></mte-mutant>`;
+            });
+          currentPosition.line++;
+          currentPosition.column = 1;
+          result += `${lineEnd}${lineStart}`;
+          const bg = backgroundColorCalculator.determineBackground();
+          if (bg) {
+            result += `<span class="bg-${bg}">`;
+          }
+          if (currentHighlightClasses.length) {
+            result += `<span class="${currentHighlightClasses}">`;
+          }
+        }
+        break;
+      case LT:
+        {
+          const { elementName, attributes, pos, isClosing } = parseTag(i);
+          if (elementName === 'span') {
+            if (isClosing) {
+              currentHighlightClasses = '';
+              nrOfSpans--;
+            }
+            if (attributes.class) {
+              nrOfSpans++;
+              currentHighlightClasses = attributes.class;
+            }
+          }
+          result += source.substring(i, pos + 1);
+          i = pos;
+        }
+        break;
+      default:
+        currentPosition.column++;
+        result += source[i];
+        break;
+    }
+  }
+  result += `${lineEnd}</table>`;
+  return result;
+
+  function isWhitespace(char: string) {
+    return char === NEW_LINE || char === SPACE || char === TAB;
+  }
+
+  function registerMutants() {
+    let colorChanged = false;
+    for (const mutant of startedMutants) {
+      if (gte(currentPosition, mutant.location.end)) {
+        backgroundColorCalculator.markMutantEnd(mutant);
+        startedMutants.delete(mutant);
+        colorChanged = true;
+      }
+    }
+    for (const mutant of mutantsToPlace) {
+      if (gte(currentPosition, mutant.location.start)) {
+        backgroundColorCalculator.markMutantStart(mutant);
+        startedMutants.add(mutant);
+        mutantsToPlace.delete(mutant);
+        colorChanged = true;
+      }
+    }
+    if (colorChanged) {
+      result += new Array(nrOfSpans).fill('</span>').join('');
+      result += `<span class="bg-${backgroundColorCalculator.determineBackground() ?? ''}">`;
+      if (currentHighlightClasses.length) {
+        result += `<span class="${currentHighlightClasses}">`;
+      }
+    }
+  }
+
+  function parseTag(startPos: number) {
+    if (source[startPos] === '<') {
+      startPos++;
+    }
+    let isClosing = false;
+    if (source[startPos] === '/') {
+      isClosing = true;
+      startPos++;
+    }
+    let i;
+    for (i = startPos; !isWhitespace(source[i]) && source[i] !== GT && i < source.length; i++);
+    const { attributes, pos } = parseAttributes(i);
+    return { elementName: source.substring(startPos, i), attributes, pos, isClosing };
+  }
+
+  function parseAttributes(startPos: number) {
+    const attributes: Record<string, string> = Object.create(null);
+    for (let i = startPos; i < source.length; i++) {
+      const char = source[i];
+      switch (char) {
+        case ' ':
+        case '\t':
+        case '\n':
+          continue;
+        case '>':
+          return { attributes, pos: i };
+        default: {
+          const { name, value, pos } = parseAttribute(i);
+          attributes[name] = value;
+          i = pos;
+          break;
+        }
+      }
+    }
+    throw new Error('Parse attributes error');
+  }
+
+  function parseAttribute(startPos: number) {
+    let i;
+    for (i = startPos; source[i] !== '='; i++);
+    const name = source.substring(startPos, i);
+    i++;
+    const { value, pos } = parseAttributeValue(i);
+    return { name, value, pos };
+  }
+
+  function parseAttributeValue(startPos: number) {
+    if (source[startPos] === '"') {
+      startPos++;
+    }
+    let i;
+    for (i = startPos; source[i] !== '"' && i < source.length; i++);
+    return {
+      value: source.substring(startPos, i),
+      pos: i,
+    };
+  }
+}
+
 export function markMutants2(model: FileResult): string {
   const highlightedCode = highlight(model.source, languages[model.language], model.language);
   const lines = highlightedCode.split('\n');
@@ -193,6 +348,10 @@ export function markTests(source: string, tests: TestModel[]): string {
 export const COLUMN_START_INDEX = 1;
 export const LINE_START_INDEX = 1;
 export const NEW_LINE = '\n';
+export const SPACE = ' ';
+export const LT = '<';
+export const GT = '>';
+export const TAB = '\t';
 export const CARRIAGE_RETURN = '\r';
 export function lines(content: string) {
   return content.split(NEW_LINE).map((line) => (line.endsWith(CARRIAGE_RETURN) ? line.substr(0, line.length - 1) : line));
