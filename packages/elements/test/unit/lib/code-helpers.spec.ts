@@ -1,8 +1,8 @@
-import { determineLanguage, lines, markMutants, markTests, ProgrammingLanguage } from '../../../src/lib/code-helpers';
+import { determineLanguage, highlightedCodeTableWithMutants, lines, markTests, ProgrammingLanguage } from '../../../src/lib/code-helpers';
 import { MutantStatus, FileResult } from 'mutation-testing-report-schema/api';
 import { expect } from 'chai';
 import { TestModel } from 'mutation-testing-metrics';
-import { createTestDefinition } from '../../helpers/factory';
+import { createFileResult, createTestDefinition } from '../../helpers/factory';
 
 describe(lines.name, () => {
   it('should split on unix line endings', () => {
@@ -14,34 +14,21 @@ describe(lines.name, () => {
   });
 });
 
-describe(markMutants.name, () => {
-  it('should insert mte-mutant and color spans whitespace significant', () => {
-    const input: FileResult = {
+describe.only(highlightedCodeTableWithMutants.name, () => {
+  it('should highlight javascript code', () => {
+    const input: FileResult = createFileResult({
       language: 'javascript',
-      mutants: [
-        {
-          id: '1',
-          location: { end: { column: 17, line: 1 }, start: { column: 14, line: 1 } },
-          mutatorName: 'Foo',
-          replacement: 'foo',
-          status: MutantStatus.Killed,
-        },
-      ],
-      source: `const foo = 'bar';
+      source: "const foo = 'bar';",
+      mutants: [],
+    });
 
-      function add(a, b) {
-        return a + b;
-      }`
-        .replace(/ {6}/g, '')
-        .trim(), // strip the padding left
-    };
-    const actualCode = markMutants(input);
-    expect(actualCode).eq(
-      '<span>const foo = &#039;</span><mte-mutant mutant-id="1"><span class="bg-success-light">bar</span></mte-mutant><span class="bg-">&#039;;\n\nfunction add(a, b) {\n  return a + b;\n}</span>'
+    const actualCode = highlightedCodeTableWithMutants(input);
+    expect(actualCode).contains(
+      `<span class="token keyword">const</span> foo <span class="token operator">=</span> <span class="token string">'bar'</span><span class="token punctuation">;</span>`
     );
   });
 
-  it('should insert mte-mutant elements in correct locations', () => {
+  it('should insert mte-mutant elements at the end of the line', () => {
     const input: FileResult = {
       language: 'javascript',
       mutants: [
@@ -68,9 +55,9 @@ describe(markMutants.name, () => {
         .replace(/ {6}/g, '')
         .trim(), // strip the padding left
     };
-    const actualCode = markMutants(input);
-    expect(actualCode).include('<mte-mutant mutant-id="1"><span class="bg-success-light">add</span></mte-mutant>');
-    expect(actualCode).include('<mte-mutant mutant-id="2"><span class="bg-danger-light">;\n</span></mte-mutant>');
+    const actualCode = highlightedCodeTableWithMutants(input);
+    expect(actualCode).include('add <mte-mutant mutant-id="1">');
+    expect(actualCode).include('a + b;<mte-mutant mutant-id="2"></mte-mutant>');
   });
 });
 

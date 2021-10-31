@@ -1,5 +1,5 @@
 import { MutantResult, Position, FileResult } from 'mutation-testing-report-schema/api';
-import { TestModel } from 'mutation-testing-metrics';
+import { MutantModel, TestModel } from 'mutation-testing-metrics';
 import { BackgroundColorCalculator } from './BackgroundColorCalculator';
 import { escapeHtml } from './htmlHelpers';
 import { highlight, languages } from 'prismjs/components/prism-core';
@@ -56,87 +56,42 @@ export function determineLanguage(fileName: string): ProgrammingLanguage | undef
   }
 }
 
-export function markMutants3(model: FileResult): string {
-  const source = highlight(model.source, languages[model.language], model.language);
-  const lineStart = '<tr><td class="line-number"></td><td class="line-marker"></td><td class="mte-code">';
-  const lineEnd = '</td></tr>';
+/**
+ * Hightlights the code and inserts the mutants as `<mte-mutant>` elements.
+ * Code will be inside an html table that looks like this:
+ *
+ * ```html
+ * <table>
+ *   <tr>
+ *     <td class="line-number"></td>
+ *     <td class="line-marker"></td>
+ *     <td class="code"> highlighted code</td>
+ *   </tr>
+ * </table>
+ * ```
+ *
+ * @param model The file result
+ * @returns highlighted code with mutant
+ */
+export function highlightedCodeTableWithMutants(model: FileResult): string {
+  const highlightedSource = highlight(model.source, languages[model.language], model.language);
   const startedMutants = new Set<MutantResult>();
   const mutantsToPlace = new Set(model.mutants);
-  let result = `<table>${lineStart}`;
-  const currentPosition: Position = {
-    column: 1,
-    line: 1,
-  };
-  let currentHighlightClasses = '';
   const backgroundColorCalculator = new BackgroundColorCalculator();
-  let nrOfSpans = 0;
-  for (let i = 0; i < source.length; i++) {
-    const char = source[i];
-    registerMutants();
-    switch (char) {
-      case CARRIAGE_RETURN:
-        break;
-      case NEW_LINE:
-        {
-          result += new Array(nrOfSpans).fill('</span>').join('');
-          model.mutants
-            .filter((mutant) => mutant.location.start.line === currentPosition.line)
-            .forEach((mutant) => {
-              result += `<mte-mutant mutant-id="${mutant.id}"></mte-mutant>`;
-            });
-          currentPosition.line++;
-          currentPosition.column = 1;
-          result += `${lineEnd}${lineStart}`;
-          const bg = backgroundColorCalculator.determineBackground();
-          if (bg) {
-            result += `<span class="bg-${bg}">`;
-          }
-          if (currentHighlightClasses.length) {
-            result += `<span class="${currentHighlightClasses}">`;
-          }
-        }
-        break;
-      case LT:
-        {
-          const { elementName, attributes, pos, isClosing } = parseTag(i);
-          if (elementName === 'span') {
-            if (isClosing) {
-              currentHighlightClasses = '';
-              nrOfSpans--;
-            }
-            if (attributes.class) {
-              nrOfSpans++;
-              currentHighlightClasses = attributes.class;
-            }
-          }
-          result += source.substring(i, pos + 1);
-          i = pos;
-        }
-        break;
-      default:
-        currentPosition.column++;
-        result += source[i];
-        break;
-    }
-  }
-  result += `${lineEnd}</table>`;
-  return result;
+  const lineStart = '<tr><td class="line-number"></td><td class="line-marker"></td><td class="code">';
+  const lineEnd = '</td></tr>';
 
-  function isWhitespace(char: string) {
-    return char === NEW_LINE || char === SPACE || char === TAB;
-  }
-
-  function registerMutants() {
+  const lines = transformHighlightedLines(highlightedSource, (position) => {
     let colorChanged = false;
     for (const mutant of startedMutants) {
-      if (gte(currentPosition, mutant.location.end)) {
+      if (gte(position, mutant.location.end)) {
         backgroundColorCalculator.markMutantEnd(mutant);
         startedMutants.delete(mutant);
         colorChanged = true;
       }
     }
     for (const mutant of mutantsToPlace) {
-      if (gte(currentPosition, mutant.location.start)) {
+      if (gte(position, mutant.location.start)) {
         backgroundColorCalculator.markMutantStart(mutant);
         startedMutants.add(mutant);
         mutantsToPlace.delete(mutant);
@@ -144,123 +99,52 @@ export function markMutants3(model: FileResult): string {
       }
     }
     if (colorChanged) {
-      result += new Array(nrOfSpans).fill('</span>').join('');
-      result += `<span class="bg-${backgroundColorCalculator.determineBackground() ?? ''}">`;
-      if (currentHighlightClasses.length) {
-        result += `<span class="${currentHighlightClasses}">`;
-      }
+      return {
+        markerClass: backgroundColorCalculator.determineBackground(),
+      };
     }
+    return;
+  });
+  function emitMutants(lineNr: number) {
+    return model.mutants
+      .filter((mutant) => mutant.location.start.line === lineNr + 1)
+      .map((mutant) => `<mte-mutant mutant-id="${mutant.id}"></mte-mutant>`)
+      .join('');
   }
-
-  function parseTag(startPos: number) {
-    if (source[startPos] === '<') {
-      startPos++;
-    }
-    let isClosing = false;
-    if (source[startPos] === '/') {
-      isClosing = true;
-      startPos++;
-    }
-    let i;
-    for (i = startPos; !isWhitespace(source[i]) && source[i] !== GT && i < source.length; i++);
-    const { attributes, pos } = parseAttributes(i);
-    return { elementName: source.substring(startPos, i), attributes, pos, isClosing };
-  }
-
-  function parseAttributes(startPos: number) {
-    const attributes: Record<string, string> = Object.create(null);
-    for (let i = startPos; i < source.length; i++) {
-      const char = source[i];
-      switch (char) {
-        case ' ':
-        case '\t':
-        case '\n':
-          continue;
-        case '>':
-          return { attributes, pos: i };
-        default: {
-          const { name, value, pos } = parseAttribute(i);
-          attributes[name] = value;
-          i = pos;
-          break;
-        }
-      }
-    }
-    throw new Error('Parse attributes error');
-  }
-
-  function parseAttribute(startPos: number) {
-    let i;
-    for (i = startPos; source[i] !== '='; i++);
-    const name = source.substring(startPos, i);
-    i++;
-    const { value, pos } = parseAttributeValue(i);
-    return { name, value, pos };
-  }
-
-  function parseAttributeValue(startPos: number) {
-    if (source[startPos] === '"') {
-      startPos++;
-    }
-    let i;
-    for (i = startPos; source[i] !== '"' && i < source.length; i++);
-    return {
-      value: source.substring(startPos, i),
-      pos: i,
-    };
-  }
+  const tableBody = lines.map((line, lineNr) => `${lineStart}${line}${emitMutants(lineNr)}${lineEnd}`).join('');
+  return `<table>${tableBody}</table>`;
 }
 
-export function markMutants2(model: FileResult): string {
-  const highlightedCode = highlight(model.source, languages[model.language], model.language);
-  const lines = highlightedCode.split('\n');
-  return lines.reduce(
-    ({ classes, result }, line, lineNr) => {
-      result += '<tr><td class="line-number"></td><td class="line-marker"></td><td class="mte-line">';
-      if (classes.length) {
-        result += `<span class="${classes}">`;
-      }
-      let spanOpenMatch: RegExpExecArray | null;
-      let spanCloseMatch: RegExpExecArray | null = null;
-      let offset = 0;
-      while ((spanOpenMatch = /<span\s+class="([^"]+)">/.exec(line.substr(offset)))) {
-        offset += spanOpenMatch.index + spanOpenMatch[0].length;
-        spanCloseMatch = /<\/\s*span>/.exec(line.substr(offset));
-        if (spanCloseMatch) {
-          // Search for new open tag
-          spanOpenMatch = null;
-          offset += spanCloseMatch.index + spanCloseMatch[0].length;
-        } else {
-          break;
-        }
-      }
-      result += line;
-      if (spanOpenMatch) {
-        const [, newClasses] = spanOpenMatch;
-        result += '</span>';
-        classes = newClasses;
-      } else if (!spanCloseMatch && classes.length) {
-        if (/<\/\s*span>/.exec(line.substr(offset))) {
-          classes = '';
-        } else {
-          result += '</span>';
-        }
-      }
-      const mutants = model.mutants.filter((mutant) => mutant.location.start.line === lineNr + 1);
-      mutants.forEach((mutant) => {
-        result += `<mte-mutant mutant-id="${mutant.id}"></mte-mutant>`;
-      });
-      result += '</td></tr>';
-      return { classes, result };
-    },
-    { classes: '', result: '' }
-  ).result;
-  // return lines
-  //   .map((line, lineNr) => {
-  //     const mutants = model.mutants.filter((mutant) => mutant.location.start.line === lineNr + 1);
-  //     return `<span class="mte-line">${line}${mutants.map((mutant) => `<mte-mutant mutant-id="${mutant.id}"></mte-mutant>`).join('')}</span>`;
-  //   })
-  //   .join('');
+export function highlightReplacement(mutant: MutantModel, language: string): string {
+  const mutatedLines = mutant.getMutatedLines().trimEnd();
+  const originalLines = mutant.getOriginalLines().trimEnd();
+
+  let focusFrom = 0,
+    focusTo = mutatedLines.length - 1;
+  while (originalLines[focusFrom] === mutatedLines[focusFrom] && focusFrom < mutatedLines.length) {
+    focusFrom++;
+  }
+  const lengthDiff = originalLines.length - mutatedLines.length;
+  while (originalLines[focusTo + lengthDiff] === mutatedLines[focusTo] && focusTo > focusFrom) {
+    focusTo--;
+  }
+  if (focusTo === focusFrom) {
+    // For example '""'
+    focusFrom--;
+  }
+  focusTo++;
+  const lines = transformHighlightedLines(highlight(mutatedLines, languages[language], language), (pos) => {
+    const offset = pos.column - 1;
+    if (offset === focusFrom) {
+      return { markerClass: 'diff-focus' };
+    } else if (offset === focusTo) {
+      return { markerClass: null };
+    }
+    return;
+  });
+  const lineStart = '<tr class="diff-new"><td class="empty-line-number"></td><td class="line-marker"></td><td>';
+  const lineEnd = '</td></tr>';
+  return lines.map((line) => `${lineStart}${line}${lineEnd}`).join('');
 }
 
 /**
@@ -314,6 +198,171 @@ export function markMutants(model: FileResult): string {
   return html;
 }
 
+interface TransformIntervention {
+  markerClass?: string | null;
+}
+
+/**
+ *
+ * @param source The highlighted source
+ * @param fn The function to execute
+ * @returns the highlighted source split into lines
+ */
+function transformHighlightedLines(source: string, fn: (pos: Position) => TransformIntervention | undefined): string[] {
+  let currentLineParts: string[] = [];
+  const lines: string[] = [];
+  const currentPosition: Position = {
+    column: 0,
+    line: 1,
+  };
+  let currentCustomMarkerClass: string | null = null;
+  let currentHighlightedClass: string | undefined;
+  let pos = 0;
+
+  for (pos = 0; pos < source.length; pos++) {
+    switch (source[pos]) {
+      case Characters.CarriageReturn:
+        break;
+      case Characters.NewLine: // Create a new line
+        endLine();
+        currentPosition.line++;
+        currentPosition.column = 0;
+        startMarkers();
+        break;
+      case Characters.LT: // start of a element
+        {
+          const startPos = pos;
+          const { elementName, attributes, isClosing } = parseElement();
+          if (elementName === 'span') {
+            if (isClosing) {
+              currentHighlightedClass = undefined;
+            }
+            if (attributes.class) {
+              currentHighlightedClass = attributes.class;
+            }
+          }
+          emit(source.substring(startPos, pos + 1));
+        }
+        break;
+      case Characters.Amp: // Start of an HTML entity (&amp;)
+        movePosition();
+        emit(parseHtmlEntity());
+        break;
+      default:
+        movePosition();
+        emit(source[pos]);
+        break;
+    }
+  }
+  endLine();
+  return lines;
+
+  function emit(...parts: string[]) {
+    currentLineParts.push(...parts);
+  }
+
+  function startMarkers() {
+    if (currentCustomMarkerClass) {
+      emit(`<span class="${currentCustomMarkerClass}">`);
+    }
+    if (currentHighlightedClass) {
+      emit(`<span class="${currentHighlightedClass}">`);
+    }
+  }
+
+  function endMarkers() {
+    if (currentCustomMarkerClass) {
+      emit('</span>');
+    }
+    if (currentHighlightedClass) {
+      emit('</span>');
+    }
+  }
+
+  function endLine() {
+    endMarkers();
+    lines.push(currentLineParts.join(''));
+    currentLineParts = [];
+  }
+
+  function movePosition() {
+    currentPosition.column++;
+    const customMarkerClass = fn(currentPosition)?.markerClass;
+    if (customMarkerClass || customMarkerClass === null) {
+      endMarkers();
+      currentCustomMarkerClass = customMarkerClass;
+      startMarkers();
+    }
+  }
+
+  function isWhitespace(char: string) {
+    return char === Characters.NewLine || char === Characters.Space || char === Characters.Tab;
+  }
+
+  function parseElement() {
+    if (source[pos] === '<') {
+      pos++;
+    }
+    let isClosing = false;
+    if (source[pos] === '/') {
+      isClosing = true;
+      pos++;
+    }
+    const startPos = pos;
+    while (!isWhitespace(source[pos]) && source[pos] !== Characters.GT && pos < source.length) {
+      pos++;
+    }
+    const elementName = source.substring(startPos, pos);
+    const attributes = parseAttributes();
+    return { elementName, attributes, isClosing };
+  }
+
+  function parseAttributes() {
+    const attributes: Record<string, string> = Object.create(null);
+    while (pos < source.length) {
+      const char = source[pos];
+      if (char === Characters.GT) {
+        return attributes;
+      } else if (!isWhitespace(char)) {
+        const { name, value } = parseAttribute();
+        attributes[name] = value;
+      }
+      pos++;
+    }
+    throw new Error('Parse attributes error');
+  }
+
+  function parseAttribute() {
+    const startPos = pos;
+    while (source[pos] !== '=') {
+      pos++;
+    }
+    const name = source.substring(startPos, pos);
+    pos++; // jump over '='
+    const value = parseAttributeValue();
+    return { name, value };
+  }
+
+  function parseAttributeValue() {
+    if (source[pos] === '"') {
+      pos++;
+    }
+    const startPos = pos;
+    while (source[pos] !== '"') {
+      pos++;
+    }
+    return source.substring(startPos, pos);
+  }
+
+  function parseHtmlEntity() {
+    const startPos = pos;
+    while (source[pos] !== Characters.Semicolon) {
+      pos++;
+    }
+    return source.substring(startPos, pos + 1);
+  }
+}
+
 export function isAlfaNumeric(char: string) {
   // We could use a regex here, but what's the fun in that?
   const alfaNumeric = 'azAZ09';
@@ -347,14 +396,18 @@ export function markTests(source: string, tests: TestModel[]): string {
 
 export const COLUMN_START_INDEX = 1;
 export const LINE_START_INDEX = 1;
-export const NEW_LINE = '\n';
-export const SPACE = ' ';
-export const LT = '<';
-export const GT = '>';
-export const TAB = '\t';
-export const CARRIAGE_RETURN = '\r';
+enum Characters {
+  CarriageReturn = '\r',
+  NewLine = '\n',
+  Space = ' ',
+  Amp = '&',
+  Semicolon = ';',
+  LT = '<',
+  GT = '>',
+  Tab = '\t',
+}
 export function lines(content: string) {
-  return content.split(NEW_LINE).map((line) => (line.endsWith(CARRIAGE_RETURN) ? line.substr(0, line.length - 1) : line));
+  return content.split(Characters.NewLine).map((line) => (line.endsWith(Characters.CarriageReturn) ? line.substr(0, line.length - 1) : line));
 }
 
 /**
@@ -368,10 +421,10 @@ function walkString(source: string, fn: (char: string, position: Position) => st
   const builder: string[] = [fnNewLine()];
 
   for (const currentChar of source) {
-    if (column === COLUMN_START_INDEX && currentChar === CARRIAGE_RETURN) {
+    if (column === COLUMN_START_INDEX && currentChar === Characters.CarriageReturn) {
       continue;
     }
-    if (currentChar === NEW_LINE) {
+    if (currentChar === Characters.NewLine) {
       line++;
       column = COLUMN_START_INDEX;
       // builder.push(NEW_LINE);

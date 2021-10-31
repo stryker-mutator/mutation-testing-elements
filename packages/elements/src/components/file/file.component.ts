@@ -5,9 +5,8 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { MutationTestReportMutantComponent } from '../mutant/mutant.component';
 import { StateFilter } from '../state-filter/state-filter.component';
 import { bootstrap, prismjs } from '../../style';
-import { markMutants3 } from '../../lib/code-helpers';
+import { highlightedCodeTableWithMutants, highlightReplacement } from '../../lib/code-helpers';
 import { MutantStatus } from 'mutation-testing-report-schema/api';
-import { highlight, languages } from 'prismjs/components/prism-core';
 import style from './file.scss';
 import { getContextClassForStatus, getEmojiForStatus } from '../../lib/htmlHelpers';
 import { FileUnderTestModel } from 'mutation-testing-metrics';
@@ -22,9 +21,7 @@ export class MutationTestReportFileComponent extends LitElement {
   public model!: FileUnderTestModel;
 
   public static styles = [prismjs, bootstrap, unsafeCSS(style)];
-
   private codeRef = createRef<HTMLElement>();
-  private innerCodeRef = createRef<HTMLSpanElement>();
 
   private readonly expandAll = () => {
     this.forEachMutantComponent((mutantComponent) => (mutantComponent.expand = true));
@@ -60,8 +57,9 @@ export class MutationTestReportFileComponent extends LitElement {
             @expand-all="${this.expandAll}"
             @collapse-all="${this.collapseAll}"
           ></mte-state-filter>
-          <pre id="report-code-block" class="mte-line-numbers"><code ${ref(this.codeRef)} class="language-${this.model
-            .language}"><table class="innerCode" ${ref(this.innerCodeRef)}>${unsafeHTML(markMutants3(this.model))}</table></code></pre>
+          <pre id="report-code-block" class="mte-line-numbers"><code ${ref(this.codeRef)} class="language-${this.model.language}">${unsafeHTML(
+            highlightedCodeTableWithMutants(this.model)
+          )}</code></pre>
         </div>
       </div>
     `;
@@ -99,13 +97,8 @@ export class MutationTestReportFileComponent extends LitElement {
             for (let i = mutant.location.start.line - 1; i < mutant.location.end.line; i++) {
               lines.item(i).classList.add(diffOldClass);
             }
-            const mutatedHighlighted = highlight(mutant.getMutatedLines(), languages[this.model.language], this.model.language);
-            lines
-              .item(mutant.location.end.line - 1)
-              .insertAdjacentHTML(
-                'afterend',
-                `<tr class="${diffNewClass}"><td class="empty-line-number"></td><td class="line-marker"></td><td>${mutatedHighlighted}</td></tr>`
-              );
+            const mutatedLines = highlightReplacement(mutant, this.model.language);
+            lines.item(mutant.location.end.line - 1).insertAdjacentHTML('afterend', mutatedLines);
           }
         });
       });

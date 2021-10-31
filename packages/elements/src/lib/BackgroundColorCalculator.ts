@@ -42,15 +42,15 @@ export class BackgroundColorCalculator {
 
   public determineBackground = () => {
     if (this.survived > 0) {
-      return getContextClassForStatus(MutantStatus.Survived) + '-light';
+      return `bg-${getContextClassForStatus(MutantStatus.Survived)}-light`;
     } else if (this.noCoverage > 0) {
-      return getContextClassForStatus(MutantStatus.NoCoverage) + '-light';
+      return `bg-${getContextClassForStatus(MutantStatus.NoCoverage)}-light`;
     } else if (this.timeout > 0) {
-      return getContextClassForStatus(MutantStatus.Timeout) + '-light';
+      return `bg-${getContextClassForStatus(MutantStatus.Timeout)}-light`;
     } else if (this.killed > 0) {
-      return getContextClassForStatus(MutantStatus.Killed) + '-light';
+      return `bg-${getContextClassForStatus(MutantStatus.Killed)}-light`;
     } else if (this.ignored > 0) {
-      return getContextClassForStatus(MutantStatus.Ignored) + '-light';
+      return `bg-${getContextClassForStatus(MutantStatus.Ignored)}-light`;
     }
     return null;
   };

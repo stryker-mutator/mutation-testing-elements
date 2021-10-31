@@ -6,6 +6,7 @@ import { MutationTestReportMutantComponent } from '../../../src/components/mutan
 import { MutationTestReportFileStateFilterComponent, StateFilter } from '../../../src/components/state-filter/state-filter.component';
 import { createFileResult } from '../../helpers/factory';
 import { createCustomEvent } from '../../../src/lib/custom-events';
+import { FileUnderTestModel } from 'mutation-testing-metrics';
 
 describe(MutationTestReportFileComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportFileComponent>;
@@ -14,7 +15,7 @@ describe(MutationTestReportFileComponent.name, () => {
   beforeEach(async () => {
     fileResult = createFileResult();
     sut = new CustomElementFixture('mte-file', { autoConnect: false });
-    sut.element.model = fileResult;
+    sut.element.model = new FileUnderTestModel(fileResult, 'foo.js');
     sut.connect();
     await sut.whenStable();
   });

@@ -51,6 +51,10 @@ mte-mutant {
   background-color: var(--mut-diff-del-bg);
 }
 
+.diff-focus {
+  background-color: var(--mut-diff-add-bg-line-number);
+}
+
 .diff-old .line-number {
   background-color: var(--mut-diff-del-bg-line-number);
   color: var(--mut-diff-del-line-number);
