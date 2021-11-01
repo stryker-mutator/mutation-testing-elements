@@ -7,3 +7,23 @@
 mte-test {
   background-color: transparent;
 }
+
+.line-numbers {
+  counter-reset: mte-line-number;
+}
+
+.line-number {
+  text-align: right;
+  padding: 0px 10px 0px 15px;
+  color: var(--mut-line-number);
+  counter-increment: mte-line-number;
+}
+
+.line-number::before {
+  content: counter(mte-line-number);
+}
+
+.line-marker::before {
+  content: ' ';
+  padding: 0px 5px;
+}

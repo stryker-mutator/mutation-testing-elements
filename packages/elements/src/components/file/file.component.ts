@@ -5,7 +5,7 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { MutationTestReportMutantComponent } from '../mutant/mutant.component';
 import { StateFilter } from '../state-filter/state-filter.component';
 import { bootstrap, prismjs } from '../../style';
-import { highlightedCodeTableWithMutants, highlightReplacement } from '../../lib/code-helpers';
+import { highlightedCodeTableWithMutants, highlightedReplacementRows } from '../../lib/code-helpers';
 import { MutantStatus } from 'mutation-testing-report-schema/api';
 import style from './file.scss';
 import { getContextClassForStatus, getEmojiForStatus } from '../../lib/htmlHelpers';
@@ -57,7 +57,7 @@ export class MutationTestReportFileComponent extends LitElement {
             @expand-all="${this.expandAll}"
             @collapse-all="${this.collapseAll}"
           ></mte-state-filter>
-          <pre id="report-code-block" class="mte-line-numbers"><code ${ref(this.codeRef)} class="language-${this.model.language}">${unsafeHTML(
+          <pre id="report-code-block" class="line-numbers"><code ${ref(this.codeRef)} class="language-${this.model.language}">${unsafeHTML(
             highlightedCodeTableWithMutants(this.model)
           )}</code></pre>
         </div>
@@ -97,7 +97,7 @@ export class MutationTestReportFileComponent extends LitElement {
             for (let i = mutant.location.start.line - 1; i < mutant.location.end.line; i++) {
               lines.item(i).classList.add(diffOldClass);
             }
-            const mutatedLines = highlightReplacement(mutant, this.model.language);
+            const mutatedLines = highlightedReplacementRows(mutant, this.model.language);
             lines.item(mutant.location.end.line - 1).insertAdjacentHTML('afterend', mutatedLines);
           }
         });

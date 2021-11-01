@@ -3,12 +3,11 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { customElement, property } from 'lit/decorators.js';
 
 import { TestFileModel, TestStatus } from 'mutation-testing-metrics';
-import { highlightElement } from 'prismjs/components/prism-core';
 import style from './test-file.scss';
 
 import '../../style/prism-plugins';
 import { bootstrap, prismjs } from '../../style';
-import { determineLanguage, markTests } from '../../lib/code-helpers';
+import { determineLanguage, highlightedCodeTableWithTests } from '../../lib/code-helpers';
 import { MutationTestReportTestComponent } from '../test/test.component';
 import { MteCustomEvent } from '../../lib/custom-events';
 import { getContextClassForTestStatus, getEmojiForTestStatus } from '../../lib/htmlHelpers';
@@ -77,23 +76,10 @@ export class MutationTestReportTestFile extends LitElement {
   private renderCode() {
     if (this.model?.source) {
       return html`<pre id="report-code-block" class="line-numbers"><code class="language-${determineLanguage(this.model.name)}"><span>${unsafeHTML(
-        markTests(this.model.source, this.model.tests)
+        highlightedCodeTableWithTests(this.model, this.model.source)
       )}</span></code></pre>`;
     }
     return;
-  }
-
-  private highlightCode() {
-    const code = this.shadowRoot?.querySelector('code');
-    if (code) {
-      highlightElement(code);
-
-      // Prism-js's `highlightElement` creates a copy of the DOM tree to do its magic.
-      // Now that the code is highlighted, we can bind the test components
-      this.forEachTestComponent((testComponent) => {
-        testComponent.test = this.model?.tests.find((test) => test.id === testComponent.getAttribute('test-id'));
-      });
-    }
   }
 
   override update(changes: PropertyValues) {
@@ -114,7 +100,9 @@ export class MutationTestReportTestFile extends LitElement {
 
   public updated(changes: PropertyValues) {
     if (changes.has('model') && this.model) {
-      this.highlightCode();
+      this.forEachTestComponent((testComponent) => {
+        testComponent.test = this.model?.tests.find((test) => test.id === testComponent.getAttribute('test-id'));
+      });
     }
   }
 }
