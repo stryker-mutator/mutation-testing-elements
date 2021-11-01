@@ -101,7 +101,9 @@ export class MutationTestReportTestFile extends LitElement {
   public updated(changes: PropertyValues) {
     if (changes.has('model') && this.model) {
       this.forEachTestComponent((testComponent) => {
-        testComponent.test = this.model?.tests.find((test) => test.id === testComponent.getAttribute('test-id'));
+        if (!testComponent.test) {
+          testComponent.test = this.model?.tests.find((test) => test.id === testComponent.getAttribute('test-id'));
+        }
       });
     }
   }

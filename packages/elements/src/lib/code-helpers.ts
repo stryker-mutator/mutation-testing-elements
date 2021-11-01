@@ -81,12 +81,11 @@ export function highlightedCodeTableWithMutants(model: FileResult): string {
   const lineEnd = '</td></tr>';
 
   const lines = transformHighlightedLines(highlightedSource, (position) => {
-    let colorChanged = false;
+    const bgBefore = backgroundColorCalculator.determineBackground();
     for (const mutant of startedMutants) {
       if (gte(position, mutant.location.end)) {
         backgroundColorCalculator.markMutantEnd(mutant);
         startedMutants.delete(mutant);
-        colorChanged = true;
       }
     }
     for (const mutant of mutantsToPlace) {
@@ -94,13 +93,19 @@ export function highlightedCodeTableWithMutants(model: FileResult): string {
         backgroundColorCalculator.markMutantStart(mutant);
         startedMutants.add(mutant);
         mutantsToPlace.delete(mutant);
-        colorChanged = true;
       }
     }
-    if (colorChanged) {
-      return {
-        markerClass: backgroundColorCalculator.determineBackground(),
-      };
+    const bgAfter = backgroundColorCalculator.determineBackground();
+    if (bgBefore !== bgAfter) {
+      const tags: HtmlTag[] = [];
+
+      if (bgBefore) {
+        tags.push({ elementName: 'span', id: 'bg-marker', isClosing: true });
+      }
+      if (bgAfter) {
+        tags.push({ elementName: 'span', id: 'bg-marker', isClosing: false, attributes: { class: bgAfter } });
+      }
+      return { tags };
     }
     return;
   });
@@ -137,11 +142,19 @@ export function highlightedReplacementRows(mutant: MutantModel, language: string
   // Include the next char
   focusTo++;
 
+  // Make an exception for `true` and `false` (end in same character 🤷‍♀️)
+  const focussedPart = mutatedLines.substring(focusFrom, focusTo);
+  ['true', 'false'].forEach((keyword) => {
+    if (focussedPart === keyword.substr(0, keyword.length - 1) && keyword[keyword.length - 1] === mutatedLines[focusTo]) {
+      focusTo++;
+    }
+  });
+
   const lines = transformHighlightedLines(highlight(mutatedLines, languages[language], language), ({ offset }) => {
     if (offset === focusFrom) {
-      return { markerClass: 'diff-focus' };
+      return { tags: [{ elementName: 'span', id: 'diff-focus', isClosing: false, attributes: { class: 'diff-focus' } }] };
     } else if (offset === focusTo) {
-      return { markerClass: null };
+      return { tags: [{ elementName: 'span', id: 'diff-focus', isClosing: true }] };
     }
     return;
   });
@@ -173,7 +186,10 @@ export function highlightedCodeTableWithTests(file: TestFileModel, source: strin
   const testsToPlace = [...file.tests];
   const lineStart = '<tr><td class="line-number"></td><td class="line-marker"></td><td class="code">';
   const lineEnd = '</td></tr>';
-  const toComponent = (test: TestModel): string => `<mte-test test-id="${test.id}"></mte-test>`;
+  const toOpenAndClosingTags = (test: TestModel): HtmlTag[] => [
+    { elementName: 'mte-test', attributes: { 'test-id': test.id }, isClosing: false },
+    { elementName: 'mte-test', attributes: {}, isClosing: true },
+  ];
 
   const lines = transformHighlightedLines(highlightedSource, (pos) => {
     const char = source[pos.offset];
@@ -184,7 +200,7 @@ export function highlightedCodeTableWithTests(file: TestFileModel, source: strin
       // Remove the test from the tests to place
       startingTests.forEach((test) => testsToPlace.splice(testsToPlace.indexOf(test), 1));
       return {
-        additionalHtml: startingTests.map(toComponent).join(''),
+        tags: startingTests.flatMap(toOpenAndClosingTags),
       };
     }
     return;
@@ -195,12 +211,21 @@ export function highlightedCodeTableWithTests(file: TestFileModel, source: strin
 }
 
 interface VisitResult {
-  markerClass?: string | null;
-  additionalHtml?: string;
+  tags: HtmlTag[];
 }
 
 interface PositionWithOffset extends Position {
   offset: number;
+}
+
+/**
+ * A simple HTML tag representation
+ */
+export interface HtmlTag {
+  id?: string;
+  elementName: string;
+  attributes?: Record<string, string>;
+  isClosing: boolean;
 }
 
 /**
@@ -241,13 +266,8 @@ function transformHighlightedLines(source: string, visitor: (pos: PositionWithOf
     offset: -1, // incremented to 0 before first visitation
   };
 
-  // class Span {
-  //   constructor(public readonly id: string, public readonly raw: string) {}
-  // }
+  const currentlyActiveTags: HtmlTag[] = [];
 
-  // const currentSpans: Span[] = [];
-  let currentCustomMarkerClass: string | null = null;
-  let currentHighlightedClass: string | undefined;
   let pos = 0;
 
   while (pos < source.length) {
@@ -260,20 +280,16 @@ function transformHighlightedLines(source: string, visitor: (pos: PositionWithOf
         currentPosition.offset++;
         currentPosition.line++;
         currentPosition.column = 0;
-        startMarkers();
+        reopenActiveTags();
         break;
       case Characters.LT: {
-        // start of a element
-        const { elementName, attributes, isClosing, raw } = parseElement();
-        if (elementName === 'span') {
-          if (isClosing) {
-            currentHighlightedClass = undefined;
-          }
-          if (attributes.class) {
-            currentHighlightedClass = attributes.class;
-          }
+        // start- or end tag
+        const tag = parseTag();
+        if (tag.isClosing) {
+          closeTag(tag);
+        } else {
+          openTag(tag);
         }
-        emit(raw);
         break;
       }
       case Characters.Amp:
@@ -293,26 +309,23 @@ function transformHighlightedLines(source: string, visitor: (pos: PositionWithOf
     currentLineParts.push(...parts);
   }
 
-  function startMarkers() {
-    if (currentCustomMarkerClass) {
-      emit(`<span class="${currentCustomMarkerClass}">`);
-    }
-    if (currentHighlightedClass) {
-      emit(`<span class="${currentHighlightedClass}">`);
-    }
+  function reopenActiveTags() {
+    currentlyActiveTags.forEach((tag) => emit(printTag(tag)));
   }
 
-  function endMarkers() {
-    if (currentCustomMarkerClass) {
-      emit('</span>');
+  function closeActiveTags() {
+    currentlyActiveTags.forEach((tag) => emit(printTag({ ...tag, isClosing: true })));
+  }
+
+  function printTag({ attributes, elementName, isClosing }: HtmlTag) {
+    if (isClosing) {
+      return `</${elementName}>`;
     }
-    if (currentHighlightedClass) {
-      emit('</span>');
-    }
+    return `<${elementName} ${Object.entries(attributes ?? {}).reduce((acc, [name, value]) => (value ? `${acc} ${name}="${value}"` : acc), '')}>`;
   }
 
   function endLine() {
-    endMarkers();
+    closeActiveTags();
     lines.push(currentLineParts.join(''));
     currentLineParts = [];
   }
@@ -321,21 +334,18 @@ function transformHighlightedLines(source: string, visitor: (pos: PositionWithOf
     currentPosition.column++;
     currentPosition.offset++;
     const visitResult = visitor(currentPosition);
-    const customMarkerClass = visitResult?.markerClass;
-    const additionalHtml = visitResult?.additionalHtml;
-    if (customMarkerClass || customMarkerClass === null) {
-      endMarkers();
-      currentCustomMarkerClass = customMarkerClass;
-      startMarkers();
-    }
-    if (additionalHtml) {
-      emit(additionalHtml);
-    }
+    visitResult?.tags.forEach((tag) => {
+      if (tag.isClosing) {
+        closeTag(tag);
+      } else {
+        emit(printTag(tag));
+        currentlyActiveTags.push(tag);
+      }
+    });
     emit(raw);
   }
 
-  function parseElement() {
-    const startPos = pos;
+  function parseTag(): HtmlTag {
     if (source[pos] === '<') {
       pos++;
     }
@@ -349,8 +359,34 @@ function transformHighlightedLines(source: string, visitor: (pos: PositionWithOf
     }
     const elementName = source.substring(elementNameStartPos, pos);
     const attributes = parseAttributes();
-    const raw = source.substring(startPos, pos + 1);
-    return { elementName, attributes, isClosing, raw };
+    return { elementName, attributes, isClosing };
+  }
+
+  function openTag(tag: HtmlTag) {
+    currentlyActiveTags.push(tag);
+    emit(printTag(tag));
+  }
+
+  function closeTag(tag: HtmlTag) {
+    // Closing tags can come in out-of-order
+    // which means we need to close opened tags and reopen them.
+    const copy = [...currentlyActiveTags];
+    let activeTag: HtmlTag | undefined;
+    while ((activeTag = copy.pop())) {
+      if (tag.elementName === activeTag.elementName && activeTag.id === tag.id) {
+        emit(printTag(tag));
+        const activeTagsIndex = currentlyActiveTags.indexOf(activeTag);
+        currentlyActiveTags.splice(activeTagsIndex, 1);
+        for (let i = activeTagsIndex; i < currentlyActiveTags.length; i++) {
+          emit(printTag(currentlyActiveTags[i]));
+        }
+        break;
+      }
+      emit(printTag({ ...activeTag, isClosing: true }));
+    }
+    if (!activeTag) {
+      throw new Error(`Cannot find corresponding opening tag for ${printTag(tag)}`);
+    }
   }
 
   function parseAttributes() {
