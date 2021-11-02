@@ -321,7 +321,7 @@ function transformHighlightedLines(source: string, visitor: (pos: PositionWithOf
     if (isClosing) {
       return `</${elementName}>`;
     }
-    return `<${elementName} ${Object.entries(attributes ?? {}).reduce((acc, [name, value]) => (value ? `${acc} ${name}="${value}"` : acc), '')}>`;
+    return `<${elementName}${Object.entries(attributes ?? {}).reduce((acc, [name, value]) => (value ? `${acc} ${name}="${value}"` : acc), '')}>`;
   }
 
   function endLine() {
@@ -370,22 +370,33 @@ function transformHighlightedLines(source: string, visitor: (pos: PositionWithOf
   function closeTag(tag: HtmlTag) {
     // Closing tags can come in out-of-order
     // which means we need to close opened tags and reopen them.
-    const copy = [...currentlyActiveTags];
-    let activeTag: HtmlTag | undefined;
-    while ((activeTag = copy.pop())) {
+    for (let tagIndex = currentlyActiveTags.length - 1; tagIndex >= 0; tagIndex--) {
+      const activeTag = currentlyActiveTags[tagIndex];
+
       if (tag.elementName === activeTag.elementName && activeTag.id === tag.id) {
+        // We need to close this tag
         emit(printTag(tag));
-        const activeTagsIndex = currentlyActiveTags.indexOf(activeTag);
-        currentlyActiveTags.splice(activeTagsIndex, 1);
-        for (let i = activeTagsIndex; i < currentlyActiveTags.length; i++) {
+
+        // Remove from currently active tags
+        currentlyActiveTags.splice(tagIndex, 1);
+
+        // And re-open previously closed tags
+        for (let i = tagIndex; i < currentlyActiveTags.length; i++) {
           emit(printTag(currentlyActiveTags[i]));
         }
+
+        // Done
         break;
       }
+
+      // Close this active tag, this isn't the tag we're looking for
+      // Will get reopened after we've closed the tag we're looking for
       emit(printTag({ ...activeTag, isClosing: true }));
-    }
-    if (!activeTag) {
-      throw new Error(`Cannot find corresponding opening tag for ${printTag(tag)}`);
+
+      // If we're at the last tag, throw an error useful for debugging (this shouldn't happen)
+      if (tagIndex === 0) {
+        throw new Error(`Cannot find corresponding opening tag for ${printTag(tag)}`);
+      }
     }
   }
 
