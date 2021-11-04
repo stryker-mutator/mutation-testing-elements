@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { MutantModel, TestFileModel } from 'mutation-testing-metrics';
 import { TestStatus } from 'mutation-testing-metrics';
-import { MutationTestReportFileStateFilterComponent, StateFilter } from '../../../src/components/state-filter/state-filter.component';
+import { FileStateFilterComponent, StateFilter } from '../../../src/components/state-filter/state-filter.component';
 import { MutationTestReportTestFile } from '../../../src/components/test-file/test-file.component';
 import { MutationTestReportTestListItemComponent } from '../../../src/components/test-list-item/test-list-item.component';
 import { MutationTestReportTestComponent } from '../../../src/components/test/test.component';
@@ -16,8 +16,8 @@ describe(MutationTestReportTestFile.name, () => {
     sut = new CustomElementFixture('mte-test-file');
   });
 
-  function selectStateFilter(): MutationTestReportFileStateFilterComponent<TestStatus> {
-    return sut.$('mte-state-filter') as MutationTestReportFileStateFilterComponent<TestStatus>;
+  function selectStateFilter(): FileStateFilterComponent<TestStatus> {
+    return sut.$('mte-state-filter') as FileStateFilterComponent<TestStatus>;
   }
 
   function selectTestListItems(): MutationTestReportTestListItemComponent[] {
@@ -143,7 +143,7 @@ describe(MutationTestReportTestFile.name, () => {
 
   describe('with `mte-test`', () => {
     let testComponents: MutationTestReportTestComponent[];
-    let filterComponent: MutationTestReportFileStateFilterComponent<TestStatus>;
+    let filterComponent: FileStateFilterComponent<TestStatus>;
 
     beforeEach(async () => {
       const model = new TestFileModel(
@@ -160,7 +160,7 @@ describe(MutationTestReportTestFile.name, () => {
       sut.element.model = model;
       await sut.whenStable();
       testComponents = sut.$$('mte-test') as MutationTestReportTestComponent[];
-      filterComponent = sut.$('mte-state-filter') as MutationTestReportFileStateFilterComponent<TestStatus>;
+      filterComponent = sut.$('mte-state-filter') as FileStateFilterComponent<TestStatus>;
     });
 
     it('should bind the tests to the components', () => {

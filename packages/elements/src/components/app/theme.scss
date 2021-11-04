@@ -204,6 +204,7 @@
   --mut-diff-del-line-number: var(--mut-diff-add-line-number);
   --mut-badge-info-bg: #54c6ec;
   --mut-badge-info: #212529; 
+  --mut-code-lense: #919191;
 }
 :host([theme='dark']) {
   --mut-octicon-icon-color: #519aba;
@@ -216,4 +217,5 @@
   --mut-diff-del-line-number: #c9d1d9;
   --mut-badge-info-bg: #17a3b8;
   --mut-badge-info: #fff;
+  --mut-code-lense: #999;
 }

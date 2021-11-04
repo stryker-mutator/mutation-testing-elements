@@ -1,9 +1,9 @@
-import { MutationTestReportFileStateFilterComponent, StateFilter } from '../../../src/components/state-filter/state-filter.component';
+import { FileStateFilterComponent, StateFilter } from '../../../src/components/state-filter/state-filter.component';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { MutantStatus } from 'mutation-testing-report-schema/api';
 import { expect } from 'chai';
 import { normalizeWhitespace, expectedMutantColors } from '../../helpers/helperFunctions';
-import { getContextClassForStatus, getEmojiForStatus } from '../../../src/lib/htmlHelpers';
+import { getContextClassForStatus, getEmojiForStatus } from '../../../src/lib/html-helpers';
 
 function createStateFilter(status: MutantStatus): StateFilter<MutantStatus> {
   return {
@@ -15,8 +15,8 @@ function createStateFilter(status: MutantStatus): StateFilter<MutantStatus> {
   };
 }
 
-describe(MutationTestReportFileStateFilterComponent.name, () => {
-  let sut: CustomElementFixture<MutationTestReportFileStateFilterComponent<MutantStatus>>;
+describe(FileStateFilterComponent.name, () => {
+  let sut: CustomElementFixture<FileStateFilterComponent<MutantStatus>>;
 
   beforeEach(async () => {
     sut = new CustomElementFixture('mte-state-filter');

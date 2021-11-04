@@ -14,24 +14,9 @@ export interface StateFilter<TStatus> {
 }
 
 @customElement('mte-state-filter')
-export class MutationTestReportFileStateFilterComponent<TStatus> extends LitElement {
-  @property()
-  private get collapseButtonText() {
-    if (this.collapsed) {
-      return 'Expand all';
-    } else {
-      return 'Collapse all';
-    }
-  }
-
-  @property()
-  private collapsed = true;
-
+export class FileStateFilterComponent<TStatus> extends LitElement {
   @property({ type: Array })
   public filters?: StateFilter<TStatus>[];
-
-  @property({ type: Boolean, attribute: 'allow-toggle-all', reflect: true })
-  public allowToggleAll = false;
 
   public updated(changedProperties: PropertyValues) {
     if (changedProperties.has('filters')) {
@@ -48,13 +33,13 @@ export class MutationTestReportFileStateFilterComponent<TStatus> extends LitElem
     this.dispatchEvent(createCustomEvent('filters-changed', this.filters as StateFilter<any>[]));
   }
 
-  private readonly toggleOpenAll = () => {
-    this.collapsed = !this.collapsed;
-    if (this.collapsed) {
-      this.dispatchEvent(createCustomEvent('collapse-all', undefined));
-    } else {
-      this.dispatchEvent(createCustomEvent('expand-all', undefined));
-    }
+  private readonly next = (ev: Event) => {
+    ev.stopPropagation();
+    this.dispatchEvent(createCustomEvent('next', undefined, { bubbles: true, composed: true }));
+  };
+  private readonly previous = (ev: Event) => {
+    ev.stopPropagation();
+    this.dispatchEvent(createCustomEvent('previous', undefined, { bubbles: true, composed: true }));
   };
 
   public static styles = [bootstrap, unsafeCSS(style)];
@@ -81,9 +66,8 @@ export class MutationTestReportFileStateFilterComponent<TStatus> extends LitElem
             </label>
           </div>`
         )}
-        ${this.allowToggleAll
-          ? html`<button @click="${this.toggleOpenAll}" class="btn btn-sm btn-secondary" type="button">${this.collapseButtonText}</button>`
-          : ''}
+        <button @click=${this.previous} class="btn btn-sm btn-secondary" type="button">&lt;</button>
+        <button @click=${this.next} class="btn btn-sm btn-secondary" type="button">&gt;</button>
       </div>
     `;
   }

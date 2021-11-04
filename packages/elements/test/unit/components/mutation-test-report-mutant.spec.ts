@@ -3,7 +3,7 @@ import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { expect } from 'chai';
 import { MutantStatus, MutantResult } from 'mutation-testing-report-schema/api';
 import { expectedMutantColors } from '../../helpers/helperFunctions';
-import { getContextClassForStatus } from '../../../src/lib/htmlHelpers';
+import { getContextClassForStatus } from '../../../src/lib/html-helpers';
 import { CustomEventMap } from '../../../src/lib/custom-events';
 import { MutantModel } from 'mutation-testing-metrics';
 

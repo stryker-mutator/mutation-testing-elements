@@ -1,7 +1,7 @@
 import { html, LitElement, unsafeCSS, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { TestModel } from 'mutation-testing-metrics';
-import { getContextClassForTestStatus } from '../../lib/htmlHelpers';
+import { getContextClassForTestStatus } from '../../lib/html-helpers';
 import style from './test.scss';
 import { bootstrap } from '../../style';
 import { createCustomEvent } from '../../lib/custom-events';

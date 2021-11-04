@@ -2,8 +2,24 @@
 
 @each $color, $value in $theme-colors {
   .bg-#{$color}-light {
-    background-color: var(--bs-#{$color}-bg-light);
+    // background-color: var(--bs-#{$color}-bg-light);
+    text-decoration: underline var(--bs-#{$color}) double 1px;
   }
+
+  svg.#{$color} {
+    fill: var(--bs-#{$color});
+  }
+}
+
+.bg-caution-light,
+.bg-danger-light {
+  text-decoration-style: wavy;
+}
+
+.code-lense-annotation {
+  color: var(--mut-code-lense);
+  font-size: 12px;
+  line-height: 19px;
 }
 
 #report-code-block {
@@ -19,19 +35,27 @@ mte-mutant {
   margin-left: 1px;
 }
 
+.mutant {
+  cursor: pointer;
+}
+
+svg.mutant {
+  margin: 1px 2px;
+}
+
 .line-numbers {
   counter-reset: mte-line-number;
 }
 
-.line-number {
+.line .line-number {
   text-align: right;
   padding: 0px 10px 0px 15px;
   color: var(--mut-line-number);
   counter-increment: mte-line-number;
-}
 
-.line-number::before {
-  content: counter(mte-line-number);
+  &:before {
+    content: counter(mte-line-number);
+  }
 }
 
 .line-marker::before {

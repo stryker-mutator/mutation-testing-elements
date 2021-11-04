@@ -2,7 +2,7 @@ import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { TestModel } from 'mutation-testing-metrics';
 import { createCustomEvent } from '../../lib/custom-events';
-import { getEmojiForTestStatus } from '../../lib/htmlHelpers';
+import { getEmojiForTestStatus } from '../../lib/html-helpers';
 import { bootstrap } from '../../style';
 import style from './test-list-item.scss';
 

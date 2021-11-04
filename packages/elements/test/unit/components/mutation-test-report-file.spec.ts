@@ -1,15 +1,15 @@
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
-import { MutationTestReportFileComponent } from '../../../src/components/file/file.component';
+import { FileComponent } from '../../../src/components/file/file.component';
 import { expect } from 'chai';
 import { FileResult, MutantStatus } from 'mutation-testing-report-schema/api';
 import { MutationTestReportMutantComponent } from '../../../src/components/mutant/mutant.component';
-import { MutationTestReportFileStateFilterComponent, StateFilter } from '../../../src/components/state-filter/state-filter.component';
+import { FileStateFilterComponent, StateFilter } from '../../../src/components/state-filter/state-filter.component';
 import { createFileResult } from '../../helpers/factory';
 import { createCustomEvent } from '../../../src/lib/custom-events';
 import { FileUnderTestModel } from 'mutation-testing-metrics';
 
-describe(MutationTestReportFileComponent.name, () => {
-  let sut: CustomElementFixture<MutationTestReportFileComponent>;
+describe(FileComponent.name, () => {
+  let sut: CustomElementFixture<FileComponent>;
   let fileResult: FileResult;
 
   beforeEach(async () => {
@@ -34,11 +34,11 @@ describe(MutationTestReportFileComponent.name, () => {
 
   describe('with `mte-mutant`', () => {
     let mutantComponent: MutationTestReportMutantComponent;
-    let legendComponent: MutationTestReportFileStateFilterComponent<MutantStatus>;
+    let legendComponent: FileStateFilterComponent<MutantStatus>;
 
     beforeEach(() => {
       mutantComponent = sut.$('mte-mutant') as MutationTestReportMutantComponent;
-      legendComponent = sut.$('mte-state-filter') as MutationTestReportFileStateFilterComponent<MutantStatus>;
+      legendComponent = sut.$('mte-state-filter') as FileStateFilterComponent<MutantStatus>;
     });
 
     it('should populate `mte-mutant` elements with mutants', () => {

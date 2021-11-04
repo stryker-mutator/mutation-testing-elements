@@ -2,7 +2,7 @@ import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { MutantModel, TestModel } from 'mutation-testing-metrics';
 import { MutantStatus } from 'mutation-testing-report-schema/api';
-import { describeLocation, getEmojiForStatus, plural, renderIf, renderIfPresent } from '../../lib/htmlHelpers';
+import { describeLocation, getEmojiForStatus, plural, renderIf, renderIfPresent } from '../../lib/html-helpers';
 import { bootstrap } from '../../style';
 import { DrawerMode } from '../drawer/drawer.component';
 import style from './drawer-mutant.scss';

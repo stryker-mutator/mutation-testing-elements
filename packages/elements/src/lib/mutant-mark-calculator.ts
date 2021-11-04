@@ -1,11 +1,11 @@
 import { MutantResult, MutantStatus } from 'mutation-testing-report-schema/api';
-import { getContextClassForStatus } from './htmlHelpers';
+import { getContextClassForStatus } from './html-helpers';
 
 /**
  * Class to keep track of the states of the
  * mutants that are active at the cursor while walking the code.
  */
-export class BackgroundColorCalculator {
+export class MutantMarkCalculator {
   private killed = 0;
   private noCoverage = 0;
   private survived = 0;
@@ -40,7 +40,7 @@ export class BackgroundColorCalculator {
     }
   }
 
-  public determineBackground = () => {
+  public determineMarkerClass = () => {
     if (this.survived > 0) {
       return `bg-${getContextClassForStatus(MutantStatus.Survived)}-light`;
     } else if (this.noCoverage > 0) {

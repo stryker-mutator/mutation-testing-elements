@@ -7,8 +7,8 @@ export interface CustomEventMap {
   'theme-changed': { theme: string; themeBackgroundColor: string };
   'theme-switch': 'dark' | 'light';
   'filters-changed': StateFilter<any>[];
-  'collapse-all': void;
-  'expand-all': void;
+  next: void;
+  previous: void;
 }
 
 export function createCustomEvent<T extends keyof CustomEventMap>(eventName: T, detail: CustomEventMap[T], opts?: Omit<CustomEventInit, 'detail'>) {

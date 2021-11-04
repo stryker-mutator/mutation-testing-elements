@@ -1,7 +1,9 @@
-import { MutantResult, Position, FileResult } from 'mutation-testing-report-schema/api';
+import { Position } from 'mutation-testing-report-schema/api';
 import { MutantModel, TestFileModel, TestModel } from 'mutation-testing-metrics';
-import { BackgroundColorCalculator } from './BackgroundColorCalculator';
 import { highlight, languages } from 'prismjs/components/prism-core';
+
+const lineStart = '<tr class="line"><td class="line-number"></td><td class="line-marker"></td><td class="code">';
+const lineEnd = '</td></tr>';
 
 export enum ProgrammingLanguage {
   csharp = 'cs',
@@ -55,68 +57,9 @@ export function determineLanguage(fileName: string): ProgrammingLanguage | undef
   }
 }
 
-/**
- * Hightlights the code and inserts the mutants as `<mte-mutant>` elements.
- * Code will be inside an html table that looks like this:
- *
- * ```html
- * <table>
- *   <tr>
- *     <td class="line-number"></td>
- *     <td class="line-marker"></td>
- *     <td class="code"> highlighted code</td>
- *   </tr>
- * </table>
- * ```
- *
- * @param model The file result
- * @returns highlighted code with mutants
- */
-export function highlightedCodeTableWithMutants(model: FileResult): string {
-  const highlightedSource = highlight(model.source, languages[model.language], model.language);
-  const startedMutants = new Set<MutantResult>();
-  const mutantsToPlace = new Set(model.mutants);
-  const backgroundColorCalculator = new BackgroundColorCalculator();
-  const lineStart = '<tr><td class="line-number"></td><td class="line-marker"></td><td class="code">';
-  const lineEnd = '</td></tr>';
-
-  const lines = transformHighlightedLines(highlightedSource, (position) => {
-    const bgBefore = backgroundColorCalculator.determineBackground();
-    for (const mutant of startedMutants) {
-      if (gte(position, mutant.location.end)) {
-        backgroundColorCalculator.markMutantEnd(mutant);
-        startedMutants.delete(mutant);
-      }
-    }
-    for (const mutant of mutantsToPlace) {
-      if (gte(position, mutant.location.start)) {
-        backgroundColorCalculator.markMutantStart(mutant);
-        startedMutants.add(mutant);
-        mutantsToPlace.delete(mutant);
-      }
-    }
-    const bgAfter = backgroundColorCalculator.determineBackground();
-    if (bgBefore !== bgAfter) {
-      const tags: HtmlTag[] = [];
-
-      if (bgBefore) {
-        tags.push({ elementName: 'span', id: 'bg-marker', isClosing: true });
-      }
-      if (bgAfter) {
-        tags.push({ elementName: 'span', id: 'bg-marker', isClosing: false, attributes: { class: bgAfter } });
-      }
-      return { tags };
-    }
-    return;
-  });
-  function emitMutants(lineNr: number) {
-    return model.mutants
-      .filter((mutant) => mutant.location.start.line === lineNr + 1)
-      .map((mutant) => `<mte-mutant mutant-id="${mutant.id}"></mte-mutant>`)
-      .join('');
-  }
-  const tableBody = lines.map((line, lineNr) => `${lineStart}${line}${emitMutants(lineNr)}${lineEnd}`).join('');
-  return `<table>${tableBody}</table>`;
+export function highlightCode(code: string, fileName: string): string {
+  const language = determineLanguage(fileName) ?? '';
+  return highlight(code, languages[language], language);
 }
 
 export function highlightedReplacementRows(mutant: MutantModel, language: string): string {
@@ -148,11 +91,14 @@ export function highlightedReplacementRows(mutant: MutantModel, language: string
     if (focussedPart === keyword.substr(0, keyword.length - 1) && keyword[keyword.length - 1] === mutatedLines[focusTo]) {
       focusTo++;
     }
+    if (focussedPart === keyword.substr(1, keyword.length) && keyword[0] === mutatedLines[focusFrom - 1]) {
+      focusFrom--;
+    }
   });
 
   const lines = transformHighlightedLines(highlight(mutatedLines, languages[language], language), ({ offset }) => {
     if (offset === focusFrom) {
-      return { tags: [{ elementName: 'span', id: 'diff-focus', isClosing: false, attributes: { class: 'diff-focus' } }] };
+      return { tags: [{ elementName: 'span', id: 'diff-focus', attributes: { class: 'diff-focus' } }] };
     } else if (offset === focusTo) {
       return { tags: [{ elementName: 'span', id: 'diff-focus', isClosing: true }] };
     }
@@ -169,8 +115,8 @@ export function highlightedReplacementRows(mutant: MutantModel, language: string
  *
  * ```html
  * <table>
- *   <tr>
- *     <td class="line-number"></td>
+ *   <tr class="line-number">
+ *     <td></td>
  *     <td class="line-marker"></td>
  *     <td class="code"> highlighted code</td>
  *   </tr>
@@ -184,10 +130,8 @@ export function highlightedCodeTableWithTests(file: TestFileModel, source: strin
   const language = determineLanguage(file.name) ?? 'javascript';
   const highlightedSource = highlight(source, languages[language], language);
   const testsToPlace = [...file.tests];
-  const lineStart = '<tr><td class="line-number"></td><td class="line-marker"></td><td class="code">';
-  const lineEnd = '</td></tr>';
   const toOpenAndClosingTags = (test: TestModel): HtmlTag[] => [
-    { elementName: 'mte-test', attributes: { 'test-id': test.id }, isClosing: false },
+    { elementName: 'mte-test', attributes: { 'test-id': test.id } },
     { elementName: 'mte-test', attributes: {}, isClosing: true },
   ];
 
@@ -225,7 +169,7 @@ export interface HtmlTag {
   id?: string;
   elementName: string;
   attributes?: Record<string, string>;
-  isClosing: boolean;
+  isClosing?: true;
 }
 
 /**
@@ -257,7 +201,7 @@ export interface HtmlTag {
  * @param visitor The visitor function that is executed for each position in the source code and allows callers to inject a marker css class
  * @returns the highlighted source split into lines
  */
-function transformHighlightedLines(source: string, visitor: (pos: PositionWithOffset) => VisitResult | undefined): string[] {
+export function transformHighlightedLines(source: string, visitor: (pos: PositionWithOffset) => VisitResult | undefined): string[] {
   let currentLineParts: string[] = [];
   const lines: string[] = [];
   const currentPosition: PositionWithOffset = {
@@ -269,6 +213,7 @@ function transformHighlightedLines(source: string, visitor: (pos: PositionWithOf
   const currentlyActiveTags: HtmlTag[] = [];
 
   let pos = 0;
+  let activeTagsNeedOpening = true;
 
   while (pos < source.length) {
     switch (source[pos]) {
@@ -280,7 +225,7 @@ function transformHighlightedLines(source: string, visitor: (pos: PositionWithOf
         currentPosition.offset++;
         currentPosition.line++;
         currentPosition.column = 0;
-        reopenActiveTags();
+        activeTagsNeedOpening = true;
         break;
       case Characters.LT: {
         // start- or end tag
@@ -297,6 +242,10 @@ function transformHighlightedLines(source: string, visitor: (pos: PositionWithOf
         visitCharacter(parseHtmlEntity());
         break;
       default:
+        if (activeTagsNeedOpening && !isWhitespace(source[pos])) {
+          reopenActiveTags();
+          activeTagsNeedOpening = false;
+        }
         visitCharacter(source[pos]);
         break;
     }
@@ -349,7 +298,7 @@ function transformHighlightedLines(source: string, visitor: (pos: PositionWithOf
     if (source[pos] === '<') {
       pos++;
     }
-    const isClosing = source[pos] === '/';
+    const isClosing = source[pos] === '/' ? true : undefined;
     if (isClosing) {
       pos++;
     }
@@ -475,6 +424,6 @@ enum Characters {
   Tab = '\t',
 }
 
-function gte(a: Position, b: Position) {
+export function gte(a: Position, b: Position) {
   return a.line > b.line || (a.line === b.line && a.column >= b.column);
 }

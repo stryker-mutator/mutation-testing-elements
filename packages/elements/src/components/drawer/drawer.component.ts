@@ -1,6 +1,6 @@
 import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { renderIf } from '../../lib/htmlHelpers';
+import { renderIf } from '../../lib/html-helpers';
 import { bootstrap } from '../../style';
 import style from './drawer.component.scss';
 

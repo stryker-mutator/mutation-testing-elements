@@ -1,7 +1,7 @@
 import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { MutantModel, TestModel, TestStatus } from 'mutation-testing-metrics';
-import { renderIfPresent, getEmojiForTestStatus, renderIf, plural, describeLocation } from '../../lib/htmlHelpers';
+import { renderIfPresent, getEmojiForTestStatus, renderIf, plural, describeLocation } from '../../lib/html-helpers';
 import { bootstrap } from '../../style';
 import { DrawerMode } from '../drawer/drawer.component';
 import style from './drawer-test.scss';

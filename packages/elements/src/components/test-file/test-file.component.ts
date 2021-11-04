@@ -10,7 +10,7 @@ import { bootstrap, prismjs } from '../../style';
 import { determineLanguage, highlightedCodeTableWithTests } from '../../lib/code-helpers';
 import { MutationTestReportTestComponent } from '../test/test.component';
 import { MteCustomEvent } from '../../lib/custom-events';
-import { getContextClassForTestStatus, getEmojiForTestStatus } from '../../lib/htmlHelpers';
+import { getContextClassForTestStatus, getEmojiForTestStatus } from '../../lib/html-helpers';
 import { StateFilter } from '../state-filter/state-filter.component';
 import { MutationTestReportTestListItemComponent } from '../test-list-item/test-list-item.component';
 
