@@ -47,6 +47,11 @@ export class FileStateFilterComponent<TStatus> extends LitElement {
   public render() {
     return html`
       <div class="legend col-md-12 d-flex align-items-center">
+        <div class="d-flex me-2">
+          <button @click=${this.previous} class="me-1 btn btn-sm btn-secondary" type="button">&lt;</button>
+          <button @click=${this.next} class="btn btn-sm btn-secondary" type="button">&gt;</button>
+        </div>
+
         ${this.filters &&
         repeat(
           this.filters,
@@ -66,8 +71,6 @@ export class FileStateFilterComponent<TStatus> extends LitElement {
             </label>
           </div>`
         )}
-        <button @click=${this.previous} class="btn btn-sm btn-secondary" type="button">&lt;</button>
-        <button @click=${this.next} class="btn btn-sm btn-secondary" type="button">&gt;</button>
       </div>
     `;
   }

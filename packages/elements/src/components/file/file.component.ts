@@ -4,12 +4,13 @@ import { createRef, ref } from 'lit/directives/ref.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { StateFilter } from '../state-filter/state-filter.component';
 import { bootstrap, prismjs } from '../../style';
-import { gte, highlightCode, highlightedReplacementRows, HtmlTag, transformHighlightedLines } from '../../lib/code-helpers';
+import { gte, highlightCode, HtmlTag, isWhitespace, transformHighlightedLines } from '../../lib/code-helpers';
 import { MutantResult, MutantStatus } from 'mutation-testing-report-schema/api';
 import style from './file.scss';
 import { getContextClassForStatus, getEmojiForStatus } from '../../lib/html-helpers';
 import { FileUnderTestModel, MutantModel } from 'mutation-testing-metrics';
 import { MutantMarkCalculator } from '../../lib/mutant-mark-calculator';
+import { createCustomEvent } from '../../lib/custom-events';
 
 const diffOldClass = 'diff-old';
 const diffNewClass = 'diff-new';
@@ -41,6 +42,7 @@ export class FileComponent extends LitElement {
   };
 
   private codeClicked = (ev: MouseEvent) => {
+    ev.stopPropagation();
     if (ev.target instanceof Element) {
       let mutantId: string | null = null;
       let maybeMutantTarget: Element | null = ev.target;
@@ -77,8 +79,11 @@ export class FileComponent extends LitElement {
             @next=${this.nextMutant}
             @previous=${this.previousMutant}
           ></mte-state-filter>
-          <pre @click="${this.codeClicked}" id="report-code-block" class="line-numbers"><code ${ref(this.codeRef)} class="language-${this.model
-            .language}"><table>${this.codeLines.map(
+          <pre
+            @click="${this.codeClicked}"
+            id="report-code-block"
+            class="line-numbers ${this.selectedMutantStates.map((state) => `mutant-show-${getContextClassForStatus(state)}`).join(' ')}"
+          ><code ${ref(this.codeRef)} class="language-${this.model.language}"><table>${this.codeLines.map(
             (line, lineNr) => html`<tr class="line"
               ><td class="line-number"></td><td class="line-marker"></td
               ><td class="code">${unsafeHTML(line)}${this.renderMutants(mutantLineMap.get(lineNr + 1))}</td></tr
@@ -91,11 +96,15 @@ export class FileComponent extends LitElement {
 
   private nextMutant = () => {
     const index = this.selectedMutantId ? (this.mutants.findIndex((mutant) => mutant.id === this.selectedMutantId) + 1) % this.mutants.length : 0;
-    this.toggleMutant(this.mutants[index].id);
+    if (this.mutants[index]) {
+      this.toggleMutant(this.mutants[index].id);
+    }
   };
   private previousMutant = () => {
     const index = (this.mutants.findIndex((mutant) => mutant.id === this.selectedMutantId) + this.mutants.length - 1) % this.mutants.length;
-    this.toggleMutant(this.mutants[index].id);
+    if (this.mutants[index]) {
+      this.toggleMutant(this.mutants[index].id);
+    }
   };
 
   private renderMutants(mutants: MutantModel[] | undefined) {
@@ -115,6 +124,7 @@ export class FileComponent extends LitElement {
     this.removeCurrentDiff();
     if (this.selectedMutantId === mutantId) {
       this.selectedMutantId = undefined;
+      this.dispatchEvent(createCustomEvent('mutant-selected', { selected: false, mutant }));
       return;
     }
 
@@ -123,12 +133,13 @@ export class FileComponent extends LitElement {
     for (let i = mutant.location.start.line - 1; i < mutant.location.end.line; i++) {
       lines.item(i).classList.add(diffOldClass);
     }
-    const mutatedLines = highlightedReplacementRows(mutant, this.model.language);
+    const mutatedLines = this.highlightedReplacementRows(mutant);
     const mutantEndRow = lines.item(mutant.location.end.line - 1);
     mutantEndRow.insertAdjacentHTML('afterend', mutatedLines);
     if (!isElementInViewport(mutantEndRow)) {
       mutantEndRow.scrollIntoView({ block: 'center', behavior: 'smooth' });
     }
+    this.dispatchEvent(createCustomEvent('mutant-selected', { selected: true, mutant }));
   }
 
   private removeCurrentDiff() {
@@ -202,6 +213,53 @@ export class FileComponent extends LitElement {
         .sort((m1, m2) => (gte(m1.location.start, m2.location.start) ? 1 : -1));
     }
     super.update(changes);
+  }
+
+  private highlightedReplacementRows(mutant: MutantModel): string {
+    const mutatedLines = mutant.getMutatedLines().trimEnd();
+    const originalLines = mutant.getOriginalLines().trimEnd();
+
+    let focusFrom = 0,
+      focusTo = mutatedLines.length - 1;
+    while (originalLines[focusFrom] === mutatedLines[focusFrom] && focusFrom < mutatedLines.length) {
+      focusFrom++;
+    }
+    const lengthDiff = originalLines.length - mutatedLines.length;
+    while (originalLines[focusTo + lengthDiff] === mutatedLines[focusTo] && focusTo > focusFrom) {
+      focusTo--;
+    }
+
+    if (focusTo === focusFrom) {
+      // For example '""'
+      if (!isWhitespace(mutatedLines[focusFrom - 1])) {
+        focusFrom--;
+      }
+    }
+    // Include the next char
+    focusTo++;
+
+    // Make an exception for `true` and `false` (end in same character 🤷‍♀️)
+    const focussedPart = mutatedLines.substring(focusFrom, focusTo);
+    ['true', 'false'].forEach((keyword) => {
+      if (focussedPart === keyword.substr(0, keyword.length - 1) && keyword[keyword.length - 1] === mutatedLines[focusTo]) {
+        focusTo++;
+      }
+      if (focussedPart === keyword.substr(1, keyword.length) && keyword[0] === mutatedLines[focusFrom - 1]) {
+        focusFrom--;
+      }
+    });
+
+    const lines = transformHighlightedLines(highlightCode(mutatedLines, this.model.name), ({ offset }) => {
+      if (offset === focusFrom) {
+        return { tags: [{ elementName: 'span', id: 'diff-focus', attributes: { class: 'diff-focus' } }] };
+      } else if (offset === focusTo) {
+        return { tags: [{ elementName: 'span', id: 'diff-focus', isClosing: true }] };
+      }
+      return;
+    });
+    const lineStart = '<tr class="diff-new"><td class="empty-line-number"></td><td class="line-marker"></td><td>';
+    const lineEnd = '</td></tr>';
+    return lines.map((line) => `${lineStart}${line}${lineEnd}`).join('');
   }
 }
 function title(mutant: MutantModel): string {

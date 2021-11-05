@@ -42,15 +42,15 @@ export class MutantMarkCalculator {
 
   public determineMarkerClass = () => {
     if (this.survived > 0) {
-      return `bg-${getContextClassForStatus(MutantStatus.Survived)}-light`;
+      return `mutant-${getContextClassForStatus(MutantStatus.Survived)}`;
     } else if (this.noCoverage > 0) {
-      return `bg-${getContextClassForStatus(MutantStatus.NoCoverage)}-light`;
+      return `mutant-${getContextClassForStatus(MutantStatus.NoCoverage)}`;
     } else if (this.timeout > 0) {
-      return `bg-${getContextClassForStatus(MutantStatus.Timeout)}-light`;
+      return `mutant-${getContextClassForStatus(MutantStatus.Timeout)}`;
     } else if (this.killed > 0) {
-      return `bg-${getContextClassForStatus(MutantStatus.Killed)}-light`;
+      return `mutant-${getContextClassForStatus(MutantStatus.Killed)}`;
     } else if (this.ignored > 0) {
-      return `bg-${getContextClassForStatus(MutantStatus.Ignored)}-light`;
+      return `mutant-${getContextClassForStatus(MutantStatus.Ignored)}`;
     }
     return null;
   };

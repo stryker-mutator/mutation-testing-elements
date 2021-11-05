@@ -193,6 +193,18 @@
 }
 
 // Mutation testing elements custom theming ================================
+
+@function squiggly-svg-factory($stroke-color) {
+  // Color to string
+  $stroke-color: "#{$stroke-color}";
+
+  // Escape leading '#' (url encode %23)
+  $index: str-index($stroke-color, '#');
+  @if $index eq 1 {
+    $stroke-color: '%23' + str-slice($stroke-color, 2);
+  }
+  @return url("data:image/svg+xml;charset=US-ASCII,<svg width='8' height='4' xmlns='http://www.w3.org/2000/svg'><path stroke-width='2' stroke='#{$stroke-color}' d='M 0 2 C 1 4, 3 4, 4 2 C 5 0, 7 0, 8 2' fill='transparent'/></svg>");
+}
 :host(:not([theme='dark'])) {
   --mut-octicon-icon-color: #498ba7;
   --mut-line-number: #6e7781;
@@ -205,6 +217,8 @@
   --mut-badge-info-bg: #54c6ec;
   --mut-badge-info: #212529; 
   --mut-code-lense: #919191;
+  --mut-squiggly-danger: #{squiggly-svg-factory($danger)};
+  --mut-squiggly-caution: #{squiggly-svg-factory($orange)};
 }
 :host([theme='dark']) {
   --mut-octicon-icon-color: #519aba;
@@ -218,4 +232,6 @@
   --mut-badge-info-bg: #17a3b8;
   --mut-badge-info: #fff;
   --mut-code-lense: #999;
+  --mut-squiggly-danger: #{squiggly-svg-factory($darkly-danger)};
+  --mut-squiggly-caution: #{squiggly-svg-factory($darkly-orange)};
 }

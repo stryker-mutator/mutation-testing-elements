@@ -1,5 +1,5 @@
 import { Position } from 'mutation-testing-report-schema/api';
-import { MutantModel, TestFileModel, TestModel } from 'mutation-testing-metrics';
+import { TestFileModel, TestModel } from 'mutation-testing-metrics';
 import { highlight, languages } from 'prismjs/components/prism-core';
 
 const lineStart = '<tr class="line"><td class="line-number"></td><td class="line-marker"></td><td class="code">';
@@ -58,55 +58,9 @@ export function determineLanguage(fileName: string): ProgrammingLanguage | undef
 }
 
 export function highlightCode(code: string, fileName: string): string {
+  console.log('highlighting code');
   const language = determineLanguage(fileName) ?? '';
   return highlight(code, languages[language], language);
-}
-
-export function highlightedReplacementRows(mutant: MutantModel, language: string): string {
-  const mutatedLines = mutant.getMutatedLines().trimEnd();
-  const originalLines = mutant.getOriginalLines().trimEnd();
-
-  let focusFrom = 0,
-    focusTo = mutatedLines.length - 1;
-  while (originalLines[focusFrom] === mutatedLines[focusFrom] && focusFrom < mutatedLines.length) {
-    focusFrom++;
-  }
-  const lengthDiff = originalLines.length - mutatedLines.length;
-  while (originalLines[focusTo + lengthDiff] === mutatedLines[focusTo] && focusTo > focusFrom) {
-    focusTo--;
-  }
-
-  if (focusTo === focusFrom) {
-    // For example '""'
-    if (!isWhitespace(mutatedLines[focusFrom - 1])) {
-      focusFrom--;
-    }
-  }
-  // Include the next char
-  focusTo++;
-
-  // Make an exception for `true` and `false` (end in same character 🤷‍♀️)
-  const focussedPart = mutatedLines.substring(focusFrom, focusTo);
-  ['true', 'false'].forEach((keyword) => {
-    if (focussedPart === keyword.substr(0, keyword.length - 1) && keyword[keyword.length - 1] === mutatedLines[focusTo]) {
-      focusTo++;
-    }
-    if (focussedPart === keyword.substr(1, keyword.length) && keyword[0] === mutatedLines[focusFrom - 1]) {
-      focusFrom--;
-    }
-  });
-
-  const lines = transformHighlightedLines(highlight(mutatedLines, languages[language], language), ({ offset }) => {
-    if (offset === focusFrom) {
-      return { tags: [{ elementName: 'span', id: 'diff-focus', attributes: { class: 'diff-focus' } }] };
-    } else if (offset === focusTo) {
-      return { tags: [{ elementName: 'span', id: 'diff-focus', isClosing: true }] };
-    }
-    return;
-  });
-  const lineStart = '<tr class="diff-new"><td class="empty-line-number"></td><td class="line-marker"></td><td>';
-  const lineEnd = '</td></tr>';
-  return lines.map((line) => `${lineStart}${line}${lineEnd}`).join('');
 }
 
 /**
@@ -211,24 +165,26 @@ export function transformHighlightedLines(source: string, visitor: (pos: Positio
   };
 
   const currentlyActiveTags: HtmlTag[] = [];
-
+  let tagsNeedOpening = false;
   let pos = 0;
-  let activeTagsNeedOpening = true;
 
   while (pos < source.length) {
+    if (tagsNeedOpening && !isWhitespace(source[pos])) {
+      reopenActiveTags();
+      tagsNeedOpening = false;
+    }
     switch (source[pos]) {
       case Characters.CarriageReturn:
         currentPosition.offset++;
         break;
-      case Characters.NewLine: // Create a new line
+      case Characters.NewLine:
         endLine();
         currentPosition.offset++;
         currentPosition.line++;
         currentPosition.column = 0;
-        activeTagsNeedOpening = true;
+        tagsNeedOpening = true; // delay opening of the tags to prevent underlined whitespace
         break;
       case Characters.LT: {
-        // start- or end tag
         const tag = parseTag();
         if (tag.isClosing) {
           closeTag(tag);
@@ -238,14 +194,9 @@ export function transformHighlightedLines(source: string, visitor: (pos: Positio
         break;
       }
       case Characters.Amp:
-        // Start of an HTML entity
         visitCharacter(parseHtmlEntity());
         break;
       default:
-        if (activeTagsNeedOpening && !isWhitespace(source[pos])) {
-          reopenActiveTags();
-          activeTagsNeedOpening = false;
-        }
         visitCharacter(source[pos]);
         break;
     }
@@ -407,7 +358,7 @@ export function isAlfaNumeric(char: string | undefined): boolean {
   return false;
 }
 
-function isWhitespace(char: string) {
+export function isWhitespace(char: string) {
   return char === Characters.NewLine || char === Characters.Space || char === Characters.Tab;
 }
 

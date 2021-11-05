@@ -1,9 +1,8 @@
 @import '../../style/bootstrap-reboot.scss'; // import the variables
 
 @each $color, $value in $theme-colors {
-  .bg-#{$color}-light {
-    // background-color: var(--bs-#{$color}-bg-light);
-    text-decoration: underline var(--bs-#{$color}) double 1px;
+  .mutant-#{$color}, .mutant-#{$color}:after {
+    border-color: var(--bs-#{$color});
   }
 
   svg.#{$color} {
@@ -11,15 +10,30 @@
   }
 }
 
-.bg-caution-light,
-.bg-danger-light {
-  text-decoration-style: wavy;
+.mutant-success,
+.mutant-warning,
+.mutant-secondary {
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
 }
 
-.code-lense-annotation {
-  color: var(--mut-code-lense);
-  font-size: 12px;
-  line-height: 19px;
+.mutant-caution,
+.mutant-danger {
+  /*
+  Don't use `text-decoration-style: wavy`, because chrome doesn't extend to all characters: https://stackoverflow.com/questions/57559588/how-to-make-the-wavy-underline-extend-cover-all-the-characters-in-chrome
+  Use border bottom instead.
+  */
+  border-image-slice: 0 0 4 0;
+  border-image-width: 4px;
+  border-image-outset: 4px;
+  border-image-repeat: repeat;
+}
+
+.mutant-danger {
+  border-image-source: var(--mut-squiggly-danger);
+}
+.mutant-caution {
+  border-image-source: var(--mut-squiggly-caution);
 }
 
 #report-code-block {
