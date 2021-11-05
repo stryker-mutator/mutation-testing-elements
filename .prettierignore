@@ -13,3 +13,4 @@ src-generated
 reports
 target/
 packages/metrics-scala/README.md
+.bsp/
