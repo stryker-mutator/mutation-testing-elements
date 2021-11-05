@@ -9,4 +9,16 @@ pull_request_rules:
       - title~=^build\(deps-dev\)
     actions:
       merge:
+        method: squash
+pull_request_rules:
+  - name: automatic merge for Dependabot devDependencies pull requests
+    conditions:
+      - author~=^dependabot(|-preview)\[bot\]$
+      - check-success=build_and_test (12.x, ubuntu-latest)
+      - check-success=build_and_test (12.x, windows-latest)
+      - check-success=build_and_test (14.x, ubuntu-latest)
+      - check-success=build_and_test (14.x, windows-latest)
+      - title~=^build\(deps-dev\)
+    actions:
+      merge:
         method: merge
