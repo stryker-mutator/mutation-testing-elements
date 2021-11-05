@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-var-requires */
 // See https://github.com/bcherny/json-schema-to-typescript/issues/358
 
