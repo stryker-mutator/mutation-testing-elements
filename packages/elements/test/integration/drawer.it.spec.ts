@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { getCurrent } from './lib/browser';
-import { sleep } from './lib/helpers';
+import { waitUntil } from './lib/helpers';
 import { MutantComponent } from './po/MutantComponent.po';
 import { Drawer } from './po/Drawer.po';
 import { ReportPage } from './po/ReportPage';
@@ -59,9 +59,10 @@ describe('Drawer', () => {
 
       it('should show the details of the next mutant when another mutant is selected', async () => {
         await page.mutantView.mutant(24).toggleMutant();
-        await sleep();
-        expect(await drawer.isHalfOpen()).true;
-        expect(await drawer.headerText()).eq('24 👽 ConditionalExpression Survived (15:77)');
+        await waitUntil(async () => {
+          expect(await drawer.isHalfOpen()).true;
+          return expect(await drawer.headerText()).eq('24 👽 ConditionalExpression Survived (15:77)');
+        });
       });
 
       it('should hide the drawer when the user clicks somewhere else', async () => {
@@ -72,8 +73,8 @@ describe('Drawer', () => {
       it('should not hide the drawer when the user clicks somewhere on the drawer', async () => {
         await drawer.whenHalfOpen();
         await drawer.clickOnHeader();
-        await sleep();
-        expect(await drawer.isHalfOpen()).true;
+
+        await waitUntil(async () => expect(await drawer.isHalfOpen()).true);
       });
 
       describe('when "read more" is toggled', () => {
@@ -137,8 +138,8 @@ describe('Drawer', () => {
     it('should not hide the drawer when the user clicks somewhere on the drawer', async () => {
       await drawer.whenHalfOpen();
       await drawer.clickOnHeader();
-      await sleep();
-      expect(await drawer.isHalfOpen()).true;
+
+      await waitUntil(async () => expect(await drawer.isHalfOpen()).true);
     });
 
     describe('when "read more" is toggled', () => {
