@@ -1,9 +1,5 @@
 import { Position } from 'mutation-testing-report-schema/api';
-import { TestFileModel, TestModel } from 'mutation-testing-metrics';
 import { highlight, languages } from 'prismjs/components/prism-core';
-
-const lineStart = '<tr class="line"><td class="line-number"></td><td class="line-marker"></td><td class="code">';
-const lineEnd = '</td></tr>';
 
 export enum ProgrammingLanguage {
   csharp = 'cs',
@@ -58,54 +54,8 @@ export function determineLanguage(fileName: string): ProgrammingLanguage | undef
 }
 
 export function highlightCode(code: string, fileName: string): string {
-  console.log('highlighting code');
   const language = determineLanguage(fileName) ?? '';
   return highlight(code, languages[language], language);
-}
-
-/**
- * Hightlights the code and inserts the mutants as `<mte-mutant>` elements.
- * Code will be inside an html table that looks like this:
- *
- * ```html
- * <table>
- *   <tr class="line-number">
- *     <td></td>
- *     <td class="line-marker"></td>
- *     <td class="code"> highlighted code</td>
- *   </tr>
- * </table>
- * ```
- *
- * @param model The file result
- * @returns highlighted code with mutants
- */
-export function highlightedCodeTableWithTests(file: TestFileModel, source: string): string {
-  const language = determineLanguage(file.name) ?? 'javascript';
-  const highlightedSource = highlight(source, languages[language], language);
-  const testsToPlace = [...file.tests];
-  const toOpenAndClosingTags = (test: TestModel): HtmlTag[] => [
-    { elementName: 'mte-test', attributes: { 'test-id': test.id } },
-    { elementName: 'mte-test', attributes: {}, isClosing: true },
-  ];
-
-  const lines = transformHighlightedLines(highlightedSource, (pos) => {
-    const char = source[pos.offset];
-    // Test columns can be flaky. Let's prevent tests from appearing in the middle of words at least.
-    if (!isAlfaNumeric(char)) {
-      // Determine the test starts using `gte`. That way, if a flaky line/column results in a non-existing location, it will still appear on the next line
-      const startingTests = testsToPlace.filter((test) => test.location && gte(pos, test.location.start));
-      // Remove the test from the tests to place
-      startingTests.forEach((test) => testsToPlace.splice(testsToPlace.indexOf(test), 1));
-      return {
-        tags: startingTests.flatMap(toOpenAndClosingTags),
-      };
-    }
-    return;
-  });
-
-  const tableBody = lines.map((line) => `${lineStart}${line}${lineEnd}`).join('');
-  return `<table>${tableBody}</table>`;
 }
 
 interface VisitResult {
@@ -155,7 +105,7 @@ export interface HtmlTag {
  * @param visitor The visitor function that is executed for each position in the source code and allows callers to inject a marker css class
  * @returns the highlighted source split into lines
  */
-export function transformHighlightedLines(source: string, visitor: (pos: PositionWithOffset) => VisitResult | undefined): string[] {
+export function transformHighlightedLines(source: string, visitor?: (pos: PositionWithOffset) => VisitResult | undefined): string[] {
   let currentLineParts: string[] = [];
   const lines: string[] = [];
   const currentPosition: PositionWithOffset = {
@@ -233,7 +183,7 @@ export function transformHighlightedLines(source: string, visitor: (pos: Positio
   function visitCharacter(raw: string) {
     currentPosition.column++;
     currentPosition.offset++;
-    const visitResult = visitor(currentPosition);
+    const visitResult = visitor?.(currentPosition);
     visitResult?.tags.forEach((tag) => {
       if (tag.isClosing) {
         closeTag(tag);

@@ -5,6 +5,7 @@ import { bootstrap } from '../../style';
 import style from './drawer.component.scss';
 
 export type DrawerMode = 'open' | 'half' | 'closed';
+export const DRAWER_HALF_OPEN_SIZE = 120;
 
 @customElement('mte-drawer')
 export class MutationTestReportDrawer extends LitElement {

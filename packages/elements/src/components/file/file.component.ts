@@ -7,9 +7,8 @@ import { bootstrap, prismjs } from '../../style';
 import { gte, highlightCode, HtmlTag, isWhitespace, transformHighlightedLines } from '../../lib/code-helpers';
 import { MutantResult, MutantStatus } from 'mutation-testing-report-schema/api';
 import style from './file.scss';
-import { getContextClassForStatus, getEmojiForStatus } from '../../lib/html-helpers';
+import { getContextClassForStatus, getEmojiForStatus, scrollToCodeFragmentIfNeeded } from '../../lib/html-helpers';
 import { FileUnderTestModel, MutantModel } from 'mutation-testing-metrics';
-import { MutantMarkCalculator } from '../../lib/mutant-mark-calculator';
 import { createCustomEvent } from '../../lib/custom-events';
 
 const diffOldClass = 'diff-old';
@@ -44,17 +43,22 @@ export class FileComponent extends LitElement {
   private codeClicked = (ev: MouseEvent) => {
     ev.stopPropagation();
     if (ev.target instanceof Element) {
-      let mutantId: string | null = null;
       let maybeMutantTarget: Element | null = ev.target;
-      while (maybeMutantTarget instanceof Element) {
-        mutantId = maybeMutantTarget.getAttribute('mutant-id');
-        if (mutantId) {
-          break;
+      const mutantIdsInScope: string[] = [];
+      for (; maybeMutantTarget instanceof Element; maybeMutantTarget = maybeMutantTarget.parentElement) {
+        const mutantId = maybeMutantTarget.getAttribute('mutant-id');
+        if (mutantId && this.mutants.some(({ id }) => id === mutantId)) {
+          mutantIdsInScope.push(mutantId);
         }
-        maybeMutantTarget = maybeMutantTarget.parentElement;
       }
-      if (mutantId) {
-        this.toggleMutant(mutantId);
+      if (mutantIdsInScope.length) {
+        const index = (this.selectedMutantId ? mutantIdsInScope.indexOf(this.selectedMutantId) : -1) + 1;
+        if (mutantIdsInScope[index]) {
+          this.toggleMutant(mutantIdsInScope[index]);
+        } else if (this.selectedMutantId) {
+          this.toggleMutant(this.selectedMutantId);
+        }
+        clearSelection();
       }
     }
   };
@@ -82,7 +86,7 @@ export class FileComponent extends LitElement {
           <pre
             @click="${this.codeClicked}"
             id="report-code-block"
-            class="line-numbers ${this.selectedMutantStates.map((state) => `mutant-show-${getContextClassForStatus(state)}`).join(' ')}"
+            class="line-numbers ${this.selectedMutantStates.map((state) => `mte-selected-${state}`).join(' ')}"
           ><code ${ref(this.codeRef)} class="language-${this.model.language}"><table>${this.codeLines.map(
             (line, lineNr) => html`<tr class="line"
               ><td class="line-number"></td><td class="line-marker"></td
@@ -110,7 +114,7 @@ export class FileComponent extends LitElement {
   private renderMutants(mutants: MutantModel[] | undefined) {
     return html`${mutants?.map(
       (mutant) =>
-        svg`<svg class="mutant ${this.selectedMutantId === mutant.id ? 'info' : getContextClassForStatus(mutant.status)}"  mutant-id="${
+        svg`<svg class="mutant-dot ${this.selectedMutantId === mutant.id ? 'selected' : mutant.status}"  mutant-id="${
           mutant.id
         }" height="10" width="10">
           <title>${title(mutant)}</title>
@@ -136,9 +140,7 @@ export class FileComponent extends LitElement {
     const mutatedLines = this.highlightedReplacementRows(mutant);
     const mutantEndRow = lines.item(mutant.location.end.line - 1);
     mutantEndRow.insertAdjacentHTML('afterend', mutatedLines);
-    if (!isElementInViewport(mutantEndRow)) {
-      mutantEndRow.scrollIntoView({ block: 'center', behavior: 'smooth' });
-    }
+    scrollToCodeFragmentIfNeeded(mutantEndRow);
     this.dispatchEvent(createCustomEvent('mutant-selected', { selected: true, mutant }));
   }
 
@@ -171,37 +173,28 @@ export class FileComponent extends LitElement {
       const highlightedSource = highlightCode(this.model.source, this.model.name);
       const startedMutants = new Set<MutantResult>();
       const mutantsToPlace = new Set(this.model.mutants);
-      const mutantMarker = new MutantMarkCalculator();
 
       this.codeLines = transformHighlightedLines(highlightedSource, (position) => {
-        const bgBefore = mutantMarker.determineMarkerClass();
         const tags: HtmlTag[] = [];
+
+        // End previously opened mutants
         for (const mutant of startedMutants) {
           if (gte(position, mutant.location.end)) {
-            mutantMarker.markMutantEnd(mutant);
             startedMutants.delete(mutant);
             tags.push({ elementName: 'span', id: mutant.id, isClosing: true });
           }
         }
-        const mutantsToStart = [...mutantsToPlace.values()].filter((mutant) => gte(position, mutant.location.start));
 
-        for (const mutant of mutantsToStart) {
-          mutantMarker.markMutantStart(mutant);
-          startedMutants.add(mutant);
-          mutantsToPlace.delete(mutant);
-          tags.push({
-            elementName: 'span',
-            id: mutant.id,
-            attributes: { class: 'mutant', title: title(mutant), 'mutant-id': mutant.id },
-          });
-        }
-        const bgAfter = mutantMarker.determineMarkerClass();
-        if (bgBefore !== bgAfter) {
-          if (bgBefore) {
-            tags.push({ elementName: 'span', id: 'bg-marker', isClosing: true });
-          }
-          if (bgAfter) {
-            tags.push({ elementName: 'span', id: 'bg-marker', attributes: { class: bgAfter } });
+        // Open new mutants
+        for (const mutant of mutantsToPlace) {
+          if (gte(position, mutant.location.start)) {
+            startedMutants.add(mutant);
+            mutantsToPlace.delete(mutant);
+            tags.push({
+              elementName: 'span',
+              id: mutant.id,
+              attributes: { class: `mutant ${mutant.status}`, title: title(mutant), 'mutant-id': mutant.id },
+            });
           }
         }
         return { tags };
@@ -211,6 +204,9 @@ export class FileComponent extends LitElement {
       this.mutants = this.model.mutants
         .filter((mutant) => this.selectedMutantStates.includes(mutant.status))
         .sort((m1, m2) => (gte(m1.location.start, m2.location.start) ? 1 : -1));
+      if (this.selectedMutantId && !this.mutants.some(({ id }) => this.selectedMutantId === id)) {
+        this.toggleMutant(this.selectedMutantId);
+      }
     }
     super.update(changes);
   }
@@ -266,8 +262,6 @@ function title(mutant: MutantModel): string {
   return `${mutant.mutatorName} ${mutant.status}`;
 }
 
-function isElementInViewport(el: Element) {
-  const { top, bottom } = el.getBoundingClientRect();
-
-  return top >= 0 && bottom <= (window.innerHeight || document.documentElement.clientHeight);
+function clearSelection() {
+  window.getSelection()?.removeAllRanges();
 }

@@ -1,7 +1,6 @@
 import './components/app/app.component';
 import './components/file/file.component';
 import './components/breadcrumb';
-import './components/mutant/mutant.component';
 import './components/state-filter/state-filter.component';
 import './components/theme-switch/theme-switch.component';
 import './components/drawer/drawer.component';

@@ -2,15 +2,15 @@ import { expect } from 'chai';
 import { MutantModel, TestFileModel } from 'mutation-testing-metrics';
 import { TestStatus } from 'mutation-testing-metrics';
 import { FileStateFilterComponent, StateFilter } from '../../../src/components/state-filter/state-filter.component';
-import { MutationTestReportTestFile } from '../../../src/components/test-file/test-file.component';
+import { TestFileComponent } from '../../../src/components/test-file/test-file.component';
 import { MutationTestReportTestListItemComponent } from '../../../src/components/test-list-item/test-list-item.component';
 import { MutationTestReportTestComponent } from '../../../src/components/test/test.component';
 import { createCustomEvent } from '../../../src/lib/custom-events';
 import { createMutantResult, createStateFilter, createTestDefinition } from '../../helpers/factory';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 
-describe(MutationTestReportTestFile.name, () => {
-  let sut: CustomElementFixture<MutationTestReportTestFile>;
+describe(TestFileComponent.name, () => {
+  let sut: CustomElementFixture<TestFileComponent>;
 
   beforeEach(() => {
     sut = new CustomElementFixture('mte-test-file');
