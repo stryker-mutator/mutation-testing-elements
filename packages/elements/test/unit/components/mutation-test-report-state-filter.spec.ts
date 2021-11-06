@@ -117,48 +117,18 @@ describe(FileStateFilterComponent.name, () => {
     });
   });
 
-  describe('Collapse/expand button', () => {
-    let collapseButton: HTMLElement;
-    beforeEach(async () => {
-      sut.element.allowToggleAll = true;
-      await sut.whenStable();
-      collapseButton = sut.$('button.btn-secondary');
+  describe('Next/previous button', () => {
+    it('should dispatch next event when "next" is clicked', async () => {
+      const nextEvent = await sut.catchCustomEvent('next', () => {
+        sut.$('button.mte-next').click();
+      });
+      expect(nextEvent).not.null;
     });
-
-    it('should not show "Expand all" when "allowToggleAll" is false', async () => {
-      sut.element.allowToggleAll = false;
-      await sut.whenStable();
-      collapseButton = sut.$('button.btn-secondary');
-      expect(collapseButton).null;
-    });
-
-    it('should show "Expand all" button when "allowToggleAll" is true', () => {
-      expect(collapseButton.textContent).eq('Expand all');
-    });
-
-    it('should dispatch "expand-all" event when the button is clicked', async () => {
-      let actual: Event | undefined;
-      sut.element.addEventListener('expand-all', (evt) => (actual = evt));
-      collapseButton.click();
-      await sut.whenStable();
-      expect(actual).ok;
-    });
-
-    it('should dispatch "collapse-all" event when the button is clicked a second time', async () => {
-      let actual: Event | undefined;
-      sut.element.addEventListener('collapse-all', (evt) => (actual = evt));
-      collapseButton.click();
-      await sut.whenStable();
-      expect(actual).not.ok;
-      collapseButton.click();
-      await sut.whenStable();
-      expect(actual).ok;
-    });
-
-    it('should toggle the text to "Collapse all" when clicked', async () => {
-      collapseButton.click();
-      await sut.whenStable();
-      expect(collapseButton.textContent).eq('Collapse all');
+    it('should dispatch previous event when "previous" is clicked', async () => {
+      const nextEvent = await sut.catchCustomEvent('previous', () => {
+        sut.$('button.mte-previous').click();
+      });
+      expect(nextEvent).not.null;
     });
   });
 });

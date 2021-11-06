@@ -4,7 +4,7 @@ import { createRef, ref } from 'lit/directives/ref.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { StateFilter } from '../state-filter/state-filter.component';
 import { bootstrap, prismjs } from '../../style';
-import { gte, highlightCode, HtmlTag, isWhitespace, transformHighlightedLines } from '../../lib/code-helpers';
+import { gte, highlightCode, isWhitespace, transformHighlightedLines } from '../../lib/code-helpers';
 import { MutantResult, MutantStatus } from 'mutation-testing-report-schema/api';
 import style from './file.scss';
 import { getContextClassForStatus, getEmojiForStatus, scrollToCodeFragmentIfNeeded } from '../../lib/html-helpers';
@@ -174,14 +174,12 @@ export class FileComponent extends LitElement {
       const startedMutants = new Set<MutantResult>();
       const mutantsToPlace = new Set(this.model.mutants);
 
-      this.codeLines = transformHighlightedLines(highlightedSource, (position) => {
-        const tags: HtmlTag[] = [];
-
+      this.codeLines = transformHighlightedLines(highlightedSource, function* (position) {
         // End previously opened mutants
         for (const mutant of startedMutants) {
           if (gte(position, mutant.location.end)) {
             startedMutants.delete(mutant);
-            tags.push({ elementName: 'span', id: mutant.id, isClosing: true });
+            yield { elementName: 'span', id: mutant.id, isClosing: true };
           }
         }
 
@@ -190,14 +188,13 @@ export class FileComponent extends LitElement {
           if (gte(position, mutant.location.start)) {
             startedMutants.add(mutant);
             mutantsToPlace.delete(mutant);
-            tags.push({
+            yield {
               elementName: 'span',
               id: mutant.id,
               attributes: { class: `mutant ${mutant.status}`, title: title(mutant), 'mutant-id': mutant.id },
-            });
+            };
           }
         }
-        return { tags };
       });
     }
     if ((changes.has('model') && this.model) || changes.has('selectedMutantStates')) {
@@ -245,11 +242,11 @@ export class FileComponent extends LitElement {
       }
     });
 
-    const lines = transformHighlightedLines(highlightCode(mutatedLines, this.model.name), ({ offset }) => {
+    const lines = transformHighlightedLines(highlightCode(mutatedLines, this.model.name), function* ({ offset }) {
       if (offset === focusFrom) {
-        return { tags: [{ elementName: 'span', id: 'diff-focus', attributes: { class: 'diff-focus' } }] };
+        yield { elementName: 'span', id: 'diff-focus', attributes: { class: 'diff-focus' } };
       } else if (offset === focusTo) {
-        return { tags: [{ elementName: 'span', id: 'diff-focus', isClosing: true }] };
+        yield { elementName: 'span', id: 'diff-focus', isClosing: true };
       }
       return;
     });

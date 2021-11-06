@@ -86,7 +86,7 @@ export class TestFileComponent extends LitElement {
   }
 
   private renderTestList() {
-    const testsToRenderInTheList = this.model?.source ? this.model.tests.filter((test) => !test.location) : this.model?.tests ?? [];
+    const testsToRenderInTheList = this.tests.filter((test) => !test.location);
     if (testsToRenderInTheList.length) {
       return html`<div class="list-group">
         ${testsToRenderInTheList.map(
@@ -122,12 +122,21 @@ export class TestFileComponent extends LitElement {
           tests.push(test);
         }
       }
+
+      const renderFinalTests = (lastLine: number) => {
+        return this.renderTests([...testsByLine.entries()].filter(([line]) => line > lastLine).flatMap(([, tests]) => tests));
+      };
+
       return html`<pre id="report-code-block" class="line-numbers"><code class="language-${determineLanguage(this.model.name)}"><table>
         ${this.lines.map(
         (line, lineNr) =>
           html`<tr class="line"
             ><td class="line-number"></td><td class="line-marker"></td
-            ><td class="code">${unsafeHTML(line)}${this.renderTests(testsByLine.get(lineNr + 1))}</td></tr
+            ><td class="code"
+              >${unsafeHTML(line)}${this.renderTests(testsByLine.get(lineNr + 1))}${this.lines.length === lineNr + 1
+                ? renderFinalTests(lineNr + 1)
+                : ''}</td
+            ></tr
           >`
       )}</table></code></pre>`;
     }

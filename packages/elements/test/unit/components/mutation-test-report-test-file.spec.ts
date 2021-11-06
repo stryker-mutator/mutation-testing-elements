@@ -3,8 +3,6 @@ import { MutantModel, TestFileModel } from 'mutation-testing-metrics';
 import { TestStatus } from 'mutation-testing-metrics';
 import { FileStateFilterComponent, StateFilter } from '../../../src/components/state-filter/state-filter.component';
 import { TestFileComponent } from '../../../src/components/test-file/test-file.component';
-import { MutationTestReportTestListItemComponent } from '../../../src/components/test-list-item/test-list-item.component';
-import { MutationTestReportTestComponent } from '../../../src/components/test/test.component';
 import { createCustomEvent } from '../../../src/lib/custom-events';
 import { createMutantResult, createStateFilter, createTestDefinition } from '../../helpers/factory';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
@@ -20,11 +18,11 @@ describe(TestFileComponent.name, () => {
     return sut.$('mte-state-filter') as FileStateFilterComponent<TestStatus>;
   }
 
-  function selectTestListItems(): MutationTestReportTestListItemComponent[] {
-    return sut.$$('mte-test-list-item') as MutationTestReportTestListItemComponent[];
+  function selectTestListItems(): HTMLLIElement[] {
+    return sut.$$('.list-group-item');
   }
-  function selectTests(): MutationTestReportTestComponent[] {
-    return sut.$$('mte-test') as MutationTestReportTestComponent[];
+  function selectTests(): HTMLSpanElement[] {
+    return sut.$$('.test-dot');
   }
 
   describe('state filter', () => {
@@ -109,8 +107,8 @@ describe(TestFileComponent.name, () => {
       await sut.whenStable();
 
       // Assert
-      expect(selectTestListItems()[0].show).false;
-      expect(selectTests()[0].show).false;
+      expect(selectTests()).lengthOf(0);
+      expect(selectTestListItems()).lengthOf(0);
     });
   });
 
@@ -139,10 +137,54 @@ describe(TestFileComponent.name, () => {
       await sut.whenStable();
       expect(sut.$('code .token')).ok;
     });
+
+    it('should insert test-dot elements at the end of the lines', async () => {
+      const model = new TestFileModel(
+        {
+          tests: [createTestDefinition({ id: 'spec-1', location: { start: { line: 2, column: 3 } } })],
+          source: '\nit("should work", () => {})',
+        },
+        'foo.spec.js'
+      );
+      sut.element.model = model;
+      await sut.whenStable();
+
+      expect(sut.$('code tr.line:nth-child(2) .code').innerHTML).contains(
+        '<svg height="10" width="10" test-id="spec-1" class="test-dot NotCovering">'
+      );
+    });
+
+    it('should add the test title to the svg', async () => {
+      const model = new TestFileModel(
+        {
+          tests: [createTestDefinition({ id: 'spec-1', location: { start: { line: 2, column: 3 } } })],
+          source: '\nit("should work", () => {})',
+        },
+        'foo.spec.js'
+      );
+      sut.element.model = model;
+      await sut.whenStable();
+
+      expect(sut.$('code tr.line:nth-child(2) .code').innerHTML).match(/<title>(<!--.+-->)?foo should bar \(NotCovering\)<\/title>/);
+    });
+
+    it('should place remaining tests at the end', async () => {
+      // line 3 doesn't exist
+      const model = new TestFileModel(
+        {
+          tests: [createTestDefinition({ id: 'spec-1', location: { start: { line: 3, column: 1 } } })],
+          source: '  it("foo")\n  it("bar")',
+        },
+        'foo.spec.js'
+      );
+      sut.element.model = model;
+      await sut.whenStable();
+
+      expect(sut.$('code tr.line:nth-child(2) .code').innerHTML).include('test-id="spec-1"');
+    });
   });
 
-  describe('with `mte-test`', () => {
-    let testComponents: MutationTestReportTestComponent[];
+  describe('with tests', () => {
     let filterComponent: FileStateFilterComponent<TestStatus>;
 
     beforeEach(async () => {
@@ -159,19 +201,13 @@ describe(TestFileComponent.name, () => {
       model.tests[0].addKilled(new MutantModel(createMutantResult()));
       sut.element.model = model;
       await sut.whenStable();
-      testComponents = sut.$$('mte-test') as MutationTestReportTestComponent[];
       filterComponent = sut.$('mte-state-filter') as FileStateFilterComponent<TestStatus>;
     });
 
-    it('should bind the tests to the components', () => {
-      expect(testComponents[0].test).eq(sut.element.model!.tests[0]);
-      expect(testComponents[1].test).eq(sut.element.model!.tests[1]);
-    });
-
-    it('should show the tests by default', () => {
-      testComponents.forEach((testComponent) => {
-        expect(testComponent.show).true;
-      });
+    it('should set the test-id attribute', () => {
+      const tests = sut.$$<HTMLSpanElement>('.test-dot');
+      expect(tests[0].getAttribute('test-id')).eq('1');
+      expect(tests[1].getAttribute('test-id')).eq('2');
     });
 
     it('should hide the "Killing" tests when "Killing" tests are filtered out', async () => {
@@ -181,8 +217,9 @@ describe(TestFileComponent.name, () => {
       ];
       filterComponent.dispatchEvent(createCustomEvent('filters-changed', filters));
       await sut.whenStable();
-      expect(testComponents[0].show).false;
-      expect(testComponents[1].show).true;
+      const tests = sut.$$<HTMLSpanElement>('.test-dot');
+      expect(tests).lengthOf(1);
+      expect(tests[0].getAttribute('test-id')).eq('2');
     });
   });
 });

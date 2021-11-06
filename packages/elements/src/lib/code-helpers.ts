@@ -58,11 +58,7 @@ export function highlightCode(code: string, fileName: string): string {
   return highlight(code, languages[language], language);
 }
 
-interface VisitResult {
-  tags: HtmlTag[];
-}
-
-interface PositionWithOffset extends Position {
+export interface PositionWithOffset extends Position {
   offset: number;
 }
 
@@ -105,7 +101,7 @@ export interface HtmlTag {
  * @param visitor The visitor function that is executed for each position in the source code and allows callers to inject a marker css class
  * @returns the highlighted source split into lines
  */
-export function transformHighlightedLines(source: string, visitor?: (pos: PositionWithOffset) => VisitResult | undefined): string[] {
+export function transformHighlightedLines(source: string, visitor?: (pos: PositionWithOffset) => Iterable<HtmlTag>): string[] {
   let currentLineParts: string[] = [];
   const lines: string[] = [];
   const currentPosition: PositionWithOffset = {
@@ -183,22 +179,21 @@ export function transformHighlightedLines(source: string, visitor?: (pos: Positi
   function visitCharacter(raw: string) {
     currentPosition.column++;
     currentPosition.offset++;
-    const visitResult = visitor?.(currentPosition);
-    visitResult?.tags.forEach((tag) => {
-      if (tag.isClosing) {
-        closeTag(tag);
-      } else {
-        emit(printTag(tag));
-        currentlyActiveTags.push(tag);
+    if (visitor) {
+      for (const tag of visitor(currentPosition)) {
+        if (tag.isClosing) {
+          closeTag(tag);
+        } else {
+          emit(printTag(tag));
+          currentlyActiveTags.push(tag);
+        }
       }
-    });
+    }
     emit(raw);
   }
 
   function parseTag(): HtmlTag {
-    if (source[pos] === '<') {
-      pos++;
-    }
+    pos++;
     const isClosing = source[pos] === '/' ? true : undefined;
     if (isClosing) {
       pos++;
@@ -220,7 +215,8 @@ export function transformHighlightedLines(source: string, visitor?: (pos: Positi
   function closeTag(tag: HtmlTag) {
     // Closing tags can come in out-of-order
     // which means we need to close opened tags and reopen them.
-    for (let tagIndex = currentlyActiveTags.length - 1; tagIndex >= 0; tagIndex--) {
+    let tagIndex;
+    for (tagIndex = currentlyActiveTags.length - 1; tagIndex >= 0; tagIndex--) {
       const activeTag = currentlyActiveTags[tagIndex];
 
       if (tag.elementName === activeTag.elementName && activeTag.id === tag.id) {
@@ -242,11 +238,10 @@ export function transformHighlightedLines(source: string, visitor?: (pos: Positi
       // Close this active tag, this isn't the tag we're looking for
       // Will get reopened after we've closed the tag we're looking for
       emit(printTag({ ...activeTag, isClosing: true }));
-
-      // If we're at the last tag, throw an error useful for debugging (this shouldn't happen)
-      if (tagIndex === 0) {
-        throw new Error(`Cannot find corresponding opening tag for ${printTag(tag)}`);
-      }
+    }
+    // If we're at the last tag, throw an error useful for debugging (this shouldn't happen)
+    if (tagIndex === -1) {
+      throw new Error(`Cannot find corresponding opening tag for ${printTag(tag)}`);
     }
   }
 
@@ -262,7 +257,7 @@ export function transformHighlightedLines(source: string, visitor?: (pos: Positi
       }
       pos++;
     }
-    throw new Error('Parse attributes error');
+    throw new Error(`Missing closing tag near ${source.substr(pos - 10)}`);
   }
 
   function parseAttribute() {
@@ -294,18 +289,6 @@ export function transformHighlightedLines(source: string, visitor?: (pos: Positi
     }
     return source.substring(startPos, pos + 1);
   }
-}
-
-export function isAlfaNumeric(char: string | undefined): boolean {
-  // We could use a regex here, but what's the fun in that?
-  if (char) {
-    const alfaNumeric = 'azAZ09';
-
-    const charCode = char.charCodeAt(0);
-    const between = (from: number, to: number) => charCode >= alfaNumeric.charCodeAt(from) && charCode <= alfaNumeric.charCodeAt(to);
-    return between(0, 1) || between(2, 3) || between(4, 5);
-  }
-  return false;
 }
 
 export function isWhitespace(char: string) {

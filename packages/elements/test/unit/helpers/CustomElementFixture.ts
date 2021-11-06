@@ -65,8 +65,8 @@ export class CustomElementFixture<TCustomElement extends LitElement> {
     }
   }
 
-  public $$(selector: string): Element[] {
-    return [...(this.element.shadowRoot as ShadowRoot).querySelectorAll(selector)];
+  public $$<TElement extends Element = Element>(selector: string): TElement[] {
+    return [...(this.element.shadowRoot as ShadowRoot).querySelectorAll<TElement>(selector)];
   }
 
   public get style(): CSSStyleDeclaration {
