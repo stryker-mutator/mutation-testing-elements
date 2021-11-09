@@ -12,8 +12,8 @@ describe(aggregateResultsByModule.name, () => {
       config: {},
       projectRoot: undefined,
     };
-    expect(aggregateResultsByModule(Object.create(null))).deep.eq(expectedReport);
-    expect(aggregateResultsByModule(Object.create({}))).deep.eq(expectedReport);
+    expect(aggregateResultsByModule(Object.create(null) as Record<string, MutationTestResult>)).deep.eq(expectedReport);
+    expect(aggregateResultsByModule(Object.create({}) as Record<string, MutationTestResult>)).deep.eq(expectedReport);
   });
 
   describe('projectRoot', () => {

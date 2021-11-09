@@ -5,13 +5,15 @@ import { schema } from '../../src';
 const SCHEMA_NAME = 'http://stryker-mutator.io/report.schema.json';
 
 describe('JsonSchema', () => {
-  let schemaValidator: Ajv.Ajv;
+  let schemaValidator: Ajv;
 
   beforeEach(() => {
     schemaValidator = new Ajv({
-      missingRefs: 'fail',
-      strictKeywords: true,
+      strict: true,
       allErrors: true,
+      formats: {
+        uri: true,
+      },
     });
     schemaValidator.addSchema(schema, SCHEMA_NAME);
   });
@@ -44,56 +46,56 @@ describe('JsonSchema', () => {
   });
 
   it('should invalidate a report where "schemaVersion" is missing', () => {
-    actAssertInvalid('missing-version-report', "should have required property 'schemaVersion'");
+    actAssertInvalid('missing-version-report', "must have required property 'schemaVersion'");
   });
 
   it('should invalidate a report where thresholds are invalid', () => {
-    actAssertInvalid('thresholds/threshold-too-high-report', 'thresholds.high should be <= 100');
-    actAssertInvalid('thresholds/threshold-too-low-report', 'thresholds.low should be >= 0');
+    actAssertInvalid('thresholds/threshold-too-high-report', 'thresholds/high must be <= 100');
+    actAssertInvalid('thresholds/threshold-too-low-report', 'thresholds/low must be >= 0');
   });
 
   it('should invalidate a report when mutant location is missing', () => {
-    actAssertInvalid('missing-mutant-location-report', "files['test.js'].mutants[0].location should have required property 'end'");
+    actAssertInvalid('missing-mutant-location-report', "files/test.js/mutants/0/location must have required property 'end'");
   });
 
   it('should invalidate a report when a test name is missing', () => {
-    actAssertInvalid('missing-test-name', "data.testFiles['test/foo.spec.js'].tests[0] should have required property 'name'");
+    actAssertInvalid('missing-test-name', "data/testFiles/test~1foo.spec.js/tests/0 must have required property 'name'");
   });
 
-  it('should invalidate a report when the framework.name is missing', () => {
-    actAssertInvalid('missing-framework-name', "framework should have required property 'name'");
+  it('should invalidate a report when the framework/name is missing', () => {
+    actAssertInvalid('missing-framework-name', "framework must have required property 'name'");
   });
 
   it('should invalidate a report when the tests in testFiles are missing', () => {
-    actAssertInvalid('missing-tests', "data.testFiles['test/foo.spec.js'] should have required property 'tests'");
+    actAssertInvalid('missing-tests', "data/testFiles/test~1foo.spec.js must have required property 'tests'");
   });
 
-  it('should invalidate a report when system.ci is missing', () => {
-    actAssertInvalid('missing-system-ci', "data.system should have required property 'ci'");
+  it('should invalidate a report when system/ci is missing', () => {
+    actAssertInvalid('missing-system-ci', "data/system must have required property 'ci'");
   });
 
-  it('should invalidate a report when system.cpu.logicalCores is missing', () => {
-    actAssertInvalid('missing-system-cpu-logical-cores', "data.system.cpu should have required property 'logicalCores'");
+  it('should invalidate a report when system/cpu/logicalCores is missing', () => {
+    actAssertInvalid('missing-system-cpu-logical-cores', "data/system/cpu must have required property 'logicalCores'");
   });
 
-  it('should invalidate a report when system.os.platform is missing', () => {
-    actAssertInvalid('missing-system-os-platform', "data.system.os should have required property 'platform'");
+  it('should invalidate a report when system/os/platform is missing', () => {
+    actAssertInvalid('missing-system-os-platform', "data/system/os must have required property 'platform'");
   });
 
-  it('should invalidate a report when system.ram.total is missing', () => {
-    actAssertInvalid('missing-system-ram-total', "data.system.ram should have required property 'total'");
+  it('should invalidate a report when system/ram/total is missing', () => {
+    actAssertInvalid('missing-system-ram-total', "data/system/ram must have required property 'total'");
   });
 
-  it('should invalidate a report when system.os.platform is missing', () => {
-    actAssertInvalid('missing-system-os-platform', "data.system.os should have required property 'platform'");
+  it('should invalidate a report when system/os/platform is missing', () => {
+    actAssertInvalid('missing-system-os-platform', "data/system/os must have required property 'platform'");
   });
 
-  it('should invalidate a report when performance.* is missing', () => {
+  it('should invalidate a report when performance/* is missing', () => {
     actAssertInvalid(
       'missing-performance-fields',
-      "data.performance should have required property 'setup'",
-      "data.performance should have required property 'initialRun'",
-      "data.performance should have required property 'mutation'"
+      "data/performance must have required property 'setup'",
+      "data/performance must have required property 'initialRun'",
+      "data/performance must have required property 'mutation'"
     );
   });
 

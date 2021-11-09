@@ -74,3 +74,58 @@ export async function mapShadowRootConcurrent<T>(elements: Promise<WebElement[]>
     )
     .toPromise() as Promise<T[]>;
 }
+
+/**
+ * Waits until the given predicate returns a truthy value. Calls and awaits the predicate
+ * function at the given interval time. Can be used to poll until a certain condition is true.
+ *
+ * @example
+ * ```js
+ * import { waitUntil } from './lib/helpers';
+ *
+ * await waitUntil(async () => expect(await drawer.isHalfOpen()).true);
+ * ```
+ *
+ * @param predicate - predicate function which is called each poll interval.
+ *   The predicate is awaited, so it can return a promise.
+ * @param message an optional message to display when the condition timed out
+ * @param options timeout and polling interval
+ *
+ * @link Based on https://github.com/open-wc/open-wc/blob/5a28b1a546503f7677bd87c030c735bdb1ca30d7/packages/testing-helpers/src/helpers.js#L135-L179
+ */
+export function waitUntil(
+  predicate: () => Promise<boolean | Chai.Assertion>,
+  message?: string,
+  options: { interval?: number; timeout?: number } = {}
+): Promise<void> {
+  // Default options
+  const { interval, timeout } = { interval: 100, timeout: 2000, ...options };
+
+  return new Promise((resolve, reject) => {
+    let timeoutId: NodeJS.Timeout;
+    let lastError: Error | undefined;
+
+    setTimeout(() => {
+      clearTimeout(timeoutId);
+      reject(lastError ? lastError : new Error(message ? `Timeout: ${message}` : `waitUntil timed out after ${timeout}ms`));
+    }, timeout);
+
+    async function nextInterval() {
+      try {
+        if (await predicate()) {
+          resolve();
+        } else {
+          timeoutId = setTimeout(() => void nextInterval(), interval);
+        }
+      } catch (error) {
+        if (error instanceof Error) {
+          lastError = error;
+        }
+        if (!(error instanceof Chai.AssertionError)) {
+          reject(error);
+        }
+      }
+    }
+    void nextInterval();
+  });
+}
