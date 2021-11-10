@@ -19,6 +19,9 @@
     {
       "path": ".",
       "name": "parent"
+    },
+    {
+      "path": "../stryker-js"
     }
   ],
   "extensions": {

@@ -57,11 +57,11 @@ export class CustomElementFixture<TCustomElement extends LitElement> {
     });
   }
 
-  public $(selector: string, inShadow = true): HTMLElement {
+  public $<TElement extends Element = Element>(selector: string, inShadow = true): TElement {
     if (inShadow) {
-      return (this.element.shadowRoot as ShadowRoot).querySelector(selector) as HTMLElement;
+      return (this.element.shadowRoot as ShadowRoot).querySelector(selector) as TElement;
     } else {
-      return this.element.querySelector(selector) as HTMLElement;
+      return this.element.querySelector(selector) as TElement;
     }
   }
 

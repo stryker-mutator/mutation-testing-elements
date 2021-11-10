@@ -308,6 +308,38 @@ enum Characters {
   Tab = '\t',
 }
 
+export function findDiffIndices(original: string, mutated: string) {
+  let focusFrom = 0,
+    focusTo = mutated.length - 1;
+  while (original[focusFrom] === mutated[focusFrom] && focusFrom < mutated.length) {
+    focusFrom++;
+  }
+  const lengthDiff = original.length - mutated.length;
+  while (original[focusTo + lengthDiff] === mutated[focusTo] && focusTo > focusFrom) {
+    focusTo--;
+  }
+
+  if (focusTo === focusFrom) {
+    // For example '""'
+    if (!isWhitespace(mutated[focusFrom - 1])) {
+      focusFrom--;
+    }
+  }
+  // Include the next char
+  focusTo++;
+
+  // Make an exception for `true` and `false` (end in same character 🤷‍♀️)
+  const mutatedPart = mutated.substring(focusFrom, focusTo);
+  ['true', 'false'].forEach((keyword) => {
+    if (mutatedPart === keyword.substr(0, keyword.length - 1) && keyword[keyword.length - 1] === mutated[focusTo]) {
+      focusTo++;
+    }
+    if (mutatedPart === keyword.substr(1, keyword.length) && keyword[0] === mutated[focusFrom - 1]) {
+      focusFrom--;
+    }
+  });
+  return [focusFrom, focusTo];
+}
 export function gte(a: Position, b: Position) {
   return a.line > b.line || (a.line === b.line && a.column >= b.column);
 }

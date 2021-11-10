@@ -108,7 +108,7 @@ describe(FileStateFilterComponent.name, () => {
 
       // Act
       const actualEvent = await sut.catchCustomEvent('filters-changed', () => {
-        sut.$(`input[type="checkbox"][value="${MutantStatus.Survived}"]`).click();
+        sut.$<HTMLInputElement>(`input[type="checkbox"][value="${MutantStatus.Survived}"]`).click();
       });
 
       // Assert
@@ -120,13 +120,13 @@ describe(FileStateFilterComponent.name, () => {
   describe('Next/previous button', () => {
     it('should dispatch next event when "next" is clicked', async () => {
       const nextEvent = await sut.catchCustomEvent('next', () => {
-        sut.$('button.mte-next').click();
+        sut.$<HTMLButtonElement>('button.mte-next').click();
       });
       expect(nextEvent).not.null;
     });
     it('should dispatch previous event when "previous" is clicked', async () => {
       const nextEvent = await sut.catchCustomEvent('previous', () => {
-        sut.$('button.mte-previous').click();
+        sut.$<HTMLButtonElement>('button.mte-previous').click();
       });
       expect(nextEvent).not.null;
     });

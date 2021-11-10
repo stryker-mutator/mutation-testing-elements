@@ -51,8 +51,8 @@ describe(MutationTestReportDrawer.name, () => {
     it('should expand to full size when read-more is clicked', async () => {
       sut.element.mode = 'half';
       await sut.whenStable();
-      readMoreToggle().click();
       await sut.waitFor(() => getHeightPx() > 120); // use wait for since animation takes time
+      readMoreToggle().click();
       expect(getHeightPx()).gt(120);
       expect(sut.element.mode).eq('open');
     });
@@ -72,12 +72,12 @@ describe(MutationTestReportDrawer.name, () => {
     it('should not leak click events when clicked somewhere on the drawer', async () => {
       sut.element.mode = 'half';
       await sut.whenStable();
-      const event = await sut.catchNativeEvent('click', () => sut.$('header').click());
+      const event = await sut.catchNativeEvent('click', () => sut.$<HTMLElement>('header').click());
       expect(event).undefined;
     });
   });
 
-  function readMoreToggle() {
+  function readMoreToggle(): HTMLElement {
     return sut.$('[data-testId="btnReadMoreToggle"]');
   }
 

@@ -109,7 +109,7 @@ describe(MutationTestReportDrawerTestComponent.name, () => {
       });
 
       function summaryText() {
-        return sut.$('[slot="summary"]').innerText;
+        return sut.$<HTMLElement>('[slot="summary"]').innerText;
       }
     });
 
@@ -138,12 +138,12 @@ describe(MutationTestReportDrawerTestComponent.name, () => {
       });
 
       function detailText() {
-        return sut.$('[slot="detail"]').innerText;
+        return sut.$<HTMLElement>('[slot="detail"]').innerText;
       }
     });
   });
 
-  function selectDrawer() {
-    return sut.$('mte-drawer') as MutationTestReportDrawer;
+  function selectDrawer(): MutationTestReportDrawer {
+    return sut.$('mte-drawer');
   }
 });

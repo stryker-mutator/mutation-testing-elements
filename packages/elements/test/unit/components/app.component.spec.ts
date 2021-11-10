@@ -76,7 +76,7 @@ describe(MutationTestReportAppComponent.name, () => {
 
       // Assert
       expect(sut.element.errorMessage).eq(expectedErrorMessage);
-      const alert = sut.$('.alert');
+      const alert: HTMLElement = sut.$('.alert');
       expect(alert.innerText).eq(expectedErrorMessage);
       expect(getColor(alert)).eq(redAlert);
     });
@@ -116,7 +116,7 @@ describe(MutationTestReportAppComponent.name, () => {
       await sut.whenStable();
 
       // Assert
-      const file = sut.$('mte-mutant-view') as MutationTestReportMutantViewComponent;
+      const file: MutationTestReportMutantViewComponent = sut.$('mte-mutant-view');
       expect(file).ok;
       expect(file.result.file!.name).eq('foobar.js');
     });
@@ -138,7 +138,7 @@ describe(MutationTestReportAppComponent.name, () => {
       await sut.whenStable();
 
       // Assert
-      const file = sut.$('mte-test-view') as MutationTestReportTestViewComponent;
+      const file: MutationTestReportTestViewComponent = sut.$('mte-test-view');
       expect(file).ok;
       expect(file.result.file!.name).eq('foobar.spec.js');
     });
