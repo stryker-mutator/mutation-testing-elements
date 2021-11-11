@@ -57,7 +57,7 @@ export class CustomElementFixture<TCustomElement extends LitElement> {
     });
   }
 
-  public $<TElement extends Element = Element>(selector: string, inShadow = true): TElement {
+  public $<TElement extends Element = HTMLElement>(selector: string, inShadow = true): TElement {
     if (inShadow) {
       return (this.element.shadowRoot as ShadowRoot).querySelector(selector) as TElement;
     } else {

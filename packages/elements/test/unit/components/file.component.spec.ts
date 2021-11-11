@@ -3,20 +3,22 @@ import { FileComponent } from '../../../src/components/file/file.component';
 import { expect } from 'chai';
 import { FileResult, MutantStatus, MutantResult } from 'mutation-testing-report-schema/api';
 import { FileStateFilterComponent, StateFilter } from '../../../src/components/state-filter/state-filter.component';
-import { createFileResult, createMutantResult } from '../../helpers/factory';
+import { createMutantResult, createFileResult } from '../../helpers/factory';
 import { createCustomEvent } from '../../../src/lib/custom-events';
 import { FileUnderTestModel } from 'mutation-testing-metrics';
 
-describe.only(FileComponent.name, () => {
+describe(FileComponent.name, () => {
   let sut: CustomElementFixture<FileComponent>;
   let fileResult: FileResult;
+  let legendComponent: FileStateFilterComponent<MutantStatus>;
 
   beforeEach(async () => {
-    fileResult = createFileResult();
     sut = new CustomElementFixture('mte-file', { autoConnect: false });
+    fileResult = createFileResult();
     sut.element.model = new FileUnderTestModel(fileResult, 'foo.js');
     sut.connect();
     await sut.whenStable();
+    legendComponent = sut.$('mte-state-filter');
   });
 
   afterEach(() => {
@@ -32,25 +34,25 @@ describe.only(FileComponent.name, () => {
   });
 
   describe('with mutants', () => {
-    let legendComponent: FileStateFilterComponent<MutantStatus>;
-
-    beforeEach(() => {
-      legendComponent = sut.$('mte-state-filter');
-    });
-
-    // TODO Next, previous
-
-    it('should update hide a mutant if it is filtered', async () => {
+    it('should hide the mutant-dot if it is filtered', async () => {
       // Arrange
+      const fileResult = createFileResult({
+        mutants: [createMutantResult({ status: MutantStatus.Survived, location: { start: { line: 1, column: 1 }, end: { line: 1, column: 6 } } })],
+        source: 'foo + bar',
+      });
+      sut.element.model = new FileUnderTestModel(fileResult, 'foo.js');
+      await sut.whenStable();
+      expect(sut.$$('.mutant-dot')).lengthOf(1);
       const filters: StateFilter<MutantStatus>[] = [
         {
-          enabled: false,
+          enabled: false, // not enabled
           count: 1,
-          status: MutantStatus.Killed,
+          status: MutantStatus.Survived,
           context: 'success',
-          label: '✅ Killed',
+          label: '👽 Survived',
         },
       ];
+      await sut.whenStable();
 
       // Act
       legendComponent.dispatchEvent(createCustomEvent('filters-changed', filters));
@@ -58,6 +60,35 @@ describe.only(FileComponent.name, () => {
 
       // Assert
       expect(sut.$$('.mutant-dot')).lengthOf(0);
+    });
+
+    it('should sort the mutants based on location', async () => {
+      // Arrange
+      const fileResult = createFileResult({
+        mutants: [
+          createMutantResult({ id: '1', status: MutantStatus.Survived, location: { start: { line: 2, column: 1 }, end: { line: 1, column: 6 } } }),
+          createMutantResult({ id: '2', status: MutantStatus.Survived, location: { start: { line: 1, column: 2 }, end: { line: 1, column: 3 } } }),
+          createMutantResult({ id: '3', status: MutantStatus.Survived, location: { start: { line: 1, column: 1 }, end: { line: 1, column: 4 } } }),
+        ],
+        source: 'foo + bar\nfoo + bar',
+      });
+      const filters: StateFilter<MutantStatus>[] = [
+        {
+          enabled: true, // not enabled
+          count: 1,
+          status: MutantStatus.Survived,
+          context: 'success',
+          label: '👽 Survived',
+        },
+      ];
+      legendComponent.dispatchEvent(createCustomEvent('filters-changed', filters));
+
+      // Act
+      sut.element.model = new FileUnderTestModel(fileResult, 'foo.js');
+      await sut.whenStable();
+
+      // Assert
+      expect(sut.element.mutants.map(({ id }) => id)).deep.eq(['3', '2', '1']);
     });
 
     it('should insert mutant-dot elements at the end of the line', async () => {
@@ -147,7 +178,7 @@ describe.only(FileComponent.name, () => {
 
       // Assert
       allStates.forEach((status) => {
-        const mutant = sut.$<HTMLSpanElement>(`code span.mutant.${status}`);
+        const mutant = sut.$(`code span.mutant.${status}`);
         // Actual underline style is tested in e2e test
         expect(mutant.innerText).eq('foo');
       });
@@ -251,7 +282,7 @@ function add(a, b) {
 
     it('should show the diff when selecting the mutant inline', async () => {
       // Arrange
-      const mutant = sut.$<HTMLSpanElement>('span.mutant[mutant-id="1"]');
+      const mutant = sut.$('span.mutant[mutant-id="1"]');
 
       // Act
       mutant.click();
@@ -262,7 +293,7 @@ function add(a, b) {
     });
     it('should show the next diff when selecting mutant inline when another mutant is in scope', async () => {
       // Arrange
-      const mutant = sut.$<HTMLSpanElement>('span.mutant[mutant-id="1"]');
+      const mutant = sut.$('span.mutant[mutant-id="1"]');
       mutant.click();
       await sut.whenStable();
 
@@ -273,9 +304,10 @@ function add(a, b) {
       // Assert
       expect(sut.$<HTMLTableRowElement>('tr.diff-new td.code').innerText.trim()).eq('function add(a, b) {}');
     });
+
     it('should deselect the mutant when selecting mutant inline when it is the last mutant in scope', async () => {
       // Arrange
-      const mutant = sut.$<HTMLSpanElement>('span.mutant[mutant-id="1"]');
+      const mutant = sut.$('span.mutant[mutant-id="1"]');
       mutant.click();
       await sut.whenStable();
       mutant.click();
@@ -287,6 +319,116 @@ function add(a, b) {
 
       // Assert
       expect(sut.$<HTMLTableRowElement>('tr.diff-new td.code')).null;
+    });
+
+    it('should deselect the mutant when on filterChanged and filtered out', async () => {
+      // Arrange
+      const mutant = sut.$<SVGElement>('svg[mutant-id="1"]');
+      mutant.dispatchEvent(new Event('click', { bubbles: true }));
+      await sut.whenStable();
+
+      // Act
+      legendComponent.dispatchEvent(
+        createCustomEvent('filters-changed', [
+          {
+            context: '',
+            count: 1,
+            enabled: false,
+            status: MutantStatus.NoCoverage, // Mutant 1 has NoCoverage status
+            label: 'No Coverage',
+          },
+        ])
+      );
+      await sut.whenStable();
+
+      // Assert
+      expect(sut.$<HTMLTableRowElement>('tr.diff-new td.code')).null;
+    });
+
+    describe('next', () => {
+      it('should select the first mutant', async () => {
+        // Act
+        legendComponent.dispatchEvent(createCustomEvent('next', undefined));
+        await sut.whenStable();
+
+        // Assert
+        const selectedMutants = sut.$$('.mutant-dot.selected');
+        expect(selectedMutants).lengthOf(1);
+        expect(selectedMutants[0].getAttribute('mutant-id')).eq('2');
+      });
+
+      it('should select the second mutant when the first mutant is selected', async () => {
+        // Arrange
+        sut.$<SVGElement>('.mutant-dot[mutant-id="2"]').dispatchEvent(new Event('click', { bubbles: true }));
+        await sut.whenStable();
+
+        // Act
+        legendComponent.dispatchEvent(createCustomEvent('next', undefined));
+        await sut.whenStable();
+
+        // Assert
+        const selectedMutants = sut.$$('.mutant-dot.selected');
+        expect(selectedMutants).lengthOf(1);
+        expect(selectedMutants[0].getAttribute('mutant-id')).eq('1');
+      });
+
+      it('should select the first mutant when the last mutant is selected', async () => {
+        // Arrange
+        sut.$<SVGElement>('.mutant-dot[mutant-id="1"]').dispatchEvent(new Event('click', { bubbles: true }));
+        await sut.whenStable();
+
+        // Act
+        legendComponent.dispatchEvent(createCustomEvent('next', undefined));
+        await sut.whenStable();
+
+        // Assert
+        const selectedMutants = sut.$$('.mutant-dot.selected');
+        expect(selectedMutants).lengthOf(1);
+        expect(selectedMutants[0].getAttribute('mutant-id')).eq('2');
+      });
+    });
+
+    describe('previous', () => {
+      it('should select the last mutant', async () => {
+        // Act
+        legendComponent.dispatchEvent(createCustomEvent('previous', undefined));
+        await sut.whenStable();
+
+        // Assert
+        const selectedMutants = sut.$$('.mutant-dot.selected');
+        expect(selectedMutants).lengthOf(1);
+        expect(selectedMutants[0].getAttribute('mutant-id')).eq('1');
+      });
+
+      it('should select the second mutant when the first mutant is selected', async () => {
+        // Arrange
+        sut.$<SVGElement>('.mutant-dot[mutant-id="2"]').dispatchEvent(new Event('click', { bubbles: true }));
+        await sut.whenStable();
+
+        // Act
+        legendComponent.dispatchEvent(createCustomEvent('previous', undefined));
+        await sut.whenStable();
+
+        // Assert
+        const selectedMutants = sut.$$('.mutant-dot.selected');
+        expect(selectedMutants).lengthOf(1);
+        expect(selectedMutants[0].getAttribute('mutant-id')).eq('1');
+      });
+
+      it('should select the first mutant when the last mutant is selected', async () => {
+        // Arrange
+        sut.$<SVGElement>('.mutant-dot[mutant-id="1"]').dispatchEvent(new Event('click', { bubbles: true }));
+        await sut.whenStable();
+
+        // Act
+        legendComponent.dispatchEvent(createCustomEvent('previous', undefined));
+        await sut.whenStable();
+
+        // Assert
+        const selectedMutants = sut.$$('.mutant-dot.selected');
+        expect(selectedMutants).lengthOf(1);
+        expect(selectedMutants[0].getAttribute('mutant-id')).eq('2');
+      });
     });
   });
 });

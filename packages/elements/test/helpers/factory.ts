@@ -49,7 +49,7 @@ export function createLocation(overrides?: Partial<Location>): Location {
 
 export function createFileResult(overrides?: Partial<FileResult>): FileResult {
   const defaults: FileResult = {
-    language: 'js',
+    language: 'javascript',
     mutants: [createMutantResult()],
     source: 'const bar = foo();',
   };

@@ -31,7 +31,7 @@ export class FileComponent extends LitElement {
   private lines: string[] = [];
 
   @state()
-  private mutants: MutantModel[] = [];
+  public mutants: MutantModel[] = [];
 
   public static styles = [prismjs, bootstrap, unsafeCSS(style)];
   private codeRef = createRef<HTMLElement>();
@@ -114,7 +114,9 @@ export class FileComponent extends LitElement {
     }
   };
   private previousMutant = () => {
-    const index = (this.mutants.findIndex((mutant) => mutant.id === this.selectedMutantId) + this.mutants.length - 1) % this.mutants.length;
+    const index = this.selectedMutantId
+      ? (this.mutants.findIndex((mutant) => mutant.id === this.selectedMutantId) + this.mutants.length - 1) % this.mutants.length
+      : this.mutants.length - 1;
     if (this.mutants[index]) {
       this.toggleMutant(this.mutants[index].id);
     }

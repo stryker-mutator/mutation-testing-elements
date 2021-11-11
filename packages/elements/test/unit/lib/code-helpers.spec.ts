@@ -1,4 +1,10 @@
-import { determineLanguage, transformHighlightedLines, ProgrammingLanguage, PositionWithOffset } from '../../../src/lib/code-helpers';
+import {
+  determineLanguage,
+  transformHighlightedLines,
+  ProgrammingLanguage,
+  PositionWithOffset,
+  findDiffIndices,
+} from '../../../src/lib/code-helpers';
 import { expect } from 'chai';
 
 describe(transformHighlightedLines.name, () => {
@@ -114,6 +120,30 @@ describe(transformHighlightedLines.name, () => {
     it('should throw if closing a non-started tag', () => {
       expect(() => transformHighlightedLines('</span>')).throws('Cannot find corresponding opening tag for </span>');
     });
+  });
+});
+
+describe(findDiffIndices.name, () => {
+  it('should provide the entire line when everything is different', () => {
+    expect(findDiffIndices('asd', 'fgh')).deep.eq([0, 3]);
+  });
+
+  it('should be able to recognize a different operator', () => {
+    expect(findDiffIndices('foo + bar', 'foo - bar')).deep.eq([4, 5]);
+  });
+
+  it('should provide the quotes on an empty string diff', () => {
+    expect(findDiffIndices('const foo = "bar"', 'const foo = ""')).deep.eq([12, 14]);
+  });
+
+  it('should provide the full keywords for `true` and `false`', () => {
+    expect(findDiffIndices('const foo = true', 'const foo = false')).deep.eq([12, 17]);
+    expect(findDiffIndices('const foo = false', 'const foo = true')).deep.eq([12, 16]);
+    expect(findDiffIndices('if(type === 1) {', 'if(true) {')).deep.eq([3, 7]);
+  });
+
+  it('should provide the braces of an empty block', () => {
+    expect(findDiffIndices('function add(a, b){\n  return a + b;\n}', 'function add(a, b){}')).deep.eq([18, 20]);
   });
 });
 
