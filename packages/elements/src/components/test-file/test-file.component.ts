@@ -8,7 +8,7 @@ import style from './test-file.scss';
 import '../../style/prism-plugins';
 import { bootstrap, prismjs } from '../../style';
 import { determineLanguage, transformHighlightedLines, highlightCode, gte } from '../../lib/code-helpers';
-import { createCustomEvent } from '../../lib/custom-events';
+import { createCustomEvent, MteCustomEvent } from '../../lib/custom-events';
 import { getContextClassForTestStatus, getEmojiForTestStatus, scrollToCodeFragmentIfNeeded } from '../../lib/html-helpers';
 import { StateFilter } from '../state-filter/state-filter.component';
 
@@ -19,7 +19,7 @@ export class TestFileComponent extends LitElement {
 
   public static styles = [prismjs, bootstrap, unsafeCSS(style)];
 
-  @property()
+  @state()
   private filters: StateFilter<TestStatus>[] = [];
 
   @state()
@@ -34,8 +34,8 @@ export class TestFileComponent extends LitElement {
   @state()
   private tests: TestModel[] = [];
 
-  private readonly filtersChanged = (event: CustomEvent<StateFilter<TestStatus>[]>) => {
-    this.enabledStates = event.detail.filter((filter) => filter.enabled).map((filter) => filter.status);
+  private readonly filtersChanged = (event: MteCustomEvent<'filters-changed'>) => {
+    this.enabledStates = event.detail as TestStatus[];
     if (this.selectedTest && !this.enabledStates.includes(this.selectedTest.status)) {
       this.toggleTest(this.selectedTest);
     }

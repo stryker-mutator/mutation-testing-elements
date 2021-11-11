@@ -79,7 +79,7 @@ describe(FileStateFilterComponent.name, () => {
     });
 
     it('should dispatch the "filters-changed" event for the initial state', async () => {
-      const expectedFilters = [
+      const states = [
         MutantStatus.CompileError,
         MutantStatus.Killed,
         MutantStatus.NoCoverage,
@@ -87,24 +87,22 @@ describe(FileStateFilterComponent.name, () => {
         MutantStatus.Survived,
         MutantStatus.Timeout,
         MutantStatus.Ignored,
-      ].map(createStateFilter);
+      ];
+      const filters = states.map(createStateFilter);
       const actualEvent = await sut.catchCustomEvent('filters-changed', () => {
-        sut.element.filters = expectedFilters;
+        sut.element.filters = filters;
       });
       expect(actualEvent).ok;
-      expect(actualEvent!.detail).deep.eq(expectedFilters);
+      expect(actualEvent!.detail).deep.eq([MutantStatus.NoCoverage, MutantStatus.Survived, MutantStatus.Timeout]);
     });
 
-    it('should dispatch the "filters-changed" event when a checkbox is checked', async () => {
+    it('should dispatch the "filters-changed" event with an empty array when a checkbox is de-selected', async () => {
       // Arrange
       const inputFilters = [MutantStatus.CompileError, MutantStatus.Survived].map(createStateFilter);
       inputFilters[0].enabled = false;
       inputFilters[1].enabled = true;
       sut.element.filters = inputFilters;
       await sut.whenStable();
-      const expected = [MutantStatus.CompileError, MutantStatus.Survived].map(createStateFilter);
-      expected[0].enabled = false;
-      expected[1].enabled = false;
 
       // Act
       const actualEvent = await sut.catchCustomEvent('filters-changed', () => {
@@ -113,7 +111,7 @@ describe(FileStateFilterComponent.name, () => {
 
       // Assert
       expect(actualEvent).ok;
-      expect(actualEvent!.detail).deep.eq(expected);
+      expect(actualEvent!.detail).lengthOf(0);
     });
   });
 

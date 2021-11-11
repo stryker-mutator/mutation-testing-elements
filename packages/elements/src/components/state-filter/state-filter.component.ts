@@ -14,7 +14,7 @@ export interface StateFilter<TStatus> {
 }
 
 @customElement('mte-state-filter')
-export class FileStateFilterComponent<TStatus> extends LitElement {
+export class FileStateFilterComponent<TStatus extends string> extends LitElement {
   @property({ type: Array })
   public filters?: StateFilter<TStatus>[];
 
@@ -30,7 +30,12 @@ export class FileStateFilterComponent<TStatus> extends LitElement {
   }
 
   private dispatchFiltersChangedEvent() {
-    this.dispatchEvent(createCustomEvent('filters-changed', this.filters as StateFilter<any>[]));
+    this.dispatchEvent(
+      createCustomEvent(
+        'filters-changed',
+        this.filters!.filter(({ enabled }) => enabled).map(({ status }) => status)
+      )
+    );
   }
 
   private readonly next = (ev: Event) => {

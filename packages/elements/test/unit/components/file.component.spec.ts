@@ -2,7 +2,7 @@ import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { FileComponent } from '../../../src/components/file/file.component';
 import { expect } from 'chai';
 import { FileResult, MutantStatus, MutantResult } from 'mutation-testing-report-schema/api';
-import { FileStateFilterComponent, StateFilter } from '../../../src/components/state-filter/state-filter.component';
+import { FileStateFilterComponent } from '../../../src/components/state-filter/state-filter.component';
 import { createMutantResult, createFileResult } from '../../helpers/factory';
 import { createCustomEvent } from '../../../src/lib/custom-events';
 import { FileUnderTestModel } from 'mutation-testing-metrics';
@@ -43,19 +43,10 @@ describe(FileComponent.name, () => {
       sut.element.model = new FileUnderTestModel(fileResult, 'foo.js');
       await sut.whenStable();
       expect(sut.$$('.mutant-dot')).lengthOf(1);
-      const filters: StateFilter<MutantStatus>[] = [
-        {
-          enabled: false, // not enabled
-          count: 1,
-          status: MutantStatus.Survived,
-          context: 'success',
-          label: '👽 Survived',
-        },
-      ];
       await sut.whenStable();
 
       // Act
-      legendComponent.dispatchEvent(createCustomEvent('filters-changed', filters));
+      legendComponent.dispatchEvent(createCustomEvent('filters-changed', []));
       await sut.whenStable();
 
       // Assert
@@ -72,16 +63,7 @@ describe(FileComponent.name, () => {
         ],
         source: 'foo + bar\nfoo + bar',
       });
-      const filters: StateFilter<MutantStatus>[] = [
-        {
-          enabled: true, // not enabled
-          count: 1,
-          status: MutantStatus.Survived,
-          context: 'success',
-          label: '👽 Survived',
-        },
-      ];
-      legendComponent.dispatchEvent(createCustomEvent('filters-changed', filters));
+      legendComponent.dispatchEvent(createCustomEvent('filters-changed', [MutantStatus.Survived]));
 
       // Act
       sut.element.model = new FileUnderTestModel(fileResult, 'foo.js');
@@ -170,8 +152,7 @@ describe(FileComponent.name, () => {
         'foo.js'
       );
       sut.element.model = input;
-      const filters: StateFilter<MutantStatus>[] = allStates.map((status) => ({ enabled: true, count: 1, status, context: '', label: '' }));
-      legendComponent.dispatchEvent(createCustomEvent('filters-changed', filters));
+      legendComponent.dispatchEvent(createCustomEvent('filters-changed', allStates));
 
       // Act
       await sut.whenStable();
@@ -288,17 +269,7 @@ function add(a, b) {
         await sut.whenStable();
 
         // Act
-        legendComponent.dispatchEvent(
-          createCustomEvent('filters-changed', [
-            {
-              context: '',
-              count: 1,
-              enabled: false,
-              status: MutantStatus.NoCoverage, // Mutant 1 has NoCoverage status
-              label: 'No Coverage',
-            },
-          ])
-        );
+        legendComponent.dispatchEvent(createCustomEvent('filters-changed', []));
         await sut.whenStable();
 
         // Assert

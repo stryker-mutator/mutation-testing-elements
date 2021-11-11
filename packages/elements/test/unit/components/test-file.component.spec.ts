@@ -4,7 +4,7 @@ import { TestStatus } from 'mutation-testing-metrics';
 import { FileStateFilterComponent, StateFilter } from '../../../src/components/state-filter/state-filter.component';
 import { TestFileComponent } from '../../../src/components/test-file/test-file.component';
 import { createCustomEvent } from '../../../src/lib/custom-events';
-import { createMutantResult, createStateFilter, createTestDefinition } from '../../helpers/factory';
+import { createMutantResult, createTestDefinition } from '../../helpers/factory';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 
 describe(TestFileComponent.name, () => {
@@ -15,7 +15,7 @@ describe(TestFileComponent.name, () => {
   });
 
   function selectStateFilter(): FileStateFilterComponent<TestStatus> {
-    return sut.$('mte-state-filter') as FileStateFilterComponent<TestStatus>;
+    return sut.$('mte-state-filter');
   }
 
   function selectTestListItems(): HTMLLIElement[] {
@@ -100,10 +100,7 @@ describe(TestFileComponent.name, () => {
       await sut.whenStable();
 
       // Act
-      const eventDetail: StateFilter<TestStatus>[] = [
-        { enabled: false, count: 4, status: TestStatus.NotCovering, label: '🌧 NotCovering', context: 'caution' },
-      ];
-      selectStateFilter().dispatchEvent(createCustomEvent('filters-changed', eventDetail));
+      selectStateFilter().dispatchEvent(createCustomEvent('filters-changed', []));
       await sut.whenStable();
 
       // Assert
@@ -201,7 +198,7 @@ describe(TestFileComponent.name, () => {
       model.tests[0].addKilled(new MutantModel(createMutantResult()));
       sut.element.model = model;
       await sut.whenStable();
-      filterComponent = sut.$('mte-state-filter') as FileStateFilterComponent<TestStatus>;
+      filterComponent = sut.$('mte-state-filter');
     });
 
     it('should set the test-id attribute', () => {
@@ -211,11 +208,7 @@ describe(TestFileComponent.name, () => {
     });
 
     it('should hide the "Killing" tests when "Killing" tests are filtered out', async () => {
-      const filters: StateFilter<TestStatus>[] = [
-        createStateFilter(TestStatus.Killing, { enabled: false }),
-        createStateFilter(TestStatus.NotCovering, { enabled: true }),
-      ];
-      filterComponent.dispatchEvent(createCustomEvent('filters-changed', filters));
+      filterComponent.dispatchEvent(createCustomEvent('filters-changed', [TestStatus.NotCovering]));
       await sut.whenStable();
       const tests = sut.$$<HTMLSpanElement>('.test-dot');
       expect(tests).lengthOf(1);

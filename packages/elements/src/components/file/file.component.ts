@@ -9,7 +9,7 @@ import { MutantResult, MutantStatus } from 'mutation-testing-report-schema/api';
 import style from './file.scss';
 import { getContextClassForStatus, getEmojiForStatus, scrollToCodeFragmentIfNeeded } from '../../lib/html-helpers';
 import { FileUnderTestModel, MutantModel } from 'mutation-testing-metrics';
-import { createCustomEvent } from '../../lib/custom-events';
+import { createCustomEvent, MteCustomEvent } from '../../lib/custom-events';
 
 const diffOldClass = 'diff-old';
 const diffNewClass = 'diff-new';
@@ -36,8 +36,8 @@ export class FileComponent extends LitElement {
   public static styles = [prismjs, bootstrap, unsafeCSS(style)];
   private codeRef = createRef<HTMLElement>();
 
-  private readonly filtersChanged = (event: CustomEvent<StateFilter<MutantStatus>[]>) => {
-    this.selectedMutantStates = event.detail.filter((mutantFilter) => mutantFilter.enabled).map((mutantFilter) => mutantFilter.status);
+  private readonly filtersChanged = (event: MteCustomEvent<'filters-changed'>) => {
+    this.selectedMutantStates = event.detail as MutantStatus[];
   };
 
   private codeClicked = (ev: MouseEvent) => {
