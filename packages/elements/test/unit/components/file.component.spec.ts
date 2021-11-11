@@ -6,6 +6,7 @@ import { FileStateFilterComponent } from '../../../src/components/state-filter/s
 import { createMutantResult, createFileResult } from '../../helpers/factory';
 import { createCustomEvent } from '../../../src/lib/custom-events';
 import { FileUnderTestModel } from 'mutation-testing-metrics';
+import sinon from 'sinon';
 
 describe(FileComponent.name, () => {
   let sut: CustomElementFixture<FileComponent>;
@@ -121,6 +122,27 @@ describe(FileComponent.name, () => {
       expect(mutant3).ok;
     });
 
+    it('should add a title to mutant-dot elements', async () => {
+      const input = new FileUnderTestModel(
+        {
+          language: 'javascript',
+          mutants: [
+            createMutantResult({
+              location: { end: { column: 13, line: 1 }, start: { column: 10, line: 1 } },
+              mutatorName: 'MethodReplacement',
+              status: MutantStatus.NoCoverage,
+            }),
+          ],
+          source: 'const foo = "bar";',
+        },
+        'foo.js'
+      );
+      sut.element.model = input;
+      await sut.whenStable();
+      const title = sut.$('svg[mutant-id] title').textContent;
+      expect(title).eq('MethodReplacement NoCoverage');
+    });
+
     it('should report mutant status correctly', async () => {
       // Arrange
       const allStates = [
@@ -216,7 +238,22 @@ function add(a, b) {
         expect([...tr.nextElementSibling!.classList]).contains('diff-old');
         expect([...tr.nextElementSibling!.nextElementSibling!.classList]).contains('diff-old');
         expect(diff.innerText).eq('function add(a, b) {}');
-        expect(diff.querySelector('.diff-focus')!.innerHTML).eq('{');
+        const focus = [...diff.querySelectorAll('.diff-focus')].map((el) => el.textContent).join('');
+        expect(focus).eq('{}');
+      });
+
+      it.only('should add the correct focus in the mutated part', async () => {
+        // Arrange
+        const mutantDot = sut.$<SVGElement>('.mutant-dot[mutant-id="1"]');
+
+        // Act
+        mutantDot.dispatchEvent(new Event('click', { bubbles: true }));
+        await sut.whenStable();
+
+        // Assert
+        const diff = sut.$('tr.diff-new td.code');
+        const focus = [...diff.querySelectorAll('.diff-focus')].map((el) => el.textContent).join('');
+        expect(focus).eq('-');
       });
 
       it('should emit a mutantSelected', async () => {
@@ -289,6 +326,53 @@ function add(a, b) {
         // Assert
         expect(sut.$<HTMLTableRowElement>('tr.diff-new td.code').innerText.trim()).eq('return a - b;');
       });
+      it('should not show the diff if the mutant was filtered out', async () => {
+        // Arrange
+        legendComponent.dispatchEvent(createCustomEvent('filters-changed', [MutantStatus.Survived]));
+        await sut.whenStable();
+        const mutant = sut.$('span.mutant[mutant-id="1"]');
+
+        // Act
+        mutant.click();
+        await sut.whenStable();
+
+        // Assert
+        expect(sut.$('tr.diff-new td.code').innerText).eq('function add(a, b) {}'); // mutant 1 is filtered out, mutant 2 should be shown
+      });
+
+      it('should not change anything when clicking somewhere else in the code', async () => {
+        // Act
+        sut.$('code').click();
+        await sut.whenStable();
+
+        // Assert
+        expect(sut.$('tr.diff-new td.code')).null;
+      });
+
+      it('should clear the selection', async () => {
+        // Arrange
+        const getSelectionStub = sinon.stub(window, 'getSelection');
+        const selectionMock = { removeAllRanges: sinon.stub() };
+        getSelectionStub.returns(selectionMock as unknown as Selection);
+
+        // Act
+        sut.$('code').click();
+        await sut.whenStable();
+
+        // Assert
+        expect(selectionMock.removeAllRanges).calledOnce;
+      });
+
+      it('should prevent propagation', async () => {
+        // Act
+        const click = await sut.catchNativeEvent('click', () => {
+          sut.$('code').click();
+        });
+
+        // Assert
+        expect(click).undefined;
+      });
+
       it('should show the next diff when another mutant is in scope', async () => {
         // Arrange
         const mutant = sut.$('span.mutant[mutant-id="1"]');

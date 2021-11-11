@@ -42,6 +42,7 @@ export class FileComponent extends LitElement {
 
   private codeClicked = (ev: MouseEvent) => {
     ev.stopPropagation();
+
     if (ev.target instanceof Element) {
       let maybeMutantTarget: Element | null = ev.target;
       const mutantIdsInScope: string[] = [];
@@ -51,15 +52,13 @@ export class FileComponent extends LitElement {
           mutantIdsInScope.push(mutantId);
         }
       }
-      if (mutantIdsInScope.length) {
-        const index = (this.selectedMutantId ? mutantIdsInScope.indexOf(this.selectedMutantId) : -1) + 1;
-        if (mutantIdsInScope[index]) {
-          this.toggleMutant(mutantIdsInScope[index]);
-        } else if (this.selectedMutantId) {
-          this.toggleMutant(this.selectedMutantId);
-        }
-        clearSelection();
+      const index = (this.selectedMutantId ? mutantIdsInScope.indexOf(this.selectedMutantId) : -1) + 1;
+      if (mutantIdsInScope[index]) {
+        this.toggleMutant(mutantIdsInScope[index]);
+      } else if (this.selectedMutantId) {
+        this.toggleMutant(this.selectedMutantId);
       }
+      clearSelection();
     }
   };
 
