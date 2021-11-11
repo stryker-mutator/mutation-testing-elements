@@ -218,131 +218,135 @@ function add(a, b) {
       await sut.whenStable();
     });
 
-    it('should show a diff when selecting on the mutant-dot', async () => {
-      // Arrange
-      const mutantDot = sut.$<SVGElement>('.mutant-dot[mutant-id="2"]');
-      const tr = mutantDot.closest('tr')!;
+    describe('using the mutant dots', () => {
+      it('should show a diff', async () => {
+        // Arrange
+        const mutantDot = sut.$<SVGElement>('.mutant-dot[mutant-id="2"]');
+        const tr = mutantDot.closest('tr')!;
 
-      // Act
-      mutantDot.dispatchEvent(new Event('click', { bubbles: true }));
-      await sut.whenStable();
+        // Act
+        mutantDot.dispatchEvent(new Event('click', { bubbles: true }));
+        await sut.whenStable();
 
-      // Assert
-      const diff = sut.$<HTMLTableRowElement>('tr.diff-new td.code');
-      expect(tr.nextElementSibling!.nextElementSibling!.nextElementSibling!.querySelector('.diff-new td.code')).eq(diff);
-      expect([...tr.classList]).contains('diff-old');
-      expect([...tr.nextElementSibling!.classList]).contains('diff-old');
-      expect([...tr.nextElementSibling!.nextElementSibling!.classList]).contains('diff-old');
-      expect(diff.innerText).eq('function add(a, b) {}');
-      expect(diff.querySelector('.diff-focus')!.innerHTML).eq('{');
+        // Assert
+        const diff = sut.$<HTMLTableRowElement>('tr.diff-new td.code');
+        expect(tr.nextElementSibling!.nextElementSibling!.nextElementSibling!.querySelector('.diff-new td.code')).eq(diff);
+        expect([...tr.classList]).contains('diff-old');
+        expect([...tr.nextElementSibling!.classList]).contains('diff-old');
+        expect([...tr.nextElementSibling!.nextElementSibling!.classList]).contains('diff-old');
+        expect(diff.innerText).eq('function add(a, b) {}');
+        expect(diff.querySelector('.diff-focus')!.innerHTML).eq('{');
+      });
+
+      it('should emit a mutantSelected', async () => {
+        // Act
+        const event = await sut.catchCustomEvent(
+          'mutant-selected',
+          () => void sut.$('.mutant-dot[mutant-id="2"]').dispatchEvent(new Event('click', { bubbles: true }))
+        );
+
+        // Assert
+        expect(event).ok;
+        expect(event!.detail.mutant!.id).eq('2');
+        expect(event!.detail.selected).eq(true);
+      });
+
+      it('should emit a mutantSelected with selected = false when deselecting', async () => {
+        // Arrange
+        const mutantDot = sut.$('.mutant-dot[mutant-id="2"]');
+        await sut.catchCustomEvent('mutant-selected', () => void mutantDot.dispatchEvent(new Event('click', { bubbles: true })));
+
+        // Act
+        const event = await sut.catchCustomEvent('mutant-selected', () => void mutantDot.dispatchEvent(new Event('click', { bubbles: true })));
+
+        // Assert
+        expect(event).ok;
+        expect(event!.detail.mutant!.id).eq('2');
+        expect(event!.detail.selected).eq(false);
+      });
+
+      it('should remove a diff when deselecting', async () => {
+        // Arrange
+        const mutantDot = sut.$<SVGElement>('.mutant-dot[mutant-id="2"]');
+        const tr = mutantDot.closest('tr')!;
+        mutantDot.dispatchEvent(new Event('click', { bubbles: true }));
+        await sut.whenStable();
+
+        // Act
+        mutantDot.dispatchEvent(new Event('click', { bubbles: true }));
+        await sut.whenStable();
+
+        // Assert
+        expect(sut.$<HTMLTableRowElement>('tr.diff-new td.code')).null;
+        expect([...tr.classList]).not.contains('diff-old');
+      });
+
+      it('should deselect the mutant when on filterChanged and filtered out', async () => {
+        // Arrange
+        const mutant = sut.$<SVGElement>('svg[mutant-id="1"]');
+        mutant.dispatchEvent(new Event('click', { bubbles: true }));
+        await sut.whenStable();
+
+        // Act
+        legendComponent.dispatchEvent(
+          createCustomEvent('filters-changed', [
+            {
+              context: '',
+              count: 1,
+              enabled: false,
+              status: MutantStatus.NoCoverage, // Mutant 1 has NoCoverage status
+              label: 'No Coverage',
+            },
+          ])
+        );
+        await sut.whenStable();
+
+        // Assert
+        expect(sut.$<HTMLTableRowElement>('tr.diff-new td.code')).null;
+      });
     });
 
-    it('should emit a mutantSelected selecting on the mutant-dot', async () => {
-      // Act
-      const event = await sut.catchCustomEvent(
-        'mutant-selected',
-        () => void sut.$('.mutant-dot[mutant-id="2"]').dispatchEvent(new Event('click', { bubbles: true }))
-      );
+    describe('by clicking on the code directly', () => {
+      it('should show the diff', async () => {
+        // Arrange
+        const mutant = sut.$('span.mutant[mutant-id="1"]');
 
-      // Assert
-      expect(event).ok;
-      expect(event!.detail.mutant!.id).eq('2');
-      expect(event!.detail.selected).eq(true);
-    });
+        // Act
+        mutant.click();
+        await sut.whenStable();
 
-    it('should emit a mutantSelected with selected = false when deselecting a mutant-dot', async () => {
-      // Arrange
-      const mutantDot = sut.$('.mutant-dot[mutant-id="2"]');
-      await sut.catchCustomEvent('mutant-selected', () => void mutantDot.dispatchEvent(new Event('click', { bubbles: true })));
+        // Assert
+        expect(sut.$<HTMLTableRowElement>('tr.diff-new td.code').innerText.trim()).eq('return a - b;');
+      });
+      it('should show the next diff when another mutant is in scope', async () => {
+        // Arrange
+        const mutant = sut.$('span.mutant[mutant-id="1"]');
+        mutant.click();
+        await sut.whenStable();
 
-      // Act
-      const event = await sut.catchCustomEvent('mutant-selected', () => void mutantDot.dispatchEvent(new Event('click', { bubbles: true })));
+        // Act
+        mutant.click();
+        await sut.whenStable();
 
-      // Assert
-      expect(event).ok;
-      expect(event!.detail.mutant!.id).eq('2');
-      expect(event!.detail.selected).eq(false);
-    });
+        // Assert
+        expect(sut.$<HTMLTableRowElement>('tr.diff-new td.code').innerText.trim()).eq('function add(a, b) {}');
+      });
 
-    it('should remove a diff when deselecting on the mutant-dot', async () => {
-      // Arrange
-      const mutantDot = sut.$<SVGElement>('.mutant-dot[mutant-id="2"]');
-      const tr = mutantDot.closest('tr')!;
-      mutantDot.dispatchEvent(new Event('click', { bubbles: true }));
-      await sut.whenStable();
+      it('should deselect the mutant when it is the last mutant in scope', async () => {
+        // Arrange
+        const mutant = sut.$('span.mutant[mutant-id="1"]');
+        mutant.click();
+        await sut.whenStable();
+        mutant.click();
+        await sut.whenStable();
 
-      // Act
-      mutantDot.dispatchEvent(new Event('click', { bubbles: true }));
-      await sut.whenStable();
+        // Act
+        mutant.click();
+        await sut.whenStable();
 
-      // Assert
-      expect(sut.$<HTMLTableRowElement>('tr.diff-new td.code')).null;
-      expect([...tr.classList]).not.contains('diff-old');
-    });
-
-    it('should show the diff when selecting the mutant inline', async () => {
-      // Arrange
-      const mutant = sut.$('span.mutant[mutant-id="1"]');
-
-      // Act
-      mutant.click();
-      await sut.whenStable();
-
-      // Assert
-      expect(sut.$<HTMLTableRowElement>('tr.diff-new td.code').innerText.trim()).eq('return a - b;');
-    });
-    it('should show the next diff when selecting mutant inline when another mutant is in scope', async () => {
-      // Arrange
-      const mutant = sut.$('span.mutant[mutant-id="1"]');
-      mutant.click();
-      await sut.whenStable();
-
-      // Act
-      mutant.click();
-      await sut.whenStable();
-
-      // Assert
-      expect(sut.$<HTMLTableRowElement>('tr.diff-new td.code').innerText.trim()).eq('function add(a, b) {}');
-    });
-
-    it('should deselect the mutant when selecting mutant inline when it is the last mutant in scope', async () => {
-      // Arrange
-      const mutant = sut.$('span.mutant[mutant-id="1"]');
-      mutant.click();
-      await sut.whenStable();
-      mutant.click();
-      await sut.whenStable();
-
-      // Act
-      mutant.click();
-      await sut.whenStable();
-
-      // Assert
-      expect(sut.$<HTMLTableRowElement>('tr.diff-new td.code')).null;
-    });
-
-    it('should deselect the mutant when on filterChanged and filtered out', async () => {
-      // Arrange
-      const mutant = sut.$<SVGElement>('svg[mutant-id="1"]');
-      mutant.dispatchEvent(new Event('click', { bubbles: true }));
-      await sut.whenStable();
-
-      // Act
-      legendComponent.dispatchEvent(
-        createCustomEvent('filters-changed', [
-          {
-            context: '',
-            count: 1,
-            enabled: false,
-            status: MutantStatus.NoCoverage, // Mutant 1 has NoCoverage status
-            label: 'No Coverage',
-          },
-        ])
-      );
-      await sut.whenStable();
-
-      // Assert
-      expect(sut.$<HTMLTableRowElement>('tr.diff-new td.code')).null;
+        // Assert
+        expect(sut.$<HTMLTableRowElement>('tr.diff-new td.code')).null;
+      });
     });
 
     describe('next', () => {
