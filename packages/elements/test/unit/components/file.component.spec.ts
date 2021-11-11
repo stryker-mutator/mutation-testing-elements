@@ -242,7 +242,7 @@ function add(a, b) {
         expect(focus).eq('{}');
       });
 
-      it.only('should add the correct focus in the mutated part', async () => {
+      it('should add the correct focus in the mutated part', async () => {
         // Arrange
         const mutantDot = sut.$<SVGElement>('.mutant-dot[mutant-id="1"]');
 
