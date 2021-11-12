@@ -7,11 +7,12 @@ import { createMutantResult, createFileResult } from '../../helpers/factory';
 import { createCustomEvent } from '../../../src/lib/custom-events';
 import { FileUnderTestModel } from 'mutation-testing-metrics';
 import sinon from 'sinon';
+import { bootstrap } from '../../../src/style';
 
 describe(FileComponent.name, () => {
   let sut: CustomElementFixture<FileComponent>;
   let fileResult: FileResult;
-  let legendComponent: FileStateFilterComponent<MutantStatus>;
+  let filterComponent: FileStateFilterComponent<MutantStatus>;
 
   beforeEach(async () => {
     sut = new CustomElementFixture('mte-file', { autoConnect: false });
@@ -19,7 +20,7 @@ describe(FileComponent.name, () => {
     sut.element.model = new FileUnderTestModel(fileResult, 'foo.js');
     sut.connect();
     await sut.whenStable();
-    legendComponent = sut.$('mte-state-filter');
+    filterComponent = sut.$('mte-state-filter');
   });
 
   afterEach(() => {
@@ -34,7 +35,44 @@ describe(FileComponent.name, () => {
     expect(sut.$('code .token')).ok;
   });
 
+  it('should use bootstrap styles', () => {
+    expect(FileComponent.styles).contains(bootstrap);
+  });
+
   describe('with mutants', () => {
+    it('should mark the mutants inside the code', async () => {
+      // Arrange
+      const fileResult = createFileResult({
+        mutants: [
+          createMutantResult({
+            id: '1',
+            replacement: '-',
+            status: MutantStatus.NoCoverage,
+            mutatorName: 'ArithmeticOperator',
+            location: { start: { line: 2, column: 12 }, end: { line: 2, column: 13 } },
+          }),
+          createMutantResult({
+            id: '2',
+            mutatorName: 'BlockStatement',
+            replacement: '{}',
+            status: MutantStatus.Survived,
+            location: { start: { line: 1, column: 20 }, end: { line: 4, column: 2 } },
+          }),
+        ],
+        source: 'function add(a, b) {\n  return a + b;\n}',
+      });
+
+      // Act
+      sut.element.model = new FileUnderTestModel(fileResult, 'foo.js');
+      await sut.whenStable();
+
+      // Assert
+      expect(queryMutantText('1')).eq('+');
+      expect(queryMutantText('2')).eq('{return a + b;}');
+      expect(sut.$('.mutant[mutant-id="1"]').title).eq('ArithmeticOperator NoCoverage');
+      expect(sut.$('.mutant[mutant-id="2"]').title).eq('BlockStatement Survived');
+    });
+
     it('should hide the mutant-dot if it is filtered', async () => {
       // Arrange
       const fileResult = createFileResult({
@@ -47,7 +85,7 @@ describe(FileComponent.name, () => {
       await sut.whenStable();
 
       // Act
-      legendComponent.dispatchEvent(createCustomEvent('filters-changed', []));
+      filterComponent.dispatchEvent(createCustomEvent('filters-changed', []));
       await sut.whenStable();
 
       // Assert
@@ -64,14 +102,15 @@ describe(FileComponent.name, () => {
         ],
         source: 'foo + bar\nfoo + bar',
       });
-      legendComponent.dispatchEvent(createCustomEvent('filters-changed', [MutantStatus.Survived]));
+      filterComponent.dispatchEvent(createCustomEvent('filters-changed', [MutantStatus.Survived]));
 
       // Act
       sut.element.model = new FileUnderTestModel(fileResult, 'foo.js');
       await sut.whenStable();
 
       // Assert
-      expect(sut.element.mutants.map(({ id }) => id)).deep.eq(['3', '2', '1']);
+      const mutantIds = [...sut.$$('.mutant-dot')].map((mutantDot) => mutantDot.getAttribute('mutant-id'));
+      expect(mutantIds).deep.eq(['3', '2', '1']);
     });
 
     it('should insert mutant-dot elements at the end of the line', async () => {
@@ -79,36 +118,32 @@ describe(FileComponent.name, () => {
         {
           language: 'javascript',
           mutants: [
-            {
+            createMutantResult({
               id: '1',
               location: { end: { column: 13, line: 3 }, start: { column: 10, line: 3 } },
               mutatorName: 'MethodReplacement',
-              replacement: 'foo',
               status: MutantStatus.NoCoverage,
-            },
-            {
+            }),
+            createMutantResult({
               id: '2',
               location: { end: { column: 999 /*Doesn't exist*/, line: 4 }, start: { column: 15, line: 4 } },
               mutatorName: 'SemicolonRemover',
-              replacement: '',
               status: MutantStatus.Survived,
-            },
-            {
+            }),
+            createMutantResult({
               id: '3',
               location: { end: { column: 1, line: 9999 /*Doesn't exist*/ }, start: { column: 15, line: 9999 } },
               mutatorName: 'SemicolonRemover',
               replacement: '',
               status: MutantStatus.Survived,
-            },
+            }),
           ],
 
           source: `const foo = 'bar';
 
-    function add(a, b) {
-      return a + b;
-    }`
-            .replace(/ {6}/g, '')
-            .trim(), // strip the padding left
+function add(a, b) {
+  return a + b;
+}`,
         },
         'foo.js'
       );
@@ -174,7 +209,7 @@ describe(FileComponent.name, () => {
         'foo.js'
       );
       sut.element.model = input;
-      legendComponent.dispatchEvent(createCustomEvent('filters-changed', allStates));
+      filterComponent.dispatchEvent(createCustomEvent('filters-changed', allStates));
 
       // Act
       await sut.whenStable();
@@ -306,7 +341,7 @@ function add(a, b) {
         await sut.whenStable();
 
         // Act
-        legendComponent.dispatchEvent(createCustomEvent('filters-changed', []));
+        filterComponent.dispatchEvent(createCustomEvent('filters-changed', [MutantStatus.Survived])); // Deselect "NoCoverage"
         await sut.whenStable();
 
         // Assert
@@ -328,7 +363,7 @@ function add(a, b) {
       });
       it('should not show the diff if the mutant was filtered out', async () => {
         // Arrange
-        legendComponent.dispatchEvent(createCustomEvent('filters-changed', [MutantStatus.Survived]));
+        filterComponent.dispatchEvent(createCustomEvent('filters-changed', [MutantStatus.Survived]));
         await sut.whenStable();
         const mutant = sut.$('span.mutant[mutant-id="1"]');
 
@@ -407,7 +442,7 @@ function add(a, b) {
     describe('next', () => {
       it('should select the first mutant', async () => {
         // Act
-        legendComponent.dispatchEvent(createCustomEvent('next', undefined));
+        filterComponent.dispatchEvent(createCustomEvent('next', undefined));
         await sut.whenStable();
 
         // Assert
@@ -422,7 +457,7 @@ function add(a, b) {
         await sut.whenStable();
 
         // Act
-        legendComponent.dispatchEvent(createCustomEvent('next', undefined));
+        filterComponent.dispatchEvent(createCustomEvent('next', undefined));
         await sut.whenStable();
 
         // Assert
@@ -437,20 +472,34 @@ function add(a, b) {
         await sut.whenStable();
 
         // Act
-        legendComponent.dispatchEvent(createCustomEvent('next', undefined));
+        filterComponent.dispatchEvent(createCustomEvent('next', undefined));
         await sut.whenStable();
 
         // Assert
         const selectedMutants = sut.$$('.mutant-dot.selected');
         expect(selectedMutants).lengthOf(1);
         expect(selectedMutants[0].getAttribute('mutant-id')).eq('2');
+      });
+
+      it('should not do anything when there are no mutants', async () => {
+        // Arrange
+        filterComponent.dispatchEvent(createCustomEvent('filters-changed', [])); // deselect all states
+        await sut.whenStable();
+
+        // Act
+        filterComponent.dispatchEvent(createCustomEvent('next', undefined));
+        await sut.whenStable();
+
+        // Assert
+        const selectedMutants = sut.$$('.mutant-dot.selected');
+        expect(selectedMutants).lengthOf(0);
       });
     });
 
     describe('previous', () => {
       it('should select the last mutant', async () => {
         // Act
-        legendComponent.dispatchEvent(createCustomEvent('previous', undefined));
+        filterComponent.dispatchEvent(createCustomEvent('previous', undefined));
         await sut.whenStable();
 
         // Assert
@@ -465,7 +514,7 @@ function add(a, b) {
         await sut.whenStable();
 
         // Act
-        legendComponent.dispatchEvent(createCustomEvent('previous', undefined));
+        filterComponent.dispatchEvent(createCustomEvent('previous', undefined));
         await sut.whenStable();
 
         // Assert
@@ -480,7 +529,7 @@ function add(a, b) {
         await sut.whenStable();
 
         // Act
-        legendComponent.dispatchEvent(createCustomEvent('previous', undefined));
+        filterComponent.dispatchEvent(createCustomEvent('previous', undefined));
         await sut.whenStable();
 
         // Assert
@@ -488,6 +537,24 @@ function add(a, b) {
         expect(selectedMutants).lengthOf(1);
         expect(selectedMutants[0].getAttribute('mutant-id')).eq('2');
       });
+
+      it('should not do anything when there are no mutants', async () => {
+        // Arrange
+        filterComponent.dispatchEvent(createCustomEvent('filters-changed', [])); // deselect all states
+        await sut.whenStable();
+
+        // Act
+        filterComponent.dispatchEvent(createCustomEvent('previous', undefined));
+        await sut.whenStable();
+
+        // Assert
+        const selectedMutants = sut.$$('.mutant-dot.selected');
+        expect(selectedMutants).lengthOf(0);
+      });
     });
   });
+
+  function queryMutantText(mutantId: string) {
+    return [...sut.$$(`.mutant[mutant-id="${mutantId}"]`)].map((mutant) => mutant.innerText).join('');
+  }
 });

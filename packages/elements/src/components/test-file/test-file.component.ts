@@ -98,10 +98,7 @@ export class TestFileComponent extends LitElement {
               this.toggleTest(test);
             }}
             class="list-group-item list-group-item-action${this.selectedTest?.id === test.id ? ' active' : ''}"
-            ><span class="emblem">${getEmojiForTestStatus(test.status)}</span> ${test.name}${test.location
-              ? html` (${test.location.start.line}:${test.location.start.column})`
-              : ''}
-            [${test.status}]</button
+            ><span class="emblem">${getEmojiForTestStatus(test.status)}</span> ${test.name} [${test.status}]</button
           >`
         )}
       </div>`;

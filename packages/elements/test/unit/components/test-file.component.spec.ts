@@ -4,6 +4,7 @@ import { TestStatus } from 'mutation-testing-metrics';
 import { FileStateFilterComponent, StateFilter } from '../../../src/components/state-filter/state-filter.component';
 import { TestFileComponent } from '../../../src/components/test-file/test-file.component';
 import { createCustomEvent } from '../../../src/lib/custom-events';
+import { bootstrap } from '../../../src/style';
 import { createMutantResult, createTestDefinition } from '../../helpers/factory';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 
@@ -24,6 +25,10 @@ describe(TestFileComponent.name, () => {
   function selectTests(): HTMLSpanElement[] {
     return sut.$$('.test-dot');
   }
+
+  it('should use bootstrap styles', () => {
+    expect(TestFileComponent.styles).contains(bootstrap);
+  });
 
   describe('state filter', () => {
     it('should provide filters with correct emoji, context and count', async () => {
@@ -181,7 +186,7 @@ describe(TestFileComponent.name, () => {
     });
   });
 
-  describe('with tests', () => {
+  describe('with tests with locations', () => {
     let filterComponent: FileStateFilterComponent<TestStatus>;
 
     beforeEach(async () => {
@@ -202,7 +207,7 @@ describe(TestFileComponent.name, () => {
     });
 
     it('should set the test-id attribute', () => {
-      const tests = sut.$$<HTMLSpanElement>('.test-dot');
+      const tests = sut.$$('.test-dot');
       expect(tests[0].getAttribute('test-id')).eq('1');
       expect(tests[1].getAttribute('test-id')).eq('2');
     });
@@ -210,9 +215,198 @@ describe(TestFileComponent.name, () => {
     it('should hide the "Killing" tests when "Killing" tests are filtered out', async () => {
       filterComponent.dispatchEvent(createCustomEvent('filters-changed', [TestStatus.NotCovering]));
       await sut.whenStable();
-      const tests = sut.$$<HTMLSpanElement>('.test-dot');
+      const tests = sut.$$('.test-dot');
       expect(tests).lengthOf(1);
       expect(tests[0].getAttribute('test-id')).eq('2');
     });
+
+    it('should select the test when a test is clicked', async () => {
+      // Arrange
+      const testDot = sut.$<SVGElement>('.test-dot[test-id="1"]');
+
+      // Act
+      testDot.dispatchEvent(new Event('click', { bubbles: true }));
+      await sut.whenStable();
+
+      // Assert
+      expect([...testDot.classList]).contains('selected');
+    });
+
+    it('should emit a test selected event when a test is clicked', async () => {
+      // Arrange
+      const testDot = sut.$<SVGElement>('.test-dot[test-id="1"]');
+      const expectedTest = sut.element.model!.tests.find((test) => test.id === '1');
+
+      // Act
+      const actualEvent = await sut.catchCustomEvent('test-selected', () => {
+        testDot.dispatchEvent(new Event('click', { bubbles: true }));
+      });
+
+      // Assert
+      expect(actualEvent).ok;
+      expect(actualEvent!.detail.selected).true;
+      expect(actualEvent!.detail.test).eq(expectedTest);
+    });
+
+    it('should emit a test deselected event when a test is clicked', async () => {
+      // Arrange
+      const testDot = sut.$<SVGElement>('.test-dot[test-id="1"]');
+      const expectedTest = sut.element.model!.tests.find((test) => test.id === '1');
+      testDot.dispatchEvent(new Event('click', { bubbles: true }));
+      await sut.whenStable();
+
+      // Act
+      const actualEvent = await sut.catchCustomEvent('test-selected', () => {
+        testDot.dispatchEvent(new Event('click', { bubbles: true }));
+      });
+
+      // Assert
+      expect(actualEvent).ok;
+      expect(actualEvent!.detail.selected).false;
+      expect(actualEvent!.detail.test).eq(expectedTest);
+    });
+
+    it('should select the first test on "Next"', async () => {
+      // Act
+      filterComponent.dispatchEvent(createCustomEvent('next', undefined));
+      await sut.whenStable();
+
+      // Assert
+      const test = sut.$<SVGElement>('.test-dot[test-id="1"]');
+      expect([...test.classList]).contains('selected');
+    });
+    it('should select the last test on "Previous"', async () => {
+      // Act
+      filterComponent.dispatchEvent(createCustomEvent('previous', undefined));
+      await sut.whenStable();
+
+      // Assert
+      const test = sut.$<SVGElement>('.test-dot[test-id="2"]');
+      expect([...test.classList]).contains('selected');
+    });
+    it('should select the second test when the first test was selected test on "Next"', async () => {
+      // Arrange
+      await selectTest('1');
+
+      // Act
+      filterComponent.dispatchEvent(createCustomEvent('next', undefined));
+      await sut.whenStable();
+
+      // Assert
+      const test = sut.$<SVGElement>('.test-dot[test-id="2"]');
+      expect([...test.classList]).contains('selected');
+    });
+    it('should select the first test when the second test was selected test on "Previous"', async () => {
+      // Arrange
+      await selectTest('2');
+
+      // Act
+      filterComponent.dispatchEvent(createCustomEvent('previous', undefined));
+      await sut.whenStable();
+
+      // Assert
+      const test = sut.$<SVGElement>('.test-dot[test-id="1"]');
+      expect([...test.classList]).contains('selected');
+    });
+
+    it('should select the no test on "Next" when there are no tests', async () => {
+      // Arrange
+      filterComponent.dispatchEvent(createCustomEvent('filters-changed', []));
+      await sut.whenStable();
+
+      // Act
+      filterComponent.dispatchEvent(createCustomEvent('next', undefined));
+      await sut.whenStable();
+
+      // Assert
+      expect(sut.$<SVGElement>('.test-dot.selected')).null;
+    });
+
+    it('should select the no test on "Previous" when there are no tests', async () => {
+      // Arrange
+      filterComponent.dispatchEvent(createCustomEvent('filters-changed', []));
+      await sut.whenStable();
+
+      // Act
+      filterComponent.dispatchEvent(createCustomEvent('previous', undefined));
+      await sut.whenStable();
+
+      // Assert
+      expect(sut.$<SVGElement>('.test-dot.selected')).null;
+    });
+    async function selectTest(testId: string) {
+      sut.$<SVGElement>(`.test-dot[test-id="${testId}"]`).dispatchEvent(new Event('click', { bubbles: true }));
+      await sut.whenStable();
+    }
+  });
+
+  describe('with tests without locations', () => {
+    let filterComponent: FileStateFilterComponent<TestStatus>;
+
+    beforeEach(async () => {
+      const model = new TestFileModel(
+        {
+          tests: [
+            createTestDefinition({ id: '1', location: undefined, name: 'should foo into bar' }),
+            createTestDefinition({ id: '2', location: undefined, name: 'should baz into qux' }),
+          ],
+        },
+        'foo.spec.js'
+      );
+      model.tests[0].addKilled(new MutantModel(createMutantResult()));
+      sut.element.model = model;
+      await sut.whenStable();
+      filterComponent = sut.$('mte-state-filter');
+    });
+
+    it('should render the tests in a list', async () => {
+      const tests = sut.$$('.list-group-item[test-id]');
+      expect(tests).lengthOf(2);
+      expect(tests.map((test) => test.getAttribute('test-id'))).deep.eq(['1', '2']);
+      expect(tests.map((test) => test.innerText)).deep.eq(['✅ should foo into bar [Killing]', '🌧 should baz into qux [NotCovering]']);
+    });
+
+    it('should select a test on click', async () => {
+      // Arrange
+      const testButton = sut.$(`.list-group-item[test-id="1"]`);
+      const expectedTest = sut.element.model!.tests.find((test) => test.id === '1');
+
+      // Act
+      const actualEvent = await sut.catchCustomEvent('test-selected', () => {
+        testButton.click();
+      });
+
+      // Assert
+      expect(isSelected('1')).true;
+      expect(actualEvent).ok;
+      expect(actualEvent!.detail.selected).true;
+      expect(actualEvent!.detail.test).eq(expectedTest);
+    });
+
+    it('should deselect a test when it is filtered out', async () => {
+      // Arrange
+      const expectedTest = sut.element.model!.tests.find((test) => test.id === '1');
+      await selectTest('1');
+
+      // Act
+      const actualEvent = await sut.catchCustomEvent('test-selected', () => {
+        filterComponent.dispatchEvent(createCustomEvent('filters-changed', []));
+      });
+
+      // Assert
+      expect(isSelected('1')).false;
+      expect(actualEvent).ok;
+      expect(actualEvent!.detail.selected).false;
+      expect(actualEvent!.detail.test).eq(expectedTest);
+    });
+
+    async function selectTest(testId: string) {
+      sut.$(`.list-group-item[test-id="${testId}"]`).click();
+      await sut.whenStable();
+    }
+
+    function isSelected(testId: string) {
+      return Boolean(sut.$(`.list-group-item[test-id="${testId}"].active`));
+    }
   });
 });
