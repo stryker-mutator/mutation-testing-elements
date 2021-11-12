@@ -196,7 +196,7 @@
 
 @function squiggly-svg-factory($stroke-color) {
   // Color to string
-  $stroke-color: "#{$stroke-color}";
+  $stroke-color: '#{$stroke-color}';
 
   // Escape leading '#' (url encode %23)
   $index: str-index($stroke-color, '#');
@@ -215,7 +215,7 @@
   --mut-diff-del-bg-line-number: #ffd7d5;
   --mut-diff-del-line-number: var(--mut-diff-add-line-number);
   --mut-badge-info-bg: #54c6ec;
-  --mut-badge-info: #212529; 
+  --mut-badge-info: #212529;
   --mut-code-lense: #919191;
   --mut-squiggly-danger: #{squiggly-svg-factory($danger)};
   --mut-squiggly-caution: #{squiggly-svg-factory($orange)};
