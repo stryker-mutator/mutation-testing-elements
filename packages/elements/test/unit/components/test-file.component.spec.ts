@@ -359,7 +359,7 @@ describe(TestFileComponent.name, () => {
       filterComponent = sut.$('mte-state-filter');
     });
 
-    it('should render the tests in a list', async () => {
+    it('should render the tests in a list', () => {
       const tests = sut.$$('.list-group-item[test-id]');
       expect(tests).lengthOf(2);
       expect(tests.map((test) => test.getAttribute('test-id'))).deep.eq(['1', '2']);
