@@ -4,8 +4,43 @@ import {
   ProgrammingLanguage,
   PositionWithOffset,
   findDiffIndices,
+  highlightCode,
 } from '../../../src/lib/code-helpers';
 import { expect } from 'chai';
+import prism from 'prismjs/components/prism-core';
+import sinon from 'sinon';
+
+describe(highlightCode.name, () => {
+  [
+    [ProgrammingLanguage.csharp, 'foo.cs', 'using System;'],
+    [ProgrammingLanguage.java, 'foo.java', 'import java.lang;'],
+    [ProgrammingLanguage.typescript, 'foo.ts', 'const foo = bar;'],
+    [ProgrammingLanguage.typescript, 'foo.tsx', 'const foo = bar;'],
+    [ProgrammingLanguage.typescript, 'foo.cts', 'const foo = bar;'],
+    [ProgrammingLanguage.typescript, 'foo.mts', 'const foo = bar;'],
+    [ProgrammingLanguage.javascript, 'foo.js', 'const foo = bar;'],
+    [ProgrammingLanguage.javascript, 'foo.cjs', 'const foo = bar;'],
+    [ProgrammingLanguage.javascript, 'foo.mjs', 'const foo = bar;'],
+    [ProgrammingLanguage.php, 'foo.php', '$foo = $bar;'],
+    [ProgrammingLanguage.html, 'foo.html', '<html></html>'],
+    [ProgrammingLanguage.html, 'foo.vue', '<script>Vue.component({})</script>'],
+    [ProgrammingLanguage.gherkin, 'foo.feature', 'Feature: foo'],
+  ].forEach(([language, fileName, code]) => {
+    it(`should parse ${fileName} as ${language}`, () => {
+      const highlightSpy = sinon.spy(prism, 'highlight');
+      const highlightedCode = highlightCode(code, fileName);
+      expect(highlightedCode).contains('<span'); // actual highlighting is not tested, in prism we trust
+      expect(highlightSpy).calledWithExactly(code, prism.languages[language], language);
+    });
+  });
+
+  it('should at least sanitize an unknown language', () => {
+    const highlightSpy = sinon.spy(prism, 'highlight');
+    const highlightedCode = highlightCode('const a = \'<script>alert("a")</script>\'; b & a', 'foo.bar');
+    expect(highlightedCode).eq('const a = \'&lt;script>alert("a")&lt;/script>\'; b &amp; a');
+    expect(highlightSpy).called;
+  });
+});
 
 describe(transformHighlightedLines.name, () => {
   it('should split a span on multiple lines', () => {
@@ -158,6 +193,8 @@ describe(determineLanguage.name, () => {
       ['mjs', ProgrammingLanguage.javascript],
       ['ts', ProgrammingLanguage.typescript],
       ['tsx', ProgrammingLanguage.typescript],
+      ['cts', ProgrammingLanguage.typescript],
+      ['mts', ProgrammingLanguage.typescript],
       ['scala', ProgrammingLanguage.scala],
       ['php', ProgrammingLanguage.php],
       ['vue', ProgrammingLanguage.vue],

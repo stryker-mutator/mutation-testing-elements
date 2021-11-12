@@ -39,6 +39,8 @@ export function determineLanguage(fileName: string): ProgrammingLanguage | undef
       return ProgrammingLanguage.javascript;
     case 'ts':
     case 'tsx':
+    case 'cts': // New file extensions
+    case 'mts': // https://devblogs.microsoft.com/typescript/announcing-typescript-4-5-beta/#new-file-extensions
       return ProgrammingLanguage.typescript;
     case 'scala':
       return ProgrammingLanguage.scala;
@@ -54,8 +56,12 @@ export function determineLanguage(fileName: string): ProgrammingLanguage | undef
 }
 
 export function highlightCode(code: string, fileName: string): string {
-  const language = determineLanguage(fileName) ?? '';
-  return highlight(code, languages[language], language);
+  const language = determineLanguage(fileName) ?? 'plain';
+  let highlightLanguage = language;
+  if (language === ProgrammingLanguage.vue) {
+    highlightLanguage = ProgrammingLanguage.html;
+  }
+  return highlight(code, languages[highlightLanguage], highlightLanguage);
 }
 
 export interface PositionWithOffset extends Position {
