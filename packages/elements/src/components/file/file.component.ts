@@ -25,7 +25,7 @@ export class FileComponent extends LitElement {
   public selectedMutantStates: MutantStatus[] = [];
 
   @state()
-  private selectedMutantId?: string;
+  private selectedMutant?: MutantModel;
 
   @state()
   private lines: string[] = [];
@@ -45,18 +45,19 @@ export class FileComponent extends LitElement {
 
     if (ev.target instanceof Element) {
       let maybeMutantTarget: Element | null = ev.target;
-      const mutantIdsInScope: string[] = [];
+      const mutantsInScope: MutantModel[] = [];
       for (; maybeMutantTarget instanceof Element; maybeMutantTarget = maybeMutantTarget.parentElement) {
         const mutantId = maybeMutantTarget.getAttribute('mutant-id');
-        if (mutantId && this.mutants.some(({ id }) => id === mutantId)) {
-          mutantIdsInScope.push(mutantId);
+        const mutant = this.mutants.find(({ id }) => id === mutantId);
+        if (mutant) {
+          mutantsInScope.push(mutant);
         }
       }
-      const index = (this.selectedMutantId ? mutantIdsInScope.indexOf(this.selectedMutantId) : -1) + 1;
-      if (mutantIdsInScope[index]) {
-        this.toggleMutant(mutantIdsInScope[index]);
-      } else if (this.selectedMutantId) {
-        this.toggleMutant(this.selectedMutantId);
+      const index = (this.selectedMutant ? mutantsInScope.indexOf(this.selectedMutant) : -1) + 1;
+      if (mutantsInScope[index]) {
+        this.toggleMutant(mutantsInScope[index]);
+      } else if (this.selectedMutant) {
+        this.toggleMutant(this.selectedMutant);
       }
       clearSelection();
     }
@@ -107,17 +108,17 @@ export class FileComponent extends LitElement {
   }
 
   private nextMutant = () => {
-    const index = this.selectedMutantId ? (this.mutants.findIndex((mutant) => mutant.id === this.selectedMutantId) + 1) % this.mutants.length : 0;
+    const index = this.selectedMutant ? (this.mutants.indexOf(this.selectedMutant) + 1) % this.mutants.length : 0;
     if (this.mutants[index]) {
-      this.toggleMutant(this.mutants[index].id);
+      this.toggleMutant(this.mutants[index]);
     }
   };
   private previousMutant = () => {
-    const index = this.selectedMutantId
-      ? (this.mutants.findIndex((mutant) => mutant.id === this.selectedMutantId) + this.mutants.length - 1) % this.mutants.length
+    const index = this.selectedMutant
+      ? (this.mutants.indexOf(this.selectedMutant) + this.mutants.length - 1) % this.mutants.length
       : this.mutants.length - 1;
     if (this.mutants[index]) {
-      this.toggleMutant(this.mutants[index].id);
+      this.toggleMutant(this.mutants[index]);
     }
   };
 
@@ -125,7 +126,7 @@ export class FileComponent extends LitElement {
     return html`${mutants?.map(
       (mutant) =>
         svg`<svg mutant-id="${mutant.id}" class="mutant-dot ${
-          this.selectedMutantId === mutant.id ? 'selected' : mutant.status
+          this.selectedMutant?.id === mutant.id ? 'selected' : mutant.status
         }" height="10" width="10">
           <title>${title(mutant)}</title>
           <circle cx="5" cy="5" r="5" />
@@ -133,16 +134,15 @@ export class FileComponent extends LitElement {
     )}`;
   }
 
-  private toggleMutant(mutantId: string) {
-    const mutant = this.model.mutants.find((mutant) => mutant.id === mutantId)!;
+  private toggleMutant(mutant: MutantModel) {
     this.removeCurrentDiff();
-    if (this.selectedMutantId === mutantId) {
-      this.selectedMutantId = undefined;
+    if (this.selectedMutant === mutant) {
+      this.selectedMutant = undefined;
       this.dispatchEvent(createCustomEvent('mutant-selected', { selected: false, mutant }));
       return;
     }
 
-    this.selectedMutantId = mutantId;
+    this.selectedMutant = mutant;
     const lines = this.codeRef.value!.querySelectorAll('tr.line');
     for (let i = mutant.location.start.line - 1; i < mutant.location.end.line; i++) {
       lines.item(i).classList.add(diffOldClass);
@@ -211,8 +211,8 @@ export class FileComponent extends LitElement {
       this.mutants = this.model.mutants
         .filter((mutant) => this.selectedMutantStates.includes(mutant.status))
         .sort((m1, m2) => (gte(m1.location.start, m2.location.start) ? 1 : -1));
-      if (this.selectedMutantId && !this.mutants.some(({ id }) => this.selectedMutantId === id)) {
-        this.toggleMutant(this.selectedMutantId);
+      if (this.selectedMutant && !this.mutants.includes(this.selectedMutant)) {
+        this.toggleMutant(this.selectedMutant);
       }
     }
     super.update(changes);
