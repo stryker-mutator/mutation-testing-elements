@@ -74,4 +74,8 @@ export class ReportPage extends ElementSelector {
   get testView(): TestView {
     return new TestView(selectShadowRoot(this.$('mutation-test-report-app >>> mte-test-view')), this.browser);
   }
+
+  pageYOffset(): Promise<number> {
+    return this.browser.executeScript('return window.pageYOffset');
+  }
 }

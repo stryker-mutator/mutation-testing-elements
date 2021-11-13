@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { TestStatus } from 'mutation-testing-metrics';
 import { getCurrent } from './lib/browser';
-import { waitUntil } from './lib/helpers';
+import { itShouldMatchScreenshot } from './lib/helpers';
 import { ReportPage } from './po/ReportPage';
 import { TestListItem } from './po/TestListItem.po';
 
@@ -18,7 +18,7 @@ describe('Test view', () => {
     });
 
     it('should show 2 tests', async () => {
-      const tests = await page.testView.tests();
+      const tests = await page.testView.testDots();
       expect(tests).lengthOf(2);
       expect(await tests[0].isVisible()).true;
       expect(await tests[1].isVisible()).true;
@@ -32,16 +32,28 @@ describe('Test view', () => {
 
     it('should hide tests that are filtered out', async () => {
       await page.testView.stateFilter.state(TestStatus.Covering).click();
-
-      await waitUntil(async () => {
-        const tests = await page.testView.tests();
-        return expect(await tests[1].isVisible()).false;
-      });
+      const testDots = await page.testView.testDots();
+      expect(testDots).lengthOf(1);
+      expect(await testDots[0].getStatus()).eq(TestStatus.Killing);
     });
 
     it('should show the drawer when selecting a test', async () => {
       await page.testView.test(597).toggle();
       await page.testView.testDrawer.whenHalfOpen();
+    });
+
+    describe('when navigating "previous test"', () => {
+      before(async () => {
+        await page.testView.stateFilter.previous();
+      });
+
+      it('should scroll and focus the last test when "previous" is called', async () => {
+        const posAfter = await page.pageYOffset();
+        expect(posAfter).gt(100);
+        expect(await (await page.testView.testDots()).slice(-1)[0].isActive()).true;
+      });
+
+      itShouldMatchScreenshot('should look as expected');
     });
   });
 
@@ -51,9 +63,9 @@ describe('Test view', () => {
     });
 
     it('should tests in a list box', async () => {
-      const tests = await page.testView.tests();
+      const testDots = await page.testView.testDots();
       const testListItems = await page.testView.testListItems();
-      expect(tests).lengthOf(0);
+      expect(testDots).lengthOf(0);
       expect(testListItems).lengthOf(3);
     });
 
@@ -98,9 +110,9 @@ describe('Test view', () => {
     });
 
     it('should simply list all tests in a list box', async () => {
-      const tests = await page.testView.tests();
+      const testDots = await page.testView.testDots();
       const testListItems = await page.testView.testListItems();
-      expect(tests).lengthOf(0);
+      expect(testDots).lengthOf(0);
       expect(testListItems).lengthOf(82);
     });
   });

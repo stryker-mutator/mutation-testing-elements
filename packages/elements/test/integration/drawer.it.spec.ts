@@ -5,7 +5,7 @@ import { MutantComponent } from './po/MutantComponent.po';
 import { Drawer } from './po/Drawer.po';
 import { ReportPage } from './po/ReportPage';
 import { actScreenshotMatch } from './lib/helpers';
-import { TestComponent } from './po/TestComponent.po';
+import { TestDot } from './po/TestDot.po';
 
 describe('Drawer', () => {
   let page: ReportPage;
@@ -102,7 +102,7 @@ describe('Drawer', () => {
 
   describe('test view', () => {
     let drawer: Drawer;
-    let test: TestComponent;
+    let test: TestDot;
 
     beforeEach(async () => {
       page = new ReportPage(getCurrent());

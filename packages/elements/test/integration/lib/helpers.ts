@@ -28,7 +28,7 @@ export function wrapInWebElementPromise(p: () => Promise<WebElement>) {
   return new WebElementPromise(getCurrent(), p());
 }
 
-export async function isElementVisible(element: WebElementPromise) {
+export async function isElementVisible(element: WebElementPromise | WebElement) {
   try {
     const isDisplayed = await element.isDisplayed();
     return isDisplayed;

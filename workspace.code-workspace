@@ -45,7 +45,15 @@
     "gulp.autoDetect": "off",
     "jake.autoDetect": "off",
     "task.autoDetect": "off",
-    "cSpell.words": ["Theming", "autoloader", "bootswatch", "clike", "prismjs", "templating"],
+    "cSpell.words": [
+      "autoloader",
+      "bootswatch",
+      "clazz",
+      "clike",
+      "prismjs",
+      "templating",
+      "Theming"
+    ],
     "[json]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode"
     },

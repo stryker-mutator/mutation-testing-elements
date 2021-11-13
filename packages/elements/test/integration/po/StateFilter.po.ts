@@ -8,6 +8,14 @@ export class StateFilter extends PageObject {
     return new StateFilterCheckbox(this.$(`.form-check-inline[data-status="${state}"]`), this.browser);
   }
 
+  public previous(): Promise<void> {
+    return this.$('.mte-previous').click();
+  }
+
+  public next(): Promise<void> {
+    return this.$('.mte-next').click();
+  }
+
   public async states() {
     const labels = await this.$$('.form-check-inline');
     return labels.map((label) => new StateFilterCheckbox(label, this.browser));
