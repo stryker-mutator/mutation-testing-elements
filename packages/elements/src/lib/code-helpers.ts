@@ -72,9 +72,9 @@ export interface PositionWithOffset extends Position {
  * A simple HTML tag representation
  */
 export interface HtmlTag {
-  id?: string;
+  id?: string | number;
   elementName: string;
-  attributes?: Record<string, string>;
+  attributes?: Record<string, string | number>;
   isClosing?: true;
 }
 
@@ -173,7 +173,10 @@ export function transformHighlightedLines(source: string, visitor?: (pos: Positi
     if (isClosing) {
       return `</${elementName}>`;
     }
-    return `<${elementName}${Object.entries(attributes ?? {}).reduce((acc, [name, value]) => (value ? `${acc} ${name}="${value}"` : acc), '')}>`;
+    return `<${elementName}${Object.entries(attributes ?? {}).reduce(
+      (acc, [name, value]) => (value === undefined ? `${acc} ${name}` : `${acc} ${name}="${value}"`),
+      ''
+    )}>`;
   }
 
   function endLine() {

@@ -267,7 +267,7 @@ function add(a, b) {
         await sut.whenStable();
 
         // Assert
-        const diff = sut.$<HTMLTableRowElement>('tr.diff-new td.code');
+        const diff = sut.$('tr.diff-new td.code');
         expect(tr.nextElementSibling!.nextElementSibling!.nextElementSibling!.querySelector('.diff-new td.code')).eq(diff);
         expect([...tr.classList]).contains('diff-old');
         expect([...tr.nextElementSibling!.classList]).contains('diff-old');
@@ -330,7 +330,7 @@ function add(a, b) {
         await sut.whenStable();
 
         // Assert
-        expect(sut.$<HTMLTableRowElement>('tr.diff-new td.code')).null;
+        expect(sut.$('tr.diff-new td.code')).null;
         expect([...tr.classList]).not.contains('diff-old');
       });
 
@@ -345,7 +345,7 @@ function add(a, b) {
         await sut.whenStable();
 
         // Assert
-        expect(sut.$<HTMLTableRowElement>('tr.diff-new td.code')).null;
+        expect(sut.$('tr.diff-new td.code')).null;
       });
     });
 
@@ -359,7 +359,7 @@ function add(a, b) {
         await sut.whenStable();
 
         // Assert
-        expect(sut.$<HTMLTableRowElement>('tr.diff-new td.code').innerText.trim()).eq('return a - b;');
+        expect(sut.$('tr.diff-new td.code').innerText.trim()).eq('return a - b;');
       });
       it('should not show the diff if the mutant was filtered out', async () => {
         // Arrange
@@ -389,9 +389,10 @@ function add(a, b) {
         const getSelectionStub = sinon.stub(window, 'getSelection');
         const selectionMock = { removeAllRanges: sinon.stub() };
         getSelectionStub.returns(selectionMock as unknown as Selection);
+        const mutant = sut.$('span.mutant[mutant-id="1"]');
 
         // Act
-        sut.$('code').click();
+        mutant.click();
         await sut.whenStable();
 
         // Assert
@@ -419,7 +420,7 @@ function add(a, b) {
         await sut.whenStable();
 
         // Assert
-        expect(sut.$<HTMLTableRowElement>('tr.diff-new td.code').innerText.trim()).eq('function add(a, b) {}');
+        expect(sut.$('tr.diff-new td.code').innerText.trim()).eq('function add(a, b) {}');
       });
 
       it('should deselect the mutant when it is the last mutant in scope', async () => {
@@ -435,7 +436,22 @@ function add(a, b) {
         await sut.whenStable();
 
         // Assert
-        expect(sut.$<HTMLTableRowElement>('tr.diff-new td.code')).null;
+        expect(sut.$('tr.diff-new td.code')).null;
+      });
+
+      // Should not be, but Stryker.NET for example used mutant ids as numbers in the past
+      it('should support non-string mutant ids', async () => {
+        // Arrange
+        // @ts-expect-error should be a string, but this test is to see what happens when the id is a number
+        sut.element.model.mutants[0].id = 1;
+
+        // Act
+        const mutant = sut.$('span.mutant[mutant-id="1"]');
+        mutant.click();
+        await sut.whenStable();
+
+        // Assert
+        expect(sut.$('tr.diff-new td.code').innerText.trim()).eq('return a - b;');
       });
     });
 

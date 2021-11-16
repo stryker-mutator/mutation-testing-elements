@@ -146,6 +146,18 @@ describe(transformHighlightedLines.name, () => {
         ' <span class="mutant1"><span class="mutant2">= b</span></span><span class="mutant2">a</span>r',
       ]);
     });
+
+    it('should support falsy attribute values', () => {
+      const result = transformHighlightedLines('const foo = bar;', function* ({ offset }) {
+        if (offset === 6) {
+          yield { elementName: 'span', id: 0, attributes: { 'mutant-id': 0 } };
+        }
+        if (offset === 9) {
+          yield { elementName: 'span', id: 0, isClosing: true };
+        }
+      });
+      expect(result).deep.eq(['const <span mutant-id="0">foo</span> = bar;']);
+    });
   });
 
   describe('parse errors', () => {

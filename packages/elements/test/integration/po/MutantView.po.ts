@@ -1,7 +1,7 @@
 import { WebElementPromise } from 'selenium-webdriver';
-import { mapShadowRootConcurrent, selectShadowRoot } from '../lib/helpers';
+import { selectShadowRoot } from '../lib/helpers';
 import { StateFilter } from './StateFilter.po';
-import { MutantComponent } from './MutantComponent.po';
+import { MutantDot } from './MutantDot.po';
 import { Drawer } from './Drawer.po';
 import { View } from './View.po';
 
@@ -10,13 +10,13 @@ export class MutantView extends View {
     return this.$('mte-file >>> pre');
   }
 
-  public mutants(): Promise<MutantComponent[]> {
-    return mapShadowRootConcurrent(this.$$('mte-file >>> mte-mutant'), (host) => new MutantComponent(host, this.browser));
+  public async mutantDots(): Promise<MutantDot[]> {
+    const dots = await this.$$('mte-file >>> svg.mutant-dot');
+    return dots.map((host) => new MutantDot(host, this.browser));
   }
 
-  public mutant(mutantId: number | string) {
-    const shadowRoot = selectShadowRoot(this.$(`mte-file >>> mte-mutant[mutant-id="${mutantId}"]`));
-    return new MutantComponent(shadowRoot, this.browser);
+  public mutantDot(mutantId: number | string) {
+    return new MutantDot(this.$(`mte-file >>> svg.mutant-dot[mutant-id="${mutantId}"]`), this.browser);
   }
 
   public stateFilter() {

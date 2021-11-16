@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { TestStatus } from 'mutation-testing-metrics';
 import { getCurrent } from './lib/browser';
-import { itShouldMatchScreenshot } from './lib/helpers';
+import { itShouldMatchScreenshot, waitUntil } from './lib/helpers';
 import { ReportPage } from './po/ReportPage';
 import { TestListItem } from './po/TestListItem.po';
 
@@ -47,9 +47,13 @@ describe('Test view', () => {
         await page.testView.stateFilter.previous();
       });
 
+      // next and previous test already unit tested, so only focus on the part that wasn't unit tested
+
       it('should scroll and focus the last test when "previous" is called', async () => {
-        const posAfter = await page.pageYOffset();
-        expect(posAfter).gt(100);
+        await waitUntil(async () => {
+          const posAfter = await page.pageYOffset();
+          return expect(posAfter).gt(100);
+        });
         expect(await (await page.testView.testDots()).slice(-1)[0].isActive()).true;
       });
 

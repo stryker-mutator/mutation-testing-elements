@@ -48,7 +48,7 @@ export class FileComponent extends LitElement {
       const mutantsInScope: MutantModel[] = [];
       for (; maybeMutantTarget instanceof Element; maybeMutantTarget = maybeMutantTarget.parentElement) {
         const mutantId = maybeMutantTarget.getAttribute('mutant-id');
-        const mutant = this.mutants.find(({ id }) => id === mutantId);
+        const mutant = this.mutants.find(({ id }) => id.toString() === mutantId);
         if (mutant) {
           mutantsInScope.push(mutant);
         }
@@ -56,10 +56,11 @@ export class FileComponent extends LitElement {
       const index = (this.selectedMutant ? mutantsInScope.indexOf(this.selectedMutant) : -1) + 1;
       if (mutantsInScope[index]) {
         this.toggleMutant(mutantsInScope[index]);
+        clearSelection();
       } else if (this.selectedMutant) {
         this.toggleMutant(this.selectedMutant);
+        clearSelection();
       }
-      clearSelection();
     }
   };
 
