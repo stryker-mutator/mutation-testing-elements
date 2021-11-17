@@ -17,16 +17,16 @@ describe('File report "install-local-example/Options.ts"', () => {
     expect(await page.mutantView.mutantDots()).lengthOf(51);
   });
 
-  it('should not show a diff', async () => {
-    for await (const mutant of await page.mutantView.mutantDots()) {
-      const [decoration, isMutantReplacementVisible] = await Promise.all([
-        mutant.originalCodeTextDecoration(),
-        mutant.isMutantReplacementCodeVisible(),
-      ]);
-      expect(decoration).eq('none');
-      expect(isMutantReplacementVisible).eq(false);
-    }
-  });
+  // it('should not show a diff', async () => {
+  //   for await (const mutant of await page.mutantView.mutantDots()) {
+  //     const [decoration, isMutantReplacementVisible] = await Promise.all([
+  //       mutant.originalCodeTextDecoration(),
+  //       mutant.isMutantReplacementCodeVisible(),
+  //     ]);
+  //     expect(decoration).eq('none');
+  //     expect(isMutantReplacementVisible).eq(false);
+  //   }
+  // });
 
   it('should only filter Survived and NoCoverage mutants by default', async () => {
     const filter = page.mutantView.stateFilter();
