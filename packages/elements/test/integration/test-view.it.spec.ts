@@ -45,15 +45,17 @@ describe('Test view', () => {
     describe('when navigating "previous test"', () => {
       beforeEach(async () => {
         await page.testView.stateFilter.previous();
+        await waitUntil(async () => {
+          const posAfter = await page.pageYOffset();
+          return expect(posAfter).gt(100);
+        });
       });
 
       // next and previous test already unit tested, so only focus on the part that wasn't unit tested
 
       it('should scroll and focus the last test when "previous" is called', async () => {
-        await waitUntil(async () => {
-          const posAfter = await page.pageYOffset();
-          return expect(posAfter).gt(100);
-        });
+        const posAfter = await page.pageYOffset();
+        expect(posAfter).gt(100);
         expect(await (await page.testView.testDots()).slice(-1)[0].isActive()).true;
       });
 
