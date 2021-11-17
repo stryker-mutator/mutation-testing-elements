@@ -6,7 +6,7 @@ import { getCurrent } from './lib/browser';
 import { MutantMarker } from './po/MutantMarker.po';
 import { itShouldMatchScreenshot, waitUntil } from './lib/helpers';
 
-describe.only('File report "install-local-example/Options.ts"', () => {
+describe('File report "install-local-example/Options.ts"', () => {
   let page: ReportPage;
 
   beforeEach(async () => {
@@ -133,17 +133,15 @@ describe.only('File report "install-local-example/Options.ts"', () => {
     });
   });
 
-  describe.only('when navigating "previous mutant"', () => {
+  describe('when navigating "previous mutant"', () => {
     beforeEach(async () => {
       await page.mutantView.stateFilter().previous();
     });
 
     // next and previous test already unit tested, so only focus on the part that wasn't unit tested
     it('should scroll and focus the last test when "previous" is called', async () => {
-      let i = 0;
       await waitUntil(async () => {
         const posAfter = await page.pageYOffset();
-        console.log('pos after', i++, posAfter);
         return expect(posAfter).gt(100);
       });
       expect(await (await page.mutantView.mutantDots()).slice(-1)[0].isActive()).true;

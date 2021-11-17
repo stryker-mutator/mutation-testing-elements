@@ -43,7 +43,7 @@ describe('Test view', () => {
     });
 
     describe('when navigating "previous test"', () => {
-      before(async () => {
+      beforeEach(async () => {
         await page.testView.stateFilter.previous();
       });
 

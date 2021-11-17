@@ -1,5 +1,5 @@
 /// <reference types="../typings/globals-chai" />
-import { expect } from 'chai';
+import { expect, AssertionError } from 'chai';
 import { Context } from 'mocha';
 import { from } from 'rxjs';
 import { mergeMap, toArray } from 'rxjs/operators';
@@ -124,7 +124,9 @@ export function waitUntil(
         if (error instanceof Error) {
           lastError = error;
         }
-        if (!(error instanceof Chai.AssertionError)) {
+        if (error instanceof AssertionError) {
+          timeoutId = setTimeout(() => void nextInterval(), interval);
+        } else {
           reject(error);
         }
       }
