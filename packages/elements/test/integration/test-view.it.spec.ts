@@ -38,7 +38,7 @@ describe('Test view', () => {
     });
 
     it('should show the drawer when selecting a test', async () => {
-      await page.testView.test(597).toggle();
+      await page.testView.testDot(597).toggle();
       await page.testView.testDrawer.whenHalfOpen();
     });
 

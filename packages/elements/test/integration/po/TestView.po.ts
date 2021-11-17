@@ -19,7 +19,7 @@ export class TestView extends View {
     return (await this.$$('mte-test-file >>> .mte-test-list-group-item')).map((host) => new TestListItem(host, this.browser));
   }
 
-  public test(testId: number | string) {
+  public testDot(testId: number | string) {
     const el = this.$(`mte-test-file >>> svg.test-dot[test-id="${testId}"]`);
     return new TestDot(el, this.browser);
   }

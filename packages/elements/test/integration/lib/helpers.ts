@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { Context } from 'mocha';
 import { from } from 'rxjs';
 import { mergeMap, toArray } from 'rxjs/operators';
-import { WebElement, WebElementPromise } from 'selenium-webdriver';
+import { WebElement, WebElementPromise, error } from 'selenium-webdriver';
 import { ReportPage } from '../po/ReportPage';
 import { getCurrent, isHeadless } from './browser';
 import { MAX_WEBDRIVER_CONCURRENCY } from './constants';
@@ -34,6 +34,9 @@ export async function isElementVisible(element: WebElementPromise | WebElement) 
     return isDisplayed;
   } catch (err) {
     if (err instanceof Error && err.message.includes('no such element')) {
+      return false;
+    }
+    if (err instanceof error.StaleElementReferenceError) {
       return false;
     }
     throw err;

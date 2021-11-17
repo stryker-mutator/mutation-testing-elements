@@ -108,7 +108,7 @@ describe('Drawer', () => {
       page = new ReportPage(getCurrent());
       await page.navigateTo('lighthouse-example/#test/metrics/interactive-test.js');
       await page.whenFileReportLoaded();
-      test = page.testView.test(597);
+      test = page.testView.testDot(597);
       await test.toggle();
       drawer = page.testView.testDrawer;
       await page.testView.scrollToCode();
