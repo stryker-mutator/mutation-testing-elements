@@ -7,7 +7,7 @@ import { MutantMarker } from './po/MutantMarker.po';
 import { itShouldMatchScreenshot, waitUntil } from './lib/helpers';
 import { SLEEP_FOR_SCROLL } from './lib/constants';
 
-describe('File report "install-local-example/Options.ts"', () => {
+describe.only('File report "install-local-example/Options.ts"', () => {
   let page: ReportPage;
 
   beforeEach(async () => {
@@ -134,8 +134,9 @@ describe('File report "install-local-example/Options.ts"', () => {
     });
   });
 
-  describe('when navigating "previous mutant"', () => {
+  describe('when navigating "previous mutant" when scrolled up', () => {
     beforeEach(async () => {
+      await page.scrollUp();
       await page.mutantView.stateFilter().previous();
       await waitUntil(async () => {
         const posAfter = await page.pageYOffset();
@@ -151,5 +152,6 @@ describe('File report "install-local-example/Options.ts"', () => {
     });
 
     itShouldMatchScreenshot('should look as expected', SLEEP_FOR_SCROLL);
+
   });
 });

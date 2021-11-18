@@ -11,4 +11,4 @@ export const DEFAULT_TIMEOUT = 4000;
  * The exact timing function used for "smooth" scroll-behavior is browser dependent, so better be safe than sorry 🤷‍♂️
  * https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-behavior#values
  */
-export const SLEEP_FOR_SCROLL = 5000;
+export const SLEEP_FOR_SCROLL = 2000;

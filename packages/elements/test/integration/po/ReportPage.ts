@@ -31,6 +31,10 @@ export class ReportPage extends ElementSelector {
     return this.$('mutation-test-report-app >>> .container-fluid').takeScreenshot();
   }
 
+  public scrollUp(): Promise<void> {
+    return this.browser.executeScript('window.scroll(0, 0)');
+  }
+
   public async navigateTo(path: string) {
     await this.browser.get(constants.BASE_URL + path);
 
