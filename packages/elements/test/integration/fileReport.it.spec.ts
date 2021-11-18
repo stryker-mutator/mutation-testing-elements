@@ -7,7 +7,7 @@ import { MutantMarker } from './po/MutantMarker.po';
 import { itShouldMatchScreenshot, waitUntil } from './lib/helpers';
 import { SLEEP_FOR_SCROLL } from './lib/constants';
 
-describe.only('File report "install-local-example/Options.ts"', () => {
+describe('File report "install-local-example/Options.ts"', () => {
   let page: ReportPage;
 
   beforeEach(async () => {
