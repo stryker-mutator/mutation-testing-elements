@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { TestStatus } from 'mutation-testing-metrics';
 import { getCurrent } from './lib/browser';
+import { SLEEP_FOR_SCROLL } from './lib/constants';
 import { itShouldMatchScreenshot, waitUntil } from './lib/helpers';
 import { ReportPage } from './po/ReportPage';
 import { TestListItem } from './po/TestListItem.po';
@@ -59,7 +60,7 @@ describe('Test view', () => {
         expect(await (await page.testView.testDots()).slice(-1)[0].isActive()).true;
       });
 
-      itShouldMatchScreenshot('should look as expected');
+      itShouldMatchScreenshot('should look as expected', SLEEP_FOR_SCROLL);
     });
   });
 

@@ -5,6 +5,7 @@ import { MutantDot } from './po/MutantDot.po';
 import { getCurrent } from './lib/browser';
 import { MutantMarker } from './po/MutantMarker.po';
 import { itShouldMatchScreenshot, waitUntil } from './lib/helpers';
+import { SLEEP_FOR_SCROLL } from './lib/constants';
 
 describe('File report "install-local-example/Options.ts"', () => {
   let page: ReportPage;
@@ -149,6 +150,6 @@ describe('File report "install-local-example/Options.ts"', () => {
       expect(await (await page.mutantView.mutantDots()).slice(-1)[0].isActive()).true;
     });
 
-    itShouldMatchScreenshot('should look as expected');
+    itShouldMatchScreenshot('should look as expected', SLEEP_FOR_SCROLL);
   });
 });

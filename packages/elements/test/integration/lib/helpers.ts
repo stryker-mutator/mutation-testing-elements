@@ -47,16 +47,16 @@ export function sleep(n = 1000) {
   return new Promise((res) => setTimeout(res, n));
 }
 
-export function itShouldMatchScreenshot(title: string) {
+export function itShouldMatchScreenshot(title: string, sleepMs = 1000) {
   it(title, async function () {
-    await actScreenshotMatch(this);
+    await actScreenshotMatch(this, sleepMs);
   });
 }
 
-export async function actScreenshotMatch(context: Context) {
+export async function actScreenshotMatch(context: Context, sleepMs = 1000) {
   if (isHeadless()) {
     const page = new ReportPage(getCurrent());
-    await sleep();
+    await sleep(sleepMs);
     await expect(await page.takeScreenshot()).to.matchScreenshot();
   } else {
     console.log('[SKIP] skipping screenshot comparison, because not running in headless mode');
