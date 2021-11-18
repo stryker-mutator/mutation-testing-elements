@@ -54,7 +54,7 @@ export function itShouldMatchScreenshot(title: string, sleepMs = 1000) {
 }
 
 export async function actScreenshotMatch(context: Context, sleepMs = 1000) {
-  if (!isHeadless()) {
+  if (isHeadless()) {
     const page = new ReportPage(getCurrent());
     await sleep(sleepMs);
     await expect(await page.takeScreenshot()).to.matchScreenshot();

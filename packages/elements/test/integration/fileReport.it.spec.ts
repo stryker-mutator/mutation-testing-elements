@@ -152,6 +152,5 @@ describe.only('File report "install-local-example/Options.ts"', () => {
     });
 
     itShouldMatchScreenshot('should look as expected', SLEEP_FOR_SCROLL);
-
   });
 });
