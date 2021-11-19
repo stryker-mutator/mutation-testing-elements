@@ -43,7 +43,7 @@ svg.mutant-dot.selected {
   */
     border-image-slice: 0 0 4 0;
     border-image-width: 4px;
-    border-image-outset: 4px;
+    border-image-outset: 3px;
     border-bottom-style: solid;
     border-image-repeat: repeat;
     border-image-source: var(--mut-squiggly-#{map.get($mutant-themes, $status)});
