@@ -1,4 +1,4 @@
-import { escapeHtml, getContextClassForStatus, toAbsoluteUrl } from '../../../src/lib/htmlHelpers';
+import { escapeHtml, getContextClassForStatus, toAbsoluteUrl } from '../../../src/lib/html-helpers';
 import { expect } from 'chai';
 import { MutantStatus } from 'mutation-testing-report-schema/api';
 

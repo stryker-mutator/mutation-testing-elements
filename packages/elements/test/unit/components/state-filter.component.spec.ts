@@ -1,9 +1,9 @@
-import { MutationTestReportFileStateFilterComponent, StateFilter } from '../../../src/components/state-filter/state-filter.component';
+import { FileStateFilterComponent, StateFilter } from '../../../src/components/state-filter/state-filter.component';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { MutantStatus } from 'mutation-testing-report-schema/api';
 import { expect } from 'chai';
 import { normalizeWhitespace, expectedMutantColors } from '../../helpers/helperFunctions';
-import { getContextClassForStatus, getEmojiForStatus } from '../../../src/lib/htmlHelpers';
+import { getContextClassForStatus, getEmojiForStatus } from '../../../src/lib/html-helpers';
 
 function createStateFilter(status: MutantStatus): StateFilter<MutantStatus> {
   return {
@@ -15,8 +15,8 @@ function createStateFilter(status: MutantStatus): StateFilter<MutantStatus> {
   };
 }
 
-describe(MutationTestReportFileStateFilterComponent.name, () => {
-  let sut: CustomElementFixture<MutationTestReportFileStateFilterComponent<MutantStatus>>;
+describe(FileStateFilterComponent.name, () => {
+  let sut: CustomElementFixture<FileStateFilterComponent<MutantStatus>>;
 
   beforeEach(async () => {
     sut = new CustomElementFixture('mte-state-filter');
@@ -79,7 +79,7 @@ describe(MutationTestReportFileStateFilterComponent.name, () => {
     });
 
     it('should dispatch the "filters-changed" event for the initial state', async () => {
-      const expectedFilters = [
+      const states = [
         MutantStatus.CompileError,
         MutantStatus.Killed,
         MutantStatus.NoCoverage,
@@ -87,78 +87,46 @@ describe(MutationTestReportFileStateFilterComponent.name, () => {
         MutantStatus.Survived,
         MutantStatus.Timeout,
         MutantStatus.Ignored,
-      ].map(createStateFilter);
+      ];
+      const filters = states.map(createStateFilter);
       const actualEvent = await sut.catchCustomEvent('filters-changed', () => {
-        sut.element.filters = expectedFilters;
+        sut.element.filters = filters;
       });
       expect(actualEvent).ok;
-      expect(actualEvent!.detail).deep.eq(expectedFilters);
+      expect(actualEvent!.detail).deep.eq([MutantStatus.NoCoverage, MutantStatus.Survived, MutantStatus.Timeout]);
     });
 
-    it('should dispatch the "filters-changed" event when a checkbox is checked', async () => {
+    it('should dispatch the "filters-changed" event with an empty array when a checkbox is de-selected', async () => {
       // Arrange
       const inputFilters = [MutantStatus.CompileError, MutantStatus.Survived].map(createStateFilter);
       inputFilters[0].enabled = false;
       inputFilters[1].enabled = true;
       sut.element.filters = inputFilters;
       await sut.whenStable();
-      const expected = [MutantStatus.CompileError, MutantStatus.Survived].map(createStateFilter);
-      expected[0].enabled = false;
-      expected[1].enabled = false;
 
       // Act
       const actualEvent = await sut.catchCustomEvent('filters-changed', () => {
-        sut.$(`input[type="checkbox"][value="${MutantStatus.Survived}"]`).click();
+        sut.$<HTMLInputElement>(`input[type="checkbox"][value="${MutantStatus.Survived}"]`).click();
       });
 
       // Assert
       expect(actualEvent).ok;
-      expect(actualEvent!.detail).deep.eq(expected);
+      expect(actualEvent!.detail).lengthOf(0);
     });
   });
 
-  describe('Collapse/expand button', () => {
-    let collapseButton: HTMLElement;
-    beforeEach(async () => {
-      sut.element.allowToggleAll = true;
-      await sut.whenStable();
-      collapseButton = sut.$('button.btn-secondary');
+  describe('Next/previous button', () => {
+    it('should dispatch next event when "next" is clicked', async () => {
+      const nextEvent = await sut.catchCustomEvent('next', () => {
+        sut.$<HTMLButtonElement>('button.mte-next').click();
+      });
+      expect(nextEvent).not.null;
     });
-
-    it('should not show "Expand all" when "allowToggleAll" is false', async () => {
-      sut.element.allowToggleAll = false;
-      await sut.whenStable();
-      collapseButton = sut.$('button.btn-secondary');
-      expect(collapseButton).null;
-    });
-
-    it('should show "Expand all" button when "allowToggleAll" is true', () => {
-      expect(collapseButton.textContent).eq('Expand all');
-    });
-
-    it('should dispatch "expand-all" event when the button is clicked', async () => {
-      let actual: Event | undefined;
-      sut.element.addEventListener('expand-all', (evt) => (actual = evt));
-      collapseButton.click();
-      await sut.whenStable();
-      expect(actual).ok;
-    });
-
-    it('should dispatch "collapse-all" event when the button is clicked a second time', async () => {
-      let actual: Event | undefined;
-      sut.element.addEventListener('collapse-all', (evt) => (actual = evt));
-      collapseButton.click();
-      await sut.whenStable();
-      expect(actual).not.ok;
-      collapseButton.click();
-      await sut.whenStable();
-      expect(actual).ok;
-    });
-
-    it('should toggle the text to "Collapse all" when clicked', async () => {
-      collapseButton.click();
-      await sut.whenStable();
-      expect(collapseButton.textContent).eq('Collapse all');
+    it('should dispatch previous event when "previous" is clicked', async () => {
+      const nextEvent = await sut.catchCustomEvent('previous', () => {
+        sut.$<HTMLButtonElement>('button.mte-previous').click();
+      });
+      expect(nextEvent).not.null;
     });
   });
 });

@@ -14,24 +14,9 @@ export interface StateFilter<TStatus> {
 }
 
 @customElement('mte-state-filter')
-export class MutationTestReportFileStateFilterComponent<TStatus> extends LitElement {
-  @property()
-  private get collapseButtonText() {
-    if (this.collapsed) {
-      return 'Expand all';
-    } else {
-      return 'Collapse all';
-    }
-  }
-
-  @property()
-  private collapsed = true;
-
+export class FileStateFilterComponent<TStatus extends string> extends LitElement {
   @property({ type: Array })
   public filters?: StateFilter<TStatus>[];
-
-  @property({ type: Boolean, attribute: 'allow-toggle-all', reflect: true })
-  public allowToggleAll = false;
 
   public updated(changedProperties: PropertyValues) {
     if (changedProperties.has('filters')) {
@@ -45,16 +30,21 @@ export class MutationTestReportFileStateFilterComponent<TStatus> extends LitElem
   }
 
   private dispatchFiltersChangedEvent() {
-    this.dispatchEvent(createCustomEvent('filters-changed', this.filters as StateFilter<any>[]));
+    this.dispatchEvent(
+      createCustomEvent(
+        'filters-changed',
+        this.filters!.filter(({ enabled }) => enabled).map(({ status }) => status)
+      )
+    );
   }
 
-  private readonly toggleOpenAll = () => {
-    this.collapsed = !this.collapsed;
-    if (this.collapsed) {
-      this.dispatchEvent(createCustomEvent('collapse-all', undefined));
-    } else {
-      this.dispatchEvent(createCustomEvent('expand-all', undefined));
-    }
+  private readonly next = (ev: Event) => {
+    ev.stopPropagation();
+    this.dispatchEvent(createCustomEvent('next', undefined, { bubbles: true, composed: true }));
+  };
+  private readonly previous = (ev: Event) => {
+    ev.stopPropagation();
+    this.dispatchEvent(createCustomEvent('previous', undefined, { bubbles: true, composed: true }));
   };
 
   public static styles = [bootstrap, unsafeCSS(style)];
@@ -62,6 +52,11 @@ export class MutationTestReportFileStateFilterComponent<TStatus> extends LitElem
   public render() {
     return html`
       <div class="legend col-md-12 d-flex align-items-center">
+        <div class="d-flex me-2">
+          <button title="Previous" @click=${this.previous} class="me-1 btn btn-sm btn-secondary mte-previous" type="button">&lt;</button>
+          <button title="Next" @click=${this.next} class="btn btn-sm btn-secondary mte-next" type="button">&gt;</button>
+        </div>
+
         ${this.filters &&
         repeat(
           this.filters,
@@ -81,9 +76,6 @@ export class MutationTestReportFileStateFilterComponent<TStatus> extends LitElem
             </label>
           </div>`
         )}
-        ${this.allowToggleAll
-          ? html`<button @click="${this.toggleOpenAll}" class="btn btn-sm btn-secondary" type="button">${this.collapseButtonText}</button>`
-          : ''}
       </div>
     `;
   }

@@ -9,7 +9,7 @@ import style from './app.scss';
 import theme from './theme.scss';
 import { createCustomEvent } from '../../lib/custom-events';
 import { FileUnderTestModel, Metrics, MutationTestMetricsResult, TestFileModel, TestMetrics } from 'mutation-testing-metrics/src/model';
-import { toAbsoluteUrl } from '../../lib/htmlHelpers';
+import { toAbsoluteUrl } from '../../lib/html-helpers';
 import { isLocalStorageAvailable } from '../../lib/browser';
 
 interface BaseContext {

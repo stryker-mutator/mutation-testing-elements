@@ -1,9 +1,9 @@
 /// <reference types="../typings/globals-chai" />
-import { expect } from 'chai';
+import { expect, AssertionError } from 'chai';
 import { Context } from 'mocha';
 import { from } from 'rxjs';
 import { mergeMap, toArray } from 'rxjs/operators';
-import { WebElement, WebElementPromise } from 'selenium-webdriver';
+import { WebElement, WebElementPromise, error } from 'selenium-webdriver';
 import { ReportPage } from '../po/ReportPage';
 import { getCurrent, isHeadless } from './browser';
 import { MAX_WEBDRIVER_CONCURRENCY } from './constants';
@@ -28,12 +28,15 @@ export function wrapInWebElementPromise(p: () => Promise<WebElement>) {
   return new WebElementPromise(getCurrent(), p());
 }
 
-export async function isElementVisible(element: WebElementPromise) {
+export async function isElementVisible(element: WebElementPromise | WebElement) {
   try {
     const isDisplayed = await element.isDisplayed();
     return isDisplayed;
   } catch (err) {
     if (err instanceof Error && err.message.includes('no such element')) {
+      return false;
+    }
+    if (err instanceof error.StaleElementReferenceError) {
       return false;
     }
     throw err;
@@ -44,16 +47,16 @@ export function sleep(n = 1000) {
   return new Promise((res) => setTimeout(res, n));
 }
 
-export function itShouldMatchScreenshot(title: string) {
+export function itShouldMatchScreenshot(title: string, sleepMs = 1000) {
   it(title, async function () {
-    await actScreenshotMatch(this);
+    await actScreenshotMatch(this, sleepMs);
   });
 }
 
-export async function actScreenshotMatch(context: Context) {
+export async function actScreenshotMatch(context: Context, sleepMs = 1000) {
   if (isHeadless()) {
     const page = new ReportPage(getCurrent());
-    await sleep();
+    await sleep(sleepMs);
     await expect(await page.takeScreenshot()).to.matchScreenshot();
   } else {
     console.log('[SKIP] skipping screenshot comparison, because not running in headless mode');
@@ -99,7 +102,7 @@ export function waitUntil(
   options: { interval?: number; timeout?: number } = {}
 ): Promise<void> {
   // Default options
-  const { interval, timeout } = { interval: 200, timeout: 3000, ...options };
+  const { interval, timeout } = { interval: 100, timeout: 2000, ...options };
 
   return new Promise((resolve, reject) => {
     let timeoutId: NodeJS.Timeout;
@@ -121,7 +124,9 @@ export function waitUntil(
         if (error instanceof Error) {
           lastError = error;
         }
-        if (!(error instanceof Chai.AssertionError)) {
+        if (error instanceof AssertionError) {
+          timeoutId = setTimeout(() => void nextInterval(), interval);
+        } else {
           reject(error);
         }
       }

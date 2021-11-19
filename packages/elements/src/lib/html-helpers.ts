@@ -1,6 +1,7 @@
 import { TemplateResult } from 'lit';
 import { TestStatus } from 'mutation-testing-metrics';
 import { MutantStatus, OpenEndLocation } from 'mutation-testing-report-schema/api';
+import { DRAWER_HALF_OPEN_SIZE } from '../components/drawer/drawer.component';
 
 export function notNullish<T>(value: T | undefined | null): value is T {
   return value !== null && value !== undefined;
@@ -102,4 +103,16 @@ export function plural(items: unknown[]): string {
 
 export function describeLocation({ fileName, location }: { fileName: string; location?: OpenEndLocation | undefined }) {
   return fileName ? `${fileName}${location ? `:${location.start.line}:${location.start.column}` : ''}` : '';
+}
+
+export function scrollToCodeFragmentIfNeeded(el: Element | null) {
+  if (el && !isElementInViewport(el)) {
+    el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }
+}
+
+function isElementInViewport(el: Element) {
+  const { top, bottom } = el.getBoundingClientRect();
+
+  return top >= 0 && bottom <= (window.innerHeight || document.documentElement.clientHeight) - DRAWER_HALF_OPEN_SIZE;
 }

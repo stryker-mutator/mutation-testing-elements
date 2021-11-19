@@ -193,9 +193,45 @@
 }
 
 // Mutation testing elements custom theming ================================
+
+@function squiggly-svg-factory($stroke-color) {
+  // Color to string
+  $stroke-color: '#{$stroke-color}';
+
+  // Escape leading '#' (url encode %23)
+  $index: str-index($stroke-color, '#');
+  @if $index eq 1 {
+    $stroke-color: '%23' + str-slice($stroke-color, 2);
+  }
+  @return url("data:image/svg+xml;charset=UTF8,<svg xmlns='http://www.w3.org/2000/svg' height='3' width='6'><g fill='#{$stroke-color}'><path d='m5.5 0-3 3H1.1l3-3z'/><path d='m4 0 2 2V.6L5.4 0zM0 2l1 1h1.4L0 .6z'/></g></svg>");
+}
 :host(:not([theme='dark'])) {
   --mut-octicon-icon-color: #498ba7;
+  --mut-line-number: #6e7781;
+  --mut-diff-add-bg: #e6ffec;
+  --mut-diff-add-bg-line-number: #ccffd8;
+  --mut-diff-add-line-number: #24292f;
+  --mut-diff-del-bg: #ffebe9;
+  --mut-diff-del-bg-line-number: #ffd7d5;
+  --mut-diff-del-line-number: var(--mut-diff-add-line-number);
+  --mut-badge-info-bg: #54c6ec;
+  --mut-badge-info: #212529;
+  --mut-code-lense: #919191;
+  --mut-squiggly-danger: #{squiggly-svg-factory($danger)};
+  --mut-squiggly-caution: #{squiggly-svg-factory($orange)};
 }
 :host([theme='dark']) {
   --mut-octicon-icon-color: #519aba;
+  --mut-line-number: #484f58;
+  --mut-diff-add-bg: rgba(46, 160, 67, 0.15);
+  --mut-diff-add-bg-line-number: rgba(63, 185, 80, 0.3);
+  --mut-diff-add-line-number: #c9d1d9;
+  --mut-diff-del-bg: rgba(248, 81, 73, 0.15);
+  --mut-diff-del-bg-line-number: rgba(248, 81, 73, 0.3);
+  --mut-diff-del-line-number: #c9d1d9;
+  --mut-badge-info-bg: #17a3b8;
+  --mut-badge-info: #fff;
+  --mut-code-lense: #999;
+  --mut-squiggly-danger: #{squiggly-svg-factory($darkly-danger)};
+  --mut-squiggly-caution: #{squiggly-svg-factory($darkly-orange)};
 }

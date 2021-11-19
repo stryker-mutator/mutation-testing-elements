@@ -22,7 +22,7 @@ describe(MutationTestReportMutantViewComponent.name, () => {
     let metricsTable: MutationTestReportTestMetricsTable<FileUnderTestModel, Metrics>;
 
     beforeEach(() => {
-      metricsTable = sut.$('mte-metrics-table') as MutationTestReportTestMetricsTable<FileUnderTestModel, Metrics>;
+      metricsTable = sut.$('mte-metrics-table');
     });
 
     it('should pass the correct columns', () => {
@@ -120,7 +120,7 @@ describe(MutationTestReportMutantViewComponent.name, () => {
 
   describe('the drawer', () => {
     function selectDrawer(): MutationTestReportDrawerMutant {
-      return sut.$('mte-drawer-mutant') as MutationTestReportDrawerMutant;
+      return sut.$('mte-drawer-mutant');
     }
 
     it('should be rendered closed to begin with', () => {

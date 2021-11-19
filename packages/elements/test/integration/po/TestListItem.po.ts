@@ -1,16 +1,12 @@
 import { PageObject } from './PageObject.po';
 
 export class TestListItem extends PageObject {
-  private get button() {
-    return this.$('button');
-  }
-
   public async isSelected() {
-    const cssClasses = await this.button.getAttribute('class');
+    const cssClasses = (await this.host.getAttribute('class')).split(' ');
     return cssClasses.includes('active');
   }
 
   public toggle() {
-    return this.button.click();
+    return this.host.click();
   }
 }

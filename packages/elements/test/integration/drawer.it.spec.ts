@@ -1,11 +1,11 @@
 import { expect } from 'chai';
 import { getCurrent } from './lib/browser';
 import { waitUntil } from './lib/helpers';
-import { MutantComponent } from './po/MutantComponent.po';
+import { MutantDot } from './po/MutantDot.po';
 import { Drawer } from './po/Drawer.po';
 import { ReportPage } from './po/ReportPage';
 import { actScreenshotMatch } from './lib/helpers';
-import { TestComponent } from './po/TestComponent.po';
+import { TestDot } from './po/TestDot.po';
 
 describe('Drawer', () => {
   let page: ReportPage;
@@ -19,10 +19,10 @@ describe('Drawer', () => {
 
     describe('when a mutant is opened', () => {
       let drawer: Drawer;
-      let mutant: MutantComponent;
+      let mutant: MutantDot;
       beforeEach(async () => {
-        mutant = page.mutantView.mutant(20);
-        await mutant.toggleMutant();
+        mutant = page.mutantView.mutantDot(20);
+        await mutant.toggle();
         drawer = page.mutantView.mutantDrawer();
         await page.mutantView.scrollToCode();
       });
@@ -45,7 +45,7 @@ describe('Drawer', () => {
 
       it('should show the statusReason', async function () {
         // Mutant 17 has a statusReason
-        await page.mutantView.mutant(17).toggleMutant();
+        await page.mutantView.mutantDot(17).toggle();
         await drawer.whenHalfOpen();
         const summary = await drawer.summaryText();
         expect(summary).contains('Survived despite covered by 3 tests');
@@ -53,12 +53,12 @@ describe('Drawer', () => {
       });
 
       it('should close the drawer when deselecting the mutant', async () => {
-        await mutant.toggleMutant();
+        await mutant.toggle();
         await drawer.whenClosed();
       });
 
       it('should show the details of the next mutant when another mutant is selected', async () => {
-        await page.mutantView.mutant(24).toggleMutant();
+        await page.mutantView.mutantDot(24).toggle();
         await waitUntil(async () => {
           expect(await drawer.isHalfOpen()).true;
           return expect(await drawer.headerText()).eq('24 👽 ConditionalExpression Survived (15:77)');
@@ -102,13 +102,13 @@ describe('Drawer', () => {
 
   describe('test view', () => {
     let drawer: Drawer;
-    let test: TestComponent;
+    let test: TestDot;
 
     beforeEach(async () => {
       page = new ReportPage(getCurrent());
       await page.navigateTo('lighthouse-example/#test/metrics/interactive-test.js');
       await page.whenFileReportLoaded();
-      test = page.testView.test(597);
+      test = page.testView.testDot(597);
       await test.toggle();
       drawer = page.testView.testDrawer;
       await page.testView.scrollToCode();

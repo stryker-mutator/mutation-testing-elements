@@ -17,6 +17,6 @@ describe('File report "infection-php-example/TextFileLogger.php"', () => {
 
   it('should show mutants', async () => {
     await page.mutantView.whenCodeIsHighlighted();
-    expect(await page.mutantView.mutant('ebf143eb565188ddd7959bfbe70f631f').isButtonVisible()).true;
+    expect(await page.mutantView.mutantDot('ebf143eb565188ddd7959bfbe70f631f').isVisible()).true;
   });
 });

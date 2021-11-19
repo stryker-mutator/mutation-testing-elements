@@ -1,6 +1,5 @@
 import { MutantResult, MutantStatus, FileResult, Location, TestDefinition, MutationTestResult, TestFile } from 'mutation-testing-report-schema/api';
 import { Metrics, MetricsResult, TestFileModel, TestMetrics } from 'mutation-testing-metrics';
-import { StateFilter } from '../../src/components/state-filter/state-filter.component';
 
 export function createMutantResult(overrides?: Partial<MutantResult>): MutantResult {
   const defaults: MutantResult = {
@@ -22,17 +21,6 @@ export function createTestDefinition(overrides?: Partial<TestDefinition>): TestD
   };
 }
 
-export function createStateFilter<T>(status: T, overrides?: Partial<Omit<StateFilter<T>, 'status'>>): StateFilter<T> {
-  return {
-    context: 'info',
-    count: 1,
-    enabled: true,
-    label: 'Foo',
-    status,
-    ...overrides,
-  };
-}
-
 export function createLocation(overrides?: Partial<Location>): Location {
   return {
     end: {
@@ -49,7 +37,7 @@ export function createLocation(overrides?: Partial<Location>): Location {
 
 export function createFileResult(overrides?: Partial<FileResult>): FileResult {
   const defaults: FileResult = {
-    language: 'js',
+    language: 'javascript',
     mutants: [createMutantResult()],
     source: 'const bar = foo();',
   };

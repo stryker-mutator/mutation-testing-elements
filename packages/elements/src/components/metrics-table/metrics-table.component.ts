@@ -2,7 +2,7 @@ import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { MetricsResult } from 'mutation-testing-metrics';
 import { Thresholds } from 'mutation-testing-report-schema/api';
-import { toAbsoluteUrl } from '../../lib/htmlHelpers';
+import { toAbsoluteUrl } from '../../lib/html-helpers';
 import { bootstrap } from '../../style';
 import style from './metrics-table.scss';
 

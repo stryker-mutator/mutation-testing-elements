@@ -1,7 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { bootstrap } from '../style';
-import { toAbsoluteUrl } from '../lib/htmlHelpers';
+import { toAbsoluteUrl } from '../lib/html-helpers';
 import { View } from '../lib/router';
 
 @customElement('mte-breadcrumb')

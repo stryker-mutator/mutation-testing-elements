@@ -1,22 +1,27 @@
 import { WebElementPromise } from 'selenium-webdriver';
-import { mapShadowRootConcurrent, selectShadowRoot } from '../lib/helpers';
+import { selectShadowRoot } from '../lib/helpers';
 import { StateFilter } from './StateFilter.po';
-import { MutantComponent } from './MutantComponent.po';
+import { MutantDot } from './MutantDot.po';
 import { Drawer } from './Drawer.po';
 import { View } from './View.po';
+import { MutantMarker } from './MutantMarker.po';
 
 export class MutantView extends View {
   protected codeElement(): WebElementPromise {
     return this.$('mte-file >>> pre');
   }
 
-  public mutants(): Promise<MutantComponent[]> {
-    return mapShadowRootConcurrent(this.$$('mte-file >>> mte-mutant'), (host) => new MutantComponent(host, this.browser));
+  public async mutantDots(): Promise<MutantDot[]> {
+    const dots = await this.$$('mte-file >>> svg.mutant-dot');
+    return dots.map((host) => new MutantDot(host, this.browser));
   }
 
-  public mutant(mutantId: number | string) {
-    const shadowRoot = selectShadowRoot(this.$(`mte-file >>> mte-mutant[mutant-id="${mutantId}"]`));
-    return new MutantComponent(shadowRoot, this.browser);
+  public mutantDot(mutantId: number | string) {
+    return new MutantDot(this.$(`mte-file >>> svg.mutant-dot[mutant-id="${mutantId}"]`), this.browser);
+  }
+
+  public mutantMarker(mutantId: number | string) {
+    return new MutantMarker(this.$(`mte-file >>> span.mutant[mutant-id="${mutantId}"]`), this.browser);
   }
 
   public stateFilter() {
@@ -28,4 +33,25 @@ export class MutantView extends View {
     const context = selectShadowRoot(this.$('mte-drawer-mutant'));
     return new Drawer(context, this.browser);
   }
+  public async currentDiff(): Promise<null | Diff> {
+    const mutatedLineElements = await this.$$('mte-file >>> .diff-new .code');
+    const originalLineElements = await this.$$('mte-file >>> .diff-old .code');
+    if (mutatedLineElements.length || originalLineElements.length) {
+      return {
+        mutated: (await Promise.all(mutatedLineElements.map((mutatedEl) => mutatedEl.getText()))).join('\n').trim(),
+        // Don't use "getText()" for original, as that also returns the text content of the "<title>" svg elements
+        original: (
+          await Promise.all(originalLineElements.map((originalEl) => this.browser.executeScript<string>('return arguments[0].innerText', originalEl)))
+        )
+          .join('\n')
+          .trim(),
+      };
+    }
+    return null;
+  }
+}
+
+interface Diff {
+  mutated: string;
+  original: string;
 }

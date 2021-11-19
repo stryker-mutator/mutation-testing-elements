@@ -18,7 +18,7 @@ describe(MutationTestReportThemeSwitchComponent.name, () => {
   it('should be checked when theme is dark', async () => {
     sut.element.setAttribute('theme', 'dark');
     await sut.whenStable();
-    const input = sut.$('input');
+    const input: HTMLInputElement = sut.$('input');
 
     expect(input).to.have.property('checked', true);
   });
@@ -32,7 +32,7 @@ describe(MutationTestReportThemeSwitchComponent.name, () => {
   });
 
   it("should switch to checked on click when it's dark", async () => {
-    const input = sut.$('input');
+    const input: HTMLInputElement = sut.$('input');
     sut.element.setAttribute('theme', 'dark');
     await sut.whenStable();
 
@@ -41,7 +41,7 @@ describe(MutationTestReportThemeSwitchComponent.name, () => {
   });
 
   it("should switch to checked on click when it's light", async () => {
-    const input = sut.$('input');
+    const input: HTMLInputElement = sut.$('input');
     sut.element.setAttribute('theme', 'light');
     await sut.whenStable();
 
@@ -51,7 +51,7 @@ describe(MutationTestReportThemeSwitchComponent.name, () => {
 
   it('should trigger a theme-switch event when clicked', async () => {
     const act = () => {
-      const input = sut.$('input');
+      const input: HTMLInputElement = sut.$('input');
       input.click();
     };
 
@@ -61,7 +61,7 @@ describe(MutationTestReportThemeSwitchComponent.name, () => {
 
   it('should switch theme from dark to light', async () => {
     const act = () => {
-      const input = sut.$('input');
+      const input: HTMLInputElement = sut.$('input');
       input.click();
     };
 
@@ -75,7 +75,7 @@ describe(MutationTestReportThemeSwitchComponent.name, () => {
 
   it('should switch theme from light to dark', async () => {
     const act = () => {
-      const input = sut.$('input');
+      const input: HTMLInputElement = sut.$('input');
       input.click();
     };
 

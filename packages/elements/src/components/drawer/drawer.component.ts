@@ -1,10 +1,11 @@
 import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { renderIf } from '../../lib/htmlHelpers';
+import { renderIf } from '../../lib/html-helpers';
 import { bootstrap } from '../../style';
 import style from './drawer.component.scss';
 
 export type DrawerMode = 'open' | 'half' | 'closed';
+export const DRAWER_HALF_OPEN_SIZE = 120;
 
 @customElement('mte-drawer')
 export class MutationTestReportDrawer extends LitElement {

@@ -22,7 +22,7 @@
     }
   ],
   "extensions": {
-    "recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
+    "recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode", "bierner.lit-html"]
   },
   "settings": {
     "search.exclude": {
@@ -42,7 +42,15 @@
     "gulp.autoDetect": "off",
     "jake.autoDetect": "off",
     "task.autoDetect": "off",
-    "cSpell.words": ["Theming", "autoloader", "bootswatch", "clike", "prismjs", "templating"],
+    "cSpell.words": [
+      "autoloader",
+      "bootswatch",
+      "clazz",
+      "clike",
+      "prismjs",
+      "templating",
+      "Theming"
+    ],
     "[json]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode"
     },

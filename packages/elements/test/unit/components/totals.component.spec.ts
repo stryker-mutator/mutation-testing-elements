@@ -38,7 +38,7 @@ describe(MutationTestReportTestMetricsTable.name, () => {
       file: new FileUnderTestModel(createFileResult(), ''),
     });
     await sut.whenStable();
-    const table = sut.$('table') as HTMLTableElement;
+    const table = sut.$('table');
     expect(table).ok;
     expect(table.querySelectorAll('thead th')).lengthOf(12);
     expect(table.querySelectorAll('tbody th, tbody td')).lengthOf(14);
@@ -54,7 +54,7 @@ describe(MutationTestReportTestMetricsTable.name, () => {
       childResults: [file, createMetricsResult({ name: 'baz' })],
     });
     await sut.whenStable();
-    const table = sut.$('table') as HTMLTableElement;
+    const table = sut.$('table');
     expect(table).ok;
     expect(table.querySelectorAll('tbody tr')).lengthOf(3);
   });
@@ -79,7 +79,7 @@ describe(MutationTestReportTestMetricsTable.name, () => {
     await sut.whenStable();
 
     // Assert
-    const table = sut.$('table') as HTMLTableElement;
+    const table = sut.$('table');
     expect(table).ok;
     const rows = table.querySelectorAll('tbody tr');
     expect(rows).lengthOf(2);
@@ -94,7 +94,7 @@ describe(MutationTestReportTestMetricsTable.name, () => {
     sut.element.model.metrics.mutationScore = NaN;
 
     await sut.whenStable();
-    const table = sut.$('table') as HTMLTableElement;
+    const table = sut.$('table');
     expect(table).ok;
     expect(table.querySelectorAll('td span.fw-bold')[0].textContent).contains('N/A');
   });
@@ -108,7 +108,7 @@ describe(MutationTestReportTestMetricsTable.name, () => {
     sut.element.model.metrics.mutationScore = mutationScore;
 
     await sut.whenStable();
-    const table = sut.$('table') as HTMLTableElement;
+    const table = sut.$('table');
     expect(table).ok;
     expect(table.querySelectorAll('.progress')[0].textContent).contains(mutationScore);
   });
@@ -121,7 +121,7 @@ describe(MutationTestReportTestMetricsTable.name, () => {
     sut.element.model.metrics.mutationScore = NaN;
 
     await sut.whenStable();
-    const table = sut.$('table') as HTMLTableElement;
+    const table = sut.$('table');
     expect(table).ok;
     expect(table.querySelector('.progress')).null;
   });

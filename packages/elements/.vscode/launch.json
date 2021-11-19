@@ -12,7 +12,8 @@
       "webRoot": "${workspaceFolder}",
       "sourceMaps": true,
       "sourceMapPathOverrides": {
-        "webpack://elements/*": "${webRoot}/*"
+        "webpack://elements/*": "${webRoot}/*",
+        "webpack://mutation-testing-elements/*": "${webRoot}/*"
       }
     },
     {
@@ -24,7 +25,8 @@
       "webRoot": "${workspaceFolder}",
       "sourceMaps": true,
       "sourceMapPathOverrides": {
-        "webpack://elements/*": "${webRoot}/*"
+        "webpack://elements/*": "${webRoot}/*",
+        "webpack://mutation-testing-elements/*": "${webRoot}/*"
       },
       "timeout": 30000
     }

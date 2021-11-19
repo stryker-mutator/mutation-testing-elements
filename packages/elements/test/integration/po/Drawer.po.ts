@@ -1,7 +1,7 @@
 import { DEFAULT_TIMEOUT } from '../lib/constants';
 import { PageObject } from './PageObject.po';
 
-const HALF_OPEN_SIZE = 120;
+export const HALF_OPEN_SIZE = 120;
 const CLOSED_SIZE = 0;
 
 export class Drawer extends PageObject {

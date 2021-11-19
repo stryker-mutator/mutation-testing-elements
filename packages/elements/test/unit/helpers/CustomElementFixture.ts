@@ -57,16 +57,16 @@ export class CustomElementFixture<TCustomElement extends LitElement> {
     });
   }
 
-  public $(selector: string, inShadow = true): HTMLElement {
+  public $<TElement extends Element = HTMLElement>(selector: string, inShadow = true): TElement {
     if (inShadow) {
-      return (this.element.shadowRoot as ShadowRoot).querySelector(selector) as HTMLElement;
+      return (this.element.shadowRoot as ShadowRoot).querySelector(selector) as TElement;
     } else {
-      return this.element.querySelector(selector) as HTMLElement;
+      return this.element.querySelector(selector) as TElement;
     }
   }
 
-  public $$(selector: string): Element[] {
-    return [...(this.element.shadowRoot as ShadowRoot).querySelectorAll(selector)];
+  public $$<TElement extends Element = HTMLElement>(selector: string): TElement[] {
+    return [...(this.element.shadowRoot as ShadowRoot).querySelectorAll<TElement>(selector)];
   }
 
   public get style(): CSSStyleDeclaration {
