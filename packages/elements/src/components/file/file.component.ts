@@ -75,7 +75,7 @@ export class FileComponent extends LitElement {
       mutants.push(mutant);
     }
     const renderFinalMutants = (lastLine: number) => {
-      return this.renderMutants([...mutantLineMap.entries()].filter(([line]) => line > lastLine).flatMap(([, mutants]) => mutants));
+      return this.renderMutantDots([...mutantLineMap.entries()].filter(([line]) => line > lastLine).flatMap(([, mutants]) => mutants));
     };
 
     return html`
@@ -97,7 +97,7 @@ export class FileComponent extends LitElement {
             return html`<tr class="line"
               ><td class="line-number"></td><td class="line-marker"></td
               ><td class="code"
-                >${unsafeHTML(line)}${this.renderMutants(mutantLineMap.get(lineNr))}${this.lines.length === lineNr
+                >${unsafeHTML(line)}${this.renderMutantDots(mutantLineMap.get(lineNr))}${this.lines.length === lineNr
                   ? renderFinalMutants(lineNr)
                   : ''}</td
               ></tr
@@ -123,7 +123,7 @@ export class FileComponent extends LitElement {
     }
   };
 
-  private renderMutants(mutants: MutantModel[] | undefined) {
+  private renderMutantDots(mutants: MutantModel[] | undefined) {
     return html`${mutants?.map(
       (mutant) =>
         svg`<svg mutant-id="${mutant.id}" class="mutant-dot ${

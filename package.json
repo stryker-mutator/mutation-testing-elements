@@ -14,7 +14,7 @@
     "prebuild": "npm run generate",
     "generate": "lerna run generate",
     "build": "tsc -b && lerna run build",
-    "test": "lerna run test --stream --concurrency 1",
+    "test": "lerna run test --stream",
     "start": "webpack-dev-server --open",
     "start:tsc": "tsc --build --watch",
     "lerna:version:patch": "lerna version patch",

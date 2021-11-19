@@ -121,7 +121,7 @@ export class TestFileComponent extends LitElement {
       }
 
       const renderFinalTests = (lastLine: number) => {
-        return this.renderTests([...testsByLine.entries()].filter(([line]) => line > lastLine).flatMap(([, tests]) => tests));
+        return this.renderTestDots([...testsByLine.entries()].filter(([line]) => line > lastLine).flatMap(([, tests]) => tests));
       };
 
       return html`<pre id="report-code-block" class="line-numbers"><code class="language-${determineLanguage(this.model.name)}"><table>
@@ -130,7 +130,7 @@ export class TestFileComponent extends LitElement {
           html`<tr class="line"
             ><td class="line-number"></td><td class="line-marker"></td
             ><td class="code"
-              >${unsafeHTML(line)}${this.renderTests(testsByLine.get(lineNr + 1))}${this.lines.length === lineNr + 1
+              >${unsafeHTML(line)}${this.renderTestDots(testsByLine.get(lineNr + 1))}${this.lines.length === lineNr + 1
                 ? renderFinalTests(lineNr + 1)
                 : ''}</td
             ></tr
@@ -140,7 +140,7 @@ export class TestFileComponent extends LitElement {
     return;
   }
 
-  private renderTests(tests: TestModel[] | undefined) {
+  private renderTestDots(tests: TestModel[] | undefined) {
     return html`${tests?.map(
       (test) =>
         svg`<svg test-id="${test.id}" class="test-dot ${this.selectedTest === test ? 'selected' : test.status}" @click=${(ev: MouseEvent) => {
