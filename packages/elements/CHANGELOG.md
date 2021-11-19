@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.6](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.5...v1.7.6) (2021-11-19)
+
+
+### Features
+
+* **diff:** add new "diff" feature to mutant view  ([#1515](https://github.com/stryker-mutator/mutation-testing-elements/issues/1515)) ([c5f0657](https://github.com/stryker-mutator/mutation-testing-elements/commit/c5f0657a26be07fa4607a89291d34ceac1110632))
+
+
+
+
+
 ## [1.7.5](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.4...v1.7.5) (2021-08-01)
 
 
