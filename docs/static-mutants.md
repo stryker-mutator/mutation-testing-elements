@@ -40,7 +40,7 @@ All Stryker frameworks use mutant schemata, or mutation switching, to activate m
 const hi = global.activeMutant === '1' ? '' : '👋';
 ```
 
-The goal is that Stryker would be able to activate this mutant during test execution by setting `global.activeMutant` to `'1'`. However, since this mutant is only executed once during startup. Activating or de-activating the mutant won't help. The `hi` const here is already declared, and activating mutant '1' doesn't change that. 
+The goal is that Stryker would be able to activate this mutant during test execution by setting `global.activeMutant` to `'1'`. However, since this mutant is only executed once during startup, activating or de-activating the mutant won't help. The `hi` const here is already declared, and activating mutant '1' doesn't change that. 
 
 This mutant is referred to as a _static mutant_. They are executed once and cannot be activated or de-activated later during test runtime.
 
