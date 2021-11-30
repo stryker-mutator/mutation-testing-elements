@@ -5,7 +5,7 @@
 
 Utility function to calculate mutation testing metrics..
 
-See [mutant states and metrics in the Stryker handbook](https://github.com/stryker-mutator/stryker-handbook/blob/master/mutant-states-and-metrics.md#readme) for more details about mutation testing metrics.
+See [mutant states and metrics on the Stryker website](https://stryker-mutator.io/docs/mutation-testing-elements/mutant-states-and-metrics/) for more details about mutation testing metrics.
 
 ## Usage example
 
