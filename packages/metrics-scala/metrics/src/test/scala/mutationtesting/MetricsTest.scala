@@ -7,7 +7,7 @@ class MetricsTest extends munit.FunSuite {
     val mtr: FileResultDictionary = Map(
       "dir/foo.scala" -> FileResult("dirFoo", Nil),
       "dir/bar.scala" -> FileResult("dirBar", Nil),
-      "foo.scala" -> FileResult("foo", Nil)
+      "foo.scala"     -> FileResult("foo", Nil)
     )
     val result = Metrics.calculateMetrics(mtr)
     assertEquals(
@@ -27,7 +27,7 @@ class MetricsTest extends munit.FunSuite {
   test("FileResultDictionary split into more complex tree structure") {
     val iter = Iterator.from(0)
     def rndMutation: MutantResult = {
-      val id = iter.next()
+      val id     = iter.next()
       val isEven = id % 2 == 0
       MutantResult(
         id.toString(),
@@ -40,12 +40,12 @@ class MetricsTest extends munit.FunSuite {
     def rndMutants(count: Int) = Seq.fill(count)(rndMutation)
 
     val mtr: FileResultDictionary = Map(
-      "foo.scala" -> FileResult("foo", rndMutants(0)),
-      "dir/foo/bar.scala" -> FileResult("dirFoo", rndMutants(1)),
+      "foo.scala"             -> FileResult("foo", rndMutants(0)),
+      "dir/foo/bar.scala"     -> FileResult("dirFoo", rndMutants(1)),
       "foo/foo/foo/bar.scala" -> FileResult("dirFoo", rndMutants(2)),
-      "dir/bar/foo.scala" -> FileResult("dirFoo", rndMutants(2)),
-      "dir/baz/bar.scala" -> FileResult("dirBar", rndMutants(1)),
-      "dir/baz.scala" -> FileResult("dirBar", rndMutants(0))
+      "dir/bar/foo.scala"     -> FileResult("dirFoo", rndMutants(2)),
+      "dir/baz/bar.scala"     -> FileResult("dirBar", rndMutants(1)),
+      "dir/baz.scala"         -> FileResult("dirBar", rndMutants(0))
     )
     val result = Metrics.calculateMetrics(mtr)
     assertEquals(
