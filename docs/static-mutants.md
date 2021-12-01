@@ -7,7 +7,7 @@ In mutation testing, not all mutants are created equal. The performance cost for
 
 ## What is a static mutant
 
-A static mutant is a mutant that is executed once on startup instead of when the tests are running. 
+A static mutant is a mutant that is executed once on startup instead of when the tests are running.
 
 Take this small JavaScript example:
 
@@ -31,7 +31,7 @@ When you run StrykerJS on this code, it will create a mutant for the `hi` consta
 
 ```diff
 -const hi = '👋';
-+const hi = ''; 
++const hi = '';
 ```
 
 All Stryker frameworks use mutant schemata, or mutation switching, to activate mutations during test executing. This means that the actual code Stryker produces looks more like this:
@@ -40,7 +40,7 @@ All Stryker frameworks use mutant schemata, or mutation switching, to activate m
 const hi = global.activeMutant === '1' ? '' : '👋';
 ```
 
-The goal is that Stryker would be able to activate this mutant during test execution by setting `global.activeMutant` to `'1'`. However, since this mutant is only executed once during startup, activating or de-activating the mutant won't help. The `hi` const here is already declared, and activating mutant '1' doesn't change that. 
+The goal is that Stryker would be able to activate this mutant during test execution by setting `global.activeMutant` to `'1'`. However, since this mutant is only executed once during startup, activating or de-activating the mutant won't help. The `hi` const here is already declared, and activating mutant '1' doesn't change that.
 
 This mutant is referred to as a _static mutant_. They are executed once and cannot be activated or de-activated later during test runtime.
 
@@ -48,23 +48,56 @@ You can identify static mutants in your report with the 🗿 static emoji.
 
 ![static mutant](img/static-mutant.png)
 
+You can think of similar constructs in C# with [static constructors](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/static-constructors) or in Scala with [singleton objects](https://docs.scala-lang.org/tour/singleton-objects.html#inner-main)
+
 ## How to deal with static mutants
 
 You can deal with static mutants in two ways:
 
 1. You can ignore them<br />
-   The mutants will be shown in your report with the "Ignored" state and won't count towards your mutation score. This feature is called `--ignoreStatic`
+   The mutants will be shown in your report with the "Ignored" state and won't count towards your mutation score.
 2. You can run them<br />
-  The static mutants will get a fresh test environment to run in. This might require a browser page refresh or the creation of a new process or app domain. Test filtering is limited since per test coverage cannot be determined. 
+   The static mutants will get a fresh test environment to run in. This might require a browser page refresh or the creation of a new process or app domain. Test filtering is limited since per test coverage cannot be determined.
+
+## Hybrid mutants
+
+There are also static mutants that also have coverage per test. For lack of a better word, let's call them "hybrid mutants" for now.
+
+Let's change our example so we can make our StringMutator mutant hybrid.
+
+```js
+// greet.js
+export function createGreeter() {
+  const hi = '👋'; // 👽 mutated to empty string
+  return (name) => `${hi} ${name}`;
+}
+export const greet = createGreeter();
+
+// greet.spec.js
+import { createGreeter } from './greet.js';
+
+it('should greet me', () => {
+  const greeter = createGreeter();
+  expect(greeter('me')).toBe('👋 me');
+});
+```
+
+As you can see, we've moved the `hi` constant to a factory method `createGreeter`. This method executes during unit testing in the "it should great me" test. However, the factory method also executes _during the loading of greet.js_.
+
+In JavaScript, this is a common way to deal with dependency injection where you inject the dependencies using a factory method for unit testing. But, again, similar constructs can apply to C# and Scala code.
+
+When dealing with hybrid mutants, we can think of a third way to handle them. Namely to only run the tests that directly cover the mutant instead of pessimistically executing all tests.
 
 ## What Stryker does
 
 Different Stryker versions use different approaches here. In the table below, you can see which choices are available per framework.
 
-| Framework | Detect | Support run | Support ignore | Default |
-|--|--|--|--|--|
-| StrykerJS | ✅ | ✅ | ✅* | Run |
-| Stryker.NET| ❌ | ✅ | ❌ | Run |
-| Stryker.NET| ✅ | ❌ | ✅ | Ignore |
+| Framework   | Support run | Support ignore | Default for static |
+| ----------- | ----------- | -------------- | ------------------ |
+| StrykerJS   | ✅          | ✅\*           | Run all test       |
+| Stryker.NET | ✅          | ❌             | Run all test       |
+| Stryker4s   | ❌          | ✅             | Ignore             |
 
 \* Using `--ignoreStatic`
+
+When you use `--ignoreStatic`, static mutants are ignored. For hybrid mutants, Stryker assumes that the mutant should be killed by the tests that cover the mutant directly and they are therefore handled as any other mutant with test coverage. Thus in as sense Stryker will ignore the static part of hybrid mutants.
