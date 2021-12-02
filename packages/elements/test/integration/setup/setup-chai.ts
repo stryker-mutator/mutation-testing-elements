@@ -6,7 +6,7 @@ import * as chai from 'chai';
 import type { Context } from 'mocha';
 // @ts-expect-error resemblejs types are not up to date: https://www.npmjs.com/package/resemblejs#usage
 import compareImages from 'resemblejs/compareImages';
-import type { ResembleComparisonResult } from 'resemblejs';
+import type { ResembleComparisonResult, ResembleSingleCallbackComparisonOptions } from 'resemblejs';
 import { expect } from 'chai';
 
 let currentSnapshotFile: string;
@@ -42,10 +42,14 @@ async function updateSnapshot(actualBase64Encoded: string) {
 }
 
 async function assertSnapshot(actualBase64Encoded: string) {
+  const options: ResembleSingleCallbackComparisonOptions = {
+    ignore: 'antialiasing',
+  };
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   const diff: ResembleComparisonResult & { getBuffer(): Buffer } = await compareImages(
     `data:image/png;base64,${actualBase64Encoded}`,
-    await fs.readFile(currentSnapshotFile)
+    await fs.readFile(currentSnapshotFile),
+    options
   );
   if (Number(diff.misMatchPercentage) >= 0.2) {
     const { name } = path.parse(currentSnapshotFile);
