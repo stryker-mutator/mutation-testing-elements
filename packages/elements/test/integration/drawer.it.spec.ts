@@ -92,7 +92,8 @@ describe('Drawer', () => {
           await actScreenshotMatch(this);
         });
 
-        it('should look as expected in dark mode', async function () {
+        // Flaky test, disable until we find a good fix
+        it.skip('should look as expected in dark mode', async function () {
           await page.themeSelector.select('dark');
           await actScreenshotMatch(this);
         });
@@ -157,7 +158,8 @@ describe('Drawer', () => {
         await actScreenshotMatch(this);
       });
 
-      it('should look as expected in dark mode', async function () {
+      // Flaky test, disable until we find a good fix
+      it.skip('should look as expected in dark mode', async function () {
         await page.themeSelector.select('dark');
         await actScreenshotMatch(this);
       });
