@@ -106,17 +106,22 @@ function toChildModels<TFileModel, TMetrics>(
 }
 
 function relate(mutants: MutantModel[], tests: TestModel[]) {
+  // Create a testId -> TestModel map for fast lookup
+  const testMap: Map<string, TestModel> = new Map(tests.map((test) => [test.id, test]));
+
   for (const mutant of mutants) {
-    if (mutant.coveredBy || mutant.killedBy) {
-      for (const test of tests) {
-        if (mutant.coveredBy?.includes(test.id)) {
-          mutant.addCoveredBy(test);
-          test.addCovered(mutant);
-        }
-        if (mutant.killedBy?.includes(test.id)) {
-          mutant.addKilledBy(test);
-          test.addKilled(mutant);
-        }
+    const coveringTests = mutant.coveredBy?.map((testId) => testMap.get(testId)) ?? [];
+    for (const test of coveringTests) {
+      if (test) {
+        mutant.addCoveredBy(test);
+        test.addCovered(mutant);
+      }
+    }
+    const killingTests = mutant.killedBy?.map((testId) => testMap.get(testId)) ?? [];
+    for (const test of killingTests) {
+      if (test) {
+        mutant.addKilledBy(test);
+        test.addKilled(mutant);
       }
     }
   }
