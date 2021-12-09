@@ -6,6 +6,13 @@ val CrossScalaVersions = Seq(Scala213, Scala212, Scala3)
 
 scalaVersion := Scala213
 
+// Separate session name to prevent conflicts during publishing
+sonatypeSessionName := ((skipElementsPublish, skipSchemaPublish) match {
+  case (false, true) => s"[sbt-sonatype] npm-elements-${name.value}-${version.value}" // Elements only
+  case (true, false) => s"[sbt-sonatype] npm-schema-${name.value}-${version.value}"   // Schema only
+  case _             => sonatypeSessionName.value                                     // Original
+})
+
 lazy val metrics = projectMatrix
   .in(file("metrics"))
   .settings(
@@ -104,6 +111,7 @@ inThisBuild(
     publish / skip := true,
     version        := packageVersion(file(".")),
     organization   := "io.stryker-mutator",
+    versionScheme  := Some("semver-spec"),
     homepage       := Some(url("https://stryker-mutator.io/")),
     licenses += "Apache-2.0" -> url(
       "https://www.apache.org/licenses/LICENSE-2.0"
