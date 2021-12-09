@@ -195,7 +195,7 @@ describe(calculateMutationTestMetrics.name, () => {
     expect(mutant1?.killedByTests).deep.eq([test2]);
     expect(mutant1?.coveredByTests).deep.eq([test1, test2, test3]);
     expect(mutant2?.killedByTests).undefined;
-    expect(mutant2?.coveredByTests).deep.eq([test1, test4]);
+    expect(mutant2?.coveredByTests).deep.eq([test4, test1]);
     expect(test1.coveredMutants).deep.eq([mutant1, mutant2]);
     expect(test1.killedMutants).undefined;
     expect(test2.coveredMutants).deep.eq([mutant1]);
