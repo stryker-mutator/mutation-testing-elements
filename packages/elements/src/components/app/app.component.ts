@@ -73,21 +73,6 @@ export class MutationTestReportAppComponent extends LitElement {
   }
 
   public firstUpdated(): void {
-    // Set the theme when no theme is selected (light vs dark)
-    if (!this.theme) {
-      // 1. check local storage
-      const theme = isLocalStorageAvailable() && localStorage.getItem('mutation-testing-elements-theme');
-      if (theme) {
-        this.theme = theme;
-        // 2. check for user's OS preference
-      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)')?.matches) {
-        this.theme = 'dark';
-        // 3. default is light
-      } else {
-        this.theme = 'light';
-      }
-    }
-
     // Set the default view to "mutant" when no route is selected
     if (this.path.length === 0 || (this.path[0] !== View.mutant && this.path[0] !== View.test)) {
       window.location.replace(toAbsoluteUrl(`${View.mutant}`));
@@ -106,7 +91,12 @@ export class MutationTestReportAppComponent extends LitElement {
     }
   }
 
-  public async updated(changedProperties: PropertyValues) {
+  public async willUpdate(changedProperties: PropertyValues) {
+    // Set the theme when no theme is selected (light vs dark)
+    if (!this.theme) {
+      this.theme = this.getTheme();
+    }
+
     if (this.report) {
       if (changedProperties.has('report')) {
         this.updateModel(this.report);
@@ -119,8 +109,25 @@ export class MutationTestReportAppComponent extends LitElement {
     if (changedProperties.has('src')) {
       await this.loadData();
     }
+  }
+
+  public updated(changedProperties: PropertyValues) {
     if (changedProperties.has('theme') && this.theme) {
       this.dispatchEvent(createCustomEvent('theme-changed', { theme: this.theme, themeBackgroundColor: this.themeBackgroundColor }));
+    }
+  }
+
+  private getTheme(): string {
+    // 1. check local storage
+    const theme = isLocalStorageAvailable() && localStorage.getItem('mutation-testing-elements-theme');
+    if (theme) {
+      return theme;
+      // 2. check for user's OS preference
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)')?.matches) {
+      return 'dark';
+      // 3. default is light
+    } else {
+      return 'light';
     }
   }
 
