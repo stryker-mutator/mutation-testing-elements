@@ -107,10 +107,14 @@ export class MutationTestReportAppComponent extends LitElement {
   }
 
   public async updated(changedProperties: PropertyValues) {
-    if ((changedProperties.has('path') || changedProperties.has('report')) && this.report) {
-      this.updateModel(this.report);
-      this.updateContext();
-      this.updateTitle();
+    if (this.report) {
+      if (changedProperties.has('report')) {
+        this.updateModel(this.report);
+      }
+      if (changedProperties.has('path') || changedProperties.has('report')) {
+        this.updateContext();
+        this.updateTitle();
+      }
     }
     if (changedProperties.has('src')) {
       await this.loadData();
