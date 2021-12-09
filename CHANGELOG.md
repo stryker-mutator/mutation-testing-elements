@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.7](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.6...v1.7.7) (2021-12-09)
+
+
+### Performance Improvements
+
+* **metrics:** use Map for fast testId -> TestModel lookup ([dfca0bc](https://github.com/stryker-mutator/mutation-testing-elements/commit/dfca0bcc5033daee9227a9bce1bab2a4da556313))
+* **mutation-test-report-app:** only recalculate metrics if report changed ([42b7bc0](https://github.com/stryker-mutator/mutation-testing-elements/commit/42b7bc0b6fad97180aa3775fbc57ff13f222cb32))
+* **mutation-test-report-app:** only render once by setting props in earlier hooks ([210da55](https://github.com/stryker-mutator/mutation-testing-elements/commit/210da557d0aea4a3ac7748386413742435111b54))
+
+
+
+
+
 ## [1.7.6](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.5...v1.7.6) (2021-11-19)
 
 
