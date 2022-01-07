@@ -113,6 +113,15 @@ describe(MutationTestReportDrawerMutant.name, () => {
         expect(summary).contains('🕵️ Hit limit reached (501 > 500)');
       });
 
+      it('should not render the status reason when it is empty', async () => {
+        mutant.status = MutantStatus.Timeout;
+        mutant.statusReason = '   ';
+        sut.element.mutant = mutant;
+        await sut.whenStable();
+        const summary = summaryText();
+        expect(summary).not.contains('🕵️');
+      });
+
       function summaryText() {
         return sut.$<HTMLElement>('[slot="summary"]').innerText;
       }
