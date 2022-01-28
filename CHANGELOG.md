@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.9](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.8...v1.7.9) (2022-01-28)
+
+
+### Bug Fixes
+
+* **aggregate:** also make ids unique ([#1673](https://github.com/stryker-mutator/mutation-testing-elements/issues/1673)) ([3fcbbc6](https://github.com/stryker-mutator/mutation-testing-elements/commit/3fcbbc66df6a27282dc8234435bd2f6004302318)), closes [#1672](https://github.com/stryker-mutator/mutation-testing-elements/issues/1672)
+* **mutation-testing-elements:** Don't render statusreason if it's an empty string ([#1620](https://github.com/stryker-mutator/mutation-testing-elements/issues/1620)) ([c5e97e2](https://github.com/stryker-mutator/mutation-testing-elements/commit/c5e97e246e88bb249c10c05158480cf3acaccb2b))
+
+
+
+
+
 ## [1.7.8](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.7...v1.7.8) (2021-12-09)
 
 **Note:** Version bump only for package root
