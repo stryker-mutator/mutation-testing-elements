@@ -49,3 +49,58 @@ Input: `resultsByModule` The MutationTestResult objects by module name.
 ### Types
 
 Types are included and documented with TypeScript.
+
+## Use case: merging multiple JSON reports
+
+You can use this script to merge multiple JSON reports together.
+
+```js
+const { aggregateResultsByModule } = require('mutation-testing-metrics');
+const fs = require('fs');
+
+const packagesRoot = './packages';
+const reportsPerModule = fs
+  .readdirSync(packagesRoot)
+  .map((pkg) => [pkg, `${packagesRoot}/${pkg}/reports/mutation/mutation.json`])
+  .filter(([, report]) => fs.existsSync(report))
+  .map(([pkg, report]) => [pkg, require(report)])
+  .reduce((acc, [pkg, report]) => {
+    acc[pkg] = report;
+    return acc;
+  }, {});
+
+const monoReport = aggregateResultsByModule(reportsPerModule);
+fs.writeFileSync('./mono-report.html', reportTemplate(monoReport), 'utf-8');
+
+function reportTemplate(report) {
+  const scriptContent = fs.readFileSync(require.resolve('mutation-testing-elements/dist/mutation-test-elements.js'), 'utf-8');
+
+  return `<!DOCTYPE html>
+  <html>
+  <head>
+    <meta charset="utf-8">
+    <script>
+      ${scriptContent}
+    </script>
+  </head>
+  <body>
+    <mutation-test-report-app>
+      Your browser doesn't support <a href="https://caniuse.com/#search=custom%20elements">custom elements</a>.
+      Please use a latest version of an evergreen browser (Firefox, Chrome, Safari, Opera, Edge, etc).
+    </mutation-test-report-app>
+    <script>
+      const app = document.querySelector('mutation-test-report-app');
+      app.report = ${escapeHtmlTags(JSON.stringify(report))};
+      function updateTheme() {
+        document.body.style.backgroundColor = app.theme === 'dark' ? '#222' : '#fff';
+      }
+      app.addEventListener('theme-changed', updateTheme);
+      updateTheme();
+    </script>
+  </body>
+  </html>`;
+}
+function escapeHtmlTags(json) {
+  return json.replace(/</g, '<" + "');
+}
+```
