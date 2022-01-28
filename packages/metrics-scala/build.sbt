@@ -1,6 +1,6 @@
 val Scala212 = "2.12.15"
 val Scala213 = "2.13.8"
-val Scala3   = "3.1.0"
+val Scala3   = "3.1.1"
 
 val CrossScalaVersions = Seq(Scala213, Scala212, Scala3)
 
@@ -21,10 +21,7 @@ lazy val metrics = projectMatrix
   )
   .jvmPlatform(scalaVersions = CrossScalaVersions)
   .jsPlatform(
-    scalaVersions = CrossScalaVersions,
-    settings = Seq(Test / scalaJSLinkerConfig ~= {
-      _.withModuleKind(ModuleKind.CommonJSModule)
-    })
+    scalaVersions = CrossScalaVersions
   )
 
 lazy val circe = projectMatrix
@@ -49,10 +46,7 @@ lazy val circe = projectMatrix
     )
   )
   .jsPlatform(
-    scalaVersions = CrossScalaVersions,
-    settings = Seq(Test / scalaJSLinkerConfig ~= {
-      _.withModuleKind(ModuleKind.CommonJSModule)
-    })
+    scalaVersions = CrossScalaVersions
   )
 
 lazy val docs = project
@@ -87,7 +81,6 @@ lazy val schema = project
 
 lazy val sharedSettings = Seq(
   libraryDependencies += "org.scalameta" %%% "munit" % "0.7.29" % Test,
-  testFrameworks                          := List(new TestFramework("munit.Framework")),
   publish / skip                          := skipNormalProjectPublish,
   publishTo                               := sonatypePublishToBundle.value
 )
