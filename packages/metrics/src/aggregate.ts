@@ -55,6 +55,6 @@ function toUniqueIds(moduleName: string, localIds: string[] | undefined): string
   return;
 }
 
-function toUniqueId(moduleName: string, localeId: string) {
-  return `${moduleName}_${localeId}`;
+function toUniqueId(moduleName: string, localId: string) {
+  return `${moduleName}_${localId}`;
 }
