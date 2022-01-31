@@ -73,12 +73,16 @@
     --bs-#{$color}-bg: #{$value};
     --bs-#{$color}-bg-light: #{rgba($value, 0.25)};
   }
+  --bs-danger-bg-light: #5b2e30;
+  --bs-success-bg-light: #224722;
   --bs-nav-tabs-link-hover-border-color: #{$darkly-nav-tabs-link-hover-border-color};
   --bs-nav-tabs-link-active-color: #{$darkly-nav-tabs-link-active-color};
   --bs-nav-tabs-link-active-bg: #{$darkly-toast-background-color};
   --bs-nav-tabs-link-active-border-color: #{$darkly-nav-tabs-link-active-border-color};
   --bs-nav-tabs-border-color: #{$darkly-nav-tabs-border-color};
 }
+
+
 
 // Prismjs theming (code highlighting) =====================================
 :host(:not([theme='dark'])) {
@@ -224,9 +228,11 @@
   --mut-octicon-icon-color: #519aba;
   --mut-line-number: #484f58;
   --mut-diff-add-bg: rgba(46, 160, 67, 0.15);
+  --mut-diff-add-border: rgba(46, 160, 67, .8);
   --mut-diff-add-bg-line-number: rgba(63, 185, 80, 0.3);
   --mut-diff-add-line-number: #c9d1d9;
-  --mut-diff-del-bg: rgba(248, 81, 73, 0.15);
+  --mut-diff-del-bg: rgba(248, 81, 73, 0.05);
+  --mut-diff-del-border: rgba(248, 81, 73, 0.15);
   --mut-diff-del-bg-line-number: rgba(248, 81, 73, 0.3);
   --mut-diff-del-line-number: #c9d1d9;
   --mut-badge-info-bg: #17a3b8;

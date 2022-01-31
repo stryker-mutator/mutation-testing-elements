@@ -128,15 +128,17 @@ export class FileComponent extends LitElement {
       (mutant) =>
         svg`<svg mutant-id="${mutant.id}" class="mutant-dot ${
           this.selectedMutant?.id === mutant.id ? 'selected' : mutant.status
-        }" height="10" width="10">
+        }" height="16" width="16">
           <title>${title(mutant)}</title>
-          <circle cx="5" cy="5" r="5" />
+          <!-- <circle cx="5" cy="5" r="6" /> -->
+          <rect x="0" y="0" width="16" height="16" rx="5" ry="5"></rect>
           </svg>`
     )}`;
   }
 
   private toggleMutant(mutant: MutantModel) {
     this.removeCurrentDiff();
+    this.codeRef.value!.querySelectorAll('.mutant-selected-for-realz').forEach((el) => el.classList.remove('mutant-selected-for-realz'));
     if (this.selectedMutant === mutant) {
       this.selectedMutant = undefined;
       this.dispatchEvent(createCustomEvent('mutant-selected', { selected: false, mutant }));
@@ -144,6 +146,9 @@ export class FileComponent extends LitElement {
     }
 
     this.selectedMutant = mutant;
+
+    this.codeRef.value!.querySelectorAll(`.mutant[mutant-id="${mutant.id}"]`).forEach((el) => el.classList.add('mutant-selected-for-realz'));
+
     const lines = this.codeRef.value!.querySelectorAll('tr.line');
     for (let i = mutant.location.start.line - 1; i < mutant.location.end.line; i++) {
       lines.item(i).classList.add(diffOldClass);

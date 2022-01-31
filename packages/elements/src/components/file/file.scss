@@ -4,25 +4,29 @@
 @import '../../style/code.scss';
 
 $mutant-themes: (
-  'Killed': 'success',
-  'NoCoverage': 'caution',
   'Survived': 'danger',
+  'NoCoverage': 'caution',
   'Timeout': 'warning',
+  'Killed': 'success',
   'CompileError': 'secondary',
   'RuntimeError': 'secondary',
 );
 
 // These 2 themes get underlined with a squiggly (wavy) for extra emphasis
 $mutant-squiggly: 'Survived', 'NoCoverage';
+$mutant-precedence: 'Survived', 'NoCoverage', 'Timeout', 'Killed', 'CompileError', 'RuntimeError';
 
 @each $status, $theme in $mutant-themes {
-  @if (index($mutant-squiggly, $status) == null) {
-    .mte-selected-#{$status} .mutant.#{$status} {
-      border-color: var(--bs-#{$theme});
-      border-bottom-width: 2px;
-      border-bottom-style: solid;
-      cursor: pointer;
-    }
+  // @if (index($mutant-squiggly, $status) == null) {
+  .mte-selected-#{$status} .mutant.#{$status} {
+    // border-color: var(--bs-#{$theme});
+    // border-bottom-width: 2px;
+    // border-bottom-style: solid;
+    background-color: var(--bs-#{$theme}-bg-light);
+    // background-color: cyan;
+
+    cursor: pointer;
+    // }
   }
 
   svg.mutant-dot.#{$status} {
@@ -30,33 +34,55 @@ $mutant-squiggly: 'Survived', 'NoCoverage';
   }
 }
 
-svg.mutant-dot.selected {
-  fill: var(--bs-info);
-}
-
-@each $status in $mutant-squiggly {
-  .mte-selected-#{$status} .mutant.#{$status} {
-    /*
-  We want the underline of survived and no-coverage to be 'wavy'.
-  Don't use `text-decoration-style: wavy`, because chrome doesn't extend to all characters: https://stackoverflow.com/questions/57559588/how-to-make-the-wavy-underline-extend-cover-all-the-characters-in-chrome
-  Use border-image instead.
-  */
-    border-image-slice: 0 0 4 0;
-    border-image-width: 4px;
-    border-image-outset: 3px;
-    border-bottom-style: solid;
-    border-image-repeat: repeat;
-    border-image-source: var(--mut-squiggly-#{map.get($mutant-themes, $status)});
-    cursor: pointer;
-
-    // Mutant in mutant, don't start another wavy thingy
-    .mutant.Survived,
-    .mutant.NoCoverage {
-      border-image: none;
-      border-bottom-style: none;
+.mte-selected-Survived {
+  @each $status, $theme in $mutant-themes {
+    .mutant.#{$status} {
+      .mutant.Survived {
+        background-color: var(--bs-danger-bg-light);
+      }
+    }
+  }
+  .mutant.Survived {
+    @each $status, $theme in $mutant-themes {
+      .mutant.#{$status} {
+        background-color: var(--bs-danger-bg-light);
+      }
     }
   }
 }
+
+svg.mutant-dot.selected {
+  fill: var(--bs-info);
+}
+.mutant-selected-for-realz {
+  // border: var(--bs-info) 1px solid !important;
+  text-decoration: line-through;
+}
+
+// @each $status, $theme in $mutant-squiggly {
+//   .mte-selected-#{$status} .mutant.#{$status} {
+//     /*
+//   We want the underline of survived and no-coverage to be 'wavy'.
+//   Don't use `text-decoration-style: wavy`, because chrome doesn't extend to all characters: https://stackoverflow.com/questions/57559588/how-to-make-the-wavy-underline-extend-cover-all-the-characters-in-chrome
+//   Use border-image instead.
+//   */
+//     // border-image-slice: 0 0 4 0;
+//     // border-image-width: 4px;
+//     // border-image-outset: 3px;
+//     // border-bottom-style: solid;
+//     // border-image-repeat: repeat;
+//     // border-image-source: var(--mut-squiggly-#{map.get($mutant-themes, $status)});
+//     cursor: pointer;
+//     // background-color: var(--bs-#{$theme}-bg-light);
+
+//     // Mutant in mutant, don't start another wavy thingy
+//     // .mutant.Survived,
+//     // .mutant.NoCoverage {
+//       // border-image: none;
+//       // border-bottom-style: none;
+//     // }
+//   }
+// }
 
 .mutant-dot {
   cursor: pointer;
@@ -68,6 +94,7 @@ svg.mutant-dot {
 
 .diff-old {
   background-color: var(--mut-diff-del-bg);
+  border: var(--mut-diff-del-border) 1px solid;
 }
 
 .diff-focus {
@@ -79,12 +106,19 @@ svg.mutant-dot {
   color: var(--mut-diff-del-line-number);
 }
 
+@each $color, $value in $theme-colors {
+  .bg-#{$color}-light {
+    background-color: var(--bs-#{$color}-bg-light);
+  }
+}
+
 .diff-old .line-marker::before {
   content: '-';
 }
 
 .diff-new {
   background-color: var(--mut-diff-add-bg);
+  // border: var(--mut-diff-add-border) 1px solid;
 }
 
 .diff-new .empty-line-number {
