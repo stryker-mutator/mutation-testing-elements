@@ -79,7 +79,7 @@
     "sass": "^1.22.3",
     "sass-loader": "^12.0.0",
     "selenium-webdriver": "^4.0.0-alpha.4",
-    "sinon": "^12.0.1",
+    "sinon": "^13.0.0",
     "sinon-chai": "^3.3.0",
     "source-map-support": "^0.5.12",
     "ts-loader": "^9.0.0",
