@@ -102,7 +102,7 @@ export function waitUntil(
   options: { interval?: number; timeout?: number } = {}
 ): Promise<void> {
   // Default options
-  const { interval, timeout } = { interval: 100, timeout: 2000, ...options };
+  const { interval, timeout } = { interval: 100, timeout: 2500, ...options };
 
   return new Promise((resolve, reject) => {
     let timeoutId: NodeJS.Timeout;
