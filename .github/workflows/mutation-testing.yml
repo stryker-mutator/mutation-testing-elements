@@ -11,7 +11,7 @@ jobs:
   metrics:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3
       - run: npm ci
       - name: Run Stryker
         run: |
@@ -22,7 +22,7 @@ jobs:
   elements:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3
       - run: npm ci
       - run: npm run build
       - name: Run Stryker
@@ -35,7 +35,7 @@ jobs:
   metrics-scala:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3
       - uses: coursier/cache-action@v6
       - name: Run Stryker
         run: npx lerna run --stream --scope mutation-testing-metrics-scala stryker
