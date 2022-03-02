@@ -61,7 +61,7 @@ You can deal with static mutants in two ways:
 
 ## Hybrid mutants
 
-There are also static mutants that also have coverage per test. For lack of a better word, let's call them "hybrid mutants" for now.
+There are also static mutants that also have runtime coverage. For lack of a better word, let's call these "hybrid mutants" for now.
 
 Let's change our example so we can make our StringMutator mutant hybrid.
 
@@ -98,6 +98,6 @@ Different Stryker versions use different approaches here. In the table below, yo
 | Stryker.NET | ✅          | ❌             | Run all test       |
 | Stryker4s   | ❌          | ✅             | Ignore             |
 
-\* Using `--ignoreStatic`
+\* Using `--ignoreStatic` (new in StrykerJS v6.0)
 
-When you use `--ignoreStatic`, static mutants are ignored. For hybrid mutants, Stryker assumes that the mutant should be killed by the tests that cover the mutant directly and they are therefore handled as any other mutant with test coverage. Thus in as sense Stryker will ignore the static part of hybrid mutants.
+When you use `--ignoreStatic`, static mutants are ignored. For hybrid mutants, Stryker assumes that the mutant should be killed by the tests that cover the mutant at runtime and they are therefore handled as any other runtime mutant. Thus, in as sense, Stryker will ignore the _static part_ of hybrid mutants.
