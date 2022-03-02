@@ -82,7 +82,7 @@ it('should greet me', () => {
 });
 ```
 
-We've moved the `hi` constant to a factory method `createGreeter`. This method is now executed **twice**. First _during the loading of greet.js_, and second during unit testing in the "it should great me" test. 
+We've moved the `hi` constant to a factory method `createGreeter`. This method is now executed **twice**. First _during the loading of greet.js_, and second during unit testing in the "it should great me" test.
 
 In JavaScript, this is a common way to deal with dependency injection where you inject the dependencies using a factory method for unit testing. But, again, similar constructs can apply to C# and Scala code.
 
