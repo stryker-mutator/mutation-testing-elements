@@ -57,7 +57,7 @@ You can deal with static mutants in two ways:
 1. You can ignore them<br />
    The mutants will be shown in your report with the "Ignored" state and won't count towards your mutation score.
 2. You can run them<br />
-   The static mutants will get a fresh test environment to run in. This might require a browser page refresh or the creation of a new process or app domain. Test filtering is limited since per test coverage cannot be determined.
+   The static mutants will get a fresh test environment to run in. This might require a browser page refresh or the creation of a new process or app domain, which likely has a _big performance impact_. Test filtering is limited since per test coverage cannot be determined.
 
 ## Hybrid mutants
 
@@ -82,7 +82,7 @@ it('should greet me', () => {
 });
 ```
 
-As you can see, we've moved the `hi` constant to a factory method `createGreeter`. This method executes during unit testing in the "it should great me" test. However, the factory method also executes _during the loading of greet.js_.
+We've moved the `hi` constant to a factory method `createGreeter`. This method is now executed **twice**. First _during the loading of greet.js_, and second during unit testing in the "it should great me" test. 
 
 In JavaScript, this is a common way to deal with dependency injection where you inject the dependencies using a factory method for unit testing. But, again, similar constructs can apply to C# and Scala code.
 
