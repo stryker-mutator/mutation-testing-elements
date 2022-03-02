@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.10](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.9...v1.7.10) (2022-01-28)
+
+**Note:** Version bump only for package mutation-testing-report-schema
+
+
+
+
+
+## [1.7.8](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.7...v1.7.8) (2021-12-09)
+
+**Note:** Version bump only for package mutation-testing-report-schema
+
+
+
+
+
 ## [1.7.6](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.5...v1.7.6) (2021-11-19)
 
 **Note:** Version bump only for package mutation-testing-report-schema

@@ -30,8 +30,7 @@ class MetricsResultTest extends munit.FunSuite {
     }
   }
 
-  private lazy val expectedSet
-      : List[(String, MetricsResult => Number, Number)] = List(
+  private lazy val expectedSet: List[(String, MetricsResult => Number, Number)] = List(
     ("killed", _.killed, 2),
     ("survived", _.survived, 2),
     ("timeout", _.timeout, 2),

@@ -13,7 +13,7 @@ object Metrics {
     MetricsResultRoot(
       parseMutationTestResults(
         mutationTestResults
-          .map({ case (name, result) => (name.split("/").toSeq, result) })
+          .map { case (name, result) => (name.split("/").toSeq, result) }
       )
     )
 

@@ -167,7 +167,7 @@ describe(TestFileComponent.name, () => {
       sut.element.model = model;
       await sut.whenStable();
 
-      expect(sut.$('code tr.line:nth-child(2) .code').innerHTML).match(/<title>(<!--.+-->)?foo should bar \(NotCovering\)<\/title>/);
+      expect(sut.$('code tr.line:nth-child(2) .code').innerHTML).match(/<title>(<!--.*-->)?foo should bar \(NotCovering\)(<!--.*-->)?<\/title>/);
     });
 
     it('should place remaining tests at the end', async () => {

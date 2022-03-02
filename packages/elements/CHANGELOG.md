@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.10](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.9...v1.7.10) (2022-01-28)
+
+**Note:** Version bump only for package mutation-testing-elements
+
+
+
+
+
+## [1.7.9](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.8...v1.7.9) (2022-01-28)
+
+
+### Bug Fixes
+
+* **mutation-testing-elements:** Don't render statusreason if it's an empty string ([#1620](https://github.com/stryker-mutator/mutation-testing-elements/issues/1620)) ([c5e97e2](https://github.com/stryker-mutator/mutation-testing-elements/commit/c5e97e246e88bb249c10c05158480cf3acaccb2b))
+
+
+
+
+
+## [1.7.8](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.7...v1.7.8) (2021-12-09)
+
+**Note:** Version bump only for package mutation-testing-elements
+
+
+
+
+
+## [1.7.7](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.6...v1.7.7) (2021-12-09)
+
+
+### Performance Improvements
+
+* **mutation-test-report-app:** only recalculate metrics if report changed ([42b7bc0](https://github.com/stryker-mutator/mutation-testing-elements/commit/42b7bc0b6fad97180aa3775fbc57ff13f222cb32))
+* **mutation-test-report-app:** only render once by setting props in earlier hooks ([210da55](https://github.com/stryker-mutator/mutation-testing-elements/commit/210da557d0aea4a3ac7748386413742435111b54))
+
+
+
+
+
 ## [1.7.6](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.5...v1.7.6) (2021-11-19)
 
 
