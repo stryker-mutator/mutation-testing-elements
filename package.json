@@ -57,7 +57,7 @@
     "cssnano": "^5.0.1",
     "eslint": "^8.1.0",
     "eslint-config-prettier": "~8.5.0",
-    "eslint-plugin-import": "~2.25.2",
+    "eslint-plugin-import": "~2.26.0",
     "eslint-plugin-prettier": "~4.0.0",
     "express": "^4.17.1",
     "json-schema-to-typescript": "^10.0.2",
