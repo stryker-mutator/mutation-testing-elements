@@ -15,7 +15,7 @@ export class ResultTableRow extends PageObject {
   public ignored = () => this.$('td:nth-child(9)').getText();
   public runtimeErrors = () => this.$('td:nth-child(10)').getText();
   public compileErrors = () => this.$('td:nth-child(11)').getText();
-  public totalDetected = () => this.$('th:nth-child(12)').getText();
-  public totalUndetected = () => this.$('th:nth-child(13)').getText();
-  public totalMutants = () => this.$('th:nth-child(14)').getText();
+  public totalDetected = () => this.$('td:nth-child(12)').getText();
+  public totalUndetected = () => this.$('td:nth-child(13)').getText();
+  public totalMutants = () => this.$('td:nth-child(14)').getText();
 }
