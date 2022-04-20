@@ -204,13 +204,14 @@ export class MutationTestReportAppComponent extends LitElement {
               <mte-breadcrumb .view="${this.context.view}" .path="${this.context.path}"></mte-breadcrumb>
               ${this.context.view === 'mutant' && this.context.result
                 ? html`<mte-mutant-view
+                    id="mte-mutant-view"
                     .result="${this.context.result}"
                     .thresholds="${this.report!.thresholds}"
                     .path="${this.path}"
                   ></mte-mutant-view>`
                 : ''}
               ${this.context.view === 'test' && this.context.result
-                ? html`<mte-test-view .result="${this.context.result}" .path="${this.path}"></mte-test-view>`
+                ? html`<mte-test-view id="mte-test-view" .result="${this.context.result}" .path="${this.path}"></mte-test-view>`
                 : ''}
             </div>
           </div>
@@ -231,13 +232,30 @@ export class MutationTestReportAppComponent extends LitElement {
 
   private renderTabs() {
     if (this.rootModel?.testMetrics) {
+      const mutantsActive = this.context.view === 'mutant';
+      const testsActive = this.context.view === 'test';
+
       return html`<nav>
         <ul class="nav nav-tabs border-bottom-0" role="tablist">
-          <li class="nav-item">
-            <a class="nav-link ${this.context.view === 'mutant' ? 'active' : ''}" role="tab" href="${toAbsoluteUrl('mutant')}">👽 Mutants</a>
+          <li class="nav-item" role="presentation">
+            <a
+              class="nav-link ${mutantsActive ? 'active' : ''}"
+              role="tab"
+              href="${toAbsoluteUrl('mutant')}"
+              aria-selected="${mutantsActive}"
+              aria-controls="mte-mutant-view"
+              >👽 Mutants</a
+            >
           </li>
-          <li class="nav-item">
-            <a class="nav-link ${this.context.view === 'test' ? 'active' : ''}" role="tab" href="${toAbsoluteUrl('test')}">🧪 Tests</a>
+          <li class="nav-item" role="presentation">
+            <a
+              class="nav-link ${testsActive ? 'active' : ''}"
+              role="tab"
+              href="${toAbsoluteUrl('test')}"
+              aria-selected="${testsActive}"
+              aria-controls="mte-test-view"
+              >🧪 Tests</a
+            >
           </li>
         </ul>
       </nav>`;
