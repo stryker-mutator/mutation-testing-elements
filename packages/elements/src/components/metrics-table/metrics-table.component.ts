@@ -18,7 +18,7 @@ export interface Column<TMetric> {
   tooltip?: string;
   width?: TableWidth;
   category: ColumnCategory;
-  isHeader?: true;
+  isBold?: true;
 }
 
 @customElement('mte-metrics-table')
@@ -65,7 +65,10 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
   }
 
   private renderTableHead(column: Column<TMetric>) {
-    const header = column.tooltip ? html`<mte-tooltip title="${column.tooltip}">${column.label}</mte-tooltip>` : html`<span>${column.label}</span>`;
+    const id = `tooltip-${column.key.toString()}`;
+    const header = column.tooltip
+      ? html`<mte-tooltip title="${column.tooltip}" id="${id}">${column.label}</mte-tooltip>`
+      : html`<span id="${id}">${column.label}</span>`;
     if (column.category === 'percentage') {
       return html` <th colspan="2"> ${header} </th>`;
     }
@@ -118,6 +121,8 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
                   aria-valuenow="${mutationScoreRounded}"
                   aria-valuemin="0"
                   aria-valuemax="100"
+                  aria-describedby="tooltip-mutationScore"
+                  title="${column.label}"
                   style="${progressBarStyle}"
                 >
                   ${mutationScoreRounded}%
@@ -127,7 +132,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
         </td>
         <td style="width: 50px;" class="fw-bold text-center text-${coloringClass}">${valueIsPresent ? mutationScoreRounded : undefined}</td>`;
     }
-    return column.isHeader ? html`<th class="text-center">${value}</th>` : html`<td class="text-center">${value}</td>`;
+    return html`<td class="text-center ${column.isBold ? 'fw-bold' : ''}" aria-describedby="${`tooltip-${column.key.toString()}`}">${value}</td>`;
   }
   private determineColoringClass(mutationScore: number) {
     if (!isNaN(mutationScore) && this.thresholds) {
