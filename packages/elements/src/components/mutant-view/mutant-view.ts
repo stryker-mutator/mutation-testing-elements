@@ -109,7 +109,7 @@ const COLUMNS: Column<Metrics>[] = [
     tooltip: 'The number of mutants detected by your tests (killed + timeout).',
     category: 'number',
     width: 'large',
-    isHeader: true,
+    isBold: true,
   },
   {
     key: 'totalUndetected',
@@ -117,7 +117,7 @@ const COLUMNS: Column<Metrics>[] = [
     tooltip: 'The number of mutants that are not detected by your tests (survived + no coverage).',
     category: 'number',
     width: 'large',
-    isHeader: true,
+    isBold: true,
   },
   {
     key: 'totalMutants',
@@ -125,6 +125,6 @@ const COLUMNS: Column<Metrics>[] = [
     tooltip: 'All mutants (valid + invalid + ignored)',
     category: 'number',
     width: 'large',
-    isHeader: true,
+    isBold: true,
   },
 ];

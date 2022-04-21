@@ -42,7 +42,7 @@ describe(MutationTestReportTestViewComponent.name, () => {
           width: 'normal',
           category: 'number',
         },
-        { key: 'total', label: 'Total tests', width: 'large', category: 'number', isHeader: true },
+        { key: 'total', label: 'Total tests', width: 'large', category: 'number', isBold: true },
       ];
       expect(metricsTable.columns).deep.eq(expectedColumns);
     });

@@ -77,7 +77,7 @@ describe(MutationTestReportMutantViewComponent.name, () => {
           tooltip: 'The number of mutants detected by your tests (killed + timeout).',
           category: 'number',
           width: 'large',
-          isHeader: true,
+          isBold: true,
         },
         {
           key: 'totalUndetected',
@@ -85,7 +85,7 @@ describe(MutationTestReportMutantViewComponent.name, () => {
           tooltip: 'The number of mutants that are not detected by your tests (survived + no coverage).',
           category: 'number',
           width: 'large',
-          isHeader: true,
+          isBold: true,
         },
         {
           key: 'totalMutants',
@@ -93,7 +93,7 @@ describe(MutationTestReportMutantViewComponent.name, () => {
           tooltip: 'All mutants (valid + invalid + ignored)',
           category: 'number',
           width: 'large',
-          isHeader: true,
+          isBold: true,
         },
       ];
       expect(metricsTable.columns).deep.eq(expectedColumns);

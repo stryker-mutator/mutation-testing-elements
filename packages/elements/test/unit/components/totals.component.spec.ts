@@ -18,9 +18,9 @@ describe(MutationTestReportTestMetricsTable.name, () => {
       { key: 'ignored', label: '# Ignored', category: 'number' },
       { key: 'runtimeErrors', label: '# Runtime errors', category: 'number' },
       { key: 'compileErrors', label: '# Compile errors', category: 'number' },
-      { key: 'totalDetected', label: 'Total detected', category: 'number', width: 'large', isHeader: true },
-      { key: 'totalUndetected', label: 'Total undetected', category: 'number', width: 'large', isHeader: true },
-      { key: 'totalMutants', label: 'Total mutants', category: 'number', width: 'large', isHeader: true },
+      { key: 'totalDetected', label: 'Total detected', category: 'number', width: 'large', isBold: true },
+      { key: 'totalUndetected', label: 'Total undetected', category: 'number', width: 'large', isBold: true },
+      { key: 'totalMutants', label: 'Total mutants', category: 'number', width: 'large', isBold: true },
     ];
     await sut.whenStable();
   });

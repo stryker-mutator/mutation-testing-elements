@@ -70,5 +70,5 @@ const COLUMNS: Column<TestMetrics>[] = [
     width: 'normal',
     category: 'number',
   },
-  { key: 'total', label: 'Total tests', width: 'large', category: 'number', isHeader: true },
+  { key: 'total', label: 'Total tests', width: 'large', category: 'number', isBold: true },
 ];

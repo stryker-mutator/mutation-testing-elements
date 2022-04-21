@@ -18,7 +18,7 @@ export interface Column<TMetric> {
   tooltip?: string;
   width?: TableWidth;
   category: ColumnCategory;
-  isHeader?: true;
+  isBold?: true;
 }
 
 @customElement('mte-metrics-table')
@@ -132,7 +132,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
         </td>
         <td style="width: 50px;" class="fw-bold text-center text-${coloringClass}">${valueIsPresent ? mutationScoreRounded : undefined}</td>`;
     }
-    return html`<td class="text-center ${column.isHeader ? 'fw-bold' : ''}" aria-describedby="${`tooltip-${column.key.toString()}`}">${value}</td>`;
+    return html`<td class="text-center ${column.isBold ? 'fw-bold' : ''}" aria-describedby="${`tooltip-${column.key.toString()}`}">${value}</td>`;
   }
   private determineColoringClass(mutationScore: number) {
     if (!isNaN(mutationScore) && this.thresholds) {
