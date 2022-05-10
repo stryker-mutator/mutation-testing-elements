@@ -3,9 +3,9 @@
   "compilerOptions": {
     "types": ["webpack-env"],
     "outDir": "../dist",
-    "module": "es2015",
+    "module": "es2020",
     "moduleResolution": "node",
-    "lib": ["es2019", "dom", "dom.iterable"]
+    "lib": ["es2020", "dom", "dom.iterable"]
   },
   "references": [
     {
