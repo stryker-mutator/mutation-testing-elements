@@ -66,7 +66,7 @@
     "karma-mocha": "^2.0.0",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^5.0.0",
-    "lerna": "^4.0.0",
+    "lerna": "^5.0.0",
     "link-parent-bin": "^2.0.0",
     "lit": "^2.0.2",
     "mocha": "^10.0.0",
