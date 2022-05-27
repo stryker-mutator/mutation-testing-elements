@@ -10,7 +10,7 @@ import { tick } from '../helpers/tick';
 
 describe(MutationTestReportAppComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportAppComponent>;
-  let fetchStub: sinon.SinonStub<[RequestInfo, RequestInit?], Promise<Response>>;
+  let fetchStub: sinon.SinonStub<[URL | RequestInfo, RequestInit?], Promise<Response>>;
   let matchMediaStub: sinon.SinonStub<[query: string], MediaQueryList>;
 
   beforeEach(() => {
