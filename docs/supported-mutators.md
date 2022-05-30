@@ -18,7 +18,7 @@ All Stryker versions support a variety of different mutators. We've aligned on a
 | [Conditional Expression](#conditional-expression) |                     ✅                     |                        ✅                        |                      ✅                      |
 | [Equality Operator](#equality-operator)           |                     ✅                     |                        ✅                        |                      ✅                      |
 | [Logical Operator](#logical-operator)             |                     ✅                     |                        ✅                        |                      ✅                      |
-| [Method Expression](#method-expression)           |                     ❌                     |                        ✅                        |                      ✅                      |
+| [Method Expression](#method-expression)           |                     ✅                     |                        ✅                        |                      ✅                      |
 | [Object literal](#object-literal)                 |                     ✅                     |                       n/a                        |                     n/a                      |
 | [Optional chaining](#optional-chaining)           |                     ✅                     |                        ❌                        |                     n/a                      |
 | [Regex](#regex)                                   |                     ✅                     |                        ✅                        |                      ✅                      |
@@ -157,14 +157,37 @@ Stryker.NET _specific mutator_
 
 Due to differences in language syntax, method expressions are implemented differently in each Stryker framework:
 
-### Stryker.NET:
+### StrykerJS
+
+| Original             | Mutated               |
+| -------------------- | --------------------- |
+| `endsWith()`         | `startsWith()`        |
+| `startsWith()`       | `endsWith()`          |
+| `trim()`             | ` `                   |
+| `trimEnd()`          | `trimStart()`         |
+| `trimStart()`        | `trimEnd()`           |
+| `substr()`           | ` `                   |
+| `substring()`        | ` `                   |
+| `toUpperCase()`      | ` toLowerCase()`      |
+| `toLowerCase()`      | ` toUpperCase()`      |
+| `toLocalLowerCase()` | `toLocalUpperCase()`  |
+| `toLocalUpperCase()` | ` toLocalLowerCase()` |
+| `sort()`             | ` `                   |
+| `some()`             | `every()`             |
+| `every()`            | `some()`              |
+| `reverse()`          | ` `                   |
+| `filter()`           | ` `                   |
+| `slice()`            | ` `                   |
+| `charAt()`           | ` `                   |
+
+### Stryker.NET
 
 | Original              | Mutated             |
 | --------------------- | ------------------- |
-| `Distinct()`          | ``                  |
-| `Reverse()`           | ``                  |
-| `OrderBy()`           | ``                  |
-| `OrderByDescending()` | ``                  |
+| `Distinct()`          | ` `                 |
+| `Reverse()`           | ` `                 |
+| `OrderBy()`           | ` `                 |
+| `OrderByDescending()` | ` `                 |
 | `SingleOrDefault()`   | `FirstOrDefault()`  |
 | `FirstOrDefault()`    | `SingleOrDefault()` |
 | `First()`             | `Last()`            |
@@ -180,7 +203,7 @@ Due to differences in language syntax, method expressions are implemented differ
 | `Sum()`               | `Count()`           |
 | `Count()`             | `Sum()`             |
 
-### Stryker4s:
+### Stryker4s
 
 | Original           | Mutated            |
 | ------------------ | ------------------ |
