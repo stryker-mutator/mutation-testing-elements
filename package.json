@@ -7,7 +7,7 @@
   "scripts": {
     "clean": "rimraf packages/*/{dist,dist-test,src-generated}",
     "all": "npm run clean && npm run build && npm run lint && npm run test",
-    "postinstall": "lerna bootstrap && link-parent-bin",
+    "postinstall": "lerna bootstrap",
     "lint": "npm run lint:json && npm run lint:ts",
     "lint:ts": "eslint --ext .js,.ts .",
     "lint:json": "prettier --check .",
@@ -67,7 +67,6 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^5.0.0",
     "lerna": "^5.0.0",
-    "link-parent-bin": "^3.0.0",
     "lit": "^2.0.2",
     "mocha": "^10.0.0",
     "postcss": "^8.2.13",
