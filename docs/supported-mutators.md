@@ -50,7 +50,7 @@ All Stryker versions support a variety of different mutators. We've aligned on a
 ## Assignment Expression
 
 | Original             | Mutated              |
-|----------------------|----------------------|
+| -------------------- | -------------------- |
 | `+=`                 | `-=`                 |
 | `-=`                 | `+=`                 |
 | `*=`                 | `/=`                 |
