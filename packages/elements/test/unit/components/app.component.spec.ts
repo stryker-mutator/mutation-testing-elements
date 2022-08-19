@@ -95,7 +95,7 @@ describe(MutationTestReportAppComponent.name, () => {
       expect(sut.$('mte-mutant-view')).ok;
     });
 
-    it('should load navigation when test data is present', async () => {
+    it('should load navigation when testFiles are present', async () => {
       sut.element.report = createReport({
         testFiles: {
           'foobar.spec.js': {
@@ -107,7 +107,7 @@ describe(MutationTestReportAppComponent.name, () => {
       expect(sut.$('nav')).ok;
     });
 
-    it('should not load navigation if test array is empty', async () => {
+    it('should not load navigation if testFiles object is empty', async () => {
       sut.element.report = createReport({
         testFiles: {},
       });
