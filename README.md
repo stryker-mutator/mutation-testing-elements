@@ -8,6 +8,10 @@ Welcome to the mutation testing elements mono repo.
 It is a [lernajs](https://lernajs.io/) mono repository. Please see the [packages](https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages)
 directory to navigate to a sub package.
 
+The following integrations are also provided:
+
+- [SonarQube](integrations/sonarqube)
+
 ## Versioning
 
 The `mutation-testing-report-schema` and `mutation-testing-elements` versions will be kept in sync.
