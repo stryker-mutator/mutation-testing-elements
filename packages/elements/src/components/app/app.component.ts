@@ -231,7 +231,7 @@ export class MutationTestReportAppComponent extends LitElement {
   }
 
   private renderTabs() {
-    if (this.rootModel?.testMetrics) {
+    if (this.rootModel?.testMetrics?.name.trim()) {
       const mutantsActive = this.context.view === 'mutant';
       const testsActive = this.context.view === 'test';
 
