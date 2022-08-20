@@ -1,3 +1,5 @@
+# This jq filter transforms a mutation testing report to the SonarQube generic issue import format.
+
 .framework.name as $frameworkName
 | .projectRoot as $projectRoot
 | .files
