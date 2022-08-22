@@ -2,7 +2,6 @@ import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { MutantModel, TestModel, TestStatus } from 'mutation-testing-metrics';
 import { renderIfPresent, getEmojiForTestStatus, renderIf, plural, describeLocation } from '../../lib/html-helpers';
-import { bootstrap } from '../../style';
 import { DrawerMode } from '../drawer/drawer.component';
 import style from './drawer-test.scss';
 
@@ -16,7 +15,14 @@ export class MutationTestReportDrawerTestComponent extends LitElement {
   @property({ reflect: true })
   public mode: DrawerMode = 'closed';
 
-  public static styles = [bootstrap, unsafeCSS(style)];
+  /**
+   * Disable shadow-DOM for this component to let parent styles apply (such as dark theme)
+   */
+  protected override createRenderRoot(): Element | ShadowRoot {
+    return this;
+  }
+
+  public static styles = [unsafeCSS(style)];
 
   public render() {
     return html`<mte-drawer ?hasDetail="${this.test?.killedMutants || this.test?.coveredMutants}" .mode="${this.mode}">

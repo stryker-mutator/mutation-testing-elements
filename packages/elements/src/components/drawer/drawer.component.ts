@@ -1,7 +1,6 @@
 import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { renderIf } from '../../lib/html-helpers';
-import { bootstrap } from '../../style';
 import style from './drawer.component.scss';
 
 export type DrawerMode = 'open' | 'half' | 'closed';
@@ -9,7 +8,7 @@ export const DRAWER_HALF_OPEN_SIZE = 120;
 
 @customElement('mte-drawer')
 export class MutationTestReportDrawer extends LitElement {
-  public static styles = [bootstrap, unsafeCSS(style)];
+  public static styles = [unsafeCSS(style)];
 
   @property({ reflect: true })
   public mode: DrawerMode = 'closed';
@@ -28,6 +27,13 @@ export class MutationTestReportDrawer extends LitElement {
         return '';
     }
   }
+
+  // /**
+  //  * Disable shadow-DOM for this component to let parent styles apply (such as dark theme)
+  //  */
+  // protected override createRenderRoot(): Element | ShadowRoot {
+  //   return this;
+  // }
 
   public toggleReadMore = (event: MouseEvent) => {
     if (this.mode === 'open') {

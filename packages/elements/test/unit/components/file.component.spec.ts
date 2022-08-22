@@ -7,7 +7,6 @@ import { createMutantResult, createFileResult } from '../../helpers/factory';
 import { createCustomEvent } from '../../../src/lib/custom-events';
 import { FileUnderTestModel } from 'mutation-testing-metrics';
 import sinon from 'sinon';
-import { bootstrap } from '../../../src/style';
 
 describe(FileComponent.name, () => {
   let sut: CustomElementFixture<FileComponent>;
@@ -33,10 +32,6 @@ describe(FileComponent.name, () => {
 
   it('should highlight the code', () => {
     expect(sut.$('code .token')).ok;
-  });
-
-  it('should use bootstrap styles', () => {
-    expect(FileComponent.styles).contains(bootstrap);
   });
 
   describe('with mutants', () => {

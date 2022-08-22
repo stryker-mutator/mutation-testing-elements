@@ -1,86 +1,3 @@
-@import '../../style/bootstrap-reboot.scss'; // import the variables
-
-// Bootstrap theming =================================================
-:host(:not([theme='dark'])) {
-  --bs-link-color: #{$link-color};
-  --bs-link-hover-color: #{$link-hover-color};
-  --bs-breadcrumb-bg: #{$gray-200};
-  --bs-breadcrumb-active-color: #{$breadcrumb-active-color};
-  --bs-body-bg: #{$body-bg};
-  --bs-body-color: #{$body-color};
-  --bs-card-bg: #{$card-bg};
-  --bs-card-border-color: #{$card-border-color};
-  --bs-card-cap-bg: #{$gray-200};
-  --bs-list-group-hover-bg: #{$list-group-hover-bg};
-  --bs-list-group-bg: #{$list-group-bg};
-  --bs-list-group-border-color: #{$list-group-border-color};
-  --bs-list-group-action-hover-color: #{$list-group-action-hover-color};
-  --bs-list-group-action-active-color: #{$list-group-action-active-color};
-  --bs-list-group-action-active-bg: #{$list-group-action-active-bg};
-  --bs-list-group-action-color: #{$list-group-action-color};
-  --bs-list-group-active-color: #{$list-group-active-color};
-  --bs-list-group-active-bg: #{$list-group-active-bg};
-  --bs-list-group-active-border-color: #{$list-group-active-border-color};
-  --bs-table-border-color: #{$table-border-color};
-  --bs-table-bg-hover: #{$table-hover-bg};
-  --bs-progress-bg: #{$progress-bg};
-
-  @each $color, $value in $theme-colors {
-    --bs-table-#{$color}-hover-bg: #{darken($value, 5%)};
-    --bs-badge-#{$color}-color: #{color-contrast($value)};
-    --bs-btn-#{$color}-color: #{color-contrast($value)};
-    --bs-btn-#{$color}-hover-color: #{color-contrast(darken($value, 7.5%))};
-    --bs-#{$color}-bg: #{$value};
-    --bs-#{$color}-bg-light: #{rgba($value, 0.25)};
-  }
-  --bs-anchor: #{$darkly-white};
-  --bs-nav-tabs-link-hover-border-color: #{$nav-tabs-link-hover-border-color};
-  --bs-nav-tabs-link-active-color: #{$nav-tabs-link-active-color};
-  --bs-nav-tabs-link-active-bg: #{$nav-tabs-link-active-bg};
-  --bs-nav-tabs-link-active-border-color: #{$nav-tabs-link-active-border-color};
-  --bs-nav-tabs-border-color: #{$nav-tabs-border-color};
-}
-:host([theme='dark']) {
-  --bs-link-color: #{$darkly-link-color};
-  --bs-link-hover-color: #{$darkly-link-hover-color};
-  --bs-breadcrumb-bg: #{$darkly-breadcrumb-bg};
-  --bs-breadcrumb-active-color: #{$darkly-breadcrumb-active-color};
-  --bs-body-bg: #{$darkly-body-bg};
-  --bs-body-color: #{$darkly-body-color};
-  --bs-card-bg: #{$darkly-card-bg};
-  --bs-card-border-color: #{$darkly-card-border-color};
-  --bs-card-cap-bg: #{$darkly-card-cap-bg};
-  --bs-list-group-hover-bg: #{$darkly-list-group-hover-bg};
-  --bs-list-group-bg: #{$darkly-list-group-bg};
-  --bs-list-group-border-color: #{$darkly-list-group-border-color};
-  --bs-list-group-action-hover-color: #{$darkly-list-group-action-hover-color};
-  --bs-list-group-action-active-color: #{$darkly-list-group-action-active-color};
-  --bs-list-group-action-active-bg: #{$darkly-list-group-action-active-bg};
-  --bs-list-group-action-color: #{$darkly-list-group-action-color};
-  --bs-list-group-active-color: #{$darkly-list-group-active-color};
-  --bs-list-group-active-bg: #{$darkly-list-group-active-bg};
-  --bs-list-group-active-border-color: #{$darkly-list-group-active-border-color};
-  --bs-table-border-color: #{$darkly-table-border-color};
-  --bs-table-hover-color: #{$darkly-body-color};
-  --bs-table-bg-hover: #{$darkly-table-hover-bg};
-  --bs-progress-bg: #{$darkly-progress-bg};
-
-  @each $color, $value in $darkly-theme-colors {
-    --bs-table-#{$color}-bg: #{$value};
-    --bs-table-#{$color}-hover-bg: #{darken($value, 5%)};
-    --bs-badge-#{$color}-color: #{color-contrast($value)};
-    --bs-btn-#{$color}-color: #{color-contrast($value)};
-    --bs-btn-#{$color}-hover-color: #{color-contrast(darken($value, 7.5%))};
-    --bs-#{$color}-bg: #{$value};
-    --bs-#{$color}-bg-light: #{rgba($value, 0.25)};
-  }
-  --bs-nav-tabs-link-hover-border-color: #{$darkly-nav-tabs-link-hover-border-color};
-  --bs-nav-tabs-link-active-color: #{$darkly-nav-tabs-link-active-color};
-  --bs-nav-tabs-link-active-bg: #{$darkly-toast-background-color};
-  --bs-nav-tabs-link-active-border-color: #{$darkly-nav-tabs-link-active-border-color};
-  --bs-nav-tabs-border-color: #{$darkly-nav-tabs-border-color};
-}
-
 // Prismjs theming (code highlighting) =====================================
 :host(:not([theme='dark'])) {
   --prism-maintext: #393a34;
@@ -207,6 +124,7 @@
   @return url("data:image/svg+xml;charset=UTF8,<svg xmlns='http://www.w3.org/2000/svg' height='3' width='6'><g fill='#{$stroke-color}'><path d='m5.5 0-3 3H1.1l3-3z'/><path d='m4 0 2 2V.6L5.4 0zM0 2l1 1h1.4L0 .6z'/></g></svg>");
 }
 :host(:not([theme='dark'])) {
+  --mut-body-bg: theme('colors.white');
   --mut-octicon-icon-color: #498ba7;
   --mut-line-number: #6e7781;
   --mut-diff-add-bg: #e6ffec;
@@ -218,10 +136,12 @@
   --mut-badge-info-bg: #54c6ec;
   --mut-badge-info: #212529;
   --mut-code-lense: #919191;
-  --mut-squiggly-danger: #{squiggly-svg-factory($danger)};
-  --mut-squiggly-caution: #{squiggly-svg-factory($orange)};
+  // TODO: fix
+  // --mut-squiggly-danger: #{squiggly-svg-factory($danger)};
+  // --mut-squiggly-caution: #{squiggly-svg-factory($orange)};
 }
 :host([theme='dark']) {
+  --mut-body-bg: theme('colors.slate.900');
   --mut-octicon-icon-color: #519aba;
   --mut-line-number: #484f58;
   --mut-diff-add-bg: rgba(46, 160, 67, 0.15);
@@ -233,6 +153,6 @@
   --mut-badge-info-bg: #17a3b8;
   --mut-badge-info: #fff;
   --mut-code-lense: #999;
-  --mut-squiggly-danger: #{squiggly-svg-factory($darkly-danger)};
-  --mut-squiggly-caution: #{squiggly-svg-factory($darkly-orange)};
+  // --mut-squiggly-danger: #{squiggly-svg-factory($darkly-danger)};
+  // --mut-squiggly-caution: #{squiggly-svg-factory($darkly-orange)};
 }

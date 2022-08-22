@@ -3,7 +3,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { StateFilter } from '../state-filter/state-filter.component';
-import { bootstrap, prismjs } from '../../style';
+import { prismjs } from '../../style';
 import { findDiffIndices, gte, highlightCode, transformHighlightedLines } from '../../lib/code-helpers';
 import { MutantResult, MutantStatus } from 'mutation-testing-report-schema/api';
 import style from './file.scss';
@@ -33,7 +33,14 @@ export class FileComponent extends LitElement {
   @state()
   public mutants: MutantModel[] = [];
 
-  public static styles = [prismjs, bootstrap, unsafeCSS(style)];
+  /**
+   * Disable shadow-DOM for this component to let parent styles apply (such as dark theme)
+   */
+  protected override createRenderRoot(): Element | ShadowRoot {
+    return this;
+  }
+
+  public static styles = [prismjs, unsafeCSS(style)];
   private codeRef = createRef<HTMLElement>();
 
   private readonly filtersChanged = (event: MteCustomEvent<'filters-changed'>) => {

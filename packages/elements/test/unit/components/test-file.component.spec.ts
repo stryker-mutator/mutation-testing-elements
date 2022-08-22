@@ -4,7 +4,6 @@ import { TestStatus } from 'mutation-testing-metrics';
 import { FileStateFilterComponent, StateFilter } from '../../../src/components/state-filter/state-filter.component';
 import { TestFileComponent } from '../../../src/components/test-file/test-file.component';
 import { createCustomEvent } from '../../../src/lib/custom-events';
-import { bootstrap } from '../../../src/style';
 import { createMutantResult, createTestDefinition } from '../../helpers/factory';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 
@@ -25,10 +24,6 @@ describe(TestFileComponent.name, () => {
   function selectTests(): HTMLSpanElement[] {
     return sut.$$('.test-dot');
   }
-
-  it('should use bootstrap styles', () => {
-    expect(TestFileComponent.styles).contains(bootstrap);
-  });
 
   describe('state filter', () => {
     it('should provide filters with correct emoji, context and count', async () => {

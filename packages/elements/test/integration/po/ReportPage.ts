@@ -28,7 +28,7 @@ export class ReportPage extends ElementSelector {
   }
 
   public takeScreenshot(): Promise<string> {
-    return this.$('mutation-test-report-app >>> .container-fluid').takeScreenshot();
+    return this.$('mutation-test-report-app >>> .container').takeScreenshot();
   }
 
   public scrollUp(): Promise<void> {
@@ -45,7 +45,7 @@ export class ReportPage extends ElementSelector {
   }
 
   public async backgroundColor() {
-    const element = await this.$('mutation-test-report-app >>> .container-fluid');
+    const element = await this.$('mutation-test-report-app >>> .container');
     return element.getCssValue('background-color');
   }
 

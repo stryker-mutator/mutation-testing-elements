@@ -6,7 +6,7 @@ import { TestFileModel, TestModel, TestStatus } from 'mutation-testing-metrics';
 import style from './test-file.scss';
 
 import '../../style/prism-plugins';
-import { bootstrap, prismjs } from '../../style';
+import { prismjs } from '../../style';
 import { determineLanguage, transformHighlightedLines, highlightCode, gte } from '../../lib/code-helpers';
 import { createCustomEvent, MteCustomEvent } from '../../lib/custom-events';
 import { getContextClassForTestStatus, getEmojiForTestStatus, scrollToCodeFragmentIfNeeded } from '../../lib/html-helpers';
@@ -17,7 +17,7 @@ export class TestFileComponent extends LitElement {
   @property()
   public model: TestFileModel | undefined;
 
-  public static styles = [prismjs, bootstrap, unsafeCSS(style)];
+  public static styles = [prismjs, unsafeCSS(style)];
 
   @state()
   private filters: StateFilter<TestStatus>[] = [];
@@ -33,6 +33,13 @@ export class TestFileComponent extends LitElement {
 
   @state()
   private tests: TestModel[] = [];
+
+  /**
+   * Disable shadow-DOM for this component to let parent styles apply (such as dark theme)
+   */
+  protected override createRenderRoot(): Element | ShadowRoot {
+    return this;
+  }
 
   private readonly filtersChanged = (event: MteCustomEvent<'filters-changed'>) => {
     this.enabledStates = event.detail as TestStatus[];

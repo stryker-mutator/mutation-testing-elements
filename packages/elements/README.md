@@ -28,7 +28,7 @@ The mutation test report supports the following features:
 🧙‍ Filter mutants based on the outcome  
 🌑 Switch between light and dark theme  
 🔗 Deep linking using anchors (uses fragment, so path will not be contaminated)  
-✨ A nice (yet basic) UI with embedded [bootstrap](https://getbootstrap.com) css  
+✨ A nice (yet basic) UI made with [tailwind](https://tailwindcss.com/) CSS  
 🎓 Adheres to [custom element best practices](https://developers.google.com/web/fundamentals/web-components/best-practices)
 
 ## Install

@@ -1,10 +1,8 @@
-import { html, LitElement, unsafeCSS } from 'lit';
+import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { MetricsResult } from 'mutation-testing-metrics';
 import { Thresholds } from 'mutation-testing-report-schema/api';
 import { toAbsoluteUrl } from '../../lib/html-helpers';
-import { bootstrap } from '../../style';
-import style from './metrics-table.scss';
 
 export type TableWidth = 'normal' | 'large';
 
@@ -29,8 +27,6 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
   @property()
   public currentPath: string[] = [];
 
-  public static styles = [bootstrap, unsafeCSS(style)];
-
   @property({ type: Array })
   public columns!: Column<TMetric>[];
 
@@ -40,40 +36,50 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
     low: 60,
   };
 
+  /**
+   * Disable shadow-DOM for this component to let parent styles apply (such as dark theme)
+   */
+  protected override createRenderRoot(): Element | ShadowRoot {
+    return this;
+  }
+
   public render() {
     return html`${this.model
-      ? html`<table class="table table-hover table-no-top">${this.renderTableHeadRow()}${this.renderTableBody(this.model)}</table>`
+      ? html`<table
+          class="container table-fixed border border-slate-200 rounded-md dark:border-slate-700 transition-[max-width] bg-white dark:bg-gray-800 text-sm w-full text-left"
+          >${this.renderTableHeadRow()}${this.renderTableBody(this.model)}
+        </table>`
       : ''}`;
   }
 
   private renderTableHeadRow() {
-    return html`<thead>
-      <th scope="col" colspan="2" style="width: 217px">
-        <div
-          ><span>File / Directory</span
+    return html`<thead class="text-sm">
+      <tr>
+        <th scope="col" colspan="2" class="py-4 px-4">
+          <span>File / Directory</span
           ><a
             href="https://stryker-mutator.io/docs/mutation-testing-elements/mutant-states-and-metrics"
             target="_blank"
-            class="info-icon"
+            class="info-icon float-right"
             title="What does this all mean?"
             >ℹ</a
-          ></div
-        >
-      </th>
-      ${this.columns.map((column) => this.renderTableHead(column))}
+          >
+        </th>
+        ${this.columns.map((column, i) => this.renderTableHead(column, i))}
+      </tr>
     </thead>`;
   }
 
-  private renderTableHead(column: Column<TMetric>) {
+  private renderTableHead(column: Column<TMetric>, i: number) {
     const id = `tooltip-${column.key.toString()}`;
     const header = column.tooltip
       ? html`<mte-tooltip title="${column.tooltip}" id="${id}">${column.label}</mte-tooltip>`
       : html`<span id="${id}">${column.label}</span>`;
     if (column.category === 'percentage') {
-      return html` <th colspan="2"> ${header} </th>`;
+      return html` <th colspan="2" class="px-2 bg-gray-100 dark:bg-gray-900"> ${header} </th>`;
     }
-    return html`<th class="rotate text-center" style="width: ${column.width === 'large' ? 70 : 50}px">
-      <div>${header}</div>
+    return html`<th class="px-2 w-auto whitespace-nowrap ${i % 2 === 0 ? 'bg-gray-100 dark:bg-gray-900' : ''}">
+      <div class="inline-block">${header}</div>
     </th>`;
   }
 
@@ -96,27 +102,34 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
   }
 
   private renderRow(name: string, row: MetricsResult<TFile, TMetric>, ...path: string[]) {
-    return html`<tr title="${row.name}" class="align-middle">
-      <td style="width: 32px;" class="icon"><mte-file-icon file-name="${row.name}" ?file="${row.file}"></mte-file-icon></td>
-      <td>${path.length > 0 ? html`<a href="${toAbsoluteUrl(...path)}">${name}</a>` : html`<span>${row.name}</span>`}</td>
-      ${this.columns.map((column) => this.renderCell(column, row.metrics))}
+    return html`<tr title="${row.name}" class="border-b last:border-none dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-slate-700">
+      <td class="px-4 w-4"><mte-file-icon file-name="${row.name}" ?file="${row.file}"></mte-file-icon></td>
+      <td class="font-semibold text-gray-900 dark:text-white"
+        >${path.length > 0
+          ? html`<a class="py-4 inline-block hover:text-blue-600 dark:hover:text-blue-500 hover:underline" href="${toAbsoluteUrl(...path)}"
+              >${name}</a
+            >`
+          : html`<span class="py-4">${row.name}</span>`}</td
+      >
+      ${this.columns.map((column, i) => this.renderCell(column, row.metrics, i))}
     </tr>`;
   }
 
-  private renderCell(column: Column<TMetric>, metrics: TMetric) {
+  private renderCell(column: Column<TMetric>, metrics: TMetric, i: number) {
     const value = metrics[column.key] as unknown as number;
 
     if (column.category === 'percentage') {
       const valueIsPresent = !isNaN(value);
-      const coloringClass = this.determineColoringClass(value);
+      const bgColoringClass = this.determineBgColoringClass(value);
+      const textColoringClass = this.determineTextColoringClass(value);
       const mutationScoreRounded = value.toFixed(2);
       const progressBarStyle = `width: ${value}%`;
 
-      return html`<td>
+      return html`<td class="py-4 px-2 ${i % 2 === 0 ? 'bg-gray-100 dark:bg-gray-900' : ''} ">
           ${valueIsPresent
-            ? html` <div class="progress">
+            ? html`<div class="w-full bg-gray-200 rounded-full h-3 dark:bg-gray-700">
                 <div
-                  class="progress-bar bg-${coloringClass}"
+                  class="${bgColoringClass} pl-1 rounded-full h-3"
                   role="progressbar"
                   aria-valuenow="${mutationScoreRounded}"
                   aria-valuemin="0"
@@ -124,27 +137,44 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
                   aria-describedby="tooltip-mutationScore"
                   title="${column.label}"
                   style="${progressBarStyle}"
-                >
-                  ${mutationScoreRounded}%
-                </div>
+                ></div>
               </div>`
-            : html` <span class="fw-bold text-muted">N/A</span> `}
+            : html` <span class="font-bold text-light-muted dark:text-dark-muted">N/A</span> `}
         </td>
-        <td style="width: 50px;" class="fw-bold text-center text-${coloringClass}">${valueIsPresent ? mutationScoreRounded : undefined}</td>`;
+        <td class="pr-2 w-12 font-bold text-center ${textColoringClass} ${i % 2 === 0 ? 'bg-gray-100 dark:bg-gray-900' : ''}"
+          >${valueIsPresent ? mutationScoreRounded : undefined}</td
+        >`;
     }
-    return html`<td class="text-center ${column.isBold ? 'fw-bold' : ''}" aria-describedby="${`tooltip-${column.key.toString()}`}">${value}</td>`;
+    return html`<td
+      class="${i % 2 === 0 ? 'bg-gray-100 dark:bg-gray-900' : ''} text-center py-4 ${column.isBold ? 'font-bold' : ''}"
+      aria-describedby="${`tooltip-${column.key.toString()}`}"
+      >${value}</td
+    >`;
   }
-  private determineColoringClass(mutationScore: number) {
+  private determineBgColoringClass(mutationScore: number) {
     if (!isNaN(mutationScore) && this.thresholds) {
       if (mutationScore < this.thresholds.low) {
-        return 'danger';
+        return 'bg-red-600 dark:bg-red-500 text-gray-200 dark:text-gray-800';
       } else if (mutationScore < this.thresholds.high) {
-        return 'warning';
+        return 'bg-yellow-400 dark:text-gray-800';
       } else {
-        return 'success';
+        return 'bg-green-600 dark:bg-green-500 text-gray-200 dark:text-gray-800';
       }
     } else {
-      return 'default';
+      return 'bg-blue-600';
+    }
+  }
+  private determineTextColoringClass(mutationScore: number) {
+    if (!isNaN(mutationScore) && this.thresholds) {
+      if (mutationScore < this.thresholds.low) {
+        return 'text-red-600 dark:text-red-500';
+      } else if (mutationScore < this.thresholds.high) {
+        return 'text-yellow-600 dark:text-yellow-500';
+      } else {
+        return 'text-green-700 dark:text-green-500';
+      }
+    } else {
+      return '';
     }
   }
 }
