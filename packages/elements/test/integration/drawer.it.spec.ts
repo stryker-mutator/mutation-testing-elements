@@ -29,7 +29,7 @@ describe('Drawer', () => {
 
       it('should show a summary in the drawer when a mutant is clicked', async () => {
         await drawer.whenHalfOpen();
-        expect(await drawer.headerText()).eq('20 👽 ConditionalExpression Survived (15:41)');
+        expect(await drawer.headerText()).eq('👽 ConditionalExpression Survived (15:41)');
       });
 
       it('should look as expected', async function () {
@@ -61,7 +61,7 @@ describe('Drawer', () => {
         await page.mutantView.mutantDot(24).toggle();
         await waitUntil(async () => {
           expect(await drawer.isHalfOpen()).true;
-          return expect(await drawer.headerText()).eq('24 👽 ConditionalExpression Survived (15:77)');
+          return expect(await drawer.headerText()).eq('👽 ConditionalExpression Survived (15:77)');
         });
       });
 
