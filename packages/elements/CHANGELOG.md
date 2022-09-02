@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.12](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.11...v1.7.12) (2022-09-02)
+
+
+### Bug Fixes
+
+* **mutant-id:** escape html in mutant attributes ([#2070](https://github.com/stryker-mutator/mutation-testing-elements/issues/2070)) ([d96d53c](https://github.com/stryker-mutator/mutation-testing-elements/commit/d96d53c617675ab4bc01ef66166d7bebcc936bd1))
+
+
+
+
+
 ## [1.7.11](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.10...v1.7.11) (2022-08-31)
 
 
