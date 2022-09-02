@@ -27,7 +27,7 @@ describe('Unsanitized example', () => {
       }
       expect(m).ok;
       await m!.toggle();
-      expect(await page.mutantView.mutantDrawer().isHalfOpen()).eq(true);
+      expect(await page.mutantView.mutantDrawer().whenHalfOpen()).eq(true);
     });
   });
 });
