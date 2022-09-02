@@ -73,6 +73,32 @@ describe(FileComponent.name, () => {
       expect(sut.$('.mutant[mutant-id="2"]').title).eq('BlockStatement Survived');
     });
 
+    it('should escape html inside mutant attributes', async () => {
+      // Arrange
+      const fileResult = createFileResult({
+        mutants: [
+          createMutantResult({
+            id: '"&test',
+            replacement: '-',
+            status: '"&test' as MutantStatus.NoCoverage,
+            mutatorName: 'ArithmeticOperator"&<script>alert</script>',
+            location: { start: { line: 2, column: 12 }, end: { line: 2, column: 13 } },
+          }),
+        ],
+        source: 'function add(a, b) {\n  return a + b;\n}',
+      });
+
+      // Act
+      sut.element.model = new FileUnderTestModel(fileResult, 'foo.js');
+      await sut.whenStable();
+
+      // Assert
+      const mutant = sut.$('.mutant');
+      expect(mutant.getAttribute('mutant-id')).eq('"&test');
+      expect(mutant.className).eq('mutant "&test');
+      expect(mutant.title).eq('ArithmeticOperator"&<script>alert</script> "&test');
+    });
+
     it('should hide the mutant-dot if it is filtered', async () => {
       // Arrange
       const fileResult = createFileResult({

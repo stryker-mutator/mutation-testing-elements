@@ -7,7 +7,7 @@ import { bootstrap, prismjs } from '../../style';
 import { findDiffIndices, gte, highlightCode, transformHighlightedLines } from '../../lib/code-helpers';
 import { MutantResult, MutantStatus } from 'mutation-testing-report-schema/api';
 import style from './file.scss';
-import { getContextClassForStatus, getEmojiForStatus, scrollToCodeFragmentIfNeeded } from '../../lib/html-helpers';
+import { escapeHtml, getContextClassForStatus, getEmojiForStatus, scrollToCodeFragmentIfNeeded } from '../../lib/html-helpers';
 import { FileUnderTestModel, MutantModel } from 'mutation-testing-metrics';
 import { createCustomEvent, MteCustomEvent } from '../../lib/custom-events';
 
@@ -202,7 +202,11 @@ export class FileComponent extends LitElement {
             yield {
               elementName: 'span',
               id: mutant.id,
-              attributes: { class: `mutant ${mutant.status}`, title: title(mutant), 'mutant-id': mutant.id },
+              attributes: {
+                class: escapeHtml(`mutant ${mutant.status}`),
+                title: escapeHtml(title(mutant)),
+                'mutant-id': escapeHtml(mutant.id),
+              },
             };
           }
         }

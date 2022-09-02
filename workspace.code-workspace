@@ -60,7 +60,8 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "files.watcherExclude": {
       "**/target": true
-    }
+    },
+    "cSpell.language": "en"
   },
   "launch": {
     "version": "0.2.0",
