@@ -37,3 +37,15 @@ jobs:
         with:
           name: image-diffs
           path: packages/elements/reports/diff/
+  incremental_mutation_testing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: npm ci
+      - run: npm run download-incremental-reports
+      - name: Run Stryker incrementally
+        run: |
+          npm run build
+          npx lerna run --stream --scope mutation-testing-metrics --scope mutation-testing-elements stryker -- -- --incremental
+        env:
+          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
