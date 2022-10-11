@@ -112,7 +112,7 @@ describe(MutationTestReportAppComponent.name, () => {
         testFiles: {},
       });
       await sut.whenStable();
-      expect(sut.$('nav')).false;
+      expect(sut.$('nav')).null;
     });
   });
 
