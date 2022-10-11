@@ -100,4 +100,4 @@ Different Stryker versions use different approaches here. In the table below, yo
 
 \* Using `--ignoreStatic` (new in StrykerJS v6.0)
 
-When you use `--ignoreStatic`, static mutants are ignored. For hybrid mutants, Stryker assumes that the mutant should be killed by the tests that cover the mutant at runtime and they are therefore handled as any other runtime mutant. Thus, in as sense, Stryker will ignore the _static part_ of hybrid mutants.
+When you use `--ignoreStatic`, static mutants are ignored. For hybrid mutants, Stryker assumes that the mutant should be killed by the tests that cover the mutant at runtime and they are therefore handled as any other runtime mutant. Thus, in a sense, Stryker will ignore the _static part_ of hybrid mutants.

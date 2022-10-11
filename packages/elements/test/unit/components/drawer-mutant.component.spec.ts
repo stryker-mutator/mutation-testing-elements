@@ -40,7 +40,7 @@ describe(MutationTestReportDrawerMutant.name, () => {
       sut.element.mutant = mutant;
       await sut.whenStable();
       const headerText = sut.$('[slot="header"]').textContent;
-      expect(headerText).match(/\s*mut-1\s*👽\s*fooMutator\s*Survived\s*\(2:1\)\s*/);
+      expect(headerText).match(/👽\s*fooMutator\s*Survived\s*\(2:1\)\s*/);
     });
 
     it('should render closed by default', () => {

@@ -25,7 +25,7 @@ export class MutationTestReportDrawerMutant extends LitElement {
         this.mutant,
         (mutant) => html`
           <span slot="header"
-            >${mutant.id} ${getEmojiForStatus(mutant.status)} ${mutant.mutatorName} ${mutant.status}
+            >${getEmojiForStatus(mutant.status)} ${mutant.mutatorName} ${mutant.status}
             (${mutant.location.start.line}:${mutant.location.start.column})</span
           >
           <span slot="summary">${this.renderSummary()}</span>

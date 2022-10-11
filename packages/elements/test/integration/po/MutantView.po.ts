@@ -23,6 +23,10 @@ export class MutantView extends View {
   public mutantMarker(mutantId: number | string) {
     return new MutantMarker(this.$(`mte-file >>> span.mutant[mutant-id="${mutantId}"]`), this.browser);
   }
+  public async mutantMarkers() {
+    const spans = await this.$$(`mte-file >>> span.mutant[mutant-id]`);
+    return spans.map((span) => new MutantMarker(span, this.browser));
+  }
 
   public stateFilter() {
     const context = selectShadowRoot(this.$('mte-file >>> mte-state-filter'));

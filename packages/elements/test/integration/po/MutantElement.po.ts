@@ -24,4 +24,7 @@ export abstract class MutantElement extends PageObject {
       return;
     }) as MutantStatus | undefined;
   }
+  public async mutantId() {
+    return this.host.getAttribute('mutant-id');
+  }
 }

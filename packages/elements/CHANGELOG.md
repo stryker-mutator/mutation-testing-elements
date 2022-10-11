@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.12](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.11...v1.7.12) (2022-09-02)
+
+
+### Bug Fixes
+
+* **mutant-id:** escape html in mutant attributes ([#2070](https://github.com/stryker-mutator/mutation-testing-elements/issues/2070)) ([d96d53c](https://github.com/stryker-mutator/mutation-testing-elements/commit/d96d53c617675ab4bc01ef66166d7bebcc936bd1))
+
+
+
+
+
+## [1.7.11](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.10...v1.7.11) (2022-08-31)
+
+
+### Bug Fixes
+
+* Set theme color for ignored status mutants ([#2043](https://github.com/stryker-mutator/mutation-testing-elements/issues/2043)) ([1c90c70](https://github.com/stryker-mutator/mutation-testing-elements/commit/1c90c70a20612134a14f18fa5a769057b5cbe32a))
+
+
+### Features
+
+* improve accessibility of app and metrics-table components ([#1839](https://github.com/stryker-mutator/mutation-testing-elements/issues/1839)) ([60860fd](https://github.com/stryker-mutator/mutation-testing-elements/commit/60860fd3b69e823848a7eec85b69e2135b116a3b))
+* **mutant drawer:** hide mutant id ([#2065](https://github.com/stryker-mutator/mutation-testing-elements/issues/2065)) ([0f735fb](https://github.com/stryker-mutator/mutation-testing-elements/commit/0f735fb263a2b28796a15b002a3b3fca121b304d))
+
+
+
+
+
 ## [1.7.10](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.9...v1.7.10) (2022-01-28)
 
 **Note:** Version bump only for package mutation-testing-elements
