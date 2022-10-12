@@ -36,7 +36,7 @@ All Stryker versions support a variety of different mutators. We've aligned on a
 | `a / b`  | `a * b` |
 | `a % b`  | `a * b` |
 
-[🔝 Back to Top](#supported-mutators)
+[🔝 Back to Top](#)
 
 ## Array Declaration
 
@@ -45,7 +45,7 @@ All Stryker versions support a variety of different mutators. We've aligned on a
 | `new Array(1, 2, 3, 4)` | `new Array()` |
 | `[1, 2, 3, 4]`          | `[ ]`         |
 
-[🔝 Back to Top](#supported-mutators)
+[🔝 Back to Top](#)
 
 ## Assignment Expression
 
@@ -64,7 +64,7 @@ All Stryker versions support a variety of different mutators. We've aligned on a
 
 - ¹: Only supported by Stryker-JS
 
-[🔝 Back to Top](#supported-mutators)
+[🔝 Back to Top](#)
 
 ## Block Statement
 
@@ -82,7 +82,7 @@ becomes:
 function saySomething() {}
 ```
 
-[🔝 Back to Top](#supported-mutators)
+[🔝 Back to Top](#)
 
 ## Boolean Literal
 
@@ -94,7 +94,7 @@ function saySomething() {}
 
 - ¹: Not supported by Stryker4s
 
-[🔝 Back to Top](#supported-mutators)
+[🔝 Back to Top](#)
 
 ## Checked Statement
 
@@ -104,7 +104,7 @@ Stryker.NET _specific mutator_
 | ---------------- | ------- |
 | `checked(2 + 4)` | `2 + 4` |
 
-[🔝 Back to Top](#supported-mutators)
+[🔝 Back to Top](#)
 
 ## Conditional Expression
 
@@ -120,7 +120,7 @@ Stryker.NET _specific mutator_
 
 - ¹: Not supported by Stryker4s
 
-[🔝 Back to Top](#supported-mutators)
+[🔝 Back to Top](#)
 
 ## Equality Operator
 
@@ -141,7 +141,7 @@ Stryker.NET _specific mutator_
 
 - ¹: Only supported on StrykerJS and Stryker4s
 
-[🔝 Back to Top](#supported-mutators)
+[🔝 Back to Top](#)
 
 ## Logical Operator
 
@@ -151,7 +151,7 @@ Stryker.NET _specific mutator_
 | <code>a &vert;&vert; b</code> | `a && b`                      |
 | `a ?? b`                      | `a && b`                      |
 
-[🔝 Back to Top](#supported-mutators)
+[🔝 Back to Top](#)
 
 ## Method Expression
 
@@ -226,7 +226,7 @@ Due to differences in language syntax, method expressions are implemented differ
 | `a.maxBy(b)`       | `a.minBy(b)`       |
 | `a.minBy(b)`       | `a.maxBy(b)`       |
 
-[🔝 Back to Top](#supported-mutators)
+[🔝 Back to Top](#)
 
 ## Object literal
 
@@ -234,7 +234,7 @@ Due to differences in language syntax, method expressions are implemented differ
 | ---------------- | ------- |
 | `{ foo: 'bar' }` | `{ }`   |
 
-[🔝 Back to Top](#supported-mutators)
+[🔝 Back to Top](#)
 
 ## Optional chaining
 
@@ -244,7 +244,7 @@ Due to differences in language syntax, method expressions are implemented differ
 | `foo?.[1]` | `foo[1]`  |
 | `foo?.()`  | `foo()`   |
 
-[🔝 Back to Top](#supported-mutators)
+[🔝 Back to Top](#)
 
 ## Regex
 
@@ -287,7 +287,7 @@ Strings and literals identified to a regex are mutated in the following way:
 
 ¹ JVM only.
 
-[🔝 Back to Top](#supported-mutators)
+[🔝 Back to Top](#)
 
 ## String Literal
 
@@ -299,7 +299,7 @@ Strings and literals identified to a regex are mutated in the following way:
 
 ¹ For Stryker4s, only works with string interpolation and not other types of interpolation (like [Scalameta quasiquotes](https://scalameta.org/docs/trees/guide.html#with-quasiquotes)) to avoid compile errors
 
-[🔝 Back to Top](#supported-mutators)
+[🔝 Back to Top](#)
 
 ## Unary Operator
 
@@ -308,7 +308,7 @@ Strings and literals identified to a regex are mutated in the following way:
 | `+a`     | `-a`    |
 | `-a`     | `+a`    |
 
-[🔝 Back to Top](#supported-mutators)
+[🔝 Back to Top](#)
 
 ## Update Operator
 
@@ -319,4 +319,4 @@ Strings and literals identified to a regex are mutated in the following way:
 | `++a`    | `--a`   |
 | `--a`    | `++a`   |
 
-[🔝 Back to Top](#supported-mutators)
+[🔝 Back to Top](#)
