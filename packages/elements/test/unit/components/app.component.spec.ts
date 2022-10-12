@@ -46,7 +46,7 @@ describe(MutationTestReportAppComponent.name, () => {
   });
 
   describe('`src` attribute', () => {
-    it('should should fetch report data when updated', async () => {
+    it('should fetch report data when updated', async () => {
       // Arrange
       const response: Pick<Response, 'json'> = {
         json: () => Promise.resolve(expectedReport),
@@ -93,6 +93,26 @@ describe(MutationTestReportAppComponent.name, () => {
       sut.element.report = createReport();
       await sut.whenStable();
       expect(sut.$('mte-mutant-view')).ok;
+    });
+
+    it('should load navigation when testFiles are present', async () => {
+      sut.element.report = createReport({
+        testFiles: {
+          'foobar.spec.js': {
+            tests: [],
+          },
+        },
+      });
+      await sut.whenStable();
+      expect(sut.$('nav')).ok;
+    });
+
+    it('should not load navigation if testFiles object is empty', async () => {
+      sut.element.report = createReport({
+        testFiles: {},
+      });
+      await sut.whenStable();
+      expect(sut.$('nav')).null;
     });
   });
 
