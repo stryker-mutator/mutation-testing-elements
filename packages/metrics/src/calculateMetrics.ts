@@ -25,7 +25,7 @@ export function calculateMetrics(files: Record<string, FileResult>): MetricsResu
 export function calculateMutationTestMetrics(result: MutationTestResult): MutationTestMetricsResult {
   const { files, testFiles, projectRoot = '' } = result;
   const fileModelsUnderTest = normalize(files, projectRoot, (input, name) => new FileUnderTestModel(input, name));
-  if (testFiles) {
+  if (testFiles && Object.keys(testFiles).length) {
     const testFileModels = normalize(testFiles, projectRoot, (input, name) => new TestFileModel(input, name));
     relate(
       Object.values(fileModelsUnderTest).flatMap((file) => file.mutants),
