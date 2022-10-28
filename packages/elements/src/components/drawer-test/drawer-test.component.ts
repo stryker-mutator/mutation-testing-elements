@@ -63,13 +63,11 @@ export class MutationTestReportDrawerTestComponent extends LitElement {
     </div>`;
   }
   private renderDetail() {
-    return html`<ul class="list-group divide-y-2 divide-gray-400">
-      ${this.test?.killedMutants?.map(
-        (mutant) => html`<li class="list-group-item p-2" title="This test killed this mutant">🎯 ${describeMutant(mutant)}</li>`
-      )}
+    return html`<ul class="divide-y-2 divide-gray-400">
+      ${this.test?.killedMutants?.map((mutant) => html`<li class="p-2" title="This test killed this mutant">🎯 ${describeMutant(mutant)}</li>`)}
       ${this.test?.coveredMutants
         ?.filter((mutant) => !this.test?.killedMutants?.includes(mutant))
-        .map((mutant) => html`<li class="list-group-item p-2" title="This test covered this mutant">☂️ ${describeMutant(mutant)}</li>`)}
+        .map((mutant) => html`<li class="p-2" title="This test covered this mutant">☂️ ${describeMutant(mutant)}</li>`)}
     </ul>`;
   }
 }
