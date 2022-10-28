@@ -26,14 +26,14 @@ export class MutationTestReportDrawerTestComponent extends LitElement {
 
   public render() {
     return html`<mte-drawer
-      class="bg-slate-200 rounded-t-2xl z-10"
+      class="bg-slate-200 dark:bg-slate-800 rounded-t-2xl z-10"
       ?hasDetail="${this.test?.killedMutants || this.test?.coveredMutants}"
       .mode="${this.mode}"
     >
       ${renderIfPresent(
         this.test,
         (test) => html`
-          <span slot="header"
+          <span class="text-lg" slot="header"
             >${test.id} ${getEmojiForTestStatus(test.status)} ${test.name} [${test.status}]
             ${test.location ? html`(${test.location.start.line}:${test.location.start.column})` : nothing}</span
           >
@@ -47,7 +47,7 @@ export class MutationTestReportDrawerTestComponent extends LitElement {
   private renderSummary() {
     return html`<div class="d-flex mx-6">
       ${this.test?.killedMutants?.[0]
-        ? html`<h6
+        ? html`<h6 class="p-2 border-b-2 border-gray-400"
             >🎯 Killed: ${describeMutant(this.test.killedMutants?.[0])}
             ${this.test.killedMutants.length > 1 ? html`(and ${this.test.killedMutants.length - 1} more)` : nothing}</h6
           >`
@@ -55,7 +55,7 @@ export class MutationTestReportDrawerTestComponent extends LitElement {
       ${renderIfPresent(
         this.test?.coveredMutants,
         (coveredMutants) =>
-          html`<h6>
+          html`<h6 class="p-2 border-b-2 border-gray-400">
             ☂️ Covered ${coveredMutants.length} mutant${plural(coveredMutants)}
             ${renderIf(this.test?.status === TestStatus.Covering, "(yet didn't kill any of them)")}
           </h6>`
@@ -63,13 +63,13 @@ export class MutationTestReportDrawerTestComponent extends LitElement {
     </div>`;
   }
   private renderDetail() {
-    return html`<ul class="list-group">
+    return html`<ul class="list-group divide-y-2 divide-gray-400">
       ${this.test?.killedMutants?.map(
-        (mutant) => html`<li title="This test killed this mutant" class="list-group-item">🎯 ${describeMutant(mutant)}</li>`
+        (mutant) => html`<li class="list-group-item p-2" title="This test killed this mutant">🎯 ${describeMutant(mutant)}</li>`
       )}
       ${this.test?.coveredMutants
         ?.filter((mutant) => !this.test?.killedMutants?.includes(mutant))
-        .map((mutant) => html`<li class="list-group-item" title="This test covered this mutant">☂️ ${describeMutant(mutant)}</li>`)}
+        .map((mutant) => html`<li class="list-group-item p-2" title="This test covered this mutant">☂️ ${describeMutant(mutant)}</li>`)}
     </ul>`;
   }
 }
