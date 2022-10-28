@@ -1,4 +1,4 @@
-import { html, LitElement, unsafeCSS } from 'lit';
+import { html, LitElement, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { MutantModel, TestModel, TestStatus } from 'mutation-testing-metrics';
 import { renderIfPresent, getEmojiForTestStatus, renderIf, plural, describeLocation } from '../../lib/html-helpers';
@@ -31,7 +31,7 @@ export class MutationTestReportDrawerTestComponent extends LitElement {
         (test) => html`
           <span slot="header"
             >${test.id} ${getEmojiForTestStatus(test.status)} ${test.name} [${test.status}]
-            ${test.location ? html`(${test.location.start.line}:${test.location.start.column})` : ''}</span
+            ${test.location ? html`(${test.location.start.line}:${test.location.start.column})` : nothing}</span
           >
           <span slot="summary">${this.renderSummary()}</span>
           <span slot="detail">${this.renderDetail()}</span>
@@ -45,9 +45,9 @@ export class MutationTestReportDrawerTestComponent extends LitElement {
       ${this.test?.killedMutants?.[0]
         ? html`<h6 class="pe-4"
             >🎯 Killed: ${describeMutant(this.test.killedMutants?.[0])}
-            ${this.test.killedMutants.length > 1 ? html`(and ${this.test.killedMutants.length - 1} more)` : ''}</h6
+            ${this.test.killedMutants.length > 1 ? html`(and ${this.test.killedMutants.length - 1} more)` : nothing}</h6
           >`
-        : ''}
+        : nothing}
       ${renderIfPresent(
         this.test?.coveredMutants,
         (coveredMutants) =>

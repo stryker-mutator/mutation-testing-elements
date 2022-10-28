@@ -19,6 +19,9 @@ module.exports = {
   content: ['./src/**/*.ts'],
   theme: {
     extend: {
+      spacing: {
+        'offset': 'var(--top-offset, 0)'
+      },
       colors: {
         body: 'var(--mut-body-bg)',
         light,

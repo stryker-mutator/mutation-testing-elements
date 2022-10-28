@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { repeat } from 'lit/directives/repeat.js';
 import { toAbsoluteUrl } from '../lib/html-helpers';
 import { View } from '../lib/router';
 
@@ -42,13 +43,17 @@ export class MutationTestReportBreadcrumbComponent extends LitElement {
   private renderBreadcrumbItems() {
     if (this.path) {
       const path = this.path;
-      return path.map((item, index) => {
-        if (index === path.length - 1) {
-          return this.renderActiveItem(item);
-        } else {
-          return this.renderLink(item, path.slice(0, index + 1));
+      return repeat(
+        path,
+        (item) => item,
+        (item, index) => {
+          if (index === path.length - 1) {
+            return this.renderActiveItem(item);
+          } else {
+            return this.renderLink(item, path.slice(0, index + 1));
+          }
         }
-      });
+      );
     }
     return undefined;
   }
