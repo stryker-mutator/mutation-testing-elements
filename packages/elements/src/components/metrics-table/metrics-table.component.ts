@@ -56,14 +56,16 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
     return html`<thead class="text-sm text-center">
       <tr>
         <th scope="col" class="py-4 px-4">
-          <span>File / Directory</span
-          ><a
-            href="https://stryker-mutator.io/docs/mutation-testing-elements/mutant-states-and-metrics"
-            target="_blank"
-            class="info-icon float-right"
-            title="What does this all mean?"
-            >ℹ</a
-          >
+          <div class="flex justify-around items-center">
+            <span>File / Directory</span
+            ><a
+              href="https://stryker-mutator.io/docs/mutation-testing-elements/mutant-states-and-metrics"
+              target="_blank"
+              class="info-icon float-right"
+              title="What does this all mean?"
+              >ℹ</a
+            >
+          </div>
         </th>
         ${this.columns.map((column, i) => this.renderTableHead(column, i))}
       </tr>
@@ -103,13 +105,15 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
 
   private renderRow(name: string, row: MetricsResult<TFile, TMetric>, ...path: string[]) {
     return html`<tr title="${row.name}" class="border-b last:border-none dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-slate-700">
-      <td class="font-semibold text-gray-900 dark:text-white"
-        ><mte-file-icon file-name="${row.name}" ?file="${row.file}"></mte-file-icon> ${path.length > 0
-          ? html`<a class="py-4 inline-block hover:text-blue-600 dark:hover:text-blue-500 hover:underline" href="${toAbsoluteUrl(...path)}"
-              >${name}</a
-            >`
-          : html`<span class="py-4">${row.name}</span>`}</td
-      >
+      <td class="font-semibold text-gray-900 dark:text-white">
+        <div class="flex justify-start items-center">
+          <mte-file-icon file-name="${row.name}" ?file="${row.file}" class="mx-1"></mte-file-icon> ${path.length > 0
+            ? html`<a class="py-4 inline-block hover:text-blue-600 dark:hover:text-blue-500 hover:underline" href="${toAbsoluteUrl(...path)}"
+                >${name}</a
+              >`
+            : html`<span class="py-4">${row.name}</span>`}
+        </div>
+      </td>
       ${this.columns.map((column, i) => this.renderCell(column, row.metrics, i))}
     </tr>`;
   }
