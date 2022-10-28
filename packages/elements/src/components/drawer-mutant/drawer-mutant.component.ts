@@ -46,7 +46,7 @@ export class MutationTestReportDrawerMutant extends LitElement {
   }
 
   private renderSummary() {
-    return html`<div class="d-flex mx-6">
+    return html`<div class="d-flex ml-4 mr-6">
       ${this.mutant?.killedByTests?.[0]
         ? html`<h6 class="p-2 border-b-2 border-gray-400"
             >🎯 Killed by: ${this.mutant.killedByTests?.[0].name}
