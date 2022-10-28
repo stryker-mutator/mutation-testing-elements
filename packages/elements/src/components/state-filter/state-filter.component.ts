@@ -2,6 +2,7 @@ import { LitElement, PropertyValues, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { createCustomEvent } from '../../lib/custom-events';
+import { tailwind } from '../../style';
 
 export interface StateFilter<TStatus> {
   status: TStatus;
@@ -13,15 +14,10 @@ export interface StateFilter<TStatus> {
 
 @customElement('mte-state-filter')
 export class FileStateFilterComponent<TStatus extends string> extends LitElement {
+  static styles = [tailwind];
+
   @property({ type: Array })
   public filters?: StateFilter<TStatus>[];
-
-  /**
-   * Disable shadow-DOM for this component to let parent styles apply (such as dark theme)
-   */
-  protected override createRenderRoot(): Element | ShadowRoot {
-    return this;
-  }
 
   public updated(changedProperties: PropertyValues) {
     if (changedProperties.has('filters')) {
@@ -54,8 +50,8 @@ export class FileStateFilterComponent<TStatus extends string> extends LitElement
 
   public render() {
     return html`
-      <div class="top-offset bg-body flex sticky my-1 py-4 z-10">
-        <div class="flex items-center mr-3">
+      <div class="flex flex-row top-offset bg-body sticky my-1 py-4 z-10">
+        <div class="mr-3">
           <button
             title="Previous"
             @click=${this.previous}

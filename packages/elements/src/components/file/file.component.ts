@@ -3,7 +3,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { StateFilter } from '../state-filter/state-filter.component';
-import { prismjs } from '../../style';
+import { prismjs, tailwind } from '../../style';
 import { findDiffIndices, gte, highlightCode, transformHighlightedLines } from '../../lib/code-helpers';
 import { MutantResult, MutantStatus } from 'mutation-testing-report-schema/api';
 import style from './file.scss';
@@ -15,6 +15,8 @@ const diffOldClass = 'diff-old';
 const diffNewClass = 'diff-new';
 @customElement('mte-file')
 export class FileComponent extends LitElement {
+  static styles = [prismjs, tailwind, unsafeCSS(style)];
+
   @state()
   public filters: StateFilter<MutantStatus>[] = [];
 
@@ -33,14 +35,6 @@ export class FileComponent extends LitElement {
   @state()
   public mutants: MutantModel[] = [];
 
-  /**
-   * Disable shadow-DOM for this component to let parent styles apply (such as dark theme)
-   */
-  protected override createRenderRoot(): Element | ShadowRoot {
-    return this;
-  }
-
-  public static styles = [prismjs, unsafeCSS(style)];
   private codeRef = createRef<HTMLElement>();
 
   private readonly filtersChanged = (event: MteCustomEvent<'filters-changed'>) => {
@@ -86,32 +80,33 @@ export class FileComponent extends LitElement {
     };
 
     return html`
-      <div class="row">
-        <div class="col-md-12">
-          <mte-state-filter
-            allow-toggle-all
-            .filters="${this.filters}"
-            @filters-changed="${this.filtersChanged}"
-            @next=${this.nextMutant}
-            @previous=${this.previousMutant}
-          ></mte-state-filter>
-          <pre
-            @click="${this.codeClicked}"
-            id="report-code-block"
-            class="line-numbers ${this.selectedMutantStates.map((state) => `mte-selected-${state}`).join(' ')}"
-          ><code ${ref(this.codeRef)} class="language-${this.model.language}"><table>${this.lines.map((line, lineIndex) => {
-            const lineNr = lineIndex + 1;
-            return html`<tr class="line"
-              ><td class="line-number"></td><td class="line-marker"></td
-              ><td class="code"
-                >${unsafeHTML(line)}${this.renderMutantDots(mutantLineMap.get(lineNr))}${this.lines.length === lineNr
-                  ? renderFinalMutants(lineNr)
-                  : nothing}</td
-              ></tr
-            >`;
-          })}</table></code></pre>
-        </div>
-      </div>
+      <mte-state-filter
+        allow-toggle-all
+        .filters="${this.filters}"
+        @filters-changed="${this.filtersChanged}"
+        @next=${this.nextMutant}
+        @previous=${this.previousMutant}
+      ></mte-state-filter>
+      <pre
+        @click="${this.codeClicked}"
+        id="report-code-block"
+        class="flex line-numbers ${this.selectedMutantStates.map((state) => `mte-selected-${state}`).join(' ')}"
+      >
+        <code ${ref(this.codeRef)} class="flex language-${this.model.language}">
+          <table>${this.lines.map((line, lineIndex) => {
+        const lineNr = lineIndex + 1;
+        return html`<tr class="line"
+          ><td class="line-number"></td><td class="line-marker"></td
+          ><td class="code flex"
+            ><span>${unsafeHTML(line)}</span
+            ><span class="flex flex-row items-center"
+              >${this.renderMutantDots(mutantLineMap.get(lineNr))}${this.lines.length === lineNr ? renderFinalMutants(lineNr) : nothing}</span
+            ></td
+          ></tr
+        >`;
+      })}</table>
+          </code>
+          </pre>
     `;
   }
 
