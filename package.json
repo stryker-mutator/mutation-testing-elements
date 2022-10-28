@@ -90,5 +90,7 @@
     "webpack-dev-server": "^4.0.0",
     "webpack-merge": "^5.7.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@tailwindcss/forms": "^0.5.3"
+  }
 }
