@@ -19,6 +19,9 @@ export class FileStateFilterComponent<TStatus extends string> extends LitElement
   @property({ type: Array })
   public filters?: StateFilter<TStatus>[];
 
+  @property({ reflect: true })
+  public theme?: string;
+
   public updated(changedProperties: PropertyValues) {
     if (changedProperties.has('filters')) {
       this.dispatchFiltersChangedEvent();

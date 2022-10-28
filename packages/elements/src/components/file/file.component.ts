@@ -23,6 +23,9 @@ export class FileComponent extends LitElement {
   @property()
   public model!: FileUnderTestModel;
 
+  @property({ reflect: true })
+  public theme?: string;
+
   @state()
   public selectedMutantStates: MutantStatus[] = [];
 
@@ -82,6 +85,7 @@ export class FileComponent extends LitElement {
     return html`
       <mte-state-filter
         allow-toggle-all
+        .theme="${this.theme}"
         .filters="${this.filters}"
         @filters-changed="${this.filtersChanged}"
         @next=${this.nextMutant}

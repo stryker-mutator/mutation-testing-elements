@@ -19,6 +19,9 @@ export class TestFileComponent extends LitElement {
   @property()
   public model: TestFileModel | undefined;
 
+  @property({ reflect: true })
+  public theme?: string;
+
   @state()
   private filters: StateFilter<TestStatus>[] = [];
 
@@ -72,6 +75,7 @@ export class TestFileComponent extends LitElement {
   public render() {
     return html`
       <mte-state-filter
+        .theme="${this.theme}"
         @next=${this.nextTest}
         @previous=${this.previousTest}
         .filters="${this.filters}"

@@ -17,6 +17,9 @@ export class MutationTestReportTestViewComponent extends LitElement {
   @property({ attribute: false, reflect: false })
   public path!: string[];
 
+  @property({ reflect: true })
+  public theme?: string;
+
   @property()
   private selectedTest?: TestModel;
 
@@ -49,7 +52,9 @@ export class MutationTestReportTestViewComponent extends LitElement {
     return html`
       <main @click="${this.handleClick}">
         <mte-metrics-table .columns="${COLUMNS}" .currentPath="${this.path}" .model="${this.result}"> </mte-metrics-table>
-        ${this.result.file ? html`<mte-test-file @test-selected="${this.handleTestSelected}" .model="${this.result.file}"></mte-test-file>` : nothing}
+        ${this.result.file
+          ? html`<mte-test-file .theme="${this.theme}" @test-selected="${this.handleTestSelected}" .model="${this.result.file}"></mte-test-file>`
+          : nothing}
       </main>
       <mte-drawer-test .mode="${this.drawerMode}" .test="${this.selectedTest}"></mte-drawer-test>
     `;
