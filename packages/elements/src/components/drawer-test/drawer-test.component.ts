@@ -25,7 +25,11 @@ export class MutationTestReportDrawerTestComponent extends LitElement {
   public static styles = [unsafeCSS(style)];
 
   public render() {
-    return html`<mte-drawer ?hasDetail="${this.test?.killedMutants || this.test?.coveredMutants}" .mode="${this.mode}">
+    return html`<mte-drawer
+      class="bg-slate-200 rounded-t-2xl z-10"
+      ?hasDetail="${this.test?.killedMutants || this.test?.coveredMutants}"
+      .mode="${this.mode}"
+    >
       ${renderIfPresent(
         this.test,
         (test) => html`
@@ -34,16 +38,16 @@ export class MutationTestReportDrawerTestComponent extends LitElement {
             ${test.location ? html`(${test.location.start.line}:${test.location.start.column})` : ''}</span
           >
           <span slot="summary">${this.renderSummary()}</span>
-          <span slot="detail">${this.renderDetail()}</span>
+          <span class="mx-6 block" slot="detail">${this.renderDetail()}</span>
         `
       )}</mte-drawer
     >`;
   }
 
   private renderSummary() {
-    return html`<div class="d-flex mx-2">
+    return html`<div class="d-flex mx-6">
       ${this.test?.killedMutants?.[0]
-        ? html`<h6 class="pe-4"
+        ? html`<h6
             >🎯 Killed: ${describeMutant(this.test.killedMutants?.[0])}
             ${this.test.killedMutants.length > 1 ? html`(and ${this.test.killedMutants.length - 1} more)` : ''}</h6
           >`
@@ -51,7 +55,7 @@ export class MutationTestReportDrawerTestComponent extends LitElement {
       ${renderIfPresent(
         this.test?.coveredMutants,
         (coveredMutants) =>
-          html`<h6 class="pe-4">
+          html`<h6>
             ☂️ Covered ${coveredMutants.length} mutant${plural(coveredMutants)}
             ${renderIf(this.test?.status === TestStatus.Covering, "(yet didn't kill any of them)")}
           </h6>`
