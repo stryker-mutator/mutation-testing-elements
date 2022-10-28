@@ -1,8 +1,9 @@
-import { LitElement, PropertyValues, html } from 'lit';
+import { LitElement, PropertyValues, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { createCustomEvent } from '../../lib/custom-events';
 import { tailwind } from '../../style';
+import style from './state-filter.scss';
 
 export interface StateFilter<TStatus> {
   status: TStatus;
@@ -14,7 +15,7 @@ export interface StateFilter<TStatus> {
 
 @customElement('mte-state-filter')
 export class FileStateFilterComponent<TStatus extends string> extends LitElement {
-  static styles = [tailwind];
+  static styles = [tailwind, unsafeCSS(style)];
 
   @property({ type: Array })
   public filters?: StateFilter<TStatus>[];
@@ -55,12 +56,7 @@ export class FileStateFilterComponent<TStatus extends string> extends LitElement
     return html`
       <div class="flex flex-row top-offset bg-body sticky my-1 py-4 z-10">
         <div class="mr-3">
-          <button
-            title="Previous"
-            @click=${this.previous}
-            type="button"
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg p-1 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
+          <button title="Previous" @click=${this.previous} type="button" class="step-button">
             <svg aria-hidden="true" class="w-4 h-4 rotate-180" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path
                 fill-rule="evenodd"
@@ -70,12 +66,7 @@ export class FileStateFilterComponent<TStatus extends string> extends LitElement
             </svg>
             <span class="sr-only">Select previous mutant</span>
           </button>
-          <button
-            title="Next"
-            @click=${this.next}
-            type="button"
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg p-1 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
+          <button title="Next" @click=${this.next} type="button" class="step-button">
             <svg aria-hidden="true" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path
                 fill-rule="evenodd"
@@ -98,10 +89,11 @@ export class FileStateFilterComponent<TStatus extends string> extends LitElement
               <input
                 ?checked="${filter.enabled}"
                 id="filter-${filter.status}"
+                aria-describedby="status-description"
                 type="checkbox"
                 value="${filter.status}"
-                class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 hover:cursor-pointer"
                 @input="${(el: Event) => this.checkboxChanged(filter, (el.target as HTMLInputElement).checked)}"
+                class="w-5 h-5 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
               />
 
               <label
