@@ -40,14 +40,14 @@ export class MutationTestReportDrawerTestComponent extends LitElement {
           <span slot="summary">${this.renderSummary()}</span>
           <span class="mx-6 block" slot="detail">${this.renderDetail()}</span>
         `
-      )}</mte-drawer
-    >`;
+      )}
+    </mte-drawer>`;
   }
 
   private renderSummary() {
     return html`<div class="d-flex ml-4 mr-6">
       ${this.test?.killedMutants?.[0]
-        ? html`<h6 class="p-2 border-b-2 border-gray-400"
+        ? html`<h6 class="p-2"
             >🎯 Killed: ${describeMutant(this.test.killedMutants?.[0])}
             ${this.test.killedMutants.length > 1 ? html`(and ${this.test.killedMutants.length - 1} more)` : nothing}</h6
           >`
@@ -55,7 +55,7 @@ export class MutationTestReportDrawerTestComponent extends LitElement {
       ${renderIfPresent(
         this.test?.coveredMutants,
         (coveredMutants) =>
-          html`<h6 class="p-2 border-b-2 border-gray-400">
+          html`<h6 class="p-2">
             ☂️ Covered ${coveredMutants.length} mutant${plural(coveredMutants)}
             ${renderIf(this.test?.status === TestStatus.Covering, "(yet didn't kill any of them)")}
           </h6>`
@@ -63,7 +63,7 @@ export class MutationTestReportDrawerTestComponent extends LitElement {
     </div>`;
   }
   private renderDetail() {
-    return html`<ul class="divide-y-2 divide-gray-400">
+    return html`<ul class="divide-y-2 divide-gray-400 border-2 border-gray-400 rounded-2xl">
       ${this.test?.killedMutants?.map((mutant) => html`<li class="p-2" title="This test killed this mutant">🎯 ${describeMutant(mutant)}</li>`)}
       ${this.test?.coveredMutants
         ?.filter((mutant) => !this.test?.killedMutants?.includes(mutant))

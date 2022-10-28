@@ -30,7 +30,14 @@ header {
 }
 :host([mode='open']) {
   height: 50%;
+
+  .scrollable{
+    overflow-y: auto;
+    overflow-x: none;
+    height: 100%;
+  }
 }
+
 
 .summary {
   overflow: auto;
