@@ -46,16 +46,16 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
   public render() {
     return html`${this.model
       ? html`<table
-          class="container table-fixed border border-slate-200 rounded-md dark:border-slate-700 transition-[max-width] bg-white dark:bg-gray-800 text-sm w-full text-left"
+          class="container table-auto border border-slate-200 rounded-md dark:border-slate-700 transition-[max-width] bg-white dark:bg-gray-800 text-sm w-full text-left"
           >${this.renderTableHeadRow()}${this.renderTableBody(this.model)}
         </table>`
       : ''}`;
   }
 
   private renderTableHeadRow() {
-    return html`<thead class="text-sm">
+    return html`<thead class="text-sm text-center">
       <tr>
-        <th scope="col" colspan="2" class="py-4 px-4">
+        <th scope="col" class="py-4 px-4">
           <span>File / Directory</span
           ><a
             href="https://stryker-mutator.io/docs/mutation-testing-elements/mutant-states-and-metrics"
@@ -103,9 +103,8 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
 
   private renderRow(name: string, row: MetricsResult<TFile, TMetric>, ...path: string[]) {
     return html`<tr title="${row.name}" class="border-b last:border-none dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-slate-700">
-      <td class="px-4 w-4"><mte-file-icon file-name="${row.name}" ?file="${row.file}"></mte-file-icon></td>
       <td class="font-semibold text-gray-900 dark:text-white"
-        >${path.length > 0
+        ><mte-file-icon file-name="${row.name}" ?file="${row.file}"></mte-file-icon> ${path.length > 0
           ? html`<a class="py-4 inline-block hover:text-blue-600 dark:hover:text-blue-500 hover:underline" href="${toAbsoluteUrl(...path)}"
               >${name}</a
             >`
@@ -125,7 +124,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
       const mutationScoreRounded = value.toFixed(2);
       const progressBarStyle = `width: ${value}%`;
 
-      return html`<td class="py-4 px-2 ${i % 2 === 0 ? 'bg-gray-100 dark:bg-gray-900' : ''} ">
+      return html`<td class="py-4 px-4 ${i % 2 === 0 ? 'bg-gray-100 dark:bg-gray-900' : ''} ">
           ${valueIsPresent
             ? html`<div class="w-full bg-gray-200 rounded-full h-3 dark:bg-gray-700">
                 <div
