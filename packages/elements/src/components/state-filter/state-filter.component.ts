@@ -1,7 +1,6 @@
-import { LitElement, PropertyValues, html, unsafeCSS } from 'lit';
+import { LitElement, PropertyValues, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
-import style from './state-filter.css';
 import { createCustomEvent } from '../../lib/custom-events';
 
 export interface StateFilter<TStatus> {
@@ -53,11 +52,9 @@ export class FileStateFilterComponent<TStatus extends string> extends LitElement
     this.dispatchEvent(createCustomEvent('previous', undefined, { bubbles: true, composed: true }));
   };
 
-  public static styles = [unsafeCSS(style)];
-
   public render() {
     return html`
-      <div class="legend sticky flex my-1 py-4 z-10">
+      <div class="top-offset bg-body flex sticky my-1 py-4 z-10">
         <div class="flex items-center mr-3">
           <button
             title="Previous"
@@ -96,7 +93,7 @@ export class FileStateFilterComponent<TStatus extends string> extends LitElement
           this.filters,
           // Key function. I super duper want that all properties are weighed here,
           // see https://lit-html.polymer-project.org/guide/writing-templates#repeating-templates-with-the-repeat-directive
-          (filter) => JSON.stringify(filter),
+          (filter) => filter.status,
           (filter) => html`
             <div class="flex items-center mr-4" data-status="${filter.status}">
               <input

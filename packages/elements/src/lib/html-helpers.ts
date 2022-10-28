@@ -1,4 +1,4 @@
-import { TemplateResult } from 'lit';
+import { nothing, TemplateResult } from 'lit';
 import { TestStatus } from 'mutation-testing-metrics';
 import { MutantStatus, OpenEndLocation } from 'mutation-testing-report-schema/api';
 import { DRAWER_HALF_OPEN_SIZE } from '../components/drawer/drawer.component';
@@ -7,7 +7,10 @@ export function notNullish<T>(value: T | undefined | null): value is T {
   return value !== null && value !== undefined;
 }
 
-export function renderIf(condition: unknown, consequence: (() => TemplateResult) | TemplateResult | string): string | TemplateResult | undefined {
+export function renderIf(
+  condition: unknown,
+  consequence: (() => TemplateResult) | TemplateResult | string
+): string | TemplateResult | typeof nothing {
   if (condition) {
     if (typeof consequence === 'function') {
       return consequence();
@@ -15,13 +18,13 @@ export function renderIf(condition: unknown, consequence: (() => TemplateResult)
       return consequence;
     }
   } else {
-    return undefined;
+    return nothing;
   }
 }
 
-export function renderIfPresent<T>(value: T | undefined | null, factory: (value: T) => TemplateResult): TemplateResult | undefined {
+export function renderIfPresent<T>(value: T | undefined | null, factory: (value: T) => TemplateResult): TemplateResult | typeof nothing {
   if (value === null || value === undefined) {
-    return undefined;
+    return nothing;
   } else {
     return factory(value);
   }

@@ -1,4 +1,4 @@
-import { LitElement, html, unsafeCSS, PropertyValues, svg } from 'lit';
+import { LitElement, html, unsafeCSS, PropertyValues, svg, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
@@ -106,7 +106,7 @@ export class FileComponent extends LitElement {
               ><td class="code"
                 >${unsafeHTML(line)}${this.renderMutantDots(mutantLineMap.get(lineNr))}${this.lines.length === lineNr
                   ? renderFinalMutants(lineNr)
-                  : ''}</td
+                  : nothing}</td
               ></tr
             >`;
           })}</table></code></pre>

@@ -1,11 +1,10 @@
-import { LitElement, html, PropertyValues, unsafeCSS } from 'lit';
+import { LitElement, html, PropertyValues, unsafeCSS, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { MutationTestResult } from 'mutation-testing-report-schema/api';
 import { MetricsResult, calculateMutationTestMetrics } from 'mutation-testing-metrics';
 import { tailwind, globals } from '../../style';
 import { locationChange$, View } from '../../lib/router';
 import { Subscription } from 'rxjs';
-import style from './app.css';
 import theme from './theme.scss';
 import { createCustomEvent } from '../../lib/custom-events';
 import { FileUnderTestModel, Metrics, MutationTestMetricsResult, TestFileModel, TestMetrics } from 'mutation-testing-metrics';
@@ -170,7 +169,7 @@ export class MutationTestReportAppComponent extends LitElement {
     isLocalStorageAvailable() && localStorage.setItem('mutation-testing-elements-theme', this.theme);
   };
 
-  public static styles = [globals, unsafeCSS(theme), tailwind, unsafeCSS(style)];
+  public static styles = [globals, unsafeCSS(theme), tailwind];
 
   public readonly subscriptions: Subscription[] = [];
   public connectedCallback() {
@@ -189,7 +188,7 @@ export class MutationTestReportAppComponent extends LitElement {
         <h1 class="text-5xl font-bold tracking-tight mb-5 mt-4"
           >${this.context.result.name}${this.titlePostfix
             ? html`<small class="ml-4 font-light text-light-muted dark:text-dark-muted">${this.titlePostfix}</small>`
-            : ''}
+            : nothing}
         </h1>
       `;
     }
@@ -202,23 +201,21 @@ export class MutationTestReportAppComponent extends LitElement {
         <div class="mx-auto px-4 bg-bodyz text-gray-800 dark:text-gray-200 font-sans">
           <div class="transition-colors">
             ${this.renderErrorMessage()}
-            <mte-theme-switch @theme-switch="${this.themeSwitch}" class="float-right sticky pt-4 mx-4 z-20 theme-switch" .theme="${this.theme}">
+            <mte-theme-switch @theme-switch="${this.themeSwitch}" class="float-right sticky pt-4 mx-4 z-20 top-offset" .theme="${this.theme}">
             </mte-theme-switch>
             ${this.renderTitle()} ${this.renderTabs()}
-            <!-- TODO: solution for putting theme="\${this.theme}" on everything -->
             <mte-breadcrumb .view="${this.context.view}" .path="${this.context.path}"></mte-breadcrumb>
             ${this.context.view === 'mutant' && this.context.result
               ? html`<mte-mutant-view
                   id="mte-mutant-view"
-                  theme="${this.theme}"
                   .result="${this.context.result}"
                   .thresholds="${this.report!.thresholds}"
                   .path="${this.path}"
                 ></mte-mutant-view>`
-              : ''}
+              : nothing}
             ${this.context.view === 'test' && this.context.result
-              ? html`<mte-test-view id="mte-test-view" .result="${this.context.result}" .path="${this.path}" theme="${this.theme}"></mte-test-view>`
-              : ''}
+              ? html`<mte-test-view id="mte-test-view" .result="${this.context.result}" .path="${this.path}"></mte-test-view>`
+              : nothing}
           </div>
         </div>
       `;

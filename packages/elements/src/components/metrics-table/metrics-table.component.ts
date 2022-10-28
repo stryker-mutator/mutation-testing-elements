@@ -1,5 +1,6 @@
-import { html, LitElement } from 'lit';
+import { html, LitElement, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { repeat } from 'lit/directives/repeat.js';
 import { MetricsResult } from 'mutation-testing-metrics';
 import { Thresholds } from 'mutation-testing-report-schema/api';
 import { toAbsoluteUrl } from '../../lib/html-helpers';
@@ -49,7 +50,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
           class="container table-auto border border-slate-200 rounded-md dark:border-slate-700 transition-[max-width] bg-white dark:bg-gray-800 text-sm w-full text-left"
           >${this.renderTableHeadRow()}${this.renderTableBody(this.model)}
         </table>`
-      : ''}`;
+      : nothing}`;
   }
 
   private renderTableHeadRow() {
@@ -67,7 +68,11 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
             >
           </div>
         </th>
-        ${this.columns.map((column, i) => this.renderTableHead(column, i))}
+        ${repeat(
+          this.columns,
+          (column) => column.key.toString(),
+          (column, i) => this.renderTableHead(column, i)
+        )}
       </tr>
     </thead>`;
   }

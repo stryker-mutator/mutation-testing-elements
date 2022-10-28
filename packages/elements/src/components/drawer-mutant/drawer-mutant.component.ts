@@ -1,4 +1,4 @@
-import { html, LitElement, unsafeCSS } from 'lit';
+import { html, LitElement, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { MutantModel, TestModel } from 'mutation-testing-metrics';
 import { MutantStatus } from 'mutation-testing-report-schema/api';
@@ -6,7 +6,7 @@ import { describeLocation, getEmojiForStatus, plural, renderIf, renderIfPresent 
 import { DrawerMode } from '../drawer/drawer.component';
 import style from './drawer-mutant.scss';
 
-const describeTest = (test: TestModel) => html`${test.name}${test.sourceFile && test.location ? ` (${describeLocation(test)})` : ''}`;
+const describeTest = (test: TestModel) => html`${test.name}${test.sourceFile && test.location ? ` (${describeLocation(test)})` : nothing}`;
 
 @customElement('mte-drawer-mutant')
 export class MutationTestReportDrawerMutant extends LitElement {
