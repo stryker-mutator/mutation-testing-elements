@@ -17,6 +17,9 @@ module.exports = {
   // Custom selector for dark theme
   darkMode: ['class', ':host([theme="dark"])'],
   content: ['./src/**/*.ts'],
+  plugins: [
+    require('@tailwindcss/forms'),
+  ],
   theme: {
     extend: {
       spacing: {

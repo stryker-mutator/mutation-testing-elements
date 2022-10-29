@@ -3,13 +3,13 @@
 @import '../../style/code.scss';
 
 $mutant-themes: (
-  'Killed': 'success',
-  'NoCoverage': 'caution',
-  'Survived': 'danger',
-  'Timeout': 'warning',
-  'CompileError': 'secondary',
-  'RuntimeError': 'secondary',
-  'Ignored': 'secondary',
+  'Killed': 'green-700',
+  'NoCoverage': 'orange-500',
+  'Survived': 'red-500',
+  'Timeout': 'amber-400',
+  'CompileError': 'neutral-400',
+  'RuntimeError': 'neutral-400',
+  'Ignored': 'neutral-400',
 );
 
 // These 2 themes get underlined with a squiggly (wavy) for extra emphasis
@@ -18,7 +18,7 @@ $mutant-squiggly: 'Survived', 'NoCoverage';
 @each $status, $theme in $mutant-themes {
   @if (index($mutant-squiggly, $status) == null) {
     .mte-selected-#{$status} .mutant.#{$status} {
-      border-color: var(--bs-#{$theme});
+      @apply border-#{$theme};
       border-bottom-width: 2px;
       border-bottom-style: solid;
       cursor: pointer;
@@ -26,12 +26,12 @@ $mutant-squiggly: 'Survived', 'NoCoverage';
   }
 
   svg.mutant-dot.#{$status} {
-    fill: var(--bs-#{$theme});
+    @apply fill-#{$theme};
   }
 }
 
 svg.mutant-dot.selected {
-  fill: var(--bs-info);
+  @apply fill-sky-400;
 }
 
 @each $status in $mutant-squiggly {

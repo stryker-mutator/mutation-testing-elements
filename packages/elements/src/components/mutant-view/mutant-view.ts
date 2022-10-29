@@ -15,6 +15,9 @@ export class MutationTestReportMutantViewComponent extends LitElement {
   @property()
   private selectedMutant?: MutantModel;
 
+  @property({ reflect: true })
+  public theme?: string;
+
   public static styles = [unsafeCSS(style)];
 
   @property()
@@ -54,7 +57,9 @@ export class MutationTestReportMutantViewComponent extends LitElement {
       <main @click="${this.handleClick}">
         <mte-metrics-table .columns="${COLUMNS}" .currentPath="${this.path}" .thresholds="${this.thresholds}" .model="${this.result}">
         </mte-metrics-table>
-        ${this.result.file ? html`<mte-file @mutant-selected="${this.handleMutantSelected}" .model="${this.result.file}"></mte-file>` : nothing}
+        ${this.result.file
+          ? html`<mte-file .theme="${this.theme}" @mutant-selected="${this.handleMutantSelected}" .model="${this.result.file}"></mte-file>`
+          : nothing}
       </main>
       <mte-drawer-mutant .mode="${this.drawerMode}" .mutant="${this.selectedMutant}"></mte-drawer-mutant>
     `;

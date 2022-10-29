@@ -1,0 +1,37 @@
+.step-button {
+  @apply
+    text-white
+    text-center
+    mr-2
+    p-1
+    inline-flex
+    items-center
+    rounded-lg
+    ring-1
+    bg-blue-700
+
+    hover:bg-blue-800
+    focus:ring-2
+    focus:outline-none
+    focus:ring-blue-300
+
+    dark:bg-blue-600
+    dark:hover:bg-blue-700
+    dark:focus:ring-blue-800;
+}
+
+.status-checkbox {
+  @apply
+    w-4
+    h-4
+    text-blue-600
+    bg-gray-100
+    rounded
+    border-gray-300
+    focus:ring-blue-500
+    dark:focus:ring-blue-600
+    dark:ring-offset-gray-800
+    focus:ring-2
+    dark:bg-gray-700
+    dark:border-gray-600;
+}

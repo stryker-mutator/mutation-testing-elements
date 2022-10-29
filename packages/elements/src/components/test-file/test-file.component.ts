@@ -6,7 +6,7 @@ import { TestFileModel, TestModel, TestStatus } from 'mutation-testing-metrics';
 import style from './test-file.scss';
 
 import '../../style/prism-plugins';
-import { prismjs } from '../../style';
+import { prismjs, tailwind } from '../../style';
 import { determineLanguage, transformHighlightedLines, highlightCode, gte } from '../../lib/code-helpers';
 import { createCustomEvent, MteCustomEvent } from '../../lib/custom-events';
 import { getContextClassForTestStatus, getEmojiForTestStatus, scrollToCodeFragmentIfNeeded } from '../../lib/html-helpers';
@@ -14,10 +14,13 @@ import { StateFilter } from '../state-filter/state-filter.component';
 
 @customElement('mte-test-file')
 export class TestFileComponent extends LitElement {
+  public static styles = [prismjs, tailwind, unsafeCSS(style)];
+
   @property()
   public model: TestFileModel | undefined;
 
-  public static styles = [prismjs, unsafeCSS(style)];
+  @property({ reflect: true })
+  public theme?: string;
 
   @state()
   private filters: StateFilter<TestStatus>[] = [];
@@ -33,13 +36,6 @@ export class TestFileComponent extends LitElement {
 
   @state()
   private tests: TestModel[] = [];
-
-  /**
-   * Disable shadow-DOM for this component to let parent styles apply (such as dark theme)
-   */
-  protected override createRenderRoot(): Element | ShadowRoot {
-    return this;
-  }
 
   private readonly filtersChanged = (event: MteCustomEvent<'filters-changed'>) => {
     this.enabledStates = event.detail as TestStatus[];
@@ -78,17 +74,14 @@ export class TestFileComponent extends LitElement {
 
   public render() {
     return html`
-      <div class="row">
-        <div class="col-md-12">
-          <mte-state-filter
-            @next=${this.nextTest}
-            @previous=${this.previousTest}
-            .filters="${this.filters}"
-            @filters-changed="${this.filtersChanged}"
-          ></mte-state-filter>
-          ${this.renderTestList()} ${this.renderCode()}
-        </div>
-      </div>
+      <mte-state-filter
+        .theme="${this.theme}"
+        @next=${this.nextTest}
+        @previous=${this.previousTest}
+        .filters="${this.filters}"
+        @filters-changed="${this.filtersChanged}"
+      ></mte-state-filter>
+      ${this.renderTestList()} ${this.renderCode()}
     `;
   }
 
@@ -131,15 +124,16 @@ export class TestFileComponent extends LitElement {
         return this.renderTestDots([...testsByLine.entries()].filter(([line]) => line > lastLine).flatMap(([, tests]) => tests));
       };
 
-      return html`<pre id="report-code-block" class="line-numbers"><code class="language-${determineLanguage(this.model.name)}"><table>
+      return html`<pre id="report-code-block" class="flex line-numbers"><code class="flex language-${determineLanguage(this.model.name)}"><table>
         ${this.lines.map(
         (line, lineNr) =>
           html`<tr class="line"
             ><td class="line-number"></td><td class="line-marker"></td
-            ><td class="code"
-              >${unsafeHTML(line)}${this.renderTestDots(testsByLine.get(lineNr + 1))}${this.lines.length === lineNr + 1
-                ? renderFinalTests(lineNr + 1)
-                : ''}</td
+            ><td class="code flex"
+              ><span>${unsafeHTML(line)}</span
+              ><span class="flex flex-row items-center"
+                >${this.renderTestDots(testsByLine.get(lineNr + 1))}${this.lines.length === lineNr + 1 ? renderFinalTests(lineNr + 1) : ''}</span
+              ></td
             ></tr
           >`
       )}</table></code></pre>`;

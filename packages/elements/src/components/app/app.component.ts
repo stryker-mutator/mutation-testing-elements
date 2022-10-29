@@ -51,7 +51,7 @@ export class MutationTestReportAppComponent extends LitElement {
   public titlePostfix: string | undefined;
 
   @property({ reflect: true })
-  public theme: string | undefined;
+  public theme?: string;
 
   @property({ attribute: false })
   public get themeBackgroundColor(): string {
@@ -208,13 +208,14 @@ export class MutationTestReportAppComponent extends LitElement {
             ${this.context.view === 'mutant' && this.context.result
               ? html`<mte-mutant-view
                   id="mte-mutant-view"
+                  .theme="${this.theme}"
                   .result="${this.context.result}"
                   .thresholds="${this.report!.thresholds}"
                   .path="${this.path}"
                 ></mte-mutant-view>`
               : nothing}
             ${this.context.view === 'test' && this.context.result
-              ? html`<mte-test-view id="mte-test-view" .result="${this.context.result}" .path="${this.path}"></mte-test-view>`
+              ? html`<mte-test-view id="mte-test-view" .theme="${this.theme}" .result="${this.context.result}" .path="${this.path}"></mte-test-view>`
               : nothing}
           </div>
         </div>
