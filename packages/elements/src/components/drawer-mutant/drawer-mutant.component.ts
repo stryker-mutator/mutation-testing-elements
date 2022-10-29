@@ -71,7 +71,7 @@ export class MutationTestReportDrawerMutant extends LitElement {
   }
 
   private renderDetail() {
-    return html`<ul class="list-group divide-y-2 divide-gray-400">
+    return html`<ul class="list-group divide-y-2 divide-gray-400 mb-6 ml-2">
       ${this.mutant?.killedByTests?.map(
         (test) => html`<li class="mx-6 p-2" title="This mutant was killed by this test">🎯 ${describeTest(test)}</li>`
       )}

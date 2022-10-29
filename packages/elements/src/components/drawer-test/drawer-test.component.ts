@@ -63,7 +63,7 @@ export class MutationTestReportDrawerTestComponent extends LitElement {
     </div>`;
   }
   private renderDetail() {
-    return html`<ul class="divide-y-2 divide-gray-400 border-2 border-gray-400 rounded-2xl">
+    return html`<ul class="divide-y-2 divide-gray-400 border-2 border-gray-400 rounded-2xl mb-6 ml-2">
       ${this.test?.killedMutants?.map((mutant) => html`<li class="p-2" title="This test killed this mutant">🎯 ${describeMutant(mutant)}</li>`)}
       ${this.test?.coveredMutants
         ?.filter((mutant) => !this.test?.killedMutants?.includes(mutant))

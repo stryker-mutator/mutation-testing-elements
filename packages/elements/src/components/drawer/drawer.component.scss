@@ -38,6 +38,9 @@ header {
   }
 }
 
+.drawer-list{
+  width: calc(100% - 32px);
+}
 
 .summary {
   overflow: auto;

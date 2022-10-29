@@ -47,7 +47,7 @@ export class MutationTestReportDrawer extends LitElement {
 
   render() {
     return html`<aside class="scrollable" @click="${(event: Event) => event.stopPropagation()}">
-      <div>
+      <div class="drawer-list">
         <header>
           <h5>
             <slot name="header"></slot>
