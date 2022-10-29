@@ -46,8 +46,8 @@ export class MutationTestReportDrawer extends LitElement {
   };
 
   render() {
-    return html`<aside class="h-100 container-fluid" @click="${(event: Event) => event.stopPropagation()}">
-      <div class="h-100 row">
+    return html`<aside class="scrollable" @click="${(event: Event) => event.stopPropagation()}">
+      <div class="drawer-list">
         <header>
           <h5>
             <slot name="header"></slot>
@@ -57,7 +57,7 @@ export class MutationTestReportDrawer extends LitElement {
             )}
           </h5>
         </header>
-        <div class="h-100 overflow-auto col-md-12">
+        <div>
           <slot name="summary"></slot>
           ${renderIf(this.hasDetail && this.mode === 'open', html`<slot name="detail"></slot>`)}
         </div>

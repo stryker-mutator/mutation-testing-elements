@@ -30,6 +30,16 @@ header {
 }
 :host([mode='open']) {
   height: 50%;
+
+  .scrollable{
+    overflow-y: auto;
+    overflow-x: none;
+    height: 100%;
+  }
+}
+
+.drawer-list{
+  width: calc(100% - 32px);
 }
 
 .summary {

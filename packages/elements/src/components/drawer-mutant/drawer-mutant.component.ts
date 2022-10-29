@@ -26,54 +26,56 @@ export class MutationTestReportDrawerMutant extends LitElement {
   public static styles = [unsafeCSS(style)];
 
   public render() {
-    return html`<mte-drawer ?hasDetail="${this.mutant?.killedByTests || this.mutant?.coveredByTests}" .mode="${this.mode}">
+    return html`<mte-drawer
+      class="bg-slate-200 dark:bg-slate-800 rounded-t-2xl z-10"
+      ?hasDetail="${this.mutant?.killedByTests || this.mutant?.coveredByTests}"
+      .mode="${this.mode}"
+    >
       ${renderIfPresent(
         this.mutant,
         (mutant) => html`
-          <span slot="header"
+          <span class="text-lg" slot="header"
             >${getEmojiForStatus(mutant.status)} ${mutant.mutatorName} ${mutant.status}
             (${mutant.location.start.line}:${mutant.location.start.column})</span
           >
           <span slot="summary">${this.renderSummary()}</span>
-          <span slot="detail">${this.renderDetail()}</span>
+          <span slot="detail" class="block mx-6">${this.renderDetail()}</span>
         `
       )}
     </mte-drawer>`;
   }
 
   private renderSummary() {
-    return html`<div class="d-flex mx-2">
+    return html`<div class="d-flex ml-4 mr-6">
       ${this.mutant?.killedByTests?.[0]
-        ? html`<h6 class="pe-4"
+        ? html`<h6 class="p-2"
             >🎯 Killed by: ${this.mutant.killedByTests?.[0].name}
             ${this.mutant.killedByTests.length > 1 ? html`(and ${this.mutant.killedByTests.length - 1} more)` : undefined}</h6
           >`
         : undefined}
-      ${renderIf(this.mutant?.static, html`<h6 class="pe-4">🗿 Static mutant</h6>`)}
+      ${renderIf(this.mutant?.static, html`<h6>🗿 Static mutant</h6>`)}
       ${renderIfPresent(
         this.mutant?.coveredByTests,
         (coveredTests) =>
-          html`<h6 class="pe-4"
+          html`<h6 class="p-2"
             >☂️ Covered by ${coveredTests.length} test${plural(coveredTests)}
             ${renderIf(this.mutant?.status === MutantStatus.Survived, '(yet still survived)')}</h6
           >`
       )}
       ${renderIf(
         this.mutant?.statusReason?.trim(),
-        html`<h6 class="pe-4" title="Reason for the ${this.mutant!.status} status">🕵️ ${this.mutant!.statusReason}</h6>`
+        html`<h6 class="p-2" title="Reason for the ${this.mutant!.status} status">🕵️ ${this.mutant!.statusReason}</h6>`
       )}
       ${renderIfPresent(this.mutant?.description, (description) => html`<h6 class="pe-4">📖 ${description}</h6>`)}
     </div>`;
   }
 
   private renderDetail() {
-    return html`<ul class="list-group">
-      ${this.mutant?.killedByTests?.map(
-        (test) => html`<li title="This mutant was killed by this test" class="list-group-item">🎯 ${describeTest(test)}</li>`
-      )}
+    return html`<ul class="divide-y-2 divide-gray-400 border-2 border-gray-400 rounded-2xl mb-6 ml-2">
+      ${this.mutant?.killedByTests?.map((test) => html`<li class="p-2" title="This mutant was killed by this test">🎯 ${describeTest(test)}</li>`)}
       ${this.mutant?.coveredByTests
         ?.filter((test) => !this.mutant?.killedByTests?.includes(test))
-        .map((test) => html`<li class="list-group-item" title="This mutant was covered by this test">☂️ ${describeTest(test)}</li>`)}
+        .map((test) => html`<li class="p-2" title="This mutant was covered by this test">☂️ ${describeTest(test)}</li>`)}
     </ul>`;
   }
 }
