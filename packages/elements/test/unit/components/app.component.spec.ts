@@ -220,7 +220,7 @@ describe(MutationTestReportAppComponent.name, () => {
         sut.element.report = createReport();
         await sut.whenStable();
 
-        expect(sut.element.themeBackgroundColor).eq('#fff');
+        expect(sut.element.themeBackgroundColor).eq(' #fff');
       });
 
       it('should show dark theme-color on dark theme', async () => {
@@ -229,7 +229,7 @@ describe(MutationTestReportAppComponent.name, () => {
         sut.element.theme = 'dark';
         await sut.whenStable();
 
-        expect(sut.element.themeBackgroundColor).eq('#18191a');
+        expect(sut.element.themeBackgroundColor).eq(' #0f172a');
       });
     });
 
@@ -282,7 +282,7 @@ describe(MutationTestReportAppComponent.name, () => {
         sut.$('mte-theme-switch').dispatchEvent(createCustomEvent('theme-switch', 'dark'));
       });
       expect(event?.detail.theme).eq('dark');
-      expect(event?.detail.themeBackgroundColor).eq('#18191a');
+      expect(event?.detail.themeBackgroundColor).eq(' #0f172a');
     });
 
     it('should trigger a `theme-changed` event when the theme changes during init', async () => {
@@ -293,7 +293,7 @@ describe(MutationTestReportAppComponent.name, () => {
         await sut.whenStable();
       });
       expect(event?.detail.theme).eq('dark');
-      expect(event?.detail.themeBackgroundColor).eq('#18191a');
+      expect(event?.detail.themeBackgroundColor).eq(' #0f172a');
     });
   });
 
