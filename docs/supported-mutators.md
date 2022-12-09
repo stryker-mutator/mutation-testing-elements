@@ -25,6 +25,7 @@ All Stryker versions support a variety of different mutators. We've aligned on a
 | [String Literal](#string-literal)                 |                     ✅                     |                        ✅                        |                      ✅                      |
 | [Unary Operator](#unary-operator)                 |                     ✅                     |                        ✅                        |                      ❌                      |
 | [Update Operator](#update-operator)               |                     ✅                     |                        ✅                        |                     n/a                      |
+| [Math Methods](#math-methods)                     |                     ❌                     |                        ✅                        |                     ❌                     |
 
 ## Arithmetic Operator
 
@@ -320,3 +321,56 @@ Strings and literals identified to a regex are mutated in the following way:
 | `--a`    | `++a`   |
 
 [🔝 Back to Top](#)
+
+## Math Methods
+|      Original           |         Mutated         |
+| ----------------------- | ----------------------- |
+| `Acos()`                  | `Acosh()`                 |
+| `Acos()`                  | `Asin()`                  |
+| `Acos()`                  | `Atan()`                  |
+| `Acosh()`                 | `Acos()`                  |
+| `Acosh()`                 | `Asinh()`                 |
+| `Acosh()`                 | `Atanh()`                 |
+| `Asin()`                  | `Asinh()`                 |
+| `Asin()`                  | `Acos()`                  |
+| `Asin()`                  | `Atan()`                  |
+| `Asinh()`                 | `Asin()`                  |
+| `Asinh()`                 | `Acosh()`                 |
+| `Asinh()`                 | `Atanh()`                 |
+| `Atan()`                  | `Atanh()`                 |
+| `Atan()`                  | `Acos()`                  |
+| `Atan()`                  | `Asin()`                  |
+| `Atanh()`                 | `Atan()`                  |
+| `Atanh()`                 | `Acosh()`                 |
+| `Atanh()`                 | `Asinh()`                 |
+| `BitDecrement()`          | `BitIncrement()`          |
+| `BitIncrement()`          | `BitDecrement()`          |
+| `Ceiling()`               | `Floor()`                 |
+| `Cos()`                   | `Cosh()`                  |
+| `Cos()`                   | `Sin()`                   |
+| `Cos()`                   | `Tan()`                   |
+| `Cosh()`                  | `Cos()`                   |
+| `Cosh()`                  | `Sinh()`                  |
+| `Cosh()`                  | `Tanh()`                  |
+| `Exp()`                   | `Log()`                   |
+| `Floor()`                 | `Ceiling()`               |
+| `Log()`                   | `Exp()`                   |
+| `Log()`                   | `Pow()`                   |
+| `MaxMagnitude()`          | `MinMagnitude()`          |
+| `MinMagnitude()`          | `MaxMagnitude()`          |
+| `Pow()`                   | `Log()`                   |
+| `ReciprocalEstimate()`    | `ReciprocalSqrtEstimate()` |
+| `ReciprocalSqrtEstimate()` | `ReciprocalEstimate()`   |
+| `ReciprocalSqrtEstimate()` | `Sqrt()`                 |
+| `Sin()`                   | `Sinh()`                  |
+| `Sin()`                   | `Cos()`                   |
+| `Sin()`                   | `Tan()`                   |
+| `Sinh()`                  | `Sin()`                   |
+| `Sinh()`                  | `Cosh()`                  |
+| `Sinh()`                  | `Tanh()`                  |
+| `Tan()`                   | `Tanh()`                  |
+| `Tan()`                   | `Cos()`                   |
+| `Tan()`                   | `Sin()`                   |
+| `Tanh()`                  | `Tan()`                   |
+| `Tanh()`                  | `Cosh()`                  |
+| `Tanh()`                  | `Sinh()`                  |
