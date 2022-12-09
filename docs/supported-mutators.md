@@ -323,6 +323,9 @@ Strings and literals identified to a regex are mutated in the following way:
 [🔝 Back to Top](#)
 
 ## Math Methods
+
+> Currently only implemented for Stryker.NET. Future implementations for other languages can be implemented differently.
+
 |      Original           |         Mutated         |
 | ----------------------- | ----------------------- |
 | `Acos()`                  | `Acosh()`                 |
@@ -374,3 +377,5 @@ Strings and literals identified to a regex are mutated in the following way:
 | `Tanh()`                  | `Tan()`                   |
 | `Tanh()`                  | `Cosh()`                  |
 | `Tanh()`                  | `Sinh()`                  |
+
+[🔝 Back to Top](#)
