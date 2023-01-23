@@ -78,31 +78,31 @@ export class FileStateFilterComponent<TStatus extends string> extends LitElement
 
         ${renderIf(
           this.filters?.length,
-        repeat(
+          repeat(
             this.filters!,
-          // Key function. I super duper want that all properties are weighed here,
-          // see https://lit-html.polymer-project.org/guide/writing-templates#repeating-templates-with-the-repeat-directive
-          (filter) => filter.status,
-          (filter) => html`
-            <div class="mr-4 flex items-center" data-status="${filter.status}">
-              <input
-                ?checked="${filter.enabled}"
-                id="filter-${filter.status}"
-                aria-describedby="status-description"
-                type="checkbox"
-                value="${filter.status}"
-                @input="${(el: Event) => this.checkboxChanged(filter, (el.target as HTMLInputElement).checked)}"
-                class="h-5 w-5 rounded border-gray-300 bg-gray-100 text-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500"
-              />
+            // Key function. I super duper want that all properties are weighed here,
+            // see https://lit-html.polymer-project.org/guide/writing-templates#repeating-templates-with-the-repeat-directive
+            (filter) => filter.status,
+            (filter) => html`
+              <div class="mr-4 flex items-center" data-status="${filter.status}">
+                <input
+                  ?checked="${filter.enabled}"
+                  id="filter-${filter.status}"
+                  aria-describedby="status-description"
+                  type="checkbox"
+                  value="${filter.status}"
+                  @input="${(el: Event) => this.checkboxChanged(filter, (el.target as HTMLInputElement).checked)}"
+                  class="h-5 w-5 rounded border-gray-300 bg-gray-100 text-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                />
 
-              <label
-                for="filter-${filter.status}"
-                class="${this.bgForContext(filter.context)} mx-2 rounded px-2.5 py-0.5 text-sm font-medium hover:cursor-pointer"
-              >
-                ${filter.label} (${filter.count})
-              </label>
-            </div>
-          `
+                <label
+                  for="filter-${filter.status}"
+                  class="${this.bgForContext(filter.context)} mx-2 rounded px-2.5 py-0.5 text-sm font-medium hover:cursor-pointer"
+                >
+                  ${filter.label} (${filter.count})
+                </label>
+              </div>
+            `
           ) as TemplateResult
         )}
       </div>

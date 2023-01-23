@@ -30,10 +30,10 @@ const colorRange = ['DEFAULT', '50', '100', '200', '300', '400', '500', '600', '
 
 /**
  * Generate a range of color variables in tailwind format
- * @param {string} color 
- * @param {Record<keyof typeof colors['gray'],string>} defaultColors 
+ * @param {string} color
+ * @param {Record<keyof typeof colors['gray'],string>} defaultColors
  */
-const generateRange = ( color, defaultColors) =>
+const generateRange = (color, defaultColors) =>
   Object.fromEntries(
     colorRange.map((range) => {
       const variableName = `--mut-${color}${range === 'DEFAULT' ? '' : `-${range}`}`;
