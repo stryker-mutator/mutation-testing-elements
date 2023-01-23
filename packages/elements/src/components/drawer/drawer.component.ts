@@ -1,6 +1,8 @@
-import { html, LitElement, unsafeCSS } from 'lit';
+import { html, LitElement, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { renderIf } from '../../lib/html-helpers';
+import { tailwind } from '../../style';
+import { renderEmoji } from '../drawer-mutant/util';
 import style from './drawer.component.scss';
 
 export type DrawerMode = 'open' | 'half' | 'closed';
@@ -8,7 +10,7 @@ export const DRAWER_HALF_OPEN_SIZE = 120;
 
 @customElement('mte-drawer')
 export class MutationTestReportDrawer extends LitElement {
-  public static styles = [unsafeCSS(style)];
+  public static styles = [unsafeCSS(style), tailwind];
 
   @property({ reflect: true })
   public mode: DrawerMode = 'closed';
@@ -20,20 +22,13 @@ export class MutationTestReportDrawer extends LitElement {
   public get toggleMoreLabel() {
     switch (this.mode) {
       case 'half':
-        return '🔼 More';
+        return html`${renderEmoji('🔼', 'up arrow')} More`;
       case 'open':
-        return '🔽 Less';
+        return html`${renderEmoji('🔽', 'down arrow')} Less`;
       case 'closed':
-        return '';
+        return nothing;
     }
   }
-
-  // /**
-  //  * Disable shadow-DOM for this component to let parent styles apply (such as dark theme)
-  //  */
-  // protected override createRenderRoot(): Element | ShadowRoot {
-  //   return this;
-  // }
 
   public toggleReadMore = (event: MouseEvent) => {
     if (this.mode === 'open') {
@@ -46,18 +41,18 @@ export class MutationTestReportDrawer extends LitElement {
   };
 
   render() {
-    return html`<aside class="scrollable" @click="${(event: Event) => event.stopPropagation()}">
-      <div class="drawer-list">
-        <header>
-          <h5>
+    return html`<aside @click="${(event: Event) => event.stopPropagation()}">
+      <div class="container mx-4 transition-[max-width]">
+        <header class="w-full p-4 pb-0">
+          <h2>
             <slot name="header"></slot>
             ${renderIf(
               this.hasDetail,
-              html`<button data-testId="btnReadMoreToggle" class="btn" @click="${this.toggleReadMore}">${this.toggleMoreLabel}</button>`
+              html`<button data-testId="btnReadMoreToggle" class="ml-2 align-middle" @click="${this.toggleReadMore}">${this.toggleMoreLabel}</button>`
             )}
-          </h5>
+          </h2>
         </header>
-        <div>
+        <div class="scrollable fixed">
           <slot name="summary"></slot>
           ${renderIf(this.hasDetail && this.mode === 'open', html`<slot name="detail"></slot>`)}
         </div>

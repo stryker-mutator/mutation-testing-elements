@@ -10,6 +10,6 @@ export class MutationTestReportThemeSwitchComponent extends LitElement {
   static styles = [tailwind];
 
   render() {
-    return html`<span class="underline decoration-dotted cursor-help" title="${this.title}"><slot></slot></span>`;
+    return html`<span class="cursor-help underline decoration-dotted" title="${this.title}"><slot></slot></span>`;
   }
 }

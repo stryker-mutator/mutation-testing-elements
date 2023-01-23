@@ -112,7 +112,12 @@ export class MutationTestReportAppComponent extends LitElement {
 
   public updated(changedProperties: PropertyValues) {
     if (changedProperties.has('theme') && this.theme) {
-      this.dispatchEvent(createCustomEvent('theme-changed', { theme: this.theme, themeBackgroundColor: this.themeBackgroundColor }));
+      this.dispatchEvent(
+        createCustomEvent('theme-changed', {
+          theme: this.theme,
+          themeBackgroundColor: this.themeBackgroundColor,
+        })
+      );
     }
   }
 
@@ -185,37 +190,36 @@ export class MutationTestReportAppComponent extends LitElement {
   private renderTitle() {
     if (this.context.result) {
       return html`
-        <h1 class="text-5xl font-bold tracking-tight mb-5 mt-4"
-          >${this.context.result.name}${this.titlePostfix
-            ? html`<small class="ml-4 font-light text-light-muted dark:text-dark-muted">${this.titlePostfix}</small>`
+        <h1 class="text-5xl font-bold tracking-tight">
+          ${this.context.result.name}${this.titlePostfix
+            ? html`<small class="text-light-muted ml-4 font-light">${this.titlePostfix}</small>`
             : nothing}
         </h1>
       `;
     }
-    return undefined;
+    return nothing;
   }
 
   public render() {
     if (this.context.result || this.errorMessage) {
       return html`
-        <div class="mx-auto px-4 bg-bodyz text-gray-800 dark:text-gray-200 font-sans">
-          <div class="transition-colors">
+        <div class="host mx-auto px-4 pb-4 font-sans text-gray-800">
+          <div class="space-y-4 transition-colors">
             ${this.renderErrorMessage()}
-            <mte-theme-switch @theme-switch="${this.themeSwitch}" class="float-right sticky pt-4 mx-4 z-20 top-offset" .theme="${this.theme}">
+            <mte-theme-switch @theme-switch="${this.themeSwitch}" class="sticky top-offset z-20 float-right mx-4 pt-4" .theme="${this.theme}">
             </mte-theme-switch>
             ${this.renderTitle()} ${this.renderTabs()}
-            <mte-breadcrumb .view="${this.context.view}" .path="${this.context.path}"></mte-breadcrumb>
+            <mte-breadcrumb .view="${this.context.view}" class="my-4" .path="${this.context.path}"></mte-breadcrumb>
             ${this.context.view === 'mutant' && this.context.result
               ? html`<mte-mutant-view
                   id="mte-mutant-view"
-                  .theme="${this.theme}"
                   .result="${this.context.result}"
                   .thresholds="${this.report!.thresholds}"
                   .path="${this.path}"
                 ></mte-mutant-view>`
               : nothing}
             ${this.context.view === 'test' && this.context.result
-              ? html`<mte-test-view id="mte-test-view" .theme="${this.theme}" .result="${this.context.result}" .path="${this.path}"></mte-test-view>`
+              ? html`<mte-test-view id="mte-test-view" .result="${this.context.result}" .path="${this.path}"></mte-test-view>`
               : nothing}
           </div>
         </div>
@@ -227,11 +231,9 @@ export class MutationTestReportAppComponent extends LitElement {
 
   private renderErrorMessage() {
     if (this.errorMessage) {
-      return html`<div class="p-4 my-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
-        ${this.errorMessage}
-      </div>`;
+      return html`<div class="my-4 rounded-lg bg-red-100 p-4 text-sm text-red-700" role="alert">${this.errorMessage}</div>`;
     } else {
-      return html``;
+      return nothing;
     }
   }
 
@@ -241,20 +243,18 @@ export class MutationTestReportAppComponent extends LitElement {
       const testsActive = this.context.view === 'test';
 
       return html`
-        <nav class="text-sm font-medium text-center mb-6 text-gray-500 border-b border-gray-200 dark:border-gray-700">
-          <ul class="flex flex-wrap -mb-px" role="tablist">
+        <nav class="border-b border-gray-200 text-center text-sm font-medium text-gray-600">
+          <ul class="-mb-px flex flex-wrap" role="tablist">
             ${[
               { type: 'mutant', active: mutantsActive, text: '👽 Mutants' },
               { type: 'test', active: testsActive, text: '🧪 Tests' },
             ].map(
               ({ type, active, text }) => html`<li class="mr-2" role="presentation">
                 <a
-                  class="inline-block p-4 rounded-t-lg border-b-2 border-transparent  ${active
-                    ? 'text-blue-600 border-blue-600 active dark:text-blue-500 dark:border-blue-500'
-                    : 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'}"
+                  class="inline-block rounded-t-lg border-b-2 border-transparent p-4 transition-colors hover:border-gray-300 hover:bg-gray-200 hover:text-gray-700 aria-selected:border-b-[3px] aria-selected:border-primary-700  aria-selected:text-primary-700"
                   role="tab"
                   href="${toAbsoluteUrl(type)}"
-                  aria-selected="${mutantsActive}"
+                  aria-selected="${active}"
                   aria-controls="mte-${type}-view"
                   >${text}</a
                 >
@@ -264,7 +264,7 @@ export class MutationTestReportAppComponent extends LitElement {
         </nav>
       `;
     } else {
-      return undefined;
+      return nothing;
     }
   }
 }

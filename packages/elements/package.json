@@ -31,5 +31,9 @@
     "mutation-testing-metrics": "1.7.11",
     "mutation-testing-report-schema": "1.7.10",
     "prismjs": "^1.21.0"
+  },
+  "dependencies": {
+    "clsx": "^1.2.1",
+    "tailwind-merge": "^1.8.1"
   }
 }

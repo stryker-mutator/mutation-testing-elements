@@ -1,15 +1,15 @@
-import { LitElement, html, unsafeCSS, PropertyValues, svg, nothing } from 'lit';
+import { html, LitElement, nothing, PropertyValues, svg, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
-import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { StateFilter } from '../state-filter/state-filter.component';
-import { prismjs, tailwind } from '../../style';
-import { findDiffIndices, gte, highlightCode, transformHighlightedLines } from '../../lib/code-helpers';
-import { MutantResult, MutantStatus } from 'mutation-testing-report-schema/api';
-import style from './file.scss';
-import { escapeHtml, getContextClassForStatus, getEmojiForStatus, scrollToCodeFragmentIfNeeded } from '../../lib/html-helpers';
 import { FileUnderTestModel, MutantModel } from 'mutation-testing-metrics';
+import { MutantResult, MutantStatus } from 'mutation-testing-report-schema/api';
+import { findDiffIndices, gte, highlightCode, transformHighlightedLines } from '../../lib/code-helpers';
 import { createCustomEvent, MteCustomEvent } from '../../lib/custom-events';
+import { escapeHtml, getContextClassForStatus, getEmojiForStatus, scrollToCodeFragmentIfNeeded } from '../../lib/html-helpers';
+import { prismjs, tailwind } from '../../style';
+import { StateFilter } from '../state-filter/state-filter.component';
+import style from './file.scss';
+import { renderDots, renderLine } from './util';
 
 const diffOldClass = 'diff-old';
 const diffNewClass = 'diff-new';
@@ -22,9 +22,6 @@ export class FileComponent extends LitElement {
 
   @property()
   public model!: FileUnderTestModel;
-
-  @property({ reflect: true })
-  public theme?: string;
 
   @state()
   public selectedMutantStates: MutantStatus[] = [];
@@ -85,7 +82,6 @@ export class FileComponent extends LitElement {
     return html`
       <mte-state-filter
         allow-toggle-all
-        .theme="${this.theme}"
         .filters="${this.filters}"
         @filters-changed="${this.filtersChanged}"
         @next=${this.nextMutant}
@@ -94,20 +90,15 @@ export class FileComponent extends LitElement {
       <pre
         @click="${this.codeClicked}"
         id="report-code-block"
-        class="flex line-numbers ${this.selectedMutantStates.map((state) => `mte-selected-${state}`).join(' ')}"
+        class="line-numbers ${this.selectedMutantStates.map((state) => `mte-selected-${state}`).join(' ')} flex rounded-md py-4"
       >
         <code ${ref(this.codeRef)} class="flex language-${this.model.language}">
           <table>${this.lines.map((line, lineIndex) => {
         const lineNr = lineIndex + 1;
-        return html`<tr class="line"
-          ><td class="line-number"></td><td class="line-marker"></td
-          ><td class="code flex"
-            ><span>${unsafeHTML(line)}</span
-            ><span class="flex flex-row items-center"
-              >${this.renderMutantDots(mutantLineMap.get(lineNr))}${this.lines.length === lineNr ? renderFinalMutants(lineNr) : nothing}</span
-            ></td
-          ></tr
-        >`;
+        const mutantDots = this.renderMutantDots(mutantLineMap.get(lineNr));
+        const finalMutants = this.lines.length === lineNr ? renderFinalMutants(lineNr) : nothing;
+
+        return renderLine(line, renderDots(mutantDots, finalMutants));
       })}</table>
           </code>
           </pre>
@@ -130,15 +121,17 @@ export class FileComponent extends LitElement {
   };
 
   private renderMutantDots(mutants: MutantModel[] | undefined) {
-    return html`${mutants?.map(
-      (mutant) =>
-        svg`<svg mutant-id="${mutant.id}" class="mutant-dot ${
-          this.selectedMutant?.id === mutant.id ? 'selected' : mutant.status
-        }" height="10" width="10">
+    return mutants?.length
+      ? mutants.map(
+          (mutant) =>
+            svg`<svg mutant-id="${mutant.id}" class="mutant-dot ${
+              this.selectedMutant?.id === mutant.id ? 'selected' : mutant.status
+            }" height="10" width="12">
           <title>${title(mutant)}</title>
           <circle cx="5" cy="5" r="5" />
           </svg>`
-    )}`;
+        )
+      : nothing;
   }
 
   private toggleMutant(mutant: MutantModel) {
@@ -184,7 +177,7 @@ export class FileComponent extends LitElement {
           enabled: [MutantStatus.Survived, MutantStatus.NoCoverage, MutantStatus.Timeout].includes(status),
           count: this.model.mutants.filter((m) => m.status === status).length,
           status,
-          label: `${getEmojiForStatus(status)} ${status}`,
+          label: html`${getEmojiForStatus(status)} ${status}`,
           context: getContextClassForStatus(status),
         }));
       const highlightedSource = highlightCode(this.model.source, this.model.name);
@@ -211,7 +204,7 @@ export class FileComponent extends LitElement {
               attributes: {
                 class: escapeHtml(`mutant ${mutant.status}`),
                 title: escapeHtml(title(mutant)),
-                'mutant-id': escapeHtml(mutant.id),
+                'mutant-id': escapeHtml(mutant.id.toString()),
               },
             };
           }

@@ -3,6 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { FileUnderTestModel, Metrics, MetricsResult } from 'mutation-testing-metrics';
 import { MutantResult as MutantModel, Thresholds } from 'mutation-testing-report-schema/api';
 import { MteCustomEvent } from '../../lib/custom-events';
+import { tailwind } from '../../style';
 import { DrawerMode } from '../drawer/drawer.component';
 import { Column } from '../metrics-table/metrics-table.component';
 import style from './mutant-view.scss';
@@ -15,10 +16,7 @@ export class MutationTestReportMutantViewComponent extends LitElement {
   @property()
   private selectedMutant?: MutantModel;
 
-  @property({ reflect: true })
-  public theme?: string;
-
-  public static styles = [unsafeCSS(style)];
+  public static styles = [unsafeCSS(style), tailwind];
 
   @property()
   public result!: MetricsResult<FileUnderTestModel, Metrics>;
@@ -28,13 +26,6 @@ export class MutationTestReportMutantViewComponent extends LitElement {
 
   @property({ attribute: false, reflect: false })
   public path!: string[];
-
-  /**
-   * Disable shadow-DOM for this component to let parent styles apply (such as dark theme)
-   */
-  protected override createRenderRoot(): Element | ShadowRoot {
-    return this;
-  }
 
   private handleClick = () => {
     // Close the drawer if the user clicks anywhere in the report (that didn't handle the click already)
@@ -57,9 +48,7 @@ export class MutationTestReportMutantViewComponent extends LitElement {
       <main @click="${this.handleClick}">
         <mte-metrics-table .columns="${COLUMNS}" .currentPath="${this.path}" .thresholds="${this.thresholds}" .model="${this.result}">
         </mte-metrics-table>
-        ${this.result.file
-          ? html`<mte-file .theme="${this.theme}" @mutant-selected="${this.handleMutantSelected}" .model="${this.result.file}"></mte-file>`
-          : nothing}
+        ${this.result.file ? html`<mte-file @mutant-selected="${this.handleMutantSelected}" .model="${this.result.file}"></mte-file>` : nothing}
       </main>
       <mte-drawer-mutant .mode="${this.drawerMode}" .mutant="${this.selectedMutant}"></mte-drawer-mutant>
     `;

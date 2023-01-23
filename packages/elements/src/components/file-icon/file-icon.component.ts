@@ -2,7 +2,7 @@ import { LitElement, svg, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { determineLanguage, ProgrammingLanguage } from '../../lib/code-helpers';
 import style from './file-icon.scss';
-
+import { classMap } from 'lit/directives/class-map.js';
 @customElement('mte-file-icon')
 export class MutationTestReportFileIconComponent extends LitElement {
   @property({ attribute: 'file-name' })
@@ -23,7 +23,7 @@ export class MutationTestReportFileIconComponent extends LitElement {
   }
 
   private get cssClass() {
-    return `${this.isFile ? this.language?.toString() ?? 'unknown' : 'directory'}${this.isTestFile ? ' test' : ''}`;
+    return classMap({ [this.language?.toString() ?? 'unknown']: this.isFile, test: this.isTestFile });
   }
 
   public render() {

@@ -2,33 +2,68 @@
 const colors = require('tailwindcss/colors');
 
 /**
- * @type {Record<string, [light: string, dark: string]>}
+ * hexcodes need to be converted to single r g b values
+ * @see https://tailwindcss.com/docs/customizing-colors#using-css-variables
+ * @param {string} hexCode
  */
-const customTheme = {
-  body: [colors.white, colors.slate['900']],
-  muted: [colors.slate['600'], colors.slate['400']],
-};
+function hexToRgb(hexCode) {
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hexCode);
+  if (!result) throw new Error(`Invalid hex color: ${hexCode}`);
 
-const light = Object.fromEntries(Object.entries(customTheme).map(([key, value]) => [key, value[0]]));
-const dark = Object.fromEntries(Object.entries(customTheme).map(([key, value]) => [key, value[1]]));
+  const r = parseInt(result[1], 16);
+  const g = parseInt(result[2], 16);
+  const b = parseInt(result[3], 16);
+  return `${r} ${g} ${b}`;
+}
+
+/**
+ * @param {string} variableName
+ * @param {string} hexCode
+ */
+function toVariable(variableName, hexCode) {
+  const fallBackColor = hexToRgb(hexCode);
+
+  return `rgb(var(${variableName}, ${fallBackColor}) / <alpha-value>)`;
+}
+
+const colorRange = ['DEFAULT', '50', '100', '200', '300', '400', '500', '600', '700', '800', '900'];
+
+/**
+ * Generate a range of color variables in tailwind format
+ * @param {string} color 
+ * @param {Record<keyof typeof colors['gray'],string>} defaultColors 
+ */
+const generateRange = ( color, defaultColors) =>
+  Object.fromEntries(
+    colorRange.map((range) => {
+      const variableName = `--mut-${color}${range === 'DEFAULT' ? '' : `-${range}`}`;
+      const variable = toVariable(variableName, defaultColors[range] || defaultColors['500']);
+
+      return [range, variable];
+    })
+  );
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   // Custom selector for dark theme
-  darkMode: ['class', ':host([theme="dark"])'],
+  darkMode: ['class', '@container style(--mut-theme: dark)'],
   content: ['./src/**/*.ts'],
-  plugins: [
-    require('@tailwindcss/forms'),
-  ],
+  plugins: [require('@tailwindcss/forms')],
   theme: {
     extend: {
       spacing: {
-        'offset': 'var(--top-offset, 0)'
+        offset: 'var(--top-offset, 0)',
       },
       colors: {
-        body: 'var(--mut-body-bg)',
-        light,
-        dark,
+        white: toVariable('--mut-white', '#ffffff'),
+        // ALL colors here _must_ also be defined in `src/components/app/theme.scss` for light _and_ dark mode!
+        body: generateRange('body', colors.gray),
+        gray: generateRange('gray', colors.gray),
+        primary: generateRange('primary', colors.sky),
+        error: generateRange('error', colors.red),
+        success: generateRange('success', colors.green),
+        warning: generateRange('warning', colors.yellow),
+        info: generateRange('info', colors.blue),
       },
     },
   },

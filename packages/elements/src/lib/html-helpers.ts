@@ -1,6 +1,7 @@
 import { nothing, TemplateResult } from 'lit';
 import { TestStatus } from 'mutation-testing-metrics';
 import { MutantStatus, OpenEndLocation } from 'mutation-testing-report-schema/api';
+import { renderEmoji } from '../components/drawer-mutant/util';
 import { DRAWER_HALF_OPEN_SIZE } from '../components/drawer/drawer.component';
 
 export function notNullish<T>(value: T | undefined | null): value is T {
@@ -61,29 +62,29 @@ export function getContextClassForTestStatus(status: TestStatus) {
 export function getEmojiForTestStatus(status: TestStatus) {
   switch (status) {
     case TestStatus.Killing:
-      return '✅';
+      return renderEmoji('✅', status);
     case TestStatus.Covering:
-      return '☂';
+      return renderEmoji('☂', status);
     case TestStatus.NotCovering:
-      return '🌧';
+      return renderEmoji('🌧', status);
   }
 }
 
 export function getEmojiForStatus(status: MutantStatus) {
   switch (status) {
     case MutantStatus.Killed:
-      return '✅';
+      return renderEmoji('✅', status);
     case MutantStatus.NoCoverage:
-      return '🙈';
+      return renderEmoji('🙈', status);
     case MutantStatus.Ignored:
-      return '🤥';
+      return renderEmoji('🤥', status);
     case MutantStatus.Survived:
-      return '👽';
+      return renderEmoji('👽', status);
     case MutantStatus.Timeout:
-      return '⌛';
+      return renderEmoji('⌛', status);
     case MutantStatus.RuntimeError:
     case MutantStatus.CompileError:
-      return '💥';
+      return renderEmoji('💥', status);
   }
 }
 

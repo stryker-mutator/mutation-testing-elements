@@ -4,13 +4,14 @@ import { MutantStatus } from 'mutation-testing-report-schema/api';
 import { expect } from 'chai';
 import { normalizeWhitespace, expectedMutantColors } from '../../helpers/helperFunctions';
 import { getContextClassForStatus, getEmojiForStatus } from '../../../src/lib/html-helpers';
+import { html } from 'lit';
 
 function createStateFilter(status: MutantStatus): StateFilter<MutantStatus> {
   return {
     count: 1,
     context: getContextClassForStatus(status),
     enabled: [MutantStatus.Survived, MutantStatus.NoCoverage, MutantStatus.Timeout].includes(status),
-    label: `${getEmojiForStatus(status)} ${status}`,
+    label: html`${getEmojiForStatus(status)} ${status}`,
     status,
   };
 }

@@ -2,6 +2,7 @@ import { html, LitElement, nothing, PropertyValues, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { MetricsResult, TestFileModel, TestMetrics, TestModel } from 'mutation-testing-metrics';
 import { MteCustomEvent } from '../../lib/custom-events';
+import { tailwind } from '../../style';
 import { DrawerMode } from '../drawer/drawer.component';
 import { Column } from '../metrics-table/metrics-table.component';
 import style from './test-view.scss';
@@ -17,20 +18,10 @@ export class MutationTestReportTestViewComponent extends LitElement {
   @property({ attribute: false, reflect: false })
   public path!: string[];
 
-  @property({ reflect: true })
-  public theme?: string;
-
   @property()
   private selectedTest?: TestModel;
 
-  /**
-   * Disable shadow-DOM for this component to let parent styles apply (such as dark theme)
-   */
-  protected override createRenderRoot(): Element | ShadowRoot {
-    return this;
-  }
-
-  public static styles = [unsafeCSS(style)];
+  public static styles = [unsafeCSS(style), tailwind];
 
   private handleClick = () => {
     // Close the drawer if the user clicks anywhere in the report (that didn't handle the click already)
@@ -52,9 +43,7 @@ export class MutationTestReportTestViewComponent extends LitElement {
     return html`
       <main @click="${this.handleClick}">
         <mte-metrics-table .columns="${COLUMNS}" .currentPath="${this.path}" .model="${this.result}"> </mte-metrics-table>
-        ${this.result.file
-          ? html`<mte-test-file .theme="${this.theme}" @test-selected="${this.handleTestSelected}" .model="${this.result.file}"></mte-test-file>`
-          : nothing}
+        ${this.result.file ? html`<mte-test-file @test-selected="${this.handleTestSelected}" .model="${this.result.file}"></mte-test-file>` : nothing}
       </main>
       <mte-drawer-test .mode="${this.drawerMode}" .test="${this.selectedTest}"></mte-drawer-test>
     `;

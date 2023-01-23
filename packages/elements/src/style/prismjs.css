@@ -99,9 +99,13 @@ pre[class*='language-'] {
 }
 .token.entity {
   color: var(--prism-entity);
+  cursor: help;
 }
 .token.function {
   color: var(--prism-function);
+}
+.token.function-variable {
+  color: var(--prism-function-variable, var(--prism-function));
 }
 .token.inserted {
   color: var(--prism-inserted);
@@ -165,4 +169,7 @@ pre[class*='language-'] {
 }
 .token.important {
   color: var(--prism-important);
+}
+.token.class-name {
+  color: var(--prism-class-name);
 }
