@@ -52,7 +52,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
 
   public render() {
     return html`${this.model
-      ? html`<div class="container w-full rounded-md border border-gray-200 transition-[max-width]">
+      ? html`<div class="overflow-auto rounded-md border border-gray-200">
           <table class="w-full table-auto text-left text-sm">${this.renderTableHeadRow()}${this.renderTableBody(this.model)} </table>
         </div>`
       : nothing}`;

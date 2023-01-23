@@ -2,6 +2,7 @@ import { LitElement, PropertyValues, html, unsafeCSS, TemplateResult } from 'lit
 import { customElement, property } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { createCustomEvent } from '../../lib/custom-events';
+import { renderIf } from '../../lib/html-helpers';
 import { tailwind } from '../../style';
 import style from './state-filter.scss';
 
@@ -9,7 +10,7 @@ export interface StateFilter<TStatus> {
   status: TStatus;
   count: number;
   enabled: boolean;
-  label: TemplateResult<1>;
+  label: TemplateResult<1> | string;
   context: string;
 }
 
@@ -75,9 +76,10 @@ export class FileStateFilterComponent<TStatus extends string> extends LitElement
           </button>
         </div>
 
-        ${this.filters &&
+        ${renderIf(
+          this.filters?.length,
         repeat(
-          this.filters,
+            this.filters!,
           // Key function. I super duper want that all properties are weighed here,
           // see https://lit-html.polymer-project.org/guide/writing-templates#repeating-templates-with-the-repeat-directive
           (filter) => filter.status,
@@ -101,6 +103,7 @@ export class FileStateFilterComponent<TStatus extends string> extends LitElement
               </label>
             </div>
           `
+          ) as TemplateResult
         )}
       </div>
     `;

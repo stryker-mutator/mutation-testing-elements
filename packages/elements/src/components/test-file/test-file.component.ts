@@ -12,7 +12,6 @@ import { prismjs, tailwind } from '../../style';
 import '../../style/prism-plugins';
 import { renderDots, renderLine } from '../file/util';
 import { StateFilter } from '../state-filter/state-filter.component';
-import { renderEmoji } from '../drawer-mutant/util';
 
 @customElement('mte-test-file')
 export class TestFileComponent extends LitElement {

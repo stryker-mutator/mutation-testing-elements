@@ -62,7 +62,9 @@ export class MutationTestReportBreadcrumbComponent extends LitElement {
 
   private renderLink(title: string, path: string[]) {
     return html`<li class="after:text-gray-800 after:content-['/'] md:after:pl-1">
-      <a href="${toAbsoluteUrl(this.view, ...path)}" class="ml-1 text-sm font-medium text-primary-800 hover:text-gray-900 hover:underline md:ml-2"
+      <a
+        href="${toAbsoluteUrl(this.view, ...path)}"
+        class="ml-1 text-sm font-medium text-primary-800 underline hover:text-gray-900 hover:underline md:ml-2"
         >${title}</a
       >
     </li>`;

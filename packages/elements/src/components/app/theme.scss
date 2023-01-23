@@ -160,21 +160,19 @@
   // --mut-squiggly-caution: #{squiggly-svg-factory($orange)};
 }
 :host([theme='dark']) {
-  --mut-body-bg: theme('colors.slate.900');
-
   // Manually copied over from tailwind slate range
   // https://tailwindcss.com/docs/customizing-colors#default-color-palette
   $grayRanges: (
-    50: #0f172a,
-    100: #1e293b,
-    200: #334155,
-    300: #475569,
-    400: #64748b,
-    500: #94a3b8,
-    600: #cbd5e1,
-    700: #e2e8f0,
-    800: #f1f5f9,
-    900: #f8fafc,
+    50: #111827,
+    100: #1f2937,
+    200: #374151,
+    300: #4b5563,
+    400: #6b7280,
+    500: #9ca3af,
+    600: #d1d5db,
+    700: #e5e7eb,
+    800: #f3f4f6,
+    900: #f9fafb,
   );
 
   $primaryRanges: (
@@ -198,7 +196,7 @@
     --mut-primary-#{$range}: #{hexToRGB($value)};
   }
 
-  --foo: theme('colors.indigo.900');
+  --mut-body-bg: #{map-get($grayRanges, 50)};
 
   --mut-white: var(--mut-gray-50);
 
