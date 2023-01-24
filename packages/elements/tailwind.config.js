@@ -58,7 +58,11 @@ module.exports = {
         white: toVariable('--mut-white', '#ffffff'),
         // ALL colors here _must_ also be defined in `src/components/app/theme.scss` for light _and_ dark mode!
         gray: generateRange('gray', colors.zinc),
-        primary: generateRange('primary', colors.sky),
+        primary: {
+          ...generateRange('primary', colors.sky),
+          // color for 'on' background
+          on: toVariable('--mut-primary-on', colors.sky['700']),
+        },
         error: generateRange('error', colors.red),
         success: generateRange('success', colors.green),
         warning: generateRange('warning', colors.yellow),

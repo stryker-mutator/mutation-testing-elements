@@ -7,7 +7,7 @@ import { renderDetailLine, renderEmoji, renderSummaryContainer, renderSummaryLin
 import { DrawerMode } from '../drawer/drawer.component';
 import { renderDrawer } from '../drawer/util';
 
-const describeMutant = (mutant: MutantModel) => html`${mutant.id} <code>${mutant.getMutatedLines()}</code> (${describeLocation(mutant)})`;
+const describeMutant = (mutant: MutantModel) => html`<code>${mutant.getMutatedLines()}</code> (${describeLocation(mutant)})`;
 
 @customElement('mte-drawer-test')
 export class MutationTestReportDrawerTestComponent extends LitElement {
@@ -26,11 +26,11 @@ export class MutationTestReportDrawerTestComponent extends LitElement {
         this.test,
         (test) => html`
           <span class="align-middle text-lg" slot="header"
-            >${test.id} ${getEmojiForTestStatus(test.status)} ${test.name} [${test.status}]
+            >${getEmojiForTestStatus(test.status)} ${test.name} [${test.status}]
             ${test.location ? html`(${test.location.start.line}:${test.location.start.column})` : nothing}</span
           >
           <span slot="summary">${this.renderSummary()}</span>
-          <span class="mx-6 block" slot="detail">${this.renderDetail()}</span>
+          <span class="block" slot="detail">${this.renderDetail()}</span>
         `
       )
     );
@@ -53,7 +53,7 @@ export class MutationTestReportDrawerTestComponent extends LitElement {
     )}`);
   }
   private renderDetail() {
-    return html`<ul class="mb-6 ml-2">
+    return html`<ul class="mb-6">
       ${this.test?.killedMutants?.map((mutant) =>
         renderDetailLine('This test killed this mutant', html`${renderEmoji('🎯', 'killed')} ${describeMutant(mutant)}`)
       )}

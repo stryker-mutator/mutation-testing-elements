@@ -160,8 +160,10 @@
   // --mut-squiggly-caution: #{squiggly-svg-factory($orange)};
 }
 :host([theme='dark']) {
+  color-scheme: dark;
   // Manually copied over from tailwind slate range
   // https://tailwindcss.com/docs/customizing-colors#default-color-palette
+  // Tailwind Zinc
   $grayRanges: (
     50: #18181b,
     100: #27272a,
@@ -175,6 +177,7 @@
     900: #fafafa,
   );
 
+  // Tailwind Sky
   $primaryRanges: (
     // 50: #0c4a6e,
     100: #075985,
@@ -185,7 +188,9 @@
     // 600: #7dd3fc,
     // 700: #bae6fd,
     800: #e0f2fe,
-    900: #f0f9ff
+    900: #f0f9ff,
+    // color for 'on' background
+    on: #0ea5e9
   );
 
   @each $range, $value in $grayRanges {

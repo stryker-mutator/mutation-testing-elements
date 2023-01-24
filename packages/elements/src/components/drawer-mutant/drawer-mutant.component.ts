@@ -31,7 +31,7 @@ export class MutationTestReportDrawerMutant extends LitElement {
             (${mutant.location.start.line}:${mutant.location.start.column})</span
           >
           <span slot="summary">${this.renderSummary()}</span>
-          <span slot="detail" class="mx-6 block">${this.renderDetail()}</span>
+          <span slot="detail" class="block">${this.renderDetail()}</span>
         `
       )
     );
@@ -59,7 +59,7 @@ export class MutationTestReportDrawerMutant extends LitElement {
   }
 
   private renderDetail() {
-    return html`<ul class="mb-6 ml-2">
+    return html`<ul class="mb-6">
       ${this.mutant?.killedByTests?.map((test) =>
         renderDetailLine('This mutant was killed by this test', html`${renderEmoji('🎯', 'killed')} ${describeTest(test)}`)
       )}

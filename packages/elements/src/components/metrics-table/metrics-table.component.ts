@@ -123,7 +123,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
       <td class="font-semibold">
         <div class="flex items-center justify-start">
           <mte-file-icon file-name="${row.name}" ?file="${row.file}" class="mx-1"></mte-file-icon> ${path.length > 0
-            ? html`<a class="mr-auto inline-block w-full py-4 pr-2 hover:text-primary-600 hover:underline" href="${toAbsoluteUrl(...path)}"
+            ? html`<a class="mr-auto inline-block w-full py-4 pr-2 hover:text-primary-on hover:underline" href="${toAbsoluteUrl(...path)}"
                 >${name}</a
               >`
             : html`<span class="py-4">${row.name}</span>`}
@@ -172,24 +172,24 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
   private determineBgColoringClass(mutationScore: number) {
     if (!isNaN(mutationScore) && this.thresholds) {
       if (mutationScore < this.thresholds.low) {
-        return 'bg-red-600 text-gray-200';
+        return 'bg-error-600 text-gray-200';
       } else if (mutationScore < this.thresholds.high) {
-        return 'bg-yellow-400';
+        return 'bg-warning-400';
       } else {
-        return 'bg-green-600 text-gray-200';
+        return 'bg-success-600 text-gray-200';
       }
     } else {
-      return 'bg-blue-600';
+      return 'bg-info-600';
     }
   }
   private determineTextColoringClass(mutationScore: number) {
     if (!isNaN(mutationScore) && this.thresholds) {
       if (mutationScore < this.thresholds.low) {
-        return 'text-red-700';
+        return 'text-error-700';
       } else if (mutationScore < this.thresholds.high) {
-        return 'text-yellow-600';
+        return 'text-warning-600';
       } else {
-        return 'text-green-700';
+        return 'text-success-700';
       }
     } else {
       return '';
