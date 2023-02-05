@@ -22,7 +22,7 @@ describe('Theming', () => {
     });
 
     it('should have a dark background', async () => {
-      expect(await page.backgroundColor()).eq('rgba(24, 25, 26, 1)');
+      expect(await page.backgroundColor()).eq('rgb(24, 24, 27)');
     });
 
     itShouldMatchScreenshot('should match the dark theme');
