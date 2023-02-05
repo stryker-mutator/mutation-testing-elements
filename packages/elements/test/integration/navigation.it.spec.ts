@@ -71,6 +71,7 @@ describe('Navigation', () => {
       expect(await page.title()).eq('All files');
       expect(await page.currentUrl()).contains('#mutant');
       expect(await tabs[0].isActive()).true;
+      expect(await tabs[1].isActive()).false;
     });
 
     describe('open tests', () => {
@@ -81,6 +82,7 @@ describe('Navigation', () => {
       it('should show the tests view', async () => {
         expect(await page.title()).eq('All tests');
         expect(await page.currentUrl()).contains('#test');
+        expect(await tabs[0].isActive()).false;
         expect(await tabs[1].isActive()).true;
       });
 

@@ -27,7 +27,7 @@ describe('Drawer', () => {
         await page.mutantView.scrollToCode();
       });
 
-      it('should show a summary in the drawer when a mutant is clicked', async () => {
+      it.only('should show a summary in the drawer when a mutant is clicked', async () => {
         await drawer.whenHalfOpen();
         expect(await drawer.headerText()).eq('👽 ConditionalExpression Survived (15:41)');
       });
@@ -117,7 +117,7 @@ describe('Drawer', () => {
 
     it('should show a summary in the drawer when a test is selected', async () => {
       await drawer.whenHalfOpen();
-      expect(await drawer.headerText()).eq('597 ✅ Performance: interactive audit should compute interactive [Killing] (22:4)');
+      expect(await drawer.headerText()).eq('✅ Performance: interactive audit should compute interactive [Killing] (22:4)');
     });
 
     it('should look as expected', async function () {

@@ -63,7 +63,7 @@ export class ReportPage extends ElementSelector {
   }
 
   public async navigationTabs() {
-    const elements = await this.$$('mutation-test-report-app >>> .nav-tabs li');
+    const elements = await this.$$('mutation-test-report-app >>> [role=tablist] li');
     return elements.map((li) => new NavTab(li, this.browser));
   }
 

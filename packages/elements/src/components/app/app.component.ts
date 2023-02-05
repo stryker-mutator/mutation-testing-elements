@@ -254,7 +254,7 @@ export class MutationTestReportAppComponent extends LitElement {
                   class="inline-block rounded-t-lg border-b-2 border-transparent p-4 transition-colors hover:border-gray-300 hover:bg-gray-200 hover:text-gray-700 aria-selected:border-b-[3px] aria-selected:border-primary-700  aria-selected:text-primary-on"
                   role="tab"
                   href="${toAbsoluteUrl(type)}"
-                  aria-selected="${active}"
+                  ?aria-selected="${active}"
                   aria-controls="mte-${type}-view"
                   >${text}</a
                 >
