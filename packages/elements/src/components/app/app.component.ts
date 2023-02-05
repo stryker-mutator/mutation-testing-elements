@@ -203,7 +203,7 @@ export class MutationTestReportAppComponent extends LitElement {
   public render() {
     if (this.context.result || this.errorMessage) {
       return html`
-        <div class="container mx-auto pb-4 font-sans text-gray-800 transition-[max-width]">
+        <div class="mx-6 pb-4 font-sans text-gray-800">
           <div class="space-y-4 transition-colors">
             ${this.renderErrorMessage()}
             <mte-theme-switch @theme-switch="${this.themeSwitch}" class="sticky top-offset z-20 float-right mx-4 pt-4" .theme="${this.theme}">
@@ -231,7 +231,7 @@ export class MutationTestReportAppComponent extends LitElement {
 
   private renderErrorMessage() {
     if (this.errorMessage) {
-      return html`<div class="my-4 rounded-lg bg-error-100 p-4 text-sm text-error-700" role="alert">${this.errorMessage}</div>`;
+      return html`<div class="my-4 rounded-lg bg-red-100 p-4 text-sm text-red-700" role="alert">${this.errorMessage}</div>`;
     } else {
       return nothing;
     }
@@ -243,7 +243,7 @@ export class MutationTestReportAppComponent extends LitElement {
       const testsActive = this.context.view === 'test';
 
       return html`
-        <nav class="border-b border-gray-200 text-center text-sm font-medium text-gray-600">
+        <nav class="container border-b border-gray-200 text-center text-sm font-medium  text-gray-600 motion-safe:transition-max-width">
           <ul class="-mb-px flex flex-wrap" role="tablist">
             ${[
               { type: 'mutant', active: mutantsActive, text: '👽 Mutants' },

@@ -53,7 +53,7 @@ export class MutationTestReportDrawerTestComponent extends LitElement {
     )}`);
   }
   private renderDetail() {
-    return html`<ul class="mb-6">
+    return html`<ul class="mb-6 mr-12">
       ${this.test?.killedMutants?.map((mutant) =>
         renderDetailLine('This test killed this mutant', html`${renderEmoji('🎯', 'killed')} ${describeMutant(mutant)}`)
       )}

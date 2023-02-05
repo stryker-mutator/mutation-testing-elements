@@ -36,7 +36,7 @@ export function getContextClassForStatus(status: MutantStatus) {
     case MutantStatus.Killed:
       return 'success';
     case MutantStatus.NoCoverage:
-      return 'caution'; // custom class
+      return 'caution';
     case MutantStatus.Survived:
       return 'danger';
     case MutantStatus.Timeout:

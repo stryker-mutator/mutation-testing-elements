@@ -1,26 +1,16 @@
 @import '../../style/globals.scss';
 
-:host {
-  bottom: 0;
-  left: 0;
-  position: fixed;
-  @media (prefers-reduced-motion: no-preference) {
-    transition: height 0.2s ease-in-out;
-  }
-  overflow: hidden;
-  background-color: var(--bs-card-cap-bg);
-  z-index: 3;
-}
 
 :host([mode='closed']) {
-  height: 0;
+  @apply h-0;
 }
 :host([mode='half']) {
   height: $mte-drawer-height-half-open;
 }
 :host([mode='open']) {
-  height: 50%;
+  @apply h-1/2;
 
+  
   .scrollable {
     @apply h-full overflow-y-auto overflow-x-hidden;
   }

@@ -3,13 +3,13 @@
 @import '../../style/code.scss';
 
 $mutant-themes: (
-  'Killed': 'green-700',
-  'NoCoverage': 'orange-500',
-  'Survived': 'red-500',
-  'Timeout': 'amber-400',
-  'CompileError': 'neutral-400',
-  'RuntimeError': 'neutral-400',
-  'Ignored': 'neutral-400',
+  'Killed': theme('colors.green.700'),
+  'NoCoverage': theme('colors.orange.500'),
+  'Survived': theme('colors.red.500'),
+  'Timeout': theme('colors.amber.400'),
+  'CompileError': theme('colors.neutral.400'),
+  'RuntimeError': theme('colors.neutral.400'),
+  'Ignored': theme('colors.neutral.400'),
 );
 
 // These 2 themes get underlined with a squiggly (wavy) for extra emphasis
@@ -18,15 +18,13 @@ $mutant-squiggly: 'Survived', 'NoCoverage';
 @each $status, $theme in $mutant-themes {
   @if (index($mutant-squiggly, $status) == null) {
     .mte-selected-#{$status} .mutant.#{$status} {
-      @apply border-#{$theme};
-      border-bottom-width: 2px;
-      border-bottom-style: solid;
+      border-bottom: 2px solid #{$theme};
       cursor: pointer;
     }
   }
 
   svg.mutant-dot.#{$status} {
-    @apply fill-#{$theme};
+    fill: #{$theme};
   }
 }
 
@@ -43,10 +41,10 @@ svg.mutant-dot.selected {
   */
     border-image-slice: 0 0 4 0;
     border-image-width: 4px;
-    border-image-outset: 3px;
+    border-image-outset: 6px;
     border-bottom-style: solid;
     border-image-repeat: repeat;
-    border-image-source: var(--mut-squiggly-#{map.get($mutant-themes, $status)});
+    border-image-source: var(--mut-squiggly-#{$status});
     cursor: pointer;
 
     // Mutant in mutant, don't start another wavy thingy

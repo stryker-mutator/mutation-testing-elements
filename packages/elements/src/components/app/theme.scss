@@ -155,9 +155,9 @@
   --mut-badge-info-bg: #54c6ec;
   --mut-badge-info: #212529;
   --mut-code-lense: #919191;
-  // TODO: fix
-  // --mut-squiggly-danger: #{squiggly-svg-factory($danger)};
-  // --mut-squiggly-caution: #{squiggly-svg-factory($orange)};
+
+  --mut-squiggly-Survived: #{squiggly-svg-factory(#ef4444)};
+  --mut-squiggly-NoCoverage: #{squiggly-svg-factory(#fb923c)};
 }
 :host([theme='dark']) {
   color-scheme: dark;
@@ -216,6 +216,7 @@
   --mut-badge-info-bg: #17a3b8;
   --mut-badge-info: #fff;
   --mut-code-lense: #999;
-  // --mut-squiggly-danger: #{squiggly-svg-factory($darkly-danger)};
-  // --mut-squiggly-caution: #{squiggly-svg-factory($darkly-orange)};
+
+  --mut-squiggly-Survived: #{squiggly-svg-factory(#ef4444)};
+  --mut-squiggly-NoCoverage: #{squiggly-svg-factory(#fb923c)};
 }

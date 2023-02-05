@@ -63,11 +63,11 @@ module.exports = {
           // color for 'on' background
           on: toVariable('--mut-primary-on', colors.sky['700']),
         },
-        error: generateRange('error', colors.red),
-        success: generateRange('success', colors.green),
-        warning: generateRange('warning', colors.yellow),
-        info: generateRange('info', colors.blue),
       },
+      transitionProperty: {
+        'max-width': 'max-width',
+        height: 'height',
+      }
     },
   },
 };

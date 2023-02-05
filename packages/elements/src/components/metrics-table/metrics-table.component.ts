@@ -52,7 +52,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
 
   public render() {
     return html`${this.model
-      ? html`<div class="overflow-auto rounded-md border border-gray-200">
+      ? html`<div class="container overflow-auto rounded-md border border-gray-200 motion-safe:transition-max-width">
           <table class="w-full table-auto text-left text-sm">${this.renderTableHeadRow()}${this.renderTableBody(this.model)} </table>
         </div>`
       : nothing}`;
@@ -83,7 +83,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
   }
 
   private renderTableHead(column: Column<TMetric>) {
-    const classNames = this.hasMultipleColspan ? 'even:bg-gray-50' : 'odd:bg-gray-50';
+    const classNames = this.hasMultipleColspan ? 'even:bg-gray-100' : 'odd:bg-gray-100';
     const id = `tooltip-${column.key.toString()}`;
     const header = column.tooltip
       ? html`<mte-tooltip title="${column.tooltip}" id="${id}">${column.label}</mte-tooltip>`
@@ -143,11 +143,11 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
       const mutationScoreRounded = value.toFixed(2);
       const progressBarStyle = `width: ${value}%`;
 
-      return html`<td class="bg-gray-50 py-4 px-4 group-hover:bg-gray-200">
+      return html`<td class="bg-gray-100 py-4 px-4 group-hover:bg-gray-200">
           ${valueIsPresent
             ? html`<div class="h-3 w-full rounded-full bg-gray-300">
                 <div
-                  class="${bgColoringClass} h-3 rounded-full pl-1"
+                  class="${bgColoringClass} h-3 min-w-[24px] rounded-full pl-1"
                   role="progressbar"
                   aria-valuenow="${mutationScoreRounded}"
                   aria-valuemin="0"
@@ -159,12 +159,12 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
               </div>`
             : html` <span class="text-light-muted font-bold">N/A</span> `}
         </td>
-        <td class="${textColoringClass} w-12 pr-2 text-center font-bold odd:bg-gray-50 group-hover:bg-gray-200"
+        <td class="${textColoringClass} w-12 pr-2 text-center font-bold odd:bg-gray-100 group-hover:bg-gray-200"
           >${valueIsPresent ? mutationScoreRounded : nothing}</td
         >`;
     }
     return html`<td
-      class="${classMap({ 'font-bold': column.isBold ?? false })} py-4 text-center odd:bg-gray-50 group-hover:bg-gray-200"
+      class="${classMap({ 'font-bold': column.isBold ?? false })} py-4 text-center odd:bg-gray-100 group-hover:bg-gray-200"
       aria-describedby="${`tooltip-${column.key.toString()}`}"
       >${value}</td
     >`;
@@ -172,24 +172,24 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
   private determineBgColoringClass(mutationScore: number) {
     if (!isNaN(mutationScore) && this.thresholds) {
       if (mutationScore < this.thresholds.low) {
-        return 'bg-error-600 text-gray-200';
+        return 'bg-red-600 text-gray-200';
       } else if (mutationScore < this.thresholds.high) {
-        return 'bg-warning-400';
+        return 'bg-yellow-400';
       } else {
-        return 'bg-success-600 text-gray-200';
+        return 'bg-green-600 text-gray-200';
       }
     } else {
-      return 'bg-info-600';
+      return 'bg-blue-600';
     }
   }
   private determineTextColoringClass(mutationScore: number) {
     if (!isNaN(mutationScore) && this.thresholds) {
       if (mutationScore < this.thresholds.low) {
-        return 'text-error-700';
+        return 'text-red-700';
       } else if (mutationScore < this.thresholds.high) {
-        return 'text-warning-600';
+        return 'text-yellow-600';
       } else {
-        return 'text-success-700';
+        return 'text-green-700';
       }
     } else {
       return '';

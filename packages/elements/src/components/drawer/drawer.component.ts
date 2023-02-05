@@ -42,7 +42,7 @@ export class MutationTestReportDrawer extends LitElement {
 
   render() {
     return html`<aside @click="${(event: Event) => event.stopPropagation()}">
-      <div class="container mx-auto transition-[max-width]">
+      <div class="mx-6">
         <header class="w-full py-4">
           <h2>
             <slot name="header"></slot>
@@ -52,7 +52,7 @@ export class MutationTestReportDrawer extends LitElement {
             )}
           </h2>
         </header>
-        <div class="scrollable fixed container mx-auto transition-[max-width]">
+        <div class="scrollable container fixed mx-auto motion-safe:transition-max-width">
           <slot name="summary"></slot>
           ${renderIf(this.hasDetail && this.mode === 'open', html`<slot name="detail"></slot>`)}
         </div>

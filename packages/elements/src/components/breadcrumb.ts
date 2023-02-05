@@ -26,7 +26,7 @@ export class MutationTestReportBreadcrumbComponent extends LitElement {
 
   public render() {
     return html`<nav
-      class="my-6 flex rounded-md border border-gray-200 bg-primary-100 px-5 py-3 text-gray-700 transition-all"
+      class="container my-6 flex rounded-md border border-gray-200 bg-primary-100 px-5 py-3 text-gray-700 motion-safe:transition-max-width"
       aria-label="Breadcrumb"
     >
       <ol class="inline-flex items-center">
