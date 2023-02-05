@@ -1,6 +1,5 @@
 @import '../../style/globals.scss';
 
-
 :host([mode='closed']) {
   @apply h-0;
 }
@@ -10,7 +9,6 @@
 :host([mode='open']) {
   @apply h-1/2;
 
-  
   .scrollable {
     @apply h-full overflow-y-auto overflow-x-hidden;
   }
