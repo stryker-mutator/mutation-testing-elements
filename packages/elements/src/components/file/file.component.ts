@@ -202,7 +202,7 @@ export class FileComponent extends LitElement {
               elementName: 'span',
               id: mutant.id,
               attributes: {
-                class: escapeHtml(`mutant ${mutant.status}`),
+                class: escapeHtml(`mutant border-none ${mutant.status}`),
                 title: escapeHtml(title(mutant)),
                 'mutant-id': escapeHtml(mutant.id.toString()),
               },

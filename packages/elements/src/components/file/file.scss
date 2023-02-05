@@ -3,7 +3,7 @@
 @import '../../style/code.scss';
 
 $mutant-themes: (
-  'Killed': theme('colors.green.700'),
+  'Killed': theme('colors.green.600'),
   'NoCoverage': theme('colors.orange.500'),
   'Survived': theme('colors.red.500'),
   'Timeout': theme('colors.amber.400'),
@@ -18,7 +18,9 @@ $mutant-squiggly: 'Survived', 'NoCoverage';
 @each $status, $theme in $mutant-themes {
   @if (index($mutant-squiggly, $status) == null) {
     .mte-selected-#{$status} .mutant.#{$status} {
-      border-bottom: 2px solid #{$theme};
+      border-color: #{$theme};
+      border-bottom-width: 2px;
+      border-bottom-style: solid;
       cursor: pointer;
     }
   }
