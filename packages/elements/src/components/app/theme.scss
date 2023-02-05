@@ -158,6 +158,8 @@
 
   --mut-squiggly-Survived: #{squiggly-svg-factory(#ef4444)};
   --mut-squiggly-NoCoverage: #{squiggly-svg-factory(#fb923c)};
+
+  --mut-body-bg: #fff;
 }
 :host([theme='dark']) {
   color-scheme: dark;

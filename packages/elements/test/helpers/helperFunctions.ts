@@ -5,11 +5,11 @@ export function normalizeWhitespace(pseudoHtml: string) {
 }
 
 export const expectedMutantColors = Object.freeze({
-  [MutantStatus.Killed]: 'rgb(40, 167, 69)',
-  [MutantStatus.Survived]: 'rgb(220, 53, 69)',
-  [MutantStatus.NoCoverage]: 'rgb(253, 126, 20)',
-  [MutantStatus.Timeout]: 'rgb(255, 193, 7)',
-  [MutantStatus.CompileError]: 'rgb(108, 117, 125)',
-  [MutantStatus.RuntimeError]: 'rgb(108, 117, 125)',
-  [MutantStatus.Ignored]: 'rgb(108, 117, 125)',
+  [MutantStatus.Killed]: 'rgb(220, 252, 231)',
+  [MutantStatus.Survived]: 'rgb(254, 226, 226)',
+  [MutantStatus.NoCoverage]: 'rgb(255, 237, 213)',
+  [MutantStatus.Timeout]: 'rgb(254, 249, 195)',
+  [MutantStatus.CompileError]: 'rgb(244, 244, 245)',
+  [MutantStatus.RuntimeError]: 'rgb(244, 244, 245)',
+  [MutantStatus.Ignored]: 'rgb(244, 244, 245)',
 });

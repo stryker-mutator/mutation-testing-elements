@@ -49,7 +49,7 @@ describe(MutationTestReportDrawerTestComponent.name, () => {
       sut.element.test = test;
       await sut.whenStable();
       const headerText = sut.$('[slot="header"]').textContent;
-      expect(headerText).match(/\s*spec-1\s*🌧\s*foo should bar\s*\[NotCovering\]\s*\(2:1\)\s*/);
+      expect(headerText).contains('🌧 foo should bar [NotCovering]');
     });
 
     it('should render closed by default', () => {
@@ -69,7 +69,7 @@ describe(MutationTestReportDrawerTestComponent.name, () => {
         test.addKilled(mutantModel);
         sut.element.test = test;
         await sut.whenStable();
-        expect(summaryText()).contain('🎯 Killed: 1 "Foo was here" (foo.js:1:5)');
+        expect(summaryText()).contain('🎯 Killed: "Foo was here" (foo.js:1:5)');
       });
 
       it('should mention more killed mutants when they exist', async () => {
@@ -132,9 +132,9 @@ describe(MutationTestReportDrawerTestComponent.name, () => {
         await sut.whenStable();
         const listItems = sut.$$('[slot="detail"] ul li');
         expect(listItems).lengthOf(3);
-        expect(listItems[0].textContent).contains('🎯 1 const a = false');
-        expect(listItems[1].textContent).contains('🎯 2 const b = true');
-        expect(listItems[2].textContent).contains('☂️ 3 if(1 <= 5)');
+        expect(listItems[0].textContent).contains('🎯 const a = false');
+        expect(listItems[1].textContent).contains('🎯 const b = true');
+        expect(listItems[2].textContent).contains('☂️ if(1 <= 5)');
       });
 
       function detailText() {

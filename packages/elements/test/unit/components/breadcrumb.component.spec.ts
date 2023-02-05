@@ -19,7 +19,7 @@ describe(MutationTestReportBreadcrumbComponent.name, () => {
   it('should show the root item as "All files" for the "mutant" view', () => {
     const elements = sut.$$('li');
     expect(elements).lengthOf(1);
-    expect(elements[0].textContent).eq('All files');
+    expect(elements[0].textContent?.trim()).eq('All files');
     expect(elements[0].querySelector('a')).eq(null);
   });
 
@@ -28,7 +28,7 @@ describe(MutationTestReportBreadcrumbComponent.name, () => {
     await sut.whenStable();
     const elements = sut.$$('li');
     expect(elements).lengthOf(1);
-    expect(elements[0].textContent).eq('All tests');
+    expect(elements[0].textContent?.trim()).eq('All tests');
     expect(elements[0].querySelector('a')).eq(null);
   });
 
@@ -40,7 +40,7 @@ describe(MutationTestReportBreadcrumbComponent.name, () => {
     const anchor = elements[0].querySelector('a') as HTMLAnchorElement;
     expect(anchor).ok;
     expect(anchor.href).eq(href('#mutant'));
-    expect(elements[1].textContent).eq('foo.js');
+    expect(elements[1].textContent?.trim()).eq('foo.js');
     expect(elements[1].querySelector('a')).null;
   });
 
@@ -52,11 +52,11 @@ describe(MutationTestReportBreadcrumbComponent.name, () => {
     const rootLink = elements[0].querySelector('a') as HTMLAnchorElement;
     expect(rootLink).ok;
     expect(rootLink.href).eq(href('#mutant'));
-    expect(elements[1].textContent).eq('bar');
+    expect(elements[1].textContent?.trim()).eq('bar');
     const barAnchor = elements[1].querySelector('a') as HTMLAnchorElement;
     expect(barAnchor).ok;
     expect(barAnchor.href).eq(href('#mutant/bar'));
-    expect(elements[2].textContent).eq('foo.js');
+    expect(elements[2].textContent?.trim()).eq('foo.js');
     expect(elements[2].querySelector('a')).null;
   });
 

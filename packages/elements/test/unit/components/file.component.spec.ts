@@ -27,7 +27,7 @@ describe(FileComponent.name, () => {
   });
 
   it('should show the code', () => {
-    expect(sut.$('code').textContent).eq(fileResult.source);
+    expect(sut.$('code').textContent?.trim()).eq(fileResult.source);
   });
 
   it('should highlight the code', () => {

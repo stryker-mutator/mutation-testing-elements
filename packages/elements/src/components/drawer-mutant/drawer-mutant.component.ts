@@ -41,7 +41,7 @@ export class MutationTestReportDrawerMutant extends LitElement {
     return renderSummaryContainer(html`${this.mutant?.killedByTests?.[0]
       ? renderSummaryLine(
           html`${renderEmoji('🎯', 'killed')} Killed by:
-          ${this.mutant.killedByTests?.[0].name}${this.mutant.killedByTests.length > 1 ? `( and ${this.mutant.killedByTests.length - 1} more)` : ''}`
+          ${this.mutant.killedByTests?.[0].name}${this.mutant.killedByTests.length > 1 ? `(and ${this.mutant.killedByTests.length - 1} more)` : ''}`
         )
       : nothing}
     ${renderIf(this.mutant?.static, renderSummaryLine(html`${renderEmoji('🗿', 'static')} Static mutant`))}
