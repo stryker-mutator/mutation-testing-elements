@@ -27,7 +27,7 @@ describe('Drawer', () => {
         await page.mutantView.scrollToCode();
       });
 
-      it.only('should show a summary in the drawer when a mutant is clicked', async () => {
+      it('should show a summary in the drawer when a mutant is clicked', async () => {
         await drawer.whenHalfOpen();
         expect(await drawer.headerText()).eq('👽 ConditionalExpression Survived (15:41)');
       });
