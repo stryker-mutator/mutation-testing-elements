@@ -92,7 +92,7 @@ export class FileStateFilterComponent<TStatus extends string> extends LitElement
                   type="checkbox"
                   value="${filter.status}"
                   @input="${(el: Event) => this.checkboxChanged(filter, (el.target as HTMLInputElement).checked)}"
-                  class="h-5 w-5 rounded border-gray-300 bg-gray-100 text-primary-on focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  class="h-5 w-5 rounded border-gray-300 bg-gray-100 text-primary-on !ring-offset-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
                 />
 
                 <label
