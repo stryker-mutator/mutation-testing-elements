@@ -6,7 +6,7 @@ export class ResultTableRow extends PageObject {
   private readonly nameTableElement = this.$.bind(this, 'td:nth-child(1)');
   public navigate = () => this.nameTableElement().findElement(By.css('a')).click();
   public name = () => this.nameTableElement().getText();
-  public progressBar = () => new ProgressBar(this.$('td:nth-child(2) [role=progressbar]'), this.browser);
+  public progressBar = () => new ProgressBar(this.$('td:nth-child(2)>div.rounded-full'), this.browser);
   public mutationScore = () => this.$('td:nth-child(3)').getText();
   public killed = () => this.$('td:nth-child(4)').getText();
   public survived = () => this.$('td:nth-child(5)').getText();

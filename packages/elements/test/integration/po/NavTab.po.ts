@@ -17,6 +17,6 @@ export class NavTab extends PageObject {
   }
 
   private anchorLink() {
-    return this.$('a[aria-controls=mte-mutant-view]');
+    return this.$('a');
   }
 }

@@ -38,7 +38,7 @@ describe('Theming', () => {
       });
 
       it('should show a dark code editor', async () => {
-        expect(await page.mutantView.codeBackgroundColor()).eq('rgba(45, 45, 45, 1)');
+        expect(await page.mutantView.codeBackgroundColor()).eq('rgba(29, 31, 33, 1)');
       });
 
       itShouldMatchScreenshot('should match the dark theme');

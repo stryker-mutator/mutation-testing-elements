@@ -16,7 +16,7 @@ export class TestView extends View {
   }
 
   public async testListItems(): Promise<TestListItem[]> {
-    return (await this.$$('mte-test-file >>> .mte-test-list-group-item')).map((host) => new TestListItem(host, this.browser));
+    return (await this.$$('mte-test-file >>> button[test-id]')).map((host) => new TestListItem(host, this.browser));
   }
 
   public testDot(testId: number | string) {

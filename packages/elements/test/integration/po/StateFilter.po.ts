@@ -9,11 +9,11 @@ export class StateFilter extends PageObject {
   }
 
   public previous(): Promise<void> {
-    return this.$('button[title=Next]').click();
+    return this.$('button[title=Previous]').click();
   }
 
   public next(): Promise<void> {
-    return this.$('button[title=Previous]').click();
+    return this.$('button[title=Next]').click();
   }
 
   public async states() {
