@@ -415,7 +415,7 @@ describe(TestFileComponent.name, () => {
     }
 
     function isSelected(testId: string) {
-      return Boolean(sut.$(`li [test-id="${testId}"][data-active]`));
+      return Boolean(sut.$(`li [test-id="${testId}"][data-active=true]`));
     }
   });
 });

@@ -4,7 +4,7 @@ export class NavTab extends PageObject {
   async isActive() {
     const link = await this.anchorLink();
     const cssClasses = await link.getAttribute('aria-selected');
-    return cssClasses !== null;
+    return cssClasses === 'true';
   }
 
   async text() {
