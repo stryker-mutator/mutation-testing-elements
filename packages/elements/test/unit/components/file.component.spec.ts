@@ -90,7 +90,7 @@ describe(FileComponent.name, () => {
       // Assert
       const mutant = sut.$('.mutant');
       expect(mutant.getAttribute('mutant-id')).eq('"&test');
-      expect(mutant.className).eq('mutant "&test');
+      expect(mutant.className).eq('mutant border-none "&test');
       expect(mutant.title).eq('ArithmeticOperator"&<script>alert</script> "&test');
     });
 
