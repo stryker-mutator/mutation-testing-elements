@@ -52,7 +52,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
 
   public render() {
     return html`${this.model
-      ? html`<div class="container overflow-auto rounded-md border border-gray-200 motion-safe:transition-max-width">
+      ? html`<div class="container overflow-x-auto rounded-md border border-gray-200 motion-safe:transition-max-width">
           <table class="w-full table-auto text-left text-sm">${this.renderTableHeadRow()}${this.renderTableBody(this.model)} </table>
         </div>`
       : nothing}`;
@@ -83,15 +83,14 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
   }
 
   private renderTableHead(column: Column<TMetric>) {
-    const classNames = this.hasMultipleColspan ? 'even:bg-gray-100' : 'odd:bg-gray-100';
     const id = `tooltip-${column.key.toString()}`;
     const header = column.tooltip
       ? html`<mte-tooltip title="${column.tooltip}" id="${id}">${column.label}</mte-tooltip>`
       : html`<span id="${id}">${column.label}</span>`;
     if (column.category === 'percentage') {
-      return html` <th colspan="2" class="${classNames} px-2"> ${header} </th>`;
+      return html` <th colspan="2" class="px-2 even:bg-gray-100"> ${header} </th>`;
     }
-    return html`<th class="${classNames} w-auto whitespace-nowrap px-2">
+    return html`<th class="w-auto whitespace-nowrap px-2 even:bg-gray-100">
       <div class="inline-block">${header}</div>
     </th>`;
   }
@@ -135,6 +134,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
 
   private renderCell(column: Column<TMetric>, metrics: TMetric) {
     const value = metrics[column.key] as unknown as number;
+    const backgroundColoringClass = this.hasMultipleColspan ? 'odd:bg-gray-100' : 'even:bg-gray-100';
 
     if (column.category === 'percentage') {
       const valueIsPresent = !isNaN(value);
@@ -159,12 +159,12 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
               </div>`
             : html` <span class="text-light-muted font-bold">N/A</span> `}
         </td>
-        <td class="${textColoringClass} w-12 pr-2 text-center font-bold odd:bg-gray-100 group-hover:bg-gray-200"
+        <td class="${textColoringClass} ${backgroundColoringClass} w-12 pr-2 text-center font-bold group-hover:bg-gray-200"
           >${valueIsPresent ? mutationScoreRounded : nothing}</td
         >`;
     }
     return html`<td
-      class="${classMap({ 'font-bold': column.isBold ?? false })} py-4 text-center odd:bg-gray-100 group-hover:bg-gray-200"
+      class="${classMap({ 'font-bold': column.isBold ?? false, [backgroundColoringClass]: true })} py-4 text-center group-hover:bg-gray-200"
       aria-describedby="${`tooltip-${column.key.toString()}`}"
       >${value}</td
     >`;

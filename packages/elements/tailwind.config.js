@@ -45,8 +45,6 @@ const generateRange = (color, defaultColors) =>
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  // Custom selector for dark theme
-  darkMode: ['class', '@container style(--mut-theme: dark)'],
   content: ['./src/**/*.ts'],
   plugins: [require('@tailwindcss/forms')],
   theme: {
