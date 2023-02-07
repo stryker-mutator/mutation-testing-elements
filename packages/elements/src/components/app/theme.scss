@@ -37,11 +37,10 @@
   --prism-function: var(--prism-deleted);
 
   --prism-function-variable: #6f42c1;
-  
+
   --prism-selector: #00009f;
   --prism-tag: var(--prism-selector);
   --prism-keyword: var(--prism-selector);
-
 }
 :host([theme='dark']) {
   // From https://atelierbram.github.io/syntax-highlighting/prism/demo/assets/css/prism-atom-dark.css
