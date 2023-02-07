@@ -22,7 +22,7 @@
     }
   ],
   "extensions": {
-    "recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode", "bierner.lit-html", "bradlc.vscode-tailwindcss", "csstools.postcss"]
+    "recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode", "bierner.lit-html", "bradlc.vscode-tailwindcss"]
   },
   "settings": {
     "search.exclude": {
