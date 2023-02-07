@@ -100,18 +100,14 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
       if (model.file) {
         return nothing;
       } else {
-        return repeat(
-          model.childResults,
-          (m) => m.name,
-          (childResult) => {
-            const nameParts: string[] = [childResult.name];
-            while (!childResult.file && childResult.childResults.length === 1) {
-              childResult = childResult.childResults[0];
-              nameParts.push(childResult.name);
-            }
-            return this.renderRow(nameParts.join('/'), childResult, ...this.currentPath, ...nameParts);
+        return model.childResults.map((childResult) => {
+          const nameParts: string[] = [childResult.name];
+          while (!childResult.file && childResult.childResults.length === 1) {
+            childResult = childResult.childResults[0];
+            nameParts.push(childResult.name);
           }
-        );
+          return this.renderRow(nameParts.join('/'), childResult, ...this.currentPath, ...nameParts);
+        });
       }
     };
     return html`<tbody class="divide-y divide-gray-200">${this.renderRow(model.name, model)} ${renderChildren()}</tbody>`;
@@ -147,7 +143,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
           ${valueIsPresent
             ? html`<div class="h-3 w-full rounded-full bg-gray-300">
                 <div
-                  class="${bgColoringClass} h-3 min-w-[24px] rounded-full pl-1"
+                  class="${bgColoringClass} h-3 min-w-[24px] rounded-full pl-1 transition-width"
                   role="progressbar"
                   aria-valuenow="${mutationScoreRounded}"
                   aria-valuemin="0"

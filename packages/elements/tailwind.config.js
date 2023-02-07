@@ -65,6 +65,7 @@ module.exports = {
       transitionProperty: {
         'max-width': 'max-width',
         height: 'height',
+        width: 'width',
       },
     },
   },
