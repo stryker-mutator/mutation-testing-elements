@@ -48,6 +48,9 @@ module.exports = {
   content: ['./src/**/*.ts'],
   plugins: [require('@tailwindcss/forms')],
   theme: {
+    container: {
+      center: true,
+    },
     extend: {
       screens: {
         '3xl': '2000px',

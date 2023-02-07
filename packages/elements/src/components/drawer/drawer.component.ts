@@ -52,7 +52,7 @@ export class MutationTestReportDrawer extends LitElement {
             )}
           </h2>
         </header>
-        <div class="scrollable container fixed mx-auto motion-safe:transition-max-width">
+        <div class="scrollable container fixed motion-safe:transition-max-width">
           <slot name="summary"></slot>
           ${renderIf(this.hasDetail && this.mode === 'open', html`<slot name="detail"></slot>`)}
         </div>

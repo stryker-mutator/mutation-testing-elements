@@ -203,7 +203,7 @@ export class MutationTestReportAppComponent extends LitElement {
   public render() {
     if (this.context.result || this.errorMessage) {
       return html`
-        <div class="container mx-auto bg-white pb-4 font-sans text-gray-800 motion-safe:transition-max-width">
+        <div class="container bg-white pb-4 font-sans text-gray-800 motion-safe:transition-max-width">
           <div class="space-y-4 transition-colors">
             ${this.renderErrorMessage()}
             <mte-theme-switch @theme-switch="${this.themeSwitch}" class="sticky top-offset z-20 float-right mx-4 pt-4" .theme="${this.theme}">
