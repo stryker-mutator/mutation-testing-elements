@@ -49,6 +49,9 @@ module.exports = {
   plugins: [require('@tailwindcss/forms')],
   theme: {
     extend: {
+      screens: {
+        '3xl': '2000px',
+      },
       spacing: {
         offset: 'var(--top-offset, 0)',
       },

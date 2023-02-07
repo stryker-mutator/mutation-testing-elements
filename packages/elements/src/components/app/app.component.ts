@@ -203,7 +203,7 @@ export class MutationTestReportAppComponent extends LitElement {
   public render() {
     if (this.context.result || this.errorMessage) {
       return html`
-        <div class="mx-6 bg-white pb-4 font-sans text-gray-800">
+        <div class="container mx-auto bg-white pb-4 font-sans text-gray-800 motion-safe:transition-max-width">
           <div class="space-y-4 transition-colors">
             ${this.renderErrorMessage()}
             <mte-theme-switch @theme-switch="${this.themeSwitch}" class="sticky top-offset z-20 float-right mx-4 pt-4" .theme="${this.theme}">
@@ -243,7 +243,7 @@ export class MutationTestReportAppComponent extends LitElement {
       const testsActive = this.context.view === 'test';
 
       return html`
-        <nav class="container border-b border-gray-200 text-center text-sm font-medium  text-gray-600 motion-safe:transition-max-width">
+        <nav class="border-b border-gray-200 text-center text-sm font-medium  text-gray-600">
           <ul class="-mb-px flex flex-wrap" role="tablist">
             ${[
               { type: 'mutant', isActive: mutantsActive, text: '👽 Mutants' },

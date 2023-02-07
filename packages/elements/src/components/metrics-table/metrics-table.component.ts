@@ -52,7 +52,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
 
   public render() {
     return html`${this.model
-      ? html`<div class="container overflow-x-auto rounded-md border border-gray-200 motion-safe:transition-max-width">
+      ? html`<div class="overflow-x-auto rounded-md border border-gray-200">
           <table class="w-full table-auto text-left text-sm">${this.renderTableHeadRow()}${this.renderTableBody(this.model)} </table>
         </div>`
       : nothing}`;
@@ -141,9 +141,9 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
 
       return html`<td class="bg-gray-100 py-4 px-4 group-hover:bg-gray-200">
           ${valueIsPresent
-            ? html`<div class="h-3 w-full rounded-full bg-gray-300">
+            ? html`<div class="h-3 w-full min-w-[24px] rounded-full bg-gray-300">
                 <div
-                  class="${bgColoringClass} h-3 min-w-[24px] rounded-full pl-1 transition-width"
+                  class="${bgColoringClass} h-3 rounded-full pl-1 transition-width"
                   role="progressbar"
                   aria-valuenow="${mutationScoreRounded}"
                   aria-valuemin="0"
