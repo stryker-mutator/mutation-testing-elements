@@ -51,17 +51,17 @@ export class MutationTestReportTestViewComponent extends LitElement {
 }
 
 const COLUMNS: Column<TestMetrics>[] = [
-  { key: 'killing', label: '# Killing', tooltip: 'These tests killed at least one mutant', width: 'normal', category: 'number' },
+  { key: 'killing', label: 'Killing', tooltip: 'These tests killed at least one mutant', width: 'normal', category: 'number' },
   {
     key: 'covering',
-    label: '# Covering',
+    label: 'Covering',
     tooltip: 'These tests are covering at least one mutant, but not killing any of them.',
     width: 'normal',
     category: 'number',
   },
   {
     key: 'notCovering',
-    label: '# Not Covering',
+    label: 'Not Covering',
     tooltip: 'These tests were not covering a mutant (and thus not killing any of them).',
     width: 'normal',
     category: 'number',

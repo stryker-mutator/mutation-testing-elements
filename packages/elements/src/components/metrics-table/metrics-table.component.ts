@@ -90,7 +90,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
     if (column.category === 'percentage') {
       return html` <th colspan="2" class="px-2 even:bg-gray-100"> ${header} </th>`;
     }
-    return html`<th class="w-28 px-2 even:bg-gray-100">
+    return html`<th class="w-24 px-2 even:bg-gray-100 2xl:w-28">
       <div class="inline-block">${header}</div>
     </th>`;
   }
