@@ -1,12 +1,13 @@
 import { expect } from 'chai';
 import { MutantModel, TestFileModel } from 'mutation-testing-metrics';
 import { TestStatus } from 'mutation-testing-metrics';
+import { renderEmoji } from '../../../src/components/drawer-mutant/util';
 import { FileStateFilterComponent, StateFilter } from '../../../src/components/state-filter/state-filter.component';
 import { TestFileComponent } from '../../../src/components/test-file/test-file.component';
 import { createCustomEvent } from '../../../src/lib/custom-events';
-import { bootstrap } from '../../../src/style';
 import { createMutantResult, createTestDefinition } from '../../helpers/factory';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
+import { html } from 'lit-html';
 
 describe(TestFileComponent.name, () => {
   let sut: CustomElementFixture<TestFileComponent>;
@@ -20,15 +21,11 @@ describe(TestFileComponent.name, () => {
   }
 
   function selectTestListItems(): HTMLLIElement[] {
-    return sut.$$('.list-group-item');
+    return sut.$$('li');
   }
   function selectTests(): HTMLSpanElement[] {
     return sut.$$('.test-dot');
   }
-
-  it('should use bootstrap styles', () => {
-    expect(TestFileComponent.styles).contains(bootstrap);
-  });
 
   describe('state filter', () => {
     it('should provide filters with correct emoji, context and count', async () => {
@@ -57,9 +54,15 @@ describe(TestFileComponent.name, () => {
 
       // Assert
       const expectedFilters: StateFilter<TestStatus>[] = [
-        { enabled: true, count: 2, status: TestStatus.Killing, label: '✅ Killing', context: 'success' },
-        { enabled: true, count: 1, status: TestStatus.Covering, label: '☂ Covering', context: 'warning' },
-        { enabled: true, count: 1, status: TestStatus.NotCovering, label: '🌧 NotCovering', context: 'caution' },
+        { enabled: true, count: 2, status: TestStatus.Killing, label: html`${renderEmoji('✅', 'Killing')} ${'Killing'}`, context: 'success' },
+        { enabled: true, count: 1, status: TestStatus.Covering, label: html`${renderEmoji('☂', 'Covering')} ${'Covering'}`, context: 'warning' },
+        {
+          enabled: true,
+          count: 1,
+          status: TestStatus.NotCovering,
+          label: html`${renderEmoji('🌧', 'NotCovering')} ${'NotCovering'}`,
+          context: 'caution',
+        },
       ];
       expect(selectStateFilter().filters).deep.eq(expectedFilters);
     });
@@ -84,7 +87,13 @@ describe(TestFileComponent.name, () => {
 
       // Assert
       const expectedFilters: StateFilter<TestStatus>[] = [
-        { enabled: true, count: 4, status: TestStatus.NotCovering, label: '🌧 NotCovering', context: 'caution' },
+        {
+          enabled: true,
+          count: 4,
+          status: TestStatus.NotCovering,
+          label: html`${renderEmoji('🌧', 'NotCovering')} ${'NotCovering'}`,
+          context: 'caution',
+        },
       ];
       expect(selectStateFilter().filters).deep.eq(expectedFilters);
     });
@@ -152,7 +161,7 @@ describe(TestFileComponent.name, () => {
       await sut.whenStable();
 
       expect(sut.$('code tr.line:nth-child(2) .code').innerHTML).contains(
-        '<svg height="10" width="10" test-id="spec-1" class="test-dot NotCovering">'
+        '<svg height="10" width="12" test-id="spec-1" class="cursor-pointer test-dot NotCovering">'
       );
     });
 
@@ -360,7 +369,7 @@ describe(TestFileComponent.name, () => {
     });
 
     it('should render the tests in a list', () => {
-      const tests = sut.$$('.list-group-item[test-id]');
+      const tests = sut.$$('li [test-id]');
       expect(tests).lengthOf(2);
       expect(tests.map((test) => test.getAttribute('test-id'))).deep.eq(['1', '2']);
       expect(tests.map((test) => test.innerText)).deep.eq(['✅ should foo into bar [Killing]', '🌧 should baz into qux [NotCovering]']);
@@ -368,7 +377,7 @@ describe(TestFileComponent.name, () => {
 
     it('should select a test on click', async () => {
       // Arrange
-      const testButton = sut.$(`.list-group-item[test-id="1"]`);
+      const testButton = sut.$(`li [test-id="1"]`);
       const expectedTest = sut.element.model!.tests.find((test) => test.id === '1');
 
       // Act
@@ -401,12 +410,12 @@ describe(TestFileComponent.name, () => {
     });
 
     async function selectTest(testId: string) {
-      sut.$(`.list-group-item[test-id="${testId}"]`).click();
+      sut.$(`li [test-id="${testId}"]`).click();
       await sut.whenStable();
     }
 
     function isSelected(testId: string) {
-      return Boolean(sut.$(`.list-group-item[test-id="${testId}"].active`));
+      return Boolean(sut.$(`li [test-id="${testId}"][data-active=true]`));
     }
   });
 });

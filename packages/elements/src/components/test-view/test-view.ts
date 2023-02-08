@@ -1,8 +1,8 @@
-import { html, LitElement, PropertyValues, unsafeCSS } from 'lit';
+import { html, LitElement, nothing, PropertyValues, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { MetricsResult, TestFileModel, TestMetrics, TestModel } from 'mutation-testing-metrics';
 import { MteCustomEvent } from '../../lib/custom-events';
-import { bootstrap } from '../../style';
+import { tailwind } from '../../style';
 import { DrawerMode } from '../drawer/drawer.component';
 import { Column } from '../metrics-table/metrics-table.component';
 import style from './test-view.scss';
@@ -21,7 +21,7 @@ export class MutationTestReportTestViewComponent extends LitElement {
   @property()
   private selectedTest?: TestModel;
 
-  public static styles = [bootstrap, unsafeCSS(style)];
+  public static styles = [unsafeCSS(style), tailwind];
 
   private handleClick = () => {
     // Close the drawer if the user clicks anywhere in the report (that didn't handle the click already)
@@ -42,12 +42,8 @@ export class MutationTestReportTestViewComponent extends LitElement {
   public render() {
     return html`
       <main @click="${this.handleClick}">
-        <div class="row">
-          <div class="totals col-sm-11">
-            <mte-metrics-table .columns="${COLUMNS}" .currentPath="${this.path}" .model="${this.result}"> </mte-metrics-table>
-          </div>
-        </div>
-        ${this.result.file ? html`<mte-test-file @test-selected="${this.handleTestSelected}" .model="${this.result.file}"></mte-test-file>` : ''}
+        <mte-metrics-table .columns="${COLUMNS}" .currentPath="${this.path}" .model="${this.result}"> </mte-metrics-table>
+        ${this.result.file ? html`<mte-test-file @test-selected="${this.handleTestSelected}" .model="${this.result.file}"></mte-test-file>` : nothing}
       </main>
       <mte-drawer-test .mode="${this.drawerMode}" .test="${this.selectedTest}"></mte-drawer-test>
     `;
@@ -55,17 +51,17 @@ export class MutationTestReportTestViewComponent extends LitElement {
 }
 
 const COLUMNS: Column<TestMetrics>[] = [
-  { key: 'killing', label: '# Killing', tooltip: 'These tests killed at least one mutant', width: 'normal', category: 'number' },
+  { key: 'killing', label: 'Killing', tooltip: 'These tests killed at least one mutant', width: 'normal', category: 'number' },
   {
     key: 'covering',
-    label: '# Covering',
+    label: 'Covering',
     tooltip: 'These tests are covering at least one mutant, but not killing any of them.',
     width: 'normal',
     category: 'number',
   },
   {
     key: 'notCovering',
-    label: '# Not Covering',
+    label: 'Not Covering',
     tooltip: 'These tests were not covering a mutant (and thus not killing any of them).',
     width: 'normal',
     category: 'number',

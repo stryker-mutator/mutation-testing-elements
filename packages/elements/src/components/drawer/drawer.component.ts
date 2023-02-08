@@ -1,7 +1,8 @@
-import { html, LitElement, unsafeCSS } from 'lit';
+import { html, LitElement, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { renderIf } from '../../lib/html-helpers';
-import { bootstrap } from '../../style';
+import { tailwind } from '../../style';
+import { renderEmoji } from '../drawer-mutant/util';
 import style from './drawer.component.scss';
 
 export type DrawerMode = 'open' | 'half' | 'closed';
@@ -9,7 +10,7 @@ export const DRAWER_HALF_OPEN_SIZE = 120;
 
 @customElement('mte-drawer')
 export class MutationTestReportDrawer extends LitElement {
-  public static styles = [bootstrap, unsafeCSS(style)];
+  public static styles = [unsafeCSS(style), tailwind];
 
   @property({ reflect: true })
   public mode: DrawerMode = 'closed';
@@ -21,11 +22,11 @@ export class MutationTestReportDrawer extends LitElement {
   public get toggleMoreLabel() {
     switch (this.mode) {
       case 'half':
-        return '🔼 More';
+        return html`${renderEmoji('🔼', 'up arrow')} More`;
       case 'open':
-        return '🔽 Less';
+        return html`${renderEmoji('🔽', 'down arrow')} Less`;
       case 'closed':
-        return '';
+        return nothing;
     }
   }
 
@@ -40,18 +41,18 @@ export class MutationTestReportDrawer extends LitElement {
   };
 
   render() {
-    return html`<aside class="h-100 container-fluid" @click="${(event: Event) => event.stopPropagation()}">
-      <div class="h-100 row">
-        <header>
-          <h5>
+    return html`<aside @click="${(event: Event) => event.stopPropagation()}">
+      <div class="mx-6">
+        <header class="w-full py-4">
+          <h2>
             <slot name="header"></slot>
             ${renderIf(
               this.hasDetail,
-              html`<button data-testId="btnReadMoreToggle" class="btn" @click="${this.toggleReadMore}">${this.toggleMoreLabel}</button>`
+              html`<button data-testId="btnReadMoreToggle" class="ml-2 align-middle" @click="${this.toggleReadMore}">${this.toggleMoreLabel}</button>`
             )}
-          </h5>
+          </h2>
         </header>
-        <div class="h-100 overflow-auto col-md-12">
+        <div class="scrollable container fixed motion-safe:transition-max-width">
           <slot name="summary"></slot>
           ${renderIf(this.hasDetail && this.mode === 'open', html`<slot name="detail"></slot>`)}
         </div>

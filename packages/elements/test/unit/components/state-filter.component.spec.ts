@@ -4,13 +4,14 @@ import { MutantStatus } from 'mutation-testing-report-schema/api';
 import { expect } from 'chai';
 import { normalizeWhitespace, expectedMutantColors } from '../../helpers/helperFunctions';
 import { getContextClassForStatus, getEmojiForStatus } from '../../../src/lib/html-helpers';
+import { html } from 'lit';
 
 function createStateFilter(status: MutantStatus): StateFilter<MutantStatus> {
   return {
     count: 1,
     context: getContextClassForStatus(status),
     enabled: [MutantStatus.Survived, MutantStatus.NoCoverage, MutantStatus.Timeout].includes(status),
-    label: `${getEmojiForStatus(status)} ${status}`,
+    label: html`${getEmojiForStatus(status)} ${status}`,
     status,
   };
 }
@@ -48,9 +49,9 @@ describe(FileStateFilterComponent.name, () => {
       await sut.whenStable();
 
       // Assert
-      const actualCheckboxes = sut.$$('.form-check.form-check-inline');
+      const actualCheckboxes = sut.$$('input[type=checkbox]');
       expect(actualCheckboxes).lengthOf(7);
-      const checkboxTexts = actualCheckboxes.map((checkbox) => normalizeWhitespace(checkbox.textContent as string));
+      const checkboxTexts = sut.$$('input[type=checkbox] + label').map((checkbox) => normalizeWhitespace(checkbox.textContent as string));
       expect(checkboxTexts).deep.eq([
         '✅ Killed (1)',
         '👽 Survived (1)',
@@ -73,7 +74,7 @@ describe(FileStateFilterComponent.name, () => {
         await sut.whenStable();
 
         // Assert
-        const badge = sut.$(`[data-status=${mutantStatus}] .badge`);
+        const badge = sut.$(`label[for=filter-${mutantStatus}]`);
         expect(getComputedStyle(badge).backgroundColor).eq(expectedColor);
       });
     });
@@ -118,13 +119,13 @@ describe(FileStateFilterComponent.name, () => {
   describe('Next/previous button', () => {
     it('should dispatch next event when "next" is clicked', async () => {
       const nextEvent = await sut.catchCustomEvent('next', () => {
-        sut.$<HTMLButtonElement>('button.mte-next').click();
+        sut.$<HTMLButtonElement>('button[title=Next]').click();
       });
       expect(nextEvent).not.null;
     });
     it('should dispatch previous event when "previous" is clicked', async () => {
       const nextEvent = await sut.catchCustomEvent('previous', () => {
-        sut.$<HTMLButtonElement>('button.mte-previous').click();
+        sut.$<HTMLButtonElement>('button[title=Previous]').click();
       });
       expect(nextEvent).not.null;
     });

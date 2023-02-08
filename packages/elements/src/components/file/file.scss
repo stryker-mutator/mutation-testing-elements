@@ -1,16 +1,15 @@
 @use 'sass:map';
 
-@import '../../style/bootstrap-reboot.scss'; // import the variables
 @import '../../style/code.scss';
 
 $mutant-themes: (
-  'Killed': 'success',
-  'NoCoverage': 'caution',
-  'Survived': 'danger',
-  'Timeout': 'warning',
-  'CompileError': 'secondary',
-  'RuntimeError': 'secondary',
-  'Ignored': 'secondary',
+  'Killed': theme('colors.green.600'),
+  'NoCoverage': theme('colors.orange.500'),
+  'Survived': theme('colors.red.500'),
+  'Timeout': theme('colors.amber.400'),
+  'CompileError': theme('colors.neutral.400'),
+  'RuntimeError': theme('colors.neutral.400'),
+  'Ignored': theme('colors.neutral.400'),
 );
 
 // These 2 themes get underlined with a squiggly (wavy) for extra emphasis
@@ -19,7 +18,7 @@ $mutant-squiggly: 'Survived', 'NoCoverage';
 @each $status, $theme in $mutant-themes {
   @if (index($mutant-squiggly, $status) == null) {
     .mte-selected-#{$status} .mutant.#{$status} {
-      border-color: var(--bs-#{$theme});
+      border-color: #{$theme};
       border-bottom-width: 2px;
       border-bottom-style: solid;
       cursor: pointer;
@@ -27,12 +26,12 @@ $mutant-squiggly: 'Survived', 'NoCoverage';
   }
 
   svg.mutant-dot.#{$status} {
-    fill: var(--bs-#{$theme});
+    fill: #{$theme};
   }
 }
 
 svg.mutant-dot.selected {
-  fill: var(--bs-info);
+  @apply fill-sky-400;
 }
 
 @each $status in $mutant-squiggly {
@@ -44,10 +43,10 @@ svg.mutant-dot.selected {
   */
     border-image-slice: 0 0 4 0;
     border-image-width: 4px;
-    border-image-outset: 3px;
+    border-image-outset: 6px;
     border-bottom-style: solid;
     border-image-repeat: repeat;
-    border-image-source: var(--mut-squiggly-#{map.get($mutant-themes, $status)});
+    border-image-source: var(--mut-squiggly-#{$status});
     cursor: pointer;
 
     // Mutant in mutant, don't start another wavy thingy
@@ -60,11 +59,11 @@ svg.mutant-dot.selected {
 }
 
 .mutant-dot {
-  cursor: pointer;
+  @apply cursor-pointer;
 }
 
 svg.mutant-dot {
-  margin: 1px 2px;
+  @apply m-[2px];
 }
 
 .diff-old {

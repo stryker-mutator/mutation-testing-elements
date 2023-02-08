@@ -65,7 +65,7 @@ describe(MutationTestReportAppComponent.name, () => {
 
     it('should report error when fetch fails', async () => {
       // Arrange
-      const redAlert = 'rgb(132, 32, 41)';
+      const redAlert = 'rgb(185, 28, 28)';
       const expectedError = new Error('report did not exist - 404');
       const expectedErrorMessage = 'Error: report did not exist - 404';
       fetchStub.rejects(expectedError);
@@ -76,7 +76,7 @@ describe(MutationTestReportAppComponent.name, () => {
 
       // Assert
       expect(sut.element.errorMessage).eq(expectedErrorMessage);
-      const alert: HTMLElement = sut.$('.alert');
+      const alert: HTMLElement = sut.$('[role=alert]');
       expect(alert.innerText).eq(expectedErrorMessage);
       expect(getColor(alert)).eq(redAlert);
     });
@@ -220,7 +220,7 @@ describe(MutationTestReportAppComponent.name, () => {
         sut.element.report = createReport();
         await sut.whenStable();
 
-        expect(sut.element.themeBackgroundColor).eq('#fff');
+        expect(sut.element.themeBackgroundColor).eq(' #fff');
       });
 
       it('should show dark theme-color on dark theme', async () => {
@@ -229,7 +229,7 @@ describe(MutationTestReportAppComponent.name, () => {
         sut.element.theme = 'dark';
         await sut.whenStable();
 
-        expect(sut.element.themeBackgroundColor).eq('#18191a');
+        expect(sut.element.themeBackgroundColor).eq(' #18181b');
       });
     });
 
@@ -282,7 +282,7 @@ describe(MutationTestReportAppComponent.name, () => {
         sut.$('mte-theme-switch').dispatchEvent(createCustomEvent('theme-switch', 'dark'));
       });
       expect(event?.detail.theme).eq('dark');
-      expect(event?.detail.themeBackgroundColor).eq('#18191a');
+      expect(event?.detail.themeBackgroundColor).eq(' #18181b');
     });
 
     it('should trigger a `theme-changed` event when the theme changes during init', async () => {
@@ -293,7 +293,7 @@ describe(MutationTestReportAppComponent.name, () => {
         await sut.whenStable();
       });
       expect(event?.detail.theme).eq('dark');
-      expect(event?.detail.themeBackgroundColor).eq('#18191a');
+      expect(event?.detail.themeBackgroundColor).eq(' #18181b');
     });
   });
 

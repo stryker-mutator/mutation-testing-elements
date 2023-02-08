@@ -1,7 +1,7 @@
-import { LitElement, html, unsafeCSS } from 'lit';
+import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { createCustomEvent } from '../../lib/custom-events';
-import { bootstrap } from '../../style';
+import { tailwind } from '../../style';
 import style from './theme-switch.scss';
 
 @customElement('mte-theme-switch')
@@ -14,7 +14,7 @@ export class MutationTestReportThemeSwitchComponent extends LitElement {
     this.dispatchEvent(createCustomEvent('theme-switch', checked ? 'dark' : 'light'));
   };
 
-  public static styles = [bootstrap, unsafeCSS(style)];
+  public static styles = [tailwind, unsafeCSS(style)];
 
   public render() {
     return html`

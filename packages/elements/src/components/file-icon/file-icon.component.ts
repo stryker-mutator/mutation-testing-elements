@@ -2,7 +2,7 @@ import { LitElement, svg, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { determineLanguage, ProgrammingLanguage } from '../../lib/code-helpers';
 import style from './file-icon.scss';
-
+import { classMap } from 'lit/directives/class-map.js';
 @customElement('mte-file-icon')
 export class MutationTestReportFileIconComponent extends LitElement {
   @property({ attribute: 'file-name' })
@@ -23,13 +23,13 @@ export class MutationTestReportFileIconComponent extends LitElement {
   }
 
   private get cssClass() {
-    return `${this.isFile ? this.language?.toString() ?? 'unknown' : 'directory'}${this.isTestFile ? ' test' : ''}`;
+    return classMap({ [this.language?.toString() ?? 'unknown']: this.isFile, test: this.isTestFile });
   }
 
   public render() {
     // Octicons - Github
     if (!this.isFile) {
-      return svg`<svg aria-label="directory" class="octicon octicon-file-directory" viewBox="0 0 14 16" version="1.1" width="14" height="16" role="img"><path fill-rule="evenodd" d="M13 4H7V3c0-.66-.31-1-1-1H1c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1zM6 4H1V3h5v1z"></path></svg>`;
+      return svg`<svg aria-label="directory" class="octicon octicon-file-directory" viewBox="0 0 14 16" version="1.1" width="14" height="16" role="img"><path fill-rule="evenodd" d="M 13,2 H 7 V 1 C 7,0.34 6.69,0 6,0 H 1 C 0.45,0 0,0.45 0,1 v 10 c 0,0.55 0.45,1 1,1 h 12 c 0.55,0 1,-0.45 1,-1 V 3 C 14,2.45 13.55,2 13,2 Z M 6,2 H 1 V 1 h 5 z" id="path2" /></svg>`;
     }
     if (!this.language) {
       return svg`<svg aria-label="file" class="octicon octicon-file" viewBox="0 0 12 16" version="1.1" width="12" height="16" role="img"><path fill-rule="evenodd" d="M6 5H2V4h4v1zM2 8h7V7H2v1zm0 2h7V9H2v1zm0 2h7v-1H2v1zm10-7.5V14c0 .55-.45 1-1 1H1c-.55 0-1-.45-1-1V2c0-.55.45-1 1-1h7.5L12 4.5zM11 5L8 2H1v12h10V5z"></path></svg>`;

@@ -1,9 +1,9 @@
-import { html, LitElement, PropertyValues, unsafeCSS } from 'lit';
+import { html, LitElement, nothing, PropertyValues, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { FileUnderTestModel, Metrics, MetricsResult } from 'mutation-testing-metrics';
 import { MutantResult as MutantModel, Thresholds } from 'mutation-testing-report-schema/api';
 import { MteCustomEvent } from '../../lib/custom-events';
-import { bootstrap } from '../../style';
+import { tailwind } from '../../style';
 import { DrawerMode } from '../drawer/drawer.component';
 import { Column } from '../metrics-table/metrics-table.component';
 import style from './mutant-view.scss';
@@ -16,7 +16,7 @@ export class MutationTestReportMutantViewComponent extends LitElement {
   @property()
   private selectedMutant?: MutantModel;
 
-  public static styles = [bootstrap, unsafeCSS(style)];
+  public static styles = [unsafeCSS(style), tailwind];
 
   @property()
   public result!: MetricsResult<FileUnderTestModel, Metrics>;
@@ -46,13 +46,9 @@ export class MutationTestReportMutantViewComponent extends LitElement {
   public render() {
     return html`
       <main @click="${this.handleClick}">
-        <div class="row">
-          <div class="totals col-sm-11">
-            <mte-metrics-table .columns="${COLUMNS}" .currentPath="${this.path}" .thresholds="${this.thresholds}" .model="${this.result}">
-            </mte-metrics-table>
-          </div>
-        </div>
-        ${this.result.file ? html`<mte-file @mutant-selected="${this.handleMutantSelected}" .model="${this.result.file}"></mte-file>` : ''}
+        <mte-metrics-table .columns="${COLUMNS}" .currentPath="${this.path}" .thresholds="${this.thresholds}" .model="${this.result}">
+        </mte-metrics-table>
+        ${this.result.file ? html`<mte-file @mutant-selected="${this.handleMutantSelected}" .model="${this.result.file}"></mte-file>` : nothing}
       </main>
       <mte-drawer-mutant .mode="${this.drawerMode}" .mutant="${this.selectedMutant}"></mte-drawer-mutant>
     `;
@@ -68,44 +64,44 @@ const COLUMNS: Column<Metrics>[] = [
   },
   {
     key: 'killed',
-    label: '# Killed',
+    label: 'Killed',
     tooltip: 'At least one test failed while these mutants were active. This is what you want!',
     category: 'number',
   },
   {
     key: 'survived',
-    label: '# Survived',
+    label: 'Survived',
     tooltip: "All tests passed while these mutants were active. You're missing a test for them.",
     category: 'number',
   },
   {
     key: 'timeout',
-    label: '# Timeout',
+    label: 'Timeout',
     tooltip: 'Running the tests while these mutants were active resulted in a timeout. For example, an infinite loop.',
     category: 'number',
   },
   {
     key: 'noCoverage',
-    label: '# No coverage',
+    label: 'No coverage',
     tooltip: "These mutants aren't covered by one of your tests and survived as a result.",
     category: 'number',
   },
   {
     key: 'ignored',
-    label: '# Ignored',
+    label: 'Ignored',
     tooltip: "These mutants weren't tested because they are ignored. Either by user action, or for another reason.",
     category: 'number',
   },
   {
     key: 'runtimeErrors',
-    label: '# Runtime errors',
+    label: 'Runtime errors',
     tooltip: 'Running tests when these mutants are active resulted in an error (rather than a failed test). For example: an out of memory error.',
     category: 'number',
   },
-  { key: 'compileErrors', label: '# Compile errors', tooltip: 'Mutants that caused a compile error.', category: 'number' },
+  { key: 'compileErrors', label: 'Compile errors', tooltip: 'Mutants that caused a compile error.', category: 'number' },
   {
     key: 'totalDetected',
-    label: 'Total detected',
+    label: 'Detected',
     tooltip: 'The number of mutants detected by your tests (killed + timeout).',
     category: 'number',
     width: 'large',
@@ -113,7 +109,7 @@ const COLUMNS: Column<Metrics>[] = [
   },
   {
     key: 'totalUndetected',
-    label: 'Total undetected',
+    label: 'Undetected',
     tooltip: 'The number of mutants that are not detected by your tests (survived + no coverage).',
     category: 'number',
     width: 'large',
@@ -121,7 +117,7 @@ const COLUMNS: Column<Metrics>[] = [
   },
   {
     key: 'totalMutants',
-    label: 'Total mutants',
+    label: 'Total',
     tooltip: 'All mutants (valid + invalid + ignored)',
     category: 'number',
     width: 'large',

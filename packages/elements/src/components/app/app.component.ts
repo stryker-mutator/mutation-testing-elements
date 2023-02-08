@@ -1,14 +1,13 @@
-import { LitElement, html, PropertyValues, unsafeCSS } from 'lit';
+import { LitElement, html, PropertyValues, unsafeCSS, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { MutationTestResult } from 'mutation-testing-report-schema/api';
 import { MetricsResult, calculateMutationTestMetrics } from 'mutation-testing-metrics';
-import { bootstrap, globals } from '../../style';
+import { tailwind, globals } from '../../style';
 import { locationChange$, View } from '../../lib/router';
 import { Subscription } from 'rxjs';
-import style from './app.scss';
 import theme from './theme.scss';
 import { createCustomEvent } from '../../lib/custom-events';
-import { FileUnderTestModel, Metrics, MutationTestMetricsResult, TestFileModel, TestMetrics } from 'mutation-testing-metrics/src/model';
+import { FileUnderTestModel, Metrics, MutationTestMetricsResult, TestFileModel, TestMetrics } from 'mutation-testing-metrics';
 import { toAbsoluteUrl } from '../../lib/html-helpers';
 import { isLocalStorageAvailable } from '../../lib/browser';
 
@@ -52,11 +51,11 @@ export class MutationTestReportAppComponent extends LitElement {
   public titlePostfix: string | undefined;
 
   @property({ reflect: true })
-  public theme: string | undefined;
+  public theme?: string;
 
   @property({ attribute: false })
   public get themeBackgroundColor(): string {
-    return getComputedStyle(this).getPropertyValue('--bs-body-bg');
+    return getComputedStyle(this).getPropertyValue('--mut-body-bg');
   }
 
   @property()
@@ -113,7 +112,12 @@ export class MutationTestReportAppComponent extends LitElement {
 
   public updated(changedProperties: PropertyValues) {
     if (changedProperties.has('theme') && this.theme) {
-      this.dispatchEvent(createCustomEvent('theme-changed', { theme: this.theme, themeBackgroundColor: this.themeBackgroundColor }));
+      this.dispatchEvent(
+        createCustomEvent('theme-changed', {
+          theme: this.theme,
+          themeBackgroundColor: this.themeBackgroundColor,
+        })
+      );
     }
   }
 
@@ -170,7 +174,7 @@ export class MutationTestReportAppComponent extends LitElement {
     isLocalStorageAvailable() && localStorage.setItem('mutation-testing-elements-theme', this.theme);
   };
 
-  public static styles = [globals, unsafeCSS(theme), bootstrap, unsafeCSS(style)];
+  public static styles = [globals, unsafeCSS(theme), tailwind];
 
   public readonly subscriptions: Subscription[] = [];
   public connectedCallback() {
@@ -185,35 +189,38 @@ export class MutationTestReportAppComponent extends LitElement {
 
   private renderTitle() {
     if (this.context.result) {
-      return html`<h1 class="display-4"
-        >${this.context.result.name}${this.titlePostfix ? html`<small class="text-muted"> - ${this.titlePostfix}</small>` : ''}</h1
-      >`;
+      return html`
+        <h1 class="text-5xl font-bold tracking-tight">
+          ${this.context.result.name}${this.titlePostfix
+            ? html`<small class="text-light-muted ml-4 font-light">${this.titlePostfix}</small>`
+            : nothing}
+        </h1>
+      `;
     }
-    return undefined;
+    return nothing;
   }
 
   public render() {
     if (this.context.result || this.errorMessage) {
       return html`
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12">
-              ${this.renderErrorMessage()}
-              <mte-theme-switch @theme-switch="${this.themeSwitch}" class="theme-switch" .theme="${this.theme}"> </mte-theme-switch>
-              ${this.renderTitle()} ${this.renderTabs()}
-              <mte-breadcrumb .view="${this.context.view}" .path="${this.context.path}"></mte-breadcrumb>
-              ${this.context.view === 'mutant' && this.context.result
-                ? html`<mte-mutant-view
-                    id="mte-mutant-view"
-                    .result="${this.context.result}"
-                    .thresholds="${this.report!.thresholds}"
-                    .path="${this.path}"
-                  ></mte-mutant-view>`
-                : ''}
-              ${this.context.view === 'test' && this.context.result
-                ? html`<mte-test-view id="mte-test-view" .result="${this.context.result}" .path="${this.path}"></mte-test-view>`
-                : ''}
-            </div>
+        <div class="container bg-white pb-4 font-sans text-gray-800 motion-safe:transition-max-width">
+          <div class="space-y-4 transition-colors">
+            ${this.renderErrorMessage()}
+            <mte-theme-switch @theme-switch="${this.themeSwitch}" class="sticky top-offset z-20 float-right mx-4 pt-4" .theme="${this.theme}">
+            </mte-theme-switch>
+            ${this.renderTitle()} ${this.renderTabs()}
+            <mte-breadcrumb .view="${this.context.view}" class="my-4" .path="${this.context.path}"></mte-breadcrumb>
+            ${this.context.view === 'mutant' && this.context.result
+              ? html`<mte-mutant-view
+                  id="mte-mutant-view"
+                  .result="${this.context.result}"
+                  .thresholds="${this.report!.thresholds}"
+                  .path="${this.path}"
+                ></mte-mutant-view>`
+              : nothing}
+            ${this.context.view === 'test' && this.context.result
+              ? html`<mte-test-view id="mte-test-view" .result="${this.context.result}" .path="${this.path}"></mte-test-view>`
+              : nothing}
           </div>
         </div>
       `;
@@ -224,9 +231,9 @@ export class MutationTestReportAppComponent extends LitElement {
 
   private renderErrorMessage() {
     if (this.errorMessage) {
-      return html`<div class="alert alert-danger" role="alert">${this.errorMessage}</div>`;
+      return html`<div class="my-4 rounded-lg bg-red-100 p-4 text-sm text-red-700" role="alert">${this.errorMessage}</div>`;
     } else {
-      return html``;
+      return nothing;
     }
   }
 
@@ -235,32 +242,29 @@ export class MutationTestReportAppComponent extends LitElement {
       const mutantsActive = this.context.view === 'mutant';
       const testsActive = this.context.view === 'test';
 
-      return html`<nav>
-        <ul class="nav nav-tabs border-bottom-0" role="tablist">
-          <li class="nav-item" role="presentation">
-            <a
-              class="nav-link ${mutantsActive ? 'active' : ''}"
-              role="tab"
-              href="${toAbsoluteUrl('mutant')}"
-              aria-selected="${mutantsActive}"
-              aria-controls="mte-mutant-view"
-              >👽 Mutants</a
-            >
-          </li>
-          <li class="nav-item" role="presentation">
-            <a
-              class="nav-link ${testsActive ? 'active' : ''}"
-              role="tab"
-              href="${toAbsoluteUrl('test')}"
-              aria-selected="${testsActive}"
-              aria-controls="mte-test-view"
-              >🧪 Tests</a
-            >
-          </li>
-        </ul>
-      </nav>`;
+      return html`
+        <nav class="border-b border-gray-200 text-center text-sm font-medium  text-gray-600">
+          <ul class="-mb-px flex flex-wrap" role="tablist">
+            ${[
+              { type: 'mutant', isActive: mutantsActive, text: '👽 Mutants' },
+              { type: 'test', isActive: testsActive, text: '🧪 Tests' },
+            ].map(
+              ({ type, isActive, text }) => html`<li class="mr-2" role="presentation">
+                <a
+                  class="inline-block rounded-t-lg border-b-2 border-transparent p-4 transition-colors hover:border-gray-300 hover:bg-gray-200 hover:text-gray-700 aria-selected:border-b-[3px] aria-selected:border-primary-700  aria-selected:text-primary-on"
+                  role="tab"
+                  href="${toAbsoluteUrl(type)}"
+                  aria-selected="${isActive}"
+                  aria-controls="mte-${type}-view"
+                  >${text}</a
+                >
+              </li>`
+            )}
+          </ul>
+        </nav>
+      `;
     } else {
-      return undefined;
+      return nothing;
     }
   }
 }

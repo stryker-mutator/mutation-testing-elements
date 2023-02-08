@@ -14,14 +14,16 @@ describe('Directory report page', () => {
       expect(await page.mutantView.resultTable().rows()).lengthOf(11);
     });
 
-    it('should show "all files" with "78.57%" mutation score', async () => {
-      expect(await page.mutantView.resultTable().row('All files').progressBar().percentageText()).eq('78.57%');
+    it('should show "all files" with "78.57" mutation score', async () => {
+      const row = page.mutantView.resultTable().row('All files');
+      expect(await row.progressBar().percentageText()).eq('78.57');
+      expect(await row.mutationScore()).eq('78.57');
     });
 
     it('should show expected totals for cli.ts', async () => {
       const row = page.mutantView.resultTable().row('cli.ts');
       return Promise.all([
-        expect(await row.progressBar().percentageText()).eq('8.70%'),
+        expect(await row.progressBar().percentageText()).eq('8.70'),
         expect(await row.mutationScore()).eq('8.70'),
         expect(await row.killed()).eq('2'),
         expect(await row.survived()).eq('1'),

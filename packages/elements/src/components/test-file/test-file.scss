@@ -1,25 +1,21 @@
 @import '../../style/code.scss';
 
 $test-themes: (
-  'Killing': 'success',
-  'Covering': 'warning',
-  'NotCovering': 'caution',
+  'Killing': 'fill-green-700',
+  'Covering': 'fill-amber-400',
+  'NotCovering': 'fill-orange-500',
 );
 
 @each $status, $theme in $test-themes {
   svg.test-dot.#{$status} {
-    fill: var(--bs-#{$theme});
+    @apply #{$theme};
   }
 }
 
 svg.test-dot.selected {
-  fill: var(--bs-info);
-}
-
-.test-dot {
-  cursor: pointer;
+  @apply fill-sky-400;
 }
 
 svg.test-dot {
-  margin: 1px 2px;
+  @apply m-[2px];
 }

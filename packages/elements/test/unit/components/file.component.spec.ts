@@ -7,7 +7,6 @@ import { createMutantResult, createFileResult } from '../../helpers/factory';
 import { createCustomEvent } from '../../../src/lib/custom-events';
 import { FileUnderTestModel } from 'mutation-testing-metrics';
 import sinon from 'sinon';
-import { bootstrap } from '../../../src/style';
 
 describe(FileComponent.name, () => {
   let sut: CustomElementFixture<FileComponent>;
@@ -28,15 +27,11 @@ describe(FileComponent.name, () => {
   });
 
   it('should show the code', () => {
-    expect(sut.$('code').textContent).eq(fileResult.source);
+    expect(sut.$('code').textContent?.trim()).eq(fileResult.source);
   });
 
   it('should highlight the code', () => {
     expect(sut.$('code .token')).ok;
-  });
-
-  it('should use bootstrap styles', () => {
-    expect(FileComponent.styles).contains(bootstrap);
   });
 
   describe('with mutants', () => {
@@ -95,7 +90,7 @@ describe(FileComponent.name, () => {
       // Assert
       const mutant = sut.$('.mutant');
       expect(mutant.getAttribute('mutant-id')).eq('"&test');
-      expect(mutant.className).eq('mutant "&test');
+      expect(mutant.className).eq('mutant border-none "&test');
       expect(mutant.title).eq('ArithmeticOperator"&<script>alert</script> "&test');
     });
 

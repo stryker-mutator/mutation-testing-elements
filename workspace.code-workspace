@@ -22,7 +22,7 @@
     }
   ],
   "extensions": {
-    "recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode", "bierner.lit-html"]
+    "recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode", "bierner.lit-html", "bradlc.vscode-tailwindcss"]
   },
   "settings": {
     "search.exclude": {
@@ -71,7 +71,7 @@
         "port": 9229,
         "request": "attach",
         "skipFiles": ["<node_internals>/**"],
-        "type": "pwa-node"
+        "type": "node"
       },
       {
         "type": "node",

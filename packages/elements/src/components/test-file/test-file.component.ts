@@ -1,23 +1,24 @@
-import { html, LitElement, PropertyValues, svg, unsafeCSS } from 'lit';
-import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+import { html, LitElement, nothing, PropertyValues, svg, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
 import { TestFileModel, TestModel, TestStatus } from 'mutation-testing-metrics';
 import style from './test-file.scss';
 
-import '../../style/prism-plugins';
-import { bootstrap, prismjs } from '../../style';
-import { determineLanguage, transformHighlightedLines, highlightCode, gte } from '../../lib/code-helpers';
+import { repeat } from 'lit/directives/repeat.js';
+import { determineLanguage, gte, highlightCode, transformHighlightedLines } from '../../lib/code-helpers';
 import { createCustomEvent, MteCustomEvent } from '../../lib/custom-events';
 import { getContextClassForTestStatus, getEmojiForTestStatus, scrollToCodeFragmentIfNeeded } from '../../lib/html-helpers';
+import { prismjs, tailwind } from '../../style';
+import '../../style/prism-plugins';
+import { renderDots, renderLine } from '../file/util';
 import { StateFilter } from '../state-filter/state-filter.component';
 
 @customElement('mte-test-file')
 export class TestFileComponent extends LitElement {
+  public static styles = [prismjs, tailwind, unsafeCSS(style)];
+
   @property()
   public model: TestFileModel | undefined;
-
-  public static styles = [prismjs, bootstrap, unsafeCSS(style)];
 
   @state()
   private filters: StateFilter<TestStatus>[] = [];
@@ -71,39 +72,40 @@ export class TestFileComponent extends LitElement {
 
   public render() {
     return html`
-      <div class="row">
-        <div class="col-md-12">
-          <mte-state-filter
-            @next=${this.nextTest}
-            @previous=${this.previousTest}
-            .filters="${this.filters}"
-            @filters-changed="${this.filtersChanged}"
-          ></mte-state-filter>
-          ${this.renderTestList()} ${this.renderCode()}
-        </div>
-      </div>
+      <mte-state-filter
+        @next=${this.nextTest}
+        @previous=${this.previousTest}
+        .filters="${this.filters}"
+        @filters-changed="${this.filtersChanged}"
+      ></mte-state-filter>
+      ${this.renderTestList()} ${this.renderCode()}
     `;
   }
 
   private renderTestList() {
     const testsToRenderInTheList = this.tests.filter((test) => !test.location);
     if (testsToRenderInTheList.length) {
-      return html`<div class="list-group">
-        ${testsToRenderInTheList.map(
-          (test) => html`<button
-            type="button"
-            test-id="${test.id}"
-            @click=${(ev: MouseEvent) => {
-              ev.stopPropagation();
-              this.toggleTest(test);
-            }}
-            class="mte-test-list-group-item list-group-item list-group-item-action${this.selectedTest?.id === test.id ? ' active' : ''}"
-            ><span class="emblem">${getEmojiForTestStatus(test.status)}</span> ${test.name} [${test.status}]</button
-          >`
+      return html`<ul class="max-w-6xl">
+        ${repeat(
+          testsToRenderInTheList,
+          (test) => test.id,
+          (test) => html`<li class="my-3">
+            <button
+              class="w-full rounded p-3 text-left hover:bg-gray-100 active:bg-gray-200"
+              type="button"
+              data-active="${this.selectedTest === test}"
+              test-id="${test.id}"
+              @click=${(ev: MouseEvent) => {
+                ev.stopPropagation();
+                this.toggleTest(test);
+              }}
+              >${getEmojiForTestStatus(test.status)} ${test.name} [${test.status}]
+            </button>
+          </li>`
         )}
-      </div>`;
+      </ul>`;
     }
-    return;
+    return nothing;
   }
 
   private renderCode() {
@@ -124,36 +126,39 @@ export class TestFileComponent extends LitElement {
         return this.renderTestDots([...testsByLine.entries()].filter(([line]) => line > lastLine).flatMap(([, tests]) => tests));
       };
 
-      return html`<pre id="report-code-block" class="line-numbers"><code class="language-${determineLanguage(this.model.name)}"><table>
-        ${this.lines.map(
-        (line, lineNr) =>
-          html`<tr class="line"
-            ><td class="line-number"></td><td class="line-marker"></td
-            ><td class="code"
-              >${unsafeHTML(line)}${this.renderTestDots(testsByLine.get(lineNr + 1))}${this.lines.length === lineNr + 1
-                ? renderFinalTests(lineNr + 1)
-                : ''}</td
-            ></tr
-          >`
-      )}</table></code></pre>`;
+      return html`<pre id="report-code-block" class="line-numbers flex rounded-md p-1"><code class="flex language-${determineLanguage(
+        this.model.name
+      )}">
+      <table>
+        ${this.lines.map((line, lineIndex) => {
+        const lineNr = lineIndex + 1;
+        const testDots = this.renderTestDots(testsByLine.get(lineNr));
+        const finalTests = this.lines.length === lineNr ? renderFinalTests(lineNr) : nothing;
+
+        return renderLine(line, renderDots(testDots, finalTests));
+      })}</table></code></pre>`;
     }
-    return;
+    return nothing;
   }
 
   private renderTestDots(tests: TestModel[] | undefined) {
-    return html`${tests?.map(
-      (test) =>
-        svg`<svg test-id="${test.id}" class="test-dot ${this.selectedTest === test ? 'selected' : test.status}" @click=${(ev: MouseEvent) => {
-          ev.stopPropagation();
-          this.toggleTest(test);
-        }} height="10" width="10">
+    return tests?.length
+      ? tests.map(
+          (test) =>
+            svg`<svg test-id="${test.id}" class="cursor-pointer test-dot ${this.selectedTest === test ? 'selected' : test.status}" @click=${(
+              ev: MouseEvent
+            ) => {
+              ev.stopPropagation();
+              this.toggleTest(test);
+            }} height="10" width="12">
           <title>${title(test)}</title>
           <circle cx="5" cy="5" r="5" />
           </svg>`
-    )}`;
+        )
+      : nothing;
   }
 
-  override update(changes: PropertyValues<TestFileComponent>) {
+  override willUpdate(changes: PropertyValues<TestFileComponent>) {
     if (changes.has('model') && this.model) {
       const model = this.model;
       this.filters = [TestStatus.Killing, TestStatus.Covering, TestStatus.NotCovering]
@@ -162,7 +167,7 @@ export class TestFileComponent extends LitElement {
           enabled: true,
           count: model.tests.filter((m) => m.status === status).length,
           status,
-          label: `${getEmojiForTestStatus(status)} ${status}`,
+          label: html`${getEmojiForTestStatus(status)} ${status}`,
           context: getContextClassForTestStatus(status),
         }));
 

@@ -1,9 +1,9 @@
 import { PageObject } from './PageObject.po';
 
 export class ProgressBar extends PageObject {
-  private readonly progressBar = this.$('.progress-bar');
+  private readonly progressBar = this.$('[role=progressbar]');
 
-  public percentageText = async () => (await this.progressBar).getText();
+  public percentageText = async () => (await this.progressBar).getAttribute('aria-valuenow');
   public barSize = async () => (await this.progressBar).getSize();
   public totalSize = () => this.host.getSize();
   public relativeBarWidth = async () => {

@@ -1,37 +1,15 @@
 @import '../../style/globals.scss';
 
-:host {
-  width: 100%;
-  bottom: 0;
-  left: 0;
-  position: fixed;
-  transition: height 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
-  background-color: var(--bs-card-cap-bg);
-  z-index: 3;
-}
-
-header {
-  padding: 1rem;
-  border-bottom-color: var(--bs-card-border-color);
-  border-bottom: 1px;
-  width: 100%;
-  h5 {
-    padding: 0;
-    margin: 0;
-  }
-}
-
 :host([mode='closed']) {
-  height: 0;
+  @apply h-0;
 }
 :host([mode='half']) {
   height: $mte-drawer-height-half-open;
 }
 :host([mode='open']) {
-  height: 50%;
-}
+  @apply h-1/2;
 
-.summary {
-  overflow: auto;
+  .scrollable {
+    @apply h-full overflow-y-auto overflow-x-hidden;
+  }
 }

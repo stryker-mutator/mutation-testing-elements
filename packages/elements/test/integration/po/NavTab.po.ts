@@ -3,8 +3,8 @@ import { PageObject } from './PageObject.po';
 export class NavTab extends PageObject {
   async isActive() {
     const link = await this.anchorLink();
-    const cssClasses = await link.getAttribute('class');
-    return cssClasses.includes('active');
+    const cssClasses = await link.getAttribute('aria-selected');
+    return cssClasses === 'true';
   }
 
   async text() {
@@ -17,6 +17,6 @@ export class NavTab extends PageObject {
   }
 
   private anchorLink() {
-    return this.$('a.nav-link');
+    return this.$('a');
   }
 }

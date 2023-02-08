@@ -28,7 +28,7 @@ export class ReportPage extends ElementSelector {
   }
 
   public takeScreenshot(): Promise<string> {
-    return this.$('mutation-test-report-app >>> .container-fluid').takeScreenshot();
+    return this.$('mutation-test-report-app >>> div').takeScreenshot();
   }
 
   public scrollUp(): Promise<void> {
@@ -45,7 +45,7 @@ export class ReportPage extends ElementSelector {
   }
 
   public async backgroundColor() {
-    const element = await this.$('mutation-test-report-app >>> .container-fluid');
+    const element = await this.$('mutation-test-report-app >>> div');
     return element.getCssValue('background-color');
   }
 
@@ -63,7 +63,7 @@ export class ReportPage extends ElementSelector {
   }
 
   public async navigationTabs() {
-    const elements = await this.$$('mutation-test-report-app >>> .nav-tabs li');
+    const elements = await this.$$('mutation-test-report-app >>> [role=tablist] li');
     return elements.map((li) => new NavTab(li, this.browser));
   }
 

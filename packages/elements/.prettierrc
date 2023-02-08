@@ -1,0 +1,6 @@
+{
+  "printWidth": 150,
+  "singleQuote": true,
+  "htmlWhitespaceSensitivity": "strict",
+  "tailwindConfig": "./tailwind.config.js"
+}

@@ -41,7 +41,7 @@ describe(MutationTestReportTestMetricsTable.name, () => {
     const table = sut.$('table');
     expect(table).ok;
     expect(table.querySelectorAll('thead th')).lengthOf(12);
-    expect(table.querySelectorAll('tbody th, tbody td')).lengthOf(14);
+    expect(table.querySelectorAll('tbody th, tbody td')).lengthOf(13);
   });
 
   it('should show a table with a 3 rows for a directory result with 2 directories and one file', async () => {
@@ -83,7 +83,7 @@ describe(MutationTestReportTestMetricsTable.name, () => {
     expect(table).ok;
     const rows = table.querySelectorAll('tbody tr');
     expect(rows).lengthOf(2);
-    expect(((rows.item(1) as HTMLTableRowElement).cells.item(1) as HTMLTableCellElement).textContent).eq('baz/foo.js');
+    expect(((rows.item(1) as HTMLTableRowElement).cells.item(0) as HTMLTableCellElement).textContent).contains('baz/foo.js');
   });
 
   it('should show N/A when no mutation score is available', async () => {
@@ -96,7 +96,7 @@ describe(MutationTestReportTestMetricsTable.name, () => {
     await sut.whenStable();
     const table = sut.$('table');
     expect(table).ok;
-    expect(table.querySelectorAll('td span.fw-bold')[0].textContent).contains('N/A');
+    expect(table.querySelectorAll('td span.font-bold')[0].textContent).contains('N/A');
   });
 
   it('should show a progress bar when there is a score', async () => {
@@ -110,7 +110,8 @@ describe(MutationTestReportTestMetricsTable.name, () => {
     await sut.whenStable();
     const table = sut.$('table');
     expect(table).ok;
-    expect(table.querySelectorAll('.progress')[0].textContent).contains(mutationScore);
+    expect(table.querySelector('[role=progressbar]')!.getAttribute('aria-valuenow')).contains(mutationScore);
+    expect(table.querySelector('.text-red-700')!.textContent).contains(mutationScore);
   });
 
   it('should show no progress bar when score is NaN', async () => {

@@ -1,13 +1,17 @@
-import { TemplateResult } from 'lit';
+import { nothing, TemplateResult } from 'lit';
 import { TestStatus } from 'mutation-testing-metrics';
 import { MutantStatus, OpenEndLocation } from 'mutation-testing-report-schema/api';
+import { renderEmoji } from '../components/drawer-mutant/util';
 import { DRAWER_HALF_OPEN_SIZE } from '../components/drawer/drawer.component';
 
 export function notNullish<T>(value: T | undefined | null): value is T {
   return value !== null && value !== undefined;
 }
 
-export function renderIf(condition: unknown, consequence: (() => TemplateResult) | TemplateResult | string): string | TemplateResult | undefined {
+export function renderIf(
+  condition: unknown,
+  consequence: (() => TemplateResult) | TemplateResult | string
+): string | TemplateResult | typeof nothing {
   if (condition) {
     if (typeof consequence === 'function') {
       return consequence();
@@ -15,13 +19,13 @@ export function renderIf(condition: unknown, consequence: (() => TemplateResult)
       return consequence;
     }
   } else {
-    return undefined;
+    return nothing;
   }
 }
 
-export function renderIfPresent<T>(value: T | undefined | null, factory: (value: T) => TemplateResult): TemplateResult | undefined {
+export function renderIfPresent<T>(value: T | undefined | null, factory: (value: T) => TemplateResult): TemplateResult | typeof nothing {
   if (value === null || value === undefined) {
-    return undefined;
+    return nothing;
   } else {
     return factory(value);
   }
@@ -32,7 +36,7 @@ export function getContextClassForStatus(status: MutantStatus) {
     case MutantStatus.Killed:
       return 'success';
     case MutantStatus.NoCoverage:
-      return 'caution'; // custom class
+      return 'caution';
     case MutantStatus.Survived:
       return 'danger';
     case MutantStatus.Timeout:
@@ -58,29 +62,29 @@ export function getContextClassForTestStatus(status: TestStatus) {
 export function getEmojiForTestStatus(status: TestStatus) {
   switch (status) {
     case TestStatus.Killing:
-      return '✅';
+      return renderEmoji('✅', status);
     case TestStatus.Covering:
-      return '☂';
+      return renderEmoji('☂', status);
     case TestStatus.NotCovering:
-      return '🌧';
+      return renderEmoji('🌧', status);
   }
 }
 
 export function getEmojiForStatus(status: MutantStatus) {
   switch (status) {
     case MutantStatus.Killed:
-      return '✅';
+      return renderEmoji('✅', status);
     case MutantStatus.NoCoverage:
-      return '🙈';
+      return renderEmoji('🙈', status);
     case MutantStatus.Ignored:
-      return '🤥';
+      return renderEmoji('🤥', status);
     case MutantStatus.Survived:
-      return '👽';
+      return renderEmoji('👽', status);
     case MutantStatus.Timeout:
-      return '⌛';
+      return renderEmoji('⌛', status);
     case MutantStatus.RuntimeError:
     case MutantStatus.CompileError:
-      return '💥';
+      return renderEmoji('💥', status);
   }
 }
 
