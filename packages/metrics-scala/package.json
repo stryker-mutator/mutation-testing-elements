@@ -1,6 +1,6 @@
 {
   "name": "mutation-testing-metrics-scala",
-  "version": "1.7.11",
+  "version": "1.7.13",
   "description": "Zero-dependency library to calculate mutation testing metrics in Scala.",
   "scripts": {
     "test": "sbt \"compile; metrics/test; circe/test; docs/mdoc --check\"",

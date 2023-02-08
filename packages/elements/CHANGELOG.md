@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.13](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.12...v1.7.13) (2023-02-08)
+
+
+### Bug Fixes
+
+* Hide test files tab if there are no test files ([#2139](https://github.com/stryker-mutator/mutation-testing-elements/issues/2139)) ([14e84d3](https://github.com/stryker-mutator/mutation-testing-elements/commit/14e84d3fa205ff39dfa00c7e0b225abc60f900f4))
+
+
+### Features
+
+* replace bootstrap with tailwind ([#2160](https://github.com/stryker-mutator/mutation-testing-elements/issues/2160)) ([4f255b4](https://github.com/stryker-mutator/mutation-testing-elements/commit/4f255b4533f47bf581ff237131f61aa0be1212f9))
+
+
+
+
+
 ## [1.7.12](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.11...v1.7.12) (2022-09-02)
 
 

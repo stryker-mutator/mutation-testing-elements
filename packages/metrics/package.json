@@ -1,6 +1,6 @@
 {
   "name": "mutation-testing-metrics",
-  "version": "1.7.11",
+  "version": "1.7.13",
   "description": "Utility functions to calculate mutation testing metrics.",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
