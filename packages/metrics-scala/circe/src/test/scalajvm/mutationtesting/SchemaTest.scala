@@ -94,7 +94,7 @@ class SchemaTest extends munit.FunSuite {
     "missing-system-cpu-logical-cores"     -> "logicalCores",
     "missing-system-os-platform"           -> "platform",
     "missing-system-ram-total"             -> "total",
-    "missing-performance-fields"           -> "performance"
+    "missing-performance-fields"           -> "setup"
   )
 
   invalidJsons.foreach { case (fileName, expectedErrorMessage) =>
