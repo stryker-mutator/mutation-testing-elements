@@ -18,7 +18,9 @@
   "scripts": {
     "test": "mocha --forbid-only --forbid-pending -r source-map-support/register dist/test/**/*.js",
     "postpublish": "PUBLISH_SCHEMA=true ../metrics-scala/npmProjPublish.sh dist/src",
-    "generate": "node ../../tasks/schema2ts.js src/mutation-testing-report-schema.json src-generated/schema.ts"
+    "generate": "node ../../tasks/schema2ts.js src/mutation-testing-report-schema.json src-generated/schema.ts",
+    "prebuild": "nx run generate",
+    "build": "tsc -b"
   },
   "repository": {
     "type": "git",
@@ -28,5 +30,8 @@
   "bugs": {
     "url": "https://github.com/stryker-mutator/mutation-testing-elements/issues"
   },
-  "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/elements#readme"
+  "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/elements#readme",
+  "devDependencies": {
+    "ajv": "^8.6.3"
+  }
 }

@@ -6,13 +6,5 @@
     "module": "es2020",
     "moduleResolution": "node",
     "lib": ["es2020", "dom", "dom.iterable"]
-  },
-  "references": [
-    {
-      "path": "../../report-schema/src"
-    },
-    {
-      "path": "../../metrics/src"
-    }
-  ]
+  }
 }
