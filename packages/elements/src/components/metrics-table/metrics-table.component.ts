@@ -61,7 +61,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
   private renderTableHeadRow() {
     return html`<thead class="border-b border-gray-200 text-center text-sm">
       <tr>
-        <th scope="col" class="py-4 px-4">
+        <th scope="col" class="px-4 py-4">
           <div class="flex items-center justify-around">
             <span>File / Directory</span
             ><a
@@ -139,7 +139,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
       const mutationScoreRounded = value.toFixed(2);
       const progressBarStyle = `width: ${value}%`;
 
-      return html`<td class="bg-gray-100 py-4 px-4 group-hover:bg-gray-200">
+      return html`<td class="bg-gray-100 px-4 py-4 group-hover:bg-gray-200">
           ${valueIsPresent
             ? html`<div class="h-3 w-full min-w-[24px] rounded-full bg-gray-300">
                 <div
