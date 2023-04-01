@@ -179,6 +179,8 @@ Due to differences in language syntax, method expressions are implemented differ
 | `filter()`           | ` `                   |
 | `slice()`            | ` `                   |
 | `charAt()`           | ` `                   |
+| `min()`              | `max()`               |
+| `max()`              | `min()`               |
 
 ### Stryker.NET
 
