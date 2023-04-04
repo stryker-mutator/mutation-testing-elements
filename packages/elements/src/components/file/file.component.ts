@@ -171,6 +171,7 @@ export class FileComponent extends LitElement {
         MutantStatus.Timeout,
         MutantStatus.CompileError,
         MutantStatus.RuntimeError,
+        MutantStatus.Pending,
       ]
         .filter((status) => this.model.mutants.some((mutant) => mutant.status === status))
         .map((status) => ({

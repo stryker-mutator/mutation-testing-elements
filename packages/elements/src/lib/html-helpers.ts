@@ -43,6 +43,7 @@ export function getContextClassForStatus(status: MutantStatus) {
       return 'warning';
     case MutantStatus.Ignored:
     case MutantStatus.RuntimeError:
+    case MutantStatus.Pending: // For now
     case MutantStatus.CompileError:
       return 'secondary';
   }
@@ -82,6 +83,8 @@ export function getEmojiForStatus(status: MutantStatus) {
       return renderEmoji('👽', status);
     case MutantStatus.Timeout:
       return renderEmoji('⌛', status);
+    case MutantStatus.Pending:
+      return renderEmoji('⏳', status);
     case MutantStatus.RuntimeError:
     case MutantStatus.CompileError:
       return renderEmoji('💥', status);
