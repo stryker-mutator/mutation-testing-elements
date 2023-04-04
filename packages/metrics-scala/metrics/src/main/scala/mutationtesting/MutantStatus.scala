@@ -12,5 +12,6 @@ object MutantStatus {
   case object CompileError extends MutantStatus
   case object RuntimeError extends MutantStatus
   case object Ignored      extends MutantStatus
+  case object Pending      extends MutantStatus
 
 }
