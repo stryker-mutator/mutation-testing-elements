@@ -50,6 +50,7 @@ jobs:
       - run: npm run download-incremental-reports
       - name: Run Stryker incrementally
         run: |
+          npx nx run-many --target=build
           npx nx run-many --target=stryker --projects=mutation-testing-metrics,mutation-testing-elements -- --incremental
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
