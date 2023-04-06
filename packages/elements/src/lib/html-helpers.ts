@@ -82,9 +82,9 @@ export function getEmojiForStatus(status: MutantStatus) {
     case MutantStatus.Survived:
       return renderEmoji('👽', status);
     case MutantStatus.Timeout:
-      return renderEmoji('⌛', status);
-    case MutantStatus.Pending:
       return renderEmoji('⏰', status);
+    case MutantStatus.Pending:
+      return renderEmoji('⌛', status);
     case MutantStatus.RuntimeError:
     case MutantStatus.CompileError:
       return renderEmoji('💥', status);
