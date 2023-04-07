@@ -1,7 +1,7 @@
 import { LitElement, html, PropertyValues, unsafeCSS, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { MutationTestResult } from 'mutation-testing-report-schema/api';
-import { MetricsResult, calculateMutationTestMetrics } from 'mutation-testing-metrics';
+import { MetricsResult, calculateMutationTestMetrics, MutantModel } from 'mutation-testing-metrics';
 import { tailwind, globals } from '../../style';
 import { locationChange$, View } from '../../lib/router';
 import { Subscription } from 'rxjs';
@@ -10,6 +10,7 @@ import { createCustomEvent } from '../../lib/custom-events';
 import { FileUnderTestModel, Metrics, MutationTestMetricsResult, TestFileModel, TestMetrics } from 'mutation-testing-metrics';
 import { toAbsoluteUrl } from '../../lib/html-helpers';
 import { isLocalStorageAvailable } from '../../lib/browser';
+import { MutantStatus } from 'mutation-testing-report-schema';
 
 interface BaseContext {
   path: string[];
@@ -37,6 +38,9 @@ export class MutationTestReportAppComponent extends LitElement {
 
   @property()
   public src: string | undefined;
+
+  @property()
+  public sse: string | undefined;
 
   @property({ attribute: false })
   public errorMessage: string | undefined;
@@ -177,9 +181,74 @@ export class MutationTestReportAppComponent extends LitElement {
   public static styles = [globals, unsafeCSS(theme), tailwind];
 
   public readonly subscriptions: Subscription[] = [];
+
   public connectedCallback() {
     super.connectedCallback();
     this.subscriptions.push(locationChange$.subscribe((path) => (this.path = path)));
+    this.initializeSSE();
+  }
+
+  private source: EventSource | undefined;
+
+  private initializeSSE() {
+    if (!this.sse) {
+      return;
+    }
+
+    this.source = new EventSource(this.sse);
+    this.source.addEventListener("mutation", event => {
+      const newMutantData = JSON.parse(event.data) as Partial<MutantModel> & { id: string, status: MutantStatus };
+
+      if (!this.report) {
+        return;
+      }
+
+      const theMutant = Object.values(this.report.files)
+        .flatMap(file => file.mutants)
+        .find(mutant => mutant.id === newMutantData.id);
+
+      if (theMutant === undefined) {
+        return;
+      }
+
+      theMutant.status = newMutantData.status;
+      // It is only required to set the mutant status, but we accept new changes to the mutant regardless:
+      theMutant.description ??= newMutantData.description;
+      theMutant.coveredBy ??= newMutantData.coveredBy;
+      theMutant.duration ??= newMutantData.duration;
+      theMutant.killedBy ??= newMutantData.killedBy;
+      theMutant.replacement ??= newMutantData.replacement;
+      theMutant.static ??= newMutantData.static;
+      theMutant.statusReason ??= newMutantData.statusReason;
+      theMutant.testsCompleted ??= newMutantData.testsCompleted;
+      theMutant.location = newMutantData.location ?? theMutant.location;
+      theMutant.mutatorName = newMutantData.mutatorName ?? theMutant.mutatorName;
+
+      this.scheduleRender();
+    });
+    this.source.addEventListener("finished", () => {
+      this.source?.close();
+      this.scheduleRender();
+    });
+  }
+
+  private renderScheduled = false;
+
+  private scheduleRender() {
+    if (this.renderScheduled) {
+      return;
+    }
+
+    this.renderScheduled = true;
+    setTimeout(() => {
+      if (!this.report) {
+        return;
+      }
+
+      this.updateModel(this.report);
+      this.updateContext();
+      this.renderScheduled = false;
+    }, 150);
   }
 
   public disconnectedCallback() {
