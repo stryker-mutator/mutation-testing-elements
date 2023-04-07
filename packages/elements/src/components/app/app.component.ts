@@ -1,6 +1,6 @@
 import { LitElement, html, PropertyValues, unsafeCSS, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { MutationTestResult } from 'mutation-testing-report-schema/api';
+import { MutantResult, MutationTestResult } from 'mutation-testing-report-schema/api';
 import { MetricsResult, calculateMutationTestMetrics, MutantModel } from 'mutation-testing-metrics';
 import { tailwind, globals } from '../../style';
 import { locationChange$, View } from '../../lib/router';
@@ -102,6 +102,7 @@ export class MutationTestReportAppComponent extends LitElement {
 
     if (this.report) {
       if (changedProperties.has('report')) {
+        this.prepareMutantDatastructure();
         this.updateModel(this.report);
       }
       if (changedProperties.has('path') || changedProperties.has('report')) {
@@ -112,6 +113,21 @@ export class MutationTestReportAppComponent extends LitElement {
     if (changedProperties.has('src')) {
       await this.loadData();
     }
+  }
+
+  private mutants: Record<string, MutantResult> = {};
+
+  private prepareMutantDatastructure() {
+    if (!this.report) {
+      return;
+    }
+
+    const allMutants = Object.values(this.report.files)
+        .flatMap(file => file.mutants);
+    
+    allMutants.forEach(mutant => {
+      this.mutants[mutant.id] = mutant;
+    });
   }
 
   public updated(changedProperties: PropertyValues) {
@@ -203,10 +219,7 @@ export class MutationTestReportAppComponent extends LitElement {
         return;
       }
 
-      const theMutant = Object.values(this.report.files)
-        .flatMap(file => file.mutants)
-        .find(mutant => mutant.id === newMutantData.id);
-
+      const theMutant = this.mutants[newMutantData.id];
       if (theMutant === undefined) {
         return;
       }
