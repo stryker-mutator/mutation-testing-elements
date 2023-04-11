@@ -128,6 +128,7 @@ describe(calculateMetrics.name, () => {
     const input: FileResultDictionary = {
       'foo.js': createFileResult({
         mutants: [
+          createMutantResult({ status: MutantStatus.Pending }),
           createMutantResult({ status: MutantStatus.RuntimeError }),
           createMutantResult({ status: MutantStatus.Killed }),
           createMutantResult({ status: MutantStatus.CompileError }),
@@ -144,6 +145,7 @@ describe(calculateMetrics.name, () => {
     const actual = calculateMetrics(input);
 
     // Assert
+    expect(actual.metrics.pending, 'pending').to.eq(1)
     expect(actual.metrics.killed, 'killed').to.eq(2);
     expect(actual.metrics.compileErrors, 'compileErrors').eq(1);
     expect(actual.metrics.runtimeErrors, 'runtimeErrors').eq(1);
@@ -153,7 +155,7 @@ describe(calculateMetrics.name, () => {
     expect(actual.metrics.noCoverage, 'ignored').to.eq(1);
     expect(actual.metrics.totalCovered, 'totalCovered').to.eq(4);
     expect(actual.metrics.totalDetected, 'detected').to.eq(3);
-    expect(actual.metrics.totalMutants, 'mutants').to.eq(8);
+    expect(actual.metrics.totalMutants, 'mutants').to.eq(9);
     expect(actual.metrics.totalValid, 'mutants').to.eq(5);
     expect(actual.metrics.totalInvalid, 'mutants').to.eq(2);
     expect(actual.metrics.totalUndetected, 'undetected').to.eq(2);
