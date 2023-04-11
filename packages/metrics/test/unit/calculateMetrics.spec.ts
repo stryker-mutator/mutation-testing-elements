@@ -145,7 +145,7 @@ describe(calculateMetrics.name, () => {
     const actual = calculateMetrics(input);
 
     // Assert
-    expect(actual.metrics.pending, 'pending').to.eq(1)
+    expect(actual.metrics.pending, 'pending').to.eq(1);
     expect(actual.metrics.killed, 'killed').to.eq(2);
     expect(actual.metrics.compileErrors, 'compileErrors').eq(1);
     expect(actual.metrics.runtimeErrors, 'runtimeErrors').eq(1);
