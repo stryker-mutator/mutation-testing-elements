@@ -175,7 +175,7 @@ export class FileComponent extends LitElement {
       ]
         .filter((status) => this.model.mutants.some((mutant) => mutant.status === status))
         .map((status) => ({
-          enabled: [MutantStatus.Survived, MutantStatus.NoCoverage, MutantStatus.Timeout].includes(status),
+          enabled: [...this.selectedMutantStates, MutantStatus.Survived, MutantStatus.NoCoverage, MutantStatus.Timeout].includes(status),
           count: this.model.mutants.filter((m) => m.status === status).length,
           status,
           label: html`${getEmojiForStatus(status)} ${status}`,

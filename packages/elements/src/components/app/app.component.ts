@@ -246,6 +246,7 @@ export class MutationTestReportAppComponent extends LitElement {
   }
 
   private renderScheduled = false;
+  private updateTimeout = 1000 / 60;
 
   private scheduleRender() {
     if (this.renderScheduled) {
@@ -261,7 +262,7 @@ export class MutationTestReportAppComponent extends LitElement {
       this.updateModel(this.report);
       this.updateContext();
       this.renderScheduled = false;
-    }, 150);
+    }, this.updateTimeout);
   }
 
   public disconnectedCallback() {
