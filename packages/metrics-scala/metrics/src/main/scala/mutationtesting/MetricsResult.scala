@@ -1,6 +1,9 @@
 package mutationtesting
 
 sealed trait MetricsResult {
+  /** The total number of mutants that are pending, meaning that they have been generated but not yet run.
+    */
+  def pending: Int
 
   /** At least one test failed while this mutant was active. The mutant is killed. This is what you want, good job!
     */
@@ -59,7 +62,7 @@ sealed trait MetricsResult {
 
   /** All mutants.
     */
-  lazy val totalMutants: Int = totalValid + totalInvalid + ignored
+  lazy val totalMutants: Int = totalValid + totalInvalid + ignored + pending
 
   /** The total percentage of mutants that were killed. Or a {{Double.NaN}} if there are no mutants.
     */
@@ -75,6 +78,7 @@ sealed trait MetricsResult {
 sealed trait DirOps extends MetricsResult {
   val files: Iterable[MetricsResult]
 
+  override lazy val pending: Int       = sumOfChildrenWith(_.pending)
   override lazy val killed: Int        = sumOfChildrenWith(_.killed)
   override lazy val timeout: Int       = sumOfChildrenWith(_.timeout)
   override lazy val survived: Int      = sumOfChildrenWith(_.survived)
@@ -91,6 +95,7 @@ sealed trait DirOps extends MetricsResult {
 sealed trait FileOps extends MetricsResult {
   val mutants: Iterable[MetricMutant]
 
+  override lazy val pending: Int       = countWhere(MutantStatus.Pending)
   override lazy val killed: Int        = countWhere(MutantStatus.Killed)
   override lazy val timeout: Int       = countWhere(MutantStatus.Timeout)
   override lazy val survived: Int      = countWhere(MutantStatus.Survived)
