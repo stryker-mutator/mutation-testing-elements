@@ -81,6 +81,7 @@ export function createTestMetrics(overrides?: TestMetrics): TestMetrics {
 
 export function createMetrics(overrides?: Metrics): Metrics {
   const defaults: Metrics = {
+    pending: 0,
     killed: 0,
     survived: 0,
     timeout: 0,

@@ -142,6 +142,7 @@ function countTestFileMetrics(testFile: TestFileModel[]): TestMetrics {
 function countFileMetrics(fileResult: FileUnderTestModel[]): Metrics {
   const mutants = fileResult.flatMap((_) => _.mutants);
   const count = (status: MutantStatus) => mutants.filter((_) => _.status === status).length;
+  const pending = count(MutantStatus.Pending);
   const killed = count(MutantStatus.Killed);
   const timeout = count(MutantStatus.Timeout);
   const survived = count(MutantStatus.Survived);
@@ -155,6 +156,7 @@ function countFileMetrics(fileResult: FileUnderTestModel[]): Metrics {
   const totalValid = totalUndetected + totalDetected;
   const totalInvalid = runtimeErrors + compileErrors;
   return {
+    pending,
     killed,
     timeout,
     survived,
@@ -168,7 +170,7 @@ function countFileMetrics(fileResult: FileUnderTestModel[]): Metrics {
     totalValid,
     totalInvalid,
     mutationScore: totalValid > 0 ? (totalDetected / totalValid) * 100 : DEFAULT_SCORE,
-    totalMutants: totalValid + totalInvalid + ignored,
+    totalMutants: totalValid + totalInvalid + ignored + pending,
     mutationScoreBasedOnCoveredCode: totalValid > 0 ? (totalDetected / totalCovered) * 100 || 0 : DEFAULT_SCORE,
   };
 }

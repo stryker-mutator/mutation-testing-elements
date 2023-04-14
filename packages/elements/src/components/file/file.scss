@@ -3,6 +3,7 @@
 @import '../../style/code.scss';
 
 $mutant-themes: (
+  'Pending': theme('colors.neutral.400'),
   'Killed': theme('colors.green.600'),
   'NoCoverage': theme('colors.orange.500'),
   'Survived': theme('colors.red.500'),

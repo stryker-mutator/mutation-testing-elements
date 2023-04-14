@@ -57,7 +57,7 @@ describe(FileStateFilterComponent.name, () => {
         '👽 Survived (1)',
         '🙈 NoCoverage (1)',
         '🤥 Ignored (1)',
-        '⌛ Timeout (1)',
+        '⏰ Timeout (1)',
         '💥 CompileError (1)',
         '💥 RuntimeError (1)',
       ]);

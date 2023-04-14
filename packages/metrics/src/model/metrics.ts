@@ -3,6 +3,10 @@
  */
 export interface Metrics {
   /**
+   * The total number of mutants that are pending, meaning that they have been generated but not yet run
+   */
+  pending: number;
+  /**
    * The total number of mutants that were killed
    */
   killed: number;

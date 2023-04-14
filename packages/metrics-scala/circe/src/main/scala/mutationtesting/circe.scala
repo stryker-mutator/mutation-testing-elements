@@ -127,6 +127,7 @@ object circe {
         case MutantStatus.CompileError => "CompileError"
         case MutantStatus.RuntimeError => "RuntimeError"
         case MutantStatus.Ignored      => "Ignored"
+        case MutantStatus.Pending      => "Pending"
       })
 
   implicit lazy val testDefinitionCodec: Codec[TestDefinition] =
