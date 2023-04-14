@@ -43,7 +43,7 @@ export function getContextClassForStatus(status: MutantStatus) {
       return 'warning';
     case MutantStatus.Ignored:
     case MutantStatus.RuntimeError:
-    case MutantStatus.Pending: // For now
+    case MutantStatus.Pending:
     case MutantStatus.CompileError:
       return 'secondary';
   }
