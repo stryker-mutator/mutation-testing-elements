@@ -38,7 +38,8 @@ export class FileComponent extends LitElement {
   private codeRef = createRef<HTMLElement>();
 
   private readonly filtersChanged = (event: MteCustomEvent<'filters-changed'>) => {
-    this.selectedMutantStates = event.detail as MutantStatus[];
+    // Pending is not filterable, but they should still be shown to the user.
+    this.selectedMutantStates = (event.detail as MutantStatus[]).concat([MutantStatus.Pending]);
   };
 
   private codeClicked = (ev: MouseEvent) => {
@@ -171,7 +172,6 @@ export class FileComponent extends LitElement {
         MutantStatus.Timeout,
         MutantStatus.CompileError,
         MutantStatus.RuntimeError,
-        MutantStatus.Pending,
       ]
         .filter((status) => this.model.mutants.some((mutant) => mutant.status === status))
         .map((status) => ({
