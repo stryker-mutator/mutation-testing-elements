@@ -122,10 +122,9 @@ export class MutationTestReportAppComponent extends LitElement {
       return;
     }
 
-    const allMutants = Object.values(this.report.files)
-        .flatMap(file => file.mutants);
-    
-    allMutants.forEach(mutant => {
+    const allMutants = Object.values(this.report.files).flatMap((file) => file.mutants);
+
+    allMutants.forEach((mutant) => {
       this.mutants[mutant.id] = mutant;
     });
   }
@@ -212,8 +211,8 @@ export class MutationTestReportAppComponent extends LitElement {
     }
 
     this.source = new EventSource(this.sse);
-    this.source.addEventListener("mutation", event => {
-      const newMutantData = JSON.parse(event.data) as Partial<MutantModel> & { id: string, status: MutantStatus };
+    this.source.addEventListener('mutation', (event) => {
+      const newMutantData = JSON.parse(event.data as string) as Partial<MutantModel> & { id: string; status: MutantStatus };
 
       if (!this.report) {
         return;
@@ -239,7 +238,7 @@ export class MutationTestReportAppComponent extends LitElement {
 
       this.scheduleRender();
     });
-    this.source.addEventListener("finished", () => {
+    this.source.addEventListener('finished', () => {
       this.source?.close();
       this.scheduleRender();
     });
