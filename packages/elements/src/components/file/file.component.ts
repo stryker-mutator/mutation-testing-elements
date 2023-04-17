@@ -137,6 +137,7 @@ export class FileComponent extends LitElement {
 
   private toggleMutant(mutant: MutantModel) {
     this.removeCurrentDiff();
+
     if (this.selectedMutant === mutant) {
       this.selectedMutant = undefined;
       this.dispatchEvent(createCustomEvent('mutant-selected', { selected: false, mutant }));
@@ -216,11 +217,26 @@ export class FileComponent extends LitElement {
       this.mutants = this.model.mutants
         .filter((mutant) => this.selectedMutantStates.includes(mutant.status))
         .sort((m1, m2) => (gte(m1.location.start, m2.location.start) ? 1 : -1));
-      if (this.selectedMutant && !this.mutants.includes(this.selectedMutant)) {
+
+      if (
+        this.selectedMutant &&
+        !this.mutants.includes(this.selectedMutant) &&
+        changes.has('selectedMutantStates') &&
+        // This extra check is to allow mutants that have been opened before, to stay open when a realtime update comes through
+        this.selectedMutantsHaveChanged(changes.get('selectedMutantStates'))
+      ) {
         this.toggleMutant(this.selectedMutant);
       }
     }
     super.update(changes);
+  }
+
+  private selectedMutantsHaveChanged(changedMutantStates: MutantStatus[]): boolean {
+    if (changedMutantStates.length !== this.selectedMutantStates.length) {
+      return true;
+    }
+
+    return !changedMutantStates.every((state, index) => this.selectedMutantStates[index] === state);
   }
 
   private highlightedReplacementRows(mutant: MutantModel): string {
