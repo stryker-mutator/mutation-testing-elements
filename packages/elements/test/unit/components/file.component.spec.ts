@@ -382,6 +382,7 @@ function add(a, b) {
         // Assert
         expect(sut.$('tr.diff-new td.code').innerText.trim()).eq('return a - b;');
       });
+
       it('should not show the diff if the mutant was filtered out', async () => {
         // Arrange
         filterComponent.dispatchEvent(createCustomEvent('filters-changed', [MutantStatus.Survived]));
@@ -469,6 +470,24 @@ function add(a, b) {
         // Act
         const mutant = sut.$('span.mutant[mutant-id="1"]');
         mutant.click();
+        await sut.whenStable();
+
+        // Assert
+        expect(sut.$('tr.diff-new td.code').innerText.trim()).eq('return a - b;');
+      });
+
+      it('should not update state in file when model is updated', async () => {
+        // Arrange
+        sut.element.model.mutants[0].status = MutantStatus.Killed;
+        filterComponent.dispatchEvent(createCustomEvent('filters-changed', [MutantStatus.Killed]));
+        const mutant = sut.$('span.mutant[mutant-id="1"]');
+        mutant.click();
+        sut.element.requestUpdate('model');
+        await sut.whenStable();
+
+        // Act
+        sut.element.model.mutants[0].status = MutantStatus.Killed;
+        sut.element.requestUpdate('model');
         await sut.whenStable();
 
         // Assert
