@@ -1,7 +1,7 @@
 import { LitElement, html, PropertyValues, unsafeCSS, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { MutantResult, MutationTestResult } from 'mutation-testing-report-schema/api';
-import { MetricsResult, calculateMutationTestMetrics, MutantModel } from 'mutation-testing-metrics';
+import { MetricsResult, calculateMutationTestMetrics } from 'mutation-testing-metrics';
 import { tailwind, globals } from '../../style';
 import { locationChange$, View } from '../../lib/router';
 import { Subscription } from 'rxjs';
@@ -10,7 +10,6 @@ import { createCustomEvent } from '../../lib/custom-events';
 import { FileUnderTestModel, Metrics, MutationTestMetricsResult, TestFileModel, TestMetrics } from 'mutation-testing-metrics';
 import { toAbsoluteUrl } from '../../lib/html-helpers';
 import { isLocalStorageAvailable } from '../../lib/browser';
-import { MutantStatus } from 'mutation-testing-report-schema';
 
 interface BaseContext {
   path: string[];
@@ -115,7 +114,7 @@ export class MutationTestReportAppComponent extends LitElement {
     }
   }
 
-  private mutants: Record<string, MutantResult> = {};
+  private mutants: Map<string, MutantResult> = new Map();
 
   private prepareMutantDatastructure() {
     if (!this.report) {
@@ -123,9 +122,8 @@ export class MutationTestReportAppComponent extends LitElement {
     }
 
     const allMutants = Object.values(this.report.files).flatMap((file) => file.mutants);
-
     allMutants.forEach((mutant) => {
-      this.mutants[mutant.id] = mutant;
+      this.mutants.set(mutant.id, mutant);
     });
   }
 
@@ -212,29 +210,19 @@ export class MutationTestReportAppComponent extends LitElement {
 
     this.source = new EventSource(this.sse);
     this.source.addEventListener('mutation', (event) => {
-      const newMutantData = JSON.parse(event.data as string) as Partial<MutantModel> & { id: string; status: MutantStatus };
-
+      const newMutantData = JSON.parse(event.data as string) as Partial<MutantResult> & Pick<MutantResult, 'id'> & Pick<MutantResult, 'status'>;
       if (!this.report) {
         return;
       }
 
-      const theMutant = this.mutants[newMutantData.id];
+      const theMutant = this.mutants.get(newMutantData.id);
       if (theMutant === undefined) {
         return;
       }
 
-      theMutant.status = newMutantData.status;
-      // It is only required to set the mutant status, but we accept new changes to the mutant regardless:
-      theMutant.description ??= newMutantData.description;
-      theMutant.coveredBy ??= newMutantData.coveredBy;
-      theMutant.duration ??= newMutantData.duration;
-      theMutant.killedBy ??= newMutantData.killedBy;
-      theMutant.replacement ??= newMutantData.replacement;
-      theMutant.static ??= newMutantData.static;
-      theMutant.statusReason ??= newMutantData.statusReason;
-      theMutant.testsCompleted ??= newMutantData.testsCompleted;
-      theMutant.location = newMutantData.location ?? theMutant.location;
-      theMutant.mutatorName = newMutantData.mutatorName ?? theMutant.mutatorName;
+      for (const prop in newMutantData) {
+        theMutant[prop] = newMutantData[prop];
+      }
 
       this.scheduleRender();
     });

@@ -3,10 +3,11 @@ import { MutationTestReportAppComponent } from '../../../src/components/app/app.
 import { expect } from 'chai';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { createCustomEvent } from '../../../src/lib/custom-events';
-import { createReport } from '../../helpers/factory';
+import { createMutantResult, createReport } from '../../helpers/factory';
 import { MutationTestReportMutantViewComponent } from '../../../src/components/mutant-view/mutant-view';
 import { MutationTestReportTestViewComponent } from '../../../src/components/test-view/test-view';
 import { tick } from '../helpers/tick';
+import { MutantStatus } from 'mutation-testing-report-schema';
 
 describe(MutationTestReportAppComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportAppComponent>;
@@ -17,6 +18,7 @@ describe(MutationTestReportAppComponent.name, () => {
     fetchStub = sinon.stub(window, 'fetch');
     matchMediaStub = sinon.stub(window, 'matchMedia');
     matchMediaStub.returns({ matches: false } as MediaQueryList);
+
     sut = new CustomElementFixture('mutation-test-report-app');
   });
 
@@ -51,6 +53,7 @@ describe(MutationTestReportAppComponent.name, () => {
       const response: Pick<Response, 'json'> = {
         json: () => Promise.resolve(expectedReport),
       };
+
       const expectedReport = createReport();
       fetchStub.resolves(response as Response);
 
@@ -294,6 +297,146 @@ describe(MutationTestReportAppComponent.name, () => {
       });
       expect(event?.detail.theme).eq('dark');
       expect(event?.detail.themeBackgroundColor).eq(' #18181b');
+    });
+  });
+
+  describe('the `sse` property', () => {
+    const defaultMessage = new MessageEvent('mutation', { data: JSON.stringify({ id: '1', status: 'Killed' }) });
+
+    let eventSourceConstructorStub: sinon.SinonStub;
+    let eventSourceStub: sinon.SinonStubbedInstance<EventSource>;
+    let mutationCallback: CallableFunction;
+    let finishedCallback: CallableFunction;
+
+    beforeEach(() => {
+      eventSourceStub = sinon.createStubInstance(EventSource);
+      eventSourceStub.addEventListener.returns();
+      eventSourceConstructorStub = sinon.stub(window, 'EventSource').returns(eventSourceStub);
+      eventSourceStub.addEventListener.callsFake((type, cb) => {
+        if (type === 'mutation') {
+          mutationCallback = cb as CallableFunction;
+        } else {
+          finishedCallback = cb as CallableFunction;
+        }
+      });
+      sut = new CustomElementFixture('mutation-test-report-app', { autoConnect: false });
+    });
+
+    it('should not initialize SSE when property is not set', async () => {
+      // Arrange
+      sut.element.report = createReport();
+
+      // Act
+      sut.connect();
+      await sut.whenStable();
+
+      // Assert
+      expect(eventSourceConstructorStub.calledWith('/sse')).to.be.false;
+    });
+
+    it('should initialize SSE when property is set', async () => {
+      // Arrange
+      sut.element.report = createReport();
+      sut.element.sse = 'http://localhost:8080/sse';
+
+      // Act
+      sut.connect();
+      await sut.whenStable();
+
+      // Assert
+      expect(eventSourceConstructorStub.calledWith('http://localhost:8080/sse')).to.be.true;
+      expect(eventSourceStub.addEventListener.firstCall.args[0]).to.be.equal('mutation');
+      expect(eventSourceStub.addEventListener.secondCall.args[0]).to.be.equal('finished');
+    });
+
+    it('should update mutant status when SSE event comes in', async () => {
+      // Arrange
+      const report = createReport();
+      const mutant = createMutantResult();
+      mutant.status = MutantStatus.Pending;
+      report.files['foobar.js'].mutants = [mutant];
+      sut.element.report = report;
+      sut.element.sse = 'http://localhost:8080/sse';
+      sut.connect();
+      await sut.whenStable();
+
+      // Act
+      mutationCallback(defaultMessage);
+
+      // Assert
+      expect(sut.element.report.files['foobar.js'].mutants[0].status).to.be.equal(MutantStatus.Killed);
+    });
+
+    // TODO: could potentially be removed
+    it('should not update anything if report is not set', async () => {
+      // Arrange
+      sut.element.report = undefined;
+      sut.element.sse = 'http://localhost:8080/sse';
+      sut.connect();
+      await sut.whenStable();
+
+      // Act
+      mutationCallback(defaultMessage);
+
+      // Assert
+      expect(sut.element.report).to.be.undefined;
+    });
+
+    it('should update every mutant field when given in an SSE event', async () => {
+      // Arrange
+      const report = createReport();
+      const mutant = createMutantResult();
+      mutant.status = MutantStatus.Pending;
+      report.files['foobar.js'].mutants = [mutant];
+      sut.element.report = report;
+      sut.element.sse = 'http://localhost:8080/sse';
+      sut.connect();
+      await sut.whenStable();
+
+      // Act
+      const newMutantData = JSON.stringify({
+        id: '1',
+        status: MutantStatus.Killed,
+        description: 'test description',
+        coveredBy: ['test 1'],
+        duration: 100,
+        killedBy: ['test 1'],
+        replacement: 'test-r',
+        static: true,
+        statusReason: 'test reason',
+        testsCompleted: 12,
+        location: { start: { line: 12, column: 1 }, end: { line: 13, column: 2 } },
+        mutatorName: 'test mutator',
+      });
+      const message = new MessageEvent('mutation', { data: newMutantData });
+      mutationCallback(message);
+
+      // Assert
+      const theMutant = sut.element.report.files['foobar.js'].mutants[0];
+      expect(theMutant.description).to.be.equal('test description');
+      expect(theMutant.coveredBy).to.have.same.members(['test 1']);
+      expect(theMutant.duration).to.be.equal(100);
+      expect(theMutant.killedBy).to.have.same.members(['test 1']);
+      expect(theMutant.replacement).to.be.equal('test-r');
+      expect(theMutant.static).to.be.true;
+      expect(theMutant.statusReason).to.be.equal('test reason');
+      expect(theMutant.testsCompleted).to.be.equal(12);
+      expect(theMutant.location).to.deep.equal({ start: { line: 12, column: 1 }, end: { line: 13, column: 2 } });
+      expect(theMutant.mutatorName).to.be.equal('test mutator');
+    });
+
+    it('should close the SSE process when the final event comes in', async () => {
+      // Arrange
+      const message = new MessageEvent('finished', { data: '' });
+      sut.element.sse = 'http://localhost:8080/sse';
+      sut.connect();
+      await sut.whenStable();
+
+      // Act
+      finishedCallback(message);
+
+      // Assert
+      expect(eventSourceStub.close.calledOnce).to.be.true;
     });
   });
 
