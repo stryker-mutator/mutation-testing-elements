@@ -11,8 +11,8 @@
     <script>
       const urlParams = new URLSearchParams(window.location.search);
       const port = urlParams.get('port');
-      const report = document.createElement("mutation-test-report-app");
-      report.setAttribute('src', "mutation-report.json");
+      const report = document.createElement('mutation-test-report-app');
+      report.setAttribute('src', 'mutation-report.json');
       report.setAttribute('sse', `http://localhost:${port}`);
       document.body.appendChild(report);
 
