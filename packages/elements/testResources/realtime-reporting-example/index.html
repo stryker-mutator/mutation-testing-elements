@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Install local example - Mutation test elements</title>
+    <script src="/mutation-test-elements.js"></script>
+  </head>
+
+  <body>
+    <a href="/">Back</a>
+
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const port = urlParams.get('port');
+      const report = document.createElement("mutation-test-report-app");
+      report.setAttribute('src', "mutation-report.json");
+      report.setAttribute('sse', `http://localhost:${port}`);
+      document.body.appendChild(report);
+
+      const app = document.getElementsByTagName('mutation-test-report-app').item(0);
+
+      function updateTheme() {
+        document.body.style.backgroundColor = app.themeBackgroundColor;
+      }
+      app.addEventListener('theme-changed', updateTheme);
+
+      updateTheme();
+    </script>
+  </body>
+</html>

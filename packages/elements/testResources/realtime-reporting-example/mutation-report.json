@@ -1,0 +1,287 @@
+{
+  "schemaVersion": "1",
+  "thresholds": {
+    "high": 80,
+    "low": 60
+  },
+  "projectRoot": "C:\\Users\\example\\Projects\\Wrappit\\Wrappit\\Wrappit",
+  "files": {
+    "C:\\Users\\example\\Projects\\Wrappit\\Wrappit\\Wrappit\\Attributes\\EventListenerAttribute.cs": {
+      "language": "cs",
+      "source": "namespace Wrappit.Attributes;\r\n\r\n[AttributeUsage(AttributeTargets.Class)]\r\npublic class EventListenerAttribute : Attribute\r\n{\r\n}\r\n",
+      "mutants": []
+    },
+    "C:\\Users\\example\\Projects\\Wrappit\\Wrappit\\Wrappit\\Attributes\\HandleAttribute.cs": {
+      "language": "cs",
+      "source": "namespace Wrappit.Attributes;\r\n\r\n[AttributeUsage(AttributeTargets.Method)]\r\npublic class HandleAttribute : Attribute\r\n{\r\n    public string Topic { get; }\r\n    \r\n    public HandleAttribute(string topic)\r\n    {\r\n        Topic = topic;\r\n    }   \r\n}\r\n",
+      "mutants": [
+        {
+          "id": "0",
+          "mutatorName": "Block removal mutation",
+          "replacement": "{}",
+          "location": {
+            "start": {
+              "line": 9,
+              "column": 5
+            },
+            "end": {
+              "line": 11,
+              "column": 6
+            }
+          },
+          "status": "Pending",
+          "static": false
+        }
+      ]
+    },
+    "C:\\Users\\example\\Projects\\Wrappit\\Wrappit\\Wrappit\\Configuration\\WrappitContext.cs": {
+      "language": "cs",
+      "source": "using Microsoft.Extensions.Logging;\r\nusing RabbitMQ.Client;\r\n\r\nnamespace Wrappit.Configuration;\r\n\r\ninternal class WrappitContext : IWrappitContext\r\n{\r\n    private static readonly object LockObject = new();\r\n\r\n    private readonly IWrappitOptions _options;\r\n    private readonly ILogger\\u003CWrappitContext\\u003E _logger;\r\n    \r\n    private IConnection? _connection;\r\n    \r\n    public IConnection Connection\r\n    {\r\n        get\r\n        {\r\n            if (_connection == null)\r\n            {\r\n                lock (LockObject)\r\n                {\r\n                    if (_connection == null)\r\n                    {\r\n                        _connection = _options.CreateFactory().CreateConnection();\r\n                        using var channel = _connection.CreateModel();\r\n                        channel.ExchangeDeclare(_options.ExchangeName, ExchangeType.Topic, _options.DurableExchange, false, null);\r\n                        \r\n                        _logger.LogDebug(\\u0022Created exchange with name {exchangeName}.\\u0022, _options.ExchangeName);\r\n                    }\r\n                }\r\n            }\r\n\r\n            return _connection;\r\n        }\r\n    }\r\n\r\n    public string ExchangeName =\\u003E _options.ExchangeName;\r\n    public bool DurableExchange =\\u003E _options.DurableExchange;\r\n    public string QueueName =\\u003E _options.QueueName;\r\n    public int DeliveryLimit =\\u003E _options.DeliveryLimit;\r\n    public bool DurableQueue =\\u003E _options.DurableQueue;\r\n    public bool AutoDeleteQueue =\\u003E _options.AutoDeleteQueue;\r\n\r\n    public WrappitContext(IWrappitOptions options, ILogger\\u003CWrappitContext\\u003E logger)\r\n    {\r\n        _options = options;\r\n        _logger = logger;\r\n    }\r\n    \r\n    public IModel CreateChannel()\r\n    {\r\n        return Connection.CreateModel();\r\n    }\r\n    \r\n    public void Dispose()\r\n    {\r\n        _connection?.Dispose();\r\n    }\r\n}\r\n",
+      "mutants": [
+        {
+          "id": "1",
+          "mutatorName": "Block removal mutation",
+          "replacement": "{}",
+          "location": {
+            "start": {
+              "line": 18,
+              "column": 9
+            },
+            "end": {
+              "line": 35,
+              "column": 10
+            }
+          },
+          "status": "Ignored",
+          "statusReason": "Removed by block already covered filter",
+          "static": false
+        },
+        {
+          "id": "2",
+          "mutatorName": "Equality mutation",
+          "replacement": "_connection != null",
+          "location": {
+            "start": {
+              "line": 19,
+              "column": 17
+            },
+            "end": {
+              "line": 19,
+              "column": 36
+            }
+          },
+          "status": "Pending",
+          "static": false
+        },
+        {
+          "id": "3",
+          "mutatorName": "Block removal mutation",
+          "replacement": "{}",
+          "location": {
+            "start": {
+              "line": 20,
+              "column": 13
+            },
+            "end": {
+              "line": 32,
+              "column": 14
+            }
+          },
+          "status": "Ignored",
+          "statusReason": "Removed by block already covered filter",
+          "static": false
+        },
+        {
+          "id": "4",
+          "mutatorName": "Block removal mutation",
+          "replacement": "{}",
+          "location": {
+            "start": {
+              "line": 22,
+              "column": 17
+            },
+            "end": {
+              "line": 31,
+              "column": 18
+            }
+          },
+          "status": "Ignored",
+          "statusReason": "Removed by block already covered filter",
+          "static": false
+        },
+        {
+          "id": "5",
+          "mutatorName": "Equality mutation",
+          "replacement": "_connection != null",
+          "location": {
+            "start": {
+              "line": 23,
+              "column": 25
+            },
+            "end": {
+              "line": 23,
+              "column": 44
+            }
+          },
+          "status": "Pending",
+          "static": false
+        },
+        {
+          "id": "6",
+          "mutatorName": "Block removal mutation",
+          "replacement": "{}",
+          "location": {
+            "start": {
+              "line": 24,
+              "column": 21
+            },
+            "end": {
+              "line": 30,
+              "column": 22
+            }
+          },
+          "status": "Ignored",
+          "statusReason": "Removed by block already covered filter",
+          "static": false
+        },
+        {
+          "id": "7",
+          "mutatorName": "Statement mutation",
+          "replacement": ";",
+          "location": {
+            "start": {
+              "line": 27,
+              "column": 25
+            },
+            "end": {
+              "line": 27,
+              "column": 131
+            }
+          },
+          "status": "Pending",
+          "static": false
+        },
+        {
+          "id": "8",
+          "mutatorName": "Boolean mutation",
+          "replacement": "true",
+          "location": {
+            "start": {
+              "line": 27,
+              "column": 118
+            },
+            "end": {
+              "line": 27,
+              "column": 123
+            }
+          },
+          "status": "Pending",
+          "static": false
+        },
+        {
+          "id": "9",
+          "mutatorName": "Statement mutation",
+          "replacement": ";",
+          "location": {
+            "start": {
+              "line": 29,
+              "column": 25
+            },
+            "end": {
+              "line": 29,
+              "column": 111
+            }
+          },
+          "status": "Pending",
+          "static": false
+        },
+        {
+          "id": "10",
+          "mutatorName": "String mutation",
+          "replacement": "\\u0022\\u0022",
+          "location": {
+            "start": {
+              "line": 29,
+              "column": 42
+            },
+            "end": {
+              "line": 29,
+              "column": 86
+            }
+          },
+          "status": "Pending",
+          "static": false
+        },
+        {
+          "id": "11",
+          "mutatorName": "Block removal mutation",
+          "replacement": "{}",
+          "location": {
+            "start": {
+              "line": 46,
+              "column": 5
+            },
+            "end": {
+              "line": 49,
+              "column": 6
+            }
+          },
+          "status": "Pending",
+          "static": false
+        },
+        {
+          "id": "12",
+          "mutatorName": "Block removal mutation",
+          "replacement": "{}",
+          "location": {
+            "start": {
+              "line": 52,
+              "column": 5
+            },
+            "end": {
+              "line": 54,
+              "column": 6
+            }
+          },
+          "status": "Pending",
+          "static": false
+        },
+        {
+          "id": "13",
+          "mutatorName": "Block removal mutation",
+          "replacement": "{}",
+          "location": {
+            "start": {
+              "line": 57,
+              "column": 5
+            },
+            "end": {
+              "line": 59,
+              "column": 6
+            }
+          },
+          "status": "Ignored",
+          "statusReason": "Removed by block already covered filter",
+          "static": false
+        },
+        {
+          "id": "14",
+          "mutatorName": "Statement mutation",
+          "replacement": ";",
+          "location": {
+            "start": {
+              "line": 58,
+              "column": 9
+            },
+            "end": {
+              "line": 58,
+              "column": 32
+            }
+          },
+          "status": "Pending",
+          "static": false
+        }
+      ]
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import { LitElement, html, PropertyValues, unsafeCSS, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { MutantResult, MutationTestResult } from 'mutation-testing-report-schema/api';
-import { MetricsResult, calculateMutationTestMetrics } from 'mutation-testing-metrics';
+import { MetricsResult, MutantModel, calculateMutationTestMetrics } from 'mutation-testing-metrics';
 import { tailwind, globals } from '../../style';
 import { locationChange$, View } from '../../lib/router';
 import { Subscription } from 'rxjs';
@@ -210,12 +210,12 @@ export class MutationTestReportAppComponent extends LitElement {
 
     this.source = new EventSource(this.sse);
     this.source.addEventListener('mutation', (event) => {
-      const newMutantData = JSON.parse(event.data as string) as Partial<MutantResult> & Pick<MutantResult, 'id'> & Pick<MutantResult, 'status'>;
+      const newMutantData = JSON.parse(event.data as string) as Partial<MutantModel> & Pick<MutantModel, 'id'> & Pick<MutantModel, 'status'>;
       if (!this.report) {
         return;
       }
 
-      const theMutant = this.mutants.get(newMutantData.id);
+      const theMutant = this.mutants.get(newMutantData.id) as MutantModel;
       if (theMutant === undefined) {
         return;
       }
