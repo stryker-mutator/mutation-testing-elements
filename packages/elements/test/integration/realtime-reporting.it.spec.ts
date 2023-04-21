@@ -7,17 +7,17 @@ import { MutantStatus } from 'mutation-testing-report-schema';
 
 describe('realtime reporting', () => {
   const server: SseTestServer = new SseTestServer();
-  const defaultEvent = { name: 'mutation', data: { id: '0', status: 'Killed' } };
+  const defaultEvent = { id: '0', status: 'Killed' };
 
-  before(() => {
-    server.start();
+  let port: number;
+
+  before(async () => {
+    port = await server.start();
   });
 
   let page: ReportPage;
-  let port: number;
 
   beforeEach(async () => {
-    port = server.port ?? 0;
     page = new ReportPage(getCurrent());
     await page.navigateTo(`realtime-reporting-example/?port=${port}`);
     await page.whenFileReportLoaded();
@@ -29,8 +29,11 @@ describe('realtime reporting', () => {
       const attributesRow = page.mutantView.resultTable().row('Attributes');
       const wrappitContextRow = page.mutantView.resultTable().row('WrappitContext.cs');
 
-      server.send(defaultEvent);
-      server.send({ name: 'mutation', data: { id: '1', status: 'Survived' } });
+      server.on('client-connected', (client) => {
+        client.sendMutantTested(defaultEvent);
+        client.sendMutantTested({ id: '1', status: 'Survived' });
+      });
+
       await sleep(25);
 
       expect(await allFilesRow.progressBar().percentageText()).to.eq('50.00');
@@ -49,7 +52,7 @@ describe('realtime reporting', () => {
       const mutantPending = page.mutantView.mutantMarker('0');
       expect(await mutantPending.underlineIsVisible()).to.be.true;
 
-      server.send(defaultEvent);
+      server.on('client-connected', (client) => client.sendMutantTested(defaultEvent));
       await sleep(25);
 
       expect(await page.mutantView.mutantDots()).to.be.lengthOf(0);
@@ -65,7 +68,7 @@ describe('realtime reporting', () => {
       await drawer.whenHalfOpen();
       expect(await drawer.isHalfOpen()).to.be.true;
 
-      server.send(defaultEvent);
+      server.on('client-connected', (client) => client.sendMutantTested(defaultEvent));
       await sleep(25);
 
       expect(await drawer.isHalfOpen()).to.be.true;

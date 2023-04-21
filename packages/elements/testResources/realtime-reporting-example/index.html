@@ -9,11 +9,9 @@
     <a href="/">Back</a>
 
     <script>
-      const urlParams = new URLSearchParams(window.location.search);
-      const port = urlParams.get('port');
       const report = document.createElement('mutation-test-report-app');
       report.setAttribute('src', 'mutation-report.json');
-      report.setAttribute('sse', `http://localhost:${port}`);
+      report.setAttribute('sse', 'sse');
       document.body.appendChild(report);
 
       const app = document.getElementsByTagName('mutation-test-report-app').item(0);
