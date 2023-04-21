@@ -7,7 +7,7 @@ import { locationChange$, View } from '../../lib/router';
 import { Subscription } from 'rxjs';
 import theme from './theme.scss';
 import { createCustomEvent } from '../../lib/custom-events';
-import { FileUnderTestModel, Metrics, MutationTestMetricsResult, TestFileModel, TestMetrics } from 'mutation-testing-metrics';
+import { FileUnderTestModel, Metrics, MutationTestMetricsResult, TestFileModel, TestMetrics, TestModel } from 'mutation-testing-metrics';
 import { toAbsoluteUrl } from '../../lib/html-helpers';
 import { isLocalStorageAvailable } from '../../lib/browser';
 
@@ -101,7 +101,6 @@ export class MutationTestReportAppComponent extends LitElement {
 
     if (this.report) {
       if (changedProperties.has('report')) {
-        this.prepareMutantDatastructure();
         this.updateModel(this.report);
       }
       if (changedProperties.has('path') || changedProperties.has('report')) {
@@ -114,18 +113,8 @@ export class MutationTestReportAppComponent extends LitElement {
     }
   }
 
-  private mutants: Map<string, MutantResult> = new Map();
-
-  private prepareMutantDatastructure() {
-    if (!this.report) {
-      return;
-    }
-
-    const allMutants = Object.values(this.report.files).flatMap((file) => file.mutants);
-    allMutants.forEach((mutant) => {
-      this.mutants.set(mutant.id, mutant);
-    });
-  }
+  private mutants: Map<string, MutantModel> = new Map();
+  private tests: Map<string, TestModel> = new Map();
 
   public updated(changedProperties: PropertyValues) {
     if (changedProperties.has('theme') && this.theme) {
@@ -154,6 +143,23 @@ export class MutationTestReportAppComponent extends LitElement {
 
   private updateModel(report: MutationTestResult) {
     this.rootModel = calculateMutationTestMetrics(report);
+    this.mutants.clear();
+
+    collectForEach<FileUnderTestModel, Metrics>((file) => file.mutants.forEach((mutant) => this.mutants.set(mutant.id, mutant)))(
+      this.rootModel?.systemUnderTestMetrics
+    );
+    collectForEach<TestFileModel, TestMetrics>((file) => file.tests.forEach((test) => this.tests.set(test.id, test)))(this.rootModel?.testMetrics);
+
+    function collectForEach<TFile, TMetrics>(collect: (file: TFile) => void) {
+      return function forEachMetric(metrics: MetricsResult<TFile, TMetrics> | undefined): void {
+        if (metrics?.file) {
+          collect(metrics.file);
+        }
+        metrics?.childResults.forEach((child) => {
+          forEachMetric(child);
+        });
+      };
+    }
   }
 
   private updateContext() {
@@ -210,46 +216,41 @@ export class MutationTestReportAppComponent extends LitElement {
 
     this.source = new EventSource(this.sse);
     this.source.addEventListener('mutation', (event) => {
-      const newMutantData = JSON.parse(event.data as string) as Partial<MutantModel> & Pick<MutantModel, 'id'> & Pick<MutantModel, 'status'>;
+      const newMutantData = JSON.parse(event.data as string) as Partial<MutantResult> & Pick<MutantResult, 'id' | 'status'>;
       if (!this.report) {
         return;
       }
 
-      const theMutant = this.mutants.get(newMutantData.id) as MutantModel;
+      const theMutant = this.mutants.get(newMutantData.id);
       if (theMutant === undefined) {
         return;
       }
 
-      for (const prop in newMutantData) {
-        theMutant[prop] = newMutantData[prop];
+      for (const [prop, val] of Object.entries(newMutantData)) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        (theMutant as any)[prop] = val;
       }
 
-      this.scheduleRender();
+      if (newMutantData.killedBy) {
+        newMutantData.killedBy.forEach((killedByTestId) => {
+          const test = this.tests.get(killedByTestId)!;
+          test.addKilled(theMutant);
+          theMutant.addKilledBy(test);
+        });
+      }
+      if (newMutantData.coveredBy) {
+        newMutantData.coveredBy.forEach((coveredByTestId) => {
+          const test = this.tests.get(coveredByTestId)!;
+          test.addCovered(theMutant);
+          theMutant.addCoveredBy(test);
+        });
+      }
+
+      this.updateContext();
     });
     this.source.addEventListener('finished', () => {
       this.source?.close();
-      this.scheduleRender();
     });
-  }
-
-  private renderScheduled = false;
-  private updateTimeout = 1000 / 60;
-
-  private scheduleRender() {
-    if (this.renderScheduled) {
-      return;
-    }
-
-    this.renderScheduled = true;
-    setTimeout(() => {
-      if (!this.report) {
-        return;
-      }
-
-      this.updateModel(this.report);
-      this.updateContext();
-      this.renderScheduled = false;
-    }, this.updateTimeout);
   }
 
   public disconnectedCallback() {

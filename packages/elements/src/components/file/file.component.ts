@@ -35,6 +35,13 @@ export class FileComponent extends LitElement {
   @state()
   public mutants: MutantModel[] = [];
 
+  constructor() {
+    super();
+    document.addEventListener('mte-update', () => {
+      this.render();
+    });
+  }
+
   private codeRef = createRef<HTMLElement>();
 
   private readonly filtersChanged = (event: MteCustomEvent<'filters-changed'>) => {
