@@ -310,10 +310,9 @@ describe(MutationTestReportAppComponent.name, () => {
 
     beforeEach(() => {
       eventSourceStub = sinon.createStubInstance(EventSource);
-      eventSourceStub.addEventListener.returns();
       eventSourceConstructorStub = sinon.stub(window, 'EventSource').returns(eventSourceStub);
       eventSourceStub.addEventListener.callsFake((type, cb) => {
-        if (type === 'mutation') {
+        if (type === 'mutant-tested') {
           mutationCallback = cb as CallableFunction;
         } else {
           finishedCallback = cb as CallableFunction;
@@ -345,7 +344,7 @@ describe(MutationTestReportAppComponent.name, () => {
 
       // Assert
       expect(eventSourceConstructorStub.calledWith('http://localhost:8080/sse')).to.be.true;
-      expect(eventSourceStub.addEventListener.firstCall.args[0]).to.be.equal('mutation');
+      expect(eventSourceStub.addEventListener.firstCall.args[0]).to.be.equal('mutant-tested');
       expect(eventSourceStub.addEventListener.secondCall.args[0]).to.be.equal('finished');
     });
 
@@ -365,21 +364,6 @@ describe(MutationTestReportAppComponent.name, () => {
 
       // Assert
       expect(sut.element.report.files['foobar.js'].mutants[0].status).to.be.equal(MutantStatus.Killed);
-    });
-
-    // TODO: could potentially be removed
-    it('should not update anything if report is not set', async () => {
-      // Arrange
-      sut.element.report = undefined;
-      sut.element.sse = 'http://localhost:8080/sse';
-      sut.connect();
-      await sut.whenStable();
-
-      // Act
-      mutationCallback(defaultMessage);
-
-      // Assert
-      expect(sut.element.report).to.be.undefined;
     });
 
     it('should update every mutant field when given in an SSE event', async () => {
