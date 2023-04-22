@@ -12,7 +12,6 @@ function assertSourceFileDefined(sourceFile: FileUnderTestModel | undefined): as
  * Represent a model of a mutant that contains its test relationship
  */
 export class MutantModel implements MutantResult {
-  [key: string]: any;
   // MutantResult properties
 
   public coveredBy: string[] | undefined;
