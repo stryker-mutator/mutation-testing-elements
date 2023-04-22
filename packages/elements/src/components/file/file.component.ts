@@ -35,13 +35,6 @@ export class FileComponent extends LitElement {
   @state()
   public mutants: MutantModel[] = [];
 
-  constructor() {
-    super();
-    document.addEventListener('mte-update', () => {
-      this.render();
-    });
-  }
-
   private codeRef = createRef<HTMLElement>();
 
   private readonly filtersChanged = (event: MteCustomEvent<'filters-changed'>) => {
@@ -219,6 +212,10 @@ export class FileComponent extends LitElement {
           }
         }
       });
+
+      if (this.selectedMutant !== undefined) {
+        this.dispatchEventIfMutantIsUpdated();
+      }
     }
     if ((changes.has('model') && this.model) || changes.has('selectedMutantStates')) {
       this.mutants = this.model.mutants
@@ -236,6 +233,17 @@ export class FileComponent extends LitElement {
       }
     }
     super.update(changes);
+  }
+
+  private dispatchEventIfMutantIsUpdated(): void {
+    const theSameMutant = this.model.mutants.find((mutant) => mutant.id === this.selectedMutant?.id);
+    // TODO: deep eq?
+    if (theSameMutant === undefined || this.selectedMutant?.status === theSameMutant.status) {
+      return;
+    }
+
+    this.selectedMutant = theSameMutant;
+    this.dispatchEvent(createCustomEvent('mutant-selected', { selected: true, mutant: theSameMutant }));
   }
 
   private selectedMutantsHaveChanged(changedMutantStates: MutantStatus[]): boolean {

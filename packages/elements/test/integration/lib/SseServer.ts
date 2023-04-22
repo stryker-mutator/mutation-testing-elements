@@ -51,7 +51,11 @@ export class ReportingClient {
   constructor(private readonly response: ServerResponse) {}
 
   public sendMutantTested(data: object) {
-    this.send({ name: 'mutation', data: data });
+    this.send({ name: 'mutant-tested', data: data });
+  }
+
+  public sendFinished() {
+    this.send({ name: 'finished', data: {} });
   }
 
   private send(event: { name: string; data: object }) {
