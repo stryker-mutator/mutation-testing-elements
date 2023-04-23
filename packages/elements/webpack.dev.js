@@ -30,11 +30,10 @@ module.exports = merge(common, {
   devServer: {
     static: ['./testResources', '.'],
     setupMiddlewares: (middlewares) => {
-
       middlewares.unshift({
         name: 'sse-middleware',
         path: '/realtime-reporting-example/sse',
-        middleware: server.middleware
+        middleware: server.middleware,
       });
 
       return middlewares;
