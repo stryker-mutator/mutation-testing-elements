@@ -11,7 +11,7 @@
     "test": "npm run test:unit && npm run test:integration",
     "test:unit": "karma start --single-run",
     "test:unit:debug": "karma start --browsers ChromeHeadlessDebug",
-    "test:integration": "mocha --forbid-only --config ./test/integration/.mocharc.jsonc",
+    "test:integration": "mocha --forbid-only --exit --config ./test/integration/.mocharc.jsonc",
     "test:integration:update": "cross-env UPDATE_ALL_SCREENSHOTS=true HEADLESS=true mocha --config ./test/integration/.mocharc.jsonc",
     "test:integration:headless": "cross-env HEADLESS=true mocha --config ./test/integration/.mocharc.jsonc",
     "postpublish": "PUBLISH_ELEMENTS=true ../metrics-scala/npmProjPublish.sh",
