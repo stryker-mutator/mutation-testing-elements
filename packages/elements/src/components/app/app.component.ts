@@ -1,7 +1,7 @@
-import { LitElement, html, PropertyValues, unsafeCSS, nothing } from 'lit';
+import { html, PropertyValues, unsafeCSS, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { MutantResult, MutationTestResult } from 'mutation-testing-report-schema/api';
-import { MetricsResult, calculateMutationTestMetrics } from 'mutation-testing-metrics';
+import { MetricsResult, MutantModel, TestModel, calculateMutationTestMetrics } from 'mutation-testing-metrics';
 import { tailwind, globals } from '../../style';
 import { locationChange$, View } from '../../lib/router';
 import { Subscription } from 'rxjs';
@@ -10,6 +10,8 @@ import { createCustomEvent } from '../../lib/custom-events';
 import { FileUnderTestModel, Metrics, MutationTestMetricsResult, TestFileModel, TestMetrics } from 'mutation-testing-metrics';
 import { toAbsoluteUrl } from '../../lib/html-helpers';
 import { isLocalStorageAvailable } from '../../lib/browser';
+import { mutantChanges } from '../../lib/mutant-changes';
+import { RealtimeElement } from '../realtime-element';
 
 interface BaseContext {
   path: string[];
@@ -28,7 +30,7 @@ interface TestContext extends BaseContext {
 type Context = MutantContext | TestContext;
 
 @customElement('mutation-test-report-app')
-export class MutationTestReportAppComponent extends LitElement {
+export class MutationTestReportAppComponent extends RealtimeElement {
   @property({ attribute: false })
   public report: MutationTestResult | undefined;
 
@@ -113,7 +115,8 @@ export class MutationTestReportAppComponent extends LitElement {
     }
   }
 
-  private mutants: Map<string, MutantResult> = new Map();
+  private mutants: Map<string, MutantModel> = new Map();
+  private tests: Map<string, TestModel> = new Map();
 
   public updated(changedProperties: PropertyValues) {
     if (changedProperties.has('theme') && this.theme) {
@@ -141,16 +144,30 @@ export class MutationTestReportAppComponent extends LitElement {
   }
 
   private updateModel(report: MutationTestResult) {
-    if (!this.report) {
-      return;
-    }
-
-    this.mutants.clear();
-    Object.values(this.report.files)
-      .flatMap((file) => file.mutants)
-      .forEach((mutant) => this.mutants.set(mutant.id, mutant));
-
     this.rootModel = calculateMutationTestMetrics(report);
+    collectForEach<FileUnderTestModel, Metrics>((file, metric) => {
+      file.result = metric;
+      file.mutants.forEach((mutant) => this.mutants.set(mutant.id, mutant));
+    })(this.rootModel?.systemUnderTestMetrics);
+
+    collectForEach<TestFileModel, TestMetrics>((file, metric) => {
+      file.result = metric;
+      file.tests.forEach((test) => this.tests.set(test.id, test));
+    })(this.rootModel?.testMetrics);
+
+    this.rootModel.systemUnderTestMetrics.updateParent();
+    this.rootModel.testMetrics?.updateParent();
+
+    function collectForEach<TFile, TMetrics>(collect: (file: TFile, metrics: MetricsResult<TFile, TMetrics>) => void) {
+      return function forEachMetric(metrics: MetricsResult<TFile, TMetrics> | undefined): void {
+        if (metrics?.file) {
+          collect(metrics.file, metrics);
+        }
+        metrics?.childResults.forEach((child) => {
+          forEachMetric(child);
+        });
+      };
+    }
   }
 
   private updateContext() {
@@ -195,12 +212,12 @@ export class MutationTestReportAppComponent extends LitElement {
   public connectedCallback() {
     super.connectedCallback();
     this.subscriptions.push(locationChange$.subscribe((path) => (this.path = path)));
-    this.initializeSSE();
+    this.initializeSse();
   }
 
   private source: EventSource | undefined;
 
-  private initializeSSE() {
+  private initializeSse() {
     if (!this.sse) {
       return;
     }
@@ -222,8 +239,35 @@ export class MutationTestReportAppComponent extends LitElement {
         (theMutant as any)[prop] = val;
       }
 
-      this.updateModel(this.report);
-      this.updateContext();
+      let theTest: TestModel | undefined;
+      if (newMutantData.killedBy) {
+        newMutantData.killedBy.forEach((killedByTestId) => {
+          const test = this.tests.get(killedByTestId)!;
+          theTest = test;
+          if (test === undefined) {
+            return;
+          }
+          test.addKilled(theMutant);
+          theMutant.addKilledBy(test);
+        });
+      }
+
+      if (newMutantData.coveredBy) {
+        newMutantData.coveredBy.forEach((coveredByTestId) => {
+          const test = this.tests.get(coveredByTestId)!;
+          theTest = test;
+          if (test === undefined) {
+            return;
+          }
+          test.addCovered(theMutant);
+          theMutant.addCoveredBy(test);
+        });
+      }
+
+      theMutant.update();
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      theTest?.update();
+      mutantChanges.next();
     });
     this.source.addEventListener('finished', () => {
       this.source?.close();

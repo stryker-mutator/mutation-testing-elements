@@ -1,6 +1,7 @@
 import { FileResult, MutantResult } from 'mutation-testing-report-schema/api';
 import { MutantModel } from './mutant-model';
 import { SourceFile } from './source-file';
+import { MetricsResult } from './metrics-result';
 
 /**
  * Represents a file which was mutated (your production code).
@@ -18,6 +19,10 @@ export class FileUnderTestModel extends SourceFile implements FileResult {
    * The mutants inside this file.
    */
   mutants: MutantModel[];
+  /**
+   * The associated MetricsResult of this file.
+   */
+  result?: MetricsResult;
 
   /**
    * @param input The file result content

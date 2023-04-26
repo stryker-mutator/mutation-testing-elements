@@ -1,4 +1,4 @@
-import { html, LitElement, nothing, PropertyValues, svg, unsafeCSS } from 'lit';
+import { html, nothing, PropertyValues, svg, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { FileUnderTestModel, MutantModel } from 'mutation-testing-metrics';
@@ -10,11 +10,12 @@ import { prismjs, tailwind } from '../../style';
 import { StateFilter } from '../state-filter/state-filter.component';
 import style from './file.scss';
 import { renderDots, renderLine } from './util';
+import { RealtimeElement } from '../realtime-element';
 
 const diffOldClass = 'diff-old';
 const diffNewClass = 'diff-new';
 @customElement('mte-file')
-export class FileComponent extends LitElement {
+export class FileComponent extends RealtimeElement {
   static styles = [prismjs, tailwind, unsafeCSS(style)];
 
   @state()
@@ -163,59 +164,14 @@ export class FileComponent extends LitElement {
     newDiffLines.forEach((newDiffLine) => newDiffLine.remove());
   }
 
+  public override reactivate(): void {
+    super.reactivate();
+    this.updateFileRepresentation();
+  }
+
   public update(changes: PropertyValues<FileComponent>) {
     if (changes.has('model') && this.model) {
-      this.filters = [
-        MutantStatus.Killed,
-        MutantStatus.Survived,
-        MutantStatus.NoCoverage,
-        MutantStatus.Ignored,
-        MutantStatus.Timeout,
-        MutantStatus.CompileError,
-        MutantStatus.RuntimeError,
-      ]
-        .filter((status) => this.model.mutants.some((mutant) => mutant.status === status))
-        .map((status) => ({
-          enabled: [...this.selectedMutantStates, MutantStatus.Survived, MutantStatus.NoCoverage, MutantStatus.Timeout].includes(status),
-          count: this.model.mutants.filter((m) => m.status === status).length,
-          status,
-          label: html`${getEmojiForStatus(status)} ${status}`,
-          context: getContextClassForStatus(status),
-        }));
-      const highlightedSource = highlightCode(this.model.source, this.model.name);
-      const startedMutants = new Set<MutantResult>();
-      const mutantsToPlace = new Set(this.model.mutants);
-
-      this.lines = transformHighlightedLines(highlightedSource, function* (position) {
-        // End previously opened mutants
-        for (const mutant of startedMutants) {
-          if (gte(position, mutant.location.end)) {
-            startedMutants.delete(mutant);
-            yield { elementName: 'span', id: mutant.id, isClosing: true };
-          }
-        }
-
-        // Open new mutants
-        for (const mutant of mutantsToPlace) {
-          if (gte(position, mutant.location.start)) {
-            startedMutants.add(mutant);
-            mutantsToPlace.delete(mutant);
-            yield {
-              elementName: 'span',
-              id: mutant.id,
-              attributes: {
-                class: escapeHtml(`mutant border-none ${mutant.status}`),
-                title: escapeHtml(title(mutant)),
-                'mutant-id': escapeHtml(mutant.id.toString()),
-              },
-            };
-          }
-        }
-      });
-
-      if (this.selectedMutant !== undefined) {
-        this.dispatchEventIfMutantIsUpdated();
-      }
+      this.updateFileRepresentation();
     }
     if ((changes.has('model') && this.model) || changes.has('selectedMutantStates')) {
       this.mutants = this.model.mutants
@@ -235,15 +191,54 @@ export class FileComponent extends LitElement {
     super.update(changes);
   }
 
-  private dispatchEventIfMutantIsUpdated(): void {
-    const theSameMutant = this.model.mutants.find((mutant) => mutant.id === this.selectedMutant?.id);
-    // TODO: deep eq?
-    if (theSameMutant === undefined || this.selectedMutant?.status === theSameMutant.status) {
-      return;
-    }
+  private updateFileRepresentation() {
+    this.filters = [
+      MutantStatus.Killed,
+      MutantStatus.Survived,
+      MutantStatus.NoCoverage,
+      MutantStatus.Ignored,
+      MutantStatus.Timeout,
+      MutantStatus.CompileError,
+      MutantStatus.RuntimeError,
+    ]
+      .filter((status) => this.model.mutants.some((mutant) => mutant.status === status))
+      .map((status) => ({
+        enabled: [...this.selectedMutantStates, MutantStatus.Survived, MutantStatus.NoCoverage, MutantStatus.Timeout].includes(status),
+        count: this.model.mutants.filter((m) => m.status === status).length,
+        status,
+        label: html`${getEmojiForStatus(status)} ${status}`,
+        context: getContextClassForStatus(status),
+      }));
+    const highlightedSource = highlightCode(this.model.source, this.model.name);
+    const startedMutants = new Set<MutantResult>();
+    const mutantsToPlace = new Set(this.model.mutants);
 
-    this.selectedMutant = theSameMutant;
-    this.dispatchEvent(createCustomEvent('mutant-selected', { selected: true, mutant: theSameMutant }));
+    this.lines = transformHighlightedLines(highlightedSource, function* (position) {
+      // End previously opened mutants
+      for (const mutant of startedMutants) {
+        if (gte(position, mutant.location.end)) {
+          startedMutants.delete(mutant);
+          yield { elementName: 'span', id: mutant.id, isClosing: true };
+        }
+      }
+
+      // Open new mutants
+      for (const mutant of mutantsToPlace) {
+        if (gte(position, mutant.location.start)) {
+          startedMutants.add(mutant);
+          mutantsToPlace.delete(mutant);
+          yield {
+            elementName: 'span',
+            id: mutant.id,
+            attributes: {
+              class: escapeHtml(`mutant border-none ${mutant.status}`),
+              title: escapeHtml(title(mutant)),
+              'mutant-id': escapeHtml(mutant.id.toString()),
+            },
+          };
+        }
+      }
+    });
   }
 
   private selectedMutantsHaveChanged(changedMutantStates: MutantStatus[]): boolean {

@@ -363,7 +363,8 @@ describe(MutationTestReportAppComponent.name, () => {
       mutationCallback(defaultMessage);
 
       // Assert
-      expect(sut.element.report.files['foobar.js'].mutants[0].status).to.be.equal(MutantStatus.Killed);
+      const file = sut.element.rootModel!.systemUnderTestMetrics.childResults[0].file!;
+      expect(file.mutants[0].status).to.be.equal(MutantStatus.Killed);
     });
 
     it('should update every mutant field when given in an SSE event', async () => {
@@ -396,7 +397,7 @@ describe(MutationTestReportAppComponent.name, () => {
       mutationCallback(message);
 
       // Assert
-      const theMutant = sut.element.report.files['foobar.js'].mutants[0];
+      const theMutant = sut.element.rootModel!.systemUnderTestMetrics.childResults[0].file!.mutants[0];
       expect(theMutant.description).to.be.equal('test description');
       expect(theMutant.coveredBy).to.have.same.members(['test 1']);
       expect(theMutant.duration).to.be.equal(100);

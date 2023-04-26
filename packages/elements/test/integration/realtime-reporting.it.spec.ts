@@ -3,8 +3,8 @@ import { SseTestServer } from './lib/SseServer';
 import { getCurrent } from './lib/browser';
 import { ReportPage } from './po/ReportPage';
 import { ReportingClient } from './lib/SseServer';
-import { sleep } from './lib/helpers';
 import { MutantStatus } from 'mutation-testing-report-schema';
+import { waitUntil } from './lib/helpers';
 
 describe('realtime reporting', () => {
   const server: SseTestServer = new SseTestServer();
@@ -17,6 +17,10 @@ describe('realtime reporting', () => {
   beforeEach(async () => {
     port = await server.start();
     page = new ReportPage(getCurrent());
+  });
+
+  afterEach(async () => {
+    await server.close();
   });
 
   describe('when navigating to the overview page', () => {
@@ -48,10 +52,9 @@ describe('realtime reporting', () => {
       expect(await mutantPending.underlineIsVisible()).to.be.true;
 
       client.sendMutantTested(defaultEvent);
-      await sleep(25);
-
-      expect((await page.mutantView.mutantDots()).length).to.equal(0);
       const filter = page.mutantView.stateFilter();
+      await waitUntil(async () => Boolean(await filter.state(MutantStatus.Killed).isDisplayed()));
+      expect((await page.mutantView.mutantDots()).length).to.equal(0);
       await filter.state(MutantStatus.Killed).click();
       expect((await page.mutantView.mutantDots()).length).to.equal(1);
     });
@@ -64,7 +67,6 @@ describe('realtime reporting', () => {
       const drawer = page.mutantView.mutantDrawer();
       await mutant.toggle();
       await drawer.whenHalfOpen();
-      expect(await drawer.isHalfOpen()).to.be.true;
 
       client.sendMutantTested(defaultEvent);
 

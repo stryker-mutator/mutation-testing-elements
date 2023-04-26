@@ -1,10 +1,13 @@
 import EventEmitter from 'events';
 import express from 'express';
-import type { ServerResponse } from 'http';
+import type { Server, ServerResponse } from 'http';
 import type { AddressInfo } from 'net';
+import { promisify } from 'util';
 
 export class SseTestServer extends EventEmitter {
   #app;
+  #server?: Server;
+  #clients = new Set<ReportingClient>();
 
   constructor() {
     super();
@@ -27,23 +30,37 @@ export class SseTestServer extends EventEmitter {
       'Access-Control-Allow-Origin': '*',
     });
     const client = new ReportingClient(res);
-    res.on('close', () => this.emit('client-disconnected', client));
+    this.#clients.add(client);
+    res.on('close', () => {
+      this.emit('client-disconnected', client);
+      this.#clients.delete(client);
+    });
     this.emit('client-connected', client);
   };
 
   public start(): Promise<number> {
     return new Promise((resolve, reject) => {
-      const server = this.#app.listen();
+      this.#server = this.#app.listen();
 
-      server.on('error', (e) => {
+      this.#server.on('error', (e) => {
         console.log(e);
         reject(e);
       });
-      server.on('listening', () => {
-        const port = (server.address() as AddressInfo).port;
+      this.#server.on('listening', () => {
+        const port = (this.#server!.address() as AddressInfo).port;
         resolve(port);
       });
     });
+  }
+
+  public async close() {
+    if (this.#server) {
+      this.#clients.forEach((client) => {
+        client.disconnect();
+        this.#clients.delete(client);
+      });
+      await promisify(this.#server.close.bind(this.#server))();
+    }
   }
 }
 

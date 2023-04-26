@@ -66,24 +66,15 @@ function calculateDirectoryMetrics<TFileModel, TMetrics>(
 ): MetricsResult<TFileModel, TMetrics> {
   const metrics = calculateMetrics(Object.values(files));
   const childResults = toChildModels(files, calculateMetrics);
-  return {
-    name,
-    childResults,
-    metrics,
-  };
+  return new MetricsResult<TFileModel, TMetrics>(name, childResults, metrics);
 }
 
-function calculateFileMetrics<TFileModel, TMetrics>(
+export function calculateFileMetrics<TFileModel, TMetrics>(
   fileName: string,
   file: TFileModel,
   calculateMetrics: (files: TFileModel[]) => TMetrics
 ): MetricsResult<TFileModel, TMetrics> {
-  return {
-    file,
-    name: fileName,
-    childResults: [],
-    metrics: calculateMetrics([file]),
-  };
+  return new MetricsResult<TFileModel, TMetrics>(fileName, [], calculateMetrics([file]), file);
 }
 
 function toChildModels<TFileModel, TMetrics>(
@@ -127,7 +118,7 @@ function relate(mutants: MutantModel[], tests: TestModel[]) {
   }
 }
 
-function countTestFileMetrics(testFile: TestFileModel[]): TestMetrics {
+export function countTestFileMetrics(testFile: TestFileModel[]): TestMetrics {
   const tests = testFile.flatMap((_) => _.tests);
   const count = (status: TestStatus) => tests.filter((_) => _.status === status).length;
 
@@ -139,7 +130,7 @@ function countTestFileMetrics(testFile: TestFileModel[]): TestMetrics {
   };
 }
 
-function countFileMetrics(fileResult: FileUnderTestModel[]): Metrics {
+export function countFileMetrics(fileResult: FileUnderTestModel[]): Metrics {
   const mutants = fileResult.flatMap((_) => _.mutants);
   const count = (status: MutantStatus) => mutants.filter((_) => _.status === status).length;
   const pending = count(MutantStatus.Pending);

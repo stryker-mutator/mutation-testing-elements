@@ -1,10 +1,11 @@
-import { LitElement, PropertyValues, html, unsafeCSS, TemplateResult } from 'lit';
+import { PropertyValues, html, unsafeCSS, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { createCustomEvent } from '../../lib/custom-events';
 import { renderIf } from '../../lib/html-helpers';
 import { tailwind } from '../../style';
 import style from './state-filter.scss';
+import { RealtimeElement } from '../realtime-element';
 
 export interface StateFilter<TStatus> {
   status: TStatus;
@@ -15,7 +16,7 @@ export interface StateFilter<TStatus> {
 }
 
 @customElement('mte-state-filter')
-export class FileStateFilterComponent<TStatus extends string> extends LitElement {
+export class FileStateFilterComponent<TStatus extends string> extends RealtimeElement {
   static styles = [tailwind, unsafeCSS(style)];
 
   @property({ type: Array })

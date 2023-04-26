@@ -32,6 +32,9 @@ export class MutantModel implements MutantResult {
   public killedByTests: TestModel[] | undefined;
   public sourceFile: FileUnderTestModel | undefined;
 
+  private _coveredByTests: Map<string, TestModel> = new Map();
+  private _killedByTests: Map<string, TestModel> = new Map();
+
   constructor(input: MutantResult) {
     this.coveredBy = input.coveredBy;
     this.description = input.description;
@@ -51,14 +54,23 @@ export class MutantModel implements MutantResult {
     if (!this.coveredByTests) {
       this.coveredByTests = [];
     }
-    this.coveredByTests.push(test);
+    if (this._coveredByTests.has(test.id)) {
+      return;
+    }
+    this._coveredByTests.set(test.id, test);
+    this.coveredByTests?.push(test);
   }
 
   public addKilledBy(test: TestModel) {
     if (!this.killedByTests) {
       this.killedByTests = [];
     }
-    this.killedByTests.push(test);
+    if (this._killedByTests.has(test.id)) {
+      return;
+    }
+
+    this._killedByTests.set(test.id, test);
+    this.killedByTests?.push(test);
   }
 
   /**
@@ -84,5 +96,12 @@ export class MutantModel implements MutantResult {
   public get fileName() {
     assertSourceFileDefined(this.sourceFile);
     return this.sourceFile.name;
+  }
+
+  public update(): void {
+    if (!this.sourceFile?.result?.file) {
+      return;
+    }
+    this.sourceFile.result.updateAllMetrics();
   }
 }
