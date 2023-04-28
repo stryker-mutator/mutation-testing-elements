@@ -98,6 +98,7 @@ export class MutantModel implements MutantResult {
     return this.sourceFile.name;
   }
 
+  // TODO: https://github.com/stryker-mutator/mutation-testing-elements/pull/2453#discussion_r1178769871
   public update(): void {
     if (!this.sourceFile?.result?.file) {
       return;
