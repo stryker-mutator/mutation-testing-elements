@@ -32,8 +32,8 @@ export class MutantModel implements MutantResult {
   public killedByTests: TestModel[] | undefined;
   public sourceFile: FileUnderTestModel | undefined;
 
-  #_coveredByTests: Map<string, TestModel> = new Map();
-  #_killedByTests: Map<string, TestModel> = new Map();
+  #coveredByTests: Map<string, TestModel> = new Map();
+  #killedByTests: Map<string, TestModel> = new Map();
 
   constructor(input: MutantResult) {
     this.coveredBy = input.coveredBy;
@@ -54,10 +54,10 @@ export class MutantModel implements MutantResult {
     if (!this.coveredByTests) {
       this.coveredByTests = [];
     }
-    if (this.#_coveredByTests.has(test.id)) {
+    if (this.#coveredByTests.has(test.id)) {
       return;
     }
-    this.#_coveredByTests.set(test.id, test);
+    this.#coveredByTests.set(test.id, test);
     this.coveredByTests?.push(test);
   }
 
@@ -65,11 +65,11 @@ export class MutantModel implements MutantResult {
     if (!this.killedByTests) {
       this.killedByTests = [];
     }
-    if (this.#_killedByTests.has(test.id)) {
+    if (this.#killedByTests.has(test.id)) {
       return;
     }
 
-    this.#_killedByTests.set(test.id, test);
+    this.#killedByTests.set(test.id, test);
     this.killedByTests?.push(test);
   }
 
