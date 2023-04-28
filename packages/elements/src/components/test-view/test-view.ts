@@ -1,4 +1,4 @@
-import { html, LitElement, nothing, PropertyValues, unsafeCSS } from 'lit';
+import { html, nothing, PropertyValues, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { MetricsResult, TestFileModel, TestMetrics, TestModel } from 'mutation-testing-metrics';
 import { MteCustomEvent } from '../../lib/custom-events';
@@ -6,9 +6,10 @@ import { tailwind } from '../../style';
 import { DrawerMode } from '../drawer/drawer.component';
 import { Column } from '../metrics-table/metrics-table.component';
 import style from './test-view.scss';
+import { RealtimeElement } from '../realtime-element';
 
 @customElement('mte-test-view')
-export class MutationTestReportTestViewComponent extends LitElement {
+export class MutationTestReportTestViewComponent extends RealtimeElement {
   @property()
   public drawerMode: DrawerMode = 'closed';
 

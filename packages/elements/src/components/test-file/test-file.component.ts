@@ -1,4 +1,4 @@
-import { html, LitElement, nothing, PropertyValues, svg, unsafeCSS } from 'lit';
+import { html, nothing, PropertyValues, svg, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
 import { TestFileModel, TestModel, TestStatus } from 'mutation-testing-metrics';
@@ -12,9 +12,10 @@ import { prismjs, tailwind } from '../../style';
 import '../../style/prism-plugins';
 import { renderDots, renderLine } from '../file/util';
 import { StateFilter } from '../state-filter/state-filter.component';
+import { RealtimeElement } from '../realtime-element';
 
 @customElement('mte-test-file')
-export class TestFileComponent extends LitElement {
+export class TestFileComponent extends RealtimeElement {
   public static styles = [prismjs, tailwind, unsafeCSS(style)];
 
   @property()
@@ -158,22 +159,14 @@ export class TestFileComponent extends LitElement {
       : nothing;
   }
 
-  override willUpdate(changes: PropertyValues<TestFileComponent>) {
-    if (changes.has('model') && this.model) {
-      const model = this.model;
-      this.filters = [TestStatus.Killing, TestStatus.Covering, TestStatus.NotCovering]
-        .filter((status) => model.tests.some((test) => test.status === status))
-        .map((status) => ({
-          enabled: true,
-          count: model.tests.filter((m) => m.status === status).length,
-          status,
-          label: html`${getEmojiForTestStatus(status)} ${status}`,
-          context: getContextClassForTestStatus(status),
-        }));
+  public override reactivate(): void {
+    super.reactivate();
+    this.updateFileRepresentation();
+  }
 
-      if (this.model.source) {
-        this.lines = transformHighlightedLines(highlightCode(this.model.source, this.model.name));
-      }
+  override willUpdate(changes: PropertyValues<TestFileComponent>) {
+    if (changes.has('model')) {
+      this.updateFileRepresentation();
     }
 
     if ((changes.has('model') || changes.has('enabledStates')) && this.model) {
@@ -189,6 +182,26 @@ export class TestFileComponent extends LitElement {
         });
     }
     super.update(changes);
+  }
+
+  private updateFileRepresentation() {
+    if (!this.model) {
+      return;
+    }
+
+    const model = this.model;
+    this.filters = [TestStatus.Killing, TestStatus.Covering, TestStatus.NotCovering]
+      .filter((status) => model.tests.some((test) => test.status === status))
+      .map((status) => ({
+        enabled: true,
+        count: model.tests.filter((m) => m.status === status).length,
+        status,
+        label: html`${getEmojiForTestStatus(status)} ${status}`,
+        context: getContextClassForTestStatus(status),
+      }));
+    if (this.model.source) {
+      this.lines = transformHighlightedLines(highlightCode(this.model.source, this.model.name));
+    }
   }
 }
 function title(test: TestModel): string {

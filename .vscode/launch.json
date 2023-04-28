@@ -30,7 +30,7 @@
         "HEADLESS": "true"
         // "UPDATE_ALL_SCREENSHOTS": "true",
       },
-      "args": ["--no-timeout", "--colors", "--config", "${workspaceFolder}/packages/elements/test/integration/.mocharc.jsonc"],
+      "args": ["--no-timeout", "--colors", "--config", "${workspaceFolder}/packages/elements/test/integration/.mocharc.cjs"],
       "cwd": "${workspaceFolder}/packages/elements",
       "internalConsoleOptions": "openOnSessionStart",
       "sourceMaps": true

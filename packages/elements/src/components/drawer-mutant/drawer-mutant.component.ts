@@ -1,4 +1,4 @@
-import { html, LitElement, nothing } from 'lit';
+import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { MutantModel, TestModel } from 'mutation-testing-metrics';
 import { MutantStatus } from 'mutation-testing-report-schema/api';
@@ -7,11 +7,12 @@ import { tailwind } from '../../style';
 import { DrawerMode } from '../drawer/drawer.component';
 import { renderDrawer } from '../drawer/util';
 import { renderDetailLine, renderEmoji, renderSummaryContainer, renderSummaryLine } from './util';
+import { RealtimeElement } from '../realtime-element';
 
 const describeTest = (test: TestModel) => `${test.name}${test.sourceFile && test.location ? ` (${describeLocation(test)})` : ''}`;
 
 @customElement('mte-drawer-mutant')
-export class MutationTestReportDrawerMutant extends LitElement {
+export class MutationTestReportDrawerMutant extends RealtimeElement {
   @property()
   public mutant?: MutantModel;
 

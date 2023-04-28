@@ -74,7 +74,7 @@ describe(MutationTestReportDrawerTestComponent.name, () => {
 
       it('should mention more killed mutants when they exist', async () => {
         test.addKilled(createMutantModel());
-        test.addKilled(createMutantModel());
+        test.addKilled(createMutantModel({ id: '2' }));
         sut.element.test = test;
         await sut.whenStable();
         expect(summaryText()).contain('(and 1 more)');
@@ -92,7 +92,7 @@ describe(MutationTestReportDrawerTestComponent.name, () => {
 
       it("should not mention that it didn't kill any of them when in fact it had killed a mutant", async () => {
         test.addCovered(createMutantModel());
-        test.addKilled(createMutantModel());
+        test.addKilled(createMutantModel({ id: '2' }));
         sut.element.test = test;
         await sut.whenStable();
         const summary = summaryText();
@@ -101,7 +101,7 @@ describe(MutationTestReportDrawerTestComponent.name, () => {
 
       it('should mention when covered 2 mutants', async () => {
         test.addCovered(createMutantModel());
-        test.addCovered(createMutantModel());
+        test.addCovered(createMutantModel({ id: '2' }));
         sut.element.test = test;
         await sut.whenStable();
         const summary = summaryText();
