@@ -37,10 +37,8 @@
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": true
     },
+    "eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
     "typescript.tsdk": "./node_modules/typescript/lib",
-    "grunt.autoDetect": "off",
-    "gulp.autoDetect": "off",
-    "jake.autoDetect": "off",
     "task.autoDetect": "off",
     "cSpell.words": [
       "autoloader",
