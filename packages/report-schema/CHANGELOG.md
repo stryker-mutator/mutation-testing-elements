@@ -10,9 +10,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 * **schema:** add `Pending` status to JSON schema ([#2425](https://github.com/stryker-mutator/mutation-testing-elements/issues/2425)) ([c49d9a5](https://github.com/stryker-mutator/mutation-testing-elements/commit/c49d9a5e5e71d67972747cf07edd27fae110b86d)), closes [#2424](https://github.com/stryker-mutator/mutation-testing-elements/issues/2424)
 
+### BREAKING CHANGES
 
-
-
+* **schema** `Pending` is now a valid mutant state. See [#2425](https://github.com/stryker-mutator/mutation-testing-elements/pull/2425).
 
 ## [1.7.14](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.13...v1.7.14) (2023-02-08)
 
