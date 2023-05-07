@@ -59,7 +59,7 @@
               "column": 1
             }
           },
-          "status": "Killed",
+          "status": "Pending",
           "statusReason": "Expected 'foo' to be 'bar'",
           "coveredBy": ["test-1", "test-2", "test-3"],
           "killedBy": ["test-2"],
