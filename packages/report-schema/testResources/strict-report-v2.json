@@ -1,0 +1,117 @@
+{
+  "$schema": "../src/mutation-testing-report-schema.json",
+  "schemaVersion": "2",
+  "thresholds": {
+    "high": 80,
+    "low": 60
+  },
+  "config": {
+    "custom": "config"
+  },
+  "framework": {
+    "name": "Stryker",
+    "version": "4.3.0",
+    "branding": {
+      "homepageUrl": "https://stryker-mutator.io",
+      "imageUrl": "https://stryker-mutator.io/img/stryker.svg"
+    },
+    "dependencies": {
+      "@stryker-mutator/jest-runner": "1.0.2",
+      "nodejs": "12",
+      "jest": "15.0.1"
+    }
+  },
+  "files": {
+    "foo.js": {
+      "language": "javascript",
+      "source": "function add(a, b) {\n  return a + b;\n}",
+      "mutants": [
+        {
+          "id": "1",
+          "mutatorName": "Arithmetic Operator",
+          "location": {
+            "start": {
+              "line": 2,
+              "column": 12
+            },
+            "end": {
+              "line": 2,
+              "column": 13
+            }
+          },
+          "static": true,
+          "status": "Survived",
+          "description": "Changed + in -",
+          "duration": 42,
+          "replacement": "-",
+          "coveredBy": ["test-2"]
+        },
+        {
+          "id": "2",
+          "mutatorName": "Block Statement",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 20
+            },
+            "end": {
+              "line": 3,
+              "column": 1
+            }
+          },
+          "status": "Killed",
+          "statusReason": "Expected 'foo' to be 'bar'",
+          "coveredBy": ["test-1", "test-2", "test-3"],
+          "killedBy": ["test-2"],
+          "duration": 4,
+          "replacement": "&&",
+          "testsCompleted": 2
+        }
+      ]
+    }
+  },
+  "system": {
+    "ci": true,
+    "os": {
+      "description": "Ubuntu 20.04.1 LTS",
+      "platform": "linux",
+      "version": "20.04.1"
+    },
+    "cpu": {
+      "baseClock": 2300,
+      "logicalCores": 8,
+      "model": "Intel(R) Core(TM) i9-9880H CPU @ 2.30GHz"
+    },
+    "ram": {
+      "total": 320000
+    }
+  },
+  "performance": {
+    "setup": 200,
+    "initialRun": 3231,
+    "mutation": 60321
+  },
+  "projectRoot": "/home/user/projects/project-under-test",
+  "testFiles": {
+    "test/foo.spec.js": {
+      "source": "describe('add', () => {})",
+      "tests": [
+        {
+          "id": "test-1",
+          "name": "foo should bar",
+          "location": {
+            "start": { "line": 4, "column": 1 },
+            "end": { "line": 6, "column": 1 }
+          }
+        },
+        {
+          "id": "test-2",
+          "name": "baz should qux",
+          "location": {
+            "start": { "line": 8, "column": 1 }
+          }
+        }
+      ]
+    }
+  }
+}
