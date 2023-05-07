@@ -12,7 +12,7 @@
     },
     "schemaVersion": {
       "type": "string",
-      "pattern": "^([1-2]\d*|0)(\.(([1-9]\d*)|0)){0,2}$",
+      "pattern": "^([1-2])(\\.(([1-9]\\d*)|0)){0,2}$",
       "description": "Major version of this report. Used for compatibility.",
       "examples": ["1", "2.0", "2.0.0"]
     },
