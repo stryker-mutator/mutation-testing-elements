@@ -12,9 +12,9 @@
     },
     "schemaVersion": {
       "type": "string",
-      "pattern": "^1(\\.\\d*)?$",
+      "pattern": "^([1-2]\d*|0)(\.(([1-9]\d*)|0)){0,2}$",
       "description": "Major version of this report. Used for compatibility.",
-      "examples": ["1"]
+      "examples": ["1", "2.0", "2.0.0"]
     },
     "files": {
       "type": "object",
