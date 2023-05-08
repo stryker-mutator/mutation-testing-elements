@@ -118,6 +118,7 @@ object circe {
         case "CompileError" => Right(MutantStatus.CompileError)
         case "RuntimeError" => Right(MutantStatus.RuntimeError)
         case "Ignored"      => Right(MutantStatus.Ignored)
+        case "Pending"      => Right(MutantStatus.Pending)
         case other          => Left(s"Invalid status '$other'")
       })(_.contramap {
         case MutantStatus.Killed       => "Killed"
