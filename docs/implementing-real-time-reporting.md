@@ -24,7 +24,7 @@ _<sup>1</sup> This could change in the future. Instead, the only thing that woul
 To inform the report that it is going to be provided with updates, set the new `sse` property with a URL to where the SSE endpoint is located.
 
 ```html
-<mutation-test-report-app sse="localhost:8080/sse"></mutation-test-report-app>
+<mutation-test-report-app sse="http://localhost:8080/sse"></mutation-test-report-app>
 ```
 
 ### Server side implementation
