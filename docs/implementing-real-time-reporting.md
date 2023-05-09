@@ -13,9 +13,11 @@ Currently, Stryker provides the report with updates using [Server Sent Events](h
 
 ### Preparing the report
 
-First things first, the mutation testing framework should be able to generate an empty report. This report has all information necessary except the tested state of a mutant. These mutants must have the state `Pending`.
+First things first, the mutation testing framework should be able to generate an empty report. This report has all information necessary except the tested state of a mutant<sup>1</sup>. These mutants must have the state `Pending`.
 
 Once this report has been generated, it is recommended to automatically open this report for a better user experience.
+
+_<sup>1</sup> This could change in the future. Instead, the only thing that would be necessary is to show the files without any mutants and add new mutants while they are being generated. This would allow the report to open earlier._
 
 ### Changes to the `<mutation-test-report-app>` component
 
@@ -36,7 +38,7 @@ Connection: keep-alive
 Access-Control-Allow-Origin: *
 ```
 
-The `Access-Control-Allow-Origin: *` is needed, since the report is a file on disk.
+The `Access-Control-Allow-Origin: *` is necessary only if the report is opened from a file from disk. It is possible to be more strict with CORS if the report is hosted.
 
 When sending events to the browser, please note that the payload should look like the following:
 
@@ -56,7 +58,25 @@ The report currently listens to two events:
 
 #### The `mutant-tested` event
 
-This event should be sent when a single mutant has been tested. The mutant should conform to the report schema. Every single property sent will be changed in the report.
+This event should be sent when a single mutant has been tested. The mutant should conform to the [report schema](https://github.com/stryker-mutator/mutation-testing-elements/blob/master/packages/report-schema/src/mutation-testing-report-schema.json).
+
+Required properties:
+
+- `id`.
+- `status`.
+
+Optional properties:
+
+- `coveredBy`.
+- `description`.
+- `duration`.
+- `killedBy`.
+- `location`.
+- `mutatorName`.
+- `replacement`.
+- `static`.
+- `statusReason`.
+- `testsCompleted`.
 
 For this event the `data` field in the event should be stringified JSON:
 
@@ -74,9 +94,9 @@ event: finished
 data: null
 ```
 
-## Caveat
+## Limitations
 
-Please note that if a user refreshes the page while realtime reporting is ongoing, all the state will be lost. We have no plans on doing anything to combat this. Instead, it is possible to do the following:
+Please note that if a user refreshes the page while realtime reporting is ongoing, all the state will be lost. To keep this state, the following can be done:
 
-1. Keep track of every mutant event that has been tested. When a client connects (browser), send said events.
-2. When mutation testing is complete, write the full report to disk again. This way the report will still be filled when the user refreshes the page.
+1. Keep track of every mutant event that has been tested. When a browser reconnects, send all previous mutant results.
+2. If the report is opened from a file, it is possible to write the report to disk once the mutation testing process is done. If the user refreshes the page, they will see the full report.
