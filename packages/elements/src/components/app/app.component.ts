@@ -27,7 +27,13 @@ interface TestContext extends BaseContext {
   result?: MetricsResult<TestFileModel, TestMetrics>;
 }
 
-// How many milliseconds should be between updates
+/**
+ * The report needs to be able to handle realtime updates, without any constraints.
+ * To allow for this behaviour, we will update the `rootModel` once every 100ms.
+ *
+ * This throttling mechanism is only applied to the recalculation of the `rootModel`, since that is currently what takes
+ * the most time.
+ */
 const UPDATE_CYCLE_TIME = 100;
 
 type Context = MutantContext | TestContext;
