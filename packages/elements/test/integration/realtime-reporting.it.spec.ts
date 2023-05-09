@@ -31,6 +31,7 @@ describe('realtime reporting', () => {
       await page.whenFileReportLoaded();
       client.sendMutantTested(defaultEvent);
       client.sendMutantTested({ id: '1', status: 'Survived' });
+      client.sendFinished();
 
       const allFilesRow = page.mutantView.resultTable().row('All files');
       const attributesRow = page.mutantView.resultTable().row('Attributes');
