@@ -13,7 +13,7 @@ Currently, Stryker provides the report with updates using [Server Sent Events](h
 
 ### Preparing the report
 
-First things first, the mutation testing framework should be able to generate an empty report. This report has all information necessary except the tested state of a mutant<sup>1</sup>. These mutants must have the state `Pending`.
+First things first, the mutation testing framework should be able to generate a report filled with mutants<sup>1</sup>. These mutants must have the state `Pending`.
 
 Once this report has been generated, it is recommended to automatically open this report for a better user experience.
 
