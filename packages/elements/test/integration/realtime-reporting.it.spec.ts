@@ -53,6 +53,7 @@ describe('realtime reporting', () => {
       expect(await mutantPending.underlineIsVisible()).to.be.true;
 
       client.sendMutantTested(defaultEvent);
+      client.sendFinished();
       const filter = page.mutantView.stateFilter();
       await waitUntil(async () => Boolean(await filter.state(MutantStatus.Killed).isDisplayed()));
       expect((await page.mutantView.mutantDots()).length).to.equal(0);

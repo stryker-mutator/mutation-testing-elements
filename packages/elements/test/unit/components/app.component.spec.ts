@@ -331,6 +331,7 @@ describe(MutationTestReportAppComponent.name, () => {
 
     it('should initialize SSE when property is set', async () => {
       // Arrange
+      const eventListenerStub = sinon.stub(eventSource, 'addEventListener');
       sut.element.report = createReport();
       sut.element.sse = 'http://localhost:8080/sse';
 
@@ -340,9 +341,9 @@ describe(MutationTestReportAppComponent.name, () => {
 
       // Assert
       expect(eventSourceConstructorStub.calledWith('http://localhost:8080/sse')).to.be.true;
-      // expect(eventSourceStub.addEventListener.firstCall.args[0]).to.be.equal('mutant-tested');
-      // expect(eventSourceStub.addEventListener.secondCall.args[0]).to.be.equal('mutant-tested');
-      // expect(eventSourceStub.addEventListener.thirdCall.args[0]).to.be.equal('finished');
+      expect(eventListenerStub.firstCall.firstArg).to.eq('mutant-tested');
+      expect(eventListenerStub.secondCall.firstArg).to.eq('mutant-tested');
+      expect(eventListenerStub.thirdCall.firstArg).to.eq('finished');
     });
 
     it('should update mutant status when SSE event comes in', async () => {
