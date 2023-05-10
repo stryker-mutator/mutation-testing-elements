@@ -15,7 +15,12 @@ Currently, Stryker provides the report with updates using [Server Sent Events](h
 
 First things first, the mutation testing framework should be able to generate a report filled with mutants<sup>1</sup>. These mutants must have the state `Pending`.
 
-Once this report has been generated, it is recommended to automatically open this report for a better user experience.
+There are two ways of serving the generated report:
+
+1. Write the file to disk.
+2. Serve the report using a webserver.
+
+For both of these options we recommend opening the report automatically for a better user experience.
 
 _<sup>1</sup> This could change in the future. Instead, the only thing that would be necessary is to show the files without any mutants and add new mutants while they are being generated. This would allow the report to open earlier._
 
@@ -38,7 +43,7 @@ Connection: keep-alive
 Access-Control-Allow-Origin: *
 ```
 
-The `Access-Control-Allow-Origin: *` is necessary only if the report is opened from a file from disk. It is possible to be more strict with CORS if the report is hosted.
+The `Access-Control-Allow-Origin: *` is necessary only if the report is opened from a file from disk. It is possible to be more strict with CORS if the report is served with a webserver.
 
 When sending events to the browser, please note that the payload should look like the following:
 
@@ -96,7 +101,6 @@ data: null
 
 ## Limitations
 
-Please note that if a user refreshes the page while realtime reporting is ongoing, all the state will be lost. To keep this state, the following can be done:
+It is up to the implementer to keep the state. If the user refreshes the page, the report will have lost the state that was built up until that point.
 
-1. Keep track of every mutant event that has been tested. When a browser reconnects, send all previous mutant results.
-2. If the report is opened from a file, it is possible to write the report to disk once the mutation testing process is done. If the user refreshes the page, they will see the full report.
+To prevent lost data, the implementer has to keep track of all mutant events that have happened until that point. If a browser reconnects it is possible to send all those events to the browser using the `mutant-tested` event.
