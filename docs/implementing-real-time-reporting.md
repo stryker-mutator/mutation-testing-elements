@@ -13,7 +13,7 @@ Currently, Stryker provides the report with updates using [Server Sent Events](h
 
 ### Preparing the report
 
-First things first, the mutation testing framework should be able to generate a report filled with mutants<sup>1</sup>. These mutants must have the state `Pending`.
+First things first, the mutation testing framework should generate a report with an initial state of the mutants. If the mutants don't yet have a state because they have not been tested you can use the state `Pending`.
 
 There are two ways of serving the generated report:
 
@@ -22,11 +22,10 @@ There are two ways of serving the generated report:
 
 For both of these options we recommend opening the report automatically for a better user experience.
 
-_<sup>1</sup> This could change in the future. Instead, the only thing that would be necessary is to show the files without any mutants and add new mutants while they are being generated. This would allow the report to open earlier._
 
 ### Changes to the `<mutation-test-report-app>` component
 
-To inform the report that it is going to be provided with updates, set the new `sse` property with a URL to where the SSE endpoint is located.
+To inform the report that it is going to be provided with real-time updates, set the new `sse` property with the SSE endpoint URI.
 
 ```html
 <mutation-test-report-app sse="http://localhost:8080/sse"></mutation-test-report-app>
