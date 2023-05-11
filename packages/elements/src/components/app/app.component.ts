@@ -4,7 +4,7 @@ import { MutantResult, MutationTestResult } from 'mutation-testing-report-schema
 import { MetricsResult, MutantModel, TestModel, calculateMutationTestMetrics } from 'mutation-testing-metrics';
 import { tailwind, globals } from '../../style';
 import { locationChange$, View } from '../../lib/router';
-import { Subscription } from 'rxjs';
+import { Subscription, debounceTime, fromEvent } from 'rxjs';
 import theme from './theme.scss';
 import { createCustomEvent } from '../../lib/custom-events';
 import { FileUnderTestModel, Metrics, MutationTestMetricsResult, TestFileModel, TestMetrics } from 'mutation-testing-metrics';
@@ -26,6 +26,15 @@ interface TestContext extends BaseContext {
   view: View.test;
   result?: MetricsResult<TestFileModel, TestMetrics>;
 }
+
+/**
+ * The report needs to be able to handle realtime updates, without any constraints.
+ * To allow for this behaviour, we will update the `rootModel` once every 100ms.
+ *
+ * This throttling mechanism is only applied to the recalculation of the `rootModel`, since that is currently what takes
+ * the most time.
+ */
+const UPDATE_CYCLE_TIME = 100;
 
 type Context = MutantContext | TestContext;
 
@@ -216,6 +225,9 @@ export class MutationTestReportAppComponent extends RealtimeElement {
   }
 
   private source: EventSource | undefined;
+  private sseSubscriptions: Set<Subscription> = new Set();
+  private theMutant?: MutantModel;
+  private theTest?: TestModel;
 
   private initializeSse() {
     if (!this.sse) {
@@ -223,55 +235,69 @@ export class MutationTestReportAppComponent extends RealtimeElement {
     }
 
     this.source = new EventSource(this.sse);
-    this.source.addEventListener('mutant-tested', (event) => {
+
+    const modifySubscription = fromEvent<MessageEvent>(this.source, 'mutant-tested').subscribe((event) => {
       const newMutantData = JSON.parse(event.data as string) as Partial<MutantResult> & Pick<MutantResult, 'id' | 'status'>;
       if (!this.report) {
         return;
       }
 
-      const theMutant = this.mutants.get(newMutantData.id);
-      if (theMutant === undefined) {
+      const mutant = this.mutants.get(newMutantData.id);
+      if (mutant === undefined) {
         return;
       }
+      this.theMutant = mutant;
 
       for (const [prop, val] of Object.entries(newMutantData)) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        (theMutant as any)[prop] = val;
+        (this.theMutant as any)[prop] = val;
       }
 
-      let theTest: TestModel | undefined;
       if (newMutantData.killedBy) {
         newMutantData.killedBy.forEach((killedByTestId) => {
           const test = this.tests.get(killedByTestId)!;
-          theTest = test;
           if (test === undefined) {
             return;
           }
-          test.addKilled(theMutant);
-          theMutant.addKilledBy(test);
+          this.theTest = test;
+          test.addKilled(this.theMutant!);
+          this.theMutant!.addKilledBy(test);
         });
       }
 
       if (newMutantData.coveredBy) {
         newMutantData.coveredBy.forEach((coveredByTestId) => {
           const test = this.tests.get(coveredByTestId)!;
-          theTest = test;
           if (test === undefined) {
             return;
           }
-          test.addCovered(theMutant);
-          theMutant.addCoveredBy(test);
+          this.theTest = test;
+          test.addCovered(this.theMutant!);
+          this.theMutant!.addCoveredBy(test);
         });
       }
-
-      theMutant.update();
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-      theTest?.update();
-      mutantChanges.next();
     });
+
+    const applySubscription = fromEvent(this.source, 'mutant-tested')
+      .pipe(debounceTime(UPDATE_CYCLE_TIME))
+      .subscribe(() => {
+        this.applyChanges();
+      });
+
+    this.sseSubscriptions.add(modifySubscription);
+    this.sseSubscriptions.add(applySubscription);
+
     this.source.addEventListener('finished', () => {
       this.source?.close();
+      this.applyChanges();
+      this.sseSubscriptions.forEach((s) => s.unsubscribe());
     });
+  }
+
+  private applyChanges() {
+    this.theMutant?.update();
+    this.theTest?.update();
+    mutantChanges.next();
   }
 
   public disconnectedCallback() {

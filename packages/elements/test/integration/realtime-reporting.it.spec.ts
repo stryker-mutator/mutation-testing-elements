@@ -31,6 +31,7 @@ describe('realtime reporting', () => {
       await page.whenFileReportLoaded();
       client.sendMutantTested(defaultEvent);
       client.sendMutantTested({ id: '1', status: 'Survived' });
+      client.sendFinished();
 
       const allFilesRow = page.mutantView.resultTable().row('All files');
       const attributesRow = page.mutantView.resultTable().row('Attributes');
@@ -52,6 +53,7 @@ describe('realtime reporting', () => {
       expect(await mutantPending.underlineIsVisible()).to.be.true;
 
       client.sendMutantTested(defaultEvent);
+      client.sendFinished();
       const filter = page.mutantView.stateFilter();
       await waitUntil(async () => Boolean(await filter.state(MutantStatus.Killed).isDisplayed()));
       expect((await page.mutantView.mutantDots()).length).to.equal(0);

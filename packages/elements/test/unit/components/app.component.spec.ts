@@ -301,23 +301,19 @@ describe(MutationTestReportAppComponent.name, () => {
   });
 
   describe('the `sse` property', () => {
-    const defaultMessage = new MessageEvent('mutation', { data: JSON.stringify({ id: '1', status: 'Killed' }) });
+    const defaultMessage = new MessageEvent('mutant-tested', { data: JSON.stringify({ id: '1', status: 'Killed' }) });
 
     let eventSourceConstructorStub: sinon.SinonStub;
-    let eventSourceStub: sinon.SinonStubbedInstance<EventSource>;
-    let mutationCallback: CallableFunction;
-    let finishedCallback: CallableFunction;
+    let eventSource: EventSource;
 
     beforeEach(() => {
-      eventSourceStub = sinon.createStubInstance(EventSource);
-      eventSourceConstructorStub = sinon.stub(window, 'EventSource').returns(eventSourceStub);
-      eventSourceStub.addEventListener.callsFake((type, cb) => {
-        if (type === 'mutant-tested') {
-          mutationCallback = cb as CallableFunction;
-        } else {
-          finishedCallback = cb as CallableFunction;
-        }
-      });
+      try {
+        eventSource = new EventSource('http://localhost');
+      } catch {
+        // noop
+      }
+
+      eventSourceConstructorStub = sinon.stub(window, 'EventSource').returns(eventSource);
       sut = new CustomElementFixture('mutation-test-report-app', { autoConnect: false });
     });
 
@@ -335,6 +331,7 @@ describe(MutationTestReportAppComponent.name, () => {
 
     it('should initialize SSE when property is set', async () => {
       // Arrange
+      const eventListenerStub = sinon.stub(eventSource, 'addEventListener');
       sut.element.report = createReport();
       sut.element.sse = 'http://localhost:8080/sse';
 
@@ -344,8 +341,9 @@ describe(MutationTestReportAppComponent.name, () => {
 
       // Assert
       expect(eventSourceConstructorStub.calledWith('http://localhost:8080/sse')).to.be.true;
-      expect(eventSourceStub.addEventListener.firstCall.args[0]).to.be.equal('mutant-tested');
-      expect(eventSourceStub.addEventListener.secondCall.args[0]).to.be.equal('finished');
+      expect(eventListenerStub.firstCall.firstArg).to.eq('mutant-tested');
+      expect(eventListenerStub.secondCall.firstArg).to.eq('mutant-tested');
+      expect(eventListenerStub.thirdCall.firstArg).to.eq('finished');
     });
 
     it('should update mutant status when SSE event comes in', async () => {
@@ -360,7 +358,7 @@ describe(MutationTestReportAppComponent.name, () => {
       await sut.whenStable();
 
       // Act
-      mutationCallback(defaultMessage);
+      eventSource.dispatchEvent(defaultMessage);
 
       // Assert
       const file = sut.element.rootModel!.systemUnderTestMetrics.childResults[0].file!;
@@ -393,8 +391,8 @@ describe(MutationTestReportAppComponent.name, () => {
         location: { start: { line: 12, column: 1 }, end: { line: 13, column: 2 } },
         mutatorName: 'test mutator',
       });
-      const message = new MessageEvent('mutation', { data: newMutantData });
-      mutationCallback(message);
+      const message = new MessageEvent('mutant-tested', { data: newMutantData });
+      eventSource.dispatchEvent(message);
 
       // Assert
       const theMutant = sut.element.rootModel!.systemUnderTestMetrics.childResults[0].file!.mutants[0];
@@ -418,10 +416,10 @@ describe(MutationTestReportAppComponent.name, () => {
       await sut.whenStable();
 
       // Act
-      finishedCallback(message);
+      eventSource.dispatchEvent(message);
 
       // Assert
-      expect(eventSourceStub.close.calledOnce).to.be.true;
+      expect(eventSource.readyState).to.be.eq(eventSource.CLOSED);
     });
   });
 
