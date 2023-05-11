@@ -7,13 +7,13 @@ Real-time reporting was recently implemented in Stryker. This page is created to
 
 ## How does it work?
 
-Currently, Stryker provides the report with updates using [Server Sent Events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events). This was chosen over WebSockets because the dataflow should only be from a mutation framework to the report. The report should not have to send anything to the mutation framework.
+Currently, the mutation-testing-elements report support updates in real-time using [Server Sent Events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events). This was chosen over WebSockets because the dataflow should only be from a mutation framework to the report. The report should not have to send anything to the mutation framework.
 
 ## Implementation details
 
 ### Preparing the report
 
-First things first, the mutation testing framework should generate a report with an initial state of the mutants. If the mutants don't yet have a state because they have not been tested you can use the state `Pending`.
+First things first, the mutation testing framework should generate a report with an initial state of the mutants . If the mutants don't yet have a state because they have not been tested yet, you should use the state `"Pending"`.
 
 There are two ways of serving the generated report:
 
@@ -41,7 +41,7 @@ Connection: keep-alive
 Access-Control-Allow-Origin: *
 ```
 
-The `Access-Control-Allow-Origin: *` is necessary only if the report is opened from a file from disk. It is possible to be more strict with CORS if the report is served with a webserver.
+The `Access-Control-Allow-Origin: *` is necessary only if the report is opened from a file from disk. It is possible to be more strict with [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) if the report is served with a webserver.
 
 When sending events to the browser, please note that the payload should look like the following:
 
@@ -61,7 +61,7 @@ The report currently listens to two events:
 
 #### The `mutant-tested` event
 
-This event should be sent when a single mutant has been tested. The mutant should conform to the [report schema](https://github.com/stryker-mutator/mutation-testing-elements/blob/master/packages/report-schema/src/mutation-testing-report-schema.json).
+This event should be sent when a single mutant has been tested. The mutant should conform to the [report schema](https://github.com/stryker-mutator/mutation-testing-elements/blob/master/packages/report-schema/src/mutation-testing-report-schema.json#L37-L104).
 
 Required properties:
 
