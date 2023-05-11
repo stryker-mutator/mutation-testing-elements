@@ -22,7 +22,6 @@ There are two ways of serving the generated report:
 
 For both of these options we recommend opening the report automatically for a better user experience.
 
-
 ### Changes to the `<mutation-test-report-app>` component
 
 To inform the report that it is going to be provided with real-time updates, set the new `sse` property with the SSE endpoint URI.
