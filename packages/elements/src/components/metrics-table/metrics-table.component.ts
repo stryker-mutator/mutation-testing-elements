@@ -144,7 +144,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends Realtime
           ${valueIsPresent
             ? html`<div class="h-3 w-full min-w-[24px] rounded-full bg-gray-300">
                 <div
-                  class="${bgColoringClass} h-3 rounded-full pl-1 transition-width"
+                  class="${bgColoringClass} h-3 rounded-full pl-1 transition-all"
                   role="progressbar"
                   aria-valuenow="${mutationScoreRounded}"
                   aria-valuemin="0"
@@ -157,7 +157,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends Realtime
             : html` <span class="text-light-muted font-bold">N/A</span> `}
         </td>
         <td class="${textColoringClass} ${backgroundColoringClass} w-12 pr-2 text-center font-bold group-hover:bg-gray-200"
-          >${valueIsPresent ? mutationScoreRounded : nothing}</td
+          >${valueIsPresent ? html`<span class="transition-colors">${mutationScoreRounded}</span>` : nothing}</td
         >`;
     }
     return html`<td
