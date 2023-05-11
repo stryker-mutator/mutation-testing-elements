@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v2.0.0...v2.0.1) (2023-05-11)
+
+
+### Bug Fixes
+
+* **elements-table:** transition score colors after update ([#2503](https://github.com/stryker-mutator/mutation-testing-elements/issues/2503)) ([973c5c1](https://github.com/stryker-mutator/mutation-testing-elements/commit/973c5c112d53277c596438fcdb9c72537c7b6c79))
+* **schema:** Correctly validate schema version ([#2494](https://github.com/stryker-mutator/mutation-testing-elements/issues/2494)) ([72979e7](https://github.com/stryker-mutator/mutation-testing-elements/commit/72979e79b4e97591929b25f9b327b7509b591f69))
+
+
+### Performance Improvements
+
+* **elements:** improve performance of real-time reporting ([#2498](https://github.com/stryker-mutator/mutation-testing-elements/issues/2498)) ([42f8dcf](https://github.com/stryker-mutator/mutation-testing-elements/commit/42f8dcf108677221296927ede66eae033b112c43))
+
+
+
+
+
 # [2.0.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.14...v2.0.0) (2023-04-29)
 
 
