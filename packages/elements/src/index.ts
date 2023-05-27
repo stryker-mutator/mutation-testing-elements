@@ -12,3 +12,4 @@ import './components/test-file/test-file.component';
 import './components/drawer-test/drawer-test.component';
 import './components/file-icon/file-icon.component';
 import './components/tooltip/tooltip.component';
+import './components/progress-bar/progress-bar.component';
