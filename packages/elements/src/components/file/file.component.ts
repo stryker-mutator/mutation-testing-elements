@@ -10,12 +10,12 @@ import { prismjs, tailwind } from '../../style';
 import { StateFilter } from '../state-filter/state-filter.component';
 import style from './file.scss';
 import { renderDots, renderLine } from './util';
-import { RealtimeElement } from '../realtime-element';
+import { RealTimeElement } from '../real-time-element';
 
 const diffOldClass = 'diff-old';
 const diffNewClass = 'diff-new';
 @customElement('mte-file')
-export class FileComponent extends RealtimeElement {
+export class FileComponent extends RealTimeElement {
   static styles = [prismjs, tailwind, unsafeCSS(style)];
 
   @state()

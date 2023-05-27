@@ -11,7 +11,7 @@ import { FileUnderTestModel, Metrics, MutationTestMetricsResult, TestFileModel, 
 import { toAbsoluteUrl } from '../../lib/html-helpers';
 import { isLocalStorageAvailable } from '../../lib/browser';
 import { mutantChanges } from '../../lib/mutant-changes';
-import { RealtimeElement } from '../realtime-element';
+import { RealTimeElement } from '../real-time-element';
 
 interface BaseContext {
   path: string[];
@@ -39,7 +39,7 @@ const UPDATE_CYCLE_TIME = 100;
 type Context = MutantContext | TestContext;
 
 @customElement('mutation-test-report-app')
-export class MutationTestReportAppComponent extends RealtimeElement {
+export class MutationTestReportAppComponent extends RealTimeElement {
   @property({ attribute: false })
   public report: MutationTestResult | undefined;
 
