@@ -11,12 +11,17 @@ interface ProgressBarMetrics {
   [key: string]: number;
 }
 
+const METRICS_AMOUNT = 3;
+
 @customElement('mte-progress-bar')
 export class ProgressBar extends RealTimeElement {
   public static styles = [tailwind];
 
   @property({ attribute: false })
   public rootModel: MutationTestMetricsResult | undefined;
+
+  @property({ attribute: false })
+  public visible = false;
 
   #total = 0;
   #metrics: ProgressBarMetrics | undefined;
@@ -48,12 +53,12 @@ export class ProgressBar extends RealTimeElement {
   }
 
   public render() {
-    if (this.#metrics === undefined) {
+    if (this.#metrics === undefined || !this.visible) {
       return nothing;
     }
 
     return html`
-      <div class="sticky my-4 w-full rounded-md border border-gray-200 p-3">
+      <div class="my-4 rounded-md border border-gray-200 bg-white p-3">
         ${this.#renderTitle()}
         <div class="relative">
           <div class="flex h-8 w-full overflow-hidden rounded bg-gray-200">${this.#renderParts()}</div>
@@ -72,14 +77,16 @@ export class ProgressBar extends RealTimeElement {
   }
 
   #renderParts() {
-    return html`${Object.keys(this.#metrics!).map((metric) => this.#renderPart(metric, this.#metrics![metric]))}`;
+    return html`${Object.keys(this.#metrics!).map((metric, index) => this.#renderPart(metric, index, this.#metrics![metric]))}`;
   }
 
-  #renderPart(metric: keyof ProgressBarMetrics, amount: number) {
+  #renderPart(metric: keyof ProgressBarMetrics, index: number, amount: number) {
+    const color = this.#colorFromStat(metric);
     return html`<div
       style="width: ${(100 * amount) / this.#total}%"
-      class="${this.#colorFromStat(metric)} ${amount === 0 ? 'opacity-0' : ''} flex h-8 items-center rounded-r transition-all"
+      class="${color} ${amount === 0 ? 'opacity-0' : ''} z-${METRICS_AMOUNT - index}0 relative flex h-8 items-center rounded-r transition-all"
     >
+      <div class="${color} absolute -m-2 h-8 w-2"></div>
       <span class="ms-3 font-bold text-gray-800">${amount}</span>
     </div>`;
   }
@@ -87,12 +94,12 @@ export class ProgressBar extends RealTimeElement {
   #colorFromStat(metric: keyof ProgressBarMetrics) {
     switch (metric) {
       case 'killed':
-        return 'bg-green-600';
+        return 'bg-green-600 outline-green-600';
       case 'survived':
-        return 'bg-red-600';
+        return 'bg-red-600 outline-red-600';
       case 'combined':
       default:
-        return 'bg-yellow-600';
+        return 'bg-yellow-600 outline-yellow-600';
     }
   }
 

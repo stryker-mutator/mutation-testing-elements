@@ -328,7 +328,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
             </mte-theme-switch>
             ${this.renderTitle()} ${this.renderTabs()}
             <mte-breadcrumb .view="${this.context.view}" .path="${this.context.path}"></mte-breadcrumb>
-            <mte-progress-bar .rootModel="${this.rootModel}"></mte-progress-bar>
+            <mte-progress-bar .rootModel="${this.rootModel}" .visible="${this.sse}"></mte-progress-bar>
             ${this.context.view === 'mutant' && this.context.result
               ? html`<mte-mutant-view
                   id="mte-mutant-view"
