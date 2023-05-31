@@ -11,8 +11,6 @@ interface ProgressBarMetrics {
   [key: string]: number;
 }
 
-const METRICS_AMOUNT = 3;
-
 @customElement('mte-progress-bar')
 export class ProgressBar extends RealTimeElement {
   public static styles = [tailwind];
@@ -25,9 +23,28 @@ export class ProgressBar extends RealTimeElement {
 
   #total = 0;
   #metrics: ProgressBarMetrics | undefined;
+  #observer: IntersectionObserver | undefined;
+  #shouldBeSmall = false;
 
   connectedCallback(): void {
     super.connectedCallback();
+
+    this.#observer = new window.IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        this.#shouldBeSmall = false;
+      } else {
+        this.#shouldBeSmall = true;
+      }
+
+      this.requestUpdate();
+    });
+    this.#observer.observe(this);
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+
+    this.#observer?.disconnect();
   }
 
   public reactivate(): void {
@@ -38,7 +55,6 @@ export class ProgressBar extends RealTimeElement {
   public updated(changedProperties: PropertyValues): void {
     if (changedProperties.has('rootModel')) {
       this.#calculateProgressBarMetrics();
-      this.requestUpdate();
     }
   }
 
@@ -58,52 +74,60 @@ export class ProgressBar extends RealTimeElement {
     }
 
     return html`
-      <div class="my-4 rounded-md border border-gray-200 bg-white p-3">
-        ${this.#renderTitle()}
+      ${this.#renderSmallParts()}
+      <div class="my-4 rounded-md border border-gray-200 bg-white">
         <div class="relative">
-          <div class="flex h-8 w-full overflow-hidden rounded bg-gray-200">${this.#renderParts()}</div>
-          ${this.#renderTotalMutants()}
+          <div class="parts flex h-8 w-full overflow-hidden rounded bg-gray-200">${this.#renderParts()}</div>
         </div>
       </div>
     `;
   }
 
-  #renderTitle() {
-    return html`
-      <span class="mb-1 block text-base font-black text-gray-800">
-        ${this.rootModel?.systemUnderTestMetrics.metrics.pending === 0 ? 'Mutation testing finished!' : 'Mutation testing in progress...'}
-      </span>
-    `;
+  #renderSmallParts() {
+    return html`<div
+      class="${this.#shouldBeSmall ? 'opacity-1' : 'opacity-0'} pointer-events-none fixed left-0 top-0 z-20 flex w-full justify-center transition-all"
+    >
+      <div class="container w-full bg-white py-2">
+        <div class="flex h-2 overflow-hidden rounded bg-gray-200">${Object.keys(this.#metrics!).map((metric) => this.#renderSmallPart(metric))}</div>
+      </div>
+    </div>`;
+  }
+
+  #renderSmallPart(metric: string) {
+    return html`<div class="${this.#colorFromMetric(metric)} z-20 h-2 transition-all" style="width: ${this.#calculatePercentage(metric)}%"></div>`;
   }
 
   #renderParts() {
-    return html`${Object.keys(this.#metrics!).map((metric, index) => this.#renderPart(metric, index, this.#metrics![metric]))}`;
+    return html`${Object.keys(this.#metrics!).map((metric) => this.#renderPart(metric, this.#metrics![metric]))}`;
   }
 
-  #renderPart(metric: keyof ProgressBarMetrics, index: number, amount: number) {
-    const color = this.#colorFromStat(metric);
+  #renderPart(metric: keyof ProgressBarMetrics, amount: number) {
     return html`<div
-      style="width: ${(100 * amount) / this.#total}%"
-      class="${color} ${amount === 0 ? 'opacity-0' : ''} z-${METRICS_AMOUNT - index}0 relative flex h-8 items-center rounded-r transition-all"
+      style="width: ${this.#calculatePercentage(metric)}%"
+      class="${this.#colorFromMetric(metric)} ${amount === 0 ? 'opacity-0' : ''} relative flex h-8 items-center overflow-hidden transition-all"
     >
-      <div class="${color} absolute -m-2 h-8 w-2"></div>
       <span class="ms-3 font-bold text-gray-800">${amount}</span>
     </div>`;
   }
 
-  #colorFromStat(metric: keyof ProgressBarMetrics) {
+  #colorFromMetric(metric: keyof ProgressBarMetrics) {
     switch (metric) {
       case 'killed':
-        return 'bg-green-600 outline-green-600';
+        return 'bg-green-600';
       case 'survived':
-        return 'bg-red-600 outline-red-600';
+        return 'bg-red-600';
       case 'combined':
       default:
-        return 'bg-yellow-600 outline-yellow-600';
+        return 'bg-yellow-600';
     }
   }
 
-  #renderTotalMutants() {
-    return html`<span class="absolute bottom-0 right-0 flex h-8 items-center pr-3 font-bold text-gray-800">${this.#total}</span>`;
+  #calculatePercentage(metric: keyof ProgressBarMetrics) {
+    return (100 * this.#metrics![metric]) / this.#total;
   }
+
+  // TODO: keep?
+  // #renderTotalMutants() {
+  //   return html`<span class="absolute bottom-0 right-0 flex h-8 items-center pr-3 font-bold text-gray-800">${this.#total}</span>`;
+  // }
 }

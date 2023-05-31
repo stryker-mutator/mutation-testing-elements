@@ -4,7 +4,7 @@ import { MutantResult, MutationTestResult } from 'mutation-testing-report-schema
 import { MetricsResult, MutantModel, TestModel, calculateMutationTestMetrics } from 'mutation-testing-metrics';
 import { tailwind, globals } from '../../style';
 import { locationChange$, View } from '../../lib/router';
-import { Subscription, debounceTime, fromEvent } from 'rxjs';
+import { Subscription, auditTime, fromEvent } from 'rxjs';
 import theme from './theme.scss';
 import { createCustomEvent } from '../../lib/custom-events';
 import { FileUnderTestModel, Metrics, MutationTestMetricsResult, TestFileModel, TestMetrics } from 'mutation-testing-metrics';
@@ -279,7 +279,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
     });
 
     const applySubscription = fromEvent(this.source, 'mutant-tested')
-      .pipe(debounceTime(UPDATE_CYCLE_TIME))
+      .pipe(auditTime(UPDATE_CYCLE_TIME))
       .subscribe(() => {
         this.applyChanges();
       });
@@ -324,7 +324,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
         <div class="container bg-white pb-4 font-sans text-gray-800 motion-safe:transition-max-width">
           <div class="space-y-4 transition-colors">
             ${this.renderErrorMessage()}
-            <mte-theme-switch @theme-switch="${this.themeSwitch}" class="sticky top-offset z-20 float-right pt-4" .theme="${this.theme}">
+            <mte-theme-switch @theme-switch="${this.themeSwitch}" class="sticky top-offset z-20 float-right pt-6" .theme="${this.theme}">
             </mte-theme-switch>
             ${this.renderTitle()} ${this.renderTabs()}
             <mte-breadcrumb .view="${this.context.view}" .path="${this.context.path}"></mte-breadcrumb>
