@@ -19,14 +19,22 @@ export class ProgressBar extends RealTimeElement {
   public rootModel: MutationTestMetricsResult | undefined;
 
   @property({ attribute: false })
+  public metrics: ProgressBarMetrics | undefined;
+
+  @property({ attribute: false })
+  public total = 0;
+
+  @property({ attribute: false })
   public visible = false;
 
-  #total = 0;
-  #metrics: ProgressBarMetrics | undefined;
   #observer: IntersectionObserver | undefined;
   #shouldBeSmall = false;
 
-  connectedCallback(): void {
+  public constructor() {
+    super();
+  }
+
+  public connectedCallback(): void {
     super.connectedCallback();
 
     this.#observer = new window.IntersectionObserver(([entry]) => {
@@ -41,7 +49,7 @@ export class ProgressBar extends RealTimeElement {
     this.#observer.observe(this);
   }
 
-  disconnectedCallback(): void {
+  public disconnectedCallback(): void {
     super.disconnectedCallback();
 
     this.#observer?.disconnect();
@@ -52,7 +60,7 @@ export class ProgressBar extends RealTimeElement {
     this.#calculateProgressBarMetrics();
   }
 
-  public updated(changedProperties: PropertyValues): void {
+  public willUpdate(changedProperties: PropertyValues): void {
     if (changedProperties.has('rootModel')) {
       this.#calculateProgressBarMetrics();
     }
@@ -60,16 +68,21 @@ export class ProgressBar extends RealTimeElement {
 
   #calculateProgressBarMetrics() {
     const metrics = this.rootModel?.systemUnderTestMetrics.metrics;
-    this.#total = metrics?.totalMutants ?? 0;
-    this.#metrics = {
+    this.total = metrics?.totalMutants ?? 0;
+    this.metrics = {
       killed: metrics?.killed ?? 0,
       survived: metrics?.survived ?? 0,
-      combined: (metrics?.noCoverage ?? 0) + (metrics?.compileErrors ?? 0) + (metrics?.timeout ?? 0) + (metrics?.ignored ?? 0),
+      combined:
+        (metrics?.noCoverage ?? 0) +
+        (metrics?.compileErrors ?? 0) +
+        (metrics?.timeout ?? 0) +
+        (metrics?.ignored ?? 0) +
+        (metrics?.runtimeErrors ?? 0),
     };
   }
 
   public render() {
-    if (this.#metrics === undefined || !this.visible) {
+    if (this.metrics === undefined || !this.visible) {
       return nothing;
     }
 
@@ -88,7 +101,7 @@ export class ProgressBar extends RealTimeElement {
       class="${this.#shouldBeSmall ? 'opacity-1' : 'opacity-0'} pointer-events-none fixed left-0 top-0 z-20 flex w-full justify-center transition-all"
     >
       <div class="container w-full bg-white py-2">
-        <div class="flex h-2 overflow-hidden rounded bg-gray-200">${Object.keys(this.#metrics!).map((metric) => this.#renderSmallPart(metric))}</div>
+        <div class="flex h-2 overflow-hidden rounded bg-gray-200">${Object.keys(this.metrics!).map((metric) => this.#renderSmallPart(metric))}</div>
       </div>
     </div>`;
   }
@@ -98,7 +111,7 @@ export class ProgressBar extends RealTimeElement {
   }
 
   #renderParts() {
-    return html`${Object.keys(this.#metrics!).map((metric) => this.#renderPart(metric, this.#metrics![metric]))}`;
+    return html`${Object.keys(this.metrics!).map((metric) => this.#renderPart(metric, this.metrics![metric]))}`;
   }
 
   #renderPart(metric: keyof ProgressBarMetrics, amount: number) {
@@ -123,7 +136,7 @@ export class ProgressBar extends RealTimeElement {
   }
 
   #calculatePercentage(metric: keyof ProgressBarMetrics) {
-    return (100 * this.#metrics![metric]) / this.#total;
+    return this.total !== 0 ? (100 * this.metrics![metric]) / this.total : 0;
   }
 
   // TODO: keep?
