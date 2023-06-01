@@ -6,7 +6,7 @@ import { ReportingClient } from './lib/SseServer';
 import { MutantStatus } from 'mutation-testing-report-schema';
 import { waitUntil } from './lib/helpers';
 
-describe('realtime reporting', () => {
+describe('real-time reporting', () => {
   const server: SseTestServer = new SseTestServer();
   const defaultEvent = { id: '0', status: 'Killed' };
 
@@ -40,6 +40,44 @@ describe('realtime reporting', () => {
       expect(await allFilesRow.mutationScore()).to.eq('50.00');
       expect(await attributesRow.mutationScore()).to.eq('100.00');
       expect(await wrappitContextRow.mutationScore()).to.eq('0.00');
+    });
+
+    it('should show a progress-bar when real-time reporting is enabled', async () => {
+      await page.navigateTo(`realtime-reporting-example/?port=${port}`);
+      await page.whenFileReportLoaded();
+
+      expect(await page.realTimeProgressBar.progressBarVisible()).to.be.true;
+    });
+
+    it('should not show a progress-bar when real-time reporting is not enabled', async () => {
+      await page.navigateTo(`csharp-example`);
+      await page.whenFileReportLoaded();
+
+      expect(await page.realTimeProgressBar.progressBarVisible()).to.be.false;
+    });
+
+    it('should show a small progress-bar when scrolling down the page', async () => {
+      await page.navigateTo(`realtime-reporting-example/?port=${port}`);
+      await page.whenFileReportLoaded();
+
+      const progressBar = page.realTimeProgressBar;
+      expect(await progressBar.smallProgressBarVisible()).to.be.false;
+      await page.mutantView.resultTable().row('WrappitContext.cs').navigate();
+      await page.scrollDown();
+      await waitUntil(async () => expect(await progressBar.smallProgressBarVisible()).to.be.true);
+    });
+
+    it('should update the progress-bar when the report is updated', async () => {
+      server.on('client-connected', (c) => (client = c));
+
+      await page.navigateTo(`realtime-reporting-example/?port=${port}`);
+      await page.whenFileReportLoaded();
+      expect(await page.realTimeProgressBar.progressBarWidth()).to.eq('0px');
+      expect(await page.realTimeProgressBar.killedCount()).to.eq('');
+      client.sendMutantTested(defaultEvent);
+
+      await waitUntil(async () => expect(await page.realTimeProgressBar.progressBarWidth()).to.not.eq('0px'));
+      expect(await page.realTimeProgressBar.killedCount()).to.eq('1');
     });
   });
 
