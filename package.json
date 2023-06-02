@@ -35,7 +35,7 @@
   "devDependencies": {
     "@stryker-mutator/core": "^6.4.1",
     "@stryker-mutator/karma-runner": "^6.4.1",
-    "@stryker-mutator/mocha-runner": "^6.4.1",
+    "@stryker-mutator/mocha-runner": "^7.0.0",
     "@stryker-mutator/typescript-checker": "^6.4.1",
     "@tailwindcss/forms": "^0.5.3",
     "@types/chai": "^4.1.7",
