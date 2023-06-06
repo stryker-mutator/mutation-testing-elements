@@ -37,6 +37,10 @@ export class ProgressBar extends RealTimeElement {
   public connectedCallback(): void {
     super.connectedCallback();
 
+    // This code is responsible for making the small progress-bar show up.
+    // Once this element (the standard progress-bar) is no longer intersecting (visible) the viewable window,
+    // the smaller progress-bar will show up at the top if the window.
+    // If this element is visible, the smaller progress-bar will fade out and it will no longer be visible.
     this.#observer = new window.IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
         this.#shouldBeSmall = false;
