@@ -27,8 +27,7 @@ describe('real-time reporting', () => {
     it('should update the mutation testing metrics', async () => {
       server.on('client-connected', (c) => (client = c));
 
-      await page.navigateTo(`realtime-reporting-example/?port=${port}`);
-      await page.whenFileReportLoaded();
+      await arrangeNavigate();
       client.sendMutantTested(defaultEvent);
       client.sendMutantTested({ id: '1', status: 'Survived' });
       client.sendFinished();
@@ -43,8 +42,7 @@ describe('real-time reporting', () => {
     });
 
     it('should show a progress-bar when real-time reporting is enabled', async () => {
-      await page.navigateTo(`realtime-reporting-example/?port=${port}`);
-      await page.whenFileReportLoaded();
+      await arrangeNavigate();
 
       expect(await page.realTimeProgressBar.progressBarVisible()).to.be.true;
     });
@@ -57,8 +55,7 @@ describe('real-time reporting', () => {
     });
 
     it('should show a small progress-bar when scrolling down the page', async () => {
-      await page.navigateTo(`realtime-reporting-example/?port=${port}`);
-      await page.whenFileReportLoaded();
+      await arrangeNavigate();
 
       const progressBar = page.realTimeProgressBar;
       expect(await progressBar.smallProgressBarVisible()).to.be.false;
@@ -70,8 +67,7 @@ describe('real-time reporting', () => {
     it('should update the progress-bar when the report is updated', async () => {
       server.on('client-connected', (c) => (client = c));
 
-      await page.navigateTo(`realtime-reporting-example/?port=${port}`);
-      await page.whenFileReportLoaded();
+      await arrangeNavigate();
       expect(await page.realTimeProgressBar.progressBarWidth()).to.eq('0px');
       expect(await page.realTimeProgressBar.killedCount()).to.eq('');
       client.sendMutantTested(defaultEvent);
@@ -80,6 +76,11 @@ describe('real-time reporting', () => {
       expect(await page.realTimeProgressBar.killedCount()).to.eq('1');
     });
   });
+
+  async function arrangeNavigate() {
+    await page.navigateTo(`realtime-reporting-example/?port=${port}`);
+    await page.whenFileReportLoaded();
+  }
 
   describe('when navigating to a file with 1 mutant', () => {
     it('should update the state of a mutant', async () => {
