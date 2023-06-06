@@ -138,9 +138,4 @@ export class ProgressBar extends RealTimeElement {
   #calculatePercentage(metric: keyof ProgressBarMetrics) {
     return this.total !== 0 ? (100 * this.metrics![metric]) / this.total : 0;
   }
-
-  // TODO: keep?
-  // #renderTotalMutants() {
-  //   return html`<span class="absolute bottom-0 right-0 flex h-8 items-center pr-3 font-bold text-gray-800">${this.#total}</span>`;
-  // }
 }
