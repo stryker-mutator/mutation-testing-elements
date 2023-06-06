@@ -327,6 +327,7 @@ describe(MutationTestReportAppComponent.name, () => {
 
       // Assert
       expect(eventSourceConstructorStub.calledWith('/sse')).to.be.false;
+      expect(sut.$('mte-progress-bar')).to.be.null;
     });
 
     it('should initialize SSE when property is set', async () => {
@@ -344,6 +345,7 @@ describe(MutationTestReportAppComponent.name, () => {
       expect(eventListenerStub.firstCall.firstArg).to.eq('mutant-tested');
       expect(eventListenerStub.secondCall.firstArg).to.eq('mutant-tested');
       expect(eventListenerStub.thirdCall.firstArg).to.eq('finished');
+      expect(sut.$('mte-progress-bar')).to.not.be.null;
     });
 
     it('should update mutant status when SSE event comes in', async () => {
