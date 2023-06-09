@@ -1,5 +1,4 @@
-import { RealTimeElement } from '../real-time-element';
-import { html, nothing } from 'lit';
+import { LitElement, html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { tailwind } from '../../style';
 
@@ -7,7 +6,7 @@ type ProgressType = 'killed' | 'survived' | 'combined' | 'pending';
 type ProgressMetric = { type: ProgressType; amount: number };
 
 @customElement('mte-progress-bar')
-export class ProgressBar extends RealTimeElement {
+export class ProgressBar extends LitElement {
   public static styles = [tailwind];
 
   @property({ attribute: false })
