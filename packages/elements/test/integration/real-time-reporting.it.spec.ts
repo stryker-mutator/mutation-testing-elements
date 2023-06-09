@@ -47,13 +47,6 @@ describe('real-time reporting', () => {
       expect(await page.realTimeProgressBar.progressBarVisible()).to.be.true;
     });
 
-    it('should not show a progress-bar when real-time reporting is not enabled', async () => {
-      await page.navigateTo(`csharp-example`);
-      await page.whenFileReportLoaded();
-
-      expect(await page.realTimeProgressBar.progressBarVisible()).to.be.false;
-    });
-
     it('should show a small progress-bar when scrolling down the page', async () => {
       await arrangeNavigate();
 

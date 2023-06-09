@@ -1,19 +1,25 @@
-import { LitElement, html, nothing } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { LitElement, html } from 'lit';
+import { customElement, property, state } from 'lit/decorators.js';
 import { tailwind } from '../../style';
 
-type ProgressType = 'killed' | 'survived' | 'combined' | 'pending';
-type ProgressMetric = { type: ProgressType; amount: number };
+type ProgressType = 'detected' | 'undetected' | 'ignored + invalid' | 'pending';
+type ProgressMetric = { type: ProgressType; amount: number; tooltip: string };
 
 @customElement('mte-progress-bar')
 export class ProgressBar extends LitElement {
   public static styles = [tailwind];
 
   @property({ attribute: false })
-  public killed = 0;
+  public detected = 0;
 
   @property({ attribute: false })
-  public survived = 0;
+  public undetected = 0;
+
+  @property({ attribute: false })
+  public invalid = 0;
+
+  @property({ attribute: false })
+  public ignored = 0;
 
   @property({ attribute: false })
   public pending = 0;
@@ -21,8 +27,10 @@ export class ProgressBar extends LitElement {
   @property({ attribute: false })
   public total = 0;
 
+  @state()
+  private shouldBeSmall = false;
+
   #observer: IntersectionObserver | undefined;
-  #shouldBeSmall = false;
 
   public constructor() {
     super();
@@ -37,9 +45,9 @@ export class ProgressBar extends LitElement {
     // If this element is visible, the smaller progress-bar will fade out and it will no longer be visible.
     this.#observer = new window.IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
-        this.#shouldBeSmall = false;
+        this.shouldBeSmall = false;
       } else {
-        this.#shouldBeSmall = true;
+        this.shouldBeSmall = true;
       }
 
       this.requestUpdate();
@@ -56,7 +64,7 @@ export class ProgressBar extends LitElement {
   public render() {
     return html`
       ${this.#renderSmallParts()}
-      <div class="my-4 rounded-md border border-gray-200 bg-white">
+      <div class="my-4 rounded-md border border-gray-200 bg-white transition-all">
         <div class="relative">
           <div class="parts flex h-8 w-full overflow-hidden rounded bg-gray-200">${this.#renderParts()}</div>
         </div>
@@ -66,7 +74,7 @@ export class ProgressBar extends LitElement {
 
   #renderSmallParts() {
     return html`<div
-      class="${this.#shouldBeSmall ? 'opacity-1' : 'opacity-0'} pointer-events-none fixed left-0 top-0 z-20 flex w-full justify-center transition-all"
+      class="${this.shouldBeSmall ? 'opacity-1' : 'opacity-0'} pointer-events-none fixed left-0 top-0 z-20 flex w-full justify-center transition-all"
     >
       <div class="container w-full bg-white py-2">
         <div class="flex h-2 overflow-hidden rounded bg-gray-200">${this.#getMetrics().map((metric) => this.#renderSmallPart(metric))}</div>
@@ -87,32 +95,32 @@ export class ProgressBar extends LitElement {
 
   #renderPart(metric: ProgressMetric) {
     return html`<div
-      title="${metric.type[0].toUpperCase()}${metric.type.slice(1)}"
+      title="${metric.tooltip}"
       style="width: ${this.#calculatePercentage(metric.amount)}%"
       class="${this.#colorFromMetric(metric.type)} ${metric.amount === 0
         ? 'opacity-0'
         : ''} relative flex h-8 items-center overflow-hidden transition-all"
     >
-      ${metric.type !== 'pending' ? html`<span class="ms-3 font-bold text-gray-800">${metric.amount}</span>` : nothing}
+      <span class="ms-3 font-bold text-gray-800">${metric.amount}</span>
     </div>`;
   }
 
   #getMetrics(): Array<ProgressMetric> {
     return [
-      { type: 'killed', amount: this.killed },
-      { type: 'survived', amount: this.survived },
-      { type: 'combined', amount: this.total - (this.killed + this.survived + this.pending) },
-      { type: 'pending', amount: this.pending },
+      { type: 'detected', amount: this.detected, tooltip: 'killed + timeout' },
+      { type: 'undetected', amount: this.undetected, tooltip: 'survived + no coverage' },
+      { type: 'ignored + invalid', amount: this.ignored + this.invalid, tooltip: 'ignored + runtime error + compile error' },
+      { type: 'pending', amount: this.pending, tooltip: 'pending' },
     ];
   }
 
   #colorFromMetric(metric: ProgressType) {
     switch (metric) {
-      case 'killed':
+      case 'detected':
         return 'bg-green-600';
-      case 'survived':
+      case 'undetected':
         return 'bg-red-600';
-      case 'combined':
+      case 'ignored + invalid':
         return 'bg-yellow-600';
       default:
         return 'bg-gray-200';
