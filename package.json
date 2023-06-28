@@ -4,10 +4,12 @@
   "version": "0.0.6",
   "description": "A suite of web components for a mutation testing report.",
   "main": "dist/mutation-test-elements.js",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "clean": "rimraf --glob packages/*/{dist,dist-test,src-generated}",
     "all": "npm run clean && npm run build && npm run lint && npm run test",
-    "postinstall": "lerna bootstrap",
     "lint": "npm run lint:json && npm run lint:ts",
     "lint:ts": "eslint --ext .js,.ts .",
     "lint:json": "prettier --check .",
