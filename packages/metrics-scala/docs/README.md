@@ -51,7 +51,8 @@ import scala.io.Source
 import io.circe.parser.decode
 import io.circe.JsonObject
 import mutationtesting._
-import mutationtesting.circe._
+import mutationtesting.circe.mutationTestResultDecoder
+
 val json = Source.fromFile("../elements/testResources/scala-example/mutation-report.json").mkString
 
 val report = decode[MutationTestResult[JsonObject]](json) match {
