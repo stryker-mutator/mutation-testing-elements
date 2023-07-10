@@ -1,12 +1,12 @@
-import { ProgressBar } from '../../../src/components/progress-bar/progress-bar.component';
+import { ResultStatusBar } from '../../../src/components/result-status-bar/result-status-bar';
 import { CustomElementFixture } from '../helpers/CustomElementFixture';
 import { expect } from 'chai';
 
-describe(ProgressBar.name, () => {
-  let sut: CustomElementFixture<ProgressBar>;
+describe(ResultStatusBar.name, () => {
+  let sut: CustomElementFixture<ResultStatusBar>;
 
   beforeEach(() => {
-    sut = new CustomElementFixture('mte-progress-bar', { autoConnect: true });
+    sut = new CustomElementFixture('mte-result-status-bar', { autoConnect: true });
   });
 
   afterEach(() => {

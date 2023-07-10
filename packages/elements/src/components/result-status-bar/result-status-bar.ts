@@ -5,8 +5,8 @@ import { tailwind } from '../../style';
 type ProgressType = 'detected' | 'undetected' | 'ignored + invalid' | 'pending';
 type ProgressMetric = { type: ProgressType; amount: number; tooltip: string };
 
-@customElement('mte-progress-bar')
-export class ProgressBar extends LitElement {
+@customElement('mte-result-status-bar')
+export class ResultStatusBar extends LitElement {
   public static styles = [tailwind];
 
   @property({ attribute: false })

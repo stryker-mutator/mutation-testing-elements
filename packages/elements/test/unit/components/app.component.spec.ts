@@ -344,7 +344,7 @@ describe(MutationTestReportAppComponent.name, () => {
       expect(eventListenerStub.firstCall.firstArg).to.eq('mutant-tested');
       expect(eventListenerStub.secondCall.firstArg).to.eq('mutant-tested');
       expect(eventListenerStub.thirdCall.firstArg).to.eq('finished');
-      expect(sut.$('mte-progress-bar')).to.not.be.null;
+      expect(sut.$('mte-result-status-bar')).to.not.be.null;
     });
 
     it('should update mutant status when SSE event comes in', async () => {

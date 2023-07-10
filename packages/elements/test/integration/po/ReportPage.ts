@@ -85,7 +85,7 @@ export class ReportPage extends ElementSelector {
   }
 
   get realTimeProgressBar(): RealTimeProgressBar {
-    return new RealTimeProgressBar(selectShadowRoot(this.$('mutation-test-report-app >>> mte-progress-bar')), this.browser);
+    return new RealTimeProgressBar(selectShadowRoot(this.$('mutation-test-report-app >>> mte-result-status-bar')), this.browser);
   }
 
   pageYOffset(): Promise<number> {
