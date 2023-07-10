@@ -4,7 +4,7 @@ import { MutantResult, MutationTestResult } from 'mutation-testing-report-schema
 import { MetricsResult, MutantModel, TestModel, calculateMutationTestMetrics } from 'mutation-testing-metrics';
 import { tailwind, globals } from '../../style';
 import { locationChange$, View } from '../../lib/router';
-import { Subscription, auditTime, fromEvent } from 'rxjs';
+import { Subscription, fromEvent, sampleTime } from 'rxjs';
 import theme from './theme.scss';
 import { createCustomEvent } from '../../lib/custom-events';
 import { FileUnderTestModel, Metrics, MutationTestMetricsResult, TestFileModel, TestMetrics } from 'mutation-testing-metrics';
@@ -279,7 +279,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
     });
 
     const applySubscription = fromEvent(this.source, 'mutant-tested')
-      .pipe(auditTime(UPDATE_CYCLE_TIME))
+      .pipe(sampleTime(UPDATE_CYCLE_TIME))
       .subscribe(() => {
         this.applyChanges();
       });
