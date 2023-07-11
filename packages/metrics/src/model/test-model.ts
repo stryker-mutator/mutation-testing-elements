@@ -28,8 +28,8 @@ export class TestModel implements TestDefinition {
   public coveredMutants?: MutantModel[];
   public sourceFile: TestFileModel | undefined;
 
-  #killedMutants: Map<string, MutantModel> = new Map();
-  #coveredMutants: Map<string, MutantModel> = new Map();
+  #killedMutants = new Map<string, MutantModel>();
+  #coveredMutants = new Map<string, MutantModel>();
 
   public addCovered(mutant: MutantModel) {
     if (!this.coveredMutants) {

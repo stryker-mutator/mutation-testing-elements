@@ -98,7 +98,7 @@ function toChildModels<TFileModel, TMetrics>(
 
 function relate(mutants: MutantModel[], tests: TestModel[]) {
   // Create a testId -> TestModel map for fast lookup
-  const testMap: Map<string, TestModel> = new Map(tests.map((test) => [test.id, test]));
+  const testMap = new Map<string, TestModel>(tests.map((test) => [test.id, test]));
 
   for (const mutant of mutants) {
     const coveringTests = mutant.coveredBy?.map((testId) => testMap.get(testId)) ?? [];

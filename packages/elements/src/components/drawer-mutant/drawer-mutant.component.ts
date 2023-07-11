@@ -23,6 +23,7 @@ export class MutationTestReportDrawerMutant extends RealtimeElement {
 
   public render() {
     return renderDrawer(
+      // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- we want to coalesce on length 0
       { hasDetail: Boolean(this.mutant?.killedByTests?.length || this.mutant?.coveredByTests?.length), mode: this.mode },
       renderIfPresent(
         this.mutant,

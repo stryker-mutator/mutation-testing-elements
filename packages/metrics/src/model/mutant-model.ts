@@ -32,8 +32,8 @@ export class MutantModel implements MutantResult {
   public killedByTests: TestModel[] | undefined;
   public sourceFile: FileUnderTestModel | undefined;
 
-  #coveredByTests: Map<string, TestModel> = new Map();
-  #killedByTests: Map<string, TestModel> = new Map();
+  #coveredByTests = new Map<string, TestModel>();
+  #killedByTests = new Map<string, TestModel>();
 
   constructor(input: MutantResult) {
     this.coveredBy = input.coveredBy;
