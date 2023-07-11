@@ -83,7 +83,7 @@ describe(MutationTestReportTestMetricsTable.name, () => {
     expect(table).ok;
     const rows = table.querySelectorAll('tbody tr');
     expect(rows).lengthOf(2);
-    expect(((rows.item(1) as HTMLTableRowElement).cells.item(0) as HTMLTableCellElement).textContent).contains('baz/foo.js');
+    expect((rows.item(1) as HTMLTableRowElement).cells.item(0)!.textContent).contains('baz/foo.js');
   });
 
   it('should show N/A when no mutation score is available', async () => {

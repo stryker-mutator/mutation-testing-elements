@@ -17,6 +17,7 @@ export abstract class MutantElement extends PageObject {
 
   public async getStatus(): Promise<MutantStatus | undefined> {
     return (await this.classes()).find((clazz) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
       const testState = allMutantStates.find((state) => state === clazz);
       if (testState) {
         return testState;

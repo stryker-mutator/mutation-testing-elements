@@ -13,7 +13,7 @@ export abstract class SourceFile {
 
   public getLineMap(): number[] {
     assertSourceDefined(this.source);
-    return this.lineMap || (this.lineMap = computeLineStarts(this.source));
+    return this.lineMap ?? (this.lineMap = computeLineStarts(this.source));
   }
 
   /**

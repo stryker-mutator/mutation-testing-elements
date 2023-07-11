@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
 import { html, PropertyValues, unsafeCSS, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { MutantResult, MutationTestResult } from 'mutation-testing-report-schema/api';
@@ -59,7 +60,7 @@ export class MutationTestReportAppComponent extends RealtimeElement {
   public context: Context = { view: View.mutant, path: [] };
 
   @property()
-  public path: ReadonlyArray<string> = [];
+  public path: readonly string[] = [];
 
   @property({ attribute: 'title-postfix' })
   public titlePostfix: string | undefined;
@@ -124,8 +125,8 @@ export class MutationTestReportAppComponent extends RealtimeElement {
     }
   }
 
-  private mutants: Map<string, MutantModel> = new Map();
-  private tests: Map<string, TestModel> = new Map();
+  private mutants = new Map<string, MutantModel>();
+  private tests = new Map<string, TestModel>();
 
   public updated(changedProperties: PropertyValues) {
     if (changedProperties.has('theme') && this.theme) {
@@ -183,7 +184,7 @@ export class MutationTestReportAppComponent extends RealtimeElement {
     if (this.rootModel) {
       const findResult = <TFile, TResult>(root: MetricsResult<TFile, TResult>, path: string[]): MetricsResult<TFile, TResult> | undefined => {
         return path.reduce<MetricsResult<TFile, TResult> | undefined>(
-          (model, currentPathPart) => model && model.childResults.find((child) => child.name === currentPathPart),
+          (model, currentPathPart) => model?.childResults.find((child) => child.name === currentPathPart),
           root
         );
       };
@@ -225,7 +226,7 @@ export class MutationTestReportAppComponent extends RealtimeElement {
   }
 
   private source: EventSource | undefined;
-  private sseSubscriptions: Set<Subscription> = new Set();
+  private sseSubscriptions = new Set<Subscription>();
   private theMutant?: MutantModel;
   private theTest?: TestModel;
 
@@ -319,7 +320,7 @@ export class MutationTestReportAppComponent extends RealtimeElement {
   }
 
   public render() {
-    if (this.context.result || this.errorMessage) {
+    if (this.context.result ?? this.errorMessage) {
       return html`
         <div class="container bg-white pb-4 font-sans text-gray-800 motion-safe:transition-max-width">
           <div class="space-y-4 transition-colors">
