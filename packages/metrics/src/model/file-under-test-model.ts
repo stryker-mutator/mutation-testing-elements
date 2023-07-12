@@ -28,7 +28,10 @@ export class FileUnderTestModel extends SourceFile implements FileResult {
    * @param input The file result content
    * @param name The file name
    */
-  constructor(input: FileResult, public name: string) {
+  constructor(
+    input: FileResult,
+    public name: string,
+  ) {
     super();
     this.language = input.language;
     this.source = input.source;

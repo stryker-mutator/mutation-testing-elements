@@ -77,7 +77,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends Realtime
         ${repeat(
           this.columns,
           (column) => column.key,
-          (column) => this.renderTableHead(column)
+          (column) => this.renderTableHead(column),
         )}
       </tr>
     </thead>`;

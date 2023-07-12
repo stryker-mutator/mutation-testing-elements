@@ -73,7 +73,7 @@ export async function mapShadowRootConcurrent<T>(elements: Promise<WebElement[]>
   return element$
     .pipe(
       mergeMap(async (host) => fn(await selectShadowRoot(host)), MAX_WEBDRIVER_CONCURRENCY),
-      toArray()
+      toArray(),
     )
     .toPromise() as Promise<T[]>;
 }
@@ -99,7 +99,7 @@ export async function mapShadowRootConcurrent<T>(elements: Promise<WebElement[]>
 export function waitUntil(
   predicate: () => Promise<boolean | Chai.Assertion>,
   message?: string,
-  options: { interval?: number; timeout?: number } = {}
+  options: { interval?: number; timeout?: number } = {},
 ): Promise<void> {
   // Default options
   const { interval, timeout } = { interval: 100, timeout: 2500, ...options };

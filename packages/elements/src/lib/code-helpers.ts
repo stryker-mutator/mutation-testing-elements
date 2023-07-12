@@ -176,7 +176,7 @@ export function transformHighlightedLines(source: string, visitor?: (pos: Positi
     }
     return `<${elementName}${Object.entries(attributes ?? {}).reduce(
       (acc, [name, value]) => (value === undefined ? `${acc} ${name}` : `${acc} ${name}="${value}"`),
-      ''
+      '',
     )}>`;
   }
 

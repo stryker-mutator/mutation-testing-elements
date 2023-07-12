@@ -18,7 +18,10 @@ export class TestFileModel extends SourceFile implements TestFile {
    * @param input the test file content
    * @param name the file name
    */
-  constructor(input: TestFile, public name: string) {
+  constructor(
+    input: TestFile,
+    public name: string,
+  ) {
     super();
     this.source = input.source;
     this.tests = input.tests.map((testDefinition) => {

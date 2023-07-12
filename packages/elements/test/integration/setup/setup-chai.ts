@@ -30,7 +30,7 @@ export const mochaHooks = {
     currentSnapshotFile = path.join(
       dir,
       name,
-      `${this.currentTest!.fullTitle().toLowerCase().replace(/\s/g, '-').replace(/"/g, '')}.${platform()}.snap.png`
+      `${this.currentTest!.fullTitle().toLowerCase().replace(/\s/g, '-').replace(/"/g, '')}.${platform()}.snap.png`,
     );
   },
 };

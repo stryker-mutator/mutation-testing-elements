@@ -166,7 +166,7 @@ function add(a, b) {
   return a + b;
 }`,
         },
-        'foo.js'
+        'foo.js',
       );
       sut.element.model = input;
       await sut.whenStable();
@@ -191,7 +191,7 @@ function add(a, b) {
           ],
           source: 'const foo = "bar";',
         },
-        'foo.js'
+        'foo.js',
       );
       sut.element.model = input;
       await sut.whenStable();
@@ -227,7 +227,7 @@ function add(a, b) {
           mutants,
           source: mutants.map(() => 'foo').join('\n'),
         },
-        'foo.js'
+        'foo.js',
       );
       sut.element.model = input;
       filterComponent.dispatchEvent(createCustomEvent('filters-changed', allStates));
@@ -271,7 +271,7 @@ function add(a, b) {
 }
 `,
         },
-        'foo.js'
+        'foo.js',
       );
       sut.element.model = input;
       await sut.whenStable();
@@ -316,7 +316,7 @@ function add(a, b) {
         // Act
         const event = await sut.catchCustomEvent(
           'mutant-selected',
-          () => void sut.$('.mutant-dot[mutant-id="2"]').dispatchEvent(new Event('click', { bubbles: true }))
+          () => void sut.$('.mutant-dot[mutant-id="2"]').dispatchEvent(new Event('click', { bubbles: true })),
         );
 
         // Assert

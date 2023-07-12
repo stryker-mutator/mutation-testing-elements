@@ -8,7 +8,7 @@ import { map, tap } from 'rxjs/operators';
  * window.location.url === 'http://localhost:8080#foo/bar/baz.js' => ['foo', 'bar', 'baz.js ']
  */
 export const locationChange$ = merge(of(1), fromEvent<HashChangeEvent>(window, 'hashchange').pipe(tap((event) => event.preventDefault()))).pipe(
-  map(() => window.location.hash.substr(1).split('/').filter(Boolean).map(decodeURIComponent))
+  map(() => window.location.hash.substr(1).split('/').filter(Boolean).map(decodeURIComponent)),
 );
 
 export enum View {

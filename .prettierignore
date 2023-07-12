@@ -17,3 +17,5 @@ packages/metrics-scala/README.md
 
 # Large files that don't need prettier formatting
 report.json
+
+testResources

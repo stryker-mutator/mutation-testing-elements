@@ -10,7 +10,7 @@ export function notNullish<T>(value: T | undefined | null): value is T {
 
 export function renderIf(
   condition: unknown,
-  consequence: (() => TemplateResult) | TemplateResult | string
+  consequence: (() => TemplateResult) | TemplateResult | string,
 ): string | TemplateResult | typeof nothing {
   if (condition) {
     if (typeof consequence === 'function') {

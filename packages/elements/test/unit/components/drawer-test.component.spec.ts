@@ -41,7 +41,7 @@ describe(MutationTestReportDrawerTestComponent.name, () => {
           id: 'spec-1',
           location: createLocation({ start: { column: 1, line: 2 } }),
           name: 'foo should bar',
-        })
+        }),
       );
     });
 

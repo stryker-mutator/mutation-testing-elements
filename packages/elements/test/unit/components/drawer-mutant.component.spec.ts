@@ -32,7 +32,7 @@ describe(MutationTestReportDrawerMutant.name, () => {
           location: createLocation({ start: { column: 1, line: 2 } }),
           mutatorName: 'fooMutator',
           status: MutantStatus.Survived,
-        })
+        }),
       );
     });
 

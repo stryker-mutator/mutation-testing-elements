@@ -37,8 +37,8 @@ export class FileStateFilterComponent<TStatus extends string> extends RealtimeEl
     this.dispatchEvent(
       createCustomEvent(
         'filters-changed',
-        this.filters!.filter(({ enabled }) => enabled).map(({ status }) => status)
-      )
+        this.filters!.filter(({ enabled }) => enabled).map(({ status }) => status),
+      ),
     );
   }
 
@@ -103,8 +103,8 @@ export class FileStateFilterComponent<TStatus extends string> extends RealtimeEl
                   ${filter.label} (${filter.count})
                 </label>
               </div>
-            `
-          ) as TemplateResult
+            `,
+          ) as TemplateResult,
         )}
       </div>
     `;
