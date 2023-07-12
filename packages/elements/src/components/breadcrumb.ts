@@ -45,7 +45,7 @@ export class MutationTestReportBreadcrumbComponent extends LitElement {
           } else {
             return this.renderLink(item, path.slice(0, index + 1));
           }
-        }
+        },
       );
     }
     return undefined;

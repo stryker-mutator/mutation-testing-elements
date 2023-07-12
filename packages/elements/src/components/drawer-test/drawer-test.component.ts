@@ -33,31 +33,33 @@ export class MutationTestReportDrawerTestComponent extends RealtimeElement {
           >
           <span slot="summary">${this.renderSummary()}</span>
           <span class="block" slot="detail">${this.renderDetail()}</span>
-        `
-      )
+        `,
+      ),
     );
   }
 
   private renderSummary() {
-    return renderSummaryContainer(html`${this.test?.killedMutants?.[0]
-      ? renderSummaryLine(
-          html`${renderEmoji('🎯', 'killed')} Killed:
-          ${describeMutant(this.test.killedMutants?.[0])}${this.test.killedMutants.length > 1
-            ? html` (and ${this.test.killedMutants.length - 1} more)`
-            : ''}`
-        )
-      : nothing}
-    ${renderIfPresent(this.test?.coveredMutants, (coveredMutants) =>
-      renderSummaryLine(
-        html`${renderEmoji('☂️', 'umbrella')} Covered ${coveredMutants.length}
-        mutant${plural(coveredMutants)}${this.test?.status === TestStatus.Covering ? " (yet didn't kill any of them)" : ''}`
-      )
-    )}`);
+    return renderSummaryContainer(
+      html`${this.test?.killedMutants?.[0]
+        ? renderSummaryLine(
+            html`${renderEmoji('🎯', 'killed')} Killed:
+            ${describeMutant(this.test.killedMutants?.[0])}${this.test.killedMutants.length > 1
+              ? html` (and ${this.test.killedMutants.length - 1} more)`
+              : ''}`,
+          )
+        : nothing}
+      ${renderIfPresent(this.test?.coveredMutants, (coveredMutants) =>
+        renderSummaryLine(
+          html`${renderEmoji('☂️', 'umbrella')} Covered ${coveredMutants.length}
+          mutant${plural(coveredMutants)}${this.test?.status === TestStatus.Covering ? " (yet didn't kill any of them)" : ''}`,
+        ),
+      )}`,
+    );
   }
   private renderDetail() {
     return html`<ul class="mb-6 mr-12">
       ${this.test?.killedMutants?.map((mutant) =>
-        renderDetailLine('This test killed this mutant', html`${renderEmoji('🎯', 'killed')} ${describeMutant(mutant)}`)
+        renderDetailLine('This test killed this mutant', html`${renderEmoji('🎯', 'killed')} ${describeMutant(mutant)}`),
       )}
       ${this.test?.coveredMutants
         ?.filter((mutant) => !this.test?.killedMutants?.includes(mutant))

@@ -2,5 +2,6 @@
   "printWidth": 150,
   "singleQuote": true,
   "htmlWhitespaceSensitivity": "strict",
-  "tailwindConfig": "./tailwind.config.js"
+  "tailwindConfig": "./tailwind.config.js",
+  "plugins": ["prettier-plugin-tailwindcss"]
 }

@@ -10,7 +10,7 @@ export function normalizeFileNames<TIn>(input: Record<string, TIn>, projectRoot 
 export function normalize<TIn, TOut>(
   input: Record<string, TIn>,
   projectRoot: string,
-  factory: (input: TIn, relativeFileName: string) => TOut
+  factory: (input: TIn, relativeFileName: string) => TOut,
 ): Record<string, TOut> {
   const fileNames = Object.keys(input);
   const commonBasePath = determineCommonBasePath(fileNames);

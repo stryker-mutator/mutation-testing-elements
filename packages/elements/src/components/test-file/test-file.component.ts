@@ -90,19 +90,20 @@ export class TestFileComponent extends RealtimeElement {
         ${repeat(
           testsToRenderInTheList,
           (test) => test.id,
-          (test) => html`<li class="my-3">
-            <button
-              class="w-full rounded p-3 text-left hover:bg-gray-100 active:bg-gray-200"
-              type="button"
-              data-active="${this.selectedTest === test}"
-              test-id="${test.id}"
-              @click=${(ev: MouseEvent) => {
-                ev.stopPropagation();
-                this.toggleTest(test);
-              }}
-              >${getEmojiForTestStatus(test.status)} ${test.name} [${test.status}]
-            </button>
-          </li>`
+          (test) =>
+            html`<li class="my-3">
+              <button
+                class="w-full rounded p-3 text-left hover:bg-gray-100 active:bg-gray-200"
+                type="button"
+                data-active="${this.selectedTest === test}"
+                test-id="${test.id}"
+                @click=${(ev: MouseEvent) => {
+                  ev.stopPropagation();
+                  this.toggleTest(test);
+                }}
+                >${getEmojiForTestStatus(test.status)} ${test.name} [${test.status}]
+              </button>
+            </li>`,
         )}
       </ul>`;
     }
@@ -128,7 +129,7 @@ export class TestFileComponent extends RealtimeElement {
       };
 
       return html`<pre id="report-code-block" class="line-numbers flex rounded-md p-1"><code class="flex language-${determineLanguage(
-        this.model.name
+        this.model.name,
       )}">
       <table>
         ${this.lines.map((line, lineIndex) => {
@@ -147,14 +148,14 @@ export class TestFileComponent extends RealtimeElement {
       ? tests.map(
           (test) =>
             svg`<svg test-id="${test.id}" class="cursor-pointer test-dot ${this.selectedTest === test ? 'selected' : test.status}" @click=${(
-              ev: MouseEvent
+              ev: MouseEvent,
             ) => {
               ev.stopPropagation();
               this.toggleTest(test);
             }} height="10" width="12">
           <title>${title(test)}</title>
           <circle cx="5" cy="5" r="5" />
-          </svg>`
+          </svg>`,
         )
       : nothing;
   }

@@ -14,7 +14,10 @@ export class CustomElementFixture<TCustomElement extends LitElement> {
   public readonly element: TCustomElement;
   private isConnected = false;
 
-  constructor(private customElementName: string, options?: Partial<CustomElementFixtureOptions>) {
+  constructor(
+    private customElementName: string,
+    options?: Partial<CustomElementFixtureOptions>,
+  ) {
     if (!customElements.get(customElementName)) {
       throw new AssertionError(`Custom element "${customElementName}" is not defined. Is it a typo on your end?`);
     }
@@ -79,7 +82,7 @@ export class CustomElementFixture<TCustomElement extends LitElement> {
 
   public async catchCustomEvent<TEvent extends keyof CustomEventMap>(
     eventType: TEvent,
-    act: () => Promise<void> | void
+    act: () => Promise<void> | void,
   ): Promise<MteCustomEvent<TEvent> | undefined> {
     return this.catchEvent(eventType, act);
   }

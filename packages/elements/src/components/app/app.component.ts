@@ -134,7 +134,7 @@ export class MutationTestReportAppComponent extends RealtimeElement {
         createCustomEvent('theme-changed', {
           theme: this.theme,
           themeBackgroundColor: this.themeBackgroundColor,
-        })
+        }),
       );
     }
   }
@@ -185,7 +185,7 @@ export class MutationTestReportAppComponent extends RealtimeElement {
       const findResult = <TFile, TResult>(root: MetricsResult<TFile, TResult>, path: string[]): MetricsResult<TFile, TResult> | undefined => {
         return path.reduce<MetricsResult<TFile, TResult> | undefined>(
           (model, currentPathPart) => model?.childResults.find((child) => child.name === currentPathPart),
-          root
+          root,
         );
       };
       const path = this.path.slice(1);
@@ -368,16 +368,17 @@ export class MutationTestReportAppComponent extends RealtimeElement {
               { type: 'mutant', isActive: mutantsActive, text: '👽 Mutants' },
               { type: 'test', isActive: testsActive, text: '🧪 Tests' },
             ].map(
-              ({ type, isActive, text }) => html`<li class="mr-2" role="presentation">
-                <a
-                  class="inline-block rounded-t-lg border-b-2 border-transparent p-4 transition-colors hover:border-gray-300 hover:bg-gray-200 hover:text-gray-700 aria-selected:border-b-[3px] aria-selected:border-primary-700  aria-selected:text-primary-on"
-                  role="tab"
-                  href="${toAbsoluteUrl(type)}"
-                  aria-selected="${isActive}"
-                  aria-controls="mte-${type}-view"
-                  >${text}</a
-                >
-              </li>`
+              ({ type, isActive, text }) =>
+                html`<li class="mr-2" role="presentation">
+                  <a
+                    class="inline-block rounded-t-lg border-b-2 border-transparent p-4 transition-colors hover:border-gray-300 hover:bg-gray-200 hover:text-gray-700 aria-selected:border-b-[3px] aria-selected:border-primary-700  aria-selected:text-primary-on"
+                    role="tab"
+                    href="${toAbsoluteUrl(type)}"
+                    aria-selected="${isActive}"
+                    aria-controls="mte-${type}-view"
+                    >${text}</a
+                  >
+                </li>`,
             )}
           </ul>
         </nav>

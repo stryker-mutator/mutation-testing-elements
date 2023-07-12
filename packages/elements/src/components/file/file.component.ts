@@ -131,7 +131,7 @@ export class FileComponent extends RealtimeElement {
             }" height="10" width="12">
           <title>${title(mutant)}</title>
           <circle cx="5" cy="5" r="5" />
-          </svg>`
+          </svg>`,
         )
       : nothing;
   }

@@ -29,7 +29,7 @@ export function calculateMutationTestMetrics(result: MutationTestResult): Mutati
     const testFileModels = normalize(testFiles, projectRoot, (input, name) => new TestFileModel(input, name));
     relate(
       Object.values(fileModelsUnderTest).flatMap((file) => file.mutants),
-      Object.values(testFileModels).flatMap((file) => file.tests)
+      Object.values(testFileModels).flatMap((file) => file.tests),
     );
     return {
       systemUnderTestMetrics: calculateRootMetrics(ROOT_NAME, fileModelsUnderTest, countFileMetrics),
@@ -45,7 +45,7 @@ export function calculateMutationTestMetrics(result: MutationTestResult): Mutati
 function calculateRootMetrics<TFileModel, TMetrics>(
   name: string,
   files: Record<string, TFileModel>,
-  calculateMetrics: (files: TFileModel[]) => TMetrics
+  calculateMetrics: (files: TFileModel[]) => TMetrics,
 ) {
   const fileNames = Object.keys(files);
   /**
@@ -62,7 +62,7 @@ function calculateRootMetrics<TFileModel, TMetrics>(
 function calculateDirectoryMetrics<TFileModel, TMetrics>(
   name: string,
   files: Record<string, TFileModel>,
-  calculateMetrics: (files: TFileModel[]) => TMetrics
+  calculateMetrics: (files: TFileModel[]) => TMetrics,
 ): MetricsResult<TFileModel, TMetrics> {
   const metrics = calculateMetrics(Object.values(files));
   const childResults = toChildModels(files, calculateMetrics);
@@ -72,14 +72,14 @@ function calculateDirectoryMetrics<TFileModel, TMetrics>(
 export function calculateFileMetrics<TFileModel, TMetrics>(
   fileName: string,
   file: TFileModel,
-  calculateMetrics: (files: TFileModel[]) => TMetrics
+  calculateMetrics: (files: TFileModel[]) => TMetrics,
 ): MetricsResult<TFileModel, TMetrics> {
   return new MetricsResult<TFileModel, TMetrics>(fileName, [], calculateMetrics([file]), file);
 }
 
 function toChildModels<TFileModel, TMetrics>(
   files: Record<string, TFileModel>,
-  calculateMetrics: (files: TFileModel[]) => TMetrics
+  calculateMetrics: (files: TFileModel[]) => TMetrics,
 ): MetricsResult<TFileModel, TMetrics>[] {
   const filesByDirectory = groupBy(Object.entries(files), (namedFile) => namedFile[0].split('/')[0]);
   return Object.keys(filesByDirectory)

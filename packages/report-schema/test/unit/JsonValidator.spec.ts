@@ -99,7 +99,7 @@ describe('JsonSchema', () => {
       'missing-performance-fields',
       "data/performance must have required property 'setup'",
       "data/performance must have required property 'initialRun'",
-      "data/performance must have required property 'mutation'"
+      "data/performance must have required property 'mutation'",
     );
   });
 

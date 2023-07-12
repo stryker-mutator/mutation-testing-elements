@@ -55,7 +55,7 @@ describe(MutantModel.name, () => {
   describe(MutantModel.prototype.getMutatedLines.name, () => {
     it('should be able to show a mutant spanning 1 line', () => {
       const sut = new MutantModel(
-        createMutantResult({ replacement: 'baz', location: { start: { line: 2, column: 5 }, end: { line: 2, column: 8 } } })
+        createMutantResult({ replacement: 'baz', location: { start: { line: 2, column: 5 }, end: { line: 2, column: 8 } } }),
       );
       sut.sourceFile = createFileUnderTestModel({ source: '\nfoo.bar();\n qux()\n' });
       const actual = sut.getMutatedLines();
