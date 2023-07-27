@@ -5,14 +5,14 @@ import { MutantResult, MutationTestResult } from 'mutation-testing-report-schema
 import { MetricsResult, MutantModel, TestModel, calculateMutationTestMetrics } from 'mutation-testing-metrics';
 import { tailwind, globals } from '../../style';
 import { locationChange$, View } from '../../lib/router';
-import { Subscription, debounceTime, fromEvent } from 'rxjs';
+import { Subscription, fromEvent, sampleTime } from 'rxjs';
 import theme from './theme.scss';
 import { createCustomEvent } from '../../lib/custom-events';
 import { FileUnderTestModel, Metrics, MutationTestMetricsResult, TestFileModel, TestMetrics } from 'mutation-testing-metrics';
 import { toAbsoluteUrl } from '../../lib/html-helpers';
 import { isLocalStorageAvailable } from '../../lib/browser';
 import { mutantChanges } from '../../lib/mutant-changes';
-import { RealtimeElement } from '../realtime-element';
+import { RealTimeElement } from '../real-time-element';
 
 interface BaseContext {
   path: string[];
@@ -40,7 +40,7 @@ const UPDATE_CYCLE_TIME = 100;
 type Context = MutantContext | TestContext;
 
 @customElement('mutation-test-report-app')
-export class MutationTestReportAppComponent extends RealtimeElement {
+export class MutationTestReportAppComponent extends RealTimeElement {
   @property({ attribute: false })
   public report: MutationTestResult | undefined;
 
@@ -280,7 +280,7 @@ export class MutationTestReportAppComponent extends RealtimeElement {
     });
 
     const applySubscription = fromEvent(this.source, 'mutant-tested')
-      .pipe(debounceTime(UPDATE_CYCLE_TIME))
+      .pipe(sampleTime(UPDATE_CYCLE_TIME))
       .subscribe(() => {
         this.applyChanges();
       });
@@ -325,10 +325,18 @@ export class MutationTestReportAppComponent extends RealtimeElement {
         <div class="container bg-white pb-4 font-sans text-gray-800 motion-safe:transition-max-width">
           <div class="space-y-4 transition-colors">
             ${this.renderErrorMessage()}
-            <mte-theme-switch @theme-switch="${this.themeSwitch}" class="sticky top-offset z-20 float-right mx-4 pt-4" .theme="${this.theme}">
+            <mte-theme-switch @theme-switch="${this.themeSwitch}" class="sticky top-offset z-20 float-right pt-6" .theme="${this.theme}">
             </mte-theme-switch>
             ${this.renderTitle()} ${this.renderTabs()}
-            <mte-breadcrumb .view="${this.context.view}" class="my-4" .path="${this.context.path}"></mte-breadcrumb>
+            <mte-breadcrumb .view="${this.context.view}" .path="${this.context.path}"></mte-breadcrumb>
+            <mte-result-status-bar
+              .detected="${this.rootModel?.systemUnderTestMetrics.metrics.totalDetected}"
+              .undetected="${this.rootModel?.systemUnderTestMetrics.metrics.totalUndetected}"
+              .invalid="${this.rootModel?.systemUnderTestMetrics.metrics.totalInvalid}"
+              .ignored="${this.rootModel?.systemUnderTestMetrics.metrics.ignored}"
+              .pending="${this.rootModel?.systemUnderTestMetrics.metrics.pending}"
+              .total="${this.rootModel?.systemUnderTestMetrics.metrics.totalMutants}"
+            ></mte-result-status-bar>
             ${this.context.view === 'mutant' && this.context.result
               ? html`<mte-mutant-view
                   id="mte-mutant-view"

@@ -12,10 +12,10 @@ import { prismjs, tailwind } from '../../style';
 import '../../style/prism-plugins';
 import { renderDots, renderLine } from '../file/util';
 import { StateFilter } from '../state-filter/state-filter.component';
-import { RealtimeElement } from '../realtime-element';
+import { RealTimeElement } from '../real-time-element';
 
 @customElement('mte-test-file')
-export class TestFileComponent extends RealtimeElement {
+export class TestFileComponent extends RealTimeElement {
   public static styles = [prismjs, tailwind, unsafeCSS(style)];
 
   @property()

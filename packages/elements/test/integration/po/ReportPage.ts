@@ -7,6 +7,7 @@ import { ThemeSelector } from './ThemeSelector.po';
 import { MutantView } from './MutantView.po';
 import { TestView } from './TestView.po';
 import { NavTab } from './NavTab.po';
+import { RealTimeProgressBar } from './RealTimeProgressBar.po';
 
 export class ReportPage extends ElementSelector {
   constructor(private readonly browser: WebDriver) {
@@ -33,6 +34,10 @@ export class ReportPage extends ElementSelector {
 
   public scrollUp(): Promise<void> {
     return this.browser.executeScript('window.scroll(0, 0)');
+  }
+
+  public scrollDown(): Promise<void> {
+    return this.browser.executeScript('window.scrollTo(0, document.body.scrollHeight);');
   }
 
   public async navigateTo(path: string) {
@@ -77,6 +82,10 @@ export class ReportPage extends ElementSelector {
 
   get testView(): TestView {
     return new TestView(selectShadowRoot(this.$('mutation-test-report-app >>> mte-test-view')), this.browser);
+  }
+
+  get realTimeProgressBar(): RealTimeProgressBar {
+    return new RealTimeProgressBar(selectShadowRoot(this.$('mutation-test-report-app >>> mte-result-status-bar')), this.browser);
   }
 
   pageYOffset(): Promise<number> {

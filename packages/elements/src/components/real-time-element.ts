@@ -2,7 +2,7 @@ import { LitElement } from 'lit';
 import { Subscription } from 'rxjs';
 import { mutantChanges } from '../lib/mutant-changes';
 
-export abstract class RealtimeElement extends LitElement {
+export abstract class RealTimeElement extends LitElement {
   public shouldReactivate(): boolean {
     return true;
   }

@@ -7,10 +7,10 @@ import { tailwind } from '../../style';
 import { DrawerMode } from '../drawer/drawer.component';
 import { Column } from '../metrics-table/metrics-table.component';
 import style from './mutant-view.scss';
-import { RealtimeElement } from '../realtime-element';
+import { RealTimeElement } from '../real-time-element';
 
 @customElement('mte-mutant-view')
-export class MutationTestReportMutantViewComponent extends RealtimeElement {
+export class MutationTestReportMutantViewComponent extends RealTimeElement {
   @property()
   public drawerMode: DrawerMode = 'closed';
 

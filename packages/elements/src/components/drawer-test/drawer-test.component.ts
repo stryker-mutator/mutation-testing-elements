@@ -6,12 +6,12 @@ import { tailwind } from '../../style';
 import { renderDetailLine, renderEmoji, renderSummaryContainer, renderSummaryLine } from '../drawer-mutant/util';
 import { DrawerMode } from '../drawer/drawer.component';
 import { renderDrawer } from '../drawer/util';
-import { RealtimeElement } from '../realtime-element';
+import { RealTimeElement } from '../real-time-element';
 
 const describeMutant = (mutant: MutantModel) => html`<code>${mutant.getMutatedLines()}</code> (${describeLocation(mutant)})`;
 
 @customElement('mte-drawer-test')
-export class MutationTestReportDrawerTestComponent extends RealtimeElement {
+export class MutationTestReportDrawerTestComponent extends RealTimeElement {
   @property()
   public test?: TestModel;
 

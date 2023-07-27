@@ -7,7 +7,7 @@ import { Thresholds } from 'mutation-testing-report-schema/api';
 import { toAbsoluteUrl } from '../../lib/html-helpers';
 import { tailwind } from '../../style';
 import { renderEmoji } from '../drawer-mutant/util';
-import { RealtimeElement } from '../realtime-element';
+import { RealTimeElement } from '../real-time-element';
 
 export type TableWidth = 'normal' | 'large';
 
@@ -25,7 +25,7 @@ export interface Column<TMetric> {
 }
 
 @customElement('mte-metrics-table')
-export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealtimeElement {
+export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTimeElement {
   @property()
   public model?: MetricsResult<TFile, TMetric>;
 
