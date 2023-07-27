@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.2](https://github.com/stryker-mutator/mutation-testing-elements/compare/v2.0.1...v2.0.2) (2023-07-27)
+
+
+### Features
+
+* **elements:** add progress bar for real-time reporting ([#2560](https://github.com/stryker-mutator/mutation-testing-elements/issues/2560)) ([de0e16c](https://github.com/stryker-mutator/mutation-testing-elements/commit/de0e16cf7dd68e75e4c299d067b6282cf7da8ada))
+
+
+
+
+
 ## [2.0.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v2.0.0...v2.0.1) (2023-05-11)
 
 
