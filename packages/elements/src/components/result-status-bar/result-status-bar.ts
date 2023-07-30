@@ -3,7 +3,11 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { tailwind } from '../../style';
 
 type ProgressType = 'detected' | 'undetected' | 'ignored + invalid' | 'pending';
-type ProgressMetric = { type: ProgressType; amount: number; tooltip: string };
+interface ProgressMetric {
+  type: ProgressType;
+  amount: number;
+  tooltip: string;
+}
 
 @customElement('mte-result-status-bar')
 export class ResultStatusBar extends LitElement {
@@ -105,7 +109,7 @@ export class ResultStatusBar extends LitElement {
     </div>`;
   }
 
-  #getMetrics(): Array<ProgressMetric> {
+  #getMetrics(): ProgressMetric[] {
     return [
       { type: 'detected', amount: this.detected, tooltip: 'killed + timeout' },
       { type: 'undetected', amount: this.undetected, tooltip: 'survived + no coverage' },
