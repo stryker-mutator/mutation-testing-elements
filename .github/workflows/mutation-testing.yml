@@ -13,8 +13,7 @@ jobs:
       - uses: actions/checkout@v3
       - run: npm ci
       - name: Run Stryker
-        run: |
-          npx nx run mutation-testing-metrics:stryker
+        run: npx nx run mutation-testing-metrics:stryker
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
   elements:
@@ -23,8 +22,7 @@ jobs:
       - uses: actions/checkout@v3
       - run: npm ci
       - name: Run Stryker
-        run: |
-          npx nx run mutation-testing-elements:stryker
+        run: npx nx run mutation-testing-elements:stryker
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
 

@@ -18,9 +18,7 @@
   "scripts": {
     "test": "mocha --forbid-only --forbid-pending -r source-map-support/register dist/test/**/*.js",
     "postpublish": "PUBLISH_SCHEMA=true ../metrics-scala/npmProjPublish.sh dist/src",
-    "generate": "node ../../tasks/schema2ts.js src/mutation-testing-report-schema.json src-generated/schema.ts",
-    "prebuild": "nx run generate",
-    "build": "tsc -b"
+    "generate": "node ../../tasks/schema2ts.js src/mutation-testing-report-schema.json src-generated/schema.ts"
   },
   "repository": {
     "type": "git",

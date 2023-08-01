@@ -17,7 +17,7 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
           echo ${{ secrets.PGP_SECRET }} | base64 --decode | gpg --batch --import
       - run: npm ci
-      - run: npx nx run-many --target=build
+      - run: npm run build
       - name: Release
         run: npm run lerna:publish
         env:

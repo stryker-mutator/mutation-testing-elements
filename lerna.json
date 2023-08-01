@@ -1,7 +1,5 @@
 {
-  "packages": [
-    "packages/*"
-  ],
+  "packages": ["packages/*"],
   "useWorkspaces": true,
   "version": "2.0.3",
   "command": {
@@ -15,6 +13,5 @@
       "preDistTag": "beta",
       "concurrency": 1
     }
-  },
-  "useNx": true
+  }
 }

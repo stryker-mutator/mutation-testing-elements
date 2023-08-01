@@ -6,8 +6,7 @@
   "typings": "dist/src/index.d.ts",
   "scripts": {
     "test": "mocha --forbid-only --forbid-pending -r source-map-support/register dist/test/**/*.js",
-    "stryker": "stryker run",
-    "build": "tsc -b"
+    "stryker": "stryker run"
   },
   "repository": {
     "type": "git",

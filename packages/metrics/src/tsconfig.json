@@ -4,5 +4,10 @@
     "types": ["node"],
     "resolveJsonModule": true,
     "outDir": "../dist/src"
-  }
+  },
+  "references": [
+    {
+      "path": "../../report-schema/src"
+    }
+  ]
 }

@@ -2,45 +2,24 @@
   "extends": "nx/presets/npm.json",
   "tasksRunnerOptions": {
     "default": {
-      "runner": "nx/tasks-runners/default",
-      "options": {
-        "cacheableOperations": ["build", "test", "stryker", "generate", "lint"]
-      }
+      "runner": "nx/tasks-runners/default"
     }
   },
-  "namedInputs": {
-    "sharedGlobals": ["{workspaceRoot}/.eslintrc.js", "{workspaceRoot}/tsconfig.settings.json"],
-    "default": ["{projectRoot}/**/*", "sharedGlobals"],
-    "production": [
-      "default",
-      "!{projectRoot}/**/*.{test,spec}.ts",
-      "!{projectRoot}/test/**/*",
-      "!{projectRoot}/*/src/test/**/*",
-      "!{projectRoot}/testResources/**/*",
-      "!{projectRoot}/karma.conf.js",
-      "!{projectRoot}/.mocharc.jsonc"
-    ]
-  },
   "targetDefaults": {
+    "build:tsc": {
+      "dependsOn": ["^generate"]
+    },
     "build": {
-      "dependsOn": ["^build"],
-      "inputs": ["default", "^production"],
-      "outputs": ["{projectRoot}/dist"]
+      "dependsOn": ["^build", "root:build:tsc", "generate"]
     },
     "test": {
-      "dependsOn": ["build"],
-      "inputs": ["default", "^production"]
-    },
-    "generate": {
-      "inputs": ["{projectRoot}/src/mutation-testing-report-schema.json", "{workspaceRoot}/tasks/schema2ts.js"],
-      "outputs": ["{projectRoot}/src-generated"]
+      "dependsOn": ["generate", "build", "root:build:tsc"]
     },
     "stryker": {
-      "dependsOn": ["^build"],
-      "outputs": ["{projectRoot}/reports", "{projectRoot}/target-stryker4s-report-*/"]
+      "dependsOn": ["^build", "root:build:tsc"]
     },
     "lint:ts": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build", "root:build:tsc"]
     }
   }
 }
