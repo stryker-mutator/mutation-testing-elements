@@ -54,7 +54,7 @@
     "chai": "^4.2.0",
     "eslint": "^8.1.0",
     "eslint-config-prettier": "~8.8.0",
-    "eslint-plugin-import": "~2.27.4",
+    "eslint-plugin-import": "~2.28.0",
     "json-schema-to-typescript": "^13.0.1",
     "lerna": "^7.1.0",
     "mocha": "^10.0.0",
