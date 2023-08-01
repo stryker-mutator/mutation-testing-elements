@@ -12,7 +12,7 @@ class EncoderTest extends munit.FunSuite {
     val result = sut.asJson.noSpaces
 
     val expectedJson =
-      """{"$schema":"https://git.io/mutation-testing-schema","schemaVersion":"1","thresholds":{"high":80,"low":10},"projectRoot":"/src/stryker4s","files":{"src/stryker4s/Stryker4s.scala":{"source":"case class Stryker4s(foo: String)","mutants":[{"id":"1","mutatorName":"BinaryOperator","replacement":"-","location":{"start":{"line":1,"column":2},"end":{"line":2,"column":3}},"status":"Killed"}],"language":"scala"}}}"""
+      """{"$schema":"https://git.io/mutation-testing-schema","schemaVersion":"2","thresholds":{"high":80,"low":10},"projectRoot":"/src/stryker4s","files":{"src/stryker4s/Stryker4s.scala":{"source":"case class Stryker4s(foo: String)","mutants":[{"id":"1","mutatorName":"BinaryOperator","replacement":"-","location":{"start":{"line":1,"column":2},"end":{"line":2,"column":3}},"status":"Killed"}],"language":"scala"}}}"""
     assertNoDiff(result, expectedJson)
   }
 
@@ -22,7 +22,7 @@ class EncoderTest extends munit.FunSuite {
     val result = sut.asJson.noSpaces
 
     val expectedJson =
-      """{"$schema":"https://git.io/mutation-testing-schema","schemaVersion":"1","thresholds":{"high":80,"low":10},"files":{"src/stryker4s/Stryker4s.scala":{"source":"case class Stryker4s(foo: String)","mutants":[{"id":"1","mutatorName":"BinaryOperator","replacement":"-","location":{"start":{"line":1,"column":2},"end":{"line":2,"column":3}},"status":"Killed"}],"language":"scala"}}}"""
+      """{"$schema":"https://git.io/mutation-testing-schema","schemaVersion":"2","thresholds":{"high":80,"low":10},"files":{"src/stryker4s/Stryker4s.scala":{"source":"case class Stryker4s(foo: String)","mutants":[{"id":"1","mutatorName":"BinaryOperator","replacement":"-","location":{"start":{"line":1,"column":2},"end":{"line":2,"column":3}},"status":"Killed"}],"language":"scala"}}}"""
     assertNoDiff(result, expectedJson)
   }
 
@@ -48,7 +48,7 @@ class EncoderTest extends munit.FunSuite {
 
   test("config decoder is used") {
     val report =
-      """{"thresholds":{"high":80,"low":10},"files":{},"schemaVersion":"1","config":{"foo":"foovalue","bar":42}}"""
+      """{"thresholds":{"high":80,"low":10},"files":{},"schemaVersion":"2","config":{"foo":"foovalue","bar":42}}"""
     decode[MutationTestResult[CustomConfig]](report) match {
       case Left(value) => fail(s"Expected valid decoding, got: $value")
       case Right(value) =>

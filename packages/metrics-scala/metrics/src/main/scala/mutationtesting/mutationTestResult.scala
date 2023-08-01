@@ -30,7 +30,7 @@ final case class MutationTestResult[+C](
     `$schema`: Option[String] = Some(
       "https://git.io/mutation-testing-schema"
     ),
-    schemaVersion: String = "1",
+    schemaVersion: String = "2",
     thresholds: Thresholds,
     projectRoot: Option[String] = None,
     files: FileResultDictionary,

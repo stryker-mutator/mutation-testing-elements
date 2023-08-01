@@ -37,8 +37,12 @@ describe('JsonSchema', () => {
     }
   }
 
-  it('should validate a report that strictly complies to the schema', () => {
-    actAssertValid('strict-report');
+  it('should validate a v1 report that strictly complies to the schema', () => {
+    actAssertValid('strict-report-v1');
+  });
+
+  it('should validate a v2 report that strictly complies to the schema', () => {
+    actAssertValid('strict-report-v2');
   });
 
   it('should validate a report that loosely complies to the schema', () => {
@@ -95,7 +99,7 @@ describe('JsonSchema', () => {
       'missing-performance-fields',
       "data/performance must have required property 'setup'",
       "data/performance must have required property 'initialRun'",
-      "data/performance must have required property 'mutation'"
+      "data/performance must have required property 'mutation'",
     );
   });
 

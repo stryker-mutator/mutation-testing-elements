@@ -1,4 +1,4 @@
-import { html, LitElement, nothing } from 'lit';
+import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { MutantModel, TestModel, TestStatus } from 'mutation-testing-metrics';
 import { describeLocation, getEmojiForTestStatus, plural, renderIfPresent } from '../../lib/html-helpers';
@@ -6,11 +6,12 @@ import { tailwind } from '../../style';
 import { renderDetailLine, renderEmoji, renderSummaryContainer, renderSummaryLine } from '../drawer-mutant/util';
 import { DrawerMode } from '../drawer/drawer.component';
 import { renderDrawer } from '../drawer/util';
+import { RealTimeElement } from '../real-time-element';
 
 const describeMutant = (mutant: MutantModel) => html`<code>${mutant.getMutatedLines()}</code> (${describeLocation(mutant)})`;
 
 @customElement('mte-drawer-test')
-export class MutationTestReportDrawerTestComponent extends LitElement {
+export class MutationTestReportDrawerTestComponent extends RealTimeElement {
   @property()
   public test?: TestModel;
 
@@ -21,6 +22,7 @@ export class MutationTestReportDrawerTestComponent extends LitElement {
 
   public render() {
     return renderDrawer(
+      // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- we want to coalesce on length 0
       { hasDetail: Boolean(this.test?.killedMutants?.length || this.test?.coveredMutants?.length), mode: this.mode },
       renderIfPresent(
         this.test,
@@ -31,31 +33,33 @@ export class MutationTestReportDrawerTestComponent extends LitElement {
           >
           <span slot="summary">${this.renderSummary()}</span>
           <span class="block" slot="detail">${this.renderDetail()}</span>
-        `
-      )
+        `,
+      ),
     );
   }
 
   private renderSummary() {
-    return renderSummaryContainer(html`${this.test?.killedMutants?.[0]
-      ? renderSummaryLine(
-          html`${renderEmoji('🎯', 'killed')} Killed:
-          ${describeMutant(this.test.killedMutants?.[0])}${this.test.killedMutants.length > 1
-            ? html` (and ${this.test.killedMutants.length - 1} more)`
-            : ''}`
-        )
-      : nothing}
-    ${renderIfPresent(this.test?.coveredMutants, (coveredMutants) =>
-      renderSummaryLine(
-        html`${renderEmoji('☂️', 'umbrella')} Covered ${coveredMutants.length}
-        mutant${plural(coveredMutants)}${this.test?.status === TestStatus.Covering ? " (yet didn't kill any of them)" : ''}`
-      )
-    )}`);
+    return renderSummaryContainer(
+      html`${this.test?.killedMutants?.[0]
+        ? renderSummaryLine(
+            html`${renderEmoji('🎯', 'killed')} Killed:
+            ${describeMutant(this.test.killedMutants?.[0])}${this.test.killedMutants.length > 1
+              ? html` (and ${this.test.killedMutants.length - 1} more)`
+              : ''}`,
+          )
+        : nothing}
+      ${renderIfPresent(this.test?.coveredMutants, (coveredMutants) =>
+        renderSummaryLine(
+          html`${renderEmoji('☂️', 'umbrella')} Covered ${coveredMutants.length}
+          mutant${plural(coveredMutants)}${this.test?.status === TestStatus.Covering ? " (yet didn't kill any of them)" : ''}`,
+        ),
+      )}`,
+    );
   }
   private renderDetail() {
     return html`<ul class="mb-6 mr-12">
       ${this.test?.killedMutants?.map((mutant) =>
-        renderDetailLine('This test killed this mutant', html`${renderEmoji('🎯', 'killed')} ${describeMutant(mutant)}`)
+        renderDetailLine('This test killed this mutant', html`${renderEmoji('🎯', 'killed')} ${describeMutant(mutant)}`),
       )}
       ${this.test?.coveredMutants
         ?.filter((mutant) => !this.test?.killedMutants?.includes(mutant))

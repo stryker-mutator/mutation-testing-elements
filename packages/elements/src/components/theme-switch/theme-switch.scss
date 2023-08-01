@@ -85,13 +85,18 @@ $width: 2.9em;
       // pointy part
       $ma: $sa + 0.5 * $ba;
 
-      $plist: $plist, $ro + $ri * cos($sa) $ro + $ri * sin($sa), $ro + $ro * cos($ma) $ro + $ro * sin($ma);
+      $plist:
+        $plist,
+        $ro + $ri * cos($sa) $ro + $ri * sin($sa),
+        $ro + $ro * cos($ma) $ro + $ro * sin($ma);
     } @else {
       // round part
       @for $j from 0 to $p {
         $ca: $sa + $j * $la;
 
-        $plist: $plist, $ro + $ri * cos($ca) $ro + $ri * sin($ca);
+        $plist:
+          $plist,
+          $ro + $ri * cos($ca) $ro + $ri * sin($ca);
       }
     }
   }

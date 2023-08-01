@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.3](https://github.com/stryker-mutator/mutation-testing-elements/compare/v2.0.2...v2.0.3) (2023-07-27)
+
+**Note:** Version bump only for package root
+
+
+
+
+
+## [2.0.2](https://github.com/stryker-mutator/mutation-testing-elements/compare/v2.0.1...v2.0.2) (2023-07-27)
+
+
+### Features
+
+* **elements:** add progress bar for real-time reporting ([#2560](https://github.com/stryker-mutator/mutation-testing-elements/issues/2560)) ([de0e16c](https://github.com/stryker-mutator/mutation-testing-elements/commit/de0e16cf7dd68e75e4c299d067b6282cf7da8ada))
+
+
+
+
+
+## [2.0.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v2.0.0...v2.0.1) (2023-05-11)
+
+
+### Bug Fixes
+
+* **elements-table:** transition score colors after update ([#2503](https://github.com/stryker-mutator/mutation-testing-elements/issues/2503)) ([973c5c1](https://github.com/stryker-mutator/mutation-testing-elements/commit/973c5c112d53277c596438fcdb9c72537c7b6c79))
+* **schema:** Correctly validate schema version ([#2494](https://github.com/stryker-mutator/mutation-testing-elements/issues/2494)) ([72979e7](https://github.com/stryker-mutator/mutation-testing-elements/commit/72979e79b4e97591929b25f9b327b7509b591f69))
+
+
+### Performance Improvements
+
+* **elements:** improve performance of real-time reporting ([#2498](https://github.com/stryker-mutator/mutation-testing-elements/issues/2498)) ([42f8dcf](https://github.com/stryker-mutator/mutation-testing-elements/commit/42f8dcf108677221296927ede66eae033b112c43))
+
+
+
+
+
+# [2.0.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.14...v2.0.0) (2023-04-29)
+
+
+### Features
+
+* **elements:** realtime reporting ([#2453](https://github.com/stryker-mutator/mutation-testing-elements/issues/2453)) ([09ea493](https://github.com/stryker-mutator/mutation-testing-elements/commit/09ea493fdf75f2ef5f6a2288a9efeb5f94539ace)), closes [/github.com/stryker-mutator/mutation-testing-elements/pull/2453#discussion_r1178769871](https://github.com//github.com/stryker-mutator/mutation-testing-elements/pull/2453/issues/discussion_r1178769871)
+* **schema:** add `Pending` status to JSON schema ([#2425](https://github.com/stryker-mutator/mutation-testing-elements/issues/2425)) ([c49d9a5](https://github.com/stryker-mutator/mutation-testing-elements/commit/c49d9a5e5e71d67972747cf07edd27fae110b86d)), closes [#2424](https://github.com/stryker-mutator/mutation-testing-elements/issues/2424)
+
+### BREAKING CHANGES
+
+* **schema** `Pending` is now a valid mutant state. See [#2425](https://github.com/stryker-mutator/mutation-testing-elements/pull/2425).
+
 ## [1.7.14](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.13...v1.7.14) (2023-02-08)
 
 **Note:** Version bump only for package root

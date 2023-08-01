@@ -14,7 +14,10 @@ export class CustomElementFixture<TCustomElement extends LitElement> {
   public readonly element: TCustomElement;
   private isConnected = false;
 
-  constructor(private customElementName: string, options?: Partial<CustomElementFixtureOptions>) {
+  constructor(
+    private customElementName: string,
+    options?: Partial<CustomElementFixtureOptions>,
+  ) {
     if (!customElements.get(customElementName)) {
       throw new AssertionError(`Custom element "${customElementName}" is not defined. Is it a typo on your end?`);
     }
@@ -59,14 +62,14 @@ export class CustomElementFixture<TCustomElement extends LitElement> {
 
   public $<TElement extends Element = HTMLElement>(selector: string, inShadow = true): TElement {
     if (inShadow) {
-      return (this.element.shadowRoot as ShadowRoot).querySelector(selector) as TElement;
+      return this.element.shadowRoot!.querySelector(selector)!;
     } else {
-      return this.element.querySelector(selector) as TElement;
+      return this.element.querySelector(selector)!;
     }
   }
 
   public $$<TElement extends Element = HTMLElement>(selector: string): TElement[] {
-    return [...(this.element.shadowRoot as ShadowRoot).querySelectorAll<TElement>(selector)];
+    return [...this.element.shadowRoot!.querySelectorAll<TElement>(selector)];
   }
 
   public get style(): CSSStyleDeclaration {
@@ -79,7 +82,7 @@ export class CustomElementFixture<TCustomElement extends LitElement> {
 
   public async catchCustomEvent<TEvent extends keyof CustomEventMap>(
     eventType: TEvent,
-    act: () => Promise<void> | void
+    act: () => Promise<void> | void,
   ): Promise<MteCustomEvent<TEvent> | undefined> {
     return this.catchEvent(eventType, act);
   }

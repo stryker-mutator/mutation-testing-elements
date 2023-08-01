@@ -28,10 +28,17 @@ export class TestModel implements TestDefinition {
   public coveredMutants?: MutantModel[];
   public sourceFile: TestFileModel | undefined;
 
+  #killedMutants = new Map<string, MutantModel>();
+  #coveredMutants = new Map<string, MutantModel>();
+
   public addCovered(mutant: MutantModel) {
     if (!this.coveredMutants) {
       this.coveredMutants = [];
     }
+    if (this.#coveredMutants.has(mutant.id)) {
+      return;
+    }
+    this.#coveredMutants.set(mutant.id, mutant);
     this.coveredMutants.push(mutant);
   }
 
@@ -39,6 +46,10 @@ export class TestModel implements TestDefinition {
     if (!this.killedMutants) {
       this.killedMutants = [];
     }
+    if (this.#killedMutants.has(mutant.id)) {
+      return;
+    }
+    this.#killedMutants.set(mutant.id, mutant);
     this.killedMutants.push(mutant);
   }
 
@@ -76,5 +87,12 @@ export class TestModel implements TestDefinition {
     } else {
       return TestStatus.NotCovering;
     }
+  }
+
+  public update(): void {
+    if (!this.sourceFile?.result?.file) {
+      return;
+    }
+    this.sourceFile.result.updateAllMetrics();
   }
 }

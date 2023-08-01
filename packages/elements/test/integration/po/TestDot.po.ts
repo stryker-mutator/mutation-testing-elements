@@ -15,6 +15,7 @@ export class TestDot extends PageObject {
 
   public async getStatus(): Promise<TestStatus | undefined> {
     return (await this.classes()).find((clazz) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
       const testState = allTestStates.find((state) => state === clazz);
       if (testState) {
         return testState;

@@ -1,6 +1,6 @@
 {
   "name": "mutation-testing-report-schema",
-  "version": "1.7.14",
+  "version": "2.0.3",
   "description": "The json schema for a mutation testing report.",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
@@ -24,7 +24,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stryker-mutator/mutation-testing-elements.git"
+    "url": "https://github.com/stryker-mutator/mutation-testing-elements.git",
+    "directory": "packages/report-schema"
   },
   "license": "Apache-2.0",
   "bugs": {

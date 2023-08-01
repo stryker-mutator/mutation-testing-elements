@@ -90,7 +90,7 @@ describe(MutationTestReportMutantViewComponent.name, () => {
         {
           key: 'totalMutants',
           label: 'Total',
-          tooltip: 'All mutants (valid + invalid + ignored)',
+          tooltip: 'All mutants (except runtimeErrors + compileErrors)',
           category: 'number',
           width: 'large',
           isBold: true,

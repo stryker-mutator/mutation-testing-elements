@@ -11,6 +11,8 @@ _Are you new to mutation testing, see [what is mutation testing?](https://stryke
 
 A mutant can have one of the following states:
 
+- **Pending**
+  The mutant has been generated, but not run yet. This is a temporary state and will be changed once the mutant has been tested.
 - **Killed**
   When at least one test failed while this mutant was active, the mutant is killed. This is what you want, good job!
 - **Survived**
@@ -50,7 +52,7 @@ Based on these states, we can calculate the following metrics:
   The number of valid mutants. They didn't result in a compile error or runtime error.
 - **Invalid** `runtime errors + compile errors`  
   The number of invalid mutants. They couldn't be tested because they produce either a compile error or a runtime error.
-- **Total mutants** `valid + invalid + ignored`  
+- **Total mutants** `valid + invalid + ignored + pending`  
   All mutants.
 - **Mutation score** `detected / valid * 100`  
   The total percentage of mutants that were detected. The higher, the better!

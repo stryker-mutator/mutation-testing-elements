@@ -15,7 +15,7 @@ chai.use(({ Assertion }) => {
   Assertion.addMethod('matchScreenshot', async function () {
     const snapshotFileExists = existsSync(currentSnapshotFile);
     const actualBase64Encoded: string = this._obj;
-    if (process.env.UPDATE_ALL_SCREENSHOTS !== 'true' && (process.env.CI || snapshotFileExists)) {
+    if (process.env.UPDATE_ALL_SCREENSHOTS !== 'true' && (process.env.CI ?? snapshotFileExists)) {
       expect(snapshotFileExists, `Snapshot file does not exist! ${currentSnapshotFile}`).true;
       await assertSnapshot(actualBase64Encoded);
     } else {
@@ -30,7 +30,7 @@ export const mochaHooks = {
     currentSnapshotFile = path.join(
       dir,
       name,
-      `${this.currentTest!.fullTitle().toLowerCase().replace(/\s/g, '-').replace(/"/g, '')}.${platform()}.snap.png`
+      `${this.currentTest!.fullTitle().toLowerCase().replace(/\s/g, '-').replace(/"/g, '')}.${platform()}.snap.png`,
     );
   },
 };

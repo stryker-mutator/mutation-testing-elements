@@ -1,6 +1,6 @@
 {
   "name": "mutation-testing-metrics",
-  "version": "1.7.14",
+  "version": "2.0.3",
   "description": "Utility functions to calculate mutation testing metrics.",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
@@ -11,7 +11,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stryker-mutator/mutation-testing-elements.git"
+    "url": "https://github.com/stryker-mutator/mutation-testing-elements.git",
+    "directory": "packages/metrics"
   },
   "license": "Apache-2.0",
   "bugs": {
@@ -19,6 +20,6 @@
   },
   "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/metrics#readme",
   "dependencies": {
-    "mutation-testing-report-schema": "1.7.14"
+    "mutation-testing-report-schema": "2.0.3"
   }
 }

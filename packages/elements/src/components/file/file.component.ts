@@ -1,4 +1,4 @@
-import { html, LitElement, nothing, PropertyValues, svg, unsafeCSS } from 'lit';
+import { html, nothing, PropertyValues, svg, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { FileUnderTestModel, MutantModel } from 'mutation-testing-metrics';
@@ -10,11 +10,12 @@ import { prismjs, tailwind } from '../../style';
 import { StateFilter } from '../state-filter/state-filter.component';
 import style from './file.scss';
 import { renderDots, renderLine } from './util';
+import { RealTimeElement } from '../real-time-element';
 
 const diffOldClass = 'diff-old';
 const diffNewClass = 'diff-new';
 @customElement('mte-file')
-export class FileComponent extends LitElement {
+export class FileComponent extends RealTimeElement {
   static styles = [prismjs, tailwind, unsafeCSS(style)];
 
   @state()
@@ -38,7 +39,8 @@ export class FileComponent extends LitElement {
   private codeRef = createRef<HTMLElement>();
 
   private readonly filtersChanged = (event: MteCustomEvent<'filters-changed'>) => {
-    this.selectedMutantStates = event.detail as MutantStatus[];
+    // Pending is not filterable, but they should still be shown to the user.
+    this.selectedMutantStates = (event.detail as MutantStatus[]).concat([MutantStatus.Pending]);
   };
 
   private codeClicked = (ev: MouseEvent) => {
@@ -129,13 +131,14 @@ export class FileComponent extends LitElement {
             }" height="10" width="12">
           <title>${title(mutant)}</title>
           <circle cx="5" cy="5" r="5" />
-          </svg>`
+          </svg>`,
         )
       : nothing;
   }
 
   private toggleMutant(mutant: MutantModel) {
     this.removeCurrentDiff();
+
     if (this.selectedMutant === mutant) {
       this.selectedMutant = undefined;
       this.dispatchEvent(createCustomEvent('mutant-selected', { selected: false, mutant }));
@@ -161,65 +164,89 @@ export class FileComponent extends LitElement {
     newDiffLines.forEach((newDiffLine) => newDiffLine.remove());
   }
 
+  public override reactivate(): void {
+    super.reactivate();
+    this.updateFileRepresentation();
+  }
+
   public update(changes: PropertyValues<FileComponent>) {
     if (changes.has('model') && this.model) {
-      this.filters = [
-        MutantStatus.Killed,
-        MutantStatus.Survived,
-        MutantStatus.NoCoverage,
-        MutantStatus.Ignored,
-        MutantStatus.Timeout,
-        MutantStatus.CompileError,
-        MutantStatus.RuntimeError,
-      ]
-        .filter((status) => this.model.mutants.some((mutant) => mutant.status === status))
-        .map((status) => ({
-          enabled: [MutantStatus.Survived, MutantStatus.NoCoverage, MutantStatus.Timeout].includes(status),
-          count: this.model.mutants.filter((m) => m.status === status).length,
-          status,
-          label: html`${getEmojiForStatus(status)} ${status}`,
-          context: getContextClassForStatus(status),
-        }));
-      const highlightedSource = highlightCode(this.model.source, this.model.name);
-      const startedMutants = new Set<MutantResult>();
-      const mutantsToPlace = new Set(this.model.mutants);
-
-      this.lines = transformHighlightedLines(highlightedSource, function* (position) {
-        // End previously opened mutants
-        for (const mutant of startedMutants) {
-          if (gte(position, mutant.location.end)) {
-            startedMutants.delete(mutant);
-            yield { elementName: 'span', id: mutant.id, isClosing: true };
-          }
-        }
-
-        // Open new mutants
-        for (const mutant of mutantsToPlace) {
-          if (gte(position, mutant.location.start)) {
-            startedMutants.add(mutant);
-            mutantsToPlace.delete(mutant);
-            yield {
-              elementName: 'span',
-              id: mutant.id,
-              attributes: {
-                class: escapeHtml(`mutant border-none ${mutant.status}`),
-                title: escapeHtml(title(mutant)),
-                'mutant-id': escapeHtml(mutant.id.toString()),
-              },
-            };
-          }
-        }
-      });
+      this.updateFileRepresentation();
     }
     if ((changes.has('model') && this.model) || changes.has('selectedMutantStates')) {
       this.mutants = this.model.mutants
         .filter((mutant) => this.selectedMutantStates.includes(mutant.status))
         .sort((m1, m2) => (gte(m1.location.start, m2.location.start) ? 1 : -1));
-      if (this.selectedMutant && !this.mutants.includes(this.selectedMutant)) {
+
+      if (
+        this.selectedMutant &&
+        !this.mutants.includes(this.selectedMutant) &&
+        changes.has('selectedMutantStates') &&
+        // This extra check is to allow mutants that have been opened before, to stay open when a realtime update comes through
+        this.selectedMutantsHaveChanged(changes.get('selectedMutantStates'))
+      ) {
         this.toggleMutant(this.selectedMutant);
       }
     }
     super.update(changes);
+  }
+
+  private updateFileRepresentation() {
+    this.filters = [
+      MutantStatus.Killed,
+      MutantStatus.Survived,
+      MutantStatus.NoCoverage,
+      MutantStatus.Ignored,
+      MutantStatus.Timeout,
+      MutantStatus.CompileError,
+      MutantStatus.RuntimeError,
+    ]
+      .filter((status) => this.model.mutants.some((mutant) => mutant.status === status))
+      .map((status) => ({
+        enabled: [...this.selectedMutantStates, MutantStatus.Survived, MutantStatus.NoCoverage, MutantStatus.Timeout].includes(status),
+        count: this.model.mutants.filter((m) => m.status === status).length,
+        status,
+        label: html`${getEmojiForStatus(status)} ${status}`,
+        context: getContextClassForStatus(status),
+      }));
+    const highlightedSource = highlightCode(this.model.source, this.model.name);
+    const startedMutants = new Set<MutantResult>();
+    const mutantsToPlace = new Set(this.model.mutants);
+
+    this.lines = transformHighlightedLines(highlightedSource, function* (position) {
+      // End previously opened mutants
+      for (const mutant of startedMutants) {
+        if (gte(position, mutant.location.end)) {
+          startedMutants.delete(mutant);
+          yield { elementName: 'span', id: mutant.id, isClosing: true };
+        }
+      }
+
+      // Open new mutants
+      for (const mutant of mutantsToPlace) {
+        if (gte(position, mutant.location.start)) {
+          startedMutants.add(mutant);
+          mutantsToPlace.delete(mutant);
+          yield {
+            elementName: 'span',
+            id: mutant.id,
+            attributes: {
+              class: escapeHtml(`mutant border-none ${mutant.status}`),
+              title: escapeHtml(title(mutant)),
+              'mutant-id': escapeHtml(mutant.id.toString()),
+            },
+          };
+        }
+      }
+    });
+  }
+
+  private selectedMutantsHaveChanged(changedMutantStates: MutantStatus[]): boolean {
+    if (changedMutantStates.length !== this.selectedMutantStates.length) {
+      return true;
+    }
+
+    return !changedMutantStates.every((state, index) => this.selectedMutantStates[index] === state);
   }
 
   private highlightedReplacementRows(mutant: MutantModel): string {

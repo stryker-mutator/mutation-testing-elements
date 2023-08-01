@@ -25,7 +25,7 @@ export class MutationTestReportBreadcrumbComponent extends LitElement {
   }
 
   public render() {
-    return html`<nav class="my-6 flex rounded-md border border-gray-200 bg-primary-100 px-5 py-3 text-gray-700" aria-label="Breadcrumb">
+    return html`<nav class="my-4 flex rounded-md border border-primary-600 bg-primary-100 p-3 text-gray-700" aria-label="Breadcrumb">
       <ol class="inline-flex items-center">
         ${this.path && this.path.length > 0 ? this.renderLink(this.rootName, []) : this.renderActiveItem(this.rootName)}
         ${this.renderBreadcrumbItems()}
@@ -45,7 +45,7 @@ export class MutationTestReportBreadcrumbComponent extends LitElement {
           } else {
             return this.renderLink(item, path.slice(0, index + 1));
           }
-        }
+        },
       );
     }
     return undefined;
@@ -53,7 +53,7 @@ export class MutationTestReportBreadcrumbComponent extends LitElement {
 
   private renderActiveItem(title: string) {
     return html`<li aria-current="page">
-      <span class="ml-1 text-sm font-medium text-gray-800 md:ml-2">${title}</span>
+      <span class="ml-1 text-sm font-medium text-gray-800">${title}</span>
     </li> `;
   }
 

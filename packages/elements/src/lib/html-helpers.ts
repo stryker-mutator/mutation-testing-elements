@@ -10,7 +10,7 @@ export function notNullish<T>(value: T | undefined | null): value is T {
 
 export function renderIf(
   condition: unknown,
-  consequence: (() => TemplateResult) | TemplateResult | string
+  consequence: (() => TemplateResult) | TemplateResult | string,
 ): string | TemplateResult | typeof nothing {
   if (condition) {
     if (typeof consequence === 'function') {
@@ -43,6 +43,7 @@ export function getContextClassForStatus(status: MutantStatus) {
       return 'warning';
     case MutantStatus.Ignored:
     case MutantStatus.RuntimeError:
+    case MutantStatus.Pending:
     case MutantStatus.CompileError:
       return 'secondary';
   }
@@ -81,6 +82,8 @@ export function getEmojiForStatus(status: MutantStatus) {
     case MutantStatus.Survived:
       return renderEmoji('👽', status);
     case MutantStatus.Timeout:
+      return renderEmoji('⏰', status);
+    case MutantStatus.Pending:
       return renderEmoji('⌛', status);
     case MutantStatus.RuntimeError:
     case MutantStatus.CompileError:

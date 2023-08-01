@@ -1,10 +1,11 @@
-import { LitElement, PropertyValues, html, unsafeCSS, TemplateResult } from 'lit';
+import { PropertyValues, html, unsafeCSS, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { createCustomEvent } from '../../lib/custom-events';
 import { renderIf } from '../../lib/html-helpers';
 import { tailwind } from '../../style';
 import style from './state-filter.scss';
+import { RealTimeElement } from '../real-time-element';
 
 export interface StateFilter<TStatus> {
   status: TStatus;
@@ -15,7 +16,7 @@ export interface StateFilter<TStatus> {
 }
 
 @customElement('mte-state-filter')
-export class FileStateFilterComponent<TStatus extends string> extends LitElement {
+export class FileStateFilterComponent<TStatus extends string> extends RealTimeElement {
   static styles = [tailwind, unsafeCSS(style)];
 
   @property({ type: Array })
@@ -36,8 +37,8 @@ export class FileStateFilterComponent<TStatus extends string> extends LitElement
     this.dispatchEvent(
       createCustomEvent(
         'filters-changed',
-        this.filters!.filter(({ enabled }) => enabled).map(({ status }) => status)
-      )
+        this.filters!.filter(({ enabled }) => enabled).map(({ status }) => status),
+      ),
     );
   }
 
@@ -52,7 +53,7 @@ export class FileStateFilterComponent<TStatus extends string> extends LitElement
 
   public render() {
     return html`
-      <div class="sticky top-offset z-10 my-1 flex flex-row bg-white py-4">
+      <div class="sticky top-offset z-10 flex flex-row bg-white py-6">
         <div class="mr-3">
           <button title="Previous" @click=${this.previous} type="button" class="step-button">
             <svg aria-hidden="true" class="h-4 w-4 rotate-180" fill="white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -102,8 +103,8 @@ export class FileStateFilterComponent<TStatus extends string> extends LitElement
                   ${filter.label} (${filter.count})
                 </label>
               </div>
-            `
-          ) as TemplateResult
+            `,
+          ) as TemplateResult,
         )}
       </div>
     `;

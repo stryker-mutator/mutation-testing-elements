@@ -166,7 +166,7 @@ function add(a, b) {
   return a + b;
 }`,
         },
-        'foo.js'
+        'foo.js',
       );
       sut.element.model = input;
       await sut.whenStable();
@@ -191,7 +191,7 @@ function add(a, b) {
           ],
           source: 'const foo = "bar";',
         },
-        'foo.js'
+        'foo.js',
       );
       sut.element.model = input;
       await sut.whenStable();
@@ -227,7 +227,7 @@ function add(a, b) {
           mutants,
           source: mutants.map(() => 'foo').join('\n'),
         },
-        'foo.js'
+        'foo.js',
       );
       sut.element.model = input;
       filterComponent.dispatchEvent(createCustomEvent('filters-changed', allStates));
@@ -271,7 +271,7 @@ function add(a, b) {
 }
 `,
         },
-        'foo.js'
+        'foo.js',
       );
       sut.element.model = input;
       await sut.whenStable();
@@ -316,7 +316,7 @@ function add(a, b) {
         // Act
         const event = await sut.catchCustomEvent(
           'mutant-selected',
-          () => void sut.$('.mutant-dot[mutant-id="2"]').dispatchEvent(new Event('click', { bubbles: true }))
+          () => void sut.$('.mutant-dot[mutant-id="2"]').dispatchEvent(new Event('click', { bubbles: true })),
         );
 
         // Assert
@@ -382,6 +382,7 @@ function add(a, b) {
         // Assert
         expect(sut.$('tr.diff-new td.code').innerText.trim()).eq('return a - b;');
       });
+
       it('should not show the diff if the mutant was filtered out', async () => {
         // Arrange
         filterComponent.dispatchEvent(createCustomEvent('filters-changed', [MutantStatus.Survived]));
@@ -469,6 +470,24 @@ function add(a, b) {
         // Act
         const mutant = sut.$('span.mutant[mutant-id="1"]');
         mutant.click();
+        await sut.whenStable();
+
+        // Assert
+        expect(sut.$('tr.diff-new td.code').innerText.trim()).eq('return a - b;');
+      });
+
+      it('should not update state in file when model is updated', async () => {
+        // Arrange
+        sut.element.model.mutants[0].status = MutantStatus.Killed;
+        filterComponent.dispatchEvent(createCustomEvent('filters-changed', [MutantStatus.Killed]));
+        const mutant = sut.$('span.mutant[mutant-id="1"]');
+        mutant.click();
+        sut.element.requestUpdate('model');
+        await sut.whenStable();
+
+        // Act
+        sut.element.model.mutants[0].status = MutantStatus.Killed;
+        sut.element.requestUpdate('model');
         await sut.whenStable();
 
         // Assert

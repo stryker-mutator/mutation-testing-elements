@@ -39,7 +39,7 @@ describe(TestFileComponent.name, () => {
             createTestDefinition({ id: 'test-4' }),
           ],
         },
-        'foo.spec.js'
+        'foo.spec.js',
       );
       // test-1, test-2: Killing
       model.tests[0].addKilled(new MutantModel(createMutantResult()));
@@ -78,7 +78,7 @@ describe(TestFileComponent.name, () => {
             createTestDefinition({ id: 'test-4' }),
           ],
         },
-        'foo.spec.js'
+        'foo.spec.js',
       );
 
       // Act
@@ -108,7 +108,7 @@ describe(TestFileComponent.name, () => {
           ],
           source: 'it("foo should be bar") { \n}\n',
         },
-        'foo.spec.js'
+        'foo.spec.js',
       );
       sut.element.model = model;
       await sut.whenStable();
@@ -129,7 +129,7 @@ describe(TestFileComponent.name, () => {
         {
           tests: [],
         },
-        'foo.spec.js'
+        'foo.spec.js',
       );
       sut.element.model = model;
       await sut.whenStable();
@@ -142,7 +142,7 @@ describe(TestFileComponent.name, () => {
           tests: [],
           source: `it('should foo into bar');`,
         },
-        'foo.spec.js'
+        'foo.spec.js',
       );
       sut.element.model = model;
       await sut.whenStable();
@@ -155,13 +155,13 @@ describe(TestFileComponent.name, () => {
           tests: [createTestDefinition({ id: 'spec-1', location: { start: { line: 2, column: 3 } } })],
           source: '\nit("should work", () => {})',
         },
-        'foo.spec.js'
+        'foo.spec.js',
       );
       sut.element.model = model;
       await sut.whenStable();
 
       expect(sut.$('code tr.line:nth-child(2) .code').innerHTML).contains(
-        '<svg height="10" width="12" test-id="spec-1" class="cursor-pointer test-dot NotCovering">'
+        '<svg height="10" width="12" test-id="spec-1" class="cursor-pointer test-dot NotCovering">',
       );
     });
 
@@ -171,7 +171,7 @@ describe(TestFileComponent.name, () => {
           tests: [createTestDefinition({ id: 'spec-1', location: { start: { line: 2, column: 3 } } })],
           source: '\nit("should work", () => {})',
         },
-        'foo.spec.js'
+        'foo.spec.js',
       );
       sut.element.model = model;
       await sut.whenStable();
@@ -186,7 +186,7 @@ describe(TestFileComponent.name, () => {
           tests: [createTestDefinition({ id: 'spec-1', location: { start: { line: 3, column: 1 } } })],
           source: '  it("foo")\n  it("bar")',
         },
-        'foo.spec.js'
+        'foo.spec.js',
       );
       sut.element.model = model;
       await sut.whenStable();
@@ -207,7 +207,7 @@ describe(TestFileComponent.name, () => {
           ],
           source: `it('should foo into bar', () => {\nexpect(bar).includes('foo');\n});\n\nit('should baz into qux', () => {\nexpect(baz).includes('qux');\n});\n\n`,
         },
-        'foo.spec.js'
+        'foo.spec.js',
       );
       model.tests[0].addKilled(new MutantModel(createMutantResult()));
       sut.element.model = model;
@@ -360,7 +360,7 @@ describe(TestFileComponent.name, () => {
             createTestDefinition({ id: '2', location: undefined, name: 'should baz into qux' }),
           ],
         },
-        'foo.spec.js'
+        'foo.spec.js',
       );
       model.tests[0].addKilled(new MutantModel(createMutantResult()));
       sut.element.model = model;

@@ -63,7 +63,8 @@ class SchemaTest extends munit.FunSuite {
   }
 
   val validJsons = List(
-    "strict-report",
+    "strict-report-v1",
+    "strict-report-v2",
     "additional-properties-report",
     "missing-test-files",
     "missing-end-location",

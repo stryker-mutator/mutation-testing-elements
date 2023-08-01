@@ -10,7 +10,7 @@ export function normalizeFileNames<TIn>(input: Record<string, TIn>, projectRoot 
 export function normalize<TIn, TOut>(
   input: Record<string, TIn>,
   projectRoot: string,
-  factory: (input: TIn, relativeFileName: string) => TOut
+  factory: (input: TIn, relativeFileName: string) => TOut,
 ): Record<string, TOut> {
   const fileNames = Object.keys(input);
   const commonBasePath = determineCommonBasePath(fileNames);
@@ -26,7 +26,7 @@ function normalizeName(fileName: string) {
   return fileName.split(/\/|\\/).filter(Boolean).join('/');
 }
 
-export function determineCommonBasePath(fileNames: ReadonlyArray<string>): string {
+export function determineCommonBasePath(fileNames: readonly string[]): string {
   const directories = fileNames.map((fileName) => fileName.split(/\/|\\/).slice(0, -1));
   if (fileNames.length) {
     return directories.reduce(filterDirectories).join(SEPARATOR);

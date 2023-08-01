@@ -4,7 +4,7 @@ import chrome from 'selenium-webdriver/chrome';
 let browser: WebDriver | null = null;
 
 export function isHeadless(): boolean {
-  return !!(process.env.HEADLESS || process.env.CI);
+  return !!(process.env.HEADLESS ?? process.env.CI);
 }
 
 export async function init() {

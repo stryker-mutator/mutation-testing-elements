@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.3](https://github.com/stryker-mutator/mutation-testing-elements/compare/v2.0.2...v2.0.3) (2023-07-27)
+
+**Note:** Version bump only for package mutation-testing-metrics-scala
+
+
+
+
+
+## [2.0.2](https://github.com/stryker-mutator/mutation-testing-elements/compare/v2.0.1...v2.0.2) (2023-07-27)
+
+**Note:** Version bump only for package mutation-testing-metrics-scala
+
+
+
+
+
+## [2.0.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v2.0.0...v2.0.1) (2023-05-11)
+
+
+### Bug Fixes
+
+* **schema:** Correctly validate schema version ([#2494](https://github.com/stryker-mutator/mutation-testing-elements/issues/2494)) ([72979e7](https://github.com/stryker-mutator/mutation-testing-elements/commit/72979e79b4e97591929b25f9b327b7509b591f69))
+
+
+
+
+
+# [2.0.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.14...v2.0.0) (2023-04-29)
+
+
+### Features
+
+* **schema:** add `Pending` status to JSON schema ([#2425](https://github.com/stryker-mutator/mutation-testing-elements/issues/2425)) ([c49d9a5](https://github.com/stryker-mutator/mutation-testing-elements/commit/c49d9a5e5e71d67972747cf07edd27fae110b86d)), closes [#2424](https://github.com/stryker-mutator/mutation-testing-elements/issues/2424)
+
+
+
+
+
 ## [1.7.14](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.13...v1.7.14) (2023-02-08)
 
 **Note:** Version bump only for package mutation-testing-metrics-scala

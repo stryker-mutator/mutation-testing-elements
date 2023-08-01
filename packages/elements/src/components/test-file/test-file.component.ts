@@ -1,4 +1,4 @@
-import { html, LitElement, nothing, PropertyValues, svg, unsafeCSS } from 'lit';
+import { html, nothing, PropertyValues, svg, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
 import { TestFileModel, TestModel, TestStatus } from 'mutation-testing-metrics';
@@ -12,9 +12,10 @@ import { prismjs, tailwind } from '../../style';
 import '../../style/prism-plugins';
 import { renderDots, renderLine } from '../file/util';
 import { StateFilter } from '../state-filter/state-filter.component';
+import { RealTimeElement } from '../real-time-element';
 
 @customElement('mte-test-file')
-export class TestFileComponent extends LitElement {
+export class TestFileComponent extends RealTimeElement {
   public static styles = [prismjs, tailwind, unsafeCSS(style)];
 
   @property()
@@ -89,19 +90,20 @@ export class TestFileComponent extends LitElement {
         ${repeat(
           testsToRenderInTheList,
           (test) => test.id,
-          (test) => html`<li class="my-3">
-            <button
-              class="w-full rounded p-3 text-left hover:bg-gray-100 active:bg-gray-200"
-              type="button"
-              data-active="${this.selectedTest === test}"
-              test-id="${test.id}"
-              @click=${(ev: MouseEvent) => {
-                ev.stopPropagation();
-                this.toggleTest(test);
-              }}
-              >${getEmojiForTestStatus(test.status)} ${test.name} [${test.status}]
-            </button>
-          </li>`
+          (test) =>
+            html`<li class="my-3">
+              <button
+                class="w-full rounded p-3 text-left hover:bg-gray-100 active:bg-gray-200"
+                type="button"
+                data-active="${this.selectedTest === test}"
+                test-id="${test.id}"
+                @click=${(ev: MouseEvent) => {
+                  ev.stopPropagation();
+                  this.toggleTest(test);
+                }}
+                >${getEmojiForTestStatus(test.status)} ${test.name} [${test.status}]
+              </button>
+            </li>`,
         )}
       </ul>`;
     }
@@ -127,7 +129,7 @@ export class TestFileComponent extends LitElement {
       };
 
       return html`<pre id="report-code-block" class="line-numbers flex rounded-md p-1"><code class="flex language-${determineLanguage(
-        this.model.name
+        this.model.name,
       )}">
       <table>
         ${this.lines.map((line, lineIndex) => {
@@ -146,34 +148,26 @@ export class TestFileComponent extends LitElement {
       ? tests.map(
           (test) =>
             svg`<svg test-id="${test.id}" class="cursor-pointer test-dot ${this.selectedTest === test ? 'selected' : test.status}" @click=${(
-              ev: MouseEvent
+              ev: MouseEvent,
             ) => {
               ev.stopPropagation();
               this.toggleTest(test);
             }} height="10" width="12">
           <title>${title(test)}</title>
           <circle cx="5" cy="5" r="5" />
-          </svg>`
+          </svg>`,
         )
       : nothing;
   }
 
-  override willUpdate(changes: PropertyValues<TestFileComponent>) {
-    if (changes.has('model') && this.model) {
-      const model = this.model;
-      this.filters = [TestStatus.Killing, TestStatus.Covering, TestStatus.NotCovering]
-        .filter((status) => model.tests.some((test) => test.status === status))
-        .map((status) => ({
-          enabled: true,
-          count: model.tests.filter((m) => m.status === status).length,
-          status,
-          label: html`${getEmojiForTestStatus(status)} ${status}`,
-          context: getContextClassForTestStatus(status),
-        }));
+  public override reactivate(): void {
+    super.reactivate();
+    this.updateFileRepresentation();
+  }
 
-      if (this.model.source) {
-        this.lines = transformHighlightedLines(highlightCode(this.model.source, this.model.name));
-      }
+  override willUpdate(changes: PropertyValues<TestFileComponent>) {
+    if (changes.has('model')) {
+      this.updateFileRepresentation();
     }
 
     if ((changes.has('model') || changes.has('enabledStates')) && this.model) {
@@ -189,6 +183,26 @@ export class TestFileComponent extends LitElement {
         });
     }
     super.update(changes);
+  }
+
+  private updateFileRepresentation() {
+    if (!this.model) {
+      return;
+    }
+
+    const model = this.model;
+    this.filters = [TestStatus.Killing, TestStatus.Covering, TestStatus.NotCovering]
+      .filter((status) => model.tests.some((test) => test.status === status))
+      .map((status) => ({
+        enabled: true,
+        count: model.tests.filter((m) => m.status === status).length,
+        status,
+        label: html`${getEmojiForTestStatus(status)} ${status}`,
+        context: getContextClassForTestStatus(status),
+      }));
+    if (this.model.source) {
+      this.lines = transformHighlightedLines(highlightCode(this.model.source, this.model.name));
+    }
   }
 }
 function title(test: TestModel): string {

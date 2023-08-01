@@ -1,4 +1,4 @@
-import { html, LitElement, nothing, PropertyValues } from 'lit';
+import { html, nothing, PropertyValues } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { repeat } from 'lit/directives/repeat.js';
@@ -7,6 +7,7 @@ import { Thresholds } from 'mutation-testing-report-schema/api';
 import { toAbsoluteUrl } from '../../lib/html-helpers';
 import { tailwind } from '../../style';
 import { renderEmoji } from '../drawer-mutant/util';
+import { RealTimeElement } from '../real-time-element';
 
 export type TableWidth = 'normal' | 'large';
 
@@ -24,7 +25,7 @@ export interface Column<TMetric> {
 }
 
 @customElement('mte-metrics-table')
-export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitElement {
+export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTimeElement {
   @property()
   public model?: MetricsResult<TFile, TMetric>;
 
@@ -76,7 +77,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
         ${repeat(
           this.columns,
           (column) => column.key,
-          (column) => this.renderTableHead(column)
+          (column) => this.renderTableHead(column),
         )}
       </tr>
     </thead>`;
@@ -143,7 +144,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
           ${valueIsPresent
             ? html`<div class="h-3 w-full min-w-[24px] rounded-full bg-gray-300">
                 <div
-                  class="${bgColoringClass} h-3 rounded-full pl-1 transition-width"
+                  class="${bgColoringClass} h-3 rounded-full pl-1 transition-all"
                   role="progressbar"
                   aria-valuenow="${mutationScoreRounded}"
                   aria-valuemin="0"
@@ -156,7 +157,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends LitEleme
             : html` <span class="text-light-muted font-bold">N/A</span> `}
         </td>
         <td class="${textColoringClass} ${backgroundColoringClass} w-12 pr-2 text-center font-bold group-hover:bg-gray-200"
-          >${valueIsPresent ? mutationScoreRounded : nothing}</td
+          >${valueIsPresent ? html`<span class="transition-colors">${mutationScoreRounded}</span>` : nothing}</td
         >`;
     }
     return html`<td

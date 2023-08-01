@@ -32,6 +32,9 @@ export class MutantModel implements MutantResult {
   public killedByTests: TestModel[] | undefined;
   public sourceFile: FileUnderTestModel | undefined;
 
+  #coveredByTests = new Map<string, TestModel>();
+  #killedByTests = new Map<string, TestModel>();
+
   constructor(input: MutantResult) {
     this.coveredBy = input.coveredBy;
     this.description = input.description;
@@ -51,14 +54,23 @@ export class MutantModel implements MutantResult {
     if (!this.coveredByTests) {
       this.coveredByTests = [];
     }
-    this.coveredByTests.push(test);
+    if (this.#coveredByTests.has(test.id)) {
+      return;
+    }
+    this.#coveredByTests.set(test.id, test);
+    this.coveredByTests?.push(test);
   }
 
   public addKilledBy(test: TestModel) {
     if (!this.killedByTests) {
       this.killedByTests = [];
     }
-    this.killedByTests.push(test);
+    if (this.#killedByTests.has(test.id)) {
+      return;
+    }
+
+    this.#killedByTests.set(test.id, test);
+    this.killedByTests?.push(test);
   }
 
   /**
@@ -84,5 +96,13 @@ export class MutantModel implements MutantResult {
   public get fileName() {
     assertSourceFileDefined(this.sourceFile);
     return this.sourceFile.name;
+  }
+
+  // TODO: https://github.com/stryker-mutator/mutation-testing-elements/pull/2453#discussion_r1178769871
+  public update(): void {
+    if (!this.sourceFile?.result?.file) {
+      return;
+    }
+    this.sourceFile.result.updateAllMetrics();
   }
 }

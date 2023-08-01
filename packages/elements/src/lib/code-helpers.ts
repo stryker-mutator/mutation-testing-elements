@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
 import { Position } from 'mutation-testing-report-schema/api';
 import { highlight, languages } from 'prismjs/components/prism-core';
 
@@ -175,7 +176,7 @@ export function transformHighlightedLines(source: string, visitor?: (pos: Positi
     }
     return `<${elementName}${Object.entries(attributes ?? {}).reduce(
       (acc, [name, value]) => (value === undefined ? `${acc} ${name}` : `${acc} ${name}="${value}"`),
-      ''
+      '',
     )}>`;
   }
 
@@ -340,10 +341,10 @@ export function findDiffIndices(original: string, mutated: string) {
   // Make an exception for `true` and `false` (end in same character 🤷‍♀️)
   const mutatedPart = mutated.substring(focusFrom, focusTo);
   ['true', 'false'].forEach((keyword) => {
-    if (mutatedPart === keyword.substr(0, keyword.length - 1) && keyword[keyword.length - 1] === mutated[focusTo]) {
+    if (mutatedPart === keyword.substr(0, keyword.length - 1) && keyword.endsWith(mutated[focusTo])) {
       focusTo++;
     }
-    if (mutatedPart === keyword.substr(1, keyword.length) && keyword[0] === mutated[focusFrom - 1]) {
+    if (mutatedPart === keyword.substr(1, keyword.length) && keyword.startsWith(mutated[focusFrom - 1])) {
       focusFrom--;
     }
   });

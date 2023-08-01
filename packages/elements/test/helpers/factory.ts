@@ -45,21 +45,36 @@ export function createFileResult(overrides?: Partial<FileResult>): FileResult {
 }
 
 export function createMetricsResult(overrides?: Partial<MetricsResult>): MetricsResult {
-  const defaults: MetricsResult = {
-    childResults: [],
-    metrics: createMetrics(),
-    name: 'foo',
-  };
-  return { ...defaults, ...overrides };
+  const result = new MetricsResult('foo', [], createMetrics());
+  if (overrides?.file) {
+    result.file = overrides.file;
+  }
+  if (overrides?.childResults) {
+    result.childResults = overrides.childResults;
+  }
+  if (overrides?.name) {
+    result.name = overrides.name;
+  }
+  if (overrides?.metrics) {
+    result.metrics = overrides.metrics;
+  }
+
+  return result;
 }
 
 export function createTestMetricsResult(overrides?: Partial<MetricsResult<TestFileModel, TestMetrics>>): MetricsResult<TestFileModel, TestMetrics> {
-  const defaults: MetricsResult<TestFileModel, TestMetrics> = {
-    childResults: [],
-    metrics: createTestMetrics(),
-    name: 'foo',
-  };
-  return { ...defaults, ...overrides };
+  const result = new MetricsResult('foo', [], createTestMetrics(), new TestFileModel(createTestFile(), ''));
+  if (overrides?.childResults) {
+    result.childResults = overrides.childResults;
+  }
+  if (overrides?.name) {
+    result.name = overrides.name;
+  }
+  if (overrides?.metrics) {
+    result.metrics = overrides.metrics;
+  }
+
+  return result;
 }
 
 export function createTestFile(overrides?: Partial<TestFile>): TestFile {
@@ -81,6 +96,7 @@ export function createTestMetrics(overrides?: TestMetrics): TestMetrics {
 
 export function createMetrics(overrides?: Metrics): Metrics {
   const defaults: Metrics = {
+    pending: 0,
     killed: 0,
     survived: 0,
     timeout: 0,

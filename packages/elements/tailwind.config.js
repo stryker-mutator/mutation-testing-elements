@@ -40,7 +40,7 @@ const generateRange = (color, defaultColors) =>
       const variable = toVariable(variableName, defaultColors[range] || defaultColors['500']);
 
       return [range, variable];
-    })
+    }),
   );
 
 /** @type {import('tailwindcss').Config} */

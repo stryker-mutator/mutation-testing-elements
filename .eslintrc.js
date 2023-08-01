@@ -1,6 +1,6 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'prettier'],
+  plugins: ['@typescript-eslint'],
   parserOptions: {
     tsconfigRootDir: __dirname,
     project: ['tsconfig.lint.json', 'packages/*/test/tsconfig.json', 'packages/*/src/tsconfig.json'],
@@ -15,13 +15,12 @@ module.exports = {
 
     // Not useful for a lot of stuff, but mainly `.shadowRoot`
     '@typescript-eslint/no-non-null-assertion': 'off',
-    'prettier/prettier': 'error',
   },
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'plugin:@typescript-eslint/recommended-type-checked',
+    'plugin:@typescript-eslint/stylistic-type-checked',
     'prettier',
   ],
   env: {
