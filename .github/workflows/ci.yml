@@ -23,6 +23,11 @@ jobs:
           echo TMP="D:\Temp" >> $env:GITHUB_ENV
         if: matrix.os == 'windows-latest'
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: nrwl/nx-set-shas@v3
+        with:
+          main-branch-name: master
       - uses: coursier/cache-action@v6
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
@@ -45,7 +50,6 @@ jobs:
       - run: npm run download-incremental-reports
       - name: Run Stryker incrementally
         run: |
-          npm run build
-          npx lerna run --stream --scope mutation-testing-metrics --scope mutation-testing-elements stryker -- --incremental
+          npx nx run-many --target=stryker --projects=mutation-testing-metrics,mutation-testing-elements -- --incremental
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}

@@ -29,5 +29,8 @@
   "bugs": {
     "url": "https://github.com/stryker-mutator/mutation-testing-elements/issues"
   },
-  "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/elements#readme"
+  "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/elements#readme",
+  "devDependencies": {
+    "ajv": "^8.6.3"
+  }
 }

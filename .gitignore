@@ -14,3 +14,4 @@ _site/
 .idea/
 pom.xml.versionsBackup
 packages/*/mvn/resources/
+.scala-build/

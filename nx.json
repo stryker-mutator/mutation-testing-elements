@@ -1,0 +1,25 @@
+{
+  "extends": "nx/presets/npm.json",
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx/tasks-runners/default"
+    }
+  },
+  "targetDefaults": {
+    "build:tsc": {
+      "dependsOn": ["^generate"]
+    },
+    "build": {
+      "dependsOn": ["^build", "root:build:tsc", "generate"]
+    },
+    "test": {
+      "dependsOn": ["generate", "build", "root:build:tsc"]
+    },
+    "stryker": {
+      "dependsOn": ["^build", "root:build:tsc"]
+    },
+    "lint:ts": {
+      "dependsOn": ["^build", "root:build:tsc"]
+    }
+  }
+}

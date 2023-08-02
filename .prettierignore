@@ -1,8 +1,6 @@
 # Handled via npm
-package.json
 package-lock.json
 # Handled by lerna
-lerna.json
 CHANGELOG.md
 
 # Other generated files

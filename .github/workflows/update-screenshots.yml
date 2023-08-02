@@ -19,7 +19,7 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run build
-      - run: npx lerna run test:integration:update
+      - run: npx nx run mutation-testing-elements:test:integration:update
       - name: Commit
         run: |
           git config --global user.name 'Stryker Mutator NPA'
