@@ -16,6 +16,8 @@ module.exports = function (config) {
       ChromeHeadlessDebug: {
         base: 'ChromeHeadless',
         flags: ['--remote-debugging-port=9333'],
+        browserDisconnectTimeout: 10000,
+        pingTimeout: 10000,
       },
     },
     client: {
