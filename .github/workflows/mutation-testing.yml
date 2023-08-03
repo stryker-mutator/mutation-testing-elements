@@ -31,6 +31,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: coursier/cache-action@v6
+      - run: npm ci
       - name: Run Stryker
         run: npx nx run mutation-testing-metrics-scala:stryker
         env:
