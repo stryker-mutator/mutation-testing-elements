@@ -6,7 +6,8 @@
   "typings": "dist/src/index.d.ts",
   "scripts": {
     "test": "mocha --forbid-only --forbid-pending -r source-map-support/register dist/test/**/*.js",
-    "stryker": "stryker run"
+    "stryker": "stryker run",
+    "lint": "eslint --ext .js,.ts ."
   },
   "repository": {
     "type": "git",
@@ -20,5 +21,8 @@
   "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/metrics#readme",
   "dependencies": {
     "mutation-testing-report-schema": "2.0.3"
+  },
+  "devDependencies": {
+    "eslint-config-mte": "*"
   }
 }
