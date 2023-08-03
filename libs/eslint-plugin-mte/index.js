@@ -2,10 +2,8 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
   parserOptions: {
-    tsconfigRootDir: __dirname,
-    project: ['tsconfig.lint.json', 'packages/*/test/tsconfig.json', 'packages/*/src/tsconfig.json'],
+    project: true,
   },
-
   rules: {
     '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
@@ -19,12 +17,26 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
-    'plugin:@typescript-eslint/recommended-type-checked',
     'plugin:@typescript-eslint/stylistic-type-checked',
+    'plugin:@typescript-eslint/recommended-type-checked',
     'prettier',
   ],
   env: {
     node: true,
     es6: true,
   },
+  ignorePatterns: [
+    'webpack.*.js',
+    '*.conf.js',
+    '*.config.js',
+    'tsconfig-transpiler.js',
+    'node_modules',
+    'dist',
+    'dist-test',
+    'src-generated',
+    '.stryker-tmp',
+    'reports',
+    'testResources',
+    'target',
+  ],
 };

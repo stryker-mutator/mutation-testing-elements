@@ -5,7 +5,8 @@
   "description": "A suite of web components for a mutation testing report.",
   "main": "dist/mutation-test-elements.js",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "libs/*"
   ],
   "nx": {
     "_comment": "This creates a new 'root' project, with dependencies on subprojects, so 'test' in elements will call root:build:tsc",
@@ -17,9 +18,7 @@
   },
   "scripts": {
     "clean": "rimraf --glob packages/*/{dist,dist-test,src-generated}",
-    "all": "nx affected --target=lint:prettier,lint:ts,build,test",
-    "lint": "npm run lint:prettier && npm run lint:ts",
-    "lint:ts": "eslint --ext .js,.ts .",
+    "all": "nx affected --target=lint:prettier,lint,build,test",
     "lint:prettier": "prettier --check .",
     "build:tsc": "tsc --build",
     "start": "nx run-many --target=start --no-prefix",
@@ -49,12 +48,7 @@
     "@types/node": "^20.1.0",
     "@types/sinon": "^10.0.0",
     "@types/sinon-chai": "^3.2.2",
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
     "chai": "^4.2.0",
-    "eslint": "^8.1.0",
-    "eslint-config-prettier": "~8.9.0",
-    "eslint-plugin-import": "~2.28.0",
     "json-schema-to-typescript": "^13.0.1",
     "lerna": "^7.1.0",
     "mocha": "^10.0.0",
