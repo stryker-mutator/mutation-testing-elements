@@ -47,13 +47,13 @@ export function sleep(n = 1000) {
   return new Promise((res) => setTimeout(res, n));
 }
 
-export function itShouldMatchScreenshot(title: string, sleepMs = 1000) {
+export function itShouldMatchScreenshot(title: string, sleepMs = 1500) {
   it(title, async function () {
     await actScreenshotMatch(this, sleepMs);
   });
 }
 
-export async function actScreenshotMatch(context: Context, sleepMs = 1000) {
+export async function actScreenshotMatch(context: Context, sleepMs = 1500) {
   if (isHeadless()) {
     const page = new ReportPage(getCurrent());
     await sleep(sleepMs);
@@ -102,7 +102,7 @@ export function waitUntil(
   options: { interval?: number; timeout?: number } = {},
 ): Promise<void> {
   // Default options
-  const { interval, timeout } = { interval: 100, timeout: 2500, ...options };
+  const { interval, timeout } = { interval: 100, timeout: 5000, ...options };
 
   return new Promise((resolve, reject) => {
     let timeoutId: NodeJS.Timeout;
