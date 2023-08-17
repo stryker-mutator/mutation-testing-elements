@@ -1,6 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base", "config:js-lib", "group:linters"],
+  "extends": ["config:base", "config:js-lib", "group:linters", "group:test"],
   "timezone": "Europe/Amsterdam",
   "lockFileMaintenance": {
     "enabled": true
