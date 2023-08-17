@@ -52,7 +52,7 @@
     "json-schema-to-typescript": "13.0.2",
     "lerna": "7.1.5",
     "mocha": "^10.0.0",
-    "prettier": "~3.0.0",
+    "prettier": "3.0.2",
     "prettier-plugin-tailwindcss": "0.5.3",
     "rimraf": "5.0.1",
     "sinon": "^15.0.0",
