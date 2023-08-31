@@ -51,7 +51,7 @@
     "lit": "2.8.0",
     "mutation-testing-metrics": "2.0.3",
     "mutation-testing-report-schema": "2.0.3",
-    "postcss": "8.4.28",
+    "postcss": "8.4.29",
     "postcss-loader": "7.3.3",
     "prismjs": "1.29.0",
     "resemblejs": "5.0.0",
