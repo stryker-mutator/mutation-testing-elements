@@ -43,7 +43,7 @@
     "@stryker-mutator/karma-runner": "7.1.1",
     "@stryker-mutator/mocha-runner": "7.1.1",
     "@stryker-mutator/typescript-checker": "7.1.1",
-    "@types/chai": "4.3.5",
+    "@types/chai": "4.3.6",
     "@types/mocha": "10.0.1",
     "@types/node": "20.5.9",
     "@types/sinon": "10.0.16",
