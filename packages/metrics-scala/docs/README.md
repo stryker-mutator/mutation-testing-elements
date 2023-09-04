@@ -7,7 +7,7 @@ Zero-dependency library to calculate mutation testing metrics in Scala.
 
 See [mutant states and metrics in the Stryker handbook](https://github.com/stryker-mutator/stryker-handbook/blob/master/mutant-states-and-metrics.md#readme) for more details about mutation testing metrics.
 
-Cross-compiled for Scala 2.12, 2.13 and 3.1 on JVM and Scala.js. If you want to use this library but require another target or platform (such as [Scala Native](https://www.scala-native.org/)) feel free to [create an issue](https://github.com/stryker-mutator/mutation-testing-elements/issues/new)!
+Cross-compiled for Scala 2.12, 2.13 and 3 on JVM and Scala.js. If you want to use this library but require another target or platform (such as [Scala Native](https://www.scala-native.org/)) feel free to [create an issue](https://github.com/stryker-mutator/mutation-testing-elements/issues/new)!
 
 ## Usage example
 
