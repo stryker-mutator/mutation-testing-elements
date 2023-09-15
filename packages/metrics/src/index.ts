@@ -1,6 +1,6 @@
-export { calculateMetrics, calculateMutationTestMetrics } from './calculateMetrics';
 export { aggregateResultsByModule } from './aggregate';
 export { normalizeFileNames } from './helpers';
+export {generateRootModel} from './model/root-model-factory';
 export {
   MetricsResult,
   Metrics,

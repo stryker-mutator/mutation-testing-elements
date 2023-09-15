@@ -6,10 +6,12 @@ const { SseTestServer } = require('./dist-test/integration/lib/SseServer.js');
 const clientMap = new Map();
 /** @type {import("./test/integration/lib/SseServer.ts").SseTestServer} */
 const server = new SseTestServer();
+const statuses = ['Survived', 'Killed', 'Timeout', 'CompileError', 'RuntimeError', 'NoCoverage', 'Ignored'];
 server.on('client-connected', (client) => {
   let id = 0;
   const interval = setInterval(() => {
-    client.sendMutantTested({ id: String(id), status: 'Killed', coveredBy: ['test_1'] });
+    const status = statuses[Math.floor(Math.random() * statuses.length)];
+    client.sendMutantTested({ id: String(id), status: status, coveredBy: ['test_1'] });
     id++;
 
     if (id > TOTAL_MUTANT_COUNT) {

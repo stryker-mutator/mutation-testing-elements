@@ -88,11 +88,4 @@ export class TestModel implements TestDefinition {
       return TestStatus.NotCovering;
     }
   }
-
-  public update(): void {
-    if (!this.sourceFile?.result?.file) {
-      return;
-    }
-    this.sourceFile.result.updateAllMetrics();
-  }
 }

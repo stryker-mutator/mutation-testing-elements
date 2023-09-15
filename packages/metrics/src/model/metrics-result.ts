@@ -1,14 +1,12 @@
-import { TestFileModel } from '.';
-import { countFileMetrics, countTestFileMetrics } from '../calculateMetrics';
 import { FileUnderTestModel } from './file-under-test-model';
-import { Metrics } from './metrics';
+import { MutationMetrics } from './mutation-metrics';
 
 /**
  * A metrics result of T for a directory or file
  * @type {TFile} Either a file under test, or a test file
  * @type {TMetrics} Either test file metrics or file under test metrics
  */
-export class MetricsResult<TFile = FileUnderTestModel, TMetrics = Metrics> {
+export class MetricsResult<TFile = FileUnderTestModel, TMetrics = MutationMetrics> {
   /**
    * The parent of this result (if it has one)
    */
@@ -28,69 +26,35 @@ export class MetricsResult<TFile = FileUnderTestModel, TMetrics = Metrics> {
   /**
    * The actual metrics
    */
-  metrics: TMetrics;
+  #metrics: TMetrics | undefined;
+  get metrics(): TMetrics {
+    if(!this.#metrics) {
+      console.log('Calculating metrics for' + this.name)
+      this.#metrics = this.metricsFactory(this);
+    }
 
-  constructor(name: string, childResults: MetricsResult<TFile, TMetrics>[], metrics: TMetrics, file?: TFile) {
+    return this.#metrics;
+  }
+
+  private metricsFactory: (r: MetricsResult<TFile, TMetrics>) => TMetrics;
+
+  constructor(name: string, childResults: MetricsResult<TFile, TMetrics>[], metricsFactory: (r: MetricsResult<TFile, TMetrics>) => TMetrics, file?: TFile) {
     this.name = name;
     this.childResults = childResults;
-    this.metrics = metrics;
     this.file = file;
+    this.metricsFactory = metricsFactory;
+    this.#metrics = metricsFactory(this);
+    this.setParent()
   }
 
-  public updateParent(value?: MetricsResult<TFile, TMetrics>) {
-    this.parent = value;
-    this.childResults.forEach((result) => result.updateParent(this));
-  }
-
-  public updateAllMetrics() {
-    if (this.parent !== undefined) {
-      this.parent.updateAllMetrics();
-      return;
-    }
-
-    this.updateMetrics();
-  }
-
-  public updateMetrics() {
-    if (this.file === undefined) {
-      this.childResults.forEach((childResult) => {
-        childResult.updateMetrics();
-      });
-
-      const files = this.#getFileModelsRecursively(this.childResults);
-      if (files.length === 0) {
-        return;
-      }
-      if ((files[0] as TestFileModel).tests) {
-        this.metrics = countTestFileMetrics(files as TestFileModel[]) as TMetrics;
-      } else {
-        this.metrics = countFileMetrics(files as FileUnderTestModel[]) as TMetrics;
-      }
-
-      return;
-    }
-
-    if ((this.file as TestFileModel).tests) {
-      this.metrics = countTestFileMetrics([this.file as TestFileModel]) as TMetrics;
-    } else {
-      this.metrics = countFileMetrics([this.file as FileUnderTestModel]) as TMetrics;
-    }
-  }
-
-  #getFileModelsRecursively(childResults: MetricsResult<TFile, TMetrics>[]): TFile[] {
-    const flattenedFiles: TFile[] = [];
-    if (childResults.length === 0) {
-      return flattenedFiles;
-    }
-
-    childResults.forEach((child) => {
-      if (child.file) {
-        flattenedFiles.push(child.file);
-        return;
-      }
-      flattenedFiles.push(...this.#getFileModelsRecursively(child.childResults));
+  setParent() {
+    this.childResults.forEach((child) => {
+      child.parent = this;
     });
+  }
 
-    return flattenedFiles;
+  invalidateMetrics() {
+    this.#metrics = undefined;
+    this.parent?.invalidateMetrics();
   }
 }

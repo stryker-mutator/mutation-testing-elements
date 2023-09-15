@@ -2,10 +2,10 @@
 import { html, PropertyValues, unsafeCSS, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { MutantResult, MutationTestResult } from 'mutation-testing-report-schema/api';
-import { MetricsResult, MutantModel, TestModel, calculateMutationTestMetrics } from 'mutation-testing-metrics';
+import { MetricsResult, MutantModel, generateRootModel } from 'mutation-testing-metrics';
 import { tailwind, globals } from '../../style';
 import { locationChange$, View } from '../../lib/router';
-import { Subscription, fromEvent, sampleTime } from 'rxjs';
+import { Subscription, fromEvent } from 'rxjs';
 import theme from './theme.scss';
 import { createCustomEvent } from '../../lib/custom-events';
 import { FileUnderTestModel, Metrics, MutationTestMetricsResult, TestFileModel, TestMetrics } from 'mutation-testing-metrics';
@@ -28,16 +28,9 @@ interface TestContext extends BaseContext {
   result?: MetricsResult<TestFileModel, TestMetrics>;
 }
 
-/**
- * The report needs to be able to handle realtime updates, without any constraints.
- * To allow for this behaviour, we will update the `rootModel` once every 100ms.
- *
- * This throttling mechanism is only applied to the recalculation of the `rootModel`, since that is currently what takes
- * the most time.
- */
-const UPDATE_CYCLE_TIME = 100;
-
 type Context = MutantContext | TestContext;
+
+type MutantTestedEvent = Partial<MutantResult> & Pick<MutantResult, 'id' | 'status'>;
 
 @customElement('mutation-test-report-app')
 export class MutationTestReportAppComponent extends RealTimeElement {
@@ -105,7 +98,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
     }
   }
 
-  public async willUpdate(changedProperties: PropertyValues) {
+  public async willUpdate(changedProperties: PropertyValues<MutationTestReportAppComponent>) {
     // Set the theme when no theme is selected (light vs dark)
     if (!this.theme) {
       this.theme = this.getTheme();
@@ -124,9 +117,6 @@ export class MutationTestReportAppComponent extends RealTimeElement {
       await this.loadData();
     }
   }
-
-  private mutants = new Map<string, MutantModel>();
-  private tests = new Map<string, TestModel>();
 
   public updated(changedProperties: PropertyValues) {
     if (changedProperties.has('theme') && this.theme) {
@@ -154,30 +144,8 @@ export class MutationTestReportAppComponent extends RealTimeElement {
   }
 
   private updateModel(report: MutationTestResult) {
-    this.rootModel = calculateMutationTestMetrics(report);
-    collectForEach<FileUnderTestModel, Metrics>((file, metric) => {
-      file.result = metric;
-      file.mutants.forEach((mutant) => this.mutants.set(mutant.id, mutant));
-    })(this.rootModel?.systemUnderTestMetrics);
-
-    collectForEach<TestFileModel, TestMetrics>((file, metric) => {
-      file.result = metric;
-      file.tests.forEach((test) => this.tests.set(test.id, test));
-    })(this.rootModel?.testMetrics);
-
-    this.rootModel.systemUnderTestMetrics.updateParent();
-    this.rootModel.testMetrics?.updateParent();
-
-    function collectForEach<TFile, TMetrics>(collect: (file: TFile, metrics: MetricsResult<TFile, TMetrics>) => void) {
-      return function forEachMetric(metrics: MetricsResult<TFile, TMetrics> | undefined): void {
-        if (metrics?.file) {
-          collect(metrics.file, metrics);
-        }
-        metrics?.childResults.forEach((child) => {
-          forEachMetric(child);
-        });
-      };
-    }
+    this.rootModel = generateRootModel(report);
+    this.rootModel.testMetrics = undefined;
   }
 
   private updateContext() {
@@ -227,8 +195,6 @@ export class MutationTestReportAppComponent extends RealTimeElement {
 
   private source: EventSource | undefined;
   private sseSubscriptions = new Set<Subscription>();
-  private theMutant?: MutantModel;
-  private theTest?: TestModel;
 
   private initializeSse() {
     if (!this.sse) {
@@ -236,57 +202,21 @@ export class MutationTestReportAppComponent extends RealTimeElement {
     }
 
     this.source = new EventSource(this.sse);
+    // this.source.onerror = () => this.source?.close()
 
     const modifySubscription = fromEvent<MessageEvent>(this.source, 'mutant-tested').subscribe((event) => {
-      const newMutantData = JSON.parse(event.data as string) as Partial<MutantResult> & Pick<MutantResult, 'id' | 'status'>;
+      const newMutantData = JSON.parse(event.data) as MutantTestedEvent;
       if (!this.report) {
         return;
       }
 
-      const mutant = this.mutants.get(newMutantData.id);
-      if (mutant === undefined) {
-        return;
-      }
-      this.theMutant = mutant;
+      this.handleMutantTested(newMutantData)
 
-      for (const [prop, val] of Object.entries(newMutantData)) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        (this.theMutant as any)[prop] = val;
-      }
 
-      if (newMutantData.killedBy) {
-        newMutantData.killedBy.forEach((killedByTestId) => {
-          const test = this.tests.get(killedByTestId)!;
-          if (test === undefined) {
-            return;
-          }
-          this.theTest = test;
-          test.addKilled(this.theMutant!);
-          this.theMutant!.addKilledBy(test);
-        });
-      }
-
-      if (newMutantData.coveredBy) {
-        newMutantData.coveredBy.forEach((coveredByTestId) => {
-          const test = this.tests.get(coveredByTestId)!;
-          if (test === undefined) {
-            return;
-          }
-          this.theTest = test;
-          test.addCovered(this.theMutant!);
-          this.theMutant!.addCoveredBy(test);
-        });
-      }
+      // TODO Update the mutants properties (don't forget to update killedBy and coveredBy)
+      // TODO Update the test killedby status
     });
-
-    const applySubscription = fromEvent(this.source, 'mutant-tested')
-      .pipe(sampleTime(UPDATE_CYCLE_TIME))
-      .subscribe(() => {
-        this.applyChanges();
-      });
-
     this.sseSubscriptions.add(modifySubscription);
-    this.sseSubscriptions.add(applySubscription);
 
     this.source.addEventListener('finished', () => {
       this.source?.close();
@@ -295,9 +225,39 @@ export class MutationTestReportAppComponent extends RealTimeElement {
     });
   }
 
+  private handleMutantTested(newMutantData: MutantTestedEvent) {
+    const mutant = this.findMutantInRootModel(newMutantData.id)
+    if (mutant === undefined) {
+      console.error('can\'t find mutant', newMutantData.id)
+      return;
+    }
+
+    // TODO this could be done better?
+    for (const [prop, val] of Object.entries(newMutantData)) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      (mutant as any)[prop] = val;
+    }
+
+    mutant.sourceFile?.result?.invalidateMetrics();
+    this.applyChanges();
+  }
+
+  private findMutantInRootModel(id: string, start = this.rootModel?.systemUnderTestMetrics): MutantModel | undefined {
+    const mutant = start?.file?.mutants.find((m) => m.id === id);
+
+    if (mutant) {
+      return mutant;
+    }
+
+    for (const metric of start?.childResults ?? []) {
+      const subMutant = this.findMutantInRootModel(id, metric)
+      if (subMutant) return subMutant;
+    }
+
+    return undefined;
+  }
+
   private applyChanges() {
-    this.theMutant?.update();
-    this.theTest?.update();
     mutantChanges.next();
   }
 
@@ -311,8 +271,8 @@ export class MutationTestReportAppComponent extends RealTimeElement {
       return html`
         <h1 class="text-5xl font-bold tracking-tight">
           ${this.context.result.name}${this.titlePostfix
-            ? html`<small class="text-light-muted ml-4 font-light">${this.titlePostfix}</small>`
-            : nothing}
+          ? html`<small class="text-light-muted ml-4 font-light">${this.titlePostfix}</small>`
+          : nothing}
         </h1>
       `;
     }
@@ -338,16 +298,16 @@ export class MutationTestReportAppComponent extends RealTimeElement {
               .total="${this.rootModel?.systemUnderTestMetrics.metrics.totalMutants}"
             ></mte-result-status-bar>
             ${this.context.view === 'mutant' && this.context.result
-              ? html`<mte-mutant-view
+          ? html`<mte-mutant-view
                   id="mte-mutant-view"
                   .result="${this.context.result}"
                   .thresholds="${this.report!.thresholds}"
                   .path="${this.path}"
                 ></mte-mutant-view>`
-              : nothing}
+          : nothing}
             ${this.context.view === 'test' && this.context.result
-              ? html`<mte-test-view id="mte-test-view" .result="${this.context.result}" .path="${this.path}"></mte-test-view>`
-              : nothing}
+          ? html`<mte-test-view id="mte-test-view" .result="${this.context.result}" .path="${this.path}"></mte-test-view>`
+          : nothing}
           </div>
         </div>
       `;
@@ -373,11 +333,11 @@ export class MutationTestReportAppComponent extends RealTimeElement {
         <nav class="border-b border-gray-200 text-center text-sm font-medium  text-gray-600">
           <ul class="-mb-px flex flex-wrap" role="tablist">
             ${[
-              { type: 'mutant', isActive: mutantsActive, text: '👽 Mutants' },
-              { type: 'test', isActive: testsActive, text: '🧪 Tests' },
-            ].map(
-              ({ type, isActive, text }) =>
-                html`<li class="mr-2" role="presentation">
+          { type: 'mutant', isActive: mutantsActive, text: '👽 Mutants' },
+          { type: 'test', isActive: testsActive, text: '🧪 Tests' },
+        ].map(
+          ({ type, isActive, text }) =>
+            html`<li class="mr-2" role="presentation">
                   <a
                     class="inline-block rounded-t-lg border-b-2 border-transparent p-4 transition-colors hover:border-gray-300 hover:bg-gray-200 hover:text-gray-700 aria-selected:border-b-[3px] aria-selected:border-primary-700  aria-selected:text-primary-on"
                     role="tab"
@@ -387,7 +347,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
                     >${text}</a
                   >
                 </li>`,
-            )}
+        )}
           </ul>
         </nav>
       `;

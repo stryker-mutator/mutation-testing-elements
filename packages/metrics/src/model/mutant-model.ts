@@ -23,7 +23,14 @@ export class MutantModel implements MutantResult {
   public mutatorName: string;
   public replacement: string | undefined;
   public static: boolean | undefined;
-  public status: MutantStatus;
+  #status: MutantStatus;
+  get status() {
+    return this.#status;
+  }
+  set status(value: MutantStatus) {
+    this.sourceFile?.result?.invalidateMetrics();
+    this.#status = value;
+  }
   public statusReason: string | undefined;
   public testsCompleted: number | undefined;
 
@@ -45,7 +52,7 @@ export class MutantModel implements MutantResult {
     this.mutatorName = input.mutatorName;
     this.replacement = input.replacement;
     this.static = input.static;
-    this.status = input.status;
+    this.#status = input.status;
     this.statusReason = input.statusReason;
     this.testsCompleted = input.testsCompleted;
   }
@@ -96,13 +103,5 @@ export class MutantModel implements MutantResult {
   public get fileName() {
     assertSourceFileDefined(this.sourceFile);
     return this.sourceFile.name;
-  }
-
-  // TODO: https://github.com/stryker-mutator/mutation-testing-elements/pull/2453#discussion_r1178769871
-  public update(): void {
-    if (!this.sourceFile?.result?.file) {
-      return;
-    }
-    this.sourceFile.result.updateAllMetrics();
   }
 }

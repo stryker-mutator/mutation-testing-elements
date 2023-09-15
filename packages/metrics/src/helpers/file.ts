@@ -1,6 +1,6 @@
 import type { FileUnderTestModel } from '../model/file-under-test-model';
 import type { MetricsResult } from '../model/metrics-result';
-import type { Metrics } from '../model/metrics';
+import type { MutationMetrics } from '../model/mutation-metrics';
 const SEPARATOR = '/';
 
 export function normalizeFileNames<TIn>(input: Record<string, TIn>, projectRoot = ''): Record<string, TIn> {
@@ -45,7 +45,7 @@ export function determineCommonBasePath(fileNames: readonly string[]): string {
   }
 }
 
-export function compareNames<TFile = FileUnderTestModel, TMetrics = Metrics>(a: MetricsResult<TFile, TMetrics>, b: MetricsResult<TFile, TMetrics>) {
+export function compareNames<TFile = FileUnderTestModel, TMetrics = MutationMetrics>(a: MetricsResult<TFile, TMetrics>, b: MetricsResult<TFile, TMetrics>) {
   const sortValue = (metricsResult: MetricsResult<TFile, TMetrics>) => {
     // Directories first
     if (metricsResult.file) {

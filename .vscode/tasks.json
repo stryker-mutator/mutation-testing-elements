@@ -19,7 +19,8 @@
       "type": "npm",
       "script": "generate",
       "isBackground": true,
-      "group": "build"
+      "group": "build",
+      "path": "packages/report-schema",
     }
   ]
 }

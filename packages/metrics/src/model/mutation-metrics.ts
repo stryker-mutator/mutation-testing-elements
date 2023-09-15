@@ -1,7 +1,7 @@
 /**
  * Container for the metrics of mutation testing
  */
-export interface Metrics {
+export interface MutationMetrics {
   /**
    * The total number of mutants that are pending, meaning that they have been generated but not yet run
    */
@@ -76,4 +76,22 @@ export interface Metrics {
    * `totalDetected / totalCovered * 100`
    */
   mutationScoreBasedOnCoveredCode: number;
+}
+
+export function generateCalculatedMutationMetrics(calculateMetric: (prop: keyof MutationMetrics) => number): MutationMetrics {
+  const metrics = new Object() as MutationMetrics
+
+  const proxy = new Proxy<MutationMetrics>(metrics, {
+    get: (target, key: keyof MutationMetrics) => {
+      const currVal = target[key];
+
+      if (currVal === undefined) {
+        target[key] = calculateMetric(key);
+      }
+
+      return target[key]
+    }
+  });
+
+  return proxy;
 }
