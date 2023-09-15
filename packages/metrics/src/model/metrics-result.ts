@@ -29,11 +29,13 @@ export class MetricsResult<TFile = FileUnderTestModel, TMetrics = MutationMetric
   #metrics: TMetrics | undefined;
   get metrics(): TMetrics {
     if(!this.#metrics) {
-      console.log('Calculating metrics for' + this.name)
       this.#metrics = this.metricsFactory(this);
     }
 
     return this.#metrics;
+  }
+  set metrics(value: TMetrics) {
+    this.#metrics = value;
   }
 
   private metricsFactory: (r: MetricsResult<TFile, TMetrics>) => TMetrics;
@@ -49,6 +51,7 @@ export class MetricsResult<TFile = FileUnderTestModel, TMetrics = MutationMetric
 
   setParent() {
     this.childResults.forEach((child) => {
+      console.log('setParent', this.name, child.name)
       child.parent = this;
     });
   }

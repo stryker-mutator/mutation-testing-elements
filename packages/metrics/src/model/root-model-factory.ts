@@ -12,49 +12,90 @@ const ROOT_NAME_TESTS = 'All tests';
 export function generateRootModel(report: MutationTestResult): MutationTestMetricsResult {
   const projectRoot = report.projectRoot ?? '';
   const fileModelsUnderTest = normalize(report.files, projectRoot, (input, name) => new FileUnderTestModel(input, filenameOnly(name)))
+  const systemUnderTestMetrics = generateMetrics<FileUnderTestModel, MutationMetrics>(fileModelsUnderTest, generateSystemUnderTestMetric, ROOT_NAME)
+  console.clear();
 
+  console.log(report.testFiles)
   const result = {
-    systemUnderTestMetrics: generateSystemUnderTestMetrics(fileModelsUnderTest),
-    testMetrics: generateTestMetrics(report, fileModelsUnderTest),
+    systemUnderTestMetrics: systemUnderTestMetrics,
+    testMetrics: generateTestMetrics(report),
   }
 
   console.log(result)
   return result;
 }
 
-function generateTestMetrics(report: MutationTestResult, fileModelsUnderTest: Record<string, FileUnderTestModel>): MetricsResult<TestFileModel, TestMetrics> | undefined {
+function generateSystemUnderTestMetric(name: string, childResults: MetricsResult<FileUnderTestModel, MutationMetrics>[], file?: FileUnderTestModel) {
+  const metric = new MetricsResult<FileUnderTestModel, MutationMetrics>(name, childResults, generateSystemUnderTestMetricResult, file)
+
+  if (file) {
+    file.result = metric;
+  }
+
+  return metric
+}
+
+function generateSystemUnderTestMetricResult(metric: MetricsResult<FileUnderTestModel, MutationMetrics>) {
+  if (metric.file?.mutants) {
+    return countFileMetrics(metric.file.mutants)
+  }
+  return countFolderMetric(metric);
+}
+
+function generateTestMetrics(report: MutationTestResult): MetricsResult<TestFileModel, TestMetrics> | undefined {
   const { testFiles, projectRoot = '' } = report;
   if (!testFiles) {
     return undefined;
   }
 
-  const testFileModels = normalize(testFiles, projectRoot, (input, name) => new TestFileModel(input, name));
-  console.log(testFileModels, fileModelsUnderTest)
-  // relate(
-  //   Object.values(fileModelsUnderTest).flatMap((file) => file.mutants),
-  //   Object.values(testFileModels).flatMap((file) => file.tests),
-  // );
-
-  const a = Object.entries(testFileModels).map(([name, file]) => new MetricsResult<TestFileModel, TestMetrics>(name, [], (k) => countTestFileMetrics([k.file!]), file))
-
-  const metric = new MetricsResult<TestFileModel, TestMetrics>(ROOT_NAME_TESTS, a, (k) => {
-    console.log(k.file)
-    return countTestFileMetrics([k.file!])
-  }, Object.values(testFileModels)[0]);
-
-  console.log(metric)
+  const testFileModels = normalize(testFiles, projectRoot, (input, name) => new TestFileModel(input, filenameOnly(name)));
+  const metric = generateMetrics<TestFileModel, TestMetrics>(testFileModels, generateTestMetric, ROOT_NAME_TESTS);
 
   return metric;
 }
 
-type Folders = Record<string, { parent: string, name: string, childs: MetricsResult[] }>;
-function generateSystemUnderTestMetrics(files: Record<string, FileUnderTestModel>): MetricsResult<FileUnderTestModel, MutationMetrics> {
+function generateTestMetric(name: string, childResults: MetricsResult<TestFileModel, TestMetrics>[], file?: TestFileModel) {
+  const metric = new MetricsResult<TestFileModel, TestMetrics>(name, childResults, generateTestMetricResult, file)
+  if (file) {
+    file.result = metric;
+  }
+
+  return metric
+}
+
+function generateTestMetricResult(metric: MetricsResult<TestFileModel, TestMetrics>): TestMetrics {
+  if (metric.file?.tests) {
+    const countTestFile = (status: TestStatus) => metric.file!.tests.filter((_) => _.status === status).length;
+
+    return {
+      total: metric.file.tests.length,
+      killing: countTestFile(TestStatus.Killing),
+      covering: countTestFile(TestStatus.Covering),
+      notCovering: countTestFile(TestStatus.NotCovering)
+    }
+  }
+
+  const countDirectory = (prop: keyof TestMetrics) => metric.childResults.reduce((acc, curr) => acc + curr.metrics[prop], 0);
+
+  return {
+    total: countDirectory('total'),
+    killing: countDirectory('killing'),
+    covering: countDirectory('covering'),
+    notCovering: countDirectory('notCovering')
+  };
+}
+
+function generateMetrics<TFile, TMetrics>(
+  files: Record<string, TFile>,
+  generateMetric: (name: string, childResults: MetricsResult<TFile, TMetrics>[], file?: TFile) => MetricsResult<TFile, TMetrics>,
+  rootName: string
+): MetricsResult<TFile, TMetrics> {
+  type Folders = Record<string, { parent: string, name: string, childs: MetricsResult<TFile, TMetrics>[] }>;
   const folders: Folders = {};
 
   Object.entries(files).forEach(([name, file]) => {
     // create a file for each file
-    const metricFile = new MetricsResult(file.name, [], (k) => countFileMetrics(k.file?.mutants || []), file)
-    file.result = metricFile;
+    const metricFile = generateMetric(name, [], file)
     const folderNames = name.split('/').slice(0, -1);
 
     folderNames.forEach((folderName, index) => {
@@ -73,14 +114,12 @@ function generateSystemUnderTestMetrics(files: Record<string, FileUnderTestModel
   });
 
   const metrics = Object.entries(folders).map(([folderPath, folder]) => {
-    return new MetricsResult(folderPath, folder.childs, (k) => countFolderMetric(k))
+    return generateMetric(folderPath, folder.childs)
   });
 
   metrics.forEach(metric => { metric.setParent() })
   const rootMetrics = metrics.filter(m => m.parent === undefined);
-
-  const res = new MetricsResult(ROOT_NAME, rootMetrics, (k) => countFolderMetric(k));
-  return res;
+  return generateMetric(rootName, rootMetrics);;
 }
 
 function filenameOnly(filename: string): string {
@@ -159,28 +198,6 @@ function countFileMetrics(mutants: MutantModel[]): MutationMetrics {
     mutationScoreBasedOnCoveredCode: totalValid > 0 ? (totalDetected / totalCovered) * 100 || 0 : DEFAULT_SCORE,
   };
 }
-
-// function relate(mutants: MutantModel[], tests: TestModel[]) {
-//   // Create a testId -> TestModel map for fast lookup
-//   const testMap = new Map<string, TestModel>(tests.map((test) => [test.id, test]));
-
-//   for (const mutant of mutants) {
-//     const coveringTests = mutant.coveredBy?.map((testId) => testMap.get(testId)) ?? [];
-//     for (const test of coveringTests) {
-//       if (test) {
-//         mutant.addCoveredBy(test);
-//         test.addCovered(mutant);
-//       }
-//     }
-//     const killingTests = mutant.killedBy?.map((testId) => testMap.get(testId)) ?? [];
-//     for (const test of killingTests) {
-//       if (test) {
-//         mutant.addKilledBy(test);
-//         test.addKilled(mutant);
-//       }
-//     }
-//   }
-// }
 
 export function countTestFileMetrics(testFile: TestFileModel[]): TestMetrics {
   const tests = testFile.flatMap((_) => _.tests);

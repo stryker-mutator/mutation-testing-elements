@@ -106,7 +106,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
 
     if (this.report) {
       if (changedProperties.has('report')) {
-        this.updateModel(this.report);
+        this.rootModel = generateRootModel(this.report);
       }
       if (changedProperties.has('path') || changedProperties.has('report')) {
         this.updateContext();
@@ -141,10 +141,6 @@ export class MutationTestReportAppComponent extends RealTimeElement {
     } else {
       return 'light';
     }
-  }
-
-  private updateModel(report: MutationTestResult) {
-    this.rootModel = generateRootModel(report);
   }
 
   private updateContext() {
@@ -210,10 +206,6 @@ export class MutationTestReportAppComponent extends RealTimeElement {
       }
 
       this.handleMutantTested(newMutantData)
-
-
-      // TODO Update the mutants properties (don't forget to update killedBy and coveredBy)
-      // TODO Update the test killedby status
     });
     this.sseSubscriptions.add(modifySubscription);
 
