@@ -145,7 +145,6 @@ export class MutationTestReportAppComponent extends RealTimeElement {
 
   private updateModel(report: MutationTestResult) {
     this.rootModel = generateRootModel(report);
-    this.rootModel.testMetrics = undefined;
   }
 
   private updateContext() {
