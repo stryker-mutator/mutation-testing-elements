@@ -35,7 +35,7 @@
     "@types/resemblejs": "4.1.0",
     "@types/selenium-webdriver": "4.1.16",
     "@types/webpack-env": "1.18.1",
-    "autoprefixer": "10.4.15",
+    "autoprefixer": "10.4.16",
     "canvas": "2.11.2",
     "chromedriver": "116.0.0",
     "cross-env": "7.0.3",
