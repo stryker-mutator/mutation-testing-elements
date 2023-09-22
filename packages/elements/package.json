@@ -37,7 +37,7 @@
     "@types/webpack-env": "1.18.1",
     "autoprefixer": "10.4.16",
     "canvas": "2.11.2",
-    "chromedriver": "116.0.0",
+    "chromedriver": "117.0.2",
     "cross-env": "7.0.3",
     "css-loader": "6.8.1",
     "cssnano": "6.0.1",
