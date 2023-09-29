@@ -2,10 +2,10 @@
 import { html, PropertyValues, unsafeCSS, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { MutantResult, MutationTestResult } from 'mutation-testing-report-schema/api';
-import { MetricsResult, MutantModel, generateRootModel } from 'mutation-testing-metrics';
+import { MetricsResult, MutantModel, TestModel, generateRootModel } from 'mutation-testing-metrics';
 import { tailwind, globals } from '../../style';
 import { locationChange$, View } from '../../lib/router';
-import { Subscription, fromEvent } from 'rxjs';
+import { Subscription, bufferTime, fromEvent } from 'rxjs';
 import theme from './theme.scss';
 import { createCustomEvent } from '../../lib/custom-events';
 import { FileUnderTestModel, Metrics, MutationTestMetricsResult, TestFileModel, TestMetrics } from 'mutation-testing-metrics';
@@ -27,6 +27,12 @@ interface TestContext extends BaseContext {
   view: View.test;
   result?: MetricsResult<TestFileModel, TestMetrics>;
 }
+
+/**
+ * The report needs to be able to handle realtime updates, without any constraints.
+ * To allow for this behaviour, we will update the `rootModel` once every 100ms.
+ */
+const UPDATE_CYCLE_TIME = 100;
 
 type Context = MutantContext | TestContext;
 
@@ -199,19 +205,22 @@ export class MutationTestReportAppComponent extends RealTimeElement {
     this.source = new EventSource(this.sse);
     // this.source.onerror = () => this.source?.close()
 
-    const modifySubscription = fromEvent<MessageEvent>(this.source, 'mutant-tested').subscribe((event) => {
-      const newMutantData = JSON.parse(event.data) as MutantTestedEvent;
-      if (!this.report) {
-        return;
-      }
+    const modifySubscription = fromEvent<MessageEvent<string>>(this.source, 'mutant-tested')
+      .pipe(bufferTime(UPDATE_CYCLE_TIME))
+      .subscribe((events) => {
+        events.forEach((event) => {
+          const newMutantData = JSON.parse(event.data) as MutantTestedEvent;
+          if (!this.report) {
+            return;
+          }
 
-      this.handleMutantTested(newMutantData)
-    });
+          this.handleMutantTested(newMutantData)
+        });
+      });
     this.sseSubscriptions.add(modifySubscription);
 
     this.source.addEventListener('finished', () => {
       this.source?.close();
-      this.applyChanges();
       this.sseSubscriptions.forEach((s) => s.unsubscribe());
     });
   }
@@ -229,7 +238,29 @@ export class MutationTestReportAppComponent extends RealTimeElement {
       (mutant as any)[prop] = val;
     }
 
-    mutant.sourceFile?.result?.invalidateMetrics();
+
+    if (newMutantData.killedBy) {
+      newMutantData.killedBy.forEach((killedByTestId) => {
+        const test = this.findTestInRootModel(killedByTestId)
+        if (test === undefined) {
+          return;
+        }
+        test.addKilled(mutant);
+        mutant.addKilledBy(test);
+      });
+    }
+
+    if (newMutantData.coveredBy) {
+      newMutantData.coveredBy.forEach((coveredByTestId) => {
+        const test = this.findTestInRootModel(coveredByTestId)
+        if (test === undefined) {
+          return;
+        }
+        test.addCovered(mutant);
+        mutant.addCoveredBy(test);
+      });
+    }
+
     this.applyChanges();
   }
 
@@ -243,6 +274,21 @@ export class MutationTestReportAppComponent extends RealTimeElement {
     for (const metric of start?.childResults ?? []) {
       const subMutant = this.findMutantInRootModel(id, metric)
       if (subMutant) return subMutant;
+    }
+
+    return undefined;
+  }
+
+  private findTestInRootModel(id: string, start = this.rootModel?.testMetrics): TestModel | undefined {
+    const test = start?.file?.tests.find((t) => t.id === id);
+
+    if (test) {
+      return test;
+    }
+
+    for (const metric of start?.childResults ?? []) {
+      const subTest = this.findTestInRootModel(id, metric)
+      if (subTest) return subTest;
     }
 
     return undefined;

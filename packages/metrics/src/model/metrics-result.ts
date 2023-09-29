@@ -45,17 +45,18 @@ export class MetricsResult<TFile = FileUnderTestModel, TMetrics = MutationMetric
     this.childResults = childResults;
     this.file = file;
     this.metricsFactory = metricsFactory;
-    this.#metrics = metricsFactory(this);
     this.setParent()
   }
 
   setParent() {
     this.childResults.forEach((child) => {
-      console.log('setParent', this.name, child.name)
       child.parent = this;
     });
   }
 
+  /**
+   * @internal
+   */
   invalidateMetrics() {
     this.#metrics = undefined;
     this.parent?.invalidateMetrics();

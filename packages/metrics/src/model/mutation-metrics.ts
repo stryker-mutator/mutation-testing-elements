@@ -77,21 +77,3 @@ export interface MutationMetrics {
    */
   mutationScoreBasedOnCoveredCode: number;
 }
-
-export function generateCalculatedMutationMetrics(calculateMetric: (prop: keyof MutationMetrics) => number): MutationMetrics {
-  const metrics = new Object() as MutationMetrics
-
-  const proxy = new Proxy<MutationMetrics>(metrics, {
-    get: (target, key: keyof MutationMetrics) => {
-      const currVal = target[key];
-
-      if (currVal === undefined) {
-        target[key] = calculateMetric(key);
-      }
-
-      return target[key]
-    }
-  });
-
-  return proxy;
-}

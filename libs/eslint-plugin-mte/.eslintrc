@@ -3,5 +3,8 @@
   "env": {
     "commonjs": true,
     "es2021": true
+  },
+  "rules": {
+    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_*", "ignoreRestSiblings": true, "varsIgnorePattern": "^_" }]
   }
 }
