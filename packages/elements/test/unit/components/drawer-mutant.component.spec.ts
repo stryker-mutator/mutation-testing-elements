@@ -55,14 +55,14 @@ describe(MutationTestReportDrawerMutant.name, () => {
       });
 
       it('should render the first killedBy test', async () => {
-        mutant.killedByTests = [new TestModel(createTestDefinition({ name: 'foo should bar' }))];
+        mutant.addAllKilledBy([new TestModel(createTestDefinition({ name: 'foo should bar' }))]);
         sut.element.mutant = mutant;
         await sut.whenStable();
         expect(summaryText()).contain('🎯 Killed by: foo should bar');
       });
 
       it('should mention more killedBy tests when they exist', async () => {
-        mutant.killedByTests = [new TestModel(createTestDefinition({ name: 'foo should bar' })), new TestModel(createTestDefinition())];
+        mutant.addAllKilledBy([new TestModel(createTestDefinition({ name: 'foo should bar' })), new TestModel(createTestDefinition())]);
         sut.element.mutant = mutant;
         await sut.whenStable();
         expect(summaryText()).contain('(and 1 more)');
@@ -70,7 +70,7 @@ describe(MutationTestReportDrawerMutant.name, () => {
 
       it('should mention when one test covered the mutant', async () => {
         mutant.status = MutantStatus.Killed;
-        mutant.coveredByTests = [new TestModel(createTestDefinition())];
+        mutant.addAllCoveredBy([new TestModel(createTestDefinition())]);
         sut.element.mutant = mutant;
         await sut.whenStable();
         const summary = summaryText();
@@ -81,7 +81,7 @@ describe(MutationTestReportDrawerMutant.name, () => {
 
       it('should not mentioned that a killed mutant still survived', async () => {
         mutant.status = MutantStatus.Killed;
-        mutant.coveredByTests = [new TestModel(createTestDefinition())];
+        mutant.addAllCoveredBy([new TestModel(createTestDefinition())]);
         sut.element.mutant = mutant;
         await sut.whenStable();
         const summary = summaryText();
@@ -89,7 +89,7 @@ describe(MutationTestReportDrawerMutant.name, () => {
       });
 
       it('should mention when two tests covered the mutant', async () => {
-        mutant.coveredByTests = [new TestModel(createTestDefinition()), new TestModel(createTestDefinition())];
+        mutant.addAllCoveredBy([new TestModel(createTestDefinition()), new TestModel(createTestDefinition())]);
         sut.element.mutant = mutant;
         await sut.whenStable();
         const summary = summaryText();
@@ -137,8 +137,8 @@ describe(MutationTestReportDrawerMutant.name, () => {
       it('should render the tests', async () => {
         const test1 = new TestModel(createTestDefinition({ name: 'foo should bar' }));
         const test2 = new TestModel(createTestDefinition({ name: 'baz should qux' }));
-        mutant.killedByTests = [test1, test2];
-        mutant.coveredByTests = [test1, test2, new TestModel(createTestDefinition({ name: 'quux should corge' }))];
+        mutant.addAllKilledBy([test1, test2]);
+        mutant.addAllCoveredBy([test1, test2, new TestModel(createTestDefinition({ name: 'quux should corge' }))]);
         sut.element.mutant = mutant;
         await sut.whenStable();
         const listItems = sut.$$('[slot="detail"] ul li');

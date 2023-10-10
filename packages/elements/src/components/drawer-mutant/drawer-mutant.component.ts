@@ -14,12 +14,17 @@ const describeTest = (test: TestModel) => `${test.name}${test.sourceFile && test
 @customElement('mte-drawer-mutant')
 export class MutationTestReportDrawerMutant extends RealTimeElement {
   @property()
-  public mutant?: MutantModel;
+  public declare mutant?: MutantModel;
 
   @property({ reflect: true })
-  public mode: DrawerMode = 'closed';
+  public declare mode: DrawerMode;
 
   public static styles = [tailwind];
+
+  constructor() {
+    super();
+    this.mode = 'closed';
+  }
 
   public render() {
     return renderDrawer(

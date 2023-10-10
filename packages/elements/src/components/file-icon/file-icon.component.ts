@@ -6,10 +6,10 @@ import { classMap } from 'lit/directives/class-map.js';
 @customElement('mte-file-icon')
 export class MutationTestReportFileIconComponent extends LitElement {
   @property({ attribute: 'file-name' })
-  public fileName!: string;
+  public declare fileName: string;
 
   @property({ attribute: 'file', type: Boolean })
-  public isFile!: boolean;
+  public declare isFile: boolean;
 
   public static styles = [unsafeCSS(style)];
 

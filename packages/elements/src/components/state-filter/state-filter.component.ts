@@ -20,7 +20,7 @@ export class FileStateFilterComponent<TStatus extends string> extends RealTimeEl
   static styles = [tailwind, unsafeCSS(style)];
 
   @property({ type: Array })
-  public filters?: StateFilter<TStatus>[];
+  public declare filters?: StateFilter<TStatus>[];
 
   public updated(changedProperties: PropertyValues) {
     if (changedProperties.has('filters')) {

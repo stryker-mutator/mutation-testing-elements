@@ -14,30 +14,37 @@ export class ResultStatusBar extends LitElement {
   public static styles = [tailwind];
 
   @property({ attribute: false })
-  public detected = 0;
+  public declare detected;
 
   @property({ attribute: false })
-  public undetected = 0;
+  public declare undetected;
 
   @property({ attribute: false })
-  public invalid = 0;
+  public declare invalid;
 
   @property({ attribute: false })
-  public ignored = 0;
+  public declare ignored;
 
   @property({ attribute: false })
-  public pending = 0;
+  public declare pending;
 
   @property({ attribute: false })
-  public total = 0;
+  public declare total;
 
   @state()
-  private shouldBeSmall = false;
+  private declare shouldBeSmall;
 
   #observer: IntersectionObserver | undefined;
 
   public constructor() {
     super();
+    this.detected = 0;
+    this.undetected = 0;
+    this.invalid = 0;
+    this.ignored = 0;
+    this.pending = 0;
+    this.total = 0;
+    this.shouldBeSmall = false;
   }
 
   public connectedCallback(): void {

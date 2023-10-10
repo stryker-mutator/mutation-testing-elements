@@ -28,8 +28,17 @@ export class MutantModel implements MutantResult {
   public testsCompleted: number | undefined;
 
   // New fields
-  public coveredByTests: TestModel[] | undefined;
-  public killedByTests: TestModel[] | undefined;
+  get coveredByTests(): TestModel[] | undefined {
+    if (this.#coveredByTests.size) {
+      return Array.from(this.#coveredByTests.values());
+    } else return undefined;
+  }
+
+  get killedByTests(): TestModel[] | undefined {
+    if (this.#killedByTests.size) {
+      return Array.from(this.#killedByTests.values());
+    } else return undefined;
+  }
   public sourceFile: FileUnderTestModel | undefined;
 
   #coveredByTests = new Map<string, TestModel>();
@@ -51,28 +60,24 @@ export class MutantModel implements MutantResult {
   }
 
   public addCoveredBy(test: TestModel) {
-    if (!this.coveredByTests) {
-      this.coveredByTests = [];
-    }
-    if (this.#coveredByTests.has(test.id)) {
-      return;
-    }
     this.#coveredByTests.set(test.id, test);
-    this.coveredByTests?.push(test);
+  }
+
+  public addAllCoveredBy(tests: TestModel[]) {
+    for (const test of tests) {
+      this.addCoveredBy(test);
+    }
   }
 
   public addKilledBy(test: TestModel) {
-    if (!this.killedByTests) {
-      this.killedByTests = [];
-    }
-    if (this.#killedByTests.has(test.id)) {
-      return;
-    }
-
     this.#killedByTests.set(test.id, test);
-    this.killedByTests?.push(test);
   }
 
+  public addAllKilledBy(tests: TestModel[]) {
+    for (const test of tests) {
+      this.addKilledBy(test);
+    }
+  }
   /**
    * Retrieves the lines of code with the mutant applied to it, to be shown in a diff view.
    */

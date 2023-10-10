@@ -19,22 +19,30 @@ export class TestFileComponent extends RealTimeElement {
   public static styles = [prismjs, tailwind, unsafeCSS(style)];
 
   @property()
-  public model: TestFileModel | undefined;
+  public declare model: TestFileModel | undefined;
 
   @state()
-  private filters: StateFilter<TestStatus>[] = [];
+  private declare filters: StateFilter<TestStatus>[];
 
   @state()
-  private lines: string[] = [];
+  private declare lines: string[];
 
   @state()
-  public enabledStates: TestStatus[] = [];
+  public declare enabledStates: TestStatus[];
 
   @state()
-  private selectedTest: TestModel | undefined;
+  private declare selectedTest: TestModel | undefined;
 
   @state()
-  private tests: TestModel[] = [];
+  private declare tests: TestModel[];
+
+  constructor() {
+    super();
+    this.filters = [];
+    this.lines = [];
+    this.enabledStates = [];
+    this.tests = [];
+  }
 
   private readonly filtersChanged = (event: MteCustomEvent<'filters-changed'>) => {
     this.enabledStates = event.detail as TestStatus[];

@@ -101,15 +101,17 @@ function relate(mutants: MutantModel[], tests: TestModel[]) {
   const testMap = new Map<string, TestModel>(tests.map((test) => [test.id, test]));
 
   for (const mutant of mutants) {
-    const coveringTests = mutant.coveredBy?.map((testId) => testMap.get(testId)) ?? [];
-    for (const test of coveringTests) {
+    const coveringTestIds = mutant.coveredBy ?? [];
+    for (const testId of coveringTestIds) {
+      const test = testMap.get(testId);
       if (test) {
         mutant.addCoveredBy(test);
         test.addCovered(mutant);
       }
     }
-    const killingTests = mutant.killedBy?.map((testId) => testMap.get(testId)) ?? [];
-    for (const test of killingTests) {
+    const killingTestIds = mutant.killedBy ?? [];
+    for (const testId of killingTestIds) {
+      const test = testMap.get(testId);
       if (test) {
         mutant.addKilledBy(test);
         test.addKilled(mutant);
