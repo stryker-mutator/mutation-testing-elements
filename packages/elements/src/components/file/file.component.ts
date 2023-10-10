@@ -183,7 +183,7 @@ export class FileComponent extends RealTimeElement {
         !this.mutants.includes(this.selectedMutant) &&
         changes.has('selectedMutantStates') &&
         // This extra check is to allow mutants that have been opened before, to stay open when a realtime update comes through
-        this.selectedMutantsHaveChanged(changes.get('selectedMutantStates'))
+        this.selectedMutantsHaveChanged(changes.get('selectedMutantStates') ?? [])
       ) {
         this.toggleMutant(this.selectedMutant);
       }
