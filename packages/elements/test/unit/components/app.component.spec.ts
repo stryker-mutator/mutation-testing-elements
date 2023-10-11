@@ -8,6 +8,7 @@ import { MutationTestReportMutantViewComponent } from '../../../src/components/m
 import { MutationTestReportTestViewComponent } from '../../../src/components/test-view/test-view';
 import { tick } from '../helpers/tick';
 import { MutantStatus } from 'mutation-testing-report-schema';
+import { RequestInfo } from 'undici-types/fetch';
 
 describe(MutationTestReportAppComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportAppComponent>;
