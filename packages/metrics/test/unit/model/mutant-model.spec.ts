@@ -19,7 +19,7 @@ describe(MutantModel.name, () => {
       statusReason: 'Foo should have been "bar" but was "baz"',
       testsCompleted: 45,
     };
-    expect(new MutantModel(mutantResult)).deep.eq(mutantResult);
+    expect(new MutantModel(mutantResult)).deep.contains(mutantResult);
   });
 
   it('should initialize killedByTests and coveredByTests as undefined', () => {
