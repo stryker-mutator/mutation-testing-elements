@@ -62,7 +62,10 @@ describe(MutationTestReportDrawerMutant.name, () => {
       });
 
       it('should mention more killedBy tests when they exist', async () => {
-        mutant.killedByTests = [new TestModel(createTestDefinition({ name: 'foo should bar' })), new TestModel(createTestDefinition())];
+        mutant.killedByTests = [
+          new TestModel(createTestDefinition({ id: '1', name: 'foo should bar' })),
+          new TestModel(createTestDefinition({ id: '2' })),
+        ];
         sut.element.mutant = mutant;
         await sut.whenStable();
         expect(summaryText()).contain('(and 1 more)');
@@ -89,7 +92,7 @@ describe(MutationTestReportDrawerMutant.name, () => {
       });
 
       it('should mention when two tests covered the mutant', async () => {
-        mutant.coveredByTests = [new TestModel(createTestDefinition()), new TestModel(createTestDefinition())];
+        mutant.coveredByTests = [new TestModel(createTestDefinition({ id: '1' })), new TestModel(createTestDefinition({ id: '2' }))];
         sut.element.mutant = mutant;
         await sut.whenStable();
         const summary = summaryText();
@@ -135,10 +138,10 @@ describe(MutationTestReportDrawerMutant.name, () => {
       });
 
       it('should render the tests', async () => {
-        const test1 = new TestModel(createTestDefinition({ name: 'foo should bar' }));
-        const test2 = new TestModel(createTestDefinition({ name: 'baz should qux' }));
+        const test1 = new TestModel(createTestDefinition({ id: '1', name: 'foo should bar' }));
+        const test2 = new TestModel(createTestDefinition({ id: '2', name: 'baz should qux' }));
         mutant.killedByTests = [test1, test2];
-        mutant.coveredByTests = [test1, test2, new TestModel(createTestDefinition({ name: 'quux should corge' }))];
+        mutant.coveredByTests = [test1, test2, new TestModel(createTestDefinition({ id: '3', name: 'quux should corge' }))];
         sut.element.mutant = mutant;
         await sut.whenStable();
         const listItems = sut.$$('[slot="detail"] ul li');
