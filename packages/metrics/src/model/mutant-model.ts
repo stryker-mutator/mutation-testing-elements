@@ -33,11 +33,17 @@ export class MutantModel implements MutantResult {
       return Array.from(this.#coveredByTests.values());
     } else return undefined;
   }
+  set coveredByTests(tests: TestModel[]) {
+    this.#coveredByTests = new Map(tests.map((test) => [test.id, test]));
+  }
 
   get killedByTests(): TestModel[] | undefined {
     if (this.#killedByTests.size) {
       return Array.from(this.#killedByTests.values());
     } else return undefined;
+  }
+  set killedByTests(tests: TestModel[]) {
+    this.#killedByTests = new Map(tests.map((test) => [test.id, test]));
   }
   public sourceFile: FileUnderTestModel | undefined;
 
@@ -63,21 +69,10 @@ export class MutantModel implements MutantResult {
     this.#coveredByTests.set(test.id, test);
   }
 
-  public addAllCoveredBy(tests: TestModel[]) {
-    for (const test of tests) {
-      this.addCoveredBy(test);
-    }
-  }
-
   public addKilledBy(test: TestModel) {
     this.#killedByTests.set(test.id, test);
   }
 
-  public addAllKilledBy(tests: TestModel[]) {
-    for (const test of tests) {
-      this.addKilledBy(test);
-    }
-  }
   /**
    * Retrieves the lines of code with the mutant applied to it, to be shown in a diff view.
    */
