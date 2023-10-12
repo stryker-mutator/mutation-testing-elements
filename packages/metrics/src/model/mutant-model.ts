@@ -28,9 +28,24 @@ export class MutantModel implements MutantResult {
   public testsCompleted: number | undefined;
 
   // New fields
-  public coveredByTests: TestModel[] | undefined;
-  public killedByTests: TestModel[] | undefined;
-  public sourceFile: FileUnderTestModel | undefined;
+  get coveredByTests(): TestModel[] | undefined {
+    if (this.#coveredByTests.size) {
+      return Array.from(this.#coveredByTests.values());
+    } else return undefined;
+  }
+  set coveredByTests(tests: TestModel[]) {
+    this.#coveredByTests = new Map(tests.map((test) => [test.id, test]));
+  }
+
+  get killedByTests(): TestModel[] | undefined {
+    if (this.#killedByTests.size) {
+      return Array.from(this.#killedByTests.values());
+    } else return undefined;
+  }
+  set killedByTests(tests: TestModel[]) {
+    this.#killedByTests = new Map(tests.map((test) => [test.id, test]));
+  }
+  public declare sourceFile: FileUnderTestModel | undefined;
 
   #coveredByTests = new Map<string, TestModel>();
   #killedByTests = new Map<string, TestModel>();
@@ -51,26 +66,11 @@ export class MutantModel implements MutantResult {
   }
 
   public addCoveredBy(test: TestModel) {
-    if (!this.coveredByTests) {
-      this.coveredByTests = [];
-    }
-    if (this.#coveredByTests.has(test.id)) {
-      return;
-    }
     this.#coveredByTests.set(test.id, test);
-    this.coveredByTests?.push(test);
   }
 
   public addKilledBy(test: TestModel) {
-    if (!this.killedByTests) {
-      this.killedByTests = [];
-    }
-    if (this.#killedByTests.has(test.id)) {
-      return;
-    }
-
     this.#killedByTests.set(test.id, test);
-    this.killedByTests?.push(test);
   }
 
   /**

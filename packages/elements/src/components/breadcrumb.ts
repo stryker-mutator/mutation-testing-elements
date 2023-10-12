@@ -8,10 +8,10 @@ import { tailwind } from '../style';
 @customElement('mte-breadcrumb')
 export class MutationTestReportBreadcrumbComponent extends LitElement {
   @property()
-  public path: string[] | undefined;
+  public declare path: string[] | undefined;
 
   @property()
-  public view!: View;
+  public declare view: View;
 
   public static styles = [tailwind];
 

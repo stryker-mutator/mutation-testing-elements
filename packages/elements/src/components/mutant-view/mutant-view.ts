@@ -12,21 +12,26 @@ import { RealTimeElement } from '../real-time-element';
 @customElement('mte-mutant-view')
 export class MutationTestReportMutantViewComponent extends RealTimeElement {
   @property()
-  public drawerMode: DrawerMode = 'closed';
+  public declare drawerMode: DrawerMode;
 
   @property()
-  private selectedMutant?: MutantModel;
+  private declare selectedMutant?: MutantModel;
 
   public static styles = [unsafeCSS(style), tailwind];
 
   @property()
-  public result!: MetricsResult<FileUnderTestModel, Metrics>;
+  public declare result: MetricsResult<FileUnderTestModel, Metrics>;
 
   @property({ attribute: false, reflect: false })
-  public thresholds!: Thresholds;
+  public declare thresholds: Thresholds;
 
   @property({ attribute: false, reflect: false })
-  public path!: string[];
+  public declare path: string[];
+
+  constructor() {
+    super();
+    this.drawerMode = 'closed';
+  }
 
   private handleClick = () => {
     // Close the drawer if the user clicks anywhere in the report (that didn't handle the click already)

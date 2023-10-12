@@ -19,24 +19,32 @@ export class FileComponent extends RealTimeElement {
   static styles = [prismjs, tailwind, unsafeCSS(style)];
 
   @state()
-  public filters: StateFilter<MutantStatus>[] = [];
+  public declare filters: StateFilter<MutantStatus>[];
 
   @property()
-  public model!: FileUnderTestModel;
+  public declare model: FileUnderTestModel;
 
   @state()
-  public selectedMutantStates: MutantStatus[] = [];
+  public declare selectedMutantStates: MutantStatus[];
 
   @state()
-  private selectedMutant?: MutantModel;
+  private declare selectedMutant?: MutantModel;
 
   @state()
-  private lines: string[] = [];
+  private declare lines: string[];
 
   @state()
-  public mutants: MutantModel[] = [];
+  public declare mutants: MutantModel[];
 
   private codeRef = createRef<HTMLElement>();
+
+  public constructor() {
+    super();
+    this.filters = [];
+    this.selectedMutantStates = [];
+    this.lines = [];
+    this.mutants = [];
+  }
 
   private readonly filtersChanged = (event: MteCustomEvent<'filters-changed'>) => {
     // Pending is not filterable, but they should still be shown to the user.

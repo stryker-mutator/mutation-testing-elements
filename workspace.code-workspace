@@ -59,7 +59,10 @@
     "files.watcherExclude": {
       "**/target": true
     },
-    "cSpell.language": "en"
+    "cSpell.language": "en",
+    "[scala]": {
+      "editor.defaultFormatter": "scalameta.metals"
+    }
   },
   "launch": {
     "version": "0.2.0",

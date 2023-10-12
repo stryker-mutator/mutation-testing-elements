@@ -13,10 +13,10 @@ export class MutationTestReportDrawer extends LitElement {
   public static styles = [unsafeCSS(style), tailwind];
 
   @property({ reflect: true })
-  public mode: DrawerMode = 'closed';
+  public declare mode: DrawerMode;
 
   @property({ reflect: true, type: Boolean })
-  public hasDetail = false;
+  public declare hasDetail;
 
   @property()
   public get toggleMoreLabel() {
@@ -28,6 +28,12 @@ export class MutationTestReportDrawer extends LitElement {
       case 'closed':
         return nothing;
     }
+  }
+
+  constructor() {
+    super();
+    this.mode = 'closed';
+    this.hasDetail = false;
   }
 
   public toggleReadMore = (event: MouseEvent) => {

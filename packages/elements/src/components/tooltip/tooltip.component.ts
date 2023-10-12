@@ -5,7 +5,7 @@ import { tailwind } from '../../style';
 @customElement('mte-tooltip')
 export class MutationTestReportThemeSwitchComponent extends LitElement {
   @property({ attribute: true })
-  title!: string;
+  declare title: string;
 
   static styles = [tailwind];
 

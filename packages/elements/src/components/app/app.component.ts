@@ -42,31 +42,31 @@ type Context = MutantContext | TestContext;
 @customElement('mutation-test-report-app')
 export class MutationTestReportAppComponent extends RealTimeElement {
   @property({ attribute: false })
-  public report: MutationTestResult | undefined;
+  public declare report: MutationTestResult | undefined;
 
   @property({ attribute: false })
-  public rootModel: MutationTestMetricsResult | undefined;
+  public declare rootModel: MutationTestMetricsResult | undefined;
 
   @property()
-  public src: string | undefined;
+  public declare src: string | undefined;
 
   @property()
-  public sse: string | undefined;
+  public declare sse: string | undefined;
 
   @property({ attribute: false })
-  public errorMessage: string | undefined;
+  public declare errorMessage: string | undefined;
 
   @property({ attribute: false })
-  public context: Context = { view: View.mutant, path: [] };
+  public declare context: Context;
 
   @property()
-  public path: readonly string[] = [];
+  public declare path: readonly string[];
 
   @property({ attribute: 'title-postfix' })
-  public titlePostfix: string | undefined;
+  public declare titlePostfix: string | undefined;
 
   @property({ reflect: true })
-  public theme?: string;
+  public declare theme?: string;
 
   @property({ attribute: false })
   public get themeBackgroundColor(): string {
@@ -84,6 +84,12 @@ export class MutationTestReportAppComponent extends RealTimeElement {
     } else {
       return '';
     }
+  }
+
+  constructor() {
+    super();
+    this.context = { view: View.mutant, path: [] };
+    this.path = [];
   }
 
   public firstUpdated(): void {

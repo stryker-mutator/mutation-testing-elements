@@ -27,21 +27,27 @@ export interface Column<TMetric> {
 @customElement('mte-metrics-table')
 export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTimeElement {
   @property()
-  public model?: MetricsResult<TFile, TMetric>;
+  public declare model?: MetricsResult<TFile, TMetric>;
 
   @property()
-  public currentPath: string[] = [];
+  public declare currentPath: string[];
 
   @property({ type: Array })
-  public columns!: Column<TMetric>[];
+  public declare columns: Column<TMetric>[];
 
   @property()
-  public thresholds: Thresholds = {
-    high: 80,
-    low: 60,
-  };
+  public declare thresholds: Thresholds;
 
   public static styles = [tailwind];
+
+  constructor() {
+    super();
+    this.currentPath = [];
+    this.thresholds = {
+      high: 80,
+      low: 60,
+    };
+  }
 
   private hasMultipleColspan = false;
 
