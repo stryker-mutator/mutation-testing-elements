@@ -35,6 +35,12 @@
     },
     "lint": {
       "dependsOn": ["build", "root:build:tsc"]
+    },
+    "test:unit": {
+      "dependsOn": ["build", "^build"]
+    },
+    "test:integration": {
+      "dependsOn": ["build", "^build", "test:unit"]
     }
   }
 }

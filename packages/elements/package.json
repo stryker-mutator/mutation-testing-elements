@@ -8,7 +8,7 @@
   "scripts": {
     "start": "webpack serve --open --config webpack.dev.js",
     "build": "cross-env NODE_ENV=production webpack --config webpack.prod.js",
-    "test": "npm run test:unit && npm run test:integration",
+    "test": "nx run-many --target=test:unit,test:integration mutation-testing-elements",
     "test:unit": "karma start --single-run",
     "test:unit:debug": "karma start --browsers ChromeHeadlessDebug",
     "test:integration": "mocha --config ./test/integration/.mocharc.cjs",
