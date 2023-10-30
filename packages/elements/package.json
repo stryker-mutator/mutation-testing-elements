@@ -33,7 +33,7 @@
     "@types/express": "4.17.20",
     "@types/prismjs": "1.26.1",
     "@types/resemblejs": "4.1.2",
-    "@types/selenium-webdriver": "4.1.18",
+    "@types/selenium-webdriver": "4.1.19",
     "@types/webpack-env": "1.18.2",
     "autoprefixer": "10.4.16",
     "canvas": "2.11.2",
