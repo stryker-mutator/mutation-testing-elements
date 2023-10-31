@@ -1,16 +1,5 @@
 {
   "extends": "nx/presets/npm.json",
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "nx/tasks-runners/default",
-      "options": {
-        "cacheableOperations": ["build", "test", "stryker", "generate", "lint"]
-      }
-    }
-  },
-  "namedInputs": {
-    "skipForLintDepUpdate": [{ "externalDependencies": ["*", "!eslint-config-mte"] }]
-  },
   "targetDefaults": {
     "build:tsc": {
       "dependsOn": ["^generate"],
@@ -19,28 +8,32 @@
     "build": {
       "dependsOn": ["^build", "root:build:tsc", "generate"],
       "outputs": ["{projectRoot}/dist", "{projectRoot}/dist-test", "{projectRoot}/target"],
-      "inputs": ["skipForLintDepUpdate"]
+      "cache": true
     },
     "generate": {
-      "outputs": ["{projectRoot}/src-generated"]
+      "outputs": ["{projectRoot}/src-generated"],
+      "cache": true
     },
     "test": {
       "dependsOn": ["generate", "build", "root:build:tsc"],
-      "inputs": ["skipForLintDepUpdate"]
+      "cache": true
     },
     "stryker": {
       "dependsOn": ["^build", "root:build:tsc"],
       "outputs": ["{projectRoot}/reports", "{projectRoot}/target-stryker4s-report-*/"],
-      "inputs": ["skipForLintDepUpdate"]
+      "cache": true
     },
     "lint": {
-      "dependsOn": ["build", "root:build:tsc"]
+      "dependsOn": ["build", "root:build:tsc"],
+      "cache": true
     },
     "test:unit": {
-      "dependsOn": ["build", "^build"]
+      "dependsOn": ["build", "^build"],
+      "cache": true
     },
     "test:integration": {
-      "dependsOn": ["build", "^build", "test:unit"]
+      "dependsOn": ["build", "^build", "test:unit"],
+      "cache": true
     }
   }
 }
