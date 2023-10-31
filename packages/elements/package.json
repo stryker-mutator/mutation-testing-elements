@@ -1,6 +1,6 @@
 {
   "name": "mutation-testing-elements",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "A suite of web components for a mutation testing report.",
   "unpkg": "dist/mutation-test-elements.js",
   "main": "dist/index.js",
@@ -49,8 +49,8 @@
     "karma-sourcemap-loader": "0.4.0",
     "karma-webpack": "5.0.0",
     "lit": "3.0.1",
-    "mutation-testing-metrics": "2.0.3",
-    "mutation-testing-report-schema": "2.0.3",
+    "mutation-testing-metrics": "2.0.4",
+    "mutation-testing-report-schema": "2.0.4",
     "postcss": "8.4.31",
     "postcss-loader": "7.3.3",
     "prism-svelte": "0.5.0",

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.4](https://github.com/stryker-mutator/mutation-testing-elements/compare/v2.0.3...v2.0.4) (2023-10-31)
+
+
+### Performance Improvements
+
+* **metrics:** improve performance for coverage relation ([#2778](https://github.com/stryker-mutator/mutation-testing-elements/issues/2778)) ([c40369d](https://github.com/stryker-mutator/mutation-testing-elements/commit/c40369de1a62a38c9b792b8a4090c906d8526960))
+
+
+
+
+
 ## [2.0.3](https://github.com/stryker-mutator/mutation-testing-elements/compare/v2.0.2...v2.0.3) (2023-07-27)
 
 **Note:** Version bump only for package mutation-testing-metrics
