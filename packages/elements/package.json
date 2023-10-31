@@ -34,7 +34,7 @@
     "@types/prismjs": "1.26.2",
     "@types/resemblejs": "4.1.2",
     "@types/selenium-webdriver": "4.1.19",
-    "@types/webpack-env": "1.18.2",
+    "@types/webpack-env": "1.18.3",
     "autoprefixer": "10.4.16",
     "canvas": "2.11.2",
     "chromedriver": "118.0.1",
