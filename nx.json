@@ -19,7 +19,7 @@
       "cache": true
     },
     "stryker": {
-      "dependsOn": ["^build", "root:build:tsc"],
+      "dependsOn": ["build", "^build", "root:build:tsc"],
       "outputs": ["{projectRoot}/reports", "{projectRoot}/target-stryker4s-report-*/"],
       "cache": true
     },
