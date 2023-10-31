@@ -41,6 +41,7 @@ export class ReportPage extends ElementSelector {
   }
 
   public async navigateTo(path: string) {
+    await this.browser.get('about:blank');
     await this.browser.get(constants.BASE_URL + path);
 
     // Navigating to fragments (#...) resolve almost immediately. We currently don't have
