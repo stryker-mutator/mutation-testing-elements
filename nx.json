@@ -1,13 +1,5 @@
 {
   "extends": "nx/presets/npm.json",
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "nx/tasks-runners/default",
-      "options": {
-        "cacheableOperations": ["build", "test", "stryker", "generate", "lint"]
-      }
-    }
-  },
   "targetDefaults": {
     "build:tsc": {
       "dependsOn": ["^generate"],
@@ -15,20 +7,25 @@
     },
     "build": {
       "dependsOn": ["^build", "root:build:tsc", "generate"],
-      "outputs": ["{projectRoot}/dist", "{projectRoot}/dist-test", "{projectRoot}/target"]
+      "outputs": ["{projectRoot}/dist", "{projectRoot}/dist-test", "{projectRoot}/target"],
+      "cache": true
     },
     "generate": {
-      "outputs": ["{projectRoot}/src-generated"]
+      "outputs": ["{projectRoot}/src-generated"],
+      "cache": true
     },
     "test": {
-      "dependsOn": ["generate", "build", "root:build:tsc"]
+      "dependsOn": ["generate", "build", "root:build:tsc"],
+      "cache": true
     },
     "stryker": {
       "dependsOn": ["^build", "root:build:tsc"],
-      "outputs": ["{projectRoot}/reports", "{projectRoot}/target-stryker4s-report-*/"]
+      "outputs": ["{projectRoot}/reports", "{projectRoot}/target-stryker4s-report-*/"],
+      "cache": true
     },
     "lint": {
-      "dependsOn": ["build", "root:build:tsc"]
+      "dependsOn": ["build", "root:build:tsc"],
+      "cache": true
     }
   }
 }

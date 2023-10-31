@@ -15,3 +15,5 @@ _site/
 pom.xml.versionsBackup
 packages/*/mvn/resources/
 .scala-build/
+
+.nx/cache
