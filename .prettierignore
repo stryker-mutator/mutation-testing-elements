@@ -17,3 +17,5 @@ packages/metrics-scala/README.md
 report.json
 
 testResources
+
+/.nx/cache
