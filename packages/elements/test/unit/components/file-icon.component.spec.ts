@@ -49,6 +49,7 @@ describe(MutationTestReportFileIconComponent.name, () => {
       ['scala', ProgrammingLanguage.scala],
       ['php', ProgrammingLanguage.php],
       ['vue', ProgrammingLanguage.vue],
+      ['svelte', ProgrammingLanguage.svelte],
     ] as const
   ).forEach(([extension, expected]) => {
     it(`should choose show a ${expected} svg file for foo.${extension}`, async () => {

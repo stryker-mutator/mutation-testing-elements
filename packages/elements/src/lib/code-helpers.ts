@@ -12,6 +12,7 @@ export enum ProgrammingLanguage {
   typescript = 'typescript',
   vue = 'vue',
   gherkin = 'gherkin',
+  svelte = 'svelte',
 }
 
 /**
@@ -51,6 +52,8 @@ export function determineLanguage(fileName: string): ProgrammingLanguage | undef
       return ProgrammingLanguage.vue;
     case 'feature':
       return ProgrammingLanguage.gherkin;
+    case 'svelte':
+      return ProgrammingLanguage.svelte;
     default:
       return undefined;
   }
