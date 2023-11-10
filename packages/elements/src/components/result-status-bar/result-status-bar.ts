@@ -2,7 +2,8 @@ import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { tailwind } from '../../style';
 
-type ProgressType = 'detected' | 'undetected' | 'ignored + invalid' | 'pending';
+type ProgressType = 'detected' | 'survived' | 'no coverage' | 'pending';
+
 interface ProgressMetric {
   type: ProgressType;
   amount: number;
@@ -17,16 +18,13 @@ export class ResultStatusBar extends LitElement {
   public declare detected;
 
   @property({ attribute: false })
-  public declare undetected;
-
-  @property({ attribute: false })
-  public declare invalid;
-
-  @property({ attribute: false })
-  public declare ignored;
+  public declare noCoverage;
 
   @property({ attribute: false })
   public declare pending;
+
+  @property({ attribute: false })
+  public declare survived;
 
   @property({ attribute: false })
   public declare total;
@@ -39,10 +37,9 @@ export class ResultStatusBar extends LitElement {
   public constructor() {
     super();
     this.detected = 0;
-    this.undetected = 0;
-    this.invalid = 0;
-    this.ignored = 0;
+    this.noCoverage = 0;
     this.pending = 0;
+    this.survived = 0;
     this.total = 0;
     this.shouldBeSmall = false;
   }
@@ -118,10 +115,10 @@ export class ResultStatusBar extends LitElement {
 
   #getMetrics(): ProgressMetric[] {
     return [
-      { type: 'detected', amount: this.detected, tooltip: 'killed + timeout' },
-      { type: 'undetected', amount: this.undetected, tooltip: 'survived + no coverage' },
-      { type: 'ignored + invalid', amount: this.ignored + this.invalid, tooltip: 'ignored + runtime error + compile error' },
-      { type: 'pending', amount: this.pending, tooltip: 'pending' },
+      { type: 'detected', amount: this.detected, tooltip: `killed + timeout (${this.detected})` },
+      { type: 'survived', amount: this.survived, tooltip: `survived (${this.survived})` },
+      { type: 'no coverage', amount: this.noCoverage, tooltip: `no coverage (${this.noCoverage})` },
+      { type: 'pending', amount: this.pending, tooltip: `pending` },
     ];
   }
 
@@ -129,9 +126,9 @@ export class ResultStatusBar extends LitElement {
     switch (metric) {
       case 'detected':
         return 'bg-green-600';
-      case 'undetected':
+      case 'survived':
         return 'bg-red-600';
-      case 'ignored + invalid':
+      case 'no coverage':
         return 'bg-yellow-600';
       default:
         return 'bg-gray-200';

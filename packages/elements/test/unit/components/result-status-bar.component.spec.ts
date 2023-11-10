@@ -44,7 +44,7 @@ describe(ResultStatusBar.name, () => {
   });
 
   it('should be filled completely red when every mutants has survived', async () => {
-    sut.element.undetected = 1;
+    sut.element.survived = 1;
     sut.element.total = 1;
 
     await sut.whenStable();
@@ -57,9 +57,8 @@ describe(ResultStatusBar.name, () => {
   });
 
   it('should be filled completely yellow when every mutants has any other state', async () => {
-    sut.element.ignored = 1;
-    sut.element.invalid = 1;
-    sut.element.total = 2;
+    sut.element.noCoverage = 1;
+    sut.element.total = 1;
 
     await sut.whenStable();
 
@@ -85,8 +84,8 @@ describe(ResultStatusBar.name, () => {
 
   it('should fill all sections equally', async () => {
     sut.element.detected = 1;
-    sut.element.undetected = 1;
-    sut.element.ignored = 1;
+    sut.element.survived = 1;
+    sut.element.noCoverage = 1;
     sut.element.pending = 1;
     sut.element.total = 4;
 
