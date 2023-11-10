@@ -337,11 +337,10 @@ export class MutationTestReportAppComponent extends RealTimeElement {
             <mte-breadcrumb .view="${this.context.view}" .path="${this.context.path}"></mte-breadcrumb>
             <mte-result-status-bar
               .detected="${this.rootModel?.systemUnderTestMetrics.metrics.totalDetected}"
-              .undetected="${this.rootModel?.systemUnderTestMetrics.metrics.totalUndetected}"
-              .invalid="${this.rootModel?.systemUnderTestMetrics.metrics.totalInvalid}"
-              .ignored="${this.rootModel?.systemUnderTestMetrics.metrics.ignored}"
+              .noCoverage="${this.rootModel?.systemUnderTestMetrics.metrics.noCoverage}"
               .pending="${this.rootModel?.systemUnderTestMetrics.metrics.pending}"
-              .total="${this.rootModel?.systemUnderTestMetrics.metrics.totalMutants}"
+              .survived="${this.rootModel?.systemUnderTestMetrics.metrics.survived}"
+              .total="${this.rootModel?.systemUnderTestMetrics.metrics.totalValid}"
             ></mte-result-status-bar>
             ${this.context.view === 'mutant' && this.context.result
               ? html`<mte-mutant-view
