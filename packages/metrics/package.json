@@ -2,8 +2,14 @@
   "name": "mutation-testing-metrics",
   "version": "2.0.5",
   "description": "Utility functions to calculate mutation testing metrics.",
+  "type": "module",
   "main": "dist/src/index.js",
-  "typings": "dist/src/index.d.ts",
+  "exports": {
+    ".": "./dist/src/index.js"
+  },
+  "nx": {
+    "name": "metrics"
+  },
   "scripts": {
     "test": "mocha --forbid-only --forbid-pending -r source-map-support/register dist/test/**/*.js",
     "stryker": "stryker run",

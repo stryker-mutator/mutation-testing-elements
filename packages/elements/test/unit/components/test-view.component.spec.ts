@@ -1,11 +1,11 @@
-import { expect } from 'chai';
-import { MetricsResult, TestFileModel, TestMetrics, TestModel } from 'mutation-testing-metrics';
-import { MutationTestReportDrawerTestComponent } from '../../../src/components/drawer-test/drawer-test.component';
-import { Column, MutationTestReportTestMetricsTable } from '../../../src/components/metrics-table/metrics-table.component';
-import { MutationTestReportTestViewComponent } from '../../../src/components/test-view/test-view';
-import { createCustomEvent } from '../../../src/lib/custom-events';
-import { createTestDefinition, createTestFile, createTestMetricsResult } from '../../helpers/factory';
-import { CustomElementFixture } from '../helpers/CustomElementFixture';
+import type { MetricsResult, TestMetrics } from 'mutation-testing-metrics';
+import { TestFileModel, TestModel } from 'mutation-testing-metrics';
+import type { MutationTestReportDrawerTestComponent } from '../../../src/components/drawer-test/drawer-test.component.js';
+import type { Column, MutationTestReportTestMetricsTable } from '../../../src/components/metrics-table/metrics-table.component.js';
+import { MutationTestReportTestViewComponent } from '../../../src/components/test-view/test-view.js';
+import { createCustomEvent } from '../../../src/lib/custom-events.js';
+import { createTestDefinition, createTestFile, createTestMetricsResult } from '../helpers/factory.js';
+import { CustomElementFixture } from '../helpers/CustomElementFixture.js';
 
 describe(MutationTestReportTestViewComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportTestViewComponent>;

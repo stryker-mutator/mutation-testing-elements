@@ -1,6 +1,6 @@
 import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { tailwind } from '../../style';
+import { tailwind } from '../../style/index.js';
 
 @customElement('mte-tooltip')
 export class MutationTestReportThemeSwitchComponent extends LitElement {

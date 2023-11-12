@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Install local example - Mutation test elements</title>
-    <script src="/mutation-test-elements.js"></script>
-  </head>
 
-  <body>
-    <a href="/">Back</a>
+<head>
+  <title>Install local example - Mutation test elements</title>
+  <script type="module" src="/mutation-test-elements.js"></script>
+</head>
 
-    <script>
-      const queryParams = new URLSearchParams(window.location.search);
-      const port = queryParams.get('port');
-      const url = port ? `http://localhost:${port}/` : 'sse';
+<body>
+  <a href="/">Back</a>
 
-      const report = document.createElement('mutation-test-report-app');
-      report.setAttribute('src', 'mutation-report.json');
-      report.setAttribute('sse', url);
-      document.body.appendChild(report);
+  <script>
+    const queryParams = new URLSearchParams(window.location.search);
+    const port = queryParams.get('port');
+    const url = port ? `http://localhost:${port}/` : 'sse';
 
-      const app = document.getElementsByTagName('mutation-test-report-app').item(0);
+    const report = document.createElement('mutation-test-report-app');
+    report.setAttribute('src', 'mutation-report.json');
+    report.setAttribute('sse', url);
+    document.body.appendChild(report);
 
-      function updateTheme() {
-        document.body.style.backgroundColor = app.themeBackgroundColor;
-      }
-      app.addEventListener('theme-changed', updateTheme);
+    const app = document.getElementsByTagName('mutation-test-report-app').item(0);
 
-      updateTheme();
-    </script>
-  </body>
+    function updateTheme() {
+      document.body.style.backgroundColor = app.themeBackgroundColor;
+    }
+    app.addEventListener('theme-changed', updateTheme);
+
+    updateTheme();
+  </script>
+</body>
+
 </html>

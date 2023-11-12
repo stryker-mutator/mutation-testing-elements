@@ -1,18 +1,21 @@
 /* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
-import { html, PropertyValues, unsafeCSS, nothing } from 'lit';
+import type { PropertyValues } from 'lit';
+import { html, unsafeCSS, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { MutantResult, MutationTestResult } from 'mutation-testing-report-schema/api';
-import { MetricsResult, MutantModel, TestModel, calculateMutationTestMetrics } from 'mutation-testing-metrics';
-import { tailwind, globals } from '../../style';
-import { locationChange$, View } from '../../lib/router';
-import { Subscription, fromEvent, sampleTime } from 'rxjs';
-import theme from './theme.scss';
-import { createCustomEvent } from '../../lib/custom-events';
-import { FileUnderTestModel, Metrics, MutationTestMetricsResult, TestFileModel, TestMetrics } from 'mutation-testing-metrics';
-import { toAbsoluteUrl } from '../../lib/html-helpers';
-import { isLocalStorageAvailable } from '../../lib/browser';
-import { mutantChanges } from '../../lib/mutant-changes';
-import { RealTimeElement } from '../real-time-element';
+import type { MutantResult, MutationTestResult } from 'mutation-testing-report-schema/api';
+import type { MetricsResult, MutantModel, TestModel } from 'mutation-testing-metrics';
+import { calculateMutationTestMetrics } from 'mutation-testing-metrics';
+import { tailwind, globals } from '../../style/index.js';
+import { locationChange$, View } from '../../lib/router.js';
+import type { Subscription } from 'rxjs';
+import { fromEvent, sampleTime } from 'rxjs';
+import theme from './theme.scss?inline';
+import { createCustomEvent } from '../../lib/custom-events.js';
+import type { FileUnderTestModel, Metrics, MutationTestMetricsResult, TestFileModel, TestMetrics } from 'mutation-testing-metrics';
+import { toAbsoluteUrl } from '../../lib/html-helpers.js';
+import { isLocalStorageAvailable } from '../../lib/browser.js';
+import { mutantChanges } from '../../lib/mutant-changes.js';
+import { RealTimeElement } from '../real-time-element.js';
 
 interface BaseContext {
   path: string[];
@@ -112,12 +115,11 @@ export class MutationTestReportAppComponent extends RealTimeElement {
   }
 
   public async willUpdate(changedProperties: PropertyValues) {
-    // Set the theme when no theme is selected (light vs dark)
-    if (!this.theme) {
-      this.theme = this.getTheme();
-    }
-
     if (this.report) {
+      // Set the theme when no theme is selected (light vs dark)
+      if (!this.theme) {
+        this.theme = this.getTheme();
+      }
       if (changedProperties.has('report')) {
         this.updateModel(this.report);
       }
@@ -399,5 +401,11 @@ export class MutationTestReportAppComponent extends RealTimeElement {
     } else {
       return nothing;
     }
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'mutation-test-report-app': MutationTestReportAppComponent;
   }
 }

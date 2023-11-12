@@ -1,5 +1,6 @@
-import { html, nothing, TemplateResult } from 'lit';
-import { DrawerMode } from './drawer.component';
+import type { nothing, TemplateResult } from 'lit';
+import { html } from 'lit';
+import type { DrawerMode } from './drawer.component.js';
 
 export const renderDrawer = ({ hasDetail, mode }: { hasDetail: boolean; mode: DrawerMode }, content: TemplateResult | typeof nothing) =>
   html`<mte-drawer

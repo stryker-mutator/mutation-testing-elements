@@ -1,8 +1,8 @@
-import { MutantElement } from './MutantElement.po';
+import { MutantElement } from './MutantElement.po.js';
 
 export class MutantMarker extends MutantElement {
   async underlineIsVisible() {
-    const underlineStyle = await this.browser.executeScript<string>('return window.getComputedStyle(arguments[0]).borderBottomStyle;', this.host);
+    const underlineStyle = await this.host.evaluate<string>((el) => window.getComputedStyle(el).borderBottomStyle);
     switch (underlineStyle) {
       case 'solid':
         return true;

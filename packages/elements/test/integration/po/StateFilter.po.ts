@@ -1,7 +1,7 @@
-import { PageObject } from './PageObject.po';
-import { MutantStatus } from 'mutation-testing-report-schema/api';
-import { TestStatus } from 'mutation-testing-metrics';
-import { StateFilterCheckbox } from './StateFilterCheckbox.po';
+import { PageObject } from './PageObject.po.js';
+import type { MutantStatus } from 'mutation-testing-report-schema/api';
+import type { TestStatus } from 'mutation-testing-metrics';
+import { StateFilterCheckbox } from './StateFilterCheckbox.po.js';
 
 export class StateFilter extends PageObject {
   public state(state: MutantStatus | TestStatus): StateFilterCheckbox {
@@ -19,5 +19,9 @@ export class StateFilter extends PageObject {
   public async states() {
     const labels = await this.$$('[data-status]');
     return labels.map((label) => new StateFilterCheckbox(label, this.browser));
+  }
+
+  public get statesLocator() {
+    return this.$('[data-status]');
   }
 }

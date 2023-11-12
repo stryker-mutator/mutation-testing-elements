@@ -1,12 +1,13 @@
-import { html, nothing, PropertyValues, unsafeCSS } from 'lit';
+import type { PropertyValues } from 'lit';
+import { html, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { MetricsResult, TestFileModel, TestMetrics, TestModel } from 'mutation-testing-metrics';
-import { MteCustomEvent } from '../../lib/custom-events';
-import { tailwind } from '../../style';
-import { DrawerMode } from '../drawer/drawer.component';
-import { Column } from '../metrics-table/metrics-table.component';
-import style from './test-view.scss';
-import { RealTimeElement } from '../real-time-element';
+import type { MetricsResult, TestFileModel, TestMetrics, TestModel } from 'mutation-testing-metrics';
+import type { MteCustomEvent } from '../../lib/custom-events.js';
+import { tailwind } from '../../style/index.js';
+import type { DrawerMode } from '../drawer/drawer.component.js';
+import type { Column } from '../metrics-table/metrics-table.component.js';
+import { RealTimeElement } from '../real-time-element.js';
+import style from './test-view.scss?inline';
 
 @customElement('mte-test-view')
 export class MutationTestReportTestViewComponent extends RealTimeElement {

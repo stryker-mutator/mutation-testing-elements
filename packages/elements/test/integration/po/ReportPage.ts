@@ -1,95 +1,75 @@
-import { constants, DEFAULT_TIMEOUT } from '../lib/constants';
-import Breadcrumb from './Breadcrumb.po';
-import { ElementSelector } from './ElementSelector.po';
-import { selectShadowRoot, sleep } from '../lib/helpers';
-import { WebDriver } from 'selenium-webdriver';
-import { ThemeSelector } from './ThemeSelector.po';
-import { MutantView } from './MutantView.po';
-import { TestView } from './TestView.po';
-import { NavTab } from './NavTab.po';
-import { RealTimeProgressBar } from './RealTimeProgressBar.po';
+import Breadcrumb from './Breadcrumb.po.js';
+import { ElementSelector } from './ElementSelector.po.js';
+import { ThemeSelector } from './ThemeSelector.po.js';
+import { MutantView } from './MutantView.po.js';
+import { TestView } from './TestView.po.js';
+import { NavTab } from './NavTab.po.js';
+import { RealTimeProgressBar } from './RealTimeProgressBar.po.js';
+import type { Page } from '@playwright/test';
 
 export class ReportPage extends ElementSelector {
-  constructor(private readonly browser: WebDriver) {
-    super(browser);
+  constructor(private readonly page: Page) {
+    super(page.locator('body'));
   }
 
   public whenFileReportLoaded() {
-    return this.browser.wait(async () => {
-      try {
-        await this.$('mutation-test-report-app >>> :is(mte-test-view, mte-mutant-view)');
-        return true;
-      } catch (err) {
-        if (err instanceof Error && err.message.includes('Unable to locate element')) {
-          return false;
-        }
-        throw err;
-      }
-    }, DEFAULT_TIMEOUT);
-  }
-
-  public takeScreenshot(): Promise<string> {
-    return this.$('mutation-test-report-app >>> div').takeScreenshot();
+    return this.$('mutation-test-report-app >> :is(mte-test-view, mte-mutant-view)').waitFor();
   }
 
   public scrollUp(): Promise<void> {
-    return this.browser.executeScript('window.scroll(0, 0)');
+    return this.page.evaluate('window.scroll(0, 0)');
   }
 
   public scrollDown(): Promise<void> {
-    return this.browser.executeScript('window.scrollTo(0, document.body.scrollHeight);');
+    return this.page.evaluate('window.scrollTo(0, document.body.scrollHeight);');
   }
 
   public async navigateTo(path: string) {
-    await this.browser.get('about:blank');
-    await this.browser.get(constants.BASE_URL + path);
-
-    // Navigating to fragments (#...) resolve almost immediately. We currently don't have
-    // a good way to determine that the app is fully loaded. We throw an arbitrary sleep after each navigation.
-    // TODO: find a better way to determine that the page is fully loaded...
-    await sleep();
+    await this.page.goto(path);
+    await this.whenFileReportLoaded();
   }
 
-  public async backgroundColor() {
-    const element = await this.$('mutation-test-report-app >>> div');
-    return element.getCssValue('background-color');
+  public async backgroundColor(): Promise<string> {
+    return this.$('mutation-test-report-app >> div')
+      .first()
+      .evaluate((el) => getComputedStyle(el).backgroundColor);
   }
 
   public title() {
-    return this.browser.getTitle();
+    return this.page.title();
   }
 
   public currentUrl() {
-    return this.browser.getCurrentUrl();
+    return this.page.url();
   }
 
   public breadcrumb(): Breadcrumb {
-    const host = this.$('mutation-test-report-app >>> mte-breadcrumb');
-    return new Breadcrumb(selectShadowRoot(host), this.browser);
+    const host = this.$('mutation-test-report-app >> mte-breadcrumb');
+    return new Breadcrumb(host, this.page);
   }
 
   public async navigationTabs() {
-    const elements = await this.$$('mutation-test-report-app >>> [role=tablist] li');
-    return elements.map((li) => new NavTab(li, this.browser));
+    const elements = await this.$$('mutation-test-report-app >> [role=tablist] li');
+    return elements.map((li) => new NavTab(li, this.page));
   }
 
   public get themeSelector(): ThemeSelector {
-    return new ThemeSelector(selectShadowRoot(this.$('mutation-test-report-app >>> mte-theme-switch')), this.browser);
+    return new ThemeSelector(this.$('mutation-test-report-app >> mte-theme-switch'), this.page);
   }
 
   get mutantView(): MutantView {
-    return new MutantView(selectShadowRoot(this.$('mutation-test-report-app >>> mte-mutant-view')), this.browser);
+    return new MutantView(this.$('mutation-test-report-app >> mte-mutant-view'), this.page);
   }
 
   get testView(): TestView {
-    return new TestView(selectShadowRoot(this.$('mutation-test-report-app >>> mte-test-view')), this.browser);
+    return new TestView(this.$('mutation-test-report-app >> mte-test-view'), this.page);
   }
 
   get realTimeProgressBar(): RealTimeProgressBar {
-    return new RealTimeProgressBar(selectShadowRoot(this.$('mutation-test-report-app >>> mte-result-status-bar')), this.browser);
+    return new RealTimeProgressBar(this.$('mutation-test-report-app >> mte-result-status-bar'), this.page);
   }
 
   pageYOffset(): Promise<number> {
-    return this.browser.executeScript('return window.pageYOffset');
+    return this.page.evaluate('window.pageYOffset');
   }
 }

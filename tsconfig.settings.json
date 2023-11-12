@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
     "target": "es2022",
-    "module": "commonjs",
+    "module": "node16",
+    "moduleResolution": "node16",
     "strict": true,
     "composite": true,
     "declaration": true,
     "declarationMap": true,
+    "isolatedModules": true,
     "esModuleInterop": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -13,6 +15,7 @@
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
     "experimentalDecorators": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "skipLibCheck": true
   }
 }

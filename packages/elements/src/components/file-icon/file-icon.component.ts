@@ -1,7 +1,7 @@
 import { LitElement, svg, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { determineLanguage, ProgrammingLanguage } from '../../lib/code-helpers';
-import style from './file-icon.scss';
+import { determineLanguage, ProgrammingLanguage } from '../../lib/code-helpers.js';
+import style from './file-icon.scss?inline';
 import { classMap } from 'lit/directives/class-map.js';
 @customElement('mte-file-icon')
 export class MutationTestReportFileIconComponent extends LitElement {

@@ -1,9 +1,9 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
-import { toAbsoluteUrl } from '../lib/html-helpers';
-import { View } from '../lib/router';
-import { tailwind } from '../style';
+import { toAbsoluteUrl } from '../lib/html-helpers.js';
+import { View } from '../lib/router.js';
+import { tailwind } from '../style/index.js';
 
 @customElement('mte-breadcrumb')
 export class MutationTestReportBreadcrumbComponent extends LitElement {

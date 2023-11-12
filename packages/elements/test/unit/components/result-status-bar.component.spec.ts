@@ -1,6 +1,5 @@
-import { ResultStatusBar } from '../../../src/components/result-status-bar/result-status-bar';
-import { CustomElementFixture } from '../helpers/CustomElementFixture';
-import { expect } from 'chai';
+import { ResultStatusBar } from '../../../src/components/result-status-bar/result-status-bar.js';
+import { CustomElementFixture } from '../helpers/CustomElementFixture.js';
 
 describe(ResultStatusBar.name, () => {
   let sut: CustomElementFixture<ResultStatusBar>;

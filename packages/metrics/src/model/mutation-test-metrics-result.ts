@@ -1,8 +1,8 @@
-import { MetricsResult } from './metrics-result';
-import { FileUnderTestModel } from './file-under-test-model';
-import { TestMetrics } from './test-metrics';
-import { Metrics } from './metrics';
-import { TestFileModel } from './test-file-model';
+import type { MetricsResult } from './metrics-result.js';
+import type { FileUnderTestModel } from './file-under-test-model.js';
+import type { TestMetrics } from './test-metrics.js';
+import type { Metrics } from './metrics.js';
+import type { TestFileModel } from './test-file-model.js';
 
 export interface MutationTestMetricsResult {
   systemUnderTestMetrics: MetricsResult<FileUnderTestModel, Metrics>;

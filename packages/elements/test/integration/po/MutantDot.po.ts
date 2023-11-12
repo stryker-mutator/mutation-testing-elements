@@ -1,5 +1,4 @@
-import { isElementVisible } from '../lib/helpers';
-import { MutantElement } from './MutantElement.po';
+import { MutantElement } from './MutantElement.po.js';
 
 export class MutantDot extends MutantElement {
   public async isActive(): Promise<boolean> {
@@ -7,7 +6,7 @@ export class MutantDot extends MutantElement {
     return classes.includes('selected');
   }
 
-  public isVisible(): Promise<boolean> {
-    return isElementVisible(this.host);
+  get dot() {
+    return this.host;
   }
 }

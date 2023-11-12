@@ -1,6 +1,6 @@
 node_modules
 dist
-dist-test
+dist-tsc
 .stryker-tmp
 reports
 src-generated
@@ -17,3 +17,11 @@ packages/*/mvn/resources/
 .scala-build/
 
 .nx/cache
+# pack files
+mutation-*.tgz
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/

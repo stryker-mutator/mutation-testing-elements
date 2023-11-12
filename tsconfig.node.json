@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.settings.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "noEmit": true,
+    "checkJs": true,
+    "resolveJsonModule": true
+  },
+  "include": [
+    "packages/elements/test/integration/lib/SseServer.ts",
+    "packages/*/*.config.ts",
+    "packages/*/*.config.js",
+    "packages/*/*.conf.js",
+    "stryker.parent.json"
+  ]
+}

@@ -1,21 +1,21 @@
 import { expect } from 'chai';
-import { getCurrent } from './lib/browser';
-import { MutantMarker } from './po/MutantMarker.po';
-import { ReportPage } from './po/ReportPage';
+import type { MutantMarker } from './po/MutantMarker.po.js';
+import { ReportPage } from './po/ReportPage.js';
+import { test } from '@playwright/test';
 
-describe('Unsanitized example', () => {
+test.describe('Unsanitized example', () => {
   let page: ReportPage;
 
-  beforeEach(() => {
-    page = new ReportPage(getCurrent());
+  test.beforeEach(({ page: p }) => {
+    page = new ReportPage(p);
   });
 
-  describe('mutant view', () => {
-    beforeEach(async () => {
+  test.describe('mutant view', () => {
+    test.beforeEach(async () => {
       await page.navigateTo('unsanitized-example/#mutant/platform.ts');
     });
 
-    it('should escape quotes in mutant ids', async () => {
+    test('should escape quotes in mutant ids', async () => {
       const mutantMarkers = await page.mutantView.mutantMarkers();
       let m: MutantMarker | undefined;
       for (const mutantMarker of mutantMarkers) {
@@ -27,7 +27,7 @@ describe('Unsanitized example', () => {
       }
       expect(m).ok;
       await m!.toggle();
-      expect(await page.mutantView.mutantDrawer().whenHalfOpen()).eq(true);
+      await page.mutantView.mutantDrawer().whenHalfOpen();
     });
   });
 });

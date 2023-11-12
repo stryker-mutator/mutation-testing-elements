@@ -1,12 +1,9 @@
-import { expect } from 'chai';
-import { SseTestServer } from './lib/SseServer';
-import { getCurrent } from './lib/browser';
-import { ReportPage } from './po/ReportPage';
-import { ReportingClient } from './lib/SseServer';
-import { MutantStatus } from 'mutation-testing-report-schema';
-import { waitUntil } from './lib/helpers';
+import { expect, test } from '@playwright/test';
+import type { ReportingClient } from './lib/SseServer.js';
+import { SseTestServer } from './lib/SseServer.js';
+import { ReportPage } from './po/ReportPage.js';
 
-describe('real-time reporting', () => {
+test.describe('real-time reporting', () => {
   const server: SseTestServer = new SseTestServer();
   const defaultEvent = { id: '0', status: 'Killed' };
 
@@ -14,17 +11,17 @@ describe('real-time reporting', () => {
   let page: ReportPage;
   let client: ReportingClient;
 
-  beforeEach(async () => {
+  test.beforeEach(async ({ page: p }) => {
     port = await server.start();
-    page = new ReportPage(getCurrent());
+    page = new ReportPage(p);
   });
 
-  afterEach(async () => {
+  test.afterEach(async () => {
     await server.close();
   });
 
-  describe('when navigating to the overview page', () => {
-    it('should update the mutation testing metrics', async () => {
+  test.describe('when navigating to the overview page', () => {
+    test('should update the mutation testing metrics', async () => {
       server.on('client-connected', (c) => (client = c));
 
       await arrangeNavigate();
@@ -36,64 +33,64 @@ describe('real-time reporting', () => {
       const attributesRow = page.mutantView.resultTable().row('Attributes');
       const wrappitContextRow = page.mutantView.resultTable().row('WrappitContext.cs');
 
-      expect(await allFilesRow.mutationScore()).to.eq('50.00');
-      expect(await attributesRow.mutationScore()).to.eq('100.00');
-      expect(await wrappitContextRow.mutationScore()).to.eq('0.00');
+      await expect(allFilesRow.mutationScore()).toHaveText('50.00');
+      await expect(allFilesRow.mutationScore()).toHaveText('50.00');
+      await expect(attributesRow.mutationScore()).toHaveText('100.00');
+      await expect(wrappitContextRow.mutationScore()).toHaveText('0.00');
     });
 
-    it('should show a progress-bar when real-time reporting is enabled', async () => {
+    test('should show a progress-bar when real-time reporting is enabled', async () => {
       await arrangeNavigate();
 
-      expect(await page.realTimeProgressBar.progressBarVisible()).to.be.true;
+      await expect(page.realTimeProgressBar.progressBar).toBeVisible();
     });
 
-    it('should show a small progress-bar when scrolling down the page', async () => {
+    test('should show a small progress-bar when scrolling down the page', async () => {
       await arrangeNavigate();
 
       const progressBar = page.realTimeProgressBar;
-      expect(await progressBar.smallProgressBarVisible()).to.be.false;
+      expect(await progressBar.smallProgressBarVisible()).toEqual(false);
       await page.mutantView.resultTable().row('WrappitContext.cs').navigate();
       await page.scrollDown();
-      await waitUntil(async () => expect(await progressBar.smallProgressBarVisible()).to.be.true);
+      await expect.poll(async () => await progressBar.smallProgressBarVisible()).toEqual(true);
     });
 
-    it('should update the progress-bar when the report is updated', async () => {
+    test('should update the progress-bar when the report is updated', async () => {
       server.on('client-connected', (c) => (client = c));
 
       await arrangeNavigate();
-      expect(await page.realTimeProgressBar.progressBarWidth()).to.eq('0px');
-      expect(await page.realTimeProgressBar.killedCount()).to.eq('');
+      expect(await page.realTimeProgressBar.progressBarWidth()).toEqual(0);
+      await expect(page.realTimeProgressBar.killedCount()).not.toBeVisible();
       client.sendMutantTested(defaultEvent);
 
-      await waitUntil(async () => expect(await page.realTimeProgressBar.progressBarWidth()).to.not.eq('0px'));
-      expect(await page.realTimeProgressBar.killedCount()).to.eq('1');
+      await expect.poll(async () => await page.realTimeProgressBar.progressBarWidth()).not.toEqual(0);
+      await expect(page.realTimeProgressBar.killedCount()).toHaveText('1');
     });
   });
 
   async function arrangeNavigate() {
     await page.navigateTo(`realtime-reporting-example/?port=${port}`);
-    await page.whenFileReportLoaded();
   }
 
-  describe('when navigating to a file with 1 mutant', () => {
-    it('should update the state of a mutant', async () => {
+  test.describe('when navigating to a file with 1 mutant', () => {
+    test('should update the state of a mutant', async () => {
       server.on('client-connected', (c) => (client = c));
       await page.navigateTo(`realtime-reporting-example/?port=${port}#mutant/Attributes/HandleAttribute.cs/`);
-      await page.whenFileReportLoaded();
-      expect((await page.mutantView.mutantDots()).length).to.equal(1);
+
+      expect(await page.mutantView.mutantDots()).toHaveLength(1);
       const mutantPending = page.mutantView.mutantMarker('0');
-      expect(await mutantPending.underlineIsVisible()).to.be.true;
+      expect(await mutantPending.underlineIsVisible()).toEqual(true);
 
       client.sendMutantTested(defaultEvent);
       client.sendFinished();
       const filter = page.mutantView.stateFilter();
-      await waitUntil(async () => Boolean(await filter.state(MutantStatus.Killed).isDisplayed()));
-      expect((await page.mutantView.mutantDots()).length).to.equal(0);
-      await filter.state(MutantStatus.Killed).click();
-      expect((await page.mutantView.mutantDots()).length).to.equal(1);
+      await filter.state('Killed').waitForVisible();
+      expect(await page.mutantView.mutantDots()).toHaveLength(0);
+      await filter.state('Killed').click();
+      expect(await page.mutantView.mutantDots()).toHaveLength(1);
     });
 
-    it('should keep the drawer open if it has been selected while an update comes through', async () => {
+    test('should keep the drawer open if it has been selected while an update comes through', async () => {
       server.on('client-connected', (c) => (client = c));
       await page.navigateTo(`realtime-reporting-example/?port=${port}#mutant/Attributes/HandleAttribute.cs/`);
 
@@ -104,7 +101,7 @@ describe('real-time reporting', () => {
 
       client.sendMutantTested(defaultEvent);
 
-      expect(await drawer.isHalfOpen()).to.be.true;
+      await drawer.whenHalfOpen();
     });
   });
 });

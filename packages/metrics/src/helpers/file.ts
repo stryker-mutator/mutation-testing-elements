@@ -1,6 +1,6 @@
-import type { FileUnderTestModel } from '../model/file-under-test-model';
-import type { MetricsResult } from '../model/metrics-result';
-import type { Metrics } from '../model/metrics';
+import type { FileUnderTestModel } from '../model/file-under-test-model.js';
+import type { MetricsResult } from '../model/metrics-result.js';
+import type { Metrics } from '../model/metrics.js';
 const SEPARATOR = '/';
 
 export function normalizeFileNames<TIn>(input: Record<string, TIn>, projectRoot = ''): Record<string, TIn> {

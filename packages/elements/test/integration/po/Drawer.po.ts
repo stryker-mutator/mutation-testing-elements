@@ -1,32 +1,24 @@
-import { DEFAULT_TIMEOUT } from '../lib/constants';
-import { PageObject } from './PageObject.po';
+import { PageObject } from './PageObject.po.js';
+import { expect } from '@playwright/test';
 
 export const HALF_OPEN_SIZE = 120;
 const CLOSED_SIZE = 0;
 
 export class Drawer extends PageObject {
-  private get header() {
+  public get header() {
     return this.$('[slot="header"]');
   }
 
   private get readMoreToggle() {
-    return this.$('mte-drawer >>> [data-testId="btnReadMoreToggle"]');
+    return this.$('mte-drawer >> [data-testId="btnReadMoreToggle"]');
   }
 
   public toggleReadMore() {
     return this.readMoreToggle.click();
   }
 
-  public async detailsVisible() {
-    try {
-      await this.$('mte-drawer >>> slot[name="detail"]');
-      return true;
-    } catch (err) {
-      if (err instanceof Error && err.message.includes('no such element')) {
-        return false;
-      }
-      throw err;
-    }
+  public details() {
+    return this.$('mte-drawer >> [slot="detail"]');
   }
 
   public async clickOnHeader() {
@@ -34,38 +26,22 @@ export class Drawer extends PageObject {
   }
 
   public async height() {
-    const { height } = await this.$('mte-drawer').getRect();
-    return height;
+    return (await this.$('mte-drawer').boundingBox())?.height ?? 0;
   }
 
-  public headerText() {
-    return this.header.getText();
+  public summary() {
+    return this.$('[slot="summary"]');
   }
 
-  public summaryText() {
-    return this.$('[slot="summary"]').getText();
-  }
-
-  public whenOpen() {
-    return this.browser.wait(() => this.isOpen(), DEFAULT_TIMEOUT);
+  public async whenOpen() {
+    await expect.poll(async () => this.height()).toBeGreaterThan(HALF_OPEN_SIZE);
   }
 
   public whenHalfOpen() {
-    return this.browser.wait(() => this.isHalfOpen(), DEFAULT_TIMEOUT);
+    return expect.poll(async () => this.height()).toBe(HALF_OPEN_SIZE);
   }
 
   public whenClosed() {
-    return this.browser.wait(() => this.isClosed(), DEFAULT_TIMEOUT);
-  }
-
-  public async isHalfOpen() {
-    return (await this.height()) === HALF_OPEN_SIZE;
-  }
-  public async isClosed() {
-    return (await this.height()) === CLOSED_SIZE;
-  }
-
-  public async isOpen() {
-    return (await this.height()) > HALF_OPEN_SIZE;
+    return expect.poll(async () => this.height()).toBe(CLOSED_SIZE);
   }
 }

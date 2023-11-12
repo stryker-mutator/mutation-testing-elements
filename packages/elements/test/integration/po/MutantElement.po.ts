@@ -1,7 +1,16 @@
-import { MutantStatus } from 'mutation-testing-report-schema';
-import { PageObject } from './PageObject.po';
+import type { MutantStatus } from 'mutation-testing-report-schema/api';
+import { PageObject } from './PageObject.po.js';
 
-const allMutantStates = Object.values(MutantStatus) as MutantStatus[];
+const allMutantStates = Object.keys({
+  Killed: null,
+  Survived: null,
+  NoCoverage: null,
+  CompileError: null,
+  RuntimeError: null,
+  Timeout: null,
+  Ignored: null,
+  Pending: null,
+} satisfies Record<MutantStatus, unknown>) as MutantStatus[];
 
 /**
  * Represents a dom element with a mutant status class mutant-id
@@ -12,12 +21,11 @@ export abstract class MutantElement extends PageObject {
   }
 
   protected async classes() {
-    return (await this.host.getAttribute('class')).split(' ');
+    return (await this.host.getAttribute('class'))?.split(' ') ?? [];
   }
 
   public async getStatus(): Promise<MutantStatus | undefined> {
     return (await this.classes()).find((clazz) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
       const testState = allMutantStates.find((state) => state === clazz);
       if (testState) {
         return testState;

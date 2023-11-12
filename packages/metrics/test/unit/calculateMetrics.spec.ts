@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { calculateMetrics, calculateMutationTestMetrics } from '../../src/calculateMetrics';
 import { expect } from 'chai';
-import { MutantStatus, FileResultDictionary } from 'mutation-testing-report-schema/api';
-import { FileUnderTestModel, Metrics, MetricsResult, TestFileModel, TestMetrics } from '../../src/model';
-import { createFileResult, createMutantResult, createMutationTestResult, createTestDefinition, createTestFile } from '../helpers/factories';
+import type { FileResultDictionary } from 'mutation-testing-report-schema';
+import { calculateMetrics, calculateMutationTestMetrics } from '../../src/calculateMetrics.js';
+import type { FileUnderTestModel, Metrics, MetricsResult, TestMetrics } from '../../src/model/index.js';
+import { TestFileModel } from '../../src/model/index.js';
+import { createFileResult, createMutantResult, createMutationTestResult, createTestDefinition, createTestFile } from '../helpers/factories.js';
 
 describe(calculateMetrics.name, () => {
   it('should wrap results in an "All files" root', () => {
@@ -14,11 +14,11 @@ describe(calculateMetrics.name, () => {
   it('should count results of multiple files', () => {
     // Arrange
     const baz = createFileResult({
-      mutants: [createMutantResult({ status: MutantStatus.Killed }), createMutantResult({ status: MutantStatus.Survived })],
+      mutants: [createMutantResult({ status: 'Killed' }), createMutantResult({ status: 'Survived' })],
     });
     const input: FileResultDictionary = {
       'foo.js': createFileResult({
-        mutants: [createMutantResult({ status: MutantStatus.Killed })],
+        mutants: [createMutantResult({ status: 'Killed' })],
       }),
       'bar/baz.js': baz,
     };
@@ -128,15 +128,15 @@ describe(calculateMetrics.name, () => {
     const input: FileResultDictionary = {
       'foo.js': createFileResult({
         mutants: [
-          createMutantResult({ status: MutantStatus.Pending }),
-          createMutantResult({ status: MutantStatus.RuntimeError }),
-          createMutantResult({ status: MutantStatus.Killed }),
-          createMutantResult({ status: MutantStatus.CompileError }),
-          createMutantResult({ status: MutantStatus.NoCoverage }),
-          createMutantResult({ status: MutantStatus.Survived }),
-          createMutantResult({ status: MutantStatus.Killed }),
-          createMutantResult({ status: MutantStatus.Timeout }),
-          createMutantResult({ status: MutantStatus.Ignored }),
+          createMutantResult({ status: 'Pending' }),
+          createMutantResult({ status: 'RuntimeError' }),
+          createMutantResult({ status: 'Killed' }),
+          createMutantResult({ status: 'CompileError' }),
+          createMutantResult({ status: 'NoCoverage' }),
+          createMutantResult({ status: 'Survived' }),
+          createMutantResult({ status: 'Killed' }),
+          createMutantResult({ status: 'Timeout' }),
+          createMutantResult({ status: 'Ignored' }),
         ],
       }),
     };

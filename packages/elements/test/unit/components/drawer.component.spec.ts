@@ -1,6 +1,5 @@
-import { expect } from 'chai';
-import { MutationTestReportDrawer } from '../../../src/components/drawer/drawer.component';
-import { CustomElementFixture } from '../helpers/CustomElementFixture';
+import { MutationTestReportDrawer } from '../../../src/components/drawer/drawer.component.js';
+import { CustomElementFixture } from '../helpers/CustomElementFixture.js';
 
 describe(MutationTestReportDrawer.name, () => {
   let sut: CustomElementFixture<MutationTestReportDrawer>;

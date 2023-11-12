@@ -1,12 +1,10 @@
-import { CustomElementFixture } from '../helpers/CustomElementFixture';
-import { FileComponent } from '../../../src/components/file/file.component';
-import { expect } from 'chai';
-import { FileResult, MutantStatus, MutantResult } from 'mutation-testing-report-schema/api';
-import { FileStateFilterComponent } from '../../../src/components/state-filter/state-filter.component';
-import { createMutantResult, createFileResult } from '../../helpers/factory';
-import { createCustomEvent } from '../../../src/lib/custom-events';
+import { CustomElementFixture } from '../helpers/CustomElementFixture.js';
+import { FileComponent } from '../../../src/components/file/file.component.js';
+import type { FileResult, MutantStatus, MutantResult } from 'mutation-testing-report-schema/api';
+import type { FileStateFilterComponent } from '../../../src/components/state-filter/state-filter.component.js';
+import { createMutantResult, createFileResult } from '../helpers/factory.js';
+import { createCustomEvent } from '../../../src/lib/custom-events.js';
 import { FileUnderTestModel } from 'mutation-testing-metrics';
-import sinon from 'sinon';
 
 describe(FileComponent.name, () => {
   let sut: CustomElementFixture<FileComponent>;
@@ -42,7 +40,7 @@ describe(FileComponent.name, () => {
           createMutantResult({
             id: '1',
             replacement: '-',
-            status: MutantStatus.NoCoverage,
+            status: 'NoCoverage',
             mutatorName: 'ArithmeticOperator',
             location: { start: { line: 2, column: 12 }, end: { line: 2, column: 13 } },
           }),
@@ -50,7 +48,7 @@ describe(FileComponent.name, () => {
             id: '2',
             mutatorName: 'BlockStatement',
             replacement: '{}',
-            status: MutantStatus.Survived,
+            status: 'Survived',
             location: { start: { line: 1, column: 20 }, end: { line: 4, column: 2 } },
           }),
         ],
@@ -75,7 +73,7 @@ describe(FileComponent.name, () => {
           createMutantResult({
             id: '"&test',
             replacement: '-',
-            status: '"&test' as MutantStatus.NoCoverage,
+            status: '"&test' as 'NoCoverage',
             mutatorName: 'ArithmeticOperator"&<script>alert</script>',
             location: { start: { line: 2, column: 12 }, end: { line: 2, column: 13 } },
           }),
@@ -97,7 +95,7 @@ describe(FileComponent.name, () => {
     it('should hide the mutant-dot if it is filtered', async () => {
       // Arrange
       const fileResult = createFileResult({
-        mutants: [createMutantResult({ status: MutantStatus.Survived, location: { start: { line: 1, column: 1 }, end: { line: 1, column: 6 } } })],
+        mutants: [createMutantResult({ status: 'Survived', location: { start: { line: 1, column: 1 }, end: { line: 1, column: 6 } } })],
         source: 'foo + bar',
       });
       sut.element.model = new FileUnderTestModel(fileResult, 'foo.js');
@@ -117,13 +115,13 @@ describe(FileComponent.name, () => {
       // Arrange
       const fileResult = createFileResult({
         mutants: [
-          createMutantResult({ id: '1', status: MutantStatus.Survived, location: { start: { line: 2, column: 1 }, end: { line: 1, column: 6 } } }),
-          createMutantResult({ id: '2', status: MutantStatus.Survived, location: { start: { line: 1, column: 2 }, end: { line: 1, column: 3 } } }),
-          createMutantResult({ id: '3', status: MutantStatus.Survived, location: { start: { line: 1, column: 1 }, end: { line: 1, column: 4 } } }),
+          createMutantResult({ id: '1', status: 'Survived', location: { start: { line: 2, column: 1 }, end: { line: 1, column: 6 } } }),
+          createMutantResult({ id: '2', status: 'Survived', location: { start: { line: 1, column: 2 }, end: { line: 1, column: 3 } } }),
+          createMutantResult({ id: '3', status: 'Survived', location: { start: { line: 1, column: 1 }, end: { line: 1, column: 4 } } }),
         ],
         source: 'foo + bar\nfoo + bar',
       });
-      filterComponent.dispatchEvent(createCustomEvent('filters-changed', [MutantStatus.Survived]));
+      filterComponent.dispatchEvent(createCustomEvent('filters-changed', ['Survived']));
 
       // Act
       sut.element.model = new FileUnderTestModel(fileResult, 'foo.js');
@@ -143,20 +141,20 @@ describe(FileComponent.name, () => {
               id: '1',
               location: { end: { column: 13, line: 3 }, start: { column: 10, line: 3 } },
               mutatorName: 'MethodReplacement',
-              status: MutantStatus.NoCoverage,
+              status: 'NoCoverage',
             }),
             createMutantResult({
               id: '2',
               location: { end: { column: 999 /*Doesn't exist*/, line: 4 }, start: { column: 15, line: 4 } },
               mutatorName: 'SemicolonRemover',
-              status: MutantStatus.Survived,
+              status: 'Survived',
             }),
             createMutantResult({
               id: '3',
               location: { end: { column: 1, line: 9999 /*Doesn't exist*/ }, start: { column: 15, line: 9999 } },
               mutatorName: 'SemicolonRemover',
               replacement: '',
-              status: MutantStatus.Survived,
+              status: 'Survived',
             }),
           ],
 
@@ -186,7 +184,7 @@ function add(a, b) {
             createMutantResult({
               location: { end: { column: 13, line: 1 }, start: { column: 10, line: 1 } },
               mutatorName: 'MethodReplacement',
-              status: MutantStatus.NoCoverage,
+              status: 'NoCoverage',
             }),
           ],
           source: 'const foo = "bar";',
@@ -201,15 +199,7 @@ function add(a, b) {
 
     it('should report mutant status correctly', async () => {
       // Arrange
-      const allStates = [
-        MutantStatus.CompileError,
-        MutantStatus.Ignored,
-        MutantStatus.Killed,
-        MutantStatus.NoCoverage,
-        MutantStatus.RuntimeError,
-        MutantStatus.Survived,
-        MutantStatus.Timeout,
-      ];
+      const allStates: MutantStatus[] = ['CompileError', 'Ignored', 'Killed', 'NoCoverage', 'RuntimeError', 'Survived', 'Timeout'];
       const mutants: MutantResult[] = allStates.map((status, i) => {
         const id = i + 1;
         const line = id;
@@ -253,7 +243,7 @@ function add(a, b) {
             createMutantResult({
               id: '1',
               replacement: '-',
-              status: MutantStatus.NoCoverage,
+              status: 'NoCoverage',
               mutatorName: 'ArithmeticOperator',
               location: { start: { line: 3, column: 12 }, end: { line: 3, column: 13 } },
             }),
@@ -261,7 +251,7 @@ function add(a, b) {
               id: '2',
               mutatorName: 'BlockStatement',
               replacement: '{}',
-              status: MutantStatus.Survived,
+              status: 'Survived',
               location: { start: { line: 2, column: 20 }, end: { line: 4, column: 2 } },
             }),
           ],
@@ -362,7 +352,7 @@ function add(a, b) {
         await sut.whenStable();
 
         // Act
-        filterComponent.dispatchEvent(createCustomEvent('filters-changed', [MutantStatus.Survived])); // Deselect "NoCoverage"
+        filterComponent.dispatchEvent(createCustomEvent('filters-changed', ['Survived'])); // Deselect "NoCoverage"
         await sut.whenStable();
 
         // Assert
@@ -385,7 +375,7 @@ function add(a, b) {
 
       it('should not show the diff if the mutant was filtered out', async () => {
         // Arrange
-        filterComponent.dispatchEvent(createCustomEvent('filters-changed', [MutantStatus.Survived]));
+        filterComponent.dispatchEvent(createCustomEvent('filters-changed', ['Survived']));
         await sut.whenStable();
         const mutant = sut.$('span.mutant[mutant-id="1"]');
 
@@ -408,9 +398,9 @@ function add(a, b) {
 
       it('should clear the selection', async () => {
         // Arrange
-        const getSelectionStub = sinon.stub(window, 'getSelection');
-        const selectionMock = { removeAllRanges: sinon.stub() };
-        getSelectionStub.returns(selectionMock as unknown as Selection);
+        const getSelectionStub = vi.spyOn(window, 'getSelection');
+        const selectionMock = { removeAllRanges: vi.fn() };
+        getSelectionStub.mockReturnValue(selectionMock as unknown as Selection);
         const mutant = sut.$('span.mutant[mutant-id="1"]');
 
         // Act
@@ -418,7 +408,7 @@ function add(a, b) {
         await sut.whenStable();
 
         // Assert
-        expect(selectionMock.removeAllRanges).calledOnce;
+        expect(selectionMock.removeAllRanges).toHaveBeenCalledOnce();
       });
 
       it('should prevent propagation', async () => {
@@ -478,15 +468,15 @@ function add(a, b) {
 
       it('should not update state in file when model is updated', async () => {
         // Arrange
-        sut.element.model.mutants[0].status = MutantStatus.Killed;
-        filterComponent.dispatchEvent(createCustomEvent('filters-changed', [MutantStatus.Killed]));
+        sut.element.model.mutants[0].status = 'Killed';
+        filterComponent.dispatchEvent(createCustomEvent('filters-changed', ['Killed']));
         const mutant = sut.$('span.mutant[mutant-id="1"]');
         mutant.click();
         sut.element.requestUpdate('model');
         await sut.whenStable();
 
         // Act
-        sut.element.model.mutants[0].status = MutantStatus.Killed;
+        sut.element.model.mutants[0].status = 'Killed';
         sut.element.requestUpdate('model');
         await sut.whenStable();
 

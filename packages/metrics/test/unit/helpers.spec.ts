@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { normalizeFileNames } from '../../src';
+import { normalizeFileNames } from '../../src/index.js';
 
 describe(normalizeFileNames.name, () => {
   it('should replace \\ with /', () => {

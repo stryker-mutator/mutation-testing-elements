@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import { MutationTestResult } from 'mutation-testing-report-schema/api';
-import { aggregateResultsByModule } from '../../src';
-import { createFileResult, createMutantResult, createMutationTestResult, createTestDefinition, createTestFile } from '../helpers/factories';
+import type { MutationTestResult } from 'mutation-testing-report-schema';
+import { aggregateResultsByModule } from '../../src/index.js';
+import { createFileResult, createMutantResult, createMutationTestResult, createTestDefinition, createTestFile } from '../helpers/factories.js';
 
 describe(aggregateResultsByModule.name, () => {
   it('should result in an empty report when an empty object is provided', () => {
