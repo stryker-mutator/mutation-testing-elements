@@ -16,6 +16,10 @@
     "./mutation-test-elements.js": {
       "types": "./dist-tsc/src/index.d.ts",
       "default": "./dist/mutation-test-elements.js"
+    },
+    "./dist/mutation-test-elements.js": {
+      "types": "./dist-tsc/src/index.d.ts",
+      "default": "./dist/mutation-test-elements.js"
     }
   },
   "nx": {
