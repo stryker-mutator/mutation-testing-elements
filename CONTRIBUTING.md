@@ -51,6 +51,16 @@ Some quick notes to help you get started:
 
 Have fun!
 
+## Debugging mutation-testing-elements
+
+### Unit tests
+
+To debug the unit tests, you can place a `debugger` statement on the place you want to debug. Then, start the unit tests and open the dev tools to trigger the debug statement.
+
+## Integration tests
+
+Install the VS Code Playwright plugin (from the recommended extensions). Then run any test from the sidebar in a test file.
+
 ## Running Stryker on mutation-testing-elements
 
 We support mutation testing mutation-testing-elements with Stryker! You can run it with `npx nx run PACKAGE_NAME:stryker`, for example `npx nx run elements:stryker`.
