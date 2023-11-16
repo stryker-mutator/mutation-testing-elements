@@ -1,6 +1,6 @@
 {
   "name": "mutation-testing-elements",
-  "version": "2.0.5",
+  "version": "3.0.0",
   "description": "A suite of web components for a mutation testing report.",
   "unpkg": "dist/mutation-test-elements.js",
   "main": "dist/index.cjs",
@@ -56,8 +56,8 @@
     "eslint-config-mte": "*",
     "express": "4.18.2",
     "lit": "3.1.0",
-    "mutation-testing-metrics": "2.0.5",
-    "mutation-testing-report-schema": "2.0.5",
+    "mutation-testing-metrics": "3.0.0",
+    "mutation-testing-report-schema": "3.0.0",
     "postcss": "8.4.31",
     "prism-svelte": "0.5.0",
     "prismjs": "1.29.0",

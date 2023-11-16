@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v2.0.5...v3.0.0) (2023-11-16)
+
+
+### Build System
+
+* overhaul build with vite & playwright ([#2825](https://github.com/stryker-mutator/mutation-testing-elements/issues/2825)) ([3176cdc](https://github.com/stryker-mutator/mutation-testing-elements/commit/3176cdc7f3faaed319aadaf112e8b2224b3b7ffc))
+
+
+### BREAKING CHANGES
+
+* mutation-testing-report-schema and mutation-testing-metrics are now ESM
+* report-schema `MutantStatus` is a union type instead of TS enum
+
+
+
+
+
 ## [2.0.5](https://github.com/stryker-mutator/mutation-testing-elements/compare/v2.0.4...v2.0.5) (2023-10-31)
 
 **Note:** Version bump only for package mutation-testing-metrics
