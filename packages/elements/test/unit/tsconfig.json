@@ -1,0 +1,13 @@
+{
+  "extends": "../../../../tsconfig.settings.json",
+  "compilerOptions": {
+    "types": ["vite/client", "vitest/globals", "vitest/importMeta", "vitest"],
+    "emitDeclarationOnly": true,
+    "outDir": "../../dist-tsc/test/unit"
+  },
+  "references": [
+    {
+      "path": "../../src/tsconfig.json"
+    }
+  ]
+}

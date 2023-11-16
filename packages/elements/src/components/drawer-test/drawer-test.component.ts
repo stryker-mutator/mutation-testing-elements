@@ -1,12 +1,13 @@
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { MutantModel, TestModel, TestStatus } from 'mutation-testing-metrics';
-import { describeLocation, getEmojiForTestStatus, plural, renderIfPresent } from '../../lib/html-helpers';
-import { tailwind } from '../../style';
-import { renderDetailLine, renderEmoji, renderSummaryContainer, renderSummaryLine } from '../drawer-mutant/util';
-import { DrawerMode } from '../drawer/drawer.component';
-import { renderDrawer } from '../drawer/util';
-import { RealTimeElement } from '../real-time-element';
+import type { MutantModel, TestModel } from 'mutation-testing-metrics';
+import { TestStatus } from 'mutation-testing-metrics';
+import { describeLocation, getEmojiForTestStatus, plural, renderIfPresent } from '../../lib/html-helpers.js';
+import { tailwind } from '../../style/index.js';
+import { renderDetailLine, renderEmoji, renderSummaryContainer, renderSummaryLine } from '../drawer-mutant/util.js';
+import type { DrawerMode } from '../drawer/drawer.component.js';
+import { renderDrawer } from '../drawer/util.js';
+import { RealTimeElement } from '../real-time-element.js';
 
 const describeMutant = (mutant: MutantModel) => html`<code>${mutant.getMutatedLines()}</code> (${describeLocation(mutant)})`;
 

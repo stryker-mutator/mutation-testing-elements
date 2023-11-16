@@ -2,6 +2,9 @@
   "name": "mutation-testing-metrics-scala",
   "version": "2.0.5",
   "description": "Zero-dependency library to calculate mutation testing metrics in Scala.",
+  "nx": {
+    "name": "metrics-scala"
+  },
   "scripts": {
     "test": "sbt \"compile; metrics/test; circe/test; docs/mdoc --check\"",
     "publish": "sbt \"sonatypeBundleClean; publishSigned; sonatypeBundleRelease;\"",

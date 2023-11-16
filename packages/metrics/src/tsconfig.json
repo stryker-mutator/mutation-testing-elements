@@ -2,7 +2,6 @@
   "extends": "../../../tsconfig.settings.json",
   "compilerOptions": {
     "types": ["node"],
-    "resolveJsonModule": true,
     "outDir": "../dist/src"
   },
   "references": [

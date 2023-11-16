@@ -1,5 +1,5 @@
-import { MutationTestResult, TestFileDefinitionDictionary } from 'mutation-testing-report-schema';
-import { determineCommonBasePath, isNotNullish, normalizeFileNames } from './helpers';
+import type { MutationTestResult, TestFileDefinitionDictionary } from 'mutation-testing-report-schema';
+import { determineCommonBasePath, isNotNullish, normalizeFileNames } from './helpers/index.js';
 
 /**
  * Aggregates multiple reports together into a single report, grouped by module.

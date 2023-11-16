@@ -1,6 +1,5 @@
-import { escapeHtml, getContextClassForStatus, toAbsoluteUrl } from '../../../src/lib/html-helpers';
-import { expect } from 'chai';
-import { MutantStatus } from 'mutation-testing-report-schema/api';
+import { escapeHtml, getContextClassForStatus, toAbsoluteUrl } from '../../../src/lib/html-helpers.js';
+import type { MutantStatus } from 'mutation-testing-report-schema/api';
 
 describe(getContextClassForStatus.name, () => {
   function actArrangeAssert(expected: string, input: MutantStatus) {
@@ -8,13 +7,13 @@ describe(getContextClassForStatus.name, () => {
       expect(getContextClassForStatus(input)).eq(expected);
     });
   }
-  actArrangeAssert('success', MutantStatus.Killed);
-  actArrangeAssert('danger', MutantStatus.Survived);
-  actArrangeAssert('caution', MutantStatus.NoCoverage);
-  actArrangeAssert('warning', MutantStatus.Timeout);
-  actArrangeAssert('secondary', MutantStatus.CompileError);
-  actArrangeAssert('secondary', MutantStatus.RuntimeError);
-  actArrangeAssert('secondary', MutantStatus.Ignored);
+  actArrangeAssert('success', 'Killed');
+  actArrangeAssert('danger', 'Survived');
+  actArrangeAssert('caution', 'NoCoverage');
+  actArrangeAssert('warning', 'Timeout');
+  actArrangeAssert('secondary', 'CompileError');
+  actArrangeAssert('secondary', 'RuntimeError');
+  actArrangeAssert('secondary', 'Ignored');
 });
 
 describe(escapeHtml.name, () => {

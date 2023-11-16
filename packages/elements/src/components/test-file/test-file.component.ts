@@ -1,18 +1,21 @@
-import { html, nothing, PropertyValues, svg, unsafeCSS } from 'lit';
+import type { PropertyValues } from 'lit';
+import { html, nothing, svg, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
-import { TestFileModel, TestModel, TestStatus } from 'mutation-testing-metrics';
-import style from './test-file.scss';
+import type { TestFileModel, TestModel } from 'mutation-testing-metrics';
+import { TestStatus } from 'mutation-testing-metrics';
+import style from './test-file.scss?inline';
 
 import { repeat } from 'lit/directives/repeat.js';
-import { determineLanguage, gte, highlightCode, transformHighlightedLines } from '../../lib/code-helpers';
-import { createCustomEvent, MteCustomEvent } from '../../lib/custom-events';
-import { getContextClassForTestStatus, getEmojiForTestStatus, scrollToCodeFragmentIfNeeded } from '../../lib/html-helpers';
-import { prismjs, tailwind } from '../../style';
+import { determineLanguage, gte, highlightCode, transformHighlightedLines } from '../../lib/code-helpers.js';
+import type { MteCustomEvent } from '../../lib/custom-events.js';
+import { createCustomEvent } from '../../lib/custom-events.js';
+import { getContextClassForTestStatus, getEmojiForTestStatus, scrollToCodeFragmentIfNeeded } from '../../lib/html-helpers.js';
+import { prismjs, tailwind } from '../../style/index.js';
 import '../../style/prism-plugins';
-import { renderDots, renderLine } from '../file/util';
-import { StateFilter } from '../state-filter/state-filter.component';
-import { RealTimeElement } from '../real-time-element';
+import { renderDots, renderLine } from '../file/util.js';
+import type { StateFilter } from '../state-filter/state-filter.component.js';
+import { RealTimeElement } from '../real-time-element.js';
 
 @customElement('mte-test-file')
 export class TestFileComponent extends RealTimeElement {

@@ -2,7 +2,7 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
   parserOptions: {
-    project: true,
+    project: ['./tsconfig.json', './{src,test}/tsconfig.json', './test/{unit,integration}/tsconfig.json', '../../tsconfig.node.json'],
   },
   rules: {
     '@typescript-eslint/no-use-before-define': 'off',
@@ -10,6 +10,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/consistent-type-imports': 'error',
 
     // Not useful for a lot of stuff, but mainly `.shadowRoot`
     '@typescript-eslint/no-non-null-assertion': 'off',
@@ -21,18 +22,17 @@ module.exports = {
     'plugin:@typescript-eslint/recommended-type-checked',
     'prettier',
   ],
+  reportUnusedDisableDirectives: true,
   env: {
     node: true,
     es6: true,
   },
   ignorePatterns: [
-    'webpack.*.js',
-    '*.conf.js',
-    '*.config.js',
+    'trace/',
     'tsconfig-transpiler.js',
     'node_modules',
     'dist',
-    'dist-test',
+    'dist-tsc',
     'src-generated',
     '.stryker-tmp',
     'reports',

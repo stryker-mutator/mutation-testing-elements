@@ -1,5 +1,5 @@
-import { PageObject } from './PageObject.po';
-import { ResultTableRow } from './ResultTableRow.po';
+import { PageObject } from './PageObject.po.js';
+import { ResultTableRow } from './ResultTableRow.po.js';
 
 export class ResultTable extends PageObject {
   public head() {

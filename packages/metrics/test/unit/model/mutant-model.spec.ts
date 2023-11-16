@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import { MutantResult, MutantStatus } from 'mutation-testing-report-schema/api';
-import { MutantModel, TestModel } from '../../../src';
-import { createFileUnderTestModel, createLocation, createMutantResult, createTestDefinition } from '../../helpers/factories';
+import type { MutantResult } from 'mutation-testing-report-schema';
+import { MutantModel, TestModel } from '../../../src/index.js';
+import { createFileUnderTestModel, createLocation, createMutantResult, createTestDefinition } from '../../helpers/factories.js';
 
 describe(MutantModel.name, () => {
   it('should copy over all values from mutant result', () => {
@@ -15,7 +15,7 @@ describe(MutantModel.name, () => {
       mutatorName: 'fooMutator',
       replacement: '"bar"',
       static: true,
-      status: MutantStatus.Killed,
+      status: 'Killed',
       statusReason: 'Foo should have been "bar" but was "baz"',
       testsCompleted: 45,
     };

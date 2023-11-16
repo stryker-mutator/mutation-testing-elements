@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
-import { Position } from 'mutation-testing-report-schema/api';
+import type { Position } from 'mutation-testing-report-schema/api';
 import { highlight, languages } from 'prismjs/components/prism-core';
 
 export enum ProgrammingLanguage {

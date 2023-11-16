@@ -1,8 +1,9 @@
-import { compareNames, normalize } from './helpers';
-import { FileResult, MutantStatus, MutationTestResult } from 'mutation-testing-report-schema/api';
-import { groupBy } from './helpers';
-import { FileUnderTestModel, Metrics, MetricsResult, MutantModel, MutationTestMetricsResult, TestFileModel, TestMetrics, TestModel } from './model';
-import { TestStatus } from './model/test-model';
+import { compareNames, normalize, groupBy } from './helpers/index.js';
+import type { FileResult, MutationTestResult } from 'mutation-testing-report-schema';
+import type { MutantStatus } from 'mutation-testing-report-schema';
+import type { Metrics, MutantModel, MutationTestMetricsResult, TestMetrics, TestModel } from './model/index.js';
+import { FileUnderTestModel, MetricsResult, TestFileModel } from './model/index.js';
+import { TestStatus } from './model/test-model.js';
 const DEFAULT_SCORE = NaN;
 const ROOT_NAME = 'All files';
 const ROOT_NAME_TESTS = 'All tests';
@@ -135,14 +136,14 @@ export function countTestFileMetrics(testFile: TestFileModel[]): TestMetrics {
 export function countFileMetrics(fileResult: FileUnderTestModel[]): Metrics {
   const mutants = fileResult.flatMap((_) => _.mutants);
   const count = (status: MutantStatus) => mutants.filter((_) => _.status === status).length;
-  const pending = count(MutantStatus.Pending);
-  const killed = count(MutantStatus.Killed);
-  const timeout = count(MutantStatus.Timeout);
-  const survived = count(MutantStatus.Survived);
-  const noCoverage = count(MutantStatus.NoCoverage);
-  const runtimeErrors = count(MutantStatus.RuntimeError);
-  const compileErrors = count(MutantStatus.CompileError);
-  const ignored = count(MutantStatus.Ignored);
+  const pending = count('Pending');
+  const killed = count('Killed');
+  const timeout = count('Timeout');
+  const survived = count('Survived');
+  const noCoverage = count('NoCoverage');
+  const runtimeErrors = count('RuntimeError');
+  const compileErrors = count('CompileError');
+  const ignored = count('Ignored');
   const totalDetected = timeout + killed;
   const totalUndetected = survived + noCoverage;
   const totalCovered = totalDetected + survived;

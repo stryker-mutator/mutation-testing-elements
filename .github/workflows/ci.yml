@@ -28,14 +28,26 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 21
       - run: npm ci
+      # Only install playwright if elements project is affected
+      - name: affected
+        id: affected
+        shell: bash
+        run: echo "affected=$(npx nx show projects --affected --json)" >> "$GITHUB_OUTPUT"
+      - name: Install Playwright Browsers
+        if: ${{ contains(fromJson(steps.affected.outputs.affected), 'elements') }}
+        run: npx playwright install chromium firefox --with-deps
       - name: Lint & Build & Test
         run: npm run all
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: image-diffs
-          path: packages/elements/reports/diff/
+          path: packages/elements/playwright-report/
   incremental_mutation_testing:
     runs-on: ubuntu-latest
     steps:
@@ -44,6 +56,6 @@ jobs:
       - run: npm run download-incremental-reports
       - name: Run Stryker incrementally
         run: |
-          npx nx run-many --target=stryker --projects=mutation-testing-metrics,mutation-testing-elements -- --incremental
+          npx nx run-many --target=stryker --projects=metrics,elements -- --incremental
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}

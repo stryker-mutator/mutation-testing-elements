@@ -1,25 +1,23 @@
-import { PageObject } from './PageObject.po';
+import { PageObject } from './PageObject.po.js';
 
 export class RealTimeProgressBar extends PageObject {
   public async smallProgressBarVisible() {
-    const smallProgressBar = await this.$('div.pointer-events-none');
-    return (await smallProgressBar.getCssValue('opacity')) === '1';
+    const smallProgressBar = this.$('div.pointer-events-none');
+    return (await smallProgressBar.evaluate((el) => getComputedStyle(el).opacity)) === '1';
   }
 
-  public async progressBarVisible() {
-    try {
-      await this.$('div.my-4');
-      return true;
-    } catch {
-      return false;
-    }
+  get progressBar() {
+    return this.$('div.my-4');
   }
 
   public async progressBarWidth() {
-    return await this.$('.parts > div').getCssValue('width');
+    return await this.$('.parts > div')
+      .first()
+      .boundingBox()
+      .then((el) => el?.width);
   }
 
-  public async killedCount() {
-    return await this.$('.parts > div > span').getText();
+  public killedCount() {
+    return this.host.getByTitle('killed + timeout').first();
   }
 }

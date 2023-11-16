@@ -2,7 +2,7 @@
   "folders": [
     {
       "path": "packages/report-schema",
-      "name": "schema"
+      "name": "report-schema"
     },
     {
       "path": "packages/metrics",
@@ -22,7 +22,13 @@
     }
   ],
   "extensions": {
-    "recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode", "bierner.lit-html", "bradlc.vscode-tailwindcss"]
+    "recommendations": [
+      "dbaeumer.vscode-eslint",
+      "esbenp.prettier-vscode",
+      "bierner.lit-html",
+      "bradlc.vscode-tailwindcss",
+      "ms-playwright.playwright"
+    ]
   },
   "settings": {
     "search.exclude": {
@@ -30,9 +36,9 @@
       "**/bower_components": true,
       "**/*.code-search": true,
       "**/dist": true,
-      "**/dist-test": true,
+      "**/dist-tsc": true,
       "**/*.tsbuildinfo": true,
-      "**/reports/mutation": true,
+      "**/reports/mutation": true
     },
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": true
@@ -40,15 +46,7 @@
     "eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
     "typescript.tsdk": "./node_modules/typescript/lib",
     "task.autoDetect": "off",
-    "cSpell.words": [
-      "autoloader",
-      "bootswatch",
-      "clazz",
-      "clike",
-      "prismjs",
-      "templating",
-      "Theming"
-    ],
+    "cSpell.words": ["autoloader", "bootswatch", "clazz", "clike", "prismjs", "templating", "Theming"],
     "[json]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode"
     },

@@ -151,7 +151,7 @@ For compatibility with older browsers and Edge, load the Web Components polyfill
 
 ## Run tests
 
-There are unit tests with karma and integration tests using selenium-webdriver. You can run them with `npm test` or by running `npm run test:unit` or `npm run test:integration` respectively. There is also a launch configuration so you can debug from vscode.
+There are unit tests with Vitest (browser mode) and integration tests using playwright. You can run them with `npx nx test` or by running `npx nx test:unit` or `npx nx test:integration` respectively. There is also a launch configuration so you can debug from vscode.
 
 The integration tests also do screenshot comparisons. Currently, they only run when you're running in a headless browser, because the screenshots differ ever so slightly with the snapshots. You can run `npm run test:integration:headless` to run locally with screenshot comparison. It will compare and show you a diff file if the diff is deemed to large. Screenshot tests can be updated for your environment with `npm run test:integration:update`.
 

@@ -1,6 +1,6 @@
 import { AssertionError } from 'chai';
-import { LitElement } from 'lit';
-import { CustomEventMap, MteCustomEvent } from '../../../src/lib/custom-events';
+import type { LitElement } from 'lit';
+import type { CustomEventMap, MteCustomEvent } from '../../../src/lib/custom-events.js';
 
 interface CustomElementFixtureOptions {
   autoConnect: boolean;
@@ -36,7 +36,7 @@ export class CustomElementFixture<TCustomElement extends LitElement> {
     if (this.isConnected) {
       throw new Error(`Element ${this.customElementName} is already connected to the DOM. Cannot connect a second time.`);
     }
-    document.body.append(this.element);
+    document.body.appendChild(this.element);
     this.isConnected = true;
   }
 

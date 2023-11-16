@@ -3,32 +3,27 @@
   "private": true,
   "version": "0.0.6",
   "description": "A suite of web components for a mutation testing report.",
-  "main": "dist/mutation-test-elements.js",
+  "type": "module",
   "workspaces": [
     "packages/*",
     "libs/*"
   ],
-  "nx": {
-    "_comment": "This creates a new 'root' project, with dependencies on subprojects, so 'test' in elements will call root:build:tsc",
-    "implicitDependencies": [
-      "mutation-testing-report-schema",
-      "mutation-testing-elements",
-      "mutation-testing-metrics"
-    ]
-  },
+  "nx": {},
   "scripts": {
-    "clean": "rimraf --glob packages/*/{dist,dist-test,src-generated}",
+    "clean": "rimraf --glob packages/*/{dist,dist-tsc,src-generated}",
     "all": "nx affected --target=lint:prettier,lint,build,test",
+    "build": "nx run-many --target=build --exclude=root",
     "lint:prettier": "prettier --check .",
+    "lint:fix": "prettier --write . && nx run-many --target=lint --fix",
     "build:tsc": "tsc --build",
-    "start": "nx run-many --target=start --no-prefix",
+    "start": "nx start elements",
     "start:tsc": "tsc --build --watch",
     "download-incremental-reports": "bash tasks/download-incremental-reports.sh",
     "lerna:version:patch": "lerna version patch",
     "lerna:version:minor": "lerna version minor",
     "lerna:version:major": "lerna version major",
     "lerna:publish": "lerna publish from-git --yes --no-verify-access",
-    "generate": "nx run mutation-testing-report-schema:generate"
+    "generate": "nx run report-schema:generate"
   },
   "repository": {
     "type": "git",
@@ -41,25 +36,24 @@
   "homepage": "https://github.com/stryker-mutator/mutation-testing-elements#readme",
   "devDependencies": {
     "@stryker-mutator/core": "7.3.0",
-    "@stryker-mutator/karma-runner": "7.3.0",
     "@stryker-mutator/mocha-runner": "7.3.0",
     "@stryker-mutator/typescript-checker": "7.3.0",
+    "@stryker-mutator/vitest-runner": "7.3.0",
     "@types/chai": "4.3.10",
     "@types/mocha": "10.0.4",
     "@types/node": "20.9.0",
-    "@types/sinon": "17.0.1",
-    "@types/sinon-chai": "3.2.12",
     "chai": "4.3.10",
+    "eslint-plugin-lit": "1.10.1",
+    "eslint-plugin-wc": "2.0.4",
     "json-schema-to-typescript": "13.1.1",
     "lerna": "7.4.2",
     "mocha": "10.2.0",
     "nx": "17.1.2",
-    "prettier": "3.0.3",
+    "prettier": "3.1.0",
     "prettier-plugin-tailwindcss": "0.5.7",
     "rimraf": "5.0.5",
-    "sinon": "17.0.1",
-    "sinon-chai": "3.7.0",
     "source-map-support": "0.5.21",
-    "typescript": "5.2.2"
+    "typescript": "5.2.2",
+    "vite": "4.5.0"
   }
 }

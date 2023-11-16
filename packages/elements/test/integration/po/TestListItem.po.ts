@@ -1,4 +1,4 @@
-import { PageObject } from './PageObject.po';
+import { PageObject } from './PageObject.po.js';
 
 export class TestListItem extends PageObject {
   public async isSelected() {

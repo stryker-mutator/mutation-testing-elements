@@ -1,6 +1,6 @@
-import { Location, MutantResult, MutantStatus } from 'mutation-testing-report-schema/api';
-import { FileUnderTestModel } from './file-under-test-model';
-import { TestModel } from './test-model';
+import type { Location, MutantResult, MutantStatus } from 'mutation-testing-report-schema';
+import type { FileUnderTestModel } from './file-under-test-model.js';
+import type { TestModel } from './test-model.js';
 
 function assertSourceFileDefined(sourceFile: FileUnderTestModel | undefined): asserts sourceFile {
   if (sourceFile === undefined) {

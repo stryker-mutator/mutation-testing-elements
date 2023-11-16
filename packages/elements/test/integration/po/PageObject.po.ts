@@ -1,15 +1,20 @@
-import { WebElement, WebDriver } from 'selenium-webdriver';
-import { ElementSelector } from './ElementSelector.po';
+import { expect } from '@playwright/test';
+import { ElementSelector } from './ElementSelector.po.js';
+import type { Locator, Page } from '@playwright/test';
 
 export class PageObject extends ElementSelector {
   constructor(
-    protected readonly host: WebElement,
-    protected readonly browser: WebDriver,
+    protected readonly host: Locator,
+    protected readonly browser: Page,
   ) {
     super(host);
   }
 
-  public isDisplayed() {
-    return this.host.isDisplayed();
+  public waitForVisible() {
+    return expect(this.host).toBeVisible();
+  }
+
+  public waitForHidden() {
+    return expect(this.host).toBeHidden();
   }
 }

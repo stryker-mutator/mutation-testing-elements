@@ -1,9 +1,9 @@
 import { html, LitElement, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { renderIf } from '../../lib/html-helpers';
-import { tailwind } from '../../style';
-import { renderEmoji } from '../drawer-mutant/util';
-import style from './drawer.component.scss';
+import { renderIf } from '../../lib/html-helpers.js';
+import { tailwind } from '../../style/index.js';
+import { renderEmoji } from '../drawer-mutant/util.js';
+import style from './drawer.component.scss?inline';
 
 export type DrawerMode = 'open' | 'half' | 'closed';
 export const DRAWER_HALF_OPEN_SIZE = 120;
