@@ -1,5 +1,5 @@
 **/*
 !README.md
 !dist/**/*
-!dist/**/*.
+!dist-tsc/src/**/*
 tsconfig.tsbuildinfo

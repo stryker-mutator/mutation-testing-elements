@@ -1,16 +1,18 @@
-import { html, nothing, PropertyValues, svg, unsafeCSS } from 'lit';
+import type { PropertyValues } from 'lit';
+import { html, nothing, svg, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
-import { FileUnderTestModel, MutantModel } from 'mutation-testing-metrics';
-import { MutantResult, MutantStatus } from 'mutation-testing-report-schema/api';
-import { findDiffIndices, gte, highlightCode, transformHighlightedLines } from '../../lib/code-helpers';
-import { createCustomEvent, MteCustomEvent } from '../../lib/custom-events';
-import { escapeHtml, getContextClassForStatus, getEmojiForStatus, scrollToCodeFragmentIfNeeded } from '../../lib/html-helpers';
-import { prismjs, tailwind } from '../../style';
-import { StateFilter } from '../state-filter/state-filter.component';
-import style from './file.scss';
-import { renderDots, renderLine } from './util';
-import { RealTimeElement } from '../real-time-element';
+import type { FileUnderTestModel, MutantModel } from 'mutation-testing-metrics';
+import type { MutantResult, MutantStatus } from 'mutation-testing-report-schema/api';
+import { findDiffIndices, gte, highlightCode, transformHighlightedLines } from '../../lib/code-helpers.js';
+import type { MteCustomEvent } from '../../lib/custom-events.js';
+import { createCustomEvent } from '../../lib/custom-events.js';
+import { escapeHtml, getContextClassForStatus, getEmojiForStatus, scrollToCodeFragmentIfNeeded } from '../../lib/html-helpers.js';
+import { prismjs, tailwind } from '../../style/index.js';
+import type { StateFilter } from '../state-filter/state-filter.component.js';
+import style from './file.scss?inline';
+import { renderDots, renderLine } from './util.js';
+import { RealTimeElement } from '../real-time-element.js';
 
 const diffOldClass = 'diff-old';
 const diffNewClass = 'diff-new';
@@ -48,7 +50,7 @@ export class FileComponent extends RealTimeElement {
 
   private readonly filtersChanged = (event: MteCustomEvent<'filters-changed'>) => {
     // Pending is not filterable, but they should still be shown to the user.
-    this.selectedMutantStates = (event.detail as MutantStatus[]).concat([MutantStatus.Pending]);
+    this.selectedMutantStates = (event.detail as MutantStatus[]).concat(['Pending']);
   };
 
   private codeClicked = (ev: MouseEvent) => {
@@ -200,18 +202,10 @@ export class FileComponent extends RealTimeElement {
   }
 
   private updateFileRepresentation() {
-    this.filters = [
-      MutantStatus.Killed,
-      MutantStatus.Survived,
-      MutantStatus.NoCoverage,
-      MutantStatus.Ignored,
-      MutantStatus.Timeout,
-      MutantStatus.CompileError,
-      MutantStatus.RuntimeError,
-    ]
+    this.filters = (['Killed', 'Survived', 'NoCoverage', 'Ignored', 'Timeout', 'CompileError', 'RuntimeError'] satisfies MutantStatus[])
       .filter((status) => this.model.mutants.some((mutant) => mutant.status === status))
       .map((status) => ({
-        enabled: [...this.selectedMutantStates, MutantStatus.Survived, MutantStatus.NoCoverage, MutantStatus.Timeout].includes(status),
+        enabled: [...this.selectedMutantStates, 'Survived', 'NoCoverage', 'Timeout'].includes(status),
         count: this.model.mutants.filter((m) => m.status === status).length,
         status,
         label: html`${getEmojiForStatus(status)} ${status}`,

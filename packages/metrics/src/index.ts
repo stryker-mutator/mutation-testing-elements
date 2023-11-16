@@ -1,14 +1,5 @@
-export { calculateMetrics, calculateMutationTestMetrics } from './calculateMetrics';
-export { aggregateResultsByModule } from './aggregate';
-export { normalizeFileNames } from './helpers';
-export {
-  MetricsResult,
-  Metrics,
-  TestMetrics,
-  TestModel,
-  FileUnderTestModel,
-  TestFileModel,
-  MutantModel,
-  MutationTestMetricsResult,
-  TestStatus,
-} from './model';
+export { calculateMetrics, calculateMutationTestMetrics } from './calculateMetrics.js';
+export { aggregateResultsByModule } from './aggregate.js';
+export { normalizeFileNames } from './helpers/index.js';
+export { MetricsResult, TestModel, FileUnderTestModel, TestFileModel, MutantModel, TestStatus } from './model/index.js';
+export type { Metrics, TestMetrics, MutationTestMetricsResult } from './model/index.js';

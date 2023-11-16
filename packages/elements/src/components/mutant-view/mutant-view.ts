@@ -1,13 +1,14 @@
-import { html, nothing, PropertyValues, unsafeCSS } from 'lit';
+import type { PropertyValues } from 'lit';
+import { html, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { FileUnderTestModel, Metrics, MetricsResult } from 'mutation-testing-metrics';
-import { MutantResult as MutantModel, Thresholds } from 'mutation-testing-report-schema/api';
-import { MteCustomEvent } from '../../lib/custom-events';
-import { tailwind } from '../../style';
-import { DrawerMode } from '../drawer/drawer.component';
-import { Column } from '../metrics-table/metrics-table.component';
-import style from './mutant-view.scss';
-import { RealTimeElement } from '../real-time-element';
+import type { FileUnderTestModel, Metrics, MetricsResult } from 'mutation-testing-metrics';
+import type { MutantResult as MutantModel, Thresholds } from 'mutation-testing-report-schema/api';
+import type { MteCustomEvent } from '../../lib/custom-events.js';
+import { tailwind } from '../../style/index.js';
+import type { DrawerMode } from '../drawer/drawer.component.js';
+import type { Column } from '../metrics-table/metrics-table.component.js';
+import style from './mutant-view.scss?inline';
+import { RealTimeElement } from '../real-time-element.js';
 
 @customElement('mte-mutant-view')
 export class MutationTestReportMutantViewComponent extends RealTimeElement {

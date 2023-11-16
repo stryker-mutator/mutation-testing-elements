@@ -1,13 +1,14 @@
-import { html, nothing, PropertyValues } from 'lit';
+import type { PropertyValues } from 'lit';
+import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { repeat } from 'lit/directives/repeat.js';
-import { MetricsResult } from 'mutation-testing-metrics';
-import { Thresholds } from 'mutation-testing-report-schema/api';
-import { toAbsoluteUrl } from '../../lib/html-helpers';
-import { tailwind } from '../../style';
-import { renderEmoji } from '../drawer-mutant/util';
-import { RealTimeElement } from '../real-time-element';
+import type { MetricsResult } from 'mutation-testing-metrics';
+import type { Thresholds } from 'mutation-testing-report-schema/api';
+import { toAbsoluteUrl } from '../../lib/html-helpers.js';
+import { tailwind } from '../../style/index.js';
+import { renderEmoji } from '../drawer-mutant/util.js';
+import { RealTimeElement } from '../real-time-element.js';
 
 export type TableWidth = 'normal' | 'large';
 

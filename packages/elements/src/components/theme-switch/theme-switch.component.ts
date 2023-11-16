@@ -1,8 +1,8 @@
 import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { createCustomEvent } from '../../lib/custom-events';
-import { tailwind } from '../../style';
-import style from './theme-switch.scss';
+import { createCustomEvent } from '../../lib/custom-events.js';
+import { tailwind } from '../../style/index.js';
+import style from './theme-switch.scss?inline';
 
 @customElement('mte-theme-switch')
 export class MutationTestReportThemeSwitchComponent extends LitElement {

@@ -1,7 +1,6 @@
-import { MutationTestReportFileIconComponent } from '../../../src/components/file-icon/file-icon.component';
-import { expect } from 'chai';
-import { CustomElementFixture } from '../helpers/CustomElementFixture';
-import { ProgrammingLanguage } from '../../../src/lib/code-helpers';
+import { MutationTestReportFileIconComponent } from '../../../src/components/file-icon/file-icon.component.js';
+import { CustomElementFixture } from '../helpers/CustomElementFixture.js';
+import { ProgrammingLanguage } from '../../../src/lib/code-helpers.js';
 
 describe(MutationTestReportFileIconComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportFileIconComponent>;
@@ -36,35 +35,31 @@ describe(MutationTestReportFileIconComponent.name, () => {
     expectSvgClass('octicon-file');
   });
 
-  (
-    [
-      ['cs', ProgrammingLanguage.csharp],
-      ['html', ProgrammingLanguage.html],
-      ['java', ProgrammingLanguage.java],
-      ['js', ProgrammingLanguage.javascript],
-      ['cjs', ProgrammingLanguage.javascript],
-      ['mjs', ProgrammingLanguage.javascript],
-      ['ts', ProgrammingLanguage.typescript],
-      ['tsx', ProgrammingLanguage.typescript],
-      ['scala', ProgrammingLanguage.scala],
-      ['php', ProgrammingLanguage.php],
-      ['vue', ProgrammingLanguage.vue],
-      ['svelte', ProgrammingLanguage.svelte],
-    ] as const
-  ).forEach(([extension, expected]) => {
-    it(`should choose show a ${expected} svg file for foo.${extension}`, async () => {
-      // Arrange
-      sut.element.setAttribute('file', '');
-      sut.element.setAttribute('file-name', `foo.${extension}`);
+  it.each([
+    [ProgrammingLanguage.csharp, 'cs'],
+    [ProgrammingLanguage.html, 'html'],
+    [ProgrammingLanguage.java, 'java'],
+    [ProgrammingLanguage.javascript, 'js'],
+    [ProgrammingLanguage.javascript, 'cjs'],
+    [ProgrammingLanguage.javascript, 'mjs'],
+    [ProgrammingLanguage.typescript, 'ts'],
+    [ProgrammingLanguage.typescript, 'tsx'],
+    [ProgrammingLanguage.scala, 'scala'],
+    [ProgrammingLanguage.php, 'php'],
+    [ProgrammingLanguage.vue, 'vue'],
+    [ProgrammingLanguage.svelte, 'svelte'],
+  ])(`should choose show a %s svg file for foo.%s`, async (expected, extension) => {
+    // Arrange
+    sut.element.setAttribute('file', '');
+    sut.element.setAttribute('file-name', `foo.${extension}`);
 
-      // Act
-      sut.connect();
-      await sut.whenStable();
+    // Act
+    sut.connect();
+    await sut.whenStable();
 
-      // Assert
-      expectSvgClass(expected);
-      expectNotSvgClass('test');
-    });
+    // Assert
+    expectSvgClass(expected);
+    expectNotSvgClass('test');
   });
 
   it('should show a test svg when file basename ends with "spec"', async () => {

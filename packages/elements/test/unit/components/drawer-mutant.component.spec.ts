@@ -1,10 +1,8 @@
-import { expect } from 'chai';
 import { MutantModel, TestModel } from 'mutation-testing-metrics';
-import { MutantStatus } from 'mutation-testing-report-schema/api';
-import { MutationTestReportDrawerMutant } from '../../../src/components/drawer-mutant/drawer-mutant.component';
-import { MutationTestReportDrawer } from '../../../src/components/drawer/drawer.component';
-import { createLocation, createMutantResult, createTestDefinition } from '../../helpers/factory';
-import { CustomElementFixture } from '../helpers/CustomElementFixture';
+import { MutationTestReportDrawerMutant } from '../../../src/components/drawer-mutant/drawer-mutant.component.js';
+import type { MutationTestReportDrawer } from '../../../src/components/drawer/drawer.component.js';
+import { CustomElementFixture } from '../helpers/CustomElementFixture.js';
+import { createLocation, createMutantResult, createTestDefinition } from '../helpers/factory.js';
 
 describe(MutationTestReportDrawerMutant.name, () => {
   let sut: CustomElementFixture<MutationTestReportDrawerMutant>;
@@ -31,7 +29,7 @@ describe(MutationTestReportDrawerMutant.name, () => {
           id: 'mut-1',
           location: createLocation({ start: { column: 1, line: 2 } }),
           mutatorName: 'fooMutator',
-          status: MutantStatus.Survived,
+          status: 'Survived',
         }),
       );
     });
@@ -72,7 +70,7 @@ describe(MutationTestReportDrawerMutant.name, () => {
       });
 
       it('should mention when one test covered the mutant', async () => {
-        mutant.status = MutantStatus.Killed;
+        mutant.status = 'Killed';
         mutant.coveredByTests = [new TestModel(createTestDefinition())];
         sut.element.mutant = mutant;
         await sut.whenStable();
@@ -83,7 +81,7 @@ describe(MutationTestReportDrawerMutant.name, () => {
       });
 
       it('should not mentioned that a killed mutant still survived', async () => {
-        mutant.status = MutantStatus.Killed;
+        mutant.status = 'Killed';
         mutant.coveredByTests = [new TestModel(createTestDefinition())];
         sut.element.mutant = mutant;
         await sut.whenStable();
@@ -108,7 +106,7 @@ describe(MutationTestReportDrawerMutant.name, () => {
       });
 
       it('should contain the status reason', async () => {
-        mutant.status = MutantStatus.Timeout;
+        mutant.status = 'Timeout';
         mutant.statusReason = 'Hit limit reached (501 > 500)';
         sut.element.mutant = mutant;
         await sut.whenStable();
@@ -117,7 +115,7 @@ describe(MutationTestReportDrawerMutant.name, () => {
       });
 
       it('should not render the status reason when it is empty', async () => {
-        mutant.status = MutantStatus.Timeout;
+        mutant.status = 'Timeout';
         mutant.statusReason = '   ';
         sut.element.mutant = mutant;
         await sut.whenStable();

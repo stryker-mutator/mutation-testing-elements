@@ -18,8 +18,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm ci
+      - run: npx playwright install chromium firefox --with-deps
       - run: npx nx run-many --target=build
-      - run: npx nx run mutation-testing-elements:test:integration:update
+      - run: npx nx run elements:test:integration:update
       - name: Commit
         run: |
           git config --global user.name 'Stryker Mutator NPA'

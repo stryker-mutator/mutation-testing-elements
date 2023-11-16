@@ -1,6 +1,5 @@
-import { PageObject } from './PageObject.po';
+import { PageObject } from './PageObject.po.js';
 import { TestStatus } from 'mutation-testing-metrics';
-import { isElementVisible } from '../lib/helpers';
 
 const allTestStates = Object.values(TestStatus) as TestStatus[];
 
@@ -9,8 +8,8 @@ export class TestDot extends PageObject {
     return this.host.click();
   }
 
-  private async classes() {
-    return (await this.host.getAttribute('class')).split(' ');
+  private async classes(): Promise<string[]> {
+    return (await this.host.getAttribute('class'))?.split(' ') ?? [];
   }
 
   public async getStatus(): Promise<TestStatus | undefined> {
@@ -27,9 +26,5 @@ export class TestDot extends PageObject {
   public async isActive(): Promise<boolean> {
     const classes = await this.classes();
     return classes.includes('selected');
-  }
-
-  public isVisible(): Promise<boolean> {
-    return isElementVisible(this.host);
   }
 }

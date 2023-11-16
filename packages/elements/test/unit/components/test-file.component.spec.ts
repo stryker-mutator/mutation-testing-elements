@@ -1,12 +1,11 @@
-import { expect } from 'chai';
 import { MutantModel, TestFileModel } from 'mutation-testing-metrics';
 import { TestStatus } from 'mutation-testing-metrics';
-import { renderEmoji } from '../../../src/components/drawer-mutant/util';
-import { FileStateFilterComponent, StateFilter } from '../../../src/components/state-filter/state-filter.component';
-import { TestFileComponent } from '../../../src/components/test-file/test-file.component';
-import { createCustomEvent } from '../../../src/lib/custom-events';
-import { createMutantResult, createTestDefinition } from '../../helpers/factory';
-import { CustomElementFixture } from '../helpers/CustomElementFixture';
+import { renderEmoji } from '../../../src/components/drawer-mutant/util.js';
+import type { FileStateFilterComponent, StateFilter } from '../../../src/components/state-filter/state-filter.component.js';
+import { TestFileComponent } from '../../../src/components/test-file/test-file.component.js';
+import { createCustomEvent } from '../../../src/lib/custom-events.js';
+import { createMutantResult, createTestDefinition } from '../helpers/factory.js';
+import { CustomElementFixture } from '../helpers/CustomElementFixture.js';
 import { html } from 'lit-html';
 
 describe(TestFileComponent.name, () => {

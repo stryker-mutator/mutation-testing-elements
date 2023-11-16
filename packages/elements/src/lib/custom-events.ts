@@ -1,4 +1,4 @@
-import { MutantModel, TestModel } from 'mutation-testing-metrics';
+import type { MutantModel, TestModel } from 'mutation-testing-metrics';
 
 export interface CustomEventMap {
   'mutant-selected': { selected: boolean; mutant: MutantModel | undefined };

@@ -1,13 +1,12 @@
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { MutantModel, TestModel } from 'mutation-testing-metrics';
-import { MutantStatus } from 'mutation-testing-report-schema/api';
-import { describeLocation, getEmojiForStatus, plural, renderIf, renderIfPresent } from '../../lib/html-helpers';
-import { tailwind } from '../../style';
-import { DrawerMode } from '../drawer/drawer.component';
-import { renderDrawer } from '../drawer/util';
-import { renderDetailLine, renderEmoji, renderSummaryContainer, renderSummaryLine } from './util';
-import { RealTimeElement } from '../real-time-element';
+import type { MutantModel, TestModel } from 'mutation-testing-metrics';
+import { describeLocation, getEmojiForStatus, plural, renderIf, renderIfPresent } from '../../lib/html-helpers.js';
+import { tailwind } from '../../style/index.js';
+import type { DrawerMode } from '../drawer/drawer.component.js';
+import { renderDrawer } from '../drawer/util.js';
+import { RealTimeElement } from '../real-time-element.js';
+import { renderDetailLine, renderEmoji, renderSummaryContainer, renderSummaryLine } from './util.js';
 
 const describeTest = (test: TestModel) => `${test.name}${test.sourceFile && test.location ? ` (${describeLocation(test)})` : ''}`;
 
@@ -56,7 +55,7 @@ export class MutationTestReportDrawerMutant extends RealTimeElement {
       ${renderIfPresent(this.mutant?.coveredByTests, (coveredTests) =>
         renderSummaryLine(
           html`${renderEmoji('☂️', 'umbrella')} Covered by ${coveredTests.length}
-          test${plural(coveredTests)}${this.mutant?.status === MutantStatus.Survived ? ' (yet still survived)' : ''}`,
+          test${plural(coveredTests)}${this.mutant?.status === 'Survived' ? ' (yet still survived)' : ''}`,
         ),
       )}
       ${renderIf(

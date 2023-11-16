@@ -22,7 +22,7 @@ export class SseTestServer extends EventEmitter {
     return super.emit(eventType, client);
   }
 
-  public middleware = (_: unknown, res: import('express').Response) => {
+  public middleware = (_: unknown, res: ServerResponse) => {
     res.writeHead(200, {
       'Content-Type': 'text/event-stream',
       'Cache-Control': 'no-cache',

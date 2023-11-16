@@ -1,7 +1,7 @@
-import { FileResult, MutantResult } from 'mutation-testing-report-schema/api';
-import { MutantModel } from './mutant-model';
-import { SourceFile } from './source-file';
-import { MetricsResult } from './metrics-result';
+import type { FileResult, MutantResult } from 'mutation-testing-report-schema';
+import { MutantModel } from './mutant-model.js';
+import { SourceFile } from './source-file.js';
+import type { MetricsResult } from './metrics-result.js';
 
 /**
  * Represents a file which was mutated (your production code).

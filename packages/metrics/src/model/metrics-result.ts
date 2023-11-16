@@ -1,7 +1,7 @@
-import { TestFileModel } from '.';
-import { countFileMetrics, countTestFileMetrics } from '../calculateMetrics';
-import { FileUnderTestModel } from './file-under-test-model';
-import { Metrics } from './metrics';
+import { countFileMetrics, countTestFileMetrics } from '../calculateMetrics.js';
+import type { FileUnderTestModel } from './file-under-test-model.js';
+import type { Metrics } from './metrics.js';
+import type { TestFileModel } from './test-file-model.js';
 
 /**
  * A metrics result of T for a directory or file

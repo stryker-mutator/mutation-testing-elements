@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { tailwind } from '../../style';
+import { tailwind } from '../../style/index.js';
 
 type ProgressType = 'detected' | 'survived' | 'no coverage' | 'pending';
 

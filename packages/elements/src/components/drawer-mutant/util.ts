@@ -1,4 +1,5 @@
-import { html, nothing, TemplateResult } from 'lit';
+import type { TemplateResult } from 'lit';
+import { html, nothing } from 'lit';
 
 export const renderDetailLine = (title: string, content: string | TemplateResult) =>
   html`<li title=${title || nothing} class="my-3 rounded bg-white px-2 py-3 shadow">${content}</li>`;

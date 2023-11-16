@@ -1,44 +1,34 @@
-import {
-  determineLanguage,
-  transformHighlightedLines,
-  ProgrammingLanguage,
-  PositionWithOffset,
-  findDiffIndices,
-  highlightCode,
-} from '../../../src/lib/code-helpers';
-import { expect } from 'chai';
-import prism from 'prismjs/components/prism-core';
-import sinon from 'sinon';
+import type { PositionWithOffset } from '../../../src/lib/code-helpers.js';
+import { determineLanguage, transformHighlightedLines, ProgrammingLanguage, findDiffIndices, highlightCode } from '../../../src/lib/code-helpers.js';
+import * as prism from 'prismjs/components/prism-core';
 
 describe(highlightCode.name, () => {
-  [
-    [ProgrammingLanguage.csharp, 'foo.cs', 'using System;'],
-    [ProgrammingLanguage.java, 'foo.java', 'import java.lang;'],
-    [ProgrammingLanguage.typescript, 'foo.ts', 'const foo = bar;'],
-    [ProgrammingLanguage.typescript, 'foo.tsx', 'const foo = bar;'],
-    [ProgrammingLanguage.typescript, 'foo.cts', 'const foo = bar;'],
-    [ProgrammingLanguage.typescript, 'foo.mts', 'const foo = bar;'],
-    [ProgrammingLanguage.javascript, 'foo.js', 'const foo = bar;'],
-    [ProgrammingLanguage.javascript, 'foo.cjs', 'const foo = bar;'],
-    [ProgrammingLanguage.javascript, 'foo.mjs', 'const foo = bar;'],
-    [ProgrammingLanguage.php, 'foo.php', '$foo = $bar;'],
-    [ProgrammingLanguage.html, 'foo.html', '<html></html>'],
-    [ProgrammingLanguage.html, 'foo.vue', '<script>Vue.component({})</script>'],
-    [ProgrammingLanguage.gherkin, 'foo.feature', 'Feature: foo'],
-  ].forEach(([language, fileName, code]) => {
-    it(`should parse ${fileName} as ${language}`, () => {
-      const highlightSpy = sinon.spy(prism, 'highlight');
-      const highlightedCode = highlightCode(code, fileName);
-      expect(highlightedCode).contains('<span'); // actual highlighting is not tested, in prism we trust
-      expect(highlightSpy).calledWithExactly(code, prism.languages[language], language);
-    });
+  it.each([
+    ['foo.cs', ProgrammingLanguage.csharp, 'using System;'],
+    ['foo.java', ProgrammingLanguage.java, 'import java.lang;'],
+    ['foo.ts', ProgrammingLanguage.typescript, 'const foo = bar;'],
+    ['foo.tsx', ProgrammingLanguage.typescript, 'const foo = bar;'],
+    ['foo.cts', ProgrammingLanguage.typescript, 'const foo = bar;'],
+    ['foo.mts', ProgrammingLanguage.typescript, 'const foo = bar;'],
+    ['foo.js', ProgrammingLanguage.javascript, 'const foo = bar;'],
+    ['foo.cjs', ProgrammingLanguage.javascript, 'const foo = bar;'],
+    ['foo.mjs', ProgrammingLanguage.javascript, 'const foo = bar;'],
+    ['foo.php', ProgrammingLanguage.php, '$foo = $bar;'],
+    ['foo.html', ProgrammingLanguage.html, '<html></html>'],
+    ['foo.vue', ProgrammingLanguage.html, '<script>Vue.component({})</script>'],
+    ['foo.feature', ProgrammingLanguage.gherkin, 'Feature: foo'],
+  ])(`should parse %s as %s`, (fileName, language, code) => {
+    const highlightSpy = vi.spyOn(prism, 'highlight');
+    const highlightedCode = highlightCode(code, fileName);
+    expect(highlightedCode).contains('<span'); // actual highlighting is not tested, in prism we trust
+    expect(highlightSpy).toHaveBeenCalledWith(code, prism.languages[language], language);
   });
 
   it('should at least sanitize an unknown language', () => {
-    const highlightSpy = sinon.spy(prism, 'highlight');
+    const highlightSpy = vi.spyOn(prism, 'highlight');
     const highlightedCode = highlightCode('const a = \'<script>alert("a")</script>\'; b & a', 'foo.bar');
     expect(highlightedCode).eq('const a = \'&lt;script>alert("a")&lt;/script>\'; b &amp; a');
-    expect(highlightSpy).called;
+    expect(highlightSpy).toHaveBeenCalled();
   });
 });
 
@@ -195,27 +185,23 @@ describe(findDiffIndices.name, () => {
 });
 
 describe(determineLanguage.name, () => {
-  (
-    [
-      ['cs', ProgrammingLanguage.csharp],
-      ['html', ProgrammingLanguage.html],
-      ['java', ProgrammingLanguage.java],
-      ['js', ProgrammingLanguage.javascript],
-      ['cjs', ProgrammingLanguage.javascript],
-      ['mjs', ProgrammingLanguage.javascript],
-      ['ts', ProgrammingLanguage.typescript],
-      ['tsx', ProgrammingLanguage.typescript],
-      ['cts', ProgrammingLanguage.typescript],
-      ['mts', ProgrammingLanguage.typescript],
-      ['scala', ProgrammingLanguage.scala],
-      ['php', ProgrammingLanguage.php],
-      ['vue', ProgrammingLanguage.vue],
-      ['feature', ProgrammingLanguage.gherkin],
-    ] as const
-  ).forEach(([extension, expected]) => {
-    it(`should recognize file.${extension} as language ${expected}`, () => {
-      expect(determineLanguage(`file.${extension}`)).eq(expected);
-    });
+  it.each([
+    ['cs', ProgrammingLanguage.csharp],
+    ['html', ProgrammingLanguage.html],
+    ['java', ProgrammingLanguage.java],
+    ['js', ProgrammingLanguage.javascript],
+    ['cjs', ProgrammingLanguage.javascript],
+    ['mjs', ProgrammingLanguage.javascript],
+    ['ts', ProgrammingLanguage.typescript],
+    ['tsx', ProgrammingLanguage.typescript],
+    ['cts', ProgrammingLanguage.typescript],
+    ['mts', ProgrammingLanguage.typescript],
+    ['scala', ProgrammingLanguage.scala],
+    ['php', ProgrammingLanguage.php],
+    ['vue', ProgrammingLanguage.vue],
+    ['feature', ProgrammingLanguage.gherkin],
+  ] as const)(`should recognize file.%s as language %s`, (extension, expected) => {
+    expect(determineLanguage(`file.${extension}`)).eq(expected);
   });
 
   it('should result in undefined for unrecognized languages', () => {

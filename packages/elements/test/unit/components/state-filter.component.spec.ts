@@ -1,16 +1,16 @@
-import { FileStateFilterComponent, StateFilter } from '../../../src/components/state-filter/state-filter.component';
-import { CustomElementFixture } from '../helpers/CustomElementFixture';
-import { MutantStatus } from 'mutation-testing-report-schema/api';
-import { expect } from 'chai';
-import { normalizeWhitespace, expectedMutantColors } from '../../helpers/helperFunctions';
-import { getContextClassForStatus, getEmojiForStatus } from '../../../src/lib/html-helpers';
+import type { StateFilter } from '../../../src/components/state-filter/state-filter.component.js';
+import { FileStateFilterComponent } from '../../../src/components/state-filter/state-filter.component.js';
+import { CustomElementFixture } from '../helpers/CustomElementFixture.js';
+import type { MutantStatus } from 'mutation-testing-report-schema/api';
+import { normalizeWhitespace, expectedMutantColors } from '../helpers/helperFunctions.js';
+import { getContextClassForStatus, getEmojiForStatus } from '../../../src/lib/html-helpers.js';
 import { html } from 'lit';
 
 function createStateFilter(status: MutantStatus): StateFilter<MutantStatus> {
   return {
     count: 1,
     context: getContextClassForStatus(status),
-    enabled: [MutantStatus.Survived, MutantStatus.NoCoverage, MutantStatus.Timeout].includes(status),
+    enabled: ['Survived', 'NoCoverage', 'Timeout'].includes(status),
     label: html`${getEmojiForStatus(status)} ${status}`,
     status,
   };
@@ -35,15 +35,9 @@ describe(FileStateFilterComponent.name, () => {
 
     it('should display checkboxes for all states', async () => {
       // Arrange
-      sut.element.filters = [
-        MutantStatus.Killed,
-        MutantStatus.Survived,
-        MutantStatus.NoCoverage,
-        MutantStatus.Ignored,
-        MutantStatus.Timeout,
-        MutantStatus.CompileError,
-        MutantStatus.RuntimeError,
-      ].map(createStateFilter);
+      sut.element.filters = (['Killed', 'Survived', 'NoCoverage', 'Ignored', 'Timeout', 'CompileError', 'RuntimeError'] satisfies MutantStatus[]).map(
+        createStateFilter,
+      );
 
       // Act
       await sut.whenStable();
@@ -63,43 +57,33 @@ describe(FileStateFilterComponent.name, () => {
       ]);
     });
 
-    Object.entries(expectedMutantColors).forEach(([status, expectedColor]) => {
-      it(`should render correct badge color for ${status} mutant`, async () => {
-        // Arrange
-        const mutantStatus = status as MutantStatus;
-        sut.element.style.cssText = `--bs-${getContextClassForStatus(mutantStatus)}-bg: ${expectedColor};`;
-        sut.element.filters = [createStateFilter(mutantStatus)];
+    it.each(Object.entries(expectedMutantColors))('should render correct badge color for %s mutant', async (status, expectedColor) => {
+      // Arrange
+      const mutantStatus = status as MutantStatus;
+      sut.element.style.cssText = `--bs-${getContextClassForStatus(mutantStatus)}-bg: ${expectedColor};`;
+      sut.element.filters = [createStateFilter(mutantStatus)];
 
-        // Act
-        await sut.whenStable();
+      // Act
+      await sut.whenStable();
 
-        // Assert
-        const badge = sut.$(`label[for=filter-${mutantStatus}]`);
-        expect(getComputedStyle(badge).backgroundColor).eq(expectedColor);
-      });
+      // Assert
+      const badge = sut.$(`label[for=filter-${mutantStatus}]`);
+      expect(getComputedStyle(badge).backgroundColor).eq(expectedColor);
     });
 
     it('should dispatch the "filters-changed" event for the initial state', async () => {
-      const states = [
-        MutantStatus.CompileError,
-        MutantStatus.Killed,
-        MutantStatus.NoCoverage,
-        MutantStatus.RuntimeError,
-        MutantStatus.Survived,
-        MutantStatus.Timeout,
-        MutantStatus.Ignored,
-      ];
+      const states: MutantStatus[] = ['CompileError', 'Killed', 'NoCoverage', 'RuntimeError', 'Survived', 'Timeout', 'Ignored'];
       const filters = states.map(createStateFilter);
       const actualEvent = await sut.catchCustomEvent('filters-changed', () => {
         sut.element.filters = filters;
       });
       expect(actualEvent).ok;
-      expect(actualEvent!.detail).deep.eq([MutantStatus.NoCoverage, MutantStatus.Survived, MutantStatus.Timeout]);
+      expect(actualEvent!.detail).deep.eq(['NoCoverage', 'Survived', 'Timeout']);
     });
 
     it('should dispatch the "filters-changed" event with an empty array when a checkbox is de-selected', async () => {
       // Arrange
-      const inputFilters = [MutantStatus.CompileError, MutantStatus.Survived].map(createStateFilter);
+      const inputFilters = (['CompileError', 'Survived'] satisfies MutantStatus[]).map(createStateFilter);
       inputFilters[0].enabled = false;
       inputFilters[1].enabled = true;
       sut.element.filters = inputFilters;
@@ -107,7 +91,7 @@ describe(FileStateFilterComponent.name, () => {
 
       // Act
       const actualEvent = await sut.catchCustomEvent('filters-changed', () => {
-        sut.$<HTMLInputElement>(`input[type="checkbox"][value="${MutantStatus.Survived}"]`).click();
+        sut.$<HTMLInputElement>(`input[type="checkbox"][value="${'Survived'}"]`).click();
       });
 
       // Assert

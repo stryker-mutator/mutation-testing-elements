@@ -1,5 +1,5 @@
-import { OpenEndLocation } from 'mutation-testing-report-schema/api';
-import { computeLineStarts } from '../helpers';
+import type { OpenEndLocation } from 'mutation-testing-report-schema';
+import { computeLineStarts } from '../helpers/index.js';
 
 export function assertSourceDefined(source: string | undefined): asserts source {
   if (source === undefined) {

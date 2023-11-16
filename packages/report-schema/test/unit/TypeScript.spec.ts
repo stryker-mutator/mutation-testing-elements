@@ -1,4 +1,4 @@
-import {
+import type {
   CpuInformation,
   FileResult,
   FileResultDictionary,
@@ -16,9 +16,9 @@ import {
   TestDefinition,
   TestFileDefinitionDictionary,
   Thresholds,
-} from '../../src';
+} from '../../src/index.js';
 
-const mutantStatus = MutantStatus.Killed;
+const mutantStatus: MutantStatus = 'Killed';
 const position: Position = {
   column: 1,
   line: 42,

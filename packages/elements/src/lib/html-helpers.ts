@@ -1,8 +1,9 @@
-import { nothing, TemplateResult } from 'lit';
+import type { TemplateResult } from 'lit';
+import { nothing } from 'lit';
 import { TestStatus } from 'mutation-testing-metrics';
-import { MutantStatus, OpenEndLocation } from 'mutation-testing-report-schema/api';
-import { renderEmoji } from '../components/drawer-mutant/util';
-import { DRAWER_HALF_OPEN_SIZE } from '../components/drawer/drawer.component';
+import type { MutantStatus, OpenEndLocation } from 'mutation-testing-report-schema/api';
+import { renderEmoji } from '../components/drawer-mutant/util.js';
+import { DRAWER_HALF_OPEN_SIZE } from '../components/drawer/drawer.component.js';
 
 export function notNullish<T>(value: T | undefined | null): value is T {
   return value !== null && value !== undefined;
@@ -33,18 +34,18 @@ export function renderIfPresent<T>(value: T | undefined | null, factory: (value:
 
 export function getContextClassForStatus(status: MutantStatus) {
   switch (status) {
-    case MutantStatus.Killed:
+    case 'Killed':
       return 'success';
-    case MutantStatus.NoCoverage:
+    case 'NoCoverage':
       return 'caution';
-    case MutantStatus.Survived:
+    case 'Survived':
       return 'danger';
-    case MutantStatus.Timeout:
+    case 'Timeout':
       return 'warning';
-    case MutantStatus.Ignored:
-    case MutantStatus.RuntimeError:
-    case MutantStatus.Pending:
-    case MutantStatus.CompileError:
+    case 'Ignored':
+    case 'RuntimeError':
+    case 'Pending':
+    case 'CompileError':
       return 'secondary';
   }
 }
@@ -73,20 +74,20 @@ export function getEmojiForTestStatus(status: TestStatus) {
 
 export function getEmojiForStatus(status: MutantStatus) {
   switch (status) {
-    case MutantStatus.Killed:
+    case 'Killed':
       return renderEmoji('✅', status);
-    case MutantStatus.NoCoverage:
+    case 'NoCoverage':
       return renderEmoji('🙈', status);
-    case MutantStatus.Ignored:
+    case 'Ignored':
       return renderEmoji('🤥', status);
-    case MutantStatus.Survived:
+    case 'Survived':
       return renderEmoji('👽', status);
-    case MutantStatus.Timeout:
+    case 'Timeout':
       return renderEmoji('⏰', status);
-    case MutantStatus.Pending:
+    case 'Pending':
       return renderEmoji('⌛', status);
-    case MutantStatus.RuntimeError:
-    case MutantStatus.CompileError:
+    case 'RuntimeError':
+    case 'CompileError':
       return renderEmoji('💥', status);
   }
 }

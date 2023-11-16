@@ -1,11 +1,12 @@
-import { PropertyValues, html, unsafeCSS, TemplateResult } from 'lit';
+import type { PropertyValues, TemplateResult } from 'lit';
+import { html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
-import { createCustomEvent } from '../../lib/custom-events';
-import { renderIf } from '../../lib/html-helpers';
-import { tailwind } from '../../style';
-import style from './state-filter.scss';
-import { RealTimeElement } from '../real-time-element';
+import { createCustomEvent } from '../../lib/custom-events.js';
+import { renderIf } from '../../lib/html-helpers.js';
+import { tailwind } from '../../style/index.js';
+import style from './state-filter.scss?inline';
+import { RealTimeElement } from '../real-time-element.js';
 
 export interface StateFilter<TStatus> {
   status: TStatus;

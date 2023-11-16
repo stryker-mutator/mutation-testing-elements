@@ -1,141 +1,138 @@
+import { expect as expectPW, test } from '@playwright/test';
 import { expect } from 'chai';
-import { ReportPage } from './po/ReportPage';
-import { MutantStatus } from 'mutation-testing-report-schema/api';
-import { MutantDot } from './po/MutantDot.po';
-import { getCurrent } from './lib/browser';
-import { MutantMarker } from './po/MutantMarker.po';
-import { itShouldMatchScreenshot, waitUntil } from './lib/helpers';
-import { SLEEP_FOR_SCROLL } from './lib/constants';
+import { itShouldMatchScreenshot, waitUntil } from './lib/helpers.js';
+import type { MutantDot } from './po/MutantDot.po.js';
+import type { MutantMarker } from './po/MutantMarker.po.js';
+import { ReportPage } from './po/ReportPage.js';
 
-describe('File report "install-local-example/Options.ts"', () => {
+test.describe('File report "install-local-example/Options.ts"', () => {
   let page: ReportPage;
 
-  beforeEach(async () => {
-    page = new ReportPage(getCurrent());
+  test.beforeEach(async ({ page: p }) => {
+    page = new ReportPage(p);
     await page.navigateTo('install-local-example/#mutant/Options.ts');
-    await page.whenFileReportLoaded();
   });
 
-  it('should show survived and no coverage mutants by default', async () => {
+  test('should show survived and no coverage mutants by default', async () => {
     expect(await page.mutantView.mutantDots()).lengthOf(5);
     const mutantSurvived = page.mutantView.mutantMarker(20);
     const mutantKilled = page.mutantView.mutantMarker(11);
     expect(await mutantSurvived.underlineIsVisible()).true;
     expect(await mutantKilled.underlineIsVisible()).false;
-    expect(await mutantSurvived.getStatus()).eq(MutantStatus.Survived);
-    expect(await mutantKilled.getStatus()).eq(MutantStatus.Killed);
+    expect(await mutantSurvived.getStatus()).eq('Survived');
+    expect(await mutantKilled.getStatus()).eq('Killed');
   });
 
-  it('should not show a diff', async () => {
+  test('should not show a diff', async () => {
     expect(await page.mutantView.currentDiff()).null;
   });
 
-  it('should only filter Survived and NoCoverage mutants by default', async () => {
+  test('should only filter Survived and NoCoverage mutants by default', async () => {
     const filter = page.mutantView.stateFilter();
-    expect(await filter.state(MutantStatus.Killed).isChecked()).false;
-    expect(await filter.state(MutantStatus.Survived).isChecked()).true;
-    expect(await filter.state(MutantStatus.NoCoverage).isChecked()).true;
-    expect(await filter.state(MutantStatus.CompileError).isChecked()).false;
+    await expectPW(filter.state('Killed').input).not.toBeChecked();
+    await expectPW(filter.state('Survived').input).toBeChecked();
+    await expectPW(filter.state('NoCoverage').input).toBeChecked();
+    await expectPW(filter.state('CompileError').input).not.toBeChecked();
   });
 
-  it('should hide killed mutants', async () => {
-    expect(await page.mutantView.mutantDot(1).isVisible()).false;
-    expect(await page.mutantView.mutantDot(21).isVisible()).false;
+  test('should hide killed mutants', async () => {
+    await page.mutantView.mutantDot(1).waitForHidden();
+    await page.mutantView.mutantDot(21).waitForHidden();
     expect(await page.mutantView.mutantMarker(1).underlineIsVisible()).false;
     expect(await page.mutantView.mutantMarker(21).underlineIsVisible()).false;
   });
 
-  it('should show Survived mutants', async () => {
-    expect(await page.mutantView.mutantDot(20).isVisible()).true;
-    expect(await page.mutantView.mutantDot(32).isVisible()).true;
+  test('should show Survived mutants', async () => {
+    await page.mutantView.mutantDot(20).waitForVisible();
+    await page.mutantView.mutantDot(32).waitForVisible();
     expect(await page.mutantView.mutantMarker(20).underlineIsVisible()).true;
     expect(await page.mutantView.mutantMarker(32).underlineIsVisible()).true;
   });
 
-  it('should show NoCoverage mutants', async () => {
-    expect(await page.mutantView.mutantDot(37).isVisible()).true;
-    expect(await page.mutantView.mutantDot(38).isVisible()).true;
+  test('should show NoCoverage mutants', async () => {
+    await page.mutantView.mutantDot(37).waitForVisible();
+    await page.mutantView.mutantDot(38).waitForVisible();
     expect(await page.mutantView.mutantMarker(37).underlineIsVisible()).true;
     expect(await page.mutantView.mutantMarker(38).underlineIsVisible()).true;
   });
 
-  describe('when "Killed" is enabled', () => {
-    beforeEach(async () => {
-      await page.mutantView.stateFilter().state(MutantStatus.Killed).click();
+  test.describe('when "Killed" is enabled', () => {
+    test.beforeEach(async () => {
+      await page.mutantView.stateFilter().state('Killed').click();
     });
 
-    it('should also show the killed mutants', async () => {
-      expect(await page.mutantView.mutantDot(1).isVisible()).true;
+    test('should also show the killed mutants', async () => {
+      await page.mutantView.mutantDot(1).waitForVisible();
       expect(await page.mutantView.mutantMarker(1).underlineIsVisible()).true;
-      expect(await page.mutantView.mutantDot(15).isVisible()).true;
+      await page.mutantView.mutantDot(15).waitForVisible();
       expect(await page.mutantView.mutantMarker(15).underlineIsVisible()).true;
     });
 
-    describe('and a killed mutant is selected', () => {
+    test.describe('and a killed mutant is selected', () => {
       let mutantDot: MutantDot;
       let mutantMarker: MutantMarker;
-      beforeEach(async () => {
+      test.beforeEach(async () => {
         mutantDot = page.mutantView.mutantDot(1);
         mutantMarker = page.mutantView.mutantMarker(1);
         await mutantDot.toggle();
       });
 
-      it('should show the diff inline', async () => {
+      test('should show the diff inline', async () => {
         const { original, mutated } = (await page.mutantView.currentDiff())!;
         expect(original).eq('.filter((_, i) => i > 1);');
         expect(mutated).eq('.filter(() => undefined);');
       });
 
-      describe('and later "Killed" is disabled', () => {
-        beforeEach(async () => {
-          await page.mutantView.stateFilter().state(MutantStatus.Killed).click();
+      test.describe('and later "Killed" is disabled', () => {
+        test.beforeEach(async () => {
+          await page.mutantView.stateFilter().state('Killed').click();
         });
 
-        it('should remove the diff', async () => {
+        test('should remove the diff', async () => {
           expect(await page.mutantView.currentDiff()).null;
         });
 
-        it('should hide the killed mutants', async () => {
-          expect(await mutantDot.isVisible()).false;
+        test('should hide the killed mutants', async () => {
+          await mutantDot.waitForHidden();
           expect(await mutantMarker.underlineIsVisible()).false;
         });
       });
     });
   });
 
-  describe('when first visible mutant is enabled', () => {
+  test.describe('when first visible mutant is enabled', () => {
     let mutant: MutantDot;
 
-    beforeEach(async () => {
+    test.beforeEach(async () => {
       mutant = page.mutantView.mutantDot(20);
       await mutant.toggle();
     });
 
-    it('should show the diff', async () => {
+    test('should show the diff', async () => {
       expect(await page.mutantView.currentDiff()).ok; // exact diff is already tested numerous times
     });
 
-    it('should show the drawer', async () => {
+    test('should show the drawer', async () => {
       await page.mutantView.mutantDrawer().whenHalfOpen();
     });
 
-    describe('and later disabled', () => {
-      beforeEach(async () => {
+    test.describe('and later disabled', () => {
+      test.beforeEach(async () => {
         await mutant.toggle();
       });
 
-      it('should remove diff', async () => {
+      test('should remove diff', async () => {
         expect(await page.mutantView.currentDiff()).null;
       });
 
-      it('should hide the drawer', async () => {
+      test('should hide the drawer', async () => {
         await page.mutantView.mutantDrawer().whenClosed();
       });
     });
   });
 
-  describe('when navigating "previous mutant" when scrolled up', () => {
-    beforeEach(async () => {
+  test.describe('when navigating "previous mutant" when scrolled up', () => {
+    test.beforeEach(async () => {
       await page.scrollUp();
       await page.mutantView.stateFilter().previous();
       await waitUntil(async () => {
@@ -145,12 +142,12 @@ describe('File report "install-local-example/Options.ts"', () => {
     });
 
     // next and previous test already unit tested, so only focus on the part that wasn't unit tested
-    it('should scroll and focus the last test when "previous" is called', async () => {
+    test('should scroll and focus the last test when "previous" is called', async () => {
       const posAfter = await page.pageYOffset();
       expect(posAfter).gt(100);
       expect(await (await page.mutantView.mutantDots()).slice(-1)[0].isActive()).true;
     });
 
-    itShouldMatchScreenshot('should look as expected', SLEEP_FOR_SCROLL);
+    itShouldMatchScreenshot('should look as expected');
   });
 });

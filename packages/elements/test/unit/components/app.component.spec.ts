@@ -1,24 +1,21 @@
-import * as sinon from 'sinon';
-import { MutationTestReportAppComponent } from '../../../src/components/app/app.component';
-import { expect } from 'chai';
-import { CustomElementFixture } from '../helpers/CustomElementFixture';
-import { createCustomEvent } from '../../../src/lib/custom-events';
-import { createMutantResult, createReport } from '../../helpers/factory';
-import { MutationTestReportMutantViewComponent } from '../../../src/components/mutant-view/mutant-view';
-import { MutationTestReportTestViewComponent } from '../../../src/components/test-view/test-view';
-import { tick } from '../helpers/tick';
-import { MutantStatus } from 'mutation-testing-report-schema';
-import { RequestInfo } from 'undici-types/fetch';
+import type { SpyInstance } from 'vitest';
+import { MutationTestReportAppComponent } from '../../../src/components/app/app.component.js';
+import type { MutationTestReportMutantViewComponent } from '../../../src/components/mutant-view/mutant-view.js';
+import type { MutationTestReportTestViewComponent } from '../../../src/components/test-view/test-view.js';
+import { createCustomEvent } from '../../../src/lib/custom-events.js';
+import { CustomElementFixture } from '../helpers/CustomElementFixture.js';
+import { createMutantResult, createReport } from '../helpers/factory.js';
+import { tick } from '../helpers/tick.js';
 
 describe(MutationTestReportAppComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportAppComponent>;
-  let fetchStub: sinon.SinonStub<[URL | RequestInfo, RequestInit?], Promise<Response>>;
-  let matchMediaStub: sinon.SinonStub<[query: string], MediaQueryList>;
+  let fetchStub: SpyInstance;
+  let matchMediaStub: SpyInstance<[query: string], MediaQueryList>;
 
   beforeEach(() => {
-    fetchStub = sinon.stub(window, 'fetch');
-    matchMediaStub = sinon.stub(window, 'matchMedia');
-    matchMediaStub.returns({ matches: false } as MediaQueryList);
+    fetchStub = vi.spyOn(window, 'fetch');
+    matchMediaStub = vi.spyOn(window, 'matchMedia');
+    matchMediaStub.mockReturnValue({ matches: false } as MediaQueryList);
 
     sut = new CustomElementFixture('mutation-test-report-app');
   });
@@ -31,7 +28,7 @@ describe(MutationTestReportAppComponent.name, () => {
 
   describe('the title', () => {
     it('should not change without a report', () => {
-      expect(document.title).eq('');
+      expect(document.title).eq('Vitest Browser Runner');
     });
 
     it('should change when a report is set', async () => {
@@ -56,15 +53,16 @@ describe(MutationTestReportAppComponent.name, () => {
       };
 
       const expectedReport = createReport();
-      fetchStub.resolves(response as Response);
+      fetchStub.mockResolvedValue(response as Response);
 
       // Act
       sut.element.setAttribute('src', '/mutation-testing-report.json');
       await sut.whenStable(); // await window.fetch
+      await sut.whenStable(); // await component update
 
       // Assert
       expect(sut.element.report).eq(expectedReport);
-      expect(fetchStub).calledWith('/mutation-testing-report.json');
+      expect(fetchStub).toHaveBeenCalledWith('/mutation-testing-report.json');
     });
 
     it('should report error when fetch fails', async () => {
@@ -72,11 +70,12 @@ describe(MutationTestReportAppComponent.name, () => {
       const redAlert = 'rgb(185, 28, 28)';
       const expectedError = new Error('report did not exist - 404');
       const expectedErrorMessage = 'Error: report did not exist - 404';
-      fetchStub.rejects(expectedError);
+      fetchStub.mockRejectedValue(expectedError);
 
       // Act
       sut.element.setAttribute('src', '/mutation-testing-report.json');
-      await sut.whenStable();
+      await sut.whenStable(); // await window.fetch
+      await sut.whenStable(); // await component update
 
       // Assert
       expect(sut.element.errorMessage).eq(expectedErrorMessage);
@@ -206,7 +205,9 @@ describe(MutationTestReportAppComponent.name, () => {
     it('should not set theme to local storage if localStorage is not available', async () => {
       // Arrange
       sut.element.report = createReport();
-      const setItemStub = sinon.stub(localStorage, 'setItem').throws(new Error());
+      const setItemStub = vi.spyOn(localStorage, 'setItem').mockImplementation(() => {
+        throw new Error();
+      });
       await sut.whenStable();
 
       // Act
@@ -215,7 +216,7 @@ describe(MutationTestReportAppComponent.name, () => {
 
       // Assert
       expect(sut.element.theme).eq('dark');
-      expect(setItemStub.notCalled).false;
+      expect(setItemStub).not.toBeCalled();
     });
 
     describe('themeBackgroundColor', () => {
@@ -238,8 +239,10 @@ describe(MutationTestReportAppComponent.name, () => {
     });
 
     it('should use fallbacks if localStorage is not available', async () => {
-      sinon.stub(localStorage, 'setItem').throws(new Error());
-      matchMediaStub.withArgs('(prefers-color-scheme: dark)').returns({ matches: true } as MediaQueryList);
+      vi.spyOn(localStorage, 'setItem').mockImplementation(() => {
+        throw new Error();
+      });
+      matchMediaStub.mockImplementation((arg) => ({ matches: arg === '(prefers-color-scheme: dark)' }) as MediaQueryList);
       sut.element.report = createReport();
       await sut.whenStable();
 
@@ -260,7 +263,7 @@ describe(MutationTestReportAppComponent.name, () => {
 
     it('should use user prefers dark (os preference)', async () => {
       // Arrange
-      matchMediaStub.returns({ matches: true } as MediaQueryList);
+      matchMediaStub.mockReturnValue({ matches: true } as MediaQueryList);
       sut.element.report = createReport();
       await sut.whenStable();
 
@@ -270,7 +273,7 @@ describe(MutationTestReportAppComponent.name, () => {
 
     it('should use local storage over user prefers dark', async () => {
       // Arrange
-      matchMediaStub.withArgs('(prefers-color-scheme: dark)').returns({ matches: false } as MediaQueryList);
+      matchMediaStub.mockImplementation((arg) => ({ matches: arg !== '(prefers-color-scheme: dark)' }) as MediaQueryList);
       localStorage.setItem('mutation-testing-elements-theme', 'dark');
       sut.element.report = createReport();
       await sut.whenStable();
@@ -292,7 +295,7 @@ describe(MutationTestReportAppComponent.name, () => {
     it('should trigger a `theme-changed` event when the theme changes during init', async () => {
       // Arrange
       const event = await sut.catchCustomEvent('theme-changed', async () => {
-        matchMediaStub.returns({ matches: true } as MediaQueryList);
+        matchMediaStub.mockReturnValue({ matches: true } as MediaQueryList);
         sut.element.report = createReport();
         await sut.whenStable();
       });
@@ -304,7 +307,7 @@ describe(MutationTestReportAppComponent.name, () => {
   describe('the `sse` property', () => {
     const defaultMessage = new MessageEvent('mutant-tested', { data: JSON.stringify({ id: '1', status: 'Killed' }) });
 
-    let eventSourceConstructorStub: sinon.SinonStub;
+    let eventSourceConstructorStub: SpyInstance;
     let eventSource: EventSource;
 
     beforeEach(() => {
@@ -314,7 +317,7 @@ describe(MutationTestReportAppComponent.name, () => {
         // noop
       }
 
-      eventSourceConstructorStub = sinon.stub(window, 'EventSource').returns(eventSource);
+      eventSourceConstructorStub = vi.spyOn(window, 'EventSource').mockReturnValue(eventSource);
       sut = new CustomElementFixture('mutation-test-report-app', { autoConnect: false });
     });
 
@@ -327,12 +330,12 @@ describe(MutationTestReportAppComponent.name, () => {
       await sut.whenStable();
 
       // Assert
-      expect(eventSourceConstructorStub.calledWith('/sse')).to.be.false;
+      expect(eventSourceConstructorStub).not.toHaveBeenCalledWith('/sse');
     });
 
     it('should initialize SSE when property is set', async () => {
       // Arrange
-      const eventListenerStub = sinon.stub(eventSource, 'addEventListener');
+      const eventListenerStub = vi.spyOn(eventSource, 'addEventListener');
       sut.element.report = createReport();
       sut.element.sse = 'http://localhost:8080/sse';
 
@@ -341,10 +344,11 @@ describe(MutationTestReportAppComponent.name, () => {
       await sut.whenStable();
 
       // Assert
-      expect(eventSourceConstructorStub.calledWith('http://localhost:8080/sse')).to.be.true;
-      expect(eventListenerStub.firstCall.firstArg).to.eq('mutant-tested');
-      expect(eventListenerStub.secondCall.firstArg).to.eq('mutant-tested');
-      expect(eventListenerStub.thirdCall.firstArg).to.eq('finished');
+      expect(eventSourceConstructorStub).toHaveBeenCalledWith('http://localhost:8080/sse');
+
+      expect(eventListenerStub.mock.calls[0][0]).to.eq('mutant-tested');
+      expect(eventListenerStub.mock.calls[1][0]).to.eq('mutant-tested');
+      expect(eventListenerStub.mock.calls[2][0]).to.eq('finished');
       expect(sut.$('mte-result-status-bar')).to.not.be.null;
     });
 
@@ -352,7 +356,7 @@ describe(MutationTestReportAppComponent.name, () => {
       // Arrange
       const report = createReport();
       const mutant = createMutantResult();
-      mutant.status = MutantStatus.Pending;
+      mutant.status = 'Pending';
       report.files['foobar.js'].mutants = [mutant];
       sut.element.report = report;
       sut.element.sse = 'http://localhost:8080/sse';
@@ -364,14 +368,14 @@ describe(MutationTestReportAppComponent.name, () => {
 
       // Assert
       const file = sut.element.rootModel!.systemUnderTestMetrics.childResults[0].file!;
-      expect(file.mutants[0].status).to.be.equal(MutantStatus.Killed);
+      expect(file.mutants[0].status).to.be.equal('Killed');
     });
 
     it('should update every mutant field when given in an SSE event', async () => {
       // Arrange
       const report = createReport();
       const mutant = createMutantResult();
-      mutant.status = MutantStatus.Pending;
+      mutant.status = 'Pending';
       report.files['foobar.js'].mutants = [mutant];
       sut.element.report = report;
       sut.element.sse = 'http://localhost:8080/sse';
@@ -381,7 +385,7 @@ describe(MutationTestReportAppComponent.name, () => {
       // Act
       const newMutantData = JSON.stringify({
         id: '1',
-        status: MutantStatus.Killed,
+        status: 'Killed',
         description: 'test description',
         coveredBy: ['test 1'],
         duration: 100,
