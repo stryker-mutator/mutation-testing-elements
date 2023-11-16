@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.0.0...v3.0.1) (2023-11-16)
+
+
+### Bug Fixes
+
+* **exports:** add dist/mutation-test-elements.js to package exports ([704a5db](https://github.com/stryker-mutator/mutation-testing-elements/commit/704a5db665507a831042d75d86c82efa695996e3))
+
+
+
+
+
 # [3.0.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v2.0.5...v3.0.0) (2023-11-16)
 
 
