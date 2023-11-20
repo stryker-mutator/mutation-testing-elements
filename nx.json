@@ -1,5 +1,11 @@
 {
+  "$schema": "https://raw.githubusercontent.com/nrwl/nx/master/packages/nx/schemas/nx-schema.json",
   "extends": "nx/presets/npm.json",
+  "nxCloudAccessToken": "ZWQ4NmEyMmYtYTcwZS00MmJlLTlmYzUtYTRjNWI1MmZiMDg1fHJlYWQ=",
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*", "{workspaceRoot}/package-lock.json", { "runtime": "node -v" }],
+    "production": ["!{projectRoot}/test/**/*", "!{projectRoot}/.eslintrc", "!{projectRoot}/stryker.conf.js"]
+  },
   "targetDefaults": {
     "build:tsc": {
       "dependsOn": ["report-schema:generate"],
@@ -7,26 +13,32 @@
       "cache": true
     },
     "build": {
+      "inputs": ["production", "^production"],
       "dependsOn": ["^build", "root:build:tsc"],
       "outputs": ["{projectRoot}/dist", "{projectRoot}/target"],
       "cache": true
     },
     "generate": {
-      "inputs": ["{projectRoot}/src/*.json", "{workspaceRoot}/tasks/schema2ts.js"],
+      "inputs": ["{projectRoot}/src/*.json", "{workspaceRoot}/tasks/schema2ts.mjs", { "externalDependencies": ["json-schema-to-typescript"] }],
       "outputs": ["{projectRoot}/src-generated"],
       "cache": true
     },
     "test": {
+      "inputs": ["default", "^production"],
       "dependsOn": ["root:build:tsc"],
       "cache": true
     },
     "stryker": {
+      "inputs": ["default", "^production", { "env": "GITHUB_REF" }],
       "dependsOn": ["generate", "root:build:tsc", "^build"],
       "outputs": ["{projectRoot}/reports", "{projectRoot}/target-stryker4s-report-*/"],
       "cache": true
     },
     "lint": {
       "dependsOn": ["root:build:tsc"],
+      "cache": true
+    },
+    "lint:prettier": {
       "cache": true
     },
     "start": {

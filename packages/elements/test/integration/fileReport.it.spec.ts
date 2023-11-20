@@ -89,7 +89,7 @@ test.describe('File report "install-local-example/Options.ts"', () => {
         });
 
         test('should remove the diff', async () => {
-          expect(await page.mutantView.currentDiff()).null;
+          await expectPW.poll(() => page.mutantView.currentDiff()).toBeNull();
         });
 
         test('should hide the killed mutants', async () => {

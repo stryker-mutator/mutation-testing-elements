@@ -6,6 +6,9 @@ on:
   pull_request:
     types: [synchronize, opened, reopened]
 
+env:
+  NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+
 jobs:
   build_and_test:
     runs-on: ${{ matrix.os }}
@@ -44,7 +47,7 @@ jobs:
       - name: Lint & Build & Test
         run: npm run all
       - name: Bundlemon
-        if: ${{ contains(fromJson(steps.affected.outputs.affected), 'elements') }}
+        if: ${{ contains(fromJson(steps.affected.outputs.affected), 'elements') && matrix.os == 'ubuntu-latest' && matrix.node-version == '20.x' }}
         uses: lironer/bundlemon-action@v1
         with:
           working-directory: packages/elements
