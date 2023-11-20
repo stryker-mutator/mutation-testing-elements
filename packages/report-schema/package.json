@@ -23,7 +23,7 @@
   "scripts": {
     "test": "mocha --forbid-only --forbid-pending -r source-map-support/register dist/test/**/*.js",
     "postpublish": "PUBLISH_SCHEMA=true ../metrics-scala/npmProjPublish.sh",
-    "generate": "node ../../tasks/schema2ts.js src/mutation-testing-report-schema.json src-generated/schema.ts",
+    "generate": "node ../../tasks/schema2ts.mjs src/mutation-testing-report-schema.json src-generated/schema.ts",
     "lint": "eslint --ext .js,.ts ."
   },
   "repository": {

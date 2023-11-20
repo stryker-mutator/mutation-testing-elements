@@ -1,5 +1,6 @@
 /// <reference types="vitest" />
 
+import browserslistToEsbuild from 'browserslist-to-esbuild';
 import type { UserConfig } from 'vitest/config';
 import { defineConfig } from 'vitest/config';
 import type { ReportingClient } from './test/integration/lib/SseServer.js';
@@ -52,6 +53,8 @@ export default defineConfig(async ({ mode }) => {
       open: process.env.CI ? undefined : '/testResources/',
     },
     build: {
+      // @ts-expect-error cjs import
+      target: browserslistToEsbuild(),
       lib: {
         entry: 'src/index.ts',
         name: 'MutationTestElements',
@@ -77,7 +80,7 @@ export default defineConfig(async ({ mode }) => {
         if (log.includes('Multiple versions of Lit loaded.')) return;
         return;
       },
-      ...(process.env.CI ? { maxConcurrency: 1, threads: false, singleThread: true } : {}),
+      ...(process.env.CI ? { maxConcurrency: 1, threads: false, singleThread: true, retry: 2, isolate: false } : {}),
       setupFiles: ['./test/unit/setup.ts'],
       restoreMocks: true,
       globals: true,
