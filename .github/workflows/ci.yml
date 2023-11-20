@@ -43,6 +43,11 @@ jobs:
         run: npx playwright install chromium firefox --with-deps
       - name: Lint & Build & Test
         run: npm run all
+      - name: Bundlemon
+        if: ${{ contains(fromJson(steps.affected.outputs.affected), 'elements') }}
+        uses: lironer/bundlemon-action@v1
+        with:
+          working-directory: packages/elements
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
