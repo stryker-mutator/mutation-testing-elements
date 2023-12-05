@@ -1,4 +1,4 @@
-import type { SpyInstance } from 'vitest';
+import type { MockInstance } from 'vitest';
 import { MutationTestReportAppComponent } from '../../../src/components/app/app.component.js';
 import type { MutationTestReportMutantViewComponent } from '../../../src/components/mutant-view/mutant-view.js';
 import type { MutationTestReportTestViewComponent } from '../../../src/components/test-view/test-view.js';
@@ -9,8 +9,8 @@ import { tick } from '../helpers/tick.js';
 
 describe(MutationTestReportAppComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportAppComponent>;
-  let fetchStub: SpyInstance;
-  let matchMediaStub: SpyInstance<[query: string], MediaQueryList>;
+  let fetchStub: MockInstance;
+  let matchMediaStub: MockInstance<[query: string], MediaQueryList>;
 
   beforeEach(() => {
     fetchStub = vi.spyOn(window, 'fetch');
@@ -307,7 +307,7 @@ describe(MutationTestReportAppComponent.name, () => {
   describe('the `sse` property', () => {
     const defaultMessage = new MessageEvent('mutant-tested', { data: JSON.stringify({ id: '1', status: 'Killed' }) });
 
-    let eventSourceConstructorStub: SpyInstance;
+    let eventSourceConstructorStub: MockInstance;
     let eventSource: EventSource;
 
     beforeEach(() => {

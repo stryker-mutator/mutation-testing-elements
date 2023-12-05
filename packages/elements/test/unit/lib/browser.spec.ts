@@ -1,9 +1,9 @@
 import { isLocalStorageAvailable } from '../../../src/lib/browser.js';
-import type { SpyInstance } from 'vitest';
+import type { MockInstance } from 'vitest';
 
 describe(isLocalStorageAvailable.name, () => {
-  let setItemStub: SpyInstance<Parameters<Storage['setItem']>, ReturnType<Storage['setItem']>>;
-  let removeItemStub: SpyInstance<Parameters<Storage['removeItem']>, ReturnType<Storage['removeItem']>>;
+  let setItemStub: MockInstance<Parameters<Storage['setItem']>, ReturnType<Storage['setItem']>>;
+  let removeItemStub: MockInstance<Parameters<Storage['removeItem']>, ReturnType<Storage['removeItem']>>;
 
   beforeEach(() => {
     setItemStub = vi.spyOn(Storage.prototype, 'setItem');
