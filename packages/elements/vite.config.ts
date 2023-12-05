@@ -91,6 +91,7 @@ export default defineConfig(async ({ mode }) => {
         provider: 'playwright',
         // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
         headless: !!(process.env.CI || process.env.HEADLESS),
+        slowHijackESM: true,
       },
     },
   } satisfies UserConfig;
