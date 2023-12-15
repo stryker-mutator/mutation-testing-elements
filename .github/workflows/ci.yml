@@ -51,7 +51,7 @@ jobs:
         uses: lironer/bundlemon-action@v1
         with:
           working-directory: packages/elements
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: image-diffs
