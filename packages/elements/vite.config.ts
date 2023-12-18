@@ -80,7 +80,7 @@ export default defineConfig(async ({ mode }) => {
         if (log.includes('Multiple versions of Lit loaded.')) return;
         return;
       },
-      ...(process.env.CI ? { maxConcurrency: 1, retry: 2 } : {}),
+      ...(process.env.CI ? { poolOptions: { threads: { isolate: false, maxThreads: 1 } }, retry: 2 } : {}),
       setupFiles: ['./test/unit/setup.ts'],
       restoreMocks: true,
       globals: true,
