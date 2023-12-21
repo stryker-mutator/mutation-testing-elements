@@ -1,3 +1,4 @@
+import type { TemplateResult } from 'lit';
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import type { MutantModel, TestModel } from 'mutation-testing-metrics';
@@ -9,6 +10,11 @@ import { RealTimeElement } from '../real-time-element.js';
 import { renderDetailLine, renderEmoji, renderSummaryContainer, renderSummaryLine } from './util.js';
 
 const describeTest = (test: TestModel) => `${test.name}${test.sourceFile && test.location ? ` (${describeLocation(test)})` : ''}`;
+
+/**
+ * Wrap so that the whitespace is preserved when rendered
+ */
+const whitespacePreserving = (content: string | TemplateResult) => html`<span class="whitespace-pre-wrap">${content}</span>`;
 
 @customElement('mte-drawer-mutant')
 export class MutationTestReportDrawerMutant extends RealTimeElement {
@@ -60,9 +66,14 @@ export class MutationTestReportDrawerMutant extends RealTimeElement {
       )}
       ${renderIf(
         this.mutant?.statusReason?.trim(),
-        renderSummaryLine(html`${renderEmoji('🕵️', 'spy')} ${this.mutant!.statusReason!}`, `Reason for the ${this.mutant!.status} status`),
+        renderSummaryLine(
+          html`${renderEmoji('🕵️', 'spy')} ${whitespacePreserving(this.mutant!.statusReason!)}`,
+          `Reason for the ${this.mutant!.status} status`,
+        ),
       )}
-      ${renderIfPresent(this.mutant?.description, (description) => renderSummaryLine(html`${renderEmoji('📖', 'book')} ${description}`))}`,
+      ${renderIfPresent(this.mutant?.description, (description) =>
+        renderSummaryLine(html`${renderEmoji('📖', 'book')} ${whitespacePreserving(description)}`),
+      )}`,
     );
   }
 
