@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.2](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.0.1...v3.0.2) (2023-12-23)
+
+
+### Bug Fixes
+
+* **drawer:** preserve whitespace when rendering mutant description and statusReason ([#2926](https://github.com/stryker-mutator/mutation-testing-elements/issues/2926)) ([b23731a](https://github.com/stryker-mutator/mutation-testing-elements/commit/b23731add8f07720043a3c9f0203336a081260b2))
+
+
+
+
+
 ## [3.0.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.0.0...v3.0.1) (2023-11-16)
 
 

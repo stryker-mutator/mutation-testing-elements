@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.2](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.0.1...v3.0.2) (2023-12-23)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint-config-prettier to ~9.1.0 ([#2885](https://github.com/stryker-mutator/mutation-testing-elements/issues/2885)) ([c91956f](https://github.com/stryker-mutator/mutation-testing-elements/commit/c91956f414e3d51734a732fc2c6d1b669e9fd9cc))
+* **drawer:** preserve whitespace when rendering mutant description and statusReason ([#2926](https://github.com/stryker-mutator/mutation-testing-elements/issues/2926)) ([b23731a](https://github.com/stryker-mutator/mutation-testing-elements/commit/b23731add8f07720043a3c9f0203336a081260b2))
+
+
+
+
+
 ## [3.0.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.0.0...v3.0.1) (2023-11-16)
 
 
