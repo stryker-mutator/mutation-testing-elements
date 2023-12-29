@@ -1,7 +1,6 @@
-import { expect } from 'chai';
 import type { MutantMarker } from './po/MutantMarker.po.js';
 import { ReportPage } from './po/ReportPage.js';
-import { test } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 
 test.describe('Unsanitized example', () => {
   let page: ReportPage;
@@ -25,7 +24,7 @@ test.describe('Unsanitized example', () => {
           break;
         }
       }
-      expect(m).ok;
+      expect(m).toBeTruthy();
       await m!.toggle();
       await page.mutantView.mutantDrawer().whenHalfOpen();
     });

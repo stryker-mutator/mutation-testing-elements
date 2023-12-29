@@ -1,6 +1,5 @@
 import { ReportPage } from './po/ReportPage.js';
-import { expect } from 'chai';
-import { test, expect as expectPW } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import type { NavTab } from './po/NavTab.po.js';
 
 test.describe('Navigation', () => {
@@ -15,11 +14,11 @@ test.describe('Navigation', () => {
       return page.navigateTo('scala-example/');
     });
     test('should show "all files"', async () => {
-      expect(await page.title()).eq('All files - Stryker report');
+      expect(await page.title()).toEqual('All files - Stryker report');
     });
     test("shouldn't show the navigation tabs if there are no test details", async () => {
       const tabs = await page.navigationTabs();
-      expect(tabs).lengthOf(0);
+      expect(tabs).toHaveLength(0);
     });
 
     test.describe('-> "config"', () => {
@@ -29,16 +28,16 @@ test.describe('Navigation', () => {
 
       test('should show "config" page', async () => {
         const title = await page.title();
-        expect(title).eq('config - Stryker report');
+        expect(title).toEqual('config - Stryker report');
       });
 
       test('should show breadcrumb "All files - config"', async () => {
-        await expectPW(page.breadcrumb().items()).toHaveText(['All files', 'config']);
+        await expect(page.breadcrumb().items()).toHaveText(['All files', 'config']);
       });
 
       test('should show "Config.Scala" after navigating to Config.scala', async () => {
         await page.mutantView.resultTable().row('Config.scala').navigate();
-        await expectPW(page.breadcrumb().items()).toHaveText(['All files', 'config', 'Config.scala']);
+        await expect(page.breadcrumb().items()).toHaveText(['All files', 'config', 'Config.scala']);
       });
 
       test.describe('when navigating to "All files" using the breadcrumb', () => {
@@ -47,7 +46,7 @@ test.describe('Navigation', () => {
         });
 
         test('should show "all files"', async () => {
-          expect(await page.title()).eq('All files - Stryker report');
+          expect(await page.title()).toEqual('All files - Stryker report');
         });
       });
     });
@@ -63,15 +62,15 @@ test.describe('Navigation', () => {
 
     test('should show the navigation tabs', async () => {
       const labels = await Promise.all(tabs.map((tab) => tab.text()));
-      expect(tabs).lengthOf(2);
-      expect(labels).deep.eq(['👽 Mutants', '🧪 Tests']);
+      expect(tabs).toHaveLength(2);
+      expect(labels).toEqual(['👽 Mutants', '🧪 Tests']);
     });
 
     test('should show the mutant view by default', async () => {
-      expect(await page.title()).eq('All files');
-      expect(page.currentUrl()).contains('#mutant');
-      expect(await tabs[0].isActive()).true;
-      expect(await tabs[1].isActive()).false;
+      expect(await page.title()).toEqual('All files');
+      expect(page.currentUrl()).toContain('#mutant');
+      expect(await tabs[0].isActive()).toEqual(true);
+      expect(await tabs[1].isActive()).toEqual(false);
     });
 
     test.describe('open tests', () => {
@@ -80,10 +79,10 @@ test.describe('Navigation', () => {
       });
 
       test('should show the tests view', async () => {
-        await expectPW.poll(() => page.title()).toEqual('All tests');
-        expect(page.currentUrl()).contains('#test');
-        expect(await tabs[0].isActive()).false;
-        expect(await tabs[1].isActive()).true;
+        await expect.poll(() => page.title()).toEqual('All tests');
+        expect(page.currentUrl()).toContain('#test');
+        expect(await tabs[0].isActive()).toEqual(false);
+        expect(await tabs[1].isActive()).toEqual(true);
       });
 
       test.describe('-> metrics', () => {
@@ -93,16 +92,16 @@ test.describe('Navigation', () => {
 
         test('should show "metrics" page', async () => {
           const title = await page.title();
-          expect(title).eq('metrics');
+          expect(title).toEqual('metrics');
         });
 
         test('should show breadcrumb "All tests - metrics"', async () => {
-          await expectPW(page.breadcrumb().items()).toHaveText(['All tests', 'metrics']);
+          await expect(page.breadcrumb().items()).toHaveText(['All tests', 'metrics']);
         });
 
         test('should show "interactive-test.js" after navigating to interactive-test.js', async () => {
           await page.testView.resultTable().row('interactive-test.js').navigate();
-          await expectPW(page.breadcrumb().items()).toHaveText(['All tests', 'metrics', 'interactive-test.js']);
+          await expect(page.breadcrumb().items()).toHaveText(['All tests', 'metrics', 'interactive-test.js']);
         });
 
         test.describe('when navigating to "All tests" using the breadcrumb', () => {
@@ -111,7 +110,7 @@ test.describe('Navigation', () => {
           });
 
           test('should show "all tests"', async () => {
-            expect(await page.title()).eq('All tests');
+            expect(await page.title()).toEqual('All tests');
           });
         });
       });

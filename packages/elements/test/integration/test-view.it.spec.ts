@@ -1,6 +1,5 @@
-import { expect } from 'chai';
 import { TestStatus } from 'mutation-testing-metrics';
-import { test, expect as expectPW } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import { itShouldMatchScreenshot, waitUntil } from './lib/helpers.js';
 import { ReportPage } from './po/ReportPage.js';
 import type { TestListItem } from './po/TestListItem.po.js';
@@ -19,21 +18,21 @@ test.describe('Test view', () => {
 
     test('should show 2 tests', async () => {
       const tests = await page.testView.testDots();
-      expect(tests).lengthOf(2);
+      expect(tests).toHaveLength(2);
       await tests[0].waitForVisible();
       await tests[1].waitForVisible();
     });
 
     test('should show test filters', async () => {
       const states = page.testView.stateFilter.statesLocator;
-      await expectPW(states).toHaveText(['✅ Killing (1)', '☂ Covering (1)']);
+      await expect(states).toHaveText(['✅ Killing (1)', '☂ Covering (1)']);
     });
 
     test('should hide tests that are filtered out', async () => {
       await page.testView.stateFilter.state(TestStatus.Covering).click();
       const testDots = await page.testView.testDots();
-      expect(testDots).lengthOf(1);
-      expect(await testDots[0].getStatus()).eq(TestStatus.Killing);
+      expect(testDots).toHaveLength(1);
+      expect(await testDots[0].getStatus()).toEqual(TestStatus.Killing);
     });
 
     test('should show the drawer when selecting a test', async () => {
@@ -46,7 +45,7 @@ test.describe('Test view', () => {
         await page.testView.stateFilter.previous();
         await waitUntil(async () => {
           const posAfter = await page.pageYOffset();
-          return expect(posAfter).gt(100);
+          return expect(posAfter).toBeGreaterThan(100);
         });
       });
 
@@ -54,8 +53,8 @@ test.describe('Test view', () => {
 
       test('should scroll and focus the last test when "previous" is called', async () => {
         const posAfter = await page.pageYOffset();
-        expect(posAfter).gt(100);
-        expect(await (await page.testView.testDots()).slice(-1)[0].isActive()).true;
+        expect(posAfter).toBeGreaterThan(100);
+        expect(await (await page.testView.testDots()).slice(-1)[0].isActive()).toEqual(true);
       });
 
       itShouldMatchScreenshot('should look as expected');
@@ -70,13 +69,13 @@ test.describe('Test view', () => {
     test('should tests in a list box', async () => {
       const testDots = await page.testView.testDots();
       const testListItems = await page.testView.testListItems();
-      expect(testDots).lengthOf(0);
-      expect(testListItems).lengthOf(3);
+      expect(testDots).toHaveLength(0);
+      expect(testListItems).toHaveLength(3);
     });
 
     test('should show test filters', async () => {
       const states = page.testView.stateFilter.statesLocator;
-      await expectPW(states).toHaveText(['✅ Killing (2)', '☂ Covering (1)']);
+      await expect(states).toHaveText(['✅ Killing (2)', '☂ Covering (1)']);
     });
 
     test.describe('when selecting a test', () => {
@@ -88,7 +87,7 @@ test.describe('Test view', () => {
       });
 
       test('should show the test as active', async () => {
-        expect(await testListItems[0].isSelected()).true;
+        expect(await testListItems[0].isSelected()).toEqual(true);
       });
 
       test('should show the drawer', async () => {
@@ -97,13 +96,13 @@ test.describe('Test view', () => {
 
       test('should be able to deselect', async () => {
         await testListItems[0].toggle();
-        expect(await testListItems[0].isSelected()).false;
+        expect(await testListItems[0].isSelected()).toEqual(false);
       });
 
       test('should deselect when selecting another test', async () => {
         await testListItems[1].toggle();
-        expect(await testListItems[0].isSelected()).false;
-        expect(await testListItems[1].isSelected()).true;
+        expect(await testListItems[0].isSelected()).toEqual(false);
+        expect(await testListItems[1].isSelected()).toEqual(true);
       });
     });
   });
@@ -116,8 +115,8 @@ test.describe('Test view', () => {
     test('should simply list all tests in a list box', async () => {
       const testDots = await page.testView.testDots();
       const testListItems = await page.testView.testListItems();
-      expect(testDots).lengthOf(0);
-      expect(testListItems).lengthOf(82);
+      expect(testDots).toHaveLength(0);
+      expect(testListItems).toHaveLength(82);
     });
   });
 });

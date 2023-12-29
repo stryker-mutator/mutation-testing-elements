@@ -1,4 +1,3 @@
-import { AssertionError } from 'chai';
 import type { LitElement } from 'lit';
 import type { CustomEventMap, MteCustomEvent } from '../../../src/lib/custom-events.js';
 
@@ -19,7 +18,7 @@ export class CustomElementFixture<TCustomElement extends LitElement> {
     options?: Partial<CustomElementFixtureOptions>,
   ) {
     if (!customElements.get(customElementName)) {
-      throw new AssertionError(`Custom element "${customElementName}" is not defined. Is it a typo on your end?`);
+      throw new Error(`Custom element "${customElementName}" is not defined. Is it a typo on your end?`);
     }
     options = { ...defaultOptions, ...options };
     this.element = document.createElement(customElementName) as TCustomElement;
