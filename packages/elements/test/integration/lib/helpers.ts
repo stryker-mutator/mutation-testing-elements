@@ -35,9 +35,9 @@ export async function actScreenshotMatch(page: Page, context: TestInfo) {
  * @param options timeout and polling interval
  */
 export function waitUntil(
-  predicate: () => Promise<boolean | Chai.Assertion>,
+  predicate: () => Promise<void>,
   message?: string,
   { interval, timeout }: { interval?: number; timeout?: number } = {},
 ): Promise<void> {
-  return expect(async () => expect(await predicate()).toBeTruthy(), message).toPass({ intervals: interval ? [interval] : undefined, timeout });
+  return expect(predicate, message).toPass({ intervals: interval ? [interval] : undefined, timeout });
 }
