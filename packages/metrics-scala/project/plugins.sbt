@@ -8,4 +8,4 @@ addSbtPlugin("org.typelevel" % "sbt-tpolecat" % "0.5.0")
 addSbtPlugin("io.stryker-mutator" % "sbt-stryker4s" % "0.16.0")
 
 addSbtPlugin("com.eed3si9n" % "sbt-projectmatrix" % "0.9.2")
-addSbtPlugin("org.scala-js" % "sbt-scalajs"       % "1.14.0")
+addSbtPlugin("org.scala-js" % "sbt-scalajs"       % "1.15.0")
