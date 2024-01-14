@@ -7,6 +7,7 @@ import { TestStatus } from './model/test-model.js';
 const DEFAULT_SCORE = NaN;
 const ROOT_NAME = 'All files';
 const ROOT_NAME_TESTS = 'All tests';
+const IGNORED_BY_LEVEL_STATUS = 'Ignored by level'
 
 /**
  * Calculates the files-under-test metrics inside of a mutation testing report
@@ -135,6 +136,7 @@ export function countTestFileMetrics(testFile: TestFileModel[]): TestMetrics {
 
 export function countFileMetrics(fileResult: FileUnderTestModel[]): Metrics {
   const mutants = fileResult.flatMap((_) => _.mutants);
+  const ignoredByMutationLevel = mutants.filter((_) => _.status === 'Ignored' && _.statusReason === IGNORED_BY_LEVEL_STATUS).length
   const count = (status: MutantStatus) => mutants.filter((_) => _.status === status).length;
   const pending = count('Pending');
   const killed = count('Killed');
@@ -158,6 +160,7 @@ export function countFileMetrics(fileResult: FileUnderTestModel[]): Metrics {
     runtimeErrors,
     compileErrors,
     ignored,
+    ignoredByMutationLevel,
     totalDetected,
     totalUndetected,
     totalCovered,
