@@ -151,6 +151,10 @@ export function countFileMetrics(fileResult: FileUnderTestModel[]): Metrics {
   const totalCovered = totalDetected + survived;
   const totalValid = totalUndetected + totalDetected;
   const totalInvalid = runtimeErrors + compileErrors;
+  const mutationScore = totalValid > 0 ? (totalDetected / totalValid) * 100 : DEFAULT_SCORE
+  const totalMutants = totalValid + totalInvalid + ignored + pending;
+  const mutationScoreBasedOnCoveredCode = totalValid > 0 ? (totalDetected / totalCovered) * 100 || 0 : DEFAULT_SCORE;
+  const adjustedMutationScore = mutationScore * (totalMutants - ignoredByMutationLevel) / totalMutants;
   return {
     pending,
     killed,
@@ -166,8 +170,9 @@ export function countFileMetrics(fileResult: FileUnderTestModel[]): Metrics {
     totalCovered,
     totalValid,
     totalInvalid,
-    mutationScore: totalValid > 0 ? (totalDetected / totalValid) * 100 : DEFAULT_SCORE,
-    totalMutants: totalValid + totalInvalid + ignored + pending,
-    mutationScoreBasedOnCoveredCode: totalValid > 0 ? (totalDetected / totalCovered) * 100 || 0 : DEFAULT_SCORE,
+    mutationScore,
+    totalMutants,
+    mutationScoreBasedOnCoveredCode,
+    adjustedMutationScore,
   };
 }

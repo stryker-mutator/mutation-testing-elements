@@ -80,4 +80,9 @@ export interface Metrics {
    * `totalDetected / totalCovered * 100`
    */
   mutationScoreBasedOnCoveredCode: number;
+  /**
+   * An estimate for the mutation score, based upon the mutation score that was achieved with the Mutation Level.
+   * `mutationScore * (totalMutants - ignoredByMutationLevel) / totalMutants`
+   */
+  adjustedMutationScore: number;
 }
