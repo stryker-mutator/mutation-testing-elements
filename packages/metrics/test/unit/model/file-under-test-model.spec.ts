@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import { FileResult } from 'mutation-testing-report-schema/api';
-import { FileUnderTestModel, MutantModel } from '../../../src';
-import { createFileResult, createMutantResult } from '../../helpers/factories';
+import type { FileResult } from 'mutation-testing-report-schema';
+import { FileUnderTestModel, MutantModel } from '../../../src/index.js';
+import { createFileResult, createMutantResult } from '../../helpers/factories.js';
 
 describe(FileUnderTestModel.name, () => {
   it('should copy over all values from file result', () => {

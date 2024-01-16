@@ -1,15 +1,21 @@
 # Handled via npm
-package.json
 package-lock.json
 # Handled by lerna
-lerna.json
 CHANGELOG.md
 
 # Other generated files
 dist
-dist-test
+dist-tsc
 src-generated
 .stryker-tmp
 reports
 target/
 packages/metrics-scala/README.md
+.bsp/
+
+# Large files that don't need prettier formatting
+report.json
+
+testResources
+
+/.nx/cache

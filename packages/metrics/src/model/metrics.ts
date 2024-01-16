@@ -3,6 +3,10 @@
  */
 export interface Metrics {
   /**
+   * The total number of mutants that are pending, meaning that they have been generated but not yet run
+   */
+  pending: number;
+  /**
    * The total number of mutants that were killed
    */
   killed: number;
@@ -32,6 +36,10 @@ export interface Metrics {
    * The total number of mutants that were not even tested because the config of the user asked for them to be ignored.
    */
   ignored: number;
+  /**
+   * The number of mutants that were not tested because they were not included in the specified mutation level.
+   */
+  ignoredByMutationLevel: number;
   /**
    * The total number of mutants that were detected, meaning either killed or caused a time out.
    * `killed + timed out`
@@ -72,4 +80,9 @@ export interface Metrics {
    * `totalDetected / totalCovered * 100`
    */
   mutationScoreBasedOnCoveredCode: number;
+  /**
+   * An estimate for the mutation score, based upon the mutation score that was achieved with the Mutation Level.
+   * `mutationScore * (totalMutants - ignoredByMutationLevel) / totalMutants`
+   */
+  adjustedMutationScore: number;
 }

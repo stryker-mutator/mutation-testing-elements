@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Simple example - Mutation test elements</title>
-    <script src="/mutation-test-elements.js"></script>
-  </head>
 
-  <body>
-    <a href="/">Back</a>
-    <mutation-test-report-app src="mutation.json"></mutation-test-report-app>
-    <script>
-      const app = document.getElementsByTagName('mutation-test-report-app').item(0);
-      function updateTheme() {
-        document.body.style.backgroundColor = app.themeBackgroundColor;
-      }
-      app.addEventListener('theme-changed', updateTheme);
-      updateTheme();
-    </script>
-  </body>
+<head>
+  <title>Simple example - Mutation test elements</title>
+  <script type="module" src="/mutation-test-elements.js"></script>
+</head>
+
+<body>
+  <a href="/">Back</a>
+  <mutation-test-report-app src="mutation.json"></mutation-test-report-app>
+  <script>
+    const app = document.getElementsByTagName('mutation-test-report-app').item(0);
+    function updateTheme() {
+      document.body.style.backgroundColor = app.themeBackgroundColor;
+    }
+    app.addEventListener('theme-changed', updateTheme);
+    updateTheme();
+  </script>
+</body>
+
 </html>

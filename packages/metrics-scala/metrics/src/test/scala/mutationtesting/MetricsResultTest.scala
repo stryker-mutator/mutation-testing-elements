@@ -4,6 +4,7 @@ class MetricsResultTest extends munit.FunSuite {
   test("all should be 0 on empty root") {
     val sut = MetricsResultRoot(Nil)
 
+    assertEquals(sut.pending, 0)
     assertEquals(sut.killed, 0)
     assertEquals(sut.survived, 0)
     assertEquals(sut.timeout, 0)
@@ -30,8 +31,8 @@ class MetricsResultTest extends munit.FunSuite {
     }
   }
 
-  private lazy val expectedSet
-      : List[(String, MetricsResult => Number, Number)] = List(
+  private lazy val expectedSet: List[(String, MetricsResult => Number, Number)] = List(
+    ("pending", _.pending, 1),
     ("killed", _.killed, 2),
     ("survived", _.survived, 2),
     ("timeout", _.timeout, 2),
@@ -44,7 +45,7 @@ class MetricsResultTest extends munit.FunSuite {
     ("totalCovered", _.totalCovered, 6),
     ("totalValid", _.totalValid, 9),
     ("totalInvalid", _.totalInvalid, 2),
-    ("totalMutants", _.totalMutants, 12),
+    ("totalMutants", _.totalMutants, 13),
     ("mutationScore", _.mutationScore, (4d / 9d) * 100),
     (
       "mutationScoreBasedOnCoveredCode",
@@ -61,6 +62,7 @@ class MetricsResultTest extends munit.FunSuite {
           MetricsFile(
             "bar.scala",
             List(
+              MetricMutant(MutantStatus.Pending),
               MetricMutant(MutantStatus.Killed),
               MetricMutant(MutantStatus.Killed),
               MetricMutant(MutantStatus.Survived),

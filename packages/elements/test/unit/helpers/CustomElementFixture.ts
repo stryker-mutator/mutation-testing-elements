@@ -1,6 +1,5 @@
-import { AssertionError } from 'chai';
-import { LitElement } from 'lit-element';
-import { CustomEventMap, MteCustomEvent } from '../../../src/lib/custom-events';
+import type { LitElement } from 'lit';
+import type { CustomEventMap, MteCustomEvent } from '../../../src/lib/custom-events.js';
 
 interface CustomElementFixtureOptions {
   autoConnect: boolean;
@@ -14,9 +13,12 @@ export class CustomElementFixture<TCustomElement extends LitElement> {
   public readonly element: TCustomElement;
   private isConnected = false;
 
-  constructor(private customElementName: string, options?: Partial<CustomElementFixtureOptions>) {
+  constructor(
+    private customElementName: string,
+    options?: Partial<CustomElementFixtureOptions>,
+  ) {
     if (!customElements.get(customElementName)) {
-      throw new AssertionError(`Custom element "${customElementName}" is not defined. Is it a typo on your end?`);
+      throw new Error(`Custom element "${customElementName}" is not defined. Is it a typo on your end?`);
     }
     options = { ...defaultOptions, ...options };
     this.element = document.createElement(customElementName) as TCustomElement;
@@ -33,7 +35,7 @@ export class CustomElementFixture<TCustomElement extends LitElement> {
     if (this.isConnected) {
       throw new Error(`Element ${this.customElementName} is already connected to the DOM. Cannot connect a second time.`);
     }
-    document.body.append(this.element);
+    document.body.appendChild(this.element);
     this.isConnected = true;
   }
 
@@ -57,16 +59,16 @@ export class CustomElementFixture<TCustomElement extends LitElement> {
     });
   }
 
-  public $(selector: string, inShadow = true): HTMLElement {
+  public $<TElement extends Element = HTMLElement>(selector: string, inShadow = true): TElement {
     if (inShadow) {
-      return (this.element.shadowRoot as ShadowRoot).querySelector(selector) as HTMLElement;
+      return this.element.shadowRoot!.querySelector(selector)!;
     } else {
-      return this.element.querySelector(selector) as HTMLElement;
+      return this.element.querySelector(selector)!;
     }
   }
 
-  public $$(selector: string): Element[] {
-    return [...(this.element.shadowRoot as ShadowRoot).querySelectorAll(selector)];
+  public $$<TElement extends Element = HTMLElement>(selector: string): TElement[] {
+    return [...this.element.shadowRoot!.querySelectorAll<TElement>(selector)];
   }
 
   public get style(): CSSStyleDeclaration {
@@ -79,7 +81,7 @@ export class CustomElementFixture<TCustomElement extends LitElement> {
 
   public async catchCustomEvent<TEvent extends keyof CustomEventMap>(
     eventType: TEvent,
-    act: () => Promise<void> | void
+    act: () => Promise<void> | void,
   ): Promise<MteCustomEvent<TEvent> | undefined> {
     return this.catchEvent(eventType, act);
   }

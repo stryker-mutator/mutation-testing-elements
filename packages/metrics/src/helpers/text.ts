@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
 // The implementation of this file is grabbed and modified from TypeScript source code
 
 const enum CharacterCodes {

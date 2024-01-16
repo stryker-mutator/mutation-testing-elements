@@ -1,11 +1,10 @@
 {
   "extends": "../../../tsconfig.settings.json",
   "compilerOptions": {
-    "types": ["webpack-env"],
-    "outDir": "../dist",
-    "module": "es2015",
-    "moduleResolution": "node",
-    "lib": ["es2019", "dom", "dom.iterable"]
+    "types": ["vite/client"],
+    "outDir": "../dist-tsc/src",
+    "emitDeclarationOnly": true,
+    "lib": ["es2022", "dom", "dom.iterable"]
   },
   "references": [
     {

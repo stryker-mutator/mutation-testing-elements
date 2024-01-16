@@ -1,5 +1,5 @@
 **/*
 !README.md
-!dist/src/**/*.js
-!dist/src/**/*.d.ts
+!dist/src/**/*
+!src/**/*.ts
 tsconfig.tsbuildinfo

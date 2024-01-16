@@ -1,15 +1,21 @@
-import { LitElement, html, property, customElement, PropertyValues, unsafeCSS } from 'lit-element';
-import { MutationTestResult } from 'mutation-testing-report-schema/api';
-import { MetricsResult, calculateMutationTestMetrics } from 'mutation-testing-metrics';
-import { bootstrap, globals } from '../../style';
-import { locationChange$, View } from '../../lib/router';
-import { Subscription } from 'rxjs';
-import style from './app.scss';
-import theme from './theme.scss';
-import { createCustomEvent } from '../../lib/custom-events';
-import { FileUnderTestModel, Metrics, MutationTestMetricsResult, TestFileModel, TestMetrics } from 'mutation-testing-metrics/src/model';
-import { toAbsoluteUrl } from '../../lib/htmlHelpers';
-import { isLocalStorageAvailable } from '../../lib/browser';
+/* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
+import type { PropertyValues } from 'lit';
+import { html, unsafeCSS, nothing } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import type { MutantResult, MutationTestResult } from 'mutation-testing-report-schema/api';
+import type { MetricsResult, MutantModel, TestModel } from 'mutation-testing-metrics';
+import { calculateMutationTestMetrics } from 'mutation-testing-metrics';
+import { tailwind, globals } from '../../style/index.js';
+import { locationChange$, View } from '../../lib/router.js';
+import type { Subscription } from 'rxjs';
+import { fromEvent, sampleTime } from 'rxjs';
+import theme from './theme.scss?inline';
+import { createCustomEvent } from '../../lib/custom-events.js';
+import type { FileUnderTestModel, Metrics, MutationTestMetricsResult, TestFileModel, TestMetrics } from 'mutation-testing-metrics';
+import { toAbsoluteUrl } from '../../lib/html-helpers.js';
+import { isLocalStorageAvailable } from '../../lib/browser.js';
+import { mutantChanges } from '../../lib/mutant-changes.js';
+import { RealTimeElement } from '../real-time-element.js';
 
 interface BaseContext {
   path: string[];
@@ -25,37 +31,49 @@ interface TestContext extends BaseContext {
   result?: MetricsResult<TestFileModel, TestMetrics>;
 }
 
+/**
+ * The report needs to be able to handle realtime updates, without any constraints.
+ * To allow for this behaviour, we will update the `rootModel` once every 100ms.
+ *
+ * This throttling mechanism is only applied to the recalculation of the `rootModel`, since that is currently what takes
+ * the most time.
+ */
+const UPDATE_CYCLE_TIME = 100;
+
 type Context = MutantContext | TestContext;
 
 @customElement('mutation-test-report-app')
-export class MutationTestReportAppComponent extends LitElement {
+export class MutationTestReportAppComponent extends RealTimeElement {
   @property({ attribute: false })
-  public report: MutationTestResult | undefined;
+  public declare report: MutationTestResult | undefined;
 
   @property({ attribute: false })
-  public rootModel: MutationTestMetricsResult | undefined;
+  public declare rootModel: MutationTestMetricsResult | undefined;
 
   @property()
-  public src: string | undefined;
-
-  @property({ attribute: false })
-  public errorMessage: string | undefined;
-
-  @property({ attribute: false })
-  public context: Context = { view: View.mutant, path: [] };
+  public declare src: string | undefined;
 
   @property()
-  public path: ReadonlyArray<string> = [];
+  public declare sse: string | undefined;
+
+  @property({ attribute: false })
+  public declare errorMessage: string | undefined;
+
+  @property({ attribute: false })
+  public declare context: Context;
+
+  @property()
+  public declare path: readonly string[];
 
   @property({ attribute: 'title-postfix' })
-  public titlePostfix: string | undefined;
+  public declare titlePostfix: string | undefined;
 
   @property({ reflect: true })
-  public theme: string | undefined;
+  public declare theme?: string;
 
   @property({ attribute: false })
   public get themeBackgroundColor(): string {
-    return getComputedStyle(this).getPropertyValue('--bs-body-bg');
+    return getComputedStyle(this).getPropertyValue('--mut-body-bg');
   }
 
   @property()
@@ -71,22 +89,13 @@ export class MutationTestReportAppComponent extends LitElement {
     }
   }
 
-  public firstUpdated(): void {
-    // Set the theme when no theme is selected (light vs dark)
-    if (!this.theme) {
-      // 1. check local storage
-      const theme = isLocalStorageAvailable() && localStorage.getItem('mutation-testing-elements-theme');
-      if (theme) {
-        this.theme = theme;
-        // 2. check for user's OS preference
-      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)')?.matches) {
-        this.theme = 'dark';
-        // 3. default is light
-      } else {
-        this.theme = 'light';
-      }
-    }
+  constructor() {
+    super();
+    this.context = { view: View.mutant, path: [] };
+    this.path = [];
+  }
 
+  public firstUpdated(): void {
     // Set the default view to "mutant" when no route is selected
     if (this.path.length === 0 || (this.path[0] !== View.mutant && this.path[0] !== View.test)) {
       window.location.replace(toAbsoluteUrl(`${View.mutant}`));
@@ -105,30 +114,86 @@ export class MutationTestReportAppComponent extends LitElement {
     }
   }
 
-  public async updated(changedProperties: PropertyValues) {
-    if ((changedProperties.has('path') || changedProperties.has('report')) && this.report) {
-      this.updateModel(this.report);
-      this.updateContext();
-      this.updateTitle();
+  public async willUpdate(changedProperties: PropertyValues) {
+    if (this.report) {
+      // Set the theme when no theme is selected (light vs dark)
+      if (!this.theme) {
+        this.theme = this.getTheme();
+      }
+      if (changedProperties.has('report')) {
+        this.updateModel(this.report);
+      }
+      if (changedProperties.has('path') || changedProperties.has('report')) {
+        this.updateContext();
+        this.updateTitle();
+      }
     }
     if (changedProperties.has('src')) {
       await this.loadData();
     }
+  }
+
+  private mutants = new Map<string, MutantModel>();
+  private tests = new Map<string, TestModel>();
+
+  public updated(changedProperties: PropertyValues) {
     if (changedProperties.has('theme') && this.theme) {
-      this.dispatchEvent(createCustomEvent('theme-changed', { theme: this.theme, themeBackgroundColor: this.themeBackgroundColor }));
+      this.dispatchEvent(
+        createCustomEvent('theme-changed', {
+          theme: this.theme,
+          themeBackgroundColor: this.themeBackgroundColor,
+        }),
+      );
+    }
+  }
+
+  private getTheme(): string {
+    // 1. check local storage
+    const theme = isLocalStorageAvailable() && localStorage.getItem('mutation-testing-elements-theme');
+    if (theme) {
+      return theme;
+      // 2. check for user's OS preference
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)')?.matches) {
+      return 'dark';
+      // 3. default is light
+    } else {
+      return 'light';
     }
   }
 
   private updateModel(report: MutationTestResult) {
     this.rootModel = calculateMutationTestMetrics(report);
+    collectForEach<FileUnderTestModel, Metrics>((file, metric) => {
+      file.result = metric;
+      file.mutants.forEach((mutant) => this.mutants.set(mutant.id, mutant));
+    })(this.rootModel?.systemUnderTestMetrics);
+
+    collectForEach<TestFileModel, TestMetrics>((file, metric) => {
+      file.result = metric;
+      file.tests.forEach((test) => this.tests.set(test.id, test));
+    })(this.rootModel?.testMetrics);
+
+    this.rootModel.systemUnderTestMetrics.updateParent();
+    this.rootModel.testMetrics?.updateParent();
+
+    function collectForEach<TFile, TMetrics>(collect: (file: TFile, metrics: MetricsResult<TFile, TMetrics>) => void) {
+      return function forEachMetric(metrics: MetricsResult<TFile, TMetrics> | undefined): void {
+        if (metrics?.file) {
+          collect(metrics.file, metrics);
+        }
+        metrics?.childResults.forEach((child) => {
+          forEachMetric(child);
+        });
+      };
+    }
   }
 
   private updateContext() {
     if (this.rootModel) {
       const findResult = <TFile, TResult>(root: MetricsResult<TFile, TResult>, path: string[]): MetricsResult<TFile, TResult> | undefined => {
         return path.reduce<MetricsResult<TFile, TResult> | undefined>(
-          (model, currentPathPart) => model && model.childResults.find((child) => child.name === currentPathPart),
-          root
+          (model, currentPathPart) => model?.childResults.find((child) => child.name === currentPathPart),
+          root,
         );
       };
       const path = this.path.slice(1);
@@ -158,12 +223,90 @@ export class MutationTestReportAppComponent extends LitElement {
     isLocalStorageAvailable() && localStorage.setItem('mutation-testing-elements-theme', this.theme);
   };
 
-  public static styles = [globals, unsafeCSS(theme), bootstrap, unsafeCSS(style)];
+  public static styles = [globals, unsafeCSS(theme), tailwind];
 
   public readonly subscriptions: Subscription[] = [];
+
   public connectedCallback() {
     super.connectedCallback();
     this.subscriptions.push(locationChange$.subscribe((path) => (this.path = path)));
+    this.initializeSse();
+  }
+
+  private source: EventSource | undefined;
+  private sseSubscriptions = new Set<Subscription>();
+  private theMutant?: MutantModel;
+  private theTest?: TestModel;
+
+  private initializeSse() {
+    if (!this.sse) {
+      return;
+    }
+
+    this.source = new EventSource(this.sse);
+
+    const modifySubscription = fromEvent<MessageEvent>(this.source, 'mutant-tested').subscribe((event) => {
+      const newMutantData = JSON.parse(event.data as string) as Partial<MutantResult> & Pick<MutantResult, 'id' | 'status'>;
+      if (!this.report) {
+        return;
+      }
+
+      const mutant = this.mutants.get(newMutantData.id);
+      if (mutant === undefined) {
+        return;
+      }
+      this.theMutant = mutant;
+
+      for (const [prop, val] of Object.entries(newMutantData)) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        (this.theMutant as any)[prop] = val;
+      }
+
+      if (newMutantData.killedBy) {
+        newMutantData.killedBy.forEach((killedByTestId) => {
+          const test = this.tests.get(killedByTestId)!;
+          if (test === undefined) {
+            return;
+          }
+          this.theTest = test;
+          test.addKilled(this.theMutant!);
+          this.theMutant!.addKilledBy(test);
+        });
+      }
+
+      if (newMutantData.coveredBy) {
+        newMutantData.coveredBy.forEach((coveredByTestId) => {
+          const test = this.tests.get(coveredByTestId)!;
+          if (test === undefined) {
+            return;
+          }
+          this.theTest = test;
+          test.addCovered(this.theMutant!);
+          this.theMutant!.addCoveredBy(test);
+        });
+      }
+    });
+
+    const applySubscription = fromEvent(this.source, 'mutant-tested')
+      .pipe(sampleTime(UPDATE_CYCLE_TIME))
+      .subscribe(() => {
+        this.applyChanges();
+      });
+
+    this.sseSubscriptions.add(modifySubscription);
+    this.sseSubscriptions.add(applySubscription);
+
+    this.source.addEventListener('finished', () => {
+      this.source?.close();
+      this.applyChanges();
+      this.sseSubscriptions.forEach((s) => s.unsubscribe());
+    });
+  }
+
+  private applyChanges() {
+    this.theMutant?.update();
+    this.theTest?.update();
+    mutantChanges.next();
   }
 
   public disconnectedCallback() {
@@ -173,34 +316,45 @@ export class MutationTestReportAppComponent extends LitElement {
 
   private renderTitle() {
     if (this.context.result) {
-      return html`<h1 class="display-4"
-        >${this.context.result.name}${this.titlePostfix ? html`<small class="text-muted"> - ${this.titlePostfix}</small>` : ''}</h1
-      >`;
+      return html`
+        <h1 class="text-5xl font-bold tracking-tight">
+          ${this.context.result.name}${this.titlePostfix
+            ? html`<small class="text-light-muted ml-4 font-light">${this.titlePostfix}</small>`
+            : nothing}
+        </h1>
+      `;
     }
-    return undefined;
+    return nothing;
   }
 
   public render() {
-    if (this.context.result || this.errorMessage) {
+    if (this.context.result ?? this.errorMessage) {
       return html`
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12">
-              ${this.renderErrorMessage()}
-              <mte-theme-switch @theme-switch="${this.themeSwitch}" class="theme-switch" .theme="${this.theme}"> </mte-theme-switch>
-              ${this.renderTitle()} ${this.renderTabs()}
-              <mte-breadcrumb .view="${this.context.view}" .path="${this.context.path}"></mte-breadcrumb>
-              ${this.context.view === 'mutant' && this.context.result
-                ? html`<mte-mutant-view
-                    .result="${this.context.result}"
-                    .thresholds="${this.report!.thresholds}"
-                    .path="${this.path}"
-                  ></mte-mutant-view>`
-                : ''}
-              ${this.context.view === 'test' && this.context.result
-                ? html`<mte-test-view .result="${this.context.result}" .path="${this.path}"></mte-test-view>`
-                : ''}
-            </div>
+        <div class="container bg-white pb-4 font-sans text-gray-800 motion-safe:transition-max-width">
+          <div class="space-y-4 transition-colors">
+            ${this.renderErrorMessage()}
+            <mte-theme-switch @theme-switch="${this.themeSwitch}" class="sticky top-offset z-20 float-right pt-6" .theme="${this.theme}">
+            </mte-theme-switch>
+            ${this.renderTitle()} ${this.renderTabs()}
+            <mte-breadcrumb .view="${this.context.view}" .path="${this.context.path}"></mte-breadcrumb>
+            <mte-result-status-bar
+              .detected="${this.rootModel?.systemUnderTestMetrics.metrics.totalDetected}"
+              .noCoverage="${this.rootModel?.systemUnderTestMetrics.metrics.noCoverage}"
+              .pending="${this.rootModel?.systemUnderTestMetrics.metrics.pending}"
+              .survived="${this.rootModel?.systemUnderTestMetrics.metrics.survived}"
+              .total="${this.rootModel?.systemUnderTestMetrics.metrics.totalValid}"
+            ></mte-result-status-bar>
+            ${this.context.view === 'mutant' && this.context.result
+              ? html`<mte-mutant-view
+                  id="mte-mutant-view"
+                  .result="${this.context.result}"
+                  .thresholds="${this.report!.thresholds}"
+                  .path="${this.path}"
+                ></mte-mutant-view>`
+              : nothing}
+            ${this.context.view === 'test' && this.context.result
+              ? html`<mte-test-view id="mte-test-view" .result="${this.context.result}" .path="${this.path}"></mte-test-view>`
+              : nothing}
           </div>
         </div>
       `;
@@ -211,26 +365,47 @@ export class MutationTestReportAppComponent extends LitElement {
 
   private renderErrorMessage() {
     if (this.errorMessage) {
-      return html`<div class="alert alert-danger" role="alert">${this.errorMessage}</div>`;
+      return html`<div class="my-4 rounded-lg bg-red-100 p-4 text-sm text-red-700" role="alert">${this.errorMessage}</div>`;
     } else {
-      return html``;
+      return nothing;
     }
   }
 
   private renderTabs() {
     if (this.rootModel?.testMetrics) {
-      return html`<nav>
-        <ul class="nav nav-tabs border-bottom-0" role="tablist">
-          <li class="nav-item">
-            <a class="nav-link ${this.context.view === 'mutant' ? 'active' : ''}" role="tab" href="${toAbsoluteUrl('mutant')}">👽 Mutants</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link ${this.context.view === 'test' ? 'active' : ''}" role="tab" href="${toAbsoluteUrl('test')}">🧪 Tests</a>
-          </li>
-        </ul>
-      </nav>`;
+      const mutantsActive = this.context.view === 'mutant';
+      const testsActive = this.context.view === 'test';
+
+      return html`
+        <nav class="border-b border-gray-200 text-center text-sm font-medium  text-gray-600">
+          <ul class="-mb-px flex flex-wrap" role="tablist">
+            ${[
+              { type: 'mutant', isActive: mutantsActive, text: '👽 Mutants' },
+              { type: 'test', isActive: testsActive, text: '🧪 Tests' },
+            ].map(
+              ({ type, isActive, text }) =>
+                html`<li class="mr-2" role="presentation">
+                  <a
+                    class="inline-block rounded-t-lg border-b-2 border-transparent p-4 transition-colors hover:border-gray-300 hover:bg-gray-200 hover:text-gray-700 aria-selected:border-b-[3px] aria-selected:border-primary-700  aria-selected:text-primary-on"
+                    role="tab"
+                    href="${toAbsoluteUrl(type)}"
+                    aria-selected="${isActive}"
+                    aria-controls="mte-${type}-view"
+                    >${text}</a
+                  >
+                </li>`,
+            )}
+          </ul>
+        </nav>
+      `;
     } else {
-      return undefined;
+      return nothing;
     }
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'mutation-test-report-app': MutationTestReportAppComponent;
   }
 }

@@ -8,8 +8,7 @@ package object mutationtesting {
     */
   type TestFileDefinitionDictionary = Map[String, TestFile]
 
-  /** Dependencies used by the framework. Key-value pair of dependencies and
-    * their versions.
+  /** Dependencies used by the framework. Key-value pair of dependencies and their versions.
     */
   type Dependencies = Map[String, String]
 }

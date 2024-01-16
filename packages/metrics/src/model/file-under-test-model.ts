@@ -1,6 +1,7 @@
-import { FileResult, MutantResult } from 'mutation-testing-report-schema/api';
-import { MutantModel } from './mutant-model';
-import { SourceFile } from './source-file';
+import type { FileResult, MutantResult } from 'mutation-testing-report-schema';
+import { MutantModel } from './mutant-model.js';
+import { SourceFile } from './source-file.js';
+import type { MetricsResult } from './metrics-result.js';
 
 /**
  * Represents a file which was mutated (your production code).
@@ -18,12 +19,19 @@ export class FileUnderTestModel extends SourceFile implements FileResult {
    * The mutants inside this file.
    */
   mutants: MutantModel[];
+  /**
+   * The associated MetricsResult of this file.
+   */
+  result?: MetricsResult;
 
   /**
    * @param input The file result content
    * @param name The file name
    */
-  constructor(input: FileResult, public name: string) {
+  constructor(
+    input: FileResult,
+    public name: string,
+  ) {
     super();
     this.language = input.language;
     this.source = input.source;

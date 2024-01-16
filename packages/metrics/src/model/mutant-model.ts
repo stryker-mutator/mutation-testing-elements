@@ -1,6 +1,6 @@
-import { Location, MutantResult, MutantStatus } from 'mutation-testing-report-schema/api';
-import { FileUnderTestModel } from './file-under-test-model';
-import { TestModel } from './test-model';
+import type { Location, MutantResult, MutantStatus } from 'mutation-testing-report-schema';
+import type { FileUnderTestModel } from './file-under-test-model.js';
+import type { TestModel } from './test-model.js';
 
 function assertSourceFileDefined(sourceFile: FileUnderTestModel | undefined): asserts sourceFile {
   if (sourceFile === undefined) {
@@ -28,9 +28,27 @@ export class MutantModel implements MutantResult {
   public testsCompleted: number | undefined;
 
   // New fields
-  public coveredByTests: TestModel[] | undefined;
-  public killedByTests: TestModel[] | undefined;
-  public sourceFile: FileUnderTestModel | undefined;
+  get coveredByTests(): TestModel[] | undefined {
+    if (this.#coveredByTests.size) {
+      return Array.from(this.#coveredByTests.values());
+    } else return undefined;
+  }
+  set coveredByTests(tests: TestModel[]) {
+    this.#coveredByTests = new Map(tests.map((test) => [test.id, test]));
+  }
+
+  get killedByTests(): TestModel[] | undefined {
+    if (this.#killedByTests.size) {
+      return Array.from(this.#killedByTests.values());
+    } else return undefined;
+  }
+  set killedByTests(tests: TestModel[]) {
+    this.#killedByTests = new Map(tests.map((test) => [test.id, test]));
+  }
+  public declare sourceFile: FileUnderTestModel | undefined;
+
+  #coveredByTests = new Map<string, TestModel>();
+  #killedByTests = new Map<string, TestModel>();
 
   constructor(input: MutantResult) {
     this.coveredBy = input.coveredBy;
@@ -48,17 +66,11 @@ export class MutantModel implements MutantResult {
   }
 
   public addCoveredBy(test: TestModel) {
-    if (!this.coveredByTests) {
-      this.coveredByTests = [];
-    }
-    this.coveredByTests.push(test);
+    this.#coveredByTests.set(test.id, test);
   }
 
   public addKilledBy(test: TestModel) {
-    if (!this.killedByTests) {
-      this.killedByTests = [];
-    }
-    this.killedByTests.push(test);
+    this.#killedByTests.set(test.id, test);
   }
 
   /**
@@ -84,5 +96,13 @@ export class MutantModel implements MutantResult {
   public get fileName() {
     assertSourceFileDefined(this.sourceFile);
     return this.sourceFile.name;
+  }
+
+  // TODO: https://github.com/stryker-mutator/mutation-testing-elements/pull/2453#discussion_r1178769871
+  public update(): void {
+    if (!this.sourceFile?.result?.file) {
+      return;
+    }
+    this.sourceFile.result.updateAllMetrics();
   }
 }

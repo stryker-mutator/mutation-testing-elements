@@ -1,129 +1,152 @@
-import { expect } from 'chai';
-import { ReportPage } from './po/ReportPage';
-import { MutantStatus } from 'mutation-testing-report-schema/api';
-import { MutantComponent } from './po/MutantComponent.po';
-import { getCurrent } from './lib/browser';
+import { expect, test } from '@playwright/test';
+import { itShouldMatchScreenshot, waitUntil } from './lib/helpers.js';
+import type { MutantDot } from './po/MutantDot.po.js';
+import type { MutantMarker } from './po/MutantMarker.po.js';
+import { ReportPage } from './po/ReportPage.js';
 
-describe('File report "install-local-example/Options.ts"', () => {
+test.describe('File report "install-local-example/Options.ts"', () => {
   let page: ReportPage;
 
-  beforeEach(async () => {
-    page = new ReportPage(getCurrent());
+  test.beforeEach(async ({ page: p }) => {
+    page = new ReportPage(p);
     await page.navigateTo('install-local-example/#mutant/Options.ts');
-    await page.whenFileReportLoaded();
   });
 
-  it('should show 51 mutants in the file', async () => {
-    expect(await page.mutantView.mutants()).lengthOf(51);
+  test('should show survived and no coverage mutants by default', async () => {
+    expect(await page.mutantView.mutantDots()).toHaveLength(5);
+    const mutantSurvived = page.mutantView.mutantMarker(20);
+    const mutantKilled = page.mutantView.mutantMarker(11);
+    expect(await mutantSurvived.underlineIsVisible()).toEqual(true);
+    expect(await mutantKilled.underlineIsVisible()).toEqual(false);
+    expect(await mutantSurvived.getStatus()).toEqual('Survived');
+    expect(await mutantKilled.getStatus()).toEqual('Killed');
   });
 
-  it('should not "line-through" any of the original code lines', async () => {
-    for await (const mutant of await page.mutantView.mutants()) {
-      const [decoration, isMutantReplacementVisible] = await Promise.all([
-        mutant.originalCodeTextDecoration(),
-        mutant.isMutantReplacementCodeVisible(),
-      ]);
-      expect(decoration).eq('none');
-      expect(isMutantReplacementVisible).eq(false);
-    }
+  test('should not show a diff', async () => {
+    expect(await page.mutantView.currentDiff()).toBeNull();
   });
 
-  it('should only filter Survived and NoCoverage mutants by default', async () => {
+  test('should only filter Survived and NoCoverage mutants by default', async () => {
     const filter = page.mutantView.stateFilter();
-    expect(await filter.state(MutantStatus.Killed).isChecked()).false;
-    expect(await filter.state(MutantStatus.Survived).isChecked()).true;
-    expect(await filter.state(MutantStatus.NoCoverage).isChecked()).true;
-    expect(await filter.state(MutantStatus.CompileError).isChecked()).false;
+    await expect(filter.state('Killed').input).not.toBeChecked();
+    await expect(filter.state('Survived').input).toBeChecked();
+    await expect(filter.state('NoCoverage').input).toBeChecked();
+    await expect(filter.state('CompileError').input).not.toBeChecked();
   });
 
-  it('should hide killed mutants', async () => {
-    expect(await page.mutantView.mutant(1).isButtonVisible()).false;
-    expect(await page.mutantView.mutant(21).isButtonVisible()).false;
+  test('should hide killed mutants', async () => {
+    await page.mutantView.mutantDot(1).waitForHidden();
+    await page.mutantView.mutantDot(21).waitForHidden();
+    expect(await page.mutantView.mutantMarker(1).underlineIsVisible()).toEqual(false);
+    expect(await page.mutantView.mutantMarker(21).underlineIsVisible()).toEqual(false);
   });
 
-  it('should show Survived mutants', async () => {
-    expect(await page.mutantView.mutant(20).isButtonVisible()).true;
-    expect(await page.mutantView.mutant(32).isButtonVisible()).true;
+  test('should show Survived mutants', async () => {
+    await page.mutantView.mutantDot(20).waitForVisible();
+    await page.mutantView.mutantDot(32).waitForVisible();
+    expect(await page.mutantView.mutantMarker(20).underlineIsVisible()).toEqual(true);
+    expect(await page.mutantView.mutantMarker(32).underlineIsVisible()).toEqual(true);
   });
 
-  it('should show NoCoverage mutants', async () => {
-    expect(await page.mutantView.mutant(37).isButtonVisible()).true;
-    expect(await page.mutantView.mutant(38).isButtonVisible()).true;
+  test('should show NoCoverage mutants', async () => {
+    await page.mutantView.mutantDot(37).waitForVisible();
+    await page.mutantView.mutantDot(38).waitForVisible();
+    expect(await page.mutantView.mutantMarker(37).underlineIsVisible()).toEqual(true);
+    expect(await page.mutantView.mutantMarker(38).underlineIsVisible()).toEqual(true);
   });
 
-  describe('when "Killed" is enabled', () => {
-    beforeEach(async () => {
-      await page.mutantView.stateFilter().state(MutantStatus.Killed).click();
+  test.describe('when "Killed" is enabled', () => {
+    test.beforeEach(async () => {
+      await page.mutantView.stateFilter().state('Killed').click();
     });
 
-    it('should also show the killed mutants', async () => {
-      expect(await page.mutantView.mutant(1).isButtonVisible()).true;
-      expect(await page.mutantView.mutant(15).isButtonVisible()).true;
+    test('should also show the killed mutants', async () => {
+      await page.mutantView.mutantDot(1).waitForVisible();
+      expect(await page.mutantView.mutantMarker(1).underlineIsVisible()).toEqual(true);
+      await page.mutantView.mutantDot(15).waitForVisible();
+      expect(await page.mutantView.mutantMarker(15).underlineIsVisible()).toEqual(true);
     });
 
-    describe('and a killed mutant is enabled', () => {
-      let mutant: MutantComponent;
-      beforeEach(async () => {
-        mutant = page.mutantView.mutant(1);
-        await mutant.toggleMutant();
+    test.describe('and a killed mutant is selected', () => {
+      let mutantDot: MutantDot;
+      let mutantMarker: MutantMarker;
+      test.beforeEach(async () => {
+        mutantDot = page.mutantView.mutantDot(1);
+        mutantMarker = page.mutantView.mutantMarker(1);
+        await mutantDot.toggle();
       });
 
-      it('should "line-through" the original code', async () => {
-        expect(await mutant.originalCodeTextDecoration()).eq('line-through');
+      test('should show the diff inline', async () => {
+        const { original, mutated } = (await page.mutantView.currentDiff())!;
+        expect(original).toEqual('.filter((_, i) => i > 1);');
+        expect(mutated).toEqual('.filter(() => undefined);');
       });
 
-      describe('and later "Killed" is disabled', () => {
-        beforeEach(async () => {
-          await page.mutantView.stateFilter().state(MutantStatus.Killed).click();
+      test.describe('and later "Killed" is disabled', () => {
+        test.beforeEach(async () => {
+          await page.mutantView.stateFilter().state('Killed').click();
         });
 
-        it('should have removed the "line-through" from the mutant\'s original code', async () => {
-          expect(await mutant.originalCodeTextDecoration()).eq('none');
+        test('should remove the diff', async () => {
+          await expect.poll(() => page.mutantView.currentDiff()).toBeNull();
         });
 
-        it('should hide the killed mutants', async () => {
-          expect(await mutant.isButtonVisible()).false;
+        test('should hide the killed mutants', async () => {
+          await mutantDot.waitForHidden();
+          expect(await mutantMarker.underlineIsVisible()).toEqual(false);
         });
       });
     });
   });
 
-  describe('when first visible mutant is enabled', () => {
-    let mutant: MutantComponent;
+  test.describe('when first visible mutant is enabled', () => {
+    let mutant: MutantDot;
 
-    beforeEach(async () => {
-      mutant = page.mutantView.mutant(20);
-      await mutant.toggleMutant();
+    test.beforeEach(async () => {
+      mutant = page.mutantView.mutantDot(20);
+      await mutant.toggle();
     });
 
-    it('should "line-through" the originalCode', async () => {
-      expect(await mutant.originalCodeTextDecoration()).eq('line-through');
+    test('should show the diff', async () => {
+      expect(await page.mutantView.currentDiff()).toBeTruthy(); // exact diff is already tested numerous times
     });
 
-    it('should show the drawer', async () => {
+    test('should show the drawer', async () => {
       await page.mutantView.mutantDrawer().whenHalfOpen();
     });
 
-    it('should show the mutated code', async () => {
-      expect(await mutant.isMutantReplacementCodeVisible()).true;
-    });
-
-    describe('and later disabled', () => {
-      beforeEach(async () => {
-        await mutant.toggleMutant();
+    test.describe('and later disabled', () => {
+      test.beforeEach(async () => {
+        await mutant.toggle();
       });
 
-      it('should remove the "line-through" from the original code', async () => {
-        expect(await mutant.originalCodeTextDecoration()).eq('none');
+      test('should remove diff', async () => {
+        expect(await page.mutantView.currentDiff()).toBeNull();
       });
 
-      it('should hide the drawer', async () => {
+      test('should hide the drawer', async () => {
         await page.mutantView.mutantDrawer().whenClosed();
       });
+    });
+  });
 
-      it('should hide the mutated code', async () => {
-        expect(await mutant.isMutantReplacementCodeVisible()).false;
+  test.describe('when navigating "previous mutant" when scrolled up', () => {
+    test.beforeEach(async () => {
+      await page.scrollUp();
+      await page.mutantView.stateFilter().previous();
+      await waitUntil(async () => {
+        const posAfter = await page.pageYOffset();
+        return expect(posAfter).toBeGreaterThan(100);
       });
     });
+
+    // next and previous test already unit tested, so only focus on the part that wasn't unit tested
+    test('should scroll and focus the last test when "previous" is called', async () => {
+      const posAfter = await page.pageYOffset();
+      expect(posAfter).toBeGreaterThan(100);
+      expect(await (await page.mutantView.mutantDots()).slice(-1)[0].isActive()).toEqual(true);
+    });
+
+    itShouldMatchScreenshot('should look as expected');
   });
 });

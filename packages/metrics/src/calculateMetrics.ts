@@ -1,11 +1,13 @@
-import { compareNames, normalize } from './helpers';
-import { FileResult, MutantStatus, MutationTestResult } from 'mutation-testing-report-schema/api';
-import { groupBy } from './helpers';
-import { FileUnderTestModel, Metrics, MetricsResult, MutantModel, MutationTestMetricsResult, TestFileModel, TestMetrics, TestModel } from './model';
-import { TestStatus } from './model/test-model';
+import { compareNames, normalize, groupBy } from './helpers/index.js';
+import type { FileResult, MutationTestResult } from 'mutation-testing-report-schema';
+import type { MutantStatus } from 'mutation-testing-report-schema';
+import type { Metrics, MutantModel, MutationTestMetricsResult, TestMetrics, TestModel } from './model/index.js';
+import { FileUnderTestModel, MetricsResult, TestFileModel } from './model/index.js';
+import { TestStatus } from './model/test-model.js';
 const DEFAULT_SCORE = NaN;
 const ROOT_NAME = 'All files';
 const ROOT_NAME_TESTS = 'All tests';
+const IGNORED_BY_LEVEL_STATUS = 'Ignored by level'
 
 /**
  * Calculates the files-under-test metrics inside of a mutation testing report
@@ -25,11 +27,11 @@ export function calculateMetrics(files: Record<string, FileResult>): MetricsResu
 export function calculateMutationTestMetrics(result: MutationTestResult): MutationTestMetricsResult {
   const { files, testFiles, projectRoot = '' } = result;
   const fileModelsUnderTest = normalize(files, projectRoot, (input, name) => new FileUnderTestModel(input, name));
-  if (testFiles) {
+  if (testFiles && Object.keys(testFiles).length) {
     const testFileModels = normalize(testFiles, projectRoot, (input, name) => new TestFileModel(input, name));
     relate(
       Object.values(fileModelsUnderTest).flatMap((file) => file.mutants),
-      Object.values(testFileModels).flatMap((file) => file.tests)
+      Object.values(testFileModels).flatMap((file) => file.tests),
     );
     return {
       systemUnderTestMetrics: calculateRootMetrics(ROOT_NAME, fileModelsUnderTest, countFileMetrics),
@@ -45,7 +47,7 @@ export function calculateMutationTestMetrics(result: MutationTestResult): Mutati
 function calculateRootMetrics<TFileModel, TMetrics>(
   name: string,
   files: Record<string, TFileModel>,
-  calculateMetrics: (files: TFileModel[]) => TMetrics
+  calculateMetrics: (files: TFileModel[]) => TMetrics,
 ) {
   const fileNames = Object.keys(files);
   /**
@@ -62,33 +64,24 @@ function calculateRootMetrics<TFileModel, TMetrics>(
 function calculateDirectoryMetrics<TFileModel, TMetrics>(
   name: string,
   files: Record<string, TFileModel>,
-  calculateMetrics: (files: TFileModel[]) => TMetrics
+  calculateMetrics: (files: TFileModel[]) => TMetrics,
 ): MetricsResult<TFileModel, TMetrics> {
   const metrics = calculateMetrics(Object.values(files));
   const childResults = toChildModels(files, calculateMetrics);
-  return {
-    name,
-    childResults,
-    metrics,
-  };
+  return new MetricsResult<TFileModel, TMetrics>(name, childResults, metrics);
 }
 
-function calculateFileMetrics<TFileModel, TMetrics>(
+export function calculateFileMetrics<TFileModel, TMetrics>(
   fileName: string,
   file: TFileModel,
-  calculateMetrics: (files: TFileModel[]) => TMetrics
+  calculateMetrics: (files: TFileModel[]) => TMetrics,
 ): MetricsResult<TFileModel, TMetrics> {
-  return {
-    file,
-    name: fileName,
-    childResults: [],
-    metrics: calculateMetrics([file]),
-  };
+  return new MetricsResult<TFileModel, TMetrics>(fileName, [], calculateMetrics([file]), file);
 }
 
 function toChildModels<TFileModel, TMetrics>(
   files: Record<string, TFileModel>,
-  calculateMetrics: (files: TFileModel[]) => TMetrics
+  calculateMetrics: (files: TFileModel[]) => TMetrics,
 ): MetricsResult<TFileModel, TMetrics>[] {
   const filesByDirectory = groupBy(Object.entries(files), (namedFile) => namedFile[0].split('/')[0]);
   return Object.keys(filesByDirectory)
@@ -106,23 +99,30 @@ function toChildModels<TFileModel, TMetrics>(
 }
 
 function relate(mutants: MutantModel[], tests: TestModel[]) {
+  // Create a testId -> TestModel map for fast lookup
+  const testMap = new Map<string, TestModel>(tests.map((test) => [test.id, test]));
+
   for (const mutant of mutants) {
-    if (mutant.coveredBy || mutant.killedBy) {
-      for (const test of tests) {
-        if (mutant.coveredBy?.includes(test.id)) {
-          mutant.addCoveredBy(test);
-          test.addCovered(mutant);
-        }
-        if (mutant.killedBy?.includes(test.id)) {
-          mutant.addKilledBy(test);
-          test.addKilled(mutant);
-        }
+    const coveringTestIds = mutant.coveredBy ?? [];
+    for (const testId of coveringTestIds) {
+      const test = testMap.get(testId);
+      if (test) {
+        mutant.addCoveredBy(test);
+        test.addCovered(mutant);
+      }
+    }
+    const killingTestIds = mutant.killedBy ?? [];
+    for (const testId of killingTestIds) {
+      const test = testMap.get(testId);
+      if (test) {
+        mutant.addKilledBy(test);
+        test.addKilled(mutant);
       }
     }
   }
 }
 
-function countTestFileMetrics(testFile: TestFileModel[]): TestMetrics {
+export function countTestFileMetrics(testFile: TestFileModel[]): TestMetrics {
   const tests = testFile.flatMap((_) => _.tests);
   const count = (status: TestStatus) => tests.filter((_) => _.status === status).length;
 
@@ -134,22 +134,29 @@ function countTestFileMetrics(testFile: TestFileModel[]): TestMetrics {
   };
 }
 
-function countFileMetrics(fileResult: FileUnderTestModel[]): Metrics {
+export function countFileMetrics(fileResult: FileUnderTestModel[]): Metrics {
   const mutants = fileResult.flatMap((_) => _.mutants);
+  const ignoredByMutationLevel = mutants.filter((_) => _.status === 'Ignored' && _.statusReason === IGNORED_BY_LEVEL_STATUS).length
   const count = (status: MutantStatus) => mutants.filter((_) => _.status === status).length;
-  const killed = count(MutantStatus.Killed);
-  const timeout = count(MutantStatus.Timeout);
-  const survived = count(MutantStatus.Survived);
-  const noCoverage = count(MutantStatus.NoCoverage);
-  const runtimeErrors = count(MutantStatus.RuntimeError);
-  const compileErrors = count(MutantStatus.CompileError);
-  const ignored = count(MutantStatus.Ignored);
+  const pending = count('Pending');
+  const killed = count('Killed');
+  const timeout = count('Timeout');
+  const survived = count('Survived');
+  const noCoverage = count('NoCoverage');
+  const runtimeErrors = count('RuntimeError');
+  const compileErrors = count('CompileError');
+  const ignored = count('Ignored');
   const totalDetected = timeout + killed;
   const totalUndetected = survived + noCoverage;
   const totalCovered = totalDetected + survived;
   const totalValid = totalUndetected + totalDetected;
   const totalInvalid = runtimeErrors + compileErrors;
+  const mutationScore = totalValid > 0 ? (totalDetected / totalValid) * 100 : DEFAULT_SCORE
+  const totalMutants = totalValid + totalInvalid + ignored + pending;
+  const mutationScoreBasedOnCoveredCode = totalValid > 0 ? (totalDetected / totalCovered) * 100 || 0 : DEFAULT_SCORE;
+  const adjustedMutationScore = mutationScore * (totalMutants - ignoredByMutationLevel) / totalMutants;
   return {
+    pending,
     killed,
     timeout,
     survived,
@@ -157,13 +164,15 @@ function countFileMetrics(fileResult: FileUnderTestModel[]): Metrics {
     runtimeErrors,
     compileErrors,
     ignored,
+    ignoredByMutationLevel,
     totalDetected,
     totalUndetected,
     totalCovered,
     totalValid,
     totalInvalid,
-    mutationScore: totalValid > 0 ? (totalDetected / totalValid) * 100 : DEFAULT_SCORE,
-    totalMutants: totalValid + totalInvalid + ignored,
-    mutationScoreBasedOnCoveredCode: totalValid > 0 ? (totalDetected / totalCovered) * 100 || 0 : DEFAULT_SCORE,
+    mutationScore,
+    totalMutants,
+    mutationScoreBasedOnCoveredCode,
+    adjustedMutationScore,
   };
 }

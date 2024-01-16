@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Install local example - Mutation test elements</title>
-    <script src="/mutation-test-elements.js"></script>
-  </head>
+<head>
+  <title>Install local example - Mutation test elements</title>
+  <script type="module" src="/mutation-test-elements.js"></script>
+</head>
 
-  <body>
-    <a href="/">Back</a>
-    <mutation-test-report-app src="mutation-report.json"></mutation-test-report-app>
-    <script>
-      const app = document.getElementsByTagName('mutation-test-report-app').item(0);
-      function updateTheme() {
-        document.body.style.backgroundColor = app.themeBackgroundColor;
-      }
-      app.addEventListener('theme-changed', updateTheme);
-      updateTheme();
-    </script>
-  </body>
+<body>
+  <a href="/">Back</a>
+  <mutation-test-report-app src="mutation-report.json"></mutation-test-report-app>
+  <script>
+    const app = document.getElementsByTagName('mutation-test-report-app').item(0);
+    function updateTheme() {
+      document.body.style.backgroundColor = app.themeBackgroundColor;
+    }
+    app.addEventListener('theme-changed', updateTheme);
+    updateTheme();
+  </script>
+</body>
 </html>

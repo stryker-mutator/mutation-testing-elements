@@ -15,15 +15,13 @@ package mutationtesting
   * @param testFiles
   *   Test file definitions by file path OR class name.
   * @param performance
-  *   The performance statistics per phase. Total time should be roughly equal
-  *   to the sum of all these.
+  *   The performance statistics per phase. Total time should be roughly equal to the sum of all these.
   * @param framework
   *   Extra information about the framework used.
   * @param system
   *   Information about the system that performed mutation testing.
   * @param config
-  *   Free-format object that represents the configuration used to run mutation
-  *   testing.
+  *   Free-format object that represents the configuration used to run mutation testing.
   *
   * @tparam C
   *   type of the config object
@@ -32,7 +30,7 @@ final case class MutationTestResult[+C](
     `$schema`: Option[String] = Some(
       "https://git.io/mutation-testing-schema"
     ),
-    schemaVersion: String = "1",
+    schemaVersion: String = "2",
     thresholds: Thresholds,
     projectRoot: Option[String] = None,
     files: FileResultDictionary,
@@ -50,8 +48,7 @@ final case class MutationTestResult[+C](
   * @param mutants
   *   All mutants in this file.
   * @param language
-  *   Programming language that is used. Used for code highlighting, see
-  *   https://prismjs.com/#examples.
+  *   Programming language that is used. Used for code highlighting, see https://prismjs.com/#examples.
   */
 final case class FileResult(
     source: String,
@@ -61,8 +58,7 @@ final case class FileResult(
 
 /** A file containing one or more tests
   * @param source
-  *   Full source code of the test file. This can be used to display in the
-  *   report.
+  *   Full source code of the test file. This can be used to display in the report.
   * @param tests
   *   The tests contained in this test file.
   */
@@ -99,27 +95,22 @@ final case class TestDefinition(
   * @param status
   *   Result of the mutation.
   * @param statusReason
-  *   The reason that this mutant has this status. In the case of a killed
-  *   mutant, this should be filled with the failure message(s) of the failing
-  *   tests. In case of an error mutant, this should be filled with the error
-  *   message.
+  *   The reason that this mutant has this status. In the case of a killed mutant, this should be filled with the
+  *   failure message(s) of the failing tests. In case of an error mutant, this should be filled with the error message.
   * @param description
   *   Description of the applied mutation.
   * @param coveredBy
-  *   The test ids that covered this mutant. If a mutation testing framework
-  *   doesn't measure this information, it can simply be left out.
+  *   The test ids that covered this mutant. If a mutation testing framework doesn't measure this information, it can
+  *   simply be left out.
   * @param killedBy
-  *   The test ids that killed this mutant. It is a best practice to "bail" on
-  *   first failing test, in which case you can fill this array with that one
-  *   test.
+  *   The test ids that killed this mutant. It is a best practice to "bail" on first failing test, in which case you can
+  *   fill this array with that one test.
   * @param testsCompleted
-  *   The number of tests actually completed in order to test this mutant. Can
-  *   differ from `coveredBy` because of bailing a mutant test run after first
-  *   failing test.
+  *   The number of tests actually completed in order to test this mutant. Can differ from `coveredBy` because of
+  *   bailing a mutant test run after first failing test.
   * @param static
-  *   A static mutant means that it was loaded once at during initialization,
-  *   this makes it slow or even impossible to test, depending on the mutation
-  *   testing framework.
+  *   A static mutant means that it was loaded once at during initialization, this makes it slow or even impossible to
+  *   test, depending on the mutation testing framework.
   */
 final case class MutantResult(
     id: String,
@@ -144,8 +135,7 @@ final case class MutantResult(
   */
 final case class Location(start: Position, end: Position)
 
-/** A [[mutationtesting.Location]] where `end` is not required. Start is
-  * inclusive, end is exclusive.
+/** A [[mutationtesting.Location]] where `end` is not required. Start is inclusive, end is exclusive.
   *
   * @param start
   *   Starting location (inclusive).
@@ -158,8 +148,7 @@ final case class OpenEndLocation(start: Position, end: Option[Position] = None)
   */
 final case class Position(line: Int, column: Int)
 
-/** The performance statistics per phase. Total time should be roughly equal to
-  * the sum of all these.
+/** The performance statistics per phase. Total time should be roughly equal to the sum of all these.
   *
   * @param setup
   *   Time it took to run the setup phase in milliseconds.
@@ -183,8 +172,7 @@ final case class PerformanceStatistics(
   * @param branding
   *   Extra branding information about the framework used.
   * @param dependencies
-  *   Dependencies used by the framework. Key-value pair of dependencies and
-  *   their versions.
+  *   Dependencies used by the framework. Key-value pair of dependencies and their versions.
   */
 final case class FrameworkInformation(
     name: String,
@@ -208,9 +196,8 @@ final case class BrandingInformation(
 /** Information about the system that performed mutation testing
   *
   * @param ci
-  *   Did mutation testing run in a Continuous Integration environment
-  *   (pipeline)? Note that there is no way of knowing this for sure. It's done
-  *   on a best-effort basis.
+  *   Did mutation testing run in a Continuous Integration environment (pipeline)? Note that there is no way of knowing
+  *   this for sure. It's done on a best-effort basis.
   * @param os
   * @param cpu
   * @param ram
@@ -247,8 +234,7 @@ final case class CpuInformation(
 )
 
 /** @param total
-  *   The total RAM of the system that performed mutation testing in MB. On the
-  *   JVM, this can be the amount of memory available to the JVM instead of the
-  *   system memory.
+  *   The total RAM of the system that performed mutation testing in MB. On the JVM, this can be the amount of memory
+  *   available to the JVM instead of the system memory.
   */
 final case class RamInformation(total: Long)

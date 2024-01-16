@@ -5,7 +5,7 @@
 
 Welcome to the mutation testing elements mono repo.
 
-It is a [lernajs](https://lernajs.io/) mono repository. Please see the [packages](https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages)
+It is a [lernajs](https://lerna.js.org/) mono repository. Please see the [packages](https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages)
 directory to navigate to a sub package.
 
 ## Versioning

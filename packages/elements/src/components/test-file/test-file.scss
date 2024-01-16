@@ -1,9 +1,21 @@
-#report-code-block {
-  // Don't show scrollbar in code block, the page already scrolls
-  // Also let the popup appear outside the code block boundaries
-  overflow: visible;
+@import '../../style/code.scss';
+
+$test-themes: (
+  'Killing': 'fill-green-700',
+  'Covering': 'fill-amber-400',
+  'NotCovering': 'fill-orange-500',
+);
+
+@each $status, $theme in $test-themes {
+  svg.test-dot.#{$status} {
+    @apply #{$theme};
+  }
 }
 
-mte-test {
-  background-color: transparent;
+svg.test-dot.selected {
+  @apply fill-sky-400;
+}
+
+svg.test-dot {
+  @apply m-[2px];
 }

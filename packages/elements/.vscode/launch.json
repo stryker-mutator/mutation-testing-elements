@@ -5,28 +5,19 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Attach to Chrome",
+      "port": 9222,
+      "request": "attach",
       "type": "chrome",
-      "request": "launch",
-      "name": "Launch Chrome",
-      "url": "http://localhost:8080",
-      "webRoot": "${workspaceFolder}",
-      "sourceMaps": true,
-      "sourceMapPathOverrides": {
-        "webpack://elements/*": "${webRoot}/*"
-      }
+      "webRoot": "${workspaceFolder}"
     },
     {
       "type": "chrome",
-      "request": "attach",
-      "name": "Debug Unit Tests",
-      "address": "localhost",
-      "port": 9333,
+      "request": "launch",
+      "name": "Launch Chrome",
+      "url": "http://localhost:5173",
       "webRoot": "${workspaceFolder}",
-      "sourceMaps": true,
-      "sourceMapPathOverrides": {
-        "webpack://elements/*": "${webRoot}/*"
-      },
-      "timeout": 30000
+      "sourceMaps": true
     }
   ]
 }

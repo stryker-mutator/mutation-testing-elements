@@ -7,7 +7,7 @@ Zero-dependency library to calculate mutation testing metrics in Scala.
 
 See [mutant states and metrics in the Stryker handbook](https://github.com/stryker-mutator/stryker-handbook/blob/master/mutant-states-and-metrics.md#readme) for more details about mutation testing metrics.
 
-Cross-compiled for Scala 2.12 and 2.13. If you want to use this library but require another target or platform (such as [Dotty](https://dotty.epfl.ch/), [Scala.js](http://www.scala-js.org/) or [Scala Native](https://www.scala-native.org/)) feel free to [create an issue](https://github.com/stryker-mutator/mutation-testing-elements/issues/new)!
+Cross-compiled for Scala 2.12, 2.13 and 3 on JVM and Scala.js. If you want to use this library but require another target or platform (such as [Scala Native](https://www.scala-native.org/)) feel free to [create an issue](https://github.com/stryker-mutator/mutation-testing-elements/issues/new)!
 
 ## Usage example
 
@@ -15,6 +15,12 @@ Add the dependency to your project [![Maven Central](https://img.shields.io/mave
 
 ```scala
 libraryDependencies += "io.stryker-mutator" %% "mutation-testing-metrics" % version
+```
+
+Or for Scala.js:
+
+```scala
+libraryDependencies += "io.stryker-mutator" %%% "mutation-testing-metrics" % version
 ```
 
 The `mutation-testing-elements` and `mutation-testing-report-schema` projects are also published, see [NPM_PROJECTS_PUBLISHING](./NPM_PROJECTS_PUBLISHING.md) for more information.
@@ -117,7 +123,7 @@ metrics.mutationScoreBasedOnCoveredCode
 // res15: Double = 70.12987012987013
 ```
 
-- `MetricsResult` is a trait with three implementations:
+- `MetricsResult` is a sealed trait with three implementations:
   - `MetricsResultRoot`: The root of a `MetricsResult`, contains zero or more `MetricsResult`'s
   - `MetricsDirectory`: Representation of a directory. Has a directory name and zero or more `MetricsResult`'s
   - `MetricsFile`: Representation of a file with mutated code. Has a filename and zero or more `MetricMutant`'s
@@ -125,7 +131,7 @@ metrics.mutationScoreBasedOnCoveredCode
 
 ## Contributing
 
-To use this project, you will need sbt. The recommended way on macOS/Linux is with [sbt-extras](https://github.com/paulp/sbt-extras). On Windows, you can install sbt using the [official .msi](https://www.scala-sbt.org/download.html).
+To use this project, you will need a [JDK](https://adoptium.net/) and sbt. The recommended way to install sbt is with with [Coursier](https://get-coursier.io/). Alternatively, on macOS/Linux [sbt-extras](https://github.com/dwijnand/sbt-extras), or on Windows using the [official .msi](https://www.scala-sbt.org/download.html) are also options.
 
 This is a normal sbt project, you can compile code with `sbt compile` and run tests
 with `sbt test`. Running `sbt +test` will compile and test all targets. For more information on cross-compilation in sbt, see <https://www.scala-sbt.org/1.x/docs/Cross-Build.html>.

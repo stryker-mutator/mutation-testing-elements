@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { calculateMetrics, calculateMutationTestMetrics } from '../../src/calculateMetrics';
 import { expect } from 'chai';
-import { MutantStatus, FileResultDictionary } from 'mutation-testing-report-schema/api';
-import { FileUnderTestModel, Metrics, MetricsResult, TestFileModel, TestMetrics } from '../../src/model';
-import { createFileResult, createMutantResult, createMutationTestResult, createTestDefinition, createTestFile } from '../helpers/factories';
+import type { FileResultDictionary } from 'mutation-testing-report-schema';
+import { calculateMetrics, calculateMutationTestMetrics } from '../../src/calculateMetrics.js';
+import type { FileUnderTestModel, Metrics, MetricsResult, TestMetrics } from '../../src/model/index.js';
+import { TestFileModel } from '../../src/model/index.js';
+import { createFileResult, createMutantResult, createMutationTestResult, createTestDefinition, createTestFile } from '../helpers/factories.js';
 
 describe(calculateMetrics.name, () => {
   it('should wrap results in an "All files" root', () => {
@@ -14,11 +14,11 @@ describe(calculateMetrics.name, () => {
   it('should count results of multiple files', () => {
     // Arrange
     const baz = createFileResult({
-      mutants: [createMutantResult({ status: MutantStatus.Killed }), createMutantResult({ status: MutantStatus.Survived })],
+      mutants: [createMutantResult({ status: 'Killed' }), createMutantResult({ status: 'Survived' })],
     });
     const input: FileResultDictionary = {
       'foo.js': createFileResult({
-        mutants: [createMutantResult({ status: MutantStatus.Killed })],
+        mutants: [createMutantResult({ status: 'Killed' })],
       }),
       'bar/baz.js': baz,
     };
@@ -128,14 +128,15 @@ describe(calculateMetrics.name, () => {
     const input: FileResultDictionary = {
       'foo.js': createFileResult({
         mutants: [
-          createMutantResult({ status: MutantStatus.RuntimeError }),
-          createMutantResult({ status: MutantStatus.Killed }),
-          createMutantResult({ status: MutantStatus.CompileError }),
-          createMutantResult({ status: MutantStatus.NoCoverage }),
-          createMutantResult({ status: MutantStatus.Survived }),
-          createMutantResult({ status: MutantStatus.Killed }),
-          createMutantResult({ status: MutantStatus.Timeout }),
-          createMutantResult({ status: MutantStatus.Ignored }),
+          createMutantResult({ status: 'Pending' }),
+          createMutantResult({ status: 'RuntimeError' }),
+          createMutantResult({ status: 'Killed' }),
+          createMutantResult({ status: 'CompileError' }),
+          createMutantResult({ status: 'NoCoverage' }),
+          createMutantResult({ status: 'Survived' }),
+          createMutantResult({ status: 'Killed' }),
+          createMutantResult({ status: 'Timeout' }),
+          createMutantResult({ status: 'Ignored' }),
         ],
       }),
     };
@@ -144,6 +145,7 @@ describe(calculateMetrics.name, () => {
     const actual = calculateMetrics(input);
 
     // Assert
+    expect(actual.metrics.pending, 'pending').to.eq(1);
     expect(actual.metrics.killed, 'killed').to.eq(2);
     expect(actual.metrics.compileErrors, 'compileErrors').eq(1);
     expect(actual.metrics.runtimeErrors, 'runtimeErrors').eq(1);
@@ -153,7 +155,7 @@ describe(calculateMetrics.name, () => {
     expect(actual.metrics.noCoverage, 'ignored').to.eq(1);
     expect(actual.metrics.totalCovered, 'totalCovered').to.eq(4);
     expect(actual.metrics.totalDetected, 'detected').to.eq(3);
-    expect(actual.metrics.totalMutants, 'mutants').to.eq(8);
+    expect(actual.metrics.totalMutants, 'mutants').to.eq(9);
     expect(actual.metrics.totalValid, 'mutants').to.eq(5);
     expect(actual.metrics.totalInvalid, 'mutants').to.eq(2);
     expect(actual.metrics.totalUndetected, 'undetected').to.eq(2);
@@ -195,7 +197,7 @@ describe(calculateMutationTestMetrics.name, () => {
     expect(mutant1?.killedByTests).deep.eq([test2]);
     expect(mutant1?.coveredByTests).deep.eq([test1, test2, test3]);
     expect(mutant2?.killedByTests).undefined;
-    expect(mutant2?.coveredByTests).deep.eq([test1, test4]);
+    expect(mutant2?.coveredByTests).deep.eq([test4, test1]);
     expect(test1.coveredMutants).deep.eq([mutant1, mutant2]);
     expect(test1.killedMutants).undefined;
     expect(test2.coveredMutants).deep.eq([mutant1]);

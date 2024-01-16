@@ -1,38 +1,39 @@
-import { ReportPage } from './po/ReportPage';
-import { expect } from 'chai';
-import { getCurrent } from './lib/browser';
+import { ReportPage } from './po/ReportPage.js';
+import { test, expect } from '@playwright/test';
 
-describe('Directory report page', () => {
+test.describe('Directory report page', () => {
   let page: ReportPage;
-  beforeEach(async () => {
-    page = new ReportPage(getCurrent());
-    await page.navigateTo('install-local-example');
+  test.beforeEach(async ({ page: p }) => {
+    page = new ReportPage(p);
+    await page.navigateTo('install-local-example/');
   });
 
-  describe('the results table', () => {
-    it('should show 11 rows in the result table', async () => {
-      expect(await page.mutantView.resultTable().rows()).lengthOf(11);
+  test.describe('the results table', () => {
+    test('should show 11 rows in the result table', async () => {
+      expect(await page.mutantView.resultTable().rows()).toHaveLength(11);
     });
 
-    it('should show "all files" with "78.57%" mutation score', async () => {
-      expect(await page.mutantView.resultTable().row('All files').progressBar().percentageText()).eq('78.57%');
+    test('should show "all files" with "78.57" mutation score', async () => {
+      const row = page.mutantView.resultTable().row('All files');
+      await row.progressBar().expectPercentage('78.57');
+      await expect(row.mutationScore()).toHaveText('78.57');
     });
 
-    it('should show expected totals for cli.ts', async () => {
+    test('should show expected totals for cli.ts', async () => {
       const row = page.mutantView.resultTable().row('cli.ts');
-      return Promise.all([
-        expect(await row.progressBar().percentageText()).eq('8.70%'),
-        expect(await row.mutationScore()).eq('8.70'),
-        expect(await row.killed()).eq('2'),
-        expect(await row.survived()).eq('1'),
-        expect(await row.timeout()).eq('0'),
-        expect(await row.noCoverage()).eq('20'),
-        expect(await row.ignored()).eq('0'),
-        expect(await row.runtimeErrors()).eq('0'),
-        expect(await row.compileErrors()).eq('3'),
-        expect(await row.totalDetected()).eq('2'),
-        expect(await row.totalUndetected()).eq('21'),
-        expect(await row.totalMutants()).eq('26'),
+      await Promise.all([
+        row.progressBar().expectPercentage('8.70'),
+        expect(row.mutationScore()).toHaveText('8.70'),
+        expect(row.killed()).toHaveText('2'),
+        expect(row.survived()).toHaveText('1'),
+        expect(row.timeout()).toHaveText('0'),
+        expect(row.noCoverage()).toHaveText('20'),
+        expect(row.ignored()).toHaveText('0'),
+        expect(row.runtimeErrors()).toHaveText('0'),
+        expect(row.compileErrors()).toHaveText('3'),
+        expect(row.totalDetected()).toHaveText('2'),
+        expect(row.totalUndetected()).toHaveText('21'),
+        expect(row.totalMutants()).toHaveText('26'),
       ]);
     });
   });

@@ -1,14 +1,15 @@
-import { customElement, LitElement, property, html, unsafeCSS } from 'lit-element';
-import style from './tooltip.scss';
+import { html, LitElement } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { tailwind } from '../../style/index.js';
 
 @customElement('mte-tooltip')
 export class MutationTestReportThemeSwitchComponent extends LitElement {
   @property({ attribute: true })
-  title!: string;
+  declare title: string;
 
-  static styles = [unsafeCSS(style)];
+  static styles = [tailwind];
 
   render() {
-    return html`<span class="tooltip" title="${this.title}"><slot></slot></span>`;
+    return html`<span class="cursor-help underline decoration-dotted" title="${this.title}"><slot></slot></span>`;
   }
 }

@@ -1,4 +1,6 @@
-import { MetricsResult } from '../model/metrics-result';
+import type { FileUnderTestModel } from '../model/file-under-test-model.js';
+import type { MetricsResult } from '../model/metrics-result.js';
+import type { Metrics } from '../model/metrics.js';
 const SEPARATOR = '/';
 
 export function normalizeFileNames<TIn>(input: Record<string, TIn>, projectRoot = ''): Record<string, TIn> {
@@ -8,7 +10,7 @@ export function normalizeFileNames<TIn>(input: Record<string, TIn>, projectRoot 
 export function normalize<TIn, TOut>(
   input: Record<string, TIn>,
   projectRoot: string,
-  factory: (input: TIn, relativeFileName: string) => TOut
+  factory: (input: TIn, relativeFileName: string) => TOut,
 ): Record<string, TOut> {
   const fileNames = Object.keys(input);
   const commonBasePath = determineCommonBasePath(fileNames);
@@ -24,7 +26,7 @@ function normalizeName(fileName: string) {
   return fileName.split(/\/|\\/).filter(Boolean).join('/');
 }
 
-export function determineCommonBasePath(fileNames: ReadonlyArray<string>): string {
+export function determineCommonBasePath(fileNames: readonly string[]): string {
   const directories = fileNames.map((fileName) => fileName.split(/\/|\\/).slice(0, -1));
   if (fileNames.length) {
     return directories.reduce(filterDirectories).join(SEPARATOR);
@@ -43,8 +45,8 @@ export function determineCommonBasePath(fileNames: ReadonlyArray<string>): strin
   }
 }
 
-export function compareNames(a: MetricsResult<any, any>, b: MetricsResult<any, any>) {
-  const sortValue = (metricsResult: MetricsResult) => {
+export function compareNames<TFile = FileUnderTestModel, TMetrics = Metrics>(a: MetricsResult<TFile, TMetrics>, b: MetricsResult<TFile, TMetrics>) {
+  const sortValue = (metricsResult: MetricsResult<TFile, TMetrics>) => {
     // Directories first
     if (metricsResult.file) {
       return `1${metricsResult.name}`;

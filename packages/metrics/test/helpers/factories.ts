@@ -1,5 +1,5 @@
-import { FileResult, MutantResult, MutantStatus, MutationTestResult, TestDefinition, TestFile, Location } from 'mutation-testing-report-schema/api';
-import { FileUnderTestModel, TestFileModel } from '../../src';
+import type { FileResult, Location, MutantResult, MutationTestResult, TestDefinition, TestFile } from 'mutation-testing-report-schema';
+import { FileUnderTestModel, TestFileModel } from '../../src/index.js';
 
 export function createTestFileModel(overrides?: Partial<TestFileModel>): TestFileModel {
   return new TestFileModel(createTestFile(overrides), overrides?.name ?? 'foo.spec.js');
@@ -27,7 +27,7 @@ export function createMutantResult(overrides?: Partial<MutantResult>): MutantRes
     location: createLocation(),
     mutatorName: 'FooMutator',
     replacement: '"foo"',
-    status: MutantStatus.Killed,
+    status: 'Killed',
     ...overrides,
   };
 }

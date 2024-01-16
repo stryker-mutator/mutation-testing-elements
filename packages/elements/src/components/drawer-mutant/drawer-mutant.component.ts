@@ -1,72 +1,90 @@
-import { customElement, html, LitElement, property, unsafeCSS } from 'lit-element';
-import { MutantModel, TestModel } from 'mutation-testing-metrics';
-import { MutantStatus } from 'mutation-testing-report-schema/api';
-import { describeLocation, getEmojiForStatus, plural, renderIf, renderIfPresent } from '../../lib/htmlHelpers';
-import { bootstrap } from '../../style';
-import { DrawerMode } from '../drawer/drawer.component';
-import style from './drawer-mutant.scss';
+import type { TemplateResult } from 'lit';
+import { html, nothing } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import type { MutantModel, TestModel } from 'mutation-testing-metrics';
+import { describeLocation, getEmojiForStatus, plural, renderIf, renderIfPresent } from '../../lib/html-helpers.js';
+import { tailwind } from '../../style/index.js';
+import type { DrawerMode } from '../drawer/drawer.component.js';
+import { renderDrawer } from '../drawer/util.js';
+import { RealTimeElement } from '../real-time-element.js';
+import { renderDetailLine, renderEmoji, renderSummaryContainer, renderSummaryLine } from './util.js';
 
-const describeTest = (test: TestModel) => html`${test.name}${test.sourceFile && test.location ? ` (${describeLocation(test)})` : ''}`;
+const describeTest = (test: TestModel) => `${test.name}${test.sourceFile && test.location ? ` (${describeLocation(test)})` : ''}`;
+
+/**
+ * Wrap so that the whitespace is preserved when rendered
+ */
+const whitespacePreserving = (content: string | TemplateResult) => html`<span class="whitespace-pre-wrap">${content}</span>`;
 
 @customElement('mte-drawer-mutant')
-export class MutationTestReportDrawerMutant extends LitElement {
+export class MutationTestReportDrawerMutant extends RealTimeElement {
   @property()
-  public mutant?: MutantModel;
+  public declare mutant?: MutantModel;
 
   @property({ reflect: true })
-  public mode: DrawerMode = 'closed';
+  public declare mode: DrawerMode;
 
-  public static styles = [bootstrap, unsafeCSS(style)];
+  public static styles = [tailwind];
+
+  constructor() {
+    super();
+    this.mode = 'closed';
+  }
 
   public render() {
-    return html`<mte-drawer ?hasDetail="${this.mutant?.killedByTests || this.mutant?.coveredByTests}" .mode="${this.mode}">
-      ${renderIfPresent(
+    return renderDrawer(
+      // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- we want to coalesce on length 0
+      { hasDetail: Boolean(this.mutant?.killedByTests?.length || this.mutant?.coveredByTests?.length), mode: this.mode },
+      renderIfPresent(
         this.mutant,
         (mutant) => html`
-          <span slot="header"
-            >${mutant.id} ${getEmojiForStatus(mutant.status)} ${mutant.mutatorName} ${mutant.status}
+          <span class="align-middle text-lg" slot="header"
+            >${getEmojiForStatus(mutant.status)} ${mutant.mutatorName} ${mutant.status}
             (${mutant.location.start.line}:${mutant.location.start.column})</span
           >
           <span slot="summary">${this.renderSummary()}</span>
-          <span slot="detail">${this.renderDetail()}</span>
-        `
-      )}
-    </mte-drawer>`;
+          <span slot="detail" class="block">${this.renderDetail()}</span>
+        `,
+      ),
+    );
   }
 
   private renderSummary() {
-    return html`<div class="d-flex mx-2">
-      ${this.mutant?.killedByTests?.[0]
-        ? html`<h6 class="pe-4"
-            >🎯 Killed by: ${this.mutant.killedByTests?.[0].name}
-            ${this.mutant.killedByTests.length > 1 ? html`(and ${this.mutant.killedByTests.length - 1} more)` : undefined}</h6
-          >`
-        : undefined}
-      ${renderIf(this.mutant?.static, html`<h6 class="pe-4">🗿 Static mutant</h6>`)}
-      ${renderIfPresent(
-        this.mutant?.coveredByTests,
-        (coveredTests) =>
-          html`<h6 class="pe-4"
-            >☂️ Covered by ${coveredTests.length} test${plural(coveredTests)}
-            ${renderIf(this.mutant?.status === MutantStatus.Survived, '(yet still survived)')}</h6
-          >`
+    return renderSummaryContainer(
+      html`${this.mutant?.killedByTests?.[0]
+        ? renderSummaryLine(
+            html`${renderEmoji('🎯', 'killed')} Killed by:
+            ${this.mutant.killedByTests?.[0].name}${this.mutant.killedByTests.length > 1 ? `(and ${this.mutant.killedByTests.length - 1} more)` : ''}`,
+          )
+        : nothing}
+      ${renderIf(this.mutant?.static, renderSummaryLine(html`${renderEmoji('🗿', 'static')} Static mutant`))}
+      ${renderIfPresent(this.mutant?.coveredByTests, (coveredTests) =>
+        renderSummaryLine(
+          html`${renderEmoji('☂️', 'umbrella')} Covered by ${coveredTests.length}
+          test${plural(coveredTests)}${this.mutant?.status === 'Survived' ? ' (yet still survived)' : ''}`,
+        ),
       )}
-      ${renderIfPresent(
-        this.mutant?.statusReason,
-        (reason) => html`<h6 class="pe-4" title="Reason for the ${this.mutant!.status} status">🕵️ ${reason}</h6>`
+      ${renderIf(
+        this.mutant?.statusReason?.trim(),
+        renderSummaryLine(
+          html`${renderEmoji('🕵️', 'spy')} ${whitespacePreserving(this.mutant!.statusReason!)}`,
+          `Reason for the ${this.mutant!.status} status`,
+        ),
       )}
-      ${renderIfPresent(this.mutant?.description, (description) => html`<h6 class="pe-4">📖 ${description}</h6>`)}
-    </div>`;
+      ${renderIfPresent(this.mutant?.description, (description) =>
+        renderSummaryLine(html`${renderEmoji('📖', 'book')} ${whitespacePreserving(description)}`),
+      )}`,
+    );
   }
 
   private renderDetail() {
-    return html`<ul class="list-group">
-      ${this.mutant?.killedByTests?.map(
-        (test) => html`<li title="This mutant was killed by this test" class="list-group-item">🎯 ${describeTest(test)}</li>`
+    return html`<ul class="mb-6 mr-12">
+      ${this.mutant?.killedByTests?.map((test) =>
+        renderDetailLine('This mutant was killed by this test', html`${renderEmoji('🎯', 'killed')} ${describeTest(test)}`),
       )}
       ${this.mutant?.coveredByTests
         ?.filter((test) => !this.mutant?.killedByTests?.includes(test))
-        .map((test) => html`<li class="list-group-item" title="This mutant was covered by this test">☂️ ${describeTest(test)}</li>`)}
+        .map((test) => renderDetailLine('This mutant was covered by this test', html`${renderEmoji('☂️', 'umbrella')} ${describeTest(test)}`))}
     </ul>`;
   }
 }

@@ -1,115 +1,116 @@
-import { ReportPage } from './po/ReportPage';
-import { expect } from 'chai';
-import { getCurrent } from './lib/browser';
-import { NavTab } from './po/NavTab.po';
+import { ReportPage } from './po/ReportPage.js';
+import { test, expect } from '@playwright/test';
+import type { NavTab } from './po/NavTab.po.js';
 
-describe('Navigation', () => {
+test.describe('Navigation', () => {
   let page: ReportPage;
 
-  beforeEach(() => {
-    page = new ReportPage(getCurrent());
+  test.beforeEach(({ page: p }) => {
+    page = new ReportPage(p);
   });
 
-  describe('when starting at the index page', () => {
-    beforeEach(() => {
-      return page.navigateTo('scala-example');
+  test.describe('when starting at the index page', () => {
+    test.beforeEach(() => {
+      return page.navigateTo('scala-example/');
     });
-    it('should show "all files"', async () => {
-      expect(await page.title()).eq('All files - Stryker report');
+    test('should show "all files"', async () => {
+      expect(await page.title()).toEqual('All files - Stryker report');
     });
-    it("shouldn't show the navigation tabs if there are no test details", async () => {
+    test("shouldn't show the navigation tabs if there are no test details", async () => {
       const tabs = await page.navigationTabs();
-      expect(tabs).lengthOf(0);
+      expect(tabs).toHaveLength(0);
     });
 
-    describe('-> "config"', () => {
-      beforeEach(async () => {
+    test.describe('-> "config"', () => {
+      test.beforeEach(async () => {
         await page.mutantView.resultTable().row('config').navigate();
       });
 
-      it('should show "config" page', async () => {
+      test('should show "config" page', async () => {
         const title = await page.title();
-        expect(title).eq('config - Stryker report');
+        expect(title).toEqual('config - Stryker report');
       });
 
-      it('should show breadcrumb "All files - config"', async () => {
-        expect(await page.breadcrumb().items()).deep.equal(['All files', 'config']);
+      test('should show breadcrumb "All files - config"', async () => {
+        await expect(page.breadcrumb().items()).toHaveText(['All files', 'config']);
       });
 
-      it('should show "Config.Scala" after navigating to Config.scala', async () => {
+      test('should show "Config.Scala" after navigating to Config.scala', async () => {
         await page.mutantView.resultTable().row('Config.scala').navigate();
-        expect(await page.breadcrumb().items()).deep.equal(['All files', 'config', 'Config.scala']);
+        await expect(page.breadcrumb().items()).toHaveText(['All files', 'config', 'Config.scala']);
       });
 
-      describe('when navigating to "All files" using the breadcrumb', () => {
-        beforeEach(() => {
+      test.describe('when navigating to "All files" using the breadcrumb', () => {
+        test.beforeEach(() => {
           return page.breadcrumb().navigate('All files');
         });
 
-        it('should show "all files"', async () => {
-          expect(await page.title()).eq('All files - Stryker report');
+        test('should show "all files"', async () => {
+          expect(await page.title()).toEqual('All files - Stryker report');
         });
       });
     });
   });
 
-  describe('when opening a report with test details', () => {
+  test.describe('when opening a report with test details', () => {
     let tabs: NavTab[];
 
-    beforeEach(async () => {
-      await page.navigateTo('lighthouse-example');
+    test.beforeEach(async () => {
+      await page.navigateTo('lighthouse-example/');
       tabs = await page.navigationTabs();
     });
 
-    it('should show the navigation tabs', async () => {
+    test('should show the navigation tabs', async () => {
       const labels = await Promise.all(tabs.map((tab) => tab.text()));
-      expect(tabs).lengthOf(2);
-      expect(labels).deep.eq(['👽 Mutants', '🧪 Tests']);
+      expect(tabs).toHaveLength(2);
+      expect(labels).toEqual(['👽 Mutants', '🧪 Tests']);
     });
 
-    it('should show the mutant view by default', async () => {
-      expect(await page.title()).eq('All files');
-      expect(await page.currentUrl()).contains('#mutant');
-      expect(await tabs[0].isActive()).true;
+    test('should show the mutant view by default', async () => {
+      expect(await page.title()).toEqual('All files');
+      expect(page.currentUrl()).toContain('#mutant');
+      expect(await tabs[0].isActive()).toEqual(true);
+      expect(await tabs[1].isActive()).toEqual(false);
     });
 
-    describe('open tests', () => {
-      beforeEach(async () => {
+    test.describe('open tests', () => {
+      test.beforeEach(async () => {
         await tabs[1].navigate();
       });
 
-      it('should show the tests view', async () => {
-        expect(await page.title()).eq('All tests');
-        expect(await page.currentUrl()).contains('#test');
-        expect(await tabs[1].isActive()).true;
+      test('should show the tests view', async () => {
+        await expect.poll(() => page.title()).toEqual('All tests');
+        expect(page.currentUrl()).toContain('#test');
+        expect(await tabs[0].isActive()).toEqual(false);
+        expect(await tabs[1].isActive()).toEqual(true);
       });
 
-      describe('-> metrics', () => {
-        beforeEach(async () => {
+      test.describe('-> metrics', () => {
+        test.beforeEach(async () => {
           await page.testView.resultTable().row('metrics').navigate();
         });
 
-        it('should show "metrics" page', async () => {
+        test('should show "metrics" page', async () => {
           const title = await page.title();
-          expect(title).eq('metrics');
+          expect(title).toEqual('metrics');
         });
 
-        it('should show breadcrumb "All tests - metrics"', async () => {
-          expect(await page.breadcrumb().items()).deep.equal(['All tests', 'metrics']);
+        test('should show breadcrumb "All tests - metrics"', async () => {
+          await expect(page.breadcrumb().items()).toHaveText(['All tests', 'metrics']);
         });
 
-        it('should show "interactive-test.js" after navigating to interactive-test.js', async () => {
+        test('should show "interactive-test.js" after navigating to interactive-test.js', async () => {
           await page.testView.resultTable().row('interactive-test.js').navigate();
-          expect(await page.breadcrumb().items()).deep.equal(['All tests', 'metrics', 'interactive-test.js']);
+          await expect(page.breadcrumb().items()).toHaveText(['All tests', 'metrics', 'interactive-test.js']);
         });
 
-        describe('when navigating to "All tests" using the breadcrumb', () => {
-          beforeEach(() => {
+        test.describe('when navigating to "All tests" using the breadcrumb', () => {
+          test.beforeEach(() => {
             return page.breadcrumb().navigate('All tests');
           });
 
-          it('should show "all tests"', async () => {
-            expect(await page.title()).eq('All tests');
+          test('should show "all tests"', async () => {
+            expect(await page.title()).toEqual('All tests');
           });
         });
       });
