@@ -40,27 +40,29 @@ All Stryker versions support a variety of different mutators. We've aligned on a
 
 ## Array Declaration
 
-| Mutant operator              | Original                | Mutated       |
-| ---------------------------- | ----------------------- | ------------- |
-| ArrayConstructorItemsRemoval | `new Array(1, 2, 3, 4)` | `new Array()` |
-| ArrayLiteralItemsRemoval     | `[1, 2, 3, 4]`          | `[ ]`         |
+| Mutant operator              | Original                | Mutated                         |
+|------------------------------|-------------------------|---------------------------------|
+| ArrayConstructorItemsFill    | `new Array()`           | `new Array('Stryker was here')` |
+| ArrayConstructorItemsRemoval | `new Array(1, 2, 3, 4)` | `new Array()`                   |
+| ArrayLiteralItemsFill        | `[ ]`                   | `['Stryker was here']`          |
+| ArrayLiteralItemsRemoval     | `[1, 2, 3, 4]`          | `[ ]`                           |
 
 [🔝 Back to Top](#)
 
 ## Assignment Expression
 
-| Mutant operator                                 | Original              | Mutated              |
-| ------------------------- |---------------------| --------------------- | -------------------- |
-| AdditionAssignmentNegation                      | `+=`                  | `-=`                 |
-| SubtractionAssignmentNegation                   | `-=`                  | `+=`                 |
-| MultiplicationAssignmentNegation                | `*=`                  | `/=`                 |
-| DivisionAssignmentNegation                      | `/=`                  | `*=`                 |
-| RemainderAssignmentToMultiplicationReplacement  | `%=`                  | `*=`                 |
-| LeftShiftAssignmentNegation                     | `<<=`                 | `>>=`                |
-| RightShiftAssignmentNegation                    | `>>=`                 | `<<=`                |
-| BitwiseAndAssignmentNegation                    | `&=`                  | <code>&#124;=</code> |
-| BitwiseOrAssignmentNegation                     | <code>&#124;=</code>  | `&=`                 |
-| NullishCoalescingOperatorToLogicalAndAssignment | `??=`                 | `&&=`¹               |
+| Mutant operator                                            | Original              | Mutated              |
+|------------------------------------------------------------| --------------------- | -------------------- |
+| AdditionAssignmentNegation                                 | `+=`                  | `-=`                 |
+| SubtractionAssignmentNegation                              | `-=`                  | `+=`                 |
+| MultiplicationAssignmentNegation                           | `*=`                  | `/=`                 |
+| DivisionAssignmentNegation                                 | `/=`                  | `*=`                 |
+| RemainderAssignmentToMultiplicationReplacement             | `%=`                  | `*=`                 |
+| LeftShiftAssignmentNegation                                | `<<=`                 | `>>=`                |
+| RightShiftAssignmentNegation                               | `>>=`                 | `<<=`                |
+| BitwiseAndAssignmentToBitwiseOrReplacement                 | `&=`                  | <code>&#124;=</code> |
+| BitwiseOrAssignmentToBitwiseAndReplacement                 | <code>&#124;=</code>  | `&=`                 |
+| NullishCoalescingOperatorToLogicalAndAssignmentReplacement | `??=`                 | `&&=`¹               |
 
 - ¹: Only supported by Stryker-JS
 
@@ -108,15 +110,16 @@ Stryker.NET _specific mutator_
 
 ## Conditional Expression
 
-| Original                           | Mutated                             |
-| ---------------------------------- | ----------------------------------- |
-| `for (var i = 0; i < 10; i++) { }` | `for (var i = 0; false; i++) { }` ¹ |
-| `while (a > b) { }`                | `while (false) { }`                 |
-| `do { } while (a > b);`            | `do { } while (false);`             |
-| `if (a > b) { }`                   | `if (true) { }`                     |
-| `if (a > b) { }`                   | `if (false) { }`                    |
-| `var x = a > b ? 1 : 2;`           | `var x = true ? 1 : 2;` ¹           |
-| `var x = a > b ? 1 : 2;`           | `var x = false ? 1 : 2;` ¹          |
+| Mutant operator | Original                                                   | Mutated                                     |
+|-----------------|------------------------------------------------------------|---------------------------------------------|
+| ForLoopConditionToFalseReplacement                | `for (var i = 0; i < 10; i++) { }`                         | `for (var i = 0; false; i++) { }` ¹         |
+| WhileLoopConditionToFalseReplacement                | `while (a > b) { }`                                        | `while (false) { }`                         |
+| DoWhileLoopConditionToFalseReplacement                | `do { } while (a > b);`                                    | `do { } while (false);`                     |
+| IfConditionToTrueReplacement                | `if (a > b) { }`                                           | `if (true) { }`                             |
+| IfConditionToFalseReplacement                | `if (a > b) { }`                                           | `if (false) { }`                            |
+| BooleanExpressionToTrueReplacement                | `var x = a > b ? 1 : 2;`                                   | `var x = true ? 1 : 2;` ¹                   |
+| BooleanExpressionToFalseReplacement                | `var x = a > b ? 1 : 2;`                                   | `var x = false ? 1 : 2;` ¹                  |
+| SwitchStatementBodyRemoval | `switch(x) { case 1: doSomething(); default: default(); }` | `switch(x) { case 1: default: default(); }` |
 
 - ¹: Not supported by Stryker4s
 
@@ -146,9 +149,9 @@ Stryker.NET _specific mutator_
 ## Logical Operator
 
 | Mutant operator                                  | Original                      | Mutated                       |
-| ------------------------------------------------ | ----------------------------- | ----------------------------- |
-| LogicalAndOperatorNegation                       | `a && b`                      | <code>a &vert;&vert; b</code> |
-| LogicalOrOperatorNegation                        | <code>a &vert;&vert; b</code> | `a && b`                      |
+|--------------------------------------------------| ----------------------------- | ----------------------------- |
+| LogicalAndOperatorToLogicalOrReplacement         | `a && b`                      | <code>a &vert;&vert; b</code> |
+| LogicalOrOperatorToLogicalAndReplacement         | <code>a &vert;&vert; b</code> | `a && b`                      |
 | NullishCoalescingOperatorToLogicalAndReplacement | `a ?? b`                      | `a && b`                      |
 
 [🔝 Back to Top](#)
@@ -159,33 +162,33 @@ Due to differences in language syntax, method expressions are implemented differ
 
 ### StrykerJS
 
-| Original             | Mutated               |
-| -------------------- | --------------------- |
-| `endsWith()`         | `startsWith()`        |
-| `startsWith()`       | `endsWith()`          |
-| `trim()`             | ` `                   |
-| `trimEnd()`          | `trimStart()`         |
-| `trimStart()`        | `trimEnd()`           |
-| `substr()`           | ` `                   |
-| `substring()`        | ` `                   |
-| `toUpperCase()`      | ` toLowerCase()`      |
-| `toLowerCase()`      | ` toUpperCase()`      |
-| `toLocalLowerCase()` | `toLocalUpperCase()`  |
-| `toLocalUpperCase()` | ` toLocalLowerCase()` |
-| `sort()`             | ` `                   |
-| `some()`             | `every()`             |
-| `every()`            | `some()`              |
-| `reverse()`          | ` `                   |
-| `filter()`           | ` `                   |
-| `slice()`            | ` `                   |
-| `charAt()`           | ` `                   |
-| `min()`              | `max()`               |
-| `max()`              | `min()`               |
+| Mutant operator                     | Original             | Mutated               |
+|-------------------------------------|----------------------|-----------------------|
+| EndsWithMethodCallNegation          | `endsWith()`         | `startsWith()`        |
+| StartsWithMethodCallNegation        | `startsWith()`       | `endsWith()`          |
+| TrimMethodCallRemoval               | `trim()`             | ` `                   |
+| TrimEndMethodCallNegation           | `trimEnd()`          | `trimStart()`         |
+| TrimStartMethodCallNegation         | `trimStart()`        | `trimEnd()`           |
+| SubstrMethodCallRemoval             | `substr()`           | ` `                   |
+| SubstringMethodCallRemoval          | `substring()`        | ` `                   |
+| ToUpperCaseMethodCallNegation       | `toUpperCase()`      | ` toLowerCase()`      |
+| ToLowerCaseMethodCallNegation       | `toLowerCase()`      | ` toUpperCase()`      |
+| ToLocaleLowerCaseMethodCallNegation | `toLocalLowerCase()` | `toLocalUpperCase()`  |
+| ToLocaleUpperCaseMethodCallNegation | `toLocalUpperCase()` | ` toLocalLowerCase()` |
+| SortMethodCallRemoval               | `sort()`             | ` `                   |
+| SomeMethodCallToEveryReplacement    | `some()`             | `every()`             |
+| EveryMethodCallToSomeReplacement    | `every()`            | `some()`              |
+| ReverseMethodCallRemoval            | `reverse()`          | ` `                   |
+| FilterMethodCallRemoval             | `filter()`           | ` `                   |
+| SliceMethodCallRemoval              | `slice()`            | ` `                   |
+| CharAtMethodCallRemoval             | `charAt()`           | ` `                   |
+| MinMethodCallNegation               | `min()`              | `max()`               |
+| MaxMethodCallNegation               | `max()`              | `min()`               |
 
 ### Stryker.NET
 
 | Mutant operator                                      | Original              | Mutated             |
-| ---------------------------------------------------- | --------------------- | ------------------- |
+|------------------------------------------------------|-----------------------|---------------------|
 | DistinctMethodCallRemoval                            | `Distinct()`          | ` `                 |
 | ReverseMethodCallRemoval                             | `Reverse()`           | ` `                 |
 | OrderByMethodCallRemoval                             | `OrderBy()`           | ` `                 |
@@ -194,12 +197,12 @@ Due to differences in language syntax, method expressions are implemented differ
 | FirstOrDefaultMethodCallToSingleOrDefaultReplacement | `FirstOrDefault()`    | `SingleOrDefault()` |
 | FirstMethodCallNegation                              | `First()`             | `Last()`            |
 | LastMethodCallNegation                               | `Last()`              | `First()`           |
-| AllMethodCallNegation                                | `All()`               | `Any()`             |
-| AnyMethodCallNegation                                | `Any()`               | `All()`             |
-| SkipMethodCallToTakeReplacement                      | `Skip()`              | `Take()`            |
-| TakeMethodCallToSkipReplacement                      | `Take()`              | `Skip()`            |
-| SkipWhileMethodCallToTakeWhileReplacement            | `SkipWhile()`         | `TakeWhile()`       |
-| TakeWhileMethodCallToSkipWhileReplacement            | `TakeWhile()`         | `SkipWhile()`       |
+| AllMethodCallToAnyReplacement                        | `All()`               | `Any()`             |
+| AnyMethodCallToAllReplacement                        | `Any()`               | `All()`             |
+| SkipMethodCallNegation                               | `Skip()`              | `Take()`            |
+| TakeMethodCallNegation                               | `Take()`              | `Skip()`            |
+| SkipWhileMethodCallNegation                          | `SkipWhile()`         | `TakeWhile()`       |
+| TakeWhileMethodCallNegation                          | `TakeWhile()`         | `SkipWhile()`       |
 | MinMethodCallNegation                                | `Min()`               | `Max()`             |
 | MaxMethodCallNegation                                | `Max()`               | `Min()`             |
 | SumMethodCallToCountReplacement                      | `Sum()`               | `Count()`           |
@@ -208,11 +211,11 @@ Due to differences in language syntax, method expressions are implemented differ
 ### Stryker4s
 
 | Mutant operator                           | Original           | Mutated            |
-| ----------------------------------------- | ------------------ | ------------------ |
+|-------------------------------------------| ------------------ | ------------------ |
 | FilterMethodCallNegation                  | `a.filter(b)`      | `a.filterNot(b)`   |
 | FilterNotMethodCallNegation               | `a.filterNot(b)`   | `a.filter(b)`      |
-| ExistsMethodCallNegation                  | `a.exists(b)`      | `a.forall(b)`      |
-| ForAllMethodCallNegation                  | `a.forall(b)`      | `a.exists(b)`      |
+| ExistsMethodCallToForAllReplacement       | `a.exists(b)`      | `a.forall(b)`      |
+| ForAllMethodCallToExistsReplacement       | `a.forall(b)`      | `a.exists(b)`      |
 | TakeMethodCallNegation                    | `a.take(b)`        | `a.drop(b)`        |
 | DropMethodCallNegation                    | `a.drop(b)`        | `a.take(b)`        |
 | TakeRightMethodCallNegation               | `a.takeRight(b)`   | `a.dropRight(b)`   |
@@ -308,6 +311,7 @@ Strings and literals identified to a regex are mutated in the following way:
 
 | Mutant operator           | Original | Mutated |
 | ------------------------- | -------- | ------- |
+| UnaryBitwiseNotRemoval    | `~a`     | `a`     |
 | UnaryPlusOperatorNegation | `+a`     | `-a`    |
 | UnaryMinOperatorNegation  | `-a`     | `+a`    |
 
