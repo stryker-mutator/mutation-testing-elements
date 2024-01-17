@@ -2,10 +2,10 @@
   "files": [],
   "references": [
     {
-      "path": "./src/tsconfig.json"
+      "path": "./src/tsconfig.json",
     },
     {
-      "path": "./test/tsconfig.json"
-    }
-  ]
+      "path": "./test/tsconfig.json",
+    },
+  ],
 }

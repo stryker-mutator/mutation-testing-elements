@@ -3,16 +3,16 @@
   "extends": "./tsconfig.settings.json",
   "references": [
     {
-      "path": "packages/elements"
+      "path": "packages/elements",
     },
     {
-      "path": "packages/report-schema"
+      "path": "packages/report-schema",
     },
     {
-      "path": "packages/metrics"
+      "path": "packages/metrics",
     },
     {
-      "path": "./tsconfig.node.json"
-    }
-  ]
+      "path": "./tsconfig.node.json",
+    },
+  ],
 }

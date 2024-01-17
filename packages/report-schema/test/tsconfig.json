@@ -3,11 +3,11 @@
   "compilerOptions": {
     "types": ["mocha", "node"],
     "outDir": "../dist/test",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
   },
   "references": [
     {
-      "path": "../src/tsconfig.json"
-    }
-  ]
+      "path": "../src/tsconfig.json",
+    },
+  ],
 }
