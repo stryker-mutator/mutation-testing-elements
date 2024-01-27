@@ -2,11 +2,11 @@
   "extends": "../../../tsconfig.settings.json",
   "compilerOptions": {
     "types": ["node"],
-    "outDir": "../dist/src"
+    "outDir": "../dist/src",
   },
   "references": [
     {
-      "path": "../../report-schema/src"
-    }
-  ]
+      "path": "../../report-schema/src",
+    },
+  ],
 }

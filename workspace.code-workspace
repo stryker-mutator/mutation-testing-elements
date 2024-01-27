@@ -2,24 +2,24 @@
   "folders": [
     {
       "path": "packages/report-schema",
-      "name": "report-schema"
+      "name": "report-schema",
     },
     {
       "path": "packages/metrics",
-      "name": "metrics"
+      "name": "metrics",
     },
     {
       "path": "packages/metrics-scala",
-      "name": "metrics-scala"
+      "name": "metrics-scala",
     },
     {
       "path": "packages/elements",
-      "name": "elements"
+      "name": "elements",
     },
     {
       "path": ".",
-      "name": "parent"
-    }
+      "name": "parent",
+    },
   ],
   "extensions": {
     "recommendations": [
@@ -27,8 +27,8 @@
       "esbenp.prettier-vscode",
       "bierner.lit-html",
       "bradlc.vscode-tailwindcss",
-      "ms-playwright.playwright"
-    ]
+      "ms-playwright.playwright",
+    ],
   },
   "settings": {
     "search.exclude": {
@@ -38,29 +38,29 @@
       "**/dist": true,
       "**/dist-tsc": true,
       "**/*.tsbuildinfo": true,
-      "**/reports/mutation": true
+      "**/reports/mutation": true,
     },
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "explicit"
+      "source.fixAll.eslint": "explicit",
     },
     "eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
     "typescript.tsdk": "./node_modules/typescript/lib",
     "task.autoDetect": "off",
     "cSpell.words": ["autoloader", "bootswatch", "clazz", "clike", "prismjs", "templating", "Theming"],
     "[json]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode"
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
     },
     "[jsonc]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode"
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
     },
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "files.watcherExclude": {
-      "**/target": true
+      "**/target": true,
     },
     "cSpell.language": "en",
     "[scala]": {
-      "editor.defaultFormatter": "scalameta.metals"
-    }
+      "editor.defaultFormatter": "scalameta.metals",
+    },
   },
   "launch": {
     "version": "0.2.0",
@@ -70,15 +70,15 @@
         "port": 9229,
         "request": "attach",
         "skipFiles": ["<node_internals>/**"],
-        "type": "node"
+        "type": "node",
       },
       {
         "type": "node",
         "request": "launch",
         "name": "Launch Program",
         "skipFiles": ["<node_internals>/**"],
-        "program": "${file}"
-      }
-    ]
-  }
+        "program": "${file}",
+      },
+    ],
+  },
 }
