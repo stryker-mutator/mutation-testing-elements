@@ -61,7 +61,7 @@
     "esbuild": "0.20.0",
     "eslint-config-mte": "*",
     "express": "4.18.2",
-    "lit": "3.1.1",
+    "lit": "3.1.2",
     "mutation-testing-metrics": "3.0.2",
     "mutation-testing-report-schema": "3.0.2",
     "postcss": "8.4.33",
