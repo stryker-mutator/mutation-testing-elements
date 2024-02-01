@@ -25,7 +25,6 @@ jobs:
       - uses: nrwl/nx-set-shas@v4
         with:
           main-branch-name: master
-      - uses: coursier/cache-action@v6
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
@@ -35,6 +34,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 21
+          cache: 'sbt'
       - run: npm ci
       # Only install playwright if elements project is affected
       - name: affected
