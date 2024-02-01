@@ -99,6 +99,7 @@ export function createMetrics(overrides?: Metrics): Metrics {
   const defaults: Metrics = {
     pending: 0,
     killed: 0,
+    ignoredByMutationLevel: 0,
     survived: 0,
     timeout: 0,
     compileErrors: 0,
@@ -112,6 +113,7 @@ export function createMetrics(overrides?: Metrics): Metrics {
     totalUndetected: 0,
     totalValid: 0,
     mutationScore: 0,
+    adjustedMutationScore: 0,
     mutationScoreBasedOnCoveredCode: 0,
   };
   return { ...defaults, ...overrides };
