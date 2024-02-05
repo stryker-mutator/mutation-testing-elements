@@ -3,13 +3,13 @@
   "files": [],
   "references": [
     {
-      "path": "./src",
+      "path": "./src"
     },
     {
-      "path": "./test/unit",
+      "path": "./test/unit"
     },
     {
-      "path": "./test/integration",
-    },
-  ],
+      "path": "./test/integration"
+    }
+  ]
 }
