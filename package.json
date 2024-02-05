@@ -43,7 +43,7 @@
     "@types/node": "20.11.16",
     "chai": "4.4.1",
     "json-schema-to-typescript": "13.1.2",
-    "lerna": "8.0.2",
+    "lerna": "8.1.2",
     "mocha": "10.2.0",
     "nx": "18.0.1",
     "prettier": "3.2.5",
