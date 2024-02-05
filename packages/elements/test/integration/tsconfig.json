@@ -3,11 +3,11 @@
   "compilerOptions": {
     "types": ["playwright"],
     "emitDeclarationOnly": true,
-    "outDir": "../../dist-tsc/test/integration",
+    "outDir": "../../dist-tsc/test/integration"
   },
   "references": [
     {
-      "path": "../../src/tsconfig.json",
-    },
-  ],
+      "path": "../../src/tsconfig.json"
+    }
+  ]
 }

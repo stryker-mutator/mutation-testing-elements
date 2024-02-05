@@ -4,14 +4,14 @@
     "types": ["vite/client"],
     "outDir": "../dist-tsc/src",
     "emitDeclarationOnly": true,
-    "lib": ["es2022", "dom", "dom.iterable"],
+    "lib": ["es2022", "dom", "dom.iterable"]
   },
   "references": [
     {
-      "path": "../../report-schema/src",
+      "path": "../../report-schema/src"
     },
     {
-      "path": "../../metrics/src",
-    },
-  ],
+      "path": "../../metrics/src"
+    }
+  ]
 }

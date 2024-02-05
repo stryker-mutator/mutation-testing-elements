@@ -4,7 +4,7 @@
     "types": ["node"],
     "resolveJsonModule": true,
     "outDir": "../dist",
-    "rootDir": "../",
+    "rootDir": "../"
   },
-  "include": ["../src/**/*", "../src/**/*.json", "../src-generated/**/*"],
+  "include": ["../src/**/*", "../src/**/*.json", "../src-generated/**/*"]
 }
