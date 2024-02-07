@@ -64,7 +64,7 @@
     "lit": "3.1.2",
     "mutation-testing-metrics": "3.0.2",
     "mutation-testing-report-schema": "3.0.2",
-    "postcss": "8.4.34",
+    "postcss": "8.4.35",
     "prism-svelte": "0.5.0",
     "prismjs": "1.29.0",
     "rxjs": "7.8.1",
