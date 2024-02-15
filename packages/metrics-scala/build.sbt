@@ -1,6 +1,6 @@
 val Scala212 = "2.12.18"
 val Scala213 = "2.13.12"
-val Scala3   = "3.3.2"
+val Scala3   = "3.4.0"
 
 val CrossScalaVersions = Seq(Scala213, Scala212, Scala3)
 
