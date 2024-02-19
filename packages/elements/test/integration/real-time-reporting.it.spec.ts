@@ -3,7 +3,7 @@ import { SseTestServer } from './lib/SseServer.js';
 import { ReportPage } from './po/ReportPage.js';
 import type { MutantResult } from 'mutation-testing-report-schema';
 
-test.describe.only('real-time reporting', () => {
+test.describe('real-time reporting', () => {
   let server: SseTestServer;
   const defaultEvent: Readonly<Partial<MutantResult>> = Object.freeze({ id: '0', status: 'Killed' });
 
