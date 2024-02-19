@@ -17,7 +17,8 @@
     "middleware"
   ],
   "scripts": {
-    "lint": "eslint --ext .js,.ts ."
+    "lint": "eslint --ext .js,.ts .",
+    "stryker": "stryker run"
   },
   "repository": {
     "type": "git",
