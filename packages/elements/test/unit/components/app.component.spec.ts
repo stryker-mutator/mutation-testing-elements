@@ -28,7 +28,7 @@ describe(MutationTestReportAppComponent.name, () => {
 
   describe('the title', () => {
     it('should not change without a report', () => {
-      expect(document.title).eq('Vitest Browser Runner');
+      expect(document.title).eq('Vitest Browser Tester');
     });
 
     it('should change when a report is set', async () => {
