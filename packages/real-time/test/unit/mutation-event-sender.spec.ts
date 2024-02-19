@@ -63,7 +63,7 @@ describe(MutationEventSender.name, () => {
     expect(responseMock.on.firstCall.args[0]).eq('close');
     sinon.assert.calledOnce(onCompleteStub);
   });
-  
+
   it('should call the onComplete method when a connection errors', () => {
     new MutationEventSender(responseMock, onCompleteStub);
     responseMock.on.secondCall.args[1]();

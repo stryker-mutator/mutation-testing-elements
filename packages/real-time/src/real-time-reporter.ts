@@ -29,7 +29,6 @@ export class RealTimeReporter extends EventEmitter {
     return super.on(eventName, listener);
   }
 
-
   once(eventName: 'client-connected', listener: (client: MutationEventSender) => void): this;
   once(eventName: 'client-disconnected', listener: (client: MutationEventSender) => void): this;
   override once(eventName: string | symbol, listener: (...args: any[]) => void): this {
@@ -42,7 +41,6 @@ export class RealTimeReporter extends EventEmitter {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     return super.emit(eventName, ...args);
   }
-
 
   public add(res: ServerResponse) {
     const client: MutationEventSender = new MutationEventSender(

@@ -3,7 +3,7 @@
   "compilerOptions": {
     "types": ["vite/client"],
     "outDir": "../dist-tsc/src",
-    "emitDeclarationOnly": true,
+    "emitDeclarationOnly": true
   },
   "references": [
     {

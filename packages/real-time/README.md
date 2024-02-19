@@ -13,12 +13,12 @@ import { RealTimeReporter } from 'mutation-testing-real-time';
 
 const reporter = new RealTimeReporter({ accessControlAllowOrigin: '*' });
 const server = new createServer((req, res) => {
-  if(req.url === '/sse') {
+  if (req.url === '/sse') {
     reporter.add(res);
   }
 });
 
-// Whenever a mutant result comes in: 
+// Whenever a mutant result comes in:
 reporter.sendMutantTested({ id: '1', status: 'Killed' });
 // ...
 
