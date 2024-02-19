@@ -3,8 +3,7 @@
 import browserslistToEsbuild from 'browserslist-to-esbuild';
 import { type UserConfig, defineConfig } from 'vitest/config';
 import { type Plugin } from 'vite';
-import { MutationEventResponder } from 'mutation-testing-real-time';
-import type { MutationEventSender } from 'mutation-testing-real-time';
+import { type MutationEventSender, RealTimeReporter } from 'mutation-testing-real-time';
 
 export default defineConfig(() => {
   return {
@@ -67,7 +66,7 @@ export default defineConfig(() => {
 function realTimeResponderPlugin(): Plugin {
   const TOTAL_MUTANT_COUNT = 15;
   const clientMap = new Map<MutationEventSender, NodeJS.Timeout>();
-  const realTimeResponder = new MutationEventResponder();
+  const realTimeResponder = new RealTimeReporter();
   realTimeResponder.on('client-connected', (client) => {
     let id = 0;
     const interval = setInterval(() => {
