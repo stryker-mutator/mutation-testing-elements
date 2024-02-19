@@ -12,6 +12,9 @@
       "path": "packages/metrics"
     },
     {
+      "path": "packages/real-time"
+    },
+    {
       "path": "./tsconfig.node.json"
     }
   ]

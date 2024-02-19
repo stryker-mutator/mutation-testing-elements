@@ -10,14 +10,14 @@
       "name": "Mocha unit tests",
       "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
       "args": [
-        "-r",
-        "source-map-support/register",
         "--timeout",
         "999999",
         "--colors",
         "${workspaceFolder}/packages/report-schema/dist/test/**/*.js",
-        "${workspaceFolder}/packages/metrics/dist/test/**/*.js"
+        "${workspaceFolder}/packages/metrics/dist/test/**/*.js",
+        "${workspaceFolder}/packages/real-time/dist/test/**/*.js"
       ],
+      "runtimeArgs": ["--enable-source-maps"],
       "internalConsoleOptions": "openOnSessionStart"
     }
   ]

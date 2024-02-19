@@ -11,7 +11,7 @@
     "name": "metrics"
   },
   "scripts": {
-    "test": "mocha --forbid-only --forbid-pending -r source-map-support/register dist/test/**/*.js",
+    "test": "mocha --node-option enable-source-maps --forbid-only --forbid-pending dist/test/**/*.js",
     "stryker": "stryker run",
     "lint": "eslint --ext .js,.ts ."
   },

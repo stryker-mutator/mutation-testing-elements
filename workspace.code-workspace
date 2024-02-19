@@ -17,6 +17,10 @@
       "name": "elements",
     },
     {
+      "path": "packages/real-time",
+      "name": "real-time",
+    },
+    {
       "path": ".",
       "name": "parent",
     },
@@ -61,6 +65,7 @@
     "[scala]": {
       "editor.defaultFormatter": "scalameta.metals",
     },
+    "liveServer.settings.multiRootWorkspaceName": "real-time",
   },
   "launch": {
     "version": "0.2.0",

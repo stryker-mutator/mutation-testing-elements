@@ -1,18 +1,18 @@
 import { expect, test } from '@playwright/test';
-import type { ReportingClient } from './lib/SseServer.js';
 import { SseTestServer } from './lib/SseServer.js';
 import { ReportPage } from './po/ReportPage.js';
+import type { MutantResult } from 'mutation-testing-report-schema';
 
-test.describe('real-time reporting', () => {
-  const server: SseTestServer = new SseTestServer();
-  const defaultEvent = { id: '0', status: 'Killed' };
+test.describe.only('real-time reporting', () => {
+  let server: SseTestServer;
+  const defaultEvent: Readonly<Partial<MutantResult>> = Object.freeze({ id: '0', status: 'Killed' });
 
   let port: number;
   let page: ReportPage;
-  let client: ReportingClient;
 
-  test.beforeEach(async ({ page: p }) => {
-    port = await server.start();
+  test.beforeEach(({ page: p }) => {
+    server = new SseTestServer();
+    port = server.start();
     page = new ReportPage(p);
   });
 
@@ -22,12 +22,11 @@ test.describe('real-time reporting', () => {
 
   test.describe('when navigating to the overview page', () => {
     test('should update the mutation testing metrics', async () => {
-      server.on('client-connected', (c) => (client = c));
-
       await arrangeNavigate();
-      client.sendMutantTested(defaultEvent);
-      client.sendMutantTested({ id: '1', status: 'Survived' });
-      client.sendFinished();
+      await clientConnected();
+      server.sse.sendMutantTested(defaultEvent);
+      server.sse.sendMutantTested({ id: '1', status: 'Survived' });
+      server.sse.sendFinished();
 
       const allFilesRow = page.mutantView.resultTable().row('All files');
       const attributesRow = page.mutantView.resultTable().row('Attributes');
@@ -56,12 +55,12 @@ test.describe('real-time reporting', () => {
     });
 
     test('should update the progress-bar when the report is updated', async () => {
-      server.on('client-connected', (c) => (client = c));
-
       await arrangeNavigate();
+      await clientConnected();
+
       expect(await page.realTimeProgressBar.progressBarWidth()).toEqual(0);
       await expect(page.realTimeProgressBar.killedCount()).not.toBeVisible();
-      client.sendMutantTested(defaultEvent);
+      server.sse.sendMutantTested(defaultEvent);
 
       await expect.poll(async () => await page.realTimeProgressBar.progressBarWidth()).not.toEqual(0);
       await expect(page.realTimeProgressBar.killedCount()).toHaveText('1');
@@ -72,17 +71,27 @@ test.describe('real-time reporting', () => {
     await page.navigateTo(`realtime-reporting-example/?port=${port}`);
   }
 
+  async function clientConnected() {
+    return new Promise<void>((resolve) => {
+      if (server.sse.senderCount > 0) {
+        resolve();
+      } else {
+        server.sse.once('client-connected', () => resolve());
+      }
+    });
+  }
+
   test.describe('when navigating to a file with 1 mutant', () => {
     test('should update the state of a mutant', async () => {
-      server.on('client-connected', (c) => (client = c));
       await page.navigateTo(`realtime-reporting-example/?port=${port}#mutant/Attributes/HandleAttribute.cs/`);
+      await clientConnected();
 
       expect(await page.mutantView.mutantDots()).toHaveLength(1);
       const mutantPending = page.mutantView.mutantMarker('0');
       expect(await mutantPending.underlineIsVisible()).toEqual(true);
 
-      client.sendMutantTested(defaultEvent);
-      client.sendFinished();
+      server.sse.sendMutantTested(defaultEvent);
+      server.sse.sendFinished();
       const filter = page.mutantView.stateFilter();
       await filter.state('Killed').waitForVisible();
       expect(await page.mutantView.mutantDots()).toHaveLength(0);
@@ -91,15 +100,15 @@ test.describe('real-time reporting', () => {
     });
 
     test('should keep the drawer open if it has been selected while an update comes through', async () => {
-      server.on('client-connected', (c) => (client = c));
       await page.navigateTo(`realtime-reporting-example/?port=${port}#mutant/Attributes/HandleAttribute.cs/`);
+      await clientConnected();
 
       const mutant = page.mutantView.mutantDot('0');
       const drawer = page.mutantView.mutantDrawer();
       await mutant.toggle();
       await drawer.whenHalfOpen();
 
-      client.sendMutantTested(defaultEvent);
+      server.sse.sendMutantTested(defaultEvent);
 
       await drawer.whenHalfOpen();
     });

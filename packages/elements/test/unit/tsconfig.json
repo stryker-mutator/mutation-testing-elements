@@ -1,5 +1,5 @@
 {
-  "extends": "../../../../tsconfig.settings.json",
+  "extends": "../../tsconfig.elements.settings.json",
   "compilerOptions": {
     "types": ["vite/client", "vitest/globals", "vitest/importMeta", "vitest"],
     "emitDeclarationOnly": true,
