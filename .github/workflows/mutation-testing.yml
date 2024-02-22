@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  metrics:
+  nodejs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -16,8 +16,10 @@ jobs:
           node-version: 20.x
           cache: 'npm'
       - run: npm ci
-      - name: Run Stryker
-        run: npx nx run metrics:stryker
+      - run: npx nx run metrics:stryker
+        env:
+          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+      - run: npx nx run real-time:stryker
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
   elements:

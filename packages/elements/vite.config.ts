@@ -1,37 +1,11 @@
 /// <reference types="vitest" />
 
 import browserslistToEsbuild from 'browserslist-to-esbuild';
-import type { UserConfig } from 'vitest/config';
-import { defineConfig } from 'vitest/config';
-import type { ReportingClient } from './test/integration/lib/SseServer.js';
-import { SseTestServer } from './test/integration/lib/SseServer.js';
+import { type UserConfig, defineConfig } from 'vitest/config';
+import { type Plugin } from 'vite';
+import { type MutationEventSender, RealTimeReporter } from 'mutation-testing-real-time';
 
-export default defineConfig(async ({ mode }) => {
-  let server: SseTestServer | undefined;
-
-  if (mode === 'development') {
-    const TOTAL_MUTANT_COUNT = 15;
-    const clientMap = new Map<ReportingClient, NodeJS.Timeout>();
-    server = new SseTestServer();
-    server?.on('client-connected', (client) => {
-      let id = 0;
-      const interval = setInterval(() => {
-        client.sendMutantTested({ id: String(id), status: 'Killed', coveredBy: ['test_1'] });
-        id++;
-
-        if (id > TOTAL_MUTANT_COUNT) {
-          clearInterval(interval);
-          client.sendFinished();
-          client.disconnect();
-        }
-      }, 1000);
-      clientMap.set(client, interval);
-    });
-    server?.on('client-disconnected', (client) => {
-      clearInterval(clientMap.get(client));
-    });
-  }
-
+export default defineConfig(() => {
   return {
     optimizeDeps: {
       include: ['mutation-testing-report-schema', 'mutation-testing-metrics'],
@@ -41,15 +15,8 @@ export default defineConfig(async ({ mode }) => {
         '/mutation-test-elements.js': '/src/index.ts',
       },
     },
+    plugins: [realTimeResponderPlugin()],
     server: {
-      proxy: server
-        ? {
-            '/testResources/realtime-reporting-example/sse': {
-              target: `http://localhost:${await server.start()}/realtime-reporting-example/sse`,
-              bypass: server.middleware,
-            },
-          }
-        : undefined,
       open: process.env.CI ? undefined : '/testResources/',
     },
     build: {
@@ -95,3 +62,37 @@ export default defineConfig(async ({ mode }) => {
     },
   } satisfies UserConfig;
 });
+
+function realTimeResponderPlugin(): Plugin {
+  const TOTAL_MUTANT_COUNT = 15;
+  const clientMap = new Map<MutationEventSender, NodeJS.Timeout>();
+  const realTimeResponder = new RealTimeReporter();
+  realTimeResponder.on('client-connected', (client) => {
+    let id = 0;
+    const interval = setInterval(() => {
+      client.sendMutantTested({ id: String(id), status: 'Killed', coveredBy: ['test_1'] });
+      id++;
+
+      if (id > TOTAL_MUTANT_COUNT) {
+        clearInterval(interval);
+        client.sendFinished();
+      }
+    }, 1000);
+    clientMap.set(client, interval);
+  });
+  realTimeResponder.on('client-disconnected', (client) => {
+    clearInterval(clientMap.get(client));
+  });
+  return {
+    name: 'real-time-responder',
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        if (req.url === '/testResources/realtime-reporting-example/sse') {
+          realTimeResponder.add(res);
+        } else {
+          next();
+        }
+      });
+    },
+  };
+}
