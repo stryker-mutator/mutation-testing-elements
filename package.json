@@ -41,7 +41,7 @@
     "@types/chai": "4.3.11",
     "@types/mocha": "10.0.6",
     "@types/node": "20.11.19",
-    "@types/sinon": "^17.0.3",
+    "@types/sinon": "17.0.3",
     "chai": "4.4.1",
     "json-schema-to-typescript": "13.1.2",
     "lerna": "8.1.2",
@@ -50,7 +50,7 @@
     "prettier": "3.2.5",
     "prettier-plugin-tailwindcss": "0.5.11",
     "rimraf": "5.0.5",
-    "sinon": "^17.0.1",
+    "sinon": "17.0.1",
     "typescript": "5.3.3"
   }
 }
