@@ -1,5 +1,4 @@
 import 'prismjs/components/prism-core';
-import 'prismjs/plugins/line-numbers/prism-line-numbers';
 
 // Order is important here! Scala depends on java, which depends on clike
 import 'prismjs/components/prism-clike';

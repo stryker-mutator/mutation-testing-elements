@@ -1,6 +1,6 @@
 @use 'sass:map';
 
-@import '../../style/code.scss';
+@import '../../style/code.css';
 
 $mutant-themes: (
   'Pending': theme('colors.neutral.400'),

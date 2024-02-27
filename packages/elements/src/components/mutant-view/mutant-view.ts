@@ -7,7 +7,7 @@ import type { MteCustomEvent } from '../../lib/custom-events.js';
 import { tailwind } from '../../style/index.js';
 import type { DrawerMode } from '../drawer/drawer.component.js';
 import type { Column } from '../metrics-table/metrics-table.component.js';
-import style from './mutant-view.scss?inline';
+import style from './mutant-view.css?inline';
 import { RealTimeElement } from '../real-time-element.js';
 
 @customElement('mte-mutant-view')

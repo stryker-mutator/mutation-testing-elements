@@ -3,7 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { renderIf } from '../../lib/html-helpers.js';
 import { tailwind } from '../../style/index.js';
 import { renderEmoji } from '../drawer-mutant/util.js';
-import style from './drawer.component.scss?inline';
+import style from './drawer.component.css?inline';
 
 export type DrawerMode = 'open' | 'half' | 'closed';
 export const DRAWER_HALF_OPEN_SIZE = 120;
