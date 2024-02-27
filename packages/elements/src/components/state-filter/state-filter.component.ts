@@ -5,7 +5,7 @@ import { repeat } from 'lit/directives/repeat.js';
 import { createCustomEvent } from '../../lib/custom-events.js';
 import { renderIf } from '../../lib/html-helpers.js';
 import { tailwind } from '../../style/index.js';
-import style from './state-filter.scss?inline';
+import style from './state-filter.css?inline';
 import { RealTimeElement } from '../real-time-element.js';
 
 export interface StateFilter<TStatus> {

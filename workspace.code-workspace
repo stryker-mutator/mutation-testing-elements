@@ -66,6 +66,9 @@
       "editor.defaultFormatter": "scalameta.metals",
     },
     "liveServer.settings.multiRootWorkspaceName": "real-time",
+    "files.associations": {
+      "*.css": "tailwindcss",
+    },
   },
   "launch": {
     "version": "0.2.0",

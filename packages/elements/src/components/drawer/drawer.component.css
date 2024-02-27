@@ -1,10 +1,10 @@
-@import '../../style/globals.scss';
+@import '../../style/globals.css';
 
 :host([mode='closed']) {
   @apply h-0;
 }
 :host([mode='half']) {
-  height: $mte-drawer-height-half-open;
+  height: var(--mte-drawer-height-half-open);
 }
 :host([mode='open']) {
   @apply h-1/2;

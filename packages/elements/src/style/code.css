@@ -1,6 +1,6 @@
 #report-code-block {
-  // Don't show scrollbar in code block, the page already scrolls
-  // Also let the popup appear outside the code block boundaries
+  /* Don't show scrollbar in code block, the page already scrolls */
+  /* Also let the popup appear outside the code block boundaries */
   overflow-y: visible;
   overflow-x: auto;
   background: var(--prism-background);

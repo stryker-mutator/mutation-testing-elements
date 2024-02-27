@@ -7,7 +7,7 @@ import { tailwind } from '../../style/index.js';
 import type { DrawerMode } from '../drawer/drawer.component.js';
 import type { Column } from '../metrics-table/metrics-table.component.js';
 import { RealTimeElement } from '../real-time-element.js';
-import style from './test-view.scss?inline';
+import style from './test-view.css?inline';
 
 @customElement('mte-test-view')
 export class MutationTestReportTestViewComponent extends RealTimeElement {
