@@ -1,11 +1,12 @@
-import { PageObject } from './PageObject.po';
+import { expect } from '@playwright/test';
+import { PageObject } from './PageObject.po.js';
 
 export class ProgressBar extends PageObject {
-  private readonly progressBar = this.$('.progress-bar');
+  private readonly progressBar = this.$('[role=progressbar]');
 
-  public percentageText = async () => (await this.progressBar).getText();
-  public barSize = async () => (await this.progressBar).getSize();
-  public totalSize = () => this.host.getSize();
+  public expectPercentage = async (percentage: string | number) => expect(this.progressBar).toHaveAttribute('aria-valuenow', `${percentage}`);
+  public barSize = async () => (await this.progressBar.boundingBox()) ?? { width: 0, height: 0 };
+  public totalSize = async () => (await this.host.boundingBox()) ?? { width: 0, height: 0 };
   public relativeBarWidth = async () => {
     const [totalSize, barSize] = await Promise.all([this.totalSize(), this.barSize()]);
     return Math.floor((barSize.width / totalSize.width) * 100);

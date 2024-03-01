@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.elements.settings.json",
+  "compilerOptions": {
+    "types": ["playwright", "node"],
+    "emitDeclarationOnly": true,
+    "outDir": "../../dist-tsc/test/integration"
+  },
+  "references": [
+    {
+      "path": "../../src"
+    },
+    {
+      "path": "../../../real-time/src"
+    }
+  ]
+}

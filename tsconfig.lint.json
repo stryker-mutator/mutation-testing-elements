@@ -1,9 +1,0 @@
-{
-  // This file is a workaround for: https://github.com/typescript-eslint/typescript-eslint/blob/master/docs/getting-started/linting/MONOREPO.md
-  "extends": "./tsconfig.settings.json",
-  "compilerOptions": {
-    "allowJs": true,
-    "checkJs": true
-  },
-  "include": ["stryker.parent.js", ".eslintrc.js", "tasks/schema2ts.js"]
-}

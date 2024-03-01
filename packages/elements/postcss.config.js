@@ -1,12 +1,7 @@
-module.exports = {
-  plugins: [
-    require('cssnano')({
-      preset: 'default',
-    }),
-    require('@fullhuman/postcss-purgecss')({
-      content: ['src/**/*.ts'],
-      // Don't purge dynamically added classes
-      safelist: [/^(bg|text)-(success|caution|danger|warning|secondary|default)(-light)?$/, /^language-/, /^:host$/],
-    }),
-  ],
+export default {
+  plugins: {
+    'tailwindcss/nesting': {},
+    tailwindcss: {},
+    ...(process.env.NODE_ENV === 'production' ? { cssnano: {}, autoprefixer: {} } : {}),
+  },
 };

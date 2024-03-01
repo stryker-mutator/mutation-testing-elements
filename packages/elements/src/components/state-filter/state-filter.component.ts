@@ -1,36 +1,27 @@
-import { customElement, LitElement, property, PropertyValues, html, unsafeCSS } from 'lit-element';
-import { bootstrap } from '../../style';
-import style from './state-filter.scss';
-import { createCustomEvent } from '../../lib/custom-events';
-import { repeat } from 'lit-html/directives/repeat';
+import type { PropertyValues, TemplateResult } from 'lit';
+import { html, unsafeCSS } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { repeat } from 'lit/directives/repeat.js';
+import { createCustomEvent } from '../../lib/custom-events.js';
+import { renderIf } from '../../lib/html-helpers.js';
+import { tailwind } from '../../style/index.js';
+import style from './state-filter.css?inline';
+import { RealTimeElement } from '../real-time-element.js';
 
 export interface StateFilter<TStatus> {
   status: TStatus;
   count: number;
   enabled: boolean;
-  label: string;
+  label: TemplateResult<1> | string;
   context: string;
 }
 
 @customElement('mte-state-filter')
-export class MutationTestReportFileStateFilterComponent<TStatus> extends LitElement {
-  @property()
-  private get collapseButtonText() {
-    if (this.collapsed) {
-      return 'Expand all';
-    } else {
-      return 'Collapse all';
-    }
-  }
-
-  @property()
-  private collapsed = true;
+export class FileStateFilterComponent<TStatus extends string> extends RealTimeElement {
+  static styles = [tailwind, unsafeCSS(style)];
 
   @property({ type: Array })
-  public filters?: StateFilter<TStatus>[];
-
-  @property({ type: Boolean, attribute: 'allow-toggle-all', reflect: true })
-  public allowToggleAll = false;
+  public declare filters?: StateFilter<TStatus>[];
 
   public updated(changedProperties: PropertyValues) {
     if (changedProperties.has('filters')) {
@@ -44,46 +35,94 @@ export class MutationTestReportFileStateFilterComponent<TStatus> extends LitElem
   }
 
   private dispatchFiltersChangedEvent() {
-    this.dispatchEvent(createCustomEvent('filters-changed', this.filters as StateFilter<any>[]));
+    this.dispatchEvent(
+      createCustomEvent(
+        'filters-changed',
+        this.filters!.filter(({ enabled }) => enabled).map(({ status }) => status),
+      ),
+    );
   }
 
-  private readonly toggleOpenAll = () => {
-    this.collapsed = !this.collapsed;
-    if (this.collapsed) {
-      this.dispatchEvent(createCustomEvent('collapse-all', undefined));
-    } else {
-      this.dispatchEvent(createCustomEvent('expand-all', undefined));
-    }
+  private readonly next = (ev: Event) => {
+    ev.stopPropagation();
+    this.dispatchEvent(createCustomEvent('next', undefined, { bubbles: true, composed: true }));
   };
-
-  public static styles = [bootstrap, unsafeCSS(style)];
+  private readonly previous = (ev: Event) => {
+    ev.stopPropagation();
+    this.dispatchEvent(createCustomEvent('previous', undefined, { bubbles: true, composed: true }));
+  };
 
   public render() {
     return html`
-      <div class="legend col-md-12 d-flex align-items-center">
-        ${this.filters &&
-        repeat(
-          this.filters,
-          // Key function. I super duper want that all properties are weighed here,
-          // see https://lit-html.polymer-project.org/guide/writing-templates#repeating-templates-with-the-repeat-directive
-          (filter) => JSON.stringify(filter),
-          (filter) => html`<div data-status="${filter.status}" class="form-check form-check-inline">
-            <label class="form-check-label">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                ?checked="${filter.enabled}"
-                value="${filter.status}"
-                @input="${(el: Event) => this.checkboxChanged(filter, (el.target as HTMLInputElement).checked)}"
-              />
-              <span class="badge bg-${filter.context}">${filter.label} (${filter.count})</span>
-            </label>
-          </div>`
+      <div class="sticky top-offset z-10 flex flex-row bg-white py-6">
+        <div class="mr-3">
+          <button title="Previous" @click=${this.previous} type="button" class="step-button">
+            <svg aria-hidden="true" class="h-4 w-4 rotate-180" fill="white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path
+                fill-rule="evenodd"
+                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <span class="sr-only">Select previous mutant</span>
+          </button>
+          <button title="Next" @click=${this.next} type="button" class="step-button">
+            <svg aria-hidden="true" class="h-4 w-4" fill="white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path
+                fill-rule="evenodd"
+                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <span class="sr-only">Select next mutant</span>
+          </button>
+        </div>
+
+        ${renderIf(
+          this.filters?.length,
+          repeat(
+            this.filters!,
+            // Key function. I super duper want that all properties are weighed here,
+            // see https://lit-html.polymer-project.org/guide/writing-templates#repeating-templates-with-the-repeat-directive
+            (filter) => filter.status,
+            (filter) => html`
+              <div class="mr-4 flex items-center" data-status="${filter.status}">
+                <input
+                  ?checked="${filter.enabled}"
+                  id="filter-${filter.status}"
+                  aria-describedby="status-description"
+                  type="checkbox"
+                  value="${filter.status}"
+                  @input="${(el: Event) => this.checkboxChanged(filter, (el.target as HTMLInputElement).checked)}"
+                  class="h-5 w-5 rounded border-gray-300 bg-gray-100 text-primary-on !ring-offset-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                />
+
+                <label
+                  for="filter-${filter.status}"
+                  class="${this.bgForContext(filter.context)} mx-2 rounded px-2.5 py-0.5 text-sm font-medium hover:cursor-pointer"
+                >
+                  ${filter.label} (${filter.count})
+                </label>
+              </div>
+            `,
+          ) as TemplateResult,
         )}
-        ${this.allowToggleAll
-          ? html`<button @click="${this.toggleOpenAll}" class="btn btn-sm btn-secondary" type="button">${this.collapseButtonText}</button>`
-          : ''}
       </div>
     `;
+  }
+
+  private bgForContext(context: string) {
+    switch (context) {
+      case 'success':
+        return 'bg-green-100 text-green-800';
+      case 'warning':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'danger':
+        return 'bg-red-100 text-red-800';
+      case 'caution':
+        return 'bg-orange-100 text-orange-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
+    }
   }
 }

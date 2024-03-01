@@ -1,8 +1,8 @@
 import { expect } from 'chai';
-import { TestDefinition } from 'mutation-testing-report-schema/api';
-import { MutantModel, TestModel } from '../../../src';
-import { TestStatus } from '../../../src/model/test-model';
-import { createLocation, createMutantResult, createTestDefinition, createTestFileModel } from '../../helpers/factories';
+import type { TestDefinition } from 'mutation-testing-report-schema';
+import { MutantModel, TestModel } from '../../../src/index.js';
+import { TestStatus } from '../../../src/model/test-model.js';
+import { createLocation, createMutantResult, createTestDefinition, createTestFileModel } from '../../helpers/factories.js';
 
 describe(TestModel.name, () => {
   it('should copy over all values from mutant result', () => {

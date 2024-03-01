@@ -1,6 +1,6 @@
-import { OpenEndLocation, TestDefinition } from 'mutation-testing-report-schema/api';
-import { MutantModel } from './mutant-model';
-import { TestFileModel } from './test-file-model';
+import type { OpenEndLocation, TestDefinition } from 'mutation-testing-report-schema';
+import type { MutantModel } from './mutant-model.js';
+import type { TestFileModel } from './test-file-model.js';
 
 function assertSourceFileDefined(sourceFile: TestFileModel | undefined): asserts sourceFile {
   if (sourceFile === undefined) {
@@ -24,22 +24,28 @@ export class TestModel implements TestDefinition {
   public name!: string;
   public location?: OpenEndLocation | undefined;
 
-  public killedMutants?: MutantModel[];
-  public coveredMutants?: MutantModel[];
-  public sourceFile: TestFileModel | undefined;
+  get killedMutants() {
+    if (this.#killedMutants.size) {
+      return Array.from(this.#killedMutants.values());
+    } else return undefined;
+  }
+
+  get coveredMutants() {
+    if (this.#coveredMutants.size) {
+      return Array.from(this.#coveredMutants.values());
+    } else return undefined;
+  }
+  public declare sourceFile: TestFileModel | undefined;
+
+  #killedMutants = new Map<string, MutantModel>();
+  #coveredMutants = new Map<string, MutantModel>();
 
   public addCovered(mutant: MutantModel) {
-    if (!this.coveredMutants) {
-      this.coveredMutants = [];
-    }
-    this.coveredMutants.push(mutant);
+    this.#coveredMutants.set(mutant.id, mutant);
   }
 
   public addKilled(mutant: MutantModel) {
-    if (!this.killedMutants) {
-      this.killedMutants = [];
-    }
-    this.killedMutants.push(mutant);
+    this.#killedMutants.set(mutant.id, mutant);
   }
 
   constructor(input: TestDefinition) {
@@ -69,12 +75,19 @@ export class TestModel implements TestDefinition {
   }
 
   public get status(): TestStatus {
-    if (this.killedMutants?.length) {
+    if (this.#killedMutants.size) {
       return TestStatus.Killing;
-    } else if (this.coveredMutants?.length) {
+    } else if (this.#coveredMutants.size) {
       return TestStatus.Covering;
     } else {
       return TestStatus.NotCovering;
     }
+  }
+
+  public update(): void {
+    if (!this.sourceFile?.result?.file) {
+      return;
+    }
+    this.sourceFile.result.updateAllMetrics();
   }
 }

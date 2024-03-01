@@ -1,0 +1,33 @@
+{
+  "name": "mutation-testing-real-time",
+  "version": "3.0.2",
+  "description": "Helpers to create a NodeJS server for real-time reporting for a mutation testing elements report",
+  "module": "dist/src/index.js",
+  "exports": {
+    ".": "./dist/src/index.js"
+  },
+  "type": "module",
+  "nx": {
+    "name": "real-time"
+  },
+  "keywords": [
+    "mutation",
+    "testing",
+    "real-time",
+    "middleware"
+  ],
+  "scripts": {
+    "lint": "eslint --ext .js,.ts .",
+    "stryker": "stryker run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stryker-mutator/mutation-testing-elements.git",
+    "directory": "packages/real-time"
+  },
+  "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/real-time#readme",
+  "devDependencies": {
+    "@types/eventsource": "1.1.15",
+    "eventsource": "2.0.2"
+  }
+}

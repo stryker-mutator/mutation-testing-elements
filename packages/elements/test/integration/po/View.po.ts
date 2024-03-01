@@ -1,8 +1,6 @@
-import { By, WebElementPromise } from 'selenium-webdriver';
-import { DEFAULT_TIMEOUT } from '../lib/constants';
-import { selectShadowRoot } from '../lib/helpers';
-import { PageObject } from './PageObject.po';
-import { ResultTable } from './ResultTable.po';
+import { PageObject } from './PageObject.po.js';
+import { ResultTable } from './ResultTable.po.js';
+import type { Locator } from '@playwright/test';
 
 export abstract class View extends PageObject {
   public clickOnCode() {
@@ -10,27 +8,21 @@ export abstract class View extends PageObject {
   }
 
   public async whenCodeIsHighlighted(): Promise<void> {
-    await this.browser.wait(async () => {
-      const code = await this.codeElement();
-      await code.findElement(By.css('span.token'));
-      return true;
-    }, DEFAULT_TIMEOUT);
+    return this.codeElement().locator('span.token').first().waitFor();
   }
 
   public async codeBackgroundColor(): Promise<string> {
-    const codeElement = await this.codeElement();
-    return codeElement.getCssValue('background-color');
+    return this.codeElement().evaluate((el) => getComputedStyle(el).backgroundColor);
   }
 
-  protected abstract codeElement(): WebElementPromise;
+  protected abstract codeElement(): Locator;
 
   public async scrollToCode() {
-    const codeElement = await this.codeElement();
-    await this.browser.executeScript(`window.scrollTo(0, ${(await codeElement.getRect()).y})`);
+    const codeElement = this.codeElement();
+    await this.browser.evaluate(`window.scrollTo(0, ${(await codeElement.boundingBox())!.y})`);
   }
 
   public resultTable() {
-    const context = selectShadowRoot(this.$('mte-metrics-table'));
-    return new ResultTable(context, this.browser);
+    return new ResultTable(this.$('mte-metrics-table'), this.browser);
   }
 }

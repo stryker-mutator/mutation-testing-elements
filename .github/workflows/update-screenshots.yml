@@ -6,25 +6,34 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [20.x]
         os: [ubuntu-latest, windows-latest]
     steps:
-      - uses: actions/checkout@v2.3.5
+      - name: Generate token
+        id: generate-token
+        uses: tibdex/github-app-token@v2
         with:
-          token: ${{ secrets.GH_TOKEN }}
+          app_id: ${{ vars.STRYKER_MUTATOR_APP_ID }}
+          private_key: ${{ secrets.STRYKER_MUTATOR_NPA_KEY }}
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ steps.generate-token.outputs.token }}
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2.4.1
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm ci
-      - run: npm run build
-      - run: npx lerna run test:integration:update
+      - run: npx playwright install chromium firefox --with-deps
+      - run: npx nx run-many --target=build
+      - run: npx nx run elements:test:integration:update
       - name: Commit
         run: |
-          git config --global user.name 'Stryker Mutator NPA'
-          git config --global user.email 'stryker-mutator@users.noreply.github.com'
+          git config --global user.name "stryker-mutator[bot]"
+          git config --global user.email 158062761+stryker-mutator[bot]@users.noreply.github.com
           git pull
           git add .
           git commit -m "test(screenshots): update screenshots for ${{ runner.os }}"
           git push
+        env:
+          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}

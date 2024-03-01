@@ -1,17 +1,98 @@
-@import '../../style/bootstrap-reboot.scss'; // import the variables
+@use 'sass:map';
 
-@each $color, $value in $theme-colors {
-  .bg-#{$color}-light {
-    background-color: var(--bs-#{$color}-bg-light);
+@import '../../style/code.css';
+
+$mutant-themes: (
+  'Pending': theme('colors.neutral.400'),
+  'Killed': theme('colors.green.600'),
+  'NoCoverage': theme('colors.orange.500'),
+  'Survived': theme('colors.red.500'),
+  'Timeout': theme('colors.amber.400'),
+  'CompileError': theme('colors.neutral.400'),
+  'RuntimeError': theme('colors.neutral.400'),
+  'Ignored': theme('colors.neutral.400'),
+);
+
+// These 2 themes get underlined with a squiggly (wavy) for extra emphasis
+$mutant-squiggly: 'Survived', 'NoCoverage';
+
+@each $status, $theme in $mutant-themes {
+  @if (index($mutant-squiggly, $status) == null) {
+    .mte-selected-#{$status} .mutant.#{$status} {
+      border-color: #{$theme};
+      border-bottom-width: 2px;
+      border-bottom-style: solid;
+      cursor: pointer;
+    }
+  }
+
+  svg.mutant-dot.#{$status} {
+    fill: #{$theme};
   }
 }
 
-#report-code-block {
-  // Don't show scrollbar in code block, the page already scrolls
-  // Also let the popup appear outside the code block boundaries
-  overflow: visible;
+svg.mutant-dot.selected {
+  @apply fill-sky-400;
 }
 
-mte-mutant {
-  background-color: transparent;
+@each $status in $mutant-squiggly {
+  .mte-selected-#{$status} .mutant.#{$status} {
+    /*
+  We want the underline of survived and no-coverage to be 'wavy'.
+  Don't use `text-decoration-style: wavy`, because chrome doesn't extend to all characters: https://stackoverflow.com/questions/57559588/how-to-make-the-wavy-underline-extend-cover-all-the-characters-in-chrome
+  Use border-image instead.
+  */
+    border-image-slice: 0 0 4 0;
+    border-image-width: 4px;
+    border-image-outset: 6px;
+    border-bottom-style: solid;
+    border-image-repeat: repeat;
+    border-image-source: var(--mut-squiggly-#{$status});
+    cursor: pointer;
+
+    // Mutant in mutant, don't start another wavy thingy
+    .mutant.Survived,
+    .mutant.NoCoverage {
+      border-image: none;
+      border-bottom-style: none;
+    }
+  }
+}
+
+.mutant-dot {
+  @apply cursor-pointer;
+}
+
+svg.mutant-dot {
+  @apply m-[2px];
+}
+
+.diff-old {
+  background-color: var(--mut-diff-del-bg);
+}
+
+.diff-focus {
+  background-color: var(--mut-diff-add-bg-line-number);
+}
+
+.diff-old .line-number {
+  background-color: var(--mut-diff-del-bg-line-number);
+  color: var(--mut-diff-del-line-number);
+}
+
+.diff-old .line-marker::before {
+  content: '-';
+}
+
+.diff-new {
+  background-color: var(--mut-diff-add-bg);
+}
+
+.diff-new .empty-line-number {
+  background-color: var(--mut-diff-add-bg-line-number);
+  color: var(--mut-diff-add-line-number);
+}
+
+.diff-new .line-marker::before {
+  content: '+';
 }

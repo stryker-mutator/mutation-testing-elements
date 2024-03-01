@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script src="/mutation-test-elements.js"></script>
-  </head>
 
-  <body>
-    <a href="/">Back</a>
-    <mutation-test-report-app title-postfix="deep dir example" src="mutation-report.json"></mutation-test-report-app>
-    <script>
-      const app = document.getElementsByTagName('mutation-test-report-app').item(0);
-      function updateTheme() {
-        document.body.style.backgroundColor = app.themeBackgroundColor;
-      }
-      app.addEventListener('theme-changed', updateTheme);
-      updateTheme();
-    </script>
-  </body>
+<head>
+  <script type="module" src="/mutation-test-elements.js"></script>
+</head>
+
+<body>
+  <a href="/">Back</a>
+  <mutation-test-report-app title-postfix="deep dir example" src="mutation-report.json"></mutation-test-report-app>
+  <script>
+    const app = document.getElementsByTagName('mutation-test-report-app').item(0);
+    function updateTheme() {
+      document.body.style.backgroundColor = app.themeBackgroundColor;
+    }
+    app.addEventListener('theme-changed', updateTheme);
+    updateTheme();
+  </script>
+</body>
+
 </html>

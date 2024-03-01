@@ -1,84 +1,4 @@
-@import '../../style/bootstrap-reboot.scss'; // import the variables
-
-// Bootstrap theming =================================================
-:host(:not([theme='dark'])) {
-  --bs-link-color: #{$link-color};
-  --bs-link-hover-color: #{$link-hover-color};
-  --bs-breadcrumb-bg: #{$gray-200};
-  --bs-breadcrumb-active-color: #{$breadcrumb-active-color};
-  --bs-body-bg: #{$body-bg};
-  --bs-body-color: #{$body-color};
-  --bs-card-bg: #{$card-bg};
-  --bs-card-border-color: #{$card-border-color};
-  --bs-card-cap-bg: #{$gray-200};
-  --bs-list-group-hover-bg: #{$list-group-hover-bg};
-  --bs-list-group-bg: #{$list-group-bg};
-  --bs-list-group-border-color: #{$list-group-border-color};
-  --bs-list-group-action-hover-color: #{$list-group-action-hover-color};
-  --bs-list-group-action-active-color: #{$list-group-action-active-color};
-  --bs-list-group-action-active-bg: #{$list-group-action-active-bg};
-  --bs-list-group-action-color: #{$list-group-action-color};
-  --bs-list-group-active-color: #{$list-group-active-color};
-  --bs-list-group-active-bg: #{$list-group-active-bg};
-  --bs-list-group-active-border-color: #{$list-group-active-border-color};
-  --bs-table-border-color: #{$table-border-color};
-  --bs-table-bg-hover: #{$table-hover-bg};
-  --bs-progress-bg: #{$progress-bg};
-
-  @each $color, $value in $theme-colors {
-    --bs-table-#{$color}-hover-bg: #{darken($value, 5%)};
-    --bs-badge-#{$color}-color: #{color-contrast($value)};
-    --bs-btn-#{$color}-color: #{color-contrast($value)};
-    --bs-btn-#{$color}-hover-color: #{color-contrast(darken($value, 7.5%))};
-    --bs-#{$color}-bg: #{$value};
-    --bs-#{$color}-bg-light: #{rgba($value, 0.25)};
-  }
-  --bs-anchor: #{$darkly-white};
-  --bs-nav-tabs-link-hover-border-color: #{$nav-tabs-link-hover-border-color};
-  --bs-nav-tabs-link-active-color: #{$nav-tabs-link-active-color};
-  --bs-nav-tabs-link-active-bg: #{$nav-tabs-link-active-bg};
-  --bs-nav-tabs-link-active-border-color: #{$nav-tabs-link-active-border-color};
-  --bs-nav-tabs-border-color: #{$nav-tabs-border-color};
-}
-:host([theme='dark']) {
-  --bs-link-color: #{$darkly-link-color};
-  --bs-link-hover-color: #{$darkly-link-hover-color};
-  --bs-breadcrumb-bg: #{$darkly-breadcrumb-bg};
-  --bs-breadcrumb-active-color: #{$darkly-breadcrumb-active-color};
-  --bs-body-bg: #{$darkly-body-bg};
-  --bs-body-color: #{$darkly-body-color};
-  --bs-card-bg: #{$darkly-card-bg};
-  --bs-card-border-color: #{$darkly-card-border-color};
-  --bs-card-cap-bg: #{$darkly-card-cap-bg};
-  --bs-list-group-hover-bg: #{$darkly-list-group-hover-bg};
-  --bs-list-group-bg: #{$darkly-list-group-bg};
-  --bs-list-group-border-color: #{$darkly-list-group-border-color};
-  --bs-list-group-action-hover-color: #{$darkly-list-group-action-hover-color};
-  --bs-list-group-action-active-color: #{$darkly-list-group-action-active-color};
-  --bs-list-group-action-active-bg: #{$darkly-list-group-action-active-bg};
-  --bs-list-group-action-color: #{$darkly-list-group-action-color};
-  --bs-list-group-active-color: #{$darkly-list-group-active-color};
-  --bs-list-group-active-bg: #{$darkly-list-group-active-bg};
-  --bs-list-group-active-border-color: #{$darkly-list-group-active-border-color};
-  --bs-table-border-color: #{$darkly-table-border-color};
-  --bs-table-bg-hover: #{$darkly-table-hover-bg};
-  --bs-progress-bg: #{$darkly-progress-bg};
-
-  @each $color, $value in $darkly-theme-colors {
-    --bs-table-#{$color}-bg: #{$value};
-    --bs-table-#{$color}-hover-bg: #{darken($value, 5%)};
-    --bs-badge-#{$color}-color: #{color-contrast($value)};
-    --bs-btn-#{$color}-color: #{color-contrast($value)};
-    --bs-btn-#{$color}-hover-color: #{color-contrast(darken($value, 7.5%))};
-    --bs-#{$color}-bg: #{$value};
-    --bs-#{$color}-bg-light: #{rgba($value, 0.25)};
-  }
-  --bs-nav-tabs-link-hover-border-color: #{$darkly-nav-tabs-link-hover-border-color};
-  --bs-nav-tabs-link-active-color: #{$darkly-nav-tabs-link-active-color};
-  --bs-nav-tabs-link-active-bg: #{$darkly-toast-background-color};
-  --bs-nav-tabs-link-active-border-color: #{$darkly-nav-tabs-link-active-border-color};
-  --bs-nav-tabs-border-color: #{$darkly-nav-tabs-border-color};
-}
+@use 'sass:color';
 
 // Prismjs theming (code highlighting) =====================================
 :host(:not([theme='dark'])) {
@@ -87,80 +7,91 @@
   --prism-border: #ddd;
 
   // from https://github.com/FormidableLabs/prism-react-renderer/blob/master/src/themes/github.js
-  --prism-operator: var(--prism-maintext);
-  --prism-punctuation: var(--prism-maintext);
-
-  --prism-atrule: #00a4db;
-  --prism-attr: var(--prism-atrule);
-  --prism-selector: var(--prism-atrule);
-
   --prism-cdata: #999988;
   --prism-comment: var(--prism-cdata);
   --prism-doctype: var(--prism-cdata);
   --prism-prolog: var(--prism-cdata);
 
-  --prism-deleted: #6f42c1;
-  --prism-function: var(--prism-deleted);
-  --prism-tag: var(--prism-deleted);
+  --prism-attr-value: #e3116c;
+  --prism-string: var(--prism-attr-value);
 
   --prism-boolean: #36acaa;
-  --prism-constant: var(--prism-boolean);
   --prism-entity: var(--prism-boolean);
+  --prism-url: var(--prism-boolean);
+  --prism-constant: var(--prism-boolean);
   --prism-inserted: var(--prism-boolean);
   --prism-number: var(--prism-boolean);
   --prism-property: var(--prism-boolean);
   --prism-regex: var(--prism-boolean);
   --prism-symbol: var(--prism-boolean);
-  --prism-url: var(--prism-boolean);
   --prism-variable: var(--prism-boolean);
 
-  --prism-attr: #e3116c;
-  --prism-string: var(--prism-attr);
+  --prism-atrule: #00a4db;
+  --prism-attr-name: var(--prism-atrule);
+  --prism-attr: var(--prism-atrule);
 
-  --prism-keyword: #00009f;
-  --prism-selector: var(--prism-keyword);
-  --prism-tag: var(--prism-keyword);
+  --prism-operator: var(--prism-maintext);
+  --prism-punctuation: var(--prism-maintext);
+
+  --prism-deleted: #9a050f;
+  --prism-function: var(--prism-deleted);
+
+  --prism-function-variable: #6f42c1;
+
+  --prism-selector: #00009f;
+  --prism-tag: var(--prism-selector);
+  --prism-keyword: var(--prism-selector);
 }
 :host([theme='dark']) {
-  // From https://atelierbram.github.io/syntax-highlighting/prism/demo/assets/css/prism-base16-eighties.dark.css
+  // From https://atelierbram.github.io/syntax-highlighting/prism/demo/assets/css/prism-atom-dark.css
   --prism-maintext: #d3d0c8;
-  --prism-background: #2d2d2d;
-  --prism-border: #393939;
+  --prism-background: #1d1f21;
+  --prism-border: rgb(var(--mut-gray-200));
 
-  --prism-cdata: #747369;
+  --prism-cdata: #7c7c7c;
   --prism-comment: var(--prism-cdata);
   --prism-doctype: var(--prism-cdata);
   --prism-prolog: var(--prism-cdata);
 
-  --prism-punctuation: #d3d0c8;
+  --prism-punctuation: #c5c8c6;
 
-  --prism-attr-name: #f99157;
-  --prism-boolean: var(--prism-attr-name);
-  --prism-number: var(--prism-attr-name);
-  --prism-operator: var(--prism-attr-name);
+  --prism-tag: #96cbfe;
+  --prism-property: var(--prism-tag);
+  --prism-keyword: var(--prism-tag);
 
-  --prism-property: #ffcc66;
+  --prism-class-name: #ffffb6;
 
-  --prism-placeholder: #6699cc;
-  --prism-tag: var(--prism-placeholder);
-  --prism-variable: var(--prism-placeholder);
+  --prism-boolean: #99cc99;
+  --prism-constant: var(--prism-boolean);
 
-  --prism-selector: #cc99cc;
-  --prism-keyword: var(--prism-selector);
+  --prism-symbol: #f92672;
+  --prism-deleted: var(--prism-symbol);
 
-  --prism-atrule: #66cccc;
-  --prism-entity: var(--prism-atrule);
-  --prism-regex: var(--prism-atrule);
-  --prism-statement: var(--prism-atrule);
-  --prism-string: var(--prism-atrule);
-  --prism-url: var(--prism-atrule);
+  --prism-number: #ff73fd;
 
-  --prism-attr-value: #99cc99;
-  --prism-control: var(--prism-attr-value);
-  --prism-directive: var(--prism-attr-value);
-  --prism-unit: var(--prism-attr-value);
+  --prism-inserted: #a8ff60;
+  --prism-selector: var(--prism-inserted);
+  --prism-attr-name: var(--prism-inserted);
+  --prism-string: var(--prism-inserted);
+  --prism-char: var(--prism-inserted);
+  --prism-builtin: var(--prism-inserted);
 
-  --prism-important: #ab4642;
+  --prism-variable: #c6c5fe;
+
+  --prism-operator: #ededed;
+
+  --prism-entity: #ffffb6;
+
+  --prism-url: #96cbfe;
+
+  --prism-attr-value: #f9ee98;
+  --prism-atrule: var(--prism-attr-value);
+
+  --prism-function: #dad085;
+
+  --prism-regex: #e9c062;
+
+  --prism-important: #fd971f;
 }
 
 // File icon theming ================================
@@ -193,9 +124,100 @@
 }
 
 // Mutation testing elements custom theming ================================
+
+@function squiggly-svg-factory($stroke-color) {
+  // Color to string
+  $stroke-color: '#{$stroke-color}';
+
+  // Escape leading '#' (url encode %23)
+  $index: str-index($stroke-color, '#');
+  @if $index eq 1 {
+    $stroke-color: '%23' + str-slice($stroke-color, 2);
+  }
+  @return url("data:image/svg+xml;charset=UTF8,<svg xmlns='http://www.w3.org/2000/svg' height='3' width='6'><g fill='#{$stroke-color}'><path d='m5.5 0-3 3H1.1l3-3z'/><path d='m4 0 2 2V.6L5.4 0zM0 2l1 1h1.4L0 .6z'/></g></svg>");
+}
+
+@function hexToRGB($hexCode) {
+  @return red($hexCode) green($hexCode) blue($hexCode);
+}
+
 :host(:not([theme='dark'])) {
+  --mut-gray-bg: theme('colors.white');
   --mut-octicon-icon-color: #498ba7;
+  --mut-line-number: #6e7781;
+  --mut-diff-add-bg: #e6ffec;
+  --mut-diff-add-bg-line-number: #ccffd8;
+  --mut-diff-add-line-number: #24292f;
+  --mut-diff-del-bg: #ffebe9;
+  --mut-diff-del-bg-line-number: #ffd7d5;
+  --mut-diff-del-line-number: var(--mut-diff-add-line-number);
+  --mut-badge-info-bg: #54c6ec;
+  --mut-badge-info: #212529;
+  --mut-code-lense: #919191;
+
+  --mut-squiggly-Survived: #{squiggly-svg-factory(#ef4444)};
+  --mut-squiggly-NoCoverage: #{squiggly-svg-factory(#fb923c)};
+
+  --mut-body-bg: #fff;
 }
 :host([theme='dark']) {
+  color-scheme: dark;
+  // Manually copied over from tailwind slate range
+  // https://tailwindcss.com/docs/customizing-colors#default-color-palette
+  // Tailwind Zinc
+  $grayRanges: (
+    50: #18181b,
+    100: #27272a,
+    200: #3f3f46,
+    300: #52525b,
+    400: #71717a,
+    500: #a1a1aa,
+    600: #d4d4d8,
+    700: #e4e4e7,
+    800: #f4f4f5,
+    900: #fafafa,
+  );
+
+  // Tailwind Sky
+  $primaryRanges: (
+    // 50: #0c4a6e,
+    100: #075985,
+    // 200: #0369a1,
+    // 300: #0284c7,
+    // 400: #0ea5e9,
+    // 500: #38bdf8,
+    // 600: #7dd3fc,
+    // 700: #bae6fd,
+    800: #e0f2fe,
+    900: #f0f9ff,
+    // color for 'on' background
+    on: #0ea5e9
+  );
+
+  @each $range, $value in $grayRanges {
+    --mut-gray-#{$range}: #{hexToRGB($value)};
+  }
+
+  @each $range, $value in $primaryRanges {
+    --mut-primary-#{$range}: #{hexToRGB($value)};
+  }
+
+  --mut-body-bg: #{map-get($grayRanges, 50)};
+
+  --mut-white: var(--mut-gray-50);
+
   --mut-octicon-icon-color: #519aba;
+  --mut-line-number: #484f58;
+  --mut-diff-add-bg: rgba(46, 160, 67, 0.15);
+  --mut-diff-add-bg-line-number: rgba(63, 185, 80, 0.3);
+  --mut-diff-add-line-number: #c9d1d9;
+  --mut-diff-del-bg: rgba(248, 81, 73, 0.15);
+  --mut-diff-del-bg-line-number: rgba(248, 81, 73, 0.3);
+  --mut-diff-del-line-number: #c9d1d9;
+  --mut-badge-info-bg: #17a3b8;
+  --mut-badge-info: #fff;
+  --mut-code-lense: #999;
+
+  --mut-squiggly-Survived: #{squiggly-svg-factory(#ef4444)};
+  --mut-squiggly-NoCoverage: #{squiggly-svg-factory(#fb923c)};
 }

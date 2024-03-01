@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>🥒 Cucumber example - Mutation test elements</title>
-    <script src="/mutation-test-elements.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=0.5" />
-  </head>
+<head>
+  <title>🥒 Cucumber example - Mutation test elements</title>
+  <script type="module" src="/mutation-test-elements.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=0.5" />
+</head>
 
-  <body>
-    <a href="/">Back</a>
-    <mutation-test-report-app src="mutation.json"></mutation-test-report-app>
-    <script>
-      const app = document.getElementsByTagName('mutation-test-report-app').item(0);
-      function updateTheme() {
-        document.body.style.backgroundColor = app.themeBackgroundColor;
-      }
-      app.addEventListener('theme-changed', updateTheme);
-      updateTheme();
-    </script>
-  </body>
+<body>
+  <a href="/">Back</a>
+  <mutation-test-report-app src="mutation.json"></mutation-test-report-app>
+  <script>
+    const app = document.getElementsByTagName('mutation-test-report-app').item(0);
+    function updateTheme() {
+      document.body.style.backgroundColor = app.themeBackgroundColor;
+    }
+    app.addEventListener('theme-changed', updateTheme);
+    updateTheme();
+  </script>
+</body>
 </html>

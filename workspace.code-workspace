@@ -2,27 +2,37 @@
   "folders": [
     {
       "path": "packages/report-schema",
-      "name": "schema"
+      "name": "report-schema",
     },
     {
       "path": "packages/metrics",
-      "name": "metrics"
+      "name": "metrics",
     },
     {
       "path": "packages/metrics-scala",
-      "name": "metrics-scala"
+      "name": "metrics-scala",
     },
     {
       "path": "packages/elements",
-      "name": "elements"
+      "name": "elements",
+    },
+    {
+      "path": "packages/real-time",
+      "name": "real-time",
     },
     {
       "path": ".",
-      "name": "parent"
-    }
+      "name": "parent",
+    },
   ],
   "extensions": {
-    "recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
+    "recommendations": [
+      "dbaeumer.vscode-eslint",
+      "esbenp.prettier-vscode",
+      "bierner.lit-html",
+      "bradlc.vscode-tailwindcss",
+      "ms-playwright.playwright",
+    ],
   },
   "settings": {
     "search.exclude": {
@@ -30,29 +40,35 @@
       "**/bower_components": true,
       "**/*.code-search": true,
       "**/dist": true,
-      "**/dist-test": true,
+      "**/dist-tsc": true,
       "**/*.tsbuildinfo": true,
       "**/reports/mutation": true,
     },
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true
+      "source.fixAll.eslint": "explicit",
     },
+    "eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
     "typescript.tsdk": "./node_modules/typescript/lib",
-    "grunt.autoDetect": "off",
-    "gulp.autoDetect": "off",
-    "jake.autoDetect": "off",
     "task.autoDetect": "off",
-    "cSpell.words": ["Theming", "autoloader", "bootswatch", "clike", "prismjs", "templating"],
+    "cSpell.words": ["autoloader", "bootswatch", "clazz", "clike", "prismjs", "templating", "Theming"],
     "[json]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode"
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
     },
     "[jsonc]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode"
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
     },
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "files.watcherExclude": {
-      "**/target": true
-    }
+      "**/target": true,
+    },
+    "cSpell.language": "en",
+    "[scala]": {
+      "editor.defaultFormatter": "scalameta.metals",
+    },
+    "liveServer.settings.multiRootWorkspaceName": "real-time",
+    "files.associations": {
+      "*.css": "tailwindcss",
+    },
   },
   "launch": {
     "version": "0.2.0",
@@ -62,15 +78,15 @@
         "port": 9229,
         "request": "attach",
         "skipFiles": ["<node_internals>/**"],
-        "type": "pwa-node"
+        "type": "node",
       },
       {
         "type": "node",
         "request": "launch",
         "name": "Launch Program",
         "skipFiles": ["<node_internals>/**"],
-        "program": "${file}"
-      }
-    ]
-  }
+        "program": "${file}",
+      },
+    ],
+  },
 }

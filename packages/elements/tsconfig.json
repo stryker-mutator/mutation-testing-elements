@@ -1,12 +1,14 @@
 {
-  "extends": "../../tsconfig.settings.json",
   "files": [],
   "references": [
     {
       "path": "./src"
     },
     {
-      "path": "./test"
+      "path": "./test/unit"
+    },
+    {
+      "path": "./test/integration"
     }
   ]
 }

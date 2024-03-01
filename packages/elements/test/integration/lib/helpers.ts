@@ -1,60 +1,17 @@
-/// <reference types="../typings/globals-chai" />
-import { expect } from 'chai';
-import { Context } from 'mocha';
-import { from } from 'rxjs';
-import { mergeMap, toArray } from 'rxjs/operators';
-import { WebElement, WebElementPromise } from 'selenium-webdriver';
-import { ReportPage } from '../po/ReportPage';
-import { getCurrent, isHeadless } from './browser';
-import { MAX_WEBDRIVER_CONCURRENCY } from './constants';
-
-export function selectShadowRoot(element: WebElement): WebElementPromise {
-  return wrapInWebElementPromise(async () => {
-    const shadowRoot = await getCurrent().executeScript<WebElement | undefined>('return arguments[0].shadowRoot', element);
-    if (shadowRoot) {
-      return shadowRoot;
-    } else {
-      if (element.getTagName) {
-        const tagName = await element.getTagName().catch(() => 'unknown-tag');
-        throw new Error(`Tag ${tagName} does not have a shadow root`);
-      } else {
-        throw new Error('No shadow root');
-      }
-    }
-  });
-}
-
-export function wrapInWebElementPromise(p: () => Promise<WebElement>) {
-  return new WebElementPromise(getCurrent(), p());
-}
-
-export async function isElementVisible(element: WebElementPromise) {
-  try {
-    const isDisplayed = await element.isDisplayed();
-    return isDisplayed;
-  } catch (err) {
-    if (err instanceof Error && err.message.includes('no such element')) {
-      return false;
-    }
-    throw err;
-  }
-}
-
-export function sleep(n = 1000) {
-  return new Promise((res) => setTimeout(res, n));
-}
+import type { Page, TestInfo } from '@playwright/test';
+import { expect, test } from '@playwright/test';
+import { isHeadless } from './browser.js';
 
 export function itShouldMatchScreenshot(title: string) {
-  it(title, async function () {
-    await actScreenshotMatch(this);
+  test(title, async function ({ page }, context) {
+    await actScreenshotMatch(page, context);
   });
 }
 
-export async function actScreenshotMatch(context: Context) {
+export async function actScreenshotMatch(page: Page, context: TestInfo) {
   if (isHeadless()) {
-    const page = new ReportPage(getCurrent());
-    await sleep();
-    await expect(await page.takeScreenshot()).to.matchScreenshot();
+    await page.locator('mutation-test-report-app >> :is(mte-test-view, mte-mutant-view)').waitFor();
+    await expect(page).toHaveScreenshot();
   } else {
     console.log('[SKIP] skipping screenshot comparison, because not running in headless mode');
     context.skip();
@@ -62,15 +19,25 @@ export async function actScreenshotMatch(context: Context) {
 }
 
 /**
- * Maps the shadow root from a possibly big list of elements using the provided `fn`,
- * while limiting the number of concurrent operations, so web driver is still able to handle the load.
+ * Waits until the given predicate returns a truthy value. Calls and awaits the predicate
+ * function at the given interval time. Can be used to poll until a certain condition is true.
+ *
+ * @example
+ * ```js
+ * import { waitUntil } from './lib/helpers.js';
+ *
+ * await waitUntil(async () => expect(await drawer.isHalfOpen()).true);
+ * ```
+ *
+ * @param predicate - predicate function which is called each poll interval.
+ *   The predicate is awaited, so it can return a promise.
+ * @param message an optional message to display when the condition timed out
+ * @param options timeout and polling interval
  */
-export async function mapShadowRootConcurrent<T>(elements: Promise<WebElement[]>, fn: (el: WebElement) => T): Promise<T[]> {
-  const element$ = from(await elements);
-  return element$
-    .pipe(
-      mergeMap(async (host) => fn(await selectShadowRoot(host)), MAX_WEBDRIVER_CONCURRENCY),
-      toArray()
-    )
-    .toPromise() as Promise<T[]>;
+export function waitUntil(
+  predicate: () => Promise<void>,
+  message?: string,
+  { interval, timeout }: { interval?: number; timeout?: number } = {},
+): Promise<void> {
+  return expect(predicate, message).toPass({ intervals: interval ? [interval] : undefined, timeout });
 }

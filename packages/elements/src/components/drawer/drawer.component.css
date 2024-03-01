@@ -1,0 +1,15 @@
+@import '../../style/globals.css';
+
+:host([mode='closed']) {
+  @apply h-0;
+}
+:host([mode='half']) {
+  height: var(--mte-drawer-height-half-open);
+}
+:host([mode='open']) {
+  @apply h-1/2;
+
+  .scrollable {
+    @apply h-full overflow-y-auto overflow-x-hidden;
+  }
+}

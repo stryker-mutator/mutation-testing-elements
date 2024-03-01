@@ -1,5 +1,4 @@
-import { locationChange$ } from '../../../src/lib/router';
-import { expect } from 'chai';
+import { locationChange$ } from '../../../src/lib/router.js';
 import { take } from 'rxjs/operators';
 
 describe('locationChange$', () => {

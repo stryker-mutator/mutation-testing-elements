@@ -1,0 +1,15 @@
+.step-button {
+  @apply mr-2
+    inline-flex
+    items-center
+    rounded-md
+    bg-primary-600
+    p-1
+    text-center
+    text-white
+  
+    hover:bg-primary-700
+    focus:outline-none
+    focus:ring-2
+    focus:ring-primary-500;
+}

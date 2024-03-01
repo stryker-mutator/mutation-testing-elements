@@ -1000,6 +1000,8 @@
           "mutatorName": "ConditionalExpression",
           "replacement": "false",
           "status": "Survived",
+          "statusReason": "First line\nSecond line",
+          "description": "Also first line\nAlso second line",
           "testsCompleted": 2,
           "static": false,
           "coveredBy": ["2", "3"]

@@ -12,9 +12,9 @@
     },
     "schemaVersion": {
       "type": "string",
-      "pattern": "^1(\\.\\d*)?$",
+      "pattern": "^([1-2])(\\.(([1-9]\\d*)|0)){0,2}$",
       "description": "Major version of this report. Used for compatibility.",
-      "examples": ["1"]
+      "examples": ["1", "2.0", "2.0.0"]
     },
     "files": {
       "type": "object",
@@ -89,7 +89,7 @@
                   "type": "string",
                   "title": "MutantStatus",
                   "description": "Result of the mutation.",
-                  "enum": ["Killed", "Survived", "NoCoverage", "CompileError", "RuntimeError", "Timeout", "Ignored"]
+                  "enum": ["Killed", "Survived", "NoCoverage", "CompileError", "RuntimeError", "Timeout", "Ignored", "Pending"]
                 },
                 "statusReason": {
                   "type": "string",

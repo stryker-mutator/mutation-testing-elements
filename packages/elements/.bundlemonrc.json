@@ -1,0 +1,7 @@
+{
+  "defaultCompression": "none",
+  "subProject": "elements",
+  "baseDir": "./dist",
+  "files": [{ "path": "*.js" }, { "path": "*.cjs" }],
+  "reportOutput": ["github"]
+}

@@ -1,7 +1,6 @@
-import { MutantResult, Position, FileResult } from 'mutation-testing-report-schema/api';
-import { TestModel } from 'mutation-testing-metrics';
-import { BackgroundColorCalculator } from './BackgroundColorCalculator';
-import { escapeHtml } from './htmlHelpers';
+/* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
+import type { Position } from 'mutation-testing-report-schema/api';
+import { highlight, languages } from 'prismjs/components/prism-core';
 
 export enum ProgrammingLanguage {
   csharp = 'cs',
@@ -13,6 +12,7 @@ export enum ProgrammingLanguage {
   typescript = 'typescript',
   vue = 'vue',
   gherkin = 'gherkin',
+  svelte = 'svelte',
 }
 
 /**
@@ -41,6 +41,8 @@ export function determineLanguage(fileName: string): ProgrammingLanguage | undef
       return ProgrammingLanguage.javascript;
     case 'ts':
     case 'tsx':
+    case 'cts': // New file extensions
+    case 'mts': // https://devblogs.microsoft.com/typescript/announcing-typescript-4-5-beta/#new-file-extensions
       return ProgrammingLanguage.typescript;
     case 'scala':
       return ProgrammingLanguage.scala;
@@ -50,123 +52,307 @@ export function determineLanguage(fileName: string): ProgrammingLanguage | undef
       return ProgrammingLanguage.vue;
     case 'feature':
       return ProgrammingLanguage.gherkin;
+    case 'svelte':
+      return ProgrammingLanguage.svelte;
     default:
       return undefined;
   }
 }
 
+export function highlightCode(code: string, fileName: string): string {
+  const language = determineLanguage(fileName) ?? 'plain';
+  let highlightLanguage = language;
+  if (language === ProgrammingLanguage.vue) {
+    highlightLanguage = ProgrammingLanguage.html;
+  }
+  return highlight(code, languages[highlightLanguage], highlightLanguage);
+}
+
+export interface PositionWithOffset extends Position {
+  offset: number;
+}
+
 /**
- * Walks over the code in model.source and adds the
- * `<mte-mutant>` elements.
- * It also adds the background color using
- * `<span class="bg-danger-light">` and friends.
+ * A simple HTML tag representation
  */
-export function markMutants(model: FileResult): string {
-  const backgroundState = new BackgroundColorCalculator();
-  const startedMutants: MutantResult[] = [];
-  const walker = (char: string, pos: Position): string => {
-    const currentMutants = model.mutants.filter((m) => eq(m.location.start, pos));
-    const mutantsEnding = startedMutants.filter((m) => gte(pos, m.location.end));
+export interface HtmlTag {
+  id?: string | number;
+  elementName: string;
+  attributes?: Record<string, string | number>;
+  isClosing?: true;
+}
 
-    // Remove the mutants that ended from the list of mutants that started
-    mutantsEnding.forEach((mutant) => startedMutants.splice(startedMutants.indexOf(mutant), 1));
-
-    // Add new mutants to started mutants
-    startedMutants.push(...currentMutants);
-
-    const builder: string[] = [];
-    if (currentMutants.length || mutantsEnding.length) {
-      currentMutants.forEach(backgroundState.markMutantStart);
-      mutantsEnding.forEach(backgroundState.markMutantEnd);
-
-      // End previous color span
-      builder.push('</span>');
-
-      // End mutants
-      mutantsEnding.forEach(() => builder.push('</mte-mutant>'));
-
-      // Start mutants
-      currentMutants.forEach((mutant) => builder.push(`<mte-mutant mutant-id="${mutant.id}">`));
-
-      // Start new color span
-      builder.push(`<span class="bg-${backgroundState.determineBackground() || ''}">`);
-    }
-
-    // Append the code character
-    builder.push(escapeHtml(char));
-    return builder.join('');
+/**
+ * Takes in a highlighted source and transforms into individual lines.
+ *
+ * Example:
+ * ```js
+ * `<span class="token comment">/* some
+ * multiline comment
+ * * /</span>
+ * <span class="token identifier">foo</token>`
+ * ```
+ *
+ * Becomes:
+ * ```js
+ * [
+ *   '<span class="token comment">/* some</span>',
+ *   '<span class="token comment">multiline comment</span>',
+ *   '<span class="token comment">* /</span>',
+ *   '<span class="token identifier">foo</token>'
+ * ]
+ * ```
+ *
+ * It also allows callers to add background coloring spans.
+ *
+ * It does this by using a _very simple_ and _very limited_ html parser that understands text with span elements, just enough for highlighted html.
+ *
+ * @param source The highlighted source
+ * @param visitor The visitor function that is executed for each position in the source code and allows callers to inject a marker css class
+ * @returns the highlighted source split into lines
+ */
+export function transformHighlightedLines(source: string, visitor?: (pos: PositionWithOffset) => Iterable<HtmlTag>): string[] {
+  let currentLineParts: string[] = [];
+  const lines: string[] = [];
+  const currentPosition: PositionWithOffset = {
+    column: 0, // incremented to 1 before first visitation
+    line: 1,
+    offset: -1, // incremented to 0 before first visitation
   };
-  return `<span>${walkString(model.source, walker)}</span>`;
-}
 
-export function isAlfaNumeric(char: string) {
-  // We could use a regex here, but what's the fun in that?
-  const alfaNumeric = 'azAZ09';
+  const currentlyActiveTags: HtmlTag[] = [];
+  let tagsNeedOpening = false;
+  let pos = 0;
 
-  const charCode = char.charCodeAt(0);
-  const between = (from: number, to: number) => charCode >= alfaNumeric.charCodeAt(from) && charCode <= alfaNumeric.charCodeAt(to);
-  return between(0, 1) || between(2, 3) || between(4, 5);
-}
-
-export function markTests(source: string, tests: TestModel[]): string {
-  const toComponent = (test: TestModel): string => `<mte-test test-id="${test.id}"></mte-test>`;
-
-  // work with a copy, so we can mutate the array
-  const testsToPlace = [...tests];
-  return `<span>${walkString(source, (char, pos) => {
-    const builder: string[] = [];
-
-    // Test columns can be flaky. Let's prevent tests from appearing in the middle of words at least.
-    if (!isAlfaNumeric(char)) {
-      // Determine the test starts using `gte`. That way, if a flaky line/column results in a non-existing location, it will still appear on the next line
-      const startingTests = testsToPlace.filter((test) => test.location && gte(pos, test.location.start));
-      builder.push(...startingTests.map(toComponent));
-
-      // Remove the test from the tests to place
-      startingTests.forEach((test) => testsToPlace.splice(testsToPlace.indexOf(test), 1));
+  while (pos < source.length) {
+    if (tagsNeedOpening && !isWhitespace(source[pos])) {
+      reopenActiveTags();
+      tagsNeedOpening = false;
     }
-    builder.push(escapeHtml(char));
-    return builder.join('');
-  })}${testsToPlace.map(toComponent).join('')}</span>`;
+    switch (source[pos]) {
+      case Characters.CarriageReturn:
+        currentPosition.offset++;
+        break;
+      case Characters.NewLine:
+        endLine();
+        currentPosition.offset++;
+        currentPosition.line++;
+        currentPosition.column = 0;
+        tagsNeedOpening = true; // delay opening of the tags to prevent underlined whitespace
+        break;
+      case Characters.LT: {
+        const tag = parseTag();
+        if (tag.isClosing) {
+          closeTag(tag);
+        } else {
+          openTag(tag);
+        }
+        break;
+      }
+      case Characters.Amp:
+        visitCharacter(parseHtmlEntity());
+        break;
+      default:
+        visitCharacter(source[pos]);
+        break;
+    }
+    pos++;
+  }
+  endLine();
+  return lines;
+
+  function emit(...parts: string[]) {
+    currentLineParts.push(...parts);
+  }
+
+  function reopenActiveTags() {
+    currentlyActiveTags.forEach((tag) => emit(printTag(tag)));
+  }
+
+  function closeActiveTags() {
+    currentlyActiveTags.forEach((tag) => emit(printTag({ ...tag, isClosing: true })));
+  }
+
+  function printTag({ attributes, elementName, isClosing }: HtmlTag) {
+    if (isClosing) {
+      return `</${elementName}>`;
+    }
+    return `<${elementName}${Object.entries(attributes ?? {}).reduce(
+      (acc, [name, value]) => (value === undefined ? `${acc} ${name}` : `${acc} ${name}="${value}"`),
+      '',
+    )}>`;
+  }
+
+  function endLine() {
+    closeActiveTags();
+    lines.push(currentLineParts.join(''));
+    currentLineParts = [];
+  }
+
+  function visitCharacter(raw: string) {
+    currentPosition.column++;
+    currentPosition.offset++;
+    if (visitor) {
+      for (const tag of visitor(currentPosition)) {
+        if (tag.isClosing) {
+          closeTag(tag);
+        } else {
+          emit(printTag(tag));
+          currentlyActiveTags.push(tag);
+        }
+      }
+    }
+    emit(raw);
+  }
+
+  function parseTag(): HtmlTag {
+    pos++;
+    const isClosing = source[pos] === '/' ? true : undefined;
+    if (isClosing) {
+      pos++;
+    }
+    const elementNameStartPos = pos;
+    while (!isWhitespace(source[pos]) && source[pos] !== Characters.GT) {
+      pos++;
+    }
+    const elementName = source.substring(elementNameStartPos, pos);
+    const attributes = parseAttributes();
+    return { elementName, attributes, isClosing };
+  }
+
+  function openTag(tag: HtmlTag) {
+    currentlyActiveTags.push(tag);
+    emit(printTag(tag));
+  }
+
+  function closeTag(tag: HtmlTag) {
+    // Closing tags can come in out-of-order
+    // which means we need to close opened tags and reopen them.
+    let tagIndex;
+    for (tagIndex = currentlyActiveTags.length - 1; tagIndex >= 0; tagIndex--) {
+      const activeTag = currentlyActiveTags[tagIndex];
+
+      if (tag.elementName === activeTag.elementName && activeTag.id === tag.id) {
+        // We need to close this tag
+        emit(printTag(tag));
+
+        // Remove from currently active tags
+        currentlyActiveTags.splice(tagIndex, 1);
+
+        // And re-open previously closed tags
+        for (let i = tagIndex; i < currentlyActiveTags.length; i++) {
+          emit(printTag(currentlyActiveTags[i]));
+        }
+
+        // Done
+        break;
+      }
+
+      // Close this active tag, this isn't the tag we're looking for
+      // Will get reopened after we've closed the tag we're looking for
+      emit(printTag({ ...activeTag, isClosing: true }));
+    }
+    // If we're at the last tag, throw an error useful for debugging (this shouldn't happen)
+    if (tagIndex === -1) {
+      throw new Error(`Cannot find corresponding opening tag for ${printTag(tag)}`);
+    }
+  }
+
+  function parseAttributes() {
+    const attributes: Record<string, string> = Object.create(null);
+    while (pos < source.length) {
+      const char = source[pos];
+      if (char === Characters.GT) {
+        return attributes;
+      } else if (!isWhitespace(char)) {
+        const { name, value } = parseAttribute();
+        attributes[name] = value;
+      }
+      pos++;
+    }
+    throw new Error(`Missing closing tag near ${source.substr(pos - 10)}`);
+  }
+
+  function parseAttribute() {
+    const startPos = pos;
+    while (source[pos] !== '=') {
+      pos++;
+    }
+    const name = source.substring(startPos, pos);
+    pos++; // jump over '='
+    const value = parseAttributeValue();
+    return { name, value };
+  }
+
+  function parseAttributeValue() {
+    if (source[pos] === '"') {
+      pos++;
+    }
+    const startPos = pos;
+    while (source[pos] !== '"') {
+      pos++;
+    }
+    return source.substring(startPos, pos);
+  }
+
+  function parseHtmlEntity() {
+    const startPos = pos;
+    while (source[pos] !== Characters.Semicolon) {
+      pos++;
+    }
+    return source.substring(startPos, pos + 1);
+  }
+}
+
+export function isWhitespace(char: string) {
+  return char === Characters.NewLine || char === Characters.Space || char === Characters.Tab;
 }
 
 export const COLUMN_START_INDEX = 1;
 export const LINE_START_INDEX = 1;
-export const NEW_LINE = '\n';
-export const CARRIAGE_RETURN = '\r';
-export function lines(content: string) {
-  return content.split(NEW_LINE).map((line) => (line.endsWith(CARRIAGE_RETURN) ? line.substr(0, line.length - 1) : line));
+enum Characters {
+  CarriageReturn = '\r',
+  NewLine = '\n',
+  Space = ' ',
+  Amp = '&',
+  Semicolon = ';',
+  LT = '<',
+  GT = '>',
+  Tab = '\t',
 }
 
-/**
- * Walks a string. Executes a function on each character of the string (except for new lines and carriage returns)
- * @param source the string to walk
- * @param fn The function to execute on each character of the string
- */
-function walkString(source: string, fn: (char: string, position: Position) => string): string {
-  let column = COLUMN_START_INDEX;
-  let line = LINE_START_INDEX;
-  const builder: string[] = [];
-
-  for (const currentChar of source) {
-    if (column === COLUMN_START_INDEX && currentChar === CARRIAGE_RETURN) {
-      continue;
-    }
-    if (currentChar === NEW_LINE) {
-      line++;
-      column = COLUMN_START_INDEX;
-      builder.push(NEW_LINE);
-      continue;
-    }
-    builder.push(fn(currentChar, { line, column: column++ }));
+export function findDiffIndices(original: string, mutated: string) {
+  let focusFrom = 0,
+    focusTo = mutated.length - 1;
+  while (original[focusFrom] === mutated[focusFrom] && focusFrom < mutated.length) {
+    focusFrom++;
   }
-  return builder.join('');
-}
+  const lengthDiff = original.length - mutated.length;
+  while (original[focusTo + lengthDiff] === mutated[focusTo] && focusTo > focusFrom) {
+    focusTo--;
+  }
 
-function gte(a: Position, b: Position) {
+  if (focusTo === focusFrom) {
+    // For example '""'
+    if (!isWhitespace(mutated[focusFrom - 1])) {
+      focusFrom--;
+    }
+  }
+  // Include the next char
+  focusTo++;
+
+  // Make an exception for `true` and `false` (end in same character 🤷‍♀️)
+  const mutatedPart = mutated.substring(focusFrom, focusTo);
+  ['true', 'false'].forEach((keyword) => {
+    if (mutatedPart === keyword.substr(0, keyword.length - 1) && keyword.endsWith(mutated[focusTo])) {
+      focusTo++;
+    }
+    if (mutatedPart === keyword.substr(1, keyword.length) && keyword.startsWith(mutated[focusFrom - 1])) {
+      focusFrom--;
+    }
+  });
+  return [focusFrom, focusTo];
+}
+export function gte(a: Position, b: Position) {
   return a.line > b.line || (a.line === b.line && a.column >= b.column);
-}
-
-function eq(a: Position, b: Position) {
-  return a.line === b.line && a.column === b.column;
 }

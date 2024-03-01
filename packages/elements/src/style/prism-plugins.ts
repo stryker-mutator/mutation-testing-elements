@@ -1,5 +1,4 @@
 import 'prismjs/components/prism-core';
-import 'prismjs/plugins/line-numbers/prism-line-numbers';
 
 // Order is important here! Scala depends on java, which depends on clike
 import 'prismjs/components/prism-clike';
@@ -14,6 +13,9 @@ import 'prismjs/components/prism-gherkin';
 import 'prismjs/components/prism-markup';
 import 'prismjs/components/prism-markup-templating';
 import 'prismjs/components/prism-php';
+
+// Svelte
+import 'prism-svelte';
 
 // Don't strip pre-existing HTML to keep the popups and badges working
 import 'prismjs/plugins/keep-markup/prism-keep-markup';

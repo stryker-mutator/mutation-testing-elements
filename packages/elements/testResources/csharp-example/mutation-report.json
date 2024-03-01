@@ -5,6 +5,7 @@
     "high": 80
   },
   "projectRoot": "c:\\z\\github\\stryker-mutator\\mutation-testing-elements\\testResources\\csharp-example",
+  "testFiles": {},
   "files": {
     "ExampleProject\\DummyCalc.cs": {
       "source": "using ExampleClassLibrary;\r\n\r\nnamespace ExampleProject\r\n{\r\n    public class DummyCalc\r\n    {\r\n        public int SomeCalc(int first, int second)\r\n        {\r\n\t\t\twhile(second > 0) {\r\n\t\t\t\tfirst = first + second + 1;\r\n\t\t\t\tsecond--;\r\n\t\t\t}\r\n\t\t\twhile(1 < 0) {\r\n\t\t\t\t// endless looping\r\n\t\t\t}\r\n            return first;\r\n        }\r\n\r\n        public int Recursive(int n)\r\n        {\r\n            var recursive = new RecursiveMath();\r\n            return recursive.Fibinacci(n);\r\n        }\r\n    }\r\n}\r\n",
@@ -40,7 +41,7 @@
               "column": 20
             }
           },
-          "status": "Survived"
+          "status": "Pending"
         },
         {
           "id": 2,

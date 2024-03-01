@@ -8,9 +8,16 @@ A suite of elements designed to display a mutation testing report.
 <table>
 <tbody>
 <tr>
- <td><img alt="Directory result example" width="300" src="https://raw.githubusercontent.com/stryker-mutator/mutation-testing-elements/master/packages/elements/docs/directory-result-example.png"></td>
- <td><img alt="File result example" width="300" src="https://raw.githubusercontent.com/stryker-mutator/mutation-testing-elements/master/packages/elements/docs/file-result-example.png"></td>
- <td><img alt="File result example dark" width="300" src="https://raw.githubusercontent.com/stryker-mutator/mutation-testing-elements/master/packages/elements/docs/file-result-example-dark.png"></td>
+  <td><img width="300" alt="overview (light mode)" src="https://user-images.githubusercontent.com/10114577/217476452-888786b4-76cc-4901-bdf6-c86ced788fcf.png"></td>
+  <td><img width="300" alt="overview (dark mode)" src="https://user-images.githubusercontent.com/10114577/217476446-51029c3d-a53a-49da-a981-9a8a7bfa2c99.png"></td>
+</tr>
+<tr>
+  <td><img width="300" alt="mutant view (light mode)" src="https://user-images.githubusercontent.com/10114577/217476439-6a533270-7438-429b-b8f6-f715654a9bda.png"></td>
+  <td><img width="300" alt="mutant view (dark mode)" src="https://user-images.githubusercontent.com/10114577/217476442-f98e6498-0665-4c5f-a740-68af6ad43f86.png"></td>
+</tr>
+<tr>
+  <td><img width="300" alt="test view (light mode)" src="https://user-images.githubusercontent.com/10114577/217476461-f1cab2d0-6614-48e7-a0ea-664d3a2bfad9.png"></td>
+  <td><img width="300" alt="test view (dark mode)" src="https://user-images.githubusercontent.com/10114577/217476457-ed5c705b-f718-41e8-8891-51dd6392a356.png"></td>
 </tr>
 </tbody>
 </table>
@@ -28,7 +35,7 @@ The mutation test report supports the following features:
 🧙‍ Filter mutants based on the outcome  
 🌑 Switch between light and dark theme  
 🔗 Deep linking using anchors (uses fragment, so path will not be contaminated)  
-✨ A nice (yet basic) UI with embedded [bootstrap](https://getbootstrap.com) css  
+💅 A beautifully crafted UI made with [tailwind](https://tailwindcss.com/) CSS  
 🎓 Adheres to [custom element best practices](https://developers.google.com/web/fundamentals/web-components/best-practices)
 
 ## Install
@@ -144,7 +151,7 @@ For compatibility with older browsers and Edge, load the Web Components polyfill
 
 ## Run tests
 
-There are unit tests with karma and integration tests using selenium-webdriver. You can run them with `npm test` or by running `npm run test:unit` or `npm run test:integration` respectively. There is also a launch configuration so you can debug from vscode.
+There are unit tests with Vitest (browser mode) and integration tests using playwright. You can run them with `npx nx test` or by running `npx nx test:unit` or `npx nx test:integration` respectively. There is also a launch configuration so you can debug from vscode.
 
 The integration tests also do screenshot comparisons. Currently, they only run when you're running in a headless browser, because the screenshots differ ever so slightly with the snapshots. You can run `npm run test:integration:headless` to run locally with screenshot comparison. It will compare and show you a diff file if the diff is deemed to large. Screenshot tests can be updated for your environment with `npm run test:integration:update`.
 

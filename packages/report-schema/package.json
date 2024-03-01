@@ -1,12 +1,14 @@
 {
   "name": "mutation-testing-report-schema",
-  "version": "1.7.4",
+  "version": "3.0.2",
   "description": "The json schema for a mutation testing report.",
   "main": "dist/src/index.js",
+  "type": "module",
   "typings": "dist/src/index.d.ts",
   "exports": {
     ".": "./dist/src/index.js",
-    "./api": "./dist/src-generated/schema.js"
+    "./api": "./dist/src-generated/schema.js",
+    "./mutation-testing-report-schema.json": "./dist/src/mutation-testing-report-schema.json"
   },
   "typesVersions": {
     "*": {
@@ -15,18 +17,27 @@
       ]
     }
   },
+  "nx": {
+    "name": "report-schema"
+  },
   "scripts": {
-    "test": "mocha --forbid-only --forbid-pending -r source-map-support/register dist/test/**/*.js",
-    "postpublish": "PUBLISH_SCHEMA=true ../metrics-scala/npmProjPublish.sh dist/src",
-    "generate": "node ../../tasks/schema2ts.js src/mutation-testing-report-schema.json src-generated/schema.ts"
+    "test": "mocha --node-option \"enable-source-maps\" --forbid-only --forbid-pending dist/test/**/*.js",
+    "postpublish": "PUBLISH_SCHEMA=true ../metrics-scala/npmProjPublish.sh",
+    "generate": "node ../../tasks/schema2ts.mjs src/mutation-testing-report-schema.json src-generated/schema.ts",
+    "lint": "eslint --ext .js,.ts ."
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stryker-mutator/mutation-testing-elements.git"
+    "url": "https://github.com/stryker-mutator/mutation-testing-elements.git",
+    "directory": "packages/report-schema"
   },
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/stryker-mutator/mutation-testing-elements/issues"
   },
-  "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/elements#readme"
+  "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/elements#readme",
+  "devDependencies": {
+    "ajv": "8.12.0",
+    "eslint-config-mte": "*"
+  }
 }

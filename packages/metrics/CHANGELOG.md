@@ -3,6 +3,159 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.2](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.0.1...v3.0.2) (2023-12-23)
+
+**Note:** Version bump only for package mutation-testing-metrics
+
+
+
+
+
+# [3.0.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v2.0.5...v3.0.0) (2023-11-16)
+
+
+### Build System
+
+* overhaul build with vite & playwright ([#2825](https://github.com/stryker-mutator/mutation-testing-elements/issues/2825)) ([3176cdc](https://github.com/stryker-mutator/mutation-testing-elements/commit/3176cdc7f3faaed319aadaf112e8b2224b3b7ffc))
+
+
+### BREAKING CHANGES
+
+* mutation-testing-report-schema and mutation-testing-metrics are now ESM
+* report-schema `MutantStatus` is a union type instead of TS enum
+
+
+
+
+
+## [2.0.5](https://github.com/stryker-mutator/mutation-testing-elements/compare/v2.0.4...v2.0.5) (2023-10-31)
+
+**Note:** Version bump only for package mutation-testing-metrics
+
+
+
+
+
+## [2.0.4](https://github.com/stryker-mutator/mutation-testing-elements/compare/v2.0.3...v2.0.4) (2023-10-31)
+
+
+### Performance Improvements
+
+* **metrics:** improve performance for coverage relation ([#2778](https://github.com/stryker-mutator/mutation-testing-elements/issues/2778)) ([c40369d](https://github.com/stryker-mutator/mutation-testing-elements/commit/c40369de1a62a38c9b792b8a4090c906d8526960))
+
+
+
+
+
+## [2.0.3](https://github.com/stryker-mutator/mutation-testing-elements/compare/v2.0.2...v2.0.3) (2023-07-27)
+
+**Note:** Version bump only for package mutation-testing-metrics
+
+
+
+
+
+## [2.0.2](https://github.com/stryker-mutator/mutation-testing-elements/compare/v2.0.1...v2.0.2) (2023-07-27)
+
+**Note:** Version bump only for package mutation-testing-metrics
+
+
+
+
+
+## [2.0.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v2.0.0...v2.0.1) (2023-05-11)
+
+**Note:** Version bump only for package mutation-testing-metrics
+
+
+
+
+
+# [2.0.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.14...v2.0.0) (2023-04-29)
+
+
+### Features
+
+* **elements:** realtime reporting ([#2453](https://github.com/stryker-mutator/mutation-testing-elements/issues/2453)) ([09ea493](https://github.com/stryker-mutator/mutation-testing-elements/commit/09ea493fdf75f2ef5f6a2288a9efeb5f94539ace)), closes [/github.com/stryker-mutator/mutation-testing-elements/pull/2453#discussion_r1178769871](https://github.com//github.com/stryker-mutator/mutation-testing-elements/pull/2453/issues/discussion_r1178769871)
+* **schema:** add `Pending` status to JSON schema ([#2425](https://github.com/stryker-mutator/mutation-testing-elements/issues/2425)) ([c49d9a5](https://github.com/stryker-mutator/mutation-testing-elements/commit/c49d9a5e5e71d67972747cf07edd27fae110b86d)), closes [#2424](https://github.com/stryker-mutator/mutation-testing-elements/issues/2424)
+
+
+
+
+
+## [1.7.14](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.13...v1.7.14) (2023-02-08)
+
+**Note:** Version bump only for package mutation-testing-metrics
+
+
+
+
+
+## [1.7.13](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.12...v1.7.13) (2023-02-08)
+
+
+### Bug Fixes
+
+* Hide test files tab if there are no test files ([#2139](https://github.com/stryker-mutator/mutation-testing-elements/issues/2139)) ([14e84d3](https://github.com/stryker-mutator/mutation-testing-elements/commit/14e84d3fa205ff39dfa00c7e0b225abc60f900f4))
+
+
+
+
+
+## [1.7.11](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.10...v1.7.11) (2022-08-31)
+
+**Note:** Version bump only for package mutation-testing-metrics
+
+
+
+
+
+## [1.7.10](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.9...v1.7.10) (2022-01-28)
+
+**Note:** Version bump only for package mutation-testing-metrics
+
+
+
+
+
+## [1.7.9](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.8...v1.7.9) (2022-01-28)
+
+
+### Bug Fixes
+
+* **aggregate:** also make ids unique ([#1673](https://github.com/stryker-mutator/mutation-testing-elements/issues/1673)) ([3fcbbc6](https://github.com/stryker-mutator/mutation-testing-elements/commit/3fcbbc66df6a27282dc8234435bd2f6004302318)), closes [#1672](https://github.com/stryker-mutator/mutation-testing-elements/issues/1672)
+
+
+
+
+
+## [1.7.8](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.7...v1.7.8) (2021-12-09)
+
+**Note:** Version bump only for package mutation-testing-metrics
+
+
+
+
+
+## [1.7.7](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.6...v1.7.7) (2021-12-09)
+
+
+### Performance Improvements
+
+* **metrics:** use Map for fast testId -> TestModel lookup ([dfca0bc](https://github.com/stryker-mutator/mutation-testing-elements/commit/dfca0bcc5033daee9227a9bce1bab2a4da556313))
+
+
+
+
+
+## [1.7.6](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.5...v1.7.6) (2021-11-19)
+
+**Note:** Version bump only for package mutation-testing-metrics
+
+
+
+
+
 ## [1.7.5](https://github.com/stryker-mutator/mutation-testing-elements/compare/v1.7.4...v1.7.5) (2021-08-01)
 
 

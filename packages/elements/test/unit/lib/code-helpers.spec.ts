@@ -1,140 +1,207 @@
-import { determineLanguage, lines, markMutants, markTests, ProgrammingLanguage } from '../../../src/lib/code-helpers';
-import { MutantStatus, FileResult } from 'mutation-testing-report-schema/api';
-import { expect } from 'chai';
-import { TestModel } from 'mutation-testing-metrics';
-import { createTestDefinition } from '../../helpers/factory';
+import type { PositionWithOffset } from '../../../src/lib/code-helpers.js';
+import { determineLanguage, transformHighlightedLines, ProgrammingLanguage, findDiffIndices, highlightCode } from '../../../src/lib/code-helpers.js';
+import * as prism from 'prismjs/components/prism-core';
 
-describe(lines.name, () => {
-  it('should split on unix line endings', () => {
-    expect(lines('foo\nbar\nbaz')).deep.eq(['foo', 'bar', 'baz']);
+describe(highlightCode.name, () => {
+  it.each([
+    ['foo.cs', ProgrammingLanguage.csharp, 'using System;'],
+    ['foo.java', ProgrammingLanguage.java, 'import java.lang;'],
+    ['foo.ts', ProgrammingLanguage.typescript, 'const foo = bar;'],
+    ['foo.tsx', ProgrammingLanguage.typescript, 'const foo = bar;'],
+    ['foo.cts', ProgrammingLanguage.typescript, 'const foo = bar;'],
+    ['foo.mts', ProgrammingLanguage.typescript, 'const foo = bar;'],
+    ['foo.js', ProgrammingLanguage.javascript, 'const foo = bar;'],
+    ['foo.cjs', ProgrammingLanguage.javascript, 'const foo = bar;'],
+    ['foo.mjs', ProgrammingLanguage.javascript, 'const foo = bar;'],
+    ['foo.php', ProgrammingLanguage.php, '$foo = $bar;'],
+    ['foo.html', ProgrammingLanguage.html, '<html></html>'],
+    ['foo.vue', ProgrammingLanguage.html, '<script>Vue.component({})</script>'],
+    ['foo.feature', ProgrammingLanguage.gherkin, 'Feature: foo'],
+  ])(`should parse %s as %s`, (fileName, language, code) => {
+    const highlightSpy = vi.spyOn(prism, 'highlight');
+    const highlightedCode = highlightCode(code, fileName);
+    expect(highlightedCode).contains('<span'); // actual highlighting is not tested, in prism we trust
+    expect(highlightSpy).toHaveBeenCalledWith(code, prism.languages[language], language);
   });
 
-  it('should split on windows line endings', () => {
-    expect(lines('foo\r\nbar\r\nbaz')).deep.eq(['foo', 'bar', 'baz']);
-  });
-});
-
-describe(markMutants.name, () => {
-  it('should insert mte-mutant and color spans whitespace significant', () => {
-    const input: FileResult = {
-      language: 'javascript',
-      mutants: [
-        {
-          id: '1',
-          location: { end: { column: 17, line: 1 }, start: { column: 14, line: 1 } },
-          mutatorName: 'Foo',
-          replacement: 'foo',
-          status: MutantStatus.Killed,
-        },
-      ],
-      source: `const foo = 'bar';
-
-      function add(a, b) {
-        return a + b;
-      }`
-        .replace(/ {6}/g, '')
-        .trim(), // strip the padding left
-    };
-    const actualCode = markMutants(input);
-    expect(actualCode).eq(
-      '<span>const foo = &#039;</span><mte-mutant mutant-id="1"><span class="bg-success-light">bar</span></mte-mutant><span class="bg-">&#039;;\n\nfunction add(a, b) {\n  return a + b;\n}</span>'
-    );
-  });
-
-  it('should insert mte-mutant elements in correct locations', () => {
-    const input: FileResult = {
-      language: 'javascript',
-      mutants: [
-        {
-          id: '1',
-          location: { end: { column: 13, line: 3 }, start: { column: 10, line: 3 } },
-          mutatorName: 'MethodReplacement',
-          replacement: 'foo',
-          status: MutantStatus.Killed,
-        },
-        {
-          id: '2',
-          location: { end: { column: 999 /*Doesn't exist*/, line: 4 }, start: { column: 15, line: 4 } },
-          mutatorName: 'SemicolonRemover',
-          replacement: '',
-          status: MutantStatus.Survived,
-        },
-      ],
-      source: `const foo = 'bar';
-
-      function add(a, b) {
-        return a + b;
-      }`
-        .replace(/ {6}/g, '')
-        .trim(), // strip the padding left
-    };
-    const actualCode = markMutants(input);
-    expect(actualCode).include('<mte-mutant mutant-id="1"><span class="bg-success-light">add</span></mte-mutant>');
-    expect(actualCode).include('<mte-mutant mutant-id="2"><span class="bg-danger-light">;\n</span></mte-mutant>');
+  it('should at least sanitize an unknown language', () => {
+    const highlightSpy = vi.spyOn(prism, 'highlight');
+    const highlightedCode = highlightCode('const a = \'<script>alert("a")</script>\'; b & a', 'foo.bar');
+    expect(highlightedCode).eq('const a = \'&lt;script>alert("a")&lt;/script>\'; b &amp; a');
+    expect(highlightSpy).toHaveBeenCalled();
   });
 });
 
-describe(markTests.name, () => {
-  it('should insert <mte-test> elements whitespace significant', () => {
-    const actualCode = markTests('\nit("should work", () => {})', [
-      new TestModel(createTestDefinition({ id: 'spec-1', location: { start: { line: 2, column: 3 } } })),
+describe(transformHighlightedLines.name, () => {
+  it('should split a span on multiple lines', () => {
+    const input = '<span class="comment">/*\nfoo\n*/</span>';
+
+    const lines = transformHighlightedLines(input);
+    expect(lines).deep.eq(['<span class="comment">/*</span>', '<span class="comment">foo</span>', '<span class="comment">*/</span>']);
+  });
+
+  it('should support splitting multiple spans on multiple lines', () => {
+    const input = '<span class="comment">/*\n<span class="token">foo\n*/</span></span>';
+
+    const lines = transformHighlightedLines(input);
+    expect(lines).deep.eq([
+      '<span class="comment">/*</span>',
+      '<span class="comment"><span class="token">foo</span></span>',
+      '<span class="comment"><span class="token">*/</span></span>',
     ]);
-    expect(actualCode).eq('<span>\nit<mte-test test-id="spec-1"></mte-test>(&quot;should work&quot;, () =&gt; {})</span>');
   });
 
-  it('should insert the  <mte-test> elements in the correct locations', () => {
-    const actualCode = markTests('\nit("should work", () => {})\nit("is great", () => {})', [
-      new TestModel(createTestDefinition({ id: 'spec-1', location: { start: { line: 2, column: 3 } } })),
-      new TestModel(createTestDefinition({ id: 'spec-2', location: { start: { line: 3, column: 14 } } })),
-    ]);
-    expect(actualCode).include('it<mte-test test-id="spec-1"></mte-test>(&quot;should work&quot;');
-    expect(actualCode).include('it(&quot;is great&quot;<mte-test test-id="spec-2"></mte-test>');
+  describe('visitor position', () => {
+    let positions: PositionWithOffset[];
+    const collectPositions = (pos: PositionWithOffset) => {
+      positions.push({ ...pos });
+      return [];
+    };
+
+    function produceLinePositions(startOffset: number, line: number, toColumnIncl: number) {
+      const results: PositionWithOffset[] = [];
+      for (let i = 1; i <= toColumnIncl; i++) {
+        results.push({ column: i, line, offset: startOffset++ });
+      }
+      return results;
+    }
+
+    beforeEach(() => {
+      positions = [];
+    });
+
+    it('start with column 1, line 1, offset 0', () => {
+      transformHighlightedLines('const foo = bar', collectPositions);
+      const expectedPosition: PositionWithOffset = { column: 1, line: 1, offset: 0 };
+
+      expect(positions[0]).deep.eq(expectedPosition);
+    });
+
+    it('should skip html tags', () => {
+      transformHighlightedLines('const <span \nclass="token">foo</span> = bar', collectPositions);
+      expect(positions).deep.eq(produceLinePositions(0, 1, 15));
+    });
+
+    it('should skip html entities', () => {
+      transformHighlightedLines('foo &amp; bar', collectPositions);
+      expect(positions).deep.eq(produceLinePositions(0, 1, 9));
+    });
+
+    it('should skip carriage returns', () => {
+      transformHighlightedLines('foo\r\nbar\r\n', collectPositions);
+      expect(positions).deep.eq([...produceLinePositions(0, 1, 3), ...produceLinePositions(5, 2, 3)]);
+    });
   });
 
-  it('should place a test in the first free non-alfa-numeric character (because columns can be deceiving)', () => {
-    const source = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890()\n';
-    const tests = [new TestModel(createTestDefinition({ id: 'spec-1', location: { start: { line: 1, column: 1 } } }))];
-    const actualCode = markTests(source, tests);
-    expect(actualCode).include('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890<mte-test test-id="spec-1"></mte-test>()');
+  describe('visitor html tag insertion', () => {
+    it('should allow a simple html tag to be inserted', () => {
+      const result = transformHighlightedLines('const foo = bar', function* ({ offset }) {
+        if (offset === 6) {
+          yield { elementName: 'span', attributes: { class: 'token' } };
+        }
+        if (offset === 9) {
+          yield { elementName: 'span', isClosing: true };
+        }
+      });
+      expect(result).deep.eq(['const <span class="token">foo</span> = bar']);
+    });
+    it('should allow an inserted html tag to span multiple lines', () => {
+      const result = transformHighlightedLines('const foo\n = bar', function* ({ offset }) {
+        if (offset === 6) {
+          yield { elementName: 'span', attributes: { class: 'token' } };
+        }
+        if (offset === 16) {
+          yield { elementName: 'span', isClosing: true };
+        }
+      });
+      expect(result).deep.eq(['const <span class="token">foo</span>', ' <span class="token">= bar</span>']);
+    });
+    it('should allow inserted html tags to be closed out-of-order using the id', () => {
+      const result = transformHighlightedLines('<span class="token">const foo</span>\n = bar', function* ({ offset }) {
+        if (offset === 5) {
+          yield { elementName: 'span', id: '1', attributes: { class: 'mutant1' } };
+        }
+        if (offset === 6) {
+          yield { elementName: 'span', id: '2', attributes: { class: 'mutant2' } };
+        }
+        if (offset === 14) {
+          yield { elementName: 'span', id: '1', isClosing: true };
+        }
+        if (offset === 15) {
+          yield { elementName: 'span', id: '2', isClosing: true };
+        }
+      });
+      expect(result).deep.eq([
+        '<span class="token">const<span class="mutant1"> <span class="mutant2">foo</span></span></span><span class="mutant1"><span class="mutant2"></span></span>',
+        ' <span class="mutant1"><span class="mutant2">= b</span></span><span class="mutant2">a</span>r',
+      ]);
+    });
+
+    it('should support falsy attribute values', () => {
+      const result = transformHighlightedLines('const foo = bar;', function* ({ offset }) {
+        if (offset === 6) {
+          yield { elementName: 'span', id: 0, attributes: { 'mutant-id': 0 } };
+        }
+        if (offset === 9) {
+          yield { elementName: 'span', id: 0, isClosing: true };
+        }
+      });
+      expect(result).deep.eq(['const <span mutant-id="0">foo</span> = bar;']);
+    });
   });
 
-  it('should place tests on a non-existing column on the next line', () => {
-    // column 20 doesn't exist
-    const source = '  it("foo")\n  it("bar")';
-    const tests = [new TestModel(createTestDefinition({ id: 'spec-1', location: { start: { line: 1, column: 20 } } }))];
-    const actualCode = markTests(source, tests);
-    expect(actualCode).include('it(&quot;foo&quot;)\n<mte-test test-id="spec-1"></mte-test>  it(&quot;bar&quot;)');
+  describe('parse errors', () => {
+    it("should throw if tag doesn't close", () => {
+      expect(() => transformHighlightedLines('<span class=""')).throws('Missing closing tag near n class=""');
+    });
+    it('should throw if closing a non-started tag', () => {
+      expect(() => transformHighlightedLines('</span>')).throws('Cannot find corresponding opening tag for </span>');
+    });
+  });
+});
+
+describe(findDiffIndices.name, () => {
+  it('should provide the entire line when everything is different', () => {
+    expect(findDiffIndices('asd', 'fgh')).deep.eq([0, 3]);
   });
 
-  it('should place remaining tests at the end', () => {
-    // line 3 doesn't exist
-    const source = '  it("foo")\n  it("bar")';
-    const tests = [new TestModel(createTestDefinition({ id: 'spec-1', location: { start: { line: 3, column: 1 } } }))];
-    const actualCode = markTests(source, tests);
-    expect(actualCode).include('it(&quot;bar&quot;)<mte-test test-id="spec-1"></mte-test>');
+  it('should be able to recognize a different operator', () => {
+    expect(findDiffIndices('foo + bar', 'foo - bar')).deep.eq([4, 5]);
+  });
+
+  it('should provide the quotes on an empty string diff', () => {
+    expect(findDiffIndices('const foo = "bar"', 'const foo = ""')).deep.eq([12, 14]);
+  });
+
+  it('should provide the full keywords for `true` and `false`', () => {
+    expect(findDiffIndices('const foo = true', 'const foo = false')).deep.eq([12, 17]);
+    expect(findDiffIndices('const foo = false', 'const foo = true')).deep.eq([12, 16]);
+    expect(findDiffIndices('if(type === 1) {', 'if(true) {')).deep.eq([3, 7]);
+  });
+
+  it('should provide the braces of an empty block', () => {
+    expect(findDiffIndices('function add(a, b){\n  return a + b;\n}', 'function add(a, b){}')).deep.eq([18, 20]);
   });
 });
 
 describe(determineLanguage.name, () => {
-  (
-    [
-      ['cs', ProgrammingLanguage.csharp],
-      ['html', ProgrammingLanguage.html],
-      ['java', ProgrammingLanguage.java],
-      ['js', ProgrammingLanguage.javascript],
-      ['cjs', ProgrammingLanguage.javascript],
-      ['mjs', ProgrammingLanguage.javascript],
-      ['ts', ProgrammingLanguage.typescript],
-      ['tsx', ProgrammingLanguage.typescript],
-      ['scala', ProgrammingLanguage.scala],
-      ['php', ProgrammingLanguage.php],
-      ['vue', ProgrammingLanguage.vue],
-      ['feature', ProgrammingLanguage.gherkin],
-    ] as const
-  ).forEach(([extension, expected]) => {
-    it(`should recognize file.${extension} as language ${expected}`, () => {
-      expect(determineLanguage(`file.${extension}`)).eq(expected);
-    });
+  it.each([
+    ['cs', ProgrammingLanguage.csharp],
+    ['html', ProgrammingLanguage.html],
+    ['java', ProgrammingLanguage.java],
+    ['js', ProgrammingLanguage.javascript],
+    ['cjs', ProgrammingLanguage.javascript],
+    ['mjs', ProgrammingLanguage.javascript],
+    ['ts', ProgrammingLanguage.typescript],
+    ['tsx', ProgrammingLanguage.typescript],
+    ['cts', ProgrammingLanguage.typescript],
+    ['mts', ProgrammingLanguage.typescript],
+    ['scala', ProgrammingLanguage.scala],
+    ['php', ProgrammingLanguage.php],
+    ['vue', ProgrammingLanguage.vue],
+    ['feature', ProgrammingLanguage.gherkin],
+  ] as const)(`should recognize file.%s as language %s`, (extension, expected) => {
+    expect(determineLanguage(`file.${extension}`)).eq(expected);
   });
 
   it('should result in undefined for unrecognized languages', () => {

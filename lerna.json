@@ -1,8 +1,7 @@
 {
-  "packages": [
-    "packages/*"
-  ],
-  "version": "1.7.5",
+  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
+  "packages": ["packages/*"],
+  "version": "3.0.2",
   "command": {
     "version": {
       "allowBranch": "master",
