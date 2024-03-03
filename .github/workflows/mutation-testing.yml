@@ -35,6 +35,10 @@ jobs:
         run: npx nx run elements:stryker
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+      - uses: actions/upload-artifact@v3
+        with:
+          name: mutation-coverage
+          path: packages/elements/mutation-coverage.json
 
   metrics-scala:
     runs-on: ubuntu-latest

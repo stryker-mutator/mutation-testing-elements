@@ -51,12 +51,16 @@ export default defineConfig(() => {
       restoreMocks: true,
       globals: true,
       include: ['test/unit/**/*.spec.ts'],
+      coverage: {
+        provider: 'istanbul',
+        reportsDirectory: 'reports/coverage',
+      },
       browser: {
         name: 'chromium',
         enabled: true,
         provider: 'playwright',
         // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-        headless: !!(process.env.CI || process.env.HEADLESS),
+        headless: Boolean(process.env.CI || process.env.HEADLESS),
         slowHijackESM: true,
       },
     },

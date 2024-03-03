@@ -9,6 +9,7 @@
   ],
   "nx": {},
   "scripts": {
+    "postinstall": "playwright install chromium",
     "clean": "rimraf --glob packages/*/{dist,dist-tsc,src-generated}",
     "all": "nx affected --target=lint:prettier,lint,build,test",
     "build": "nx run-many --target=build --exclude=root",
@@ -34,10 +35,10 @@
   },
   "homepage": "https://github.com/stryker-mutator/mutation-testing-elements#readme",
   "devDependencies": {
-    "@stryker-mutator/core": "7.3.0",
-    "@stryker-mutator/mocha-runner": "7.3.0",
-    "@stryker-mutator/typescript-checker": "7.3.0",
-    "@stryker-mutator/vitest-runner": "7.3.0",
+    "@stryker-mutator/core": "8.2.6",
+    "@stryker-mutator/mocha-runner": "8.2.6",
+    "@stryker-mutator/typescript-checker": "8.2.6",
+    "@stryker-mutator/vitest-runner": "8.2.6",
     "@types/chai": "4.3.12",
     "@types/mocha": "10.0.6",
     "@types/node": "20.11.21",
