@@ -31,7 +31,7 @@
     "stryker": {
       "inputs": ["default", "^production", { "env": "GITHUB_REF" }],
       "dependsOn": ["generate", "root:build:tsc", "^build"],
-      "outputs": ["{projectRoot}/reports", "{projectRoot}/target-stryker4s-report-*/"],
+      "outputs": ["{projectRoot}/reports", "{projectRoot}/target/stryker4s-report-*/"],
       "cache": true
     },
     "lint": {
