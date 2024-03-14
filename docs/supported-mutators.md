@@ -25,6 +25,7 @@ All Stryker versions support a variety of different mutators. We've aligned on a
 | [String Literal](#string-literal)                 |                     ✅                     |                        ✅                        |                      ✅                      |
 | [Unary Operator](#unary-operator)                 |                     ✅                     |                        ✅                        |                      ❌                      |
 | [Update Operator](#update-operator)               |                     ✅                     |                        ✅                        |                     n/a                      |
+| [Math Methods](#math-methods)                     |                     ❌                     |                        ✅                        |                      ❌                      |
 
 ## Arithmetic Operator
 
@@ -204,6 +205,14 @@ Due to differences in language syntax, method expressions are implemented differ
 | `Max()`               | `Min()`             |
 | `Sum()`               | `Count()`           |
 | `Count()`             | `Sum()`             |
+| `MinBy()`             | `MaxBy()`           |
+| `MaxBy()`             | `MinBy()`           |
+| `SkipLast()`          | `TakeLast()`        |
+| `TakeLast()`          | `SkipLast()`        |
+| `Order()`             | `OrderDescending()` |
+| `OrderDescending()`   | `Order()`           |
+| `UnionBy()`           | `IntersectBy()`     |
+| `IntersectBy()`       | `UnionBy()`         |
 
 ### Stryker4s
 
@@ -320,5 +329,63 @@ Strings and literals identified to a regex are mutated in the following way:
 | `a--`    | `a++`   |
 | `++a`    | `--a`   |
 | `--a`    | `++a`   |
+
+[🔝 Back to Top](#)
+
+## Math Methods
+
+> Currently only implemented for Stryker.NET. Future implementations for other languages can be implemented differently.
+
+| Original                        | Mutated                         |
+| ------------------------------- | ------------------------------- |
+| `Math.Acos()`                   | `Math.Acosh()`                  |
+| `Math.Acos()`                   | `Math.Asin()`                   |
+| `Math.Acos()`                   | `Math.Atan()`                   |
+| `Math.Acosh()`                  | `Math.Acos()`                   |
+| `Math.Acosh()`                  | `Math.Asinh()`                  |
+| `Math.Acosh()`                  | `Math.Atanh()`                  |
+| `Math.Asin()`                   | `Math.Asinh()`                  |
+| `Math.Asin()`                   | `Math.Acos()`                   |
+| `Math.Asin()`                   | `Math.Atan()`                   |
+| `Math.Asinh()`                  | `Math.Asin()`                   |
+| `Math.Asinh()`                  | `Math.Acosh()`                  |
+| `Math.Asinh()`                  | `Math.Atanh()`                  |
+| `Math.Atan()`                   | `Math.Atanh()`                  |
+| `Math.Atan()`                   | `Math.Acos()`                   |
+| `Math.Atan()`                   | `Math.Asin()`                   |
+| `Math.Atanh()`                  | `Math.Atan()`                   |
+| `Math.Atanh()`                  | `Math.Acosh()`                  |
+| `Math.Atanh()`                  | `Math.Asinh()`                  |
+| `Math.BitDecrement()`           | `Math.BitIncrement()`           |
+| `Math.BitIncrement()`           | `Math.BitDecrement()`           |
+| `Math.Ceiling()`                | `Math.Floor()`                  |
+| `Math.Cos()`                    | `Math.Cosh()`                   |
+| `Math.Cos()`                    | `Math.Sin()`                    |
+| `Math.Cos()`                    | `Math.Tan()`                    |
+| `Math.Cosh()`                   | `Math.Cos()`                    |
+| `Math.Cosh()`                   | `Math.Sinh()`                   |
+| `Math.Cosh()`                   | `Math.Tanh()`                   |
+| `Math.Exp()`                    | `Math.Log()`                    |
+| `Math.Floor()`                  | `Math.Ceiling()`                |
+| `Math.Log()`                    | `Math.Exp()`                    |
+| `Math.Log()`                    | `Math.Pow()`                    |
+| `Math.MaxMagnitude()`           | `Math.MinMagnitude()`           |
+| `Math.MinMagnitude()`           | `Math.MaxMagnitude()`           |
+| `Math.Pow()`                    | `Math.Log()`                    |
+| `Math.ReciprocalEstimate()`     | `Math.ReciprocalSqrtEstimate()` |
+| `Math.ReciprocalSqrtEstimate()` | `Math.ReciprocalEstimate()`     |
+| `Math.ReciprocalSqrtEstimate()` | `Math.Sqrt()`                   |
+| `Math.Sin()`                    | `Math.Sinh()`                   |
+| `Math.Sin()`                    | `Math.Cos()`                    |
+| `Math.Sin()`                    | `Math.Tan()`                    |
+| `Math.Sinh()`                   | `Math.Sin()`                    |
+| `Math.Sinh()`                   | `Math.Cosh()`                   |
+| `Math.Sinh()`                   | `Math.Tanh()`                   |
+| `Math.Tan()`                    | `Math.Tanh()`                   |
+| `Math.Tan()`                    | `Math.Cos()`                    |
+| `Math.Tan()`                    | `Math.Sin()`                    |
+| `Math.Tanh()`                   | `Math.Tan()`                    |
+| `Math.Tanh()`                   | `Math.Cosh()`                   |
+| `Math.Tanh()`                   | `Math.Sinh()`                   |
 
 [🔝 Back to Top](#)
