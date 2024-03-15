@@ -300,7 +300,7 @@ Strings and literals identified to a regex are mutated in the following way:
 | FilledStringToEmpty             | `"foo"` (filled string)                | `""` (empty string)   |
 | EmptyStringToFilled             | `""` (empty string)                    | `"Stryker was here!"` |
 | FilledInterpolatedStringToEmpty | `s"foo ${bar}"` (string interpolation) | `s""` ¹               |
-| FilledInterpolatedStringToEmpty | `\`foo ${bar}\``                       | `\`\``                |
+| FilledInterpolatedStringToEmpty | `` `foo ${bar}` ``                     | ` `` `                |
 
 ¹ For Stryker4s, only works with string interpolation and not other types of interpolation (like [Scalameta quasiquotes](https://scalameta.org/docs/trees/guide.html#with-quasiquotes)) to avoid compile errors
 
