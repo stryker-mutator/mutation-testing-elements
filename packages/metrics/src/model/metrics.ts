@@ -37,6 +37,10 @@ export interface Metrics {
    */
   ignored: number;
   /**
+   * The number of mutants that were not tested because they were not included in the specified mutation level.
+   */
+  ignoredByMutationLevel: number;
+  /**
    * The total number of mutants that were detected, meaning either killed or caused a time out.
    * `killed + timed out`
    */
@@ -76,4 +80,9 @@ export interface Metrics {
    * `totalDetected / totalCovered * 100`
    */
   mutationScoreBasedOnCoveredCode: number;
+  /**
+   * An estimate for the mutation score, based upon the mutation score that was achieved with the Mutation Level.
+   * `mutationScore * (totalMutants - ignoredByMutationLevel) / totalMutants`
+   */
+  adjustedMutationScore: number;
 }

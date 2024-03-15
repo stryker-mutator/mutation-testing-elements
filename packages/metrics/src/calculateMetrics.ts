@@ -7,6 +7,7 @@ import { TestStatus } from './model/test-model.js';
 const DEFAULT_SCORE = NaN;
 const ROOT_NAME = 'All files';
 const ROOT_NAME_TESTS = 'All tests';
+const IGNORED_BY_LEVEL_STATUS = 'Ignored by level';
 
 /**
  * Calculates the files-under-test metrics inside of a mutation testing report
@@ -135,6 +136,7 @@ export function countTestFileMetrics(testFile: TestFileModel[]): TestMetrics {
 
 export function countFileMetrics(fileResult: FileUnderTestModel[]): Metrics {
   const mutants = fileResult.flatMap((_) => _.mutants);
+  const ignoredByMutationLevel = mutants.filter((_) => _.status === 'Ignored' && _.statusReason === IGNORED_BY_LEVEL_STATUS).length;
   const count = (status: MutantStatus) => mutants.filter((_) => _.status === status).length;
   const pending = count('Pending');
   const killed = count('Killed');
@@ -149,6 +151,10 @@ export function countFileMetrics(fileResult: FileUnderTestModel[]): Metrics {
   const totalCovered = totalDetected + survived;
   const totalValid = totalUndetected + totalDetected;
   const totalInvalid = runtimeErrors + compileErrors;
+  const mutationScore = totalValid > 0 ? (totalDetected / totalValid) * 100 : DEFAULT_SCORE;
+  const totalMutants = totalValid + totalInvalid + ignored + pending;
+  const mutationScoreBasedOnCoveredCode = totalValid > 0 ? (totalDetected / totalCovered) * 100 || 0 : DEFAULT_SCORE;
+  const adjustedMutationScore = (mutationScore * (totalMutants - ignoredByMutationLevel)) / totalMutants;
   return {
     pending,
     killed,
@@ -158,13 +164,15 @@ export function countFileMetrics(fileResult: FileUnderTestModel[]): Metrics {
     runtimeErrors,
     compileErrors,
     ignored,
+    ignoredByMutationLevel,
     totalDetected,
     totalUndetected,
     totalCovered,
     totalValid,
     totalInvalid,
-    mutationScore: totalValid > 0 ? (totalDetected / totalValid) * 100 : DEFAULT_SCORE,
-    totalMutants: totalValid + totalInvalid + ignored + pending,
-    mutationScoreBasedOnCoveredCode: totalValid > 0 ? (totalDetected / totalCovered) * 100 || 0 : DEFAULT_SCORE,
+    mutationScore,
+    totalMutants,
+    mutationScoreBasedOnCoveredCode,
+    adjustedMutationScore,
   };
 }
