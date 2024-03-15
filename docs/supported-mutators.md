@@ -159,28 +159,28 @@ Due to differences in language syntax, method expressions are implemented differ
 
 ### StrykerJS
 
-| Mutant operator                  | Original             | Mutated               |
-| -------------------------------- | -------------------- | --------------------- |
-| EndsWithToStartsWith             | `endsWith()`         | `startsWith()`        |
-| StartsWithToEndsWith             | `startsWith()`       | `endsWith()`          |
-| TrimToTrimEnd                    | `trim()`             | `trimEnd()`           |
-| TrimToTrimStart                  | `trimEnd()`          | `trimStart()`         |
-| TrimToTrimEnd                    | `trimStart()`        | `trimEnd()`           |
-| SubstrRemoval                    | `substr()`           | ` `                   |
-| SubstringRemoval                 | `substring()`        | ` `                   |
-| ToUpperCaseToLowerCase           | `toUpperCase()`      | ` toLowerCase()`      |
-| ToLowerCaseToUpperCase           | `toLowerCase()`      | ` toUpperCase()`      |
-| ToLocalLowerCaseToLocalUpperCase | `toLocalLowerCase()` | `toLocalUpperCase()`  |
-| ToLocalUpperCaseToLocalLowerCase | `toLocalUpperCase()` | ` toLocalLowerCase()` |
-| SortRemoval                      | `sort()`             | ` `                   |
-| SomeToEvery                      | `some()`             | `every()`             |
-| EveryToSome                      | `every()`            | `some()`              |
-| ReverseRemoval                   | `reverse()`          | ` `                   |
-| FilterRemoval                    | `filter()`           | ` `                   |
-| SliceRemoval                     | `slice()`            | ` `                   |
-| CharAtRemoval                    | `charAt()`           | ` `                   |
-| MinToMax                         | `min()`              | `max()`               |
-| MaxToMin                         | `max()`              | `min()`               |
+| Mutant operator                | Original             | Mutated              |
+| ------------------------------ | -------------------- | -------------------- |
+| EndsWithToStartsWith           | `endsWith()`         | `startsWith()`       |
+| StartsWithToEndsWith           | `startsWith()`       | `endsWith()`         |
+| TrimToTrimEnd                  | `trim()`             | `trimEnd()`          |
+| TrimToTrimStart                | `trimEnd()`          | `trimStart()`        |
+| TrimToTrimEnd                  | `trimStart()`        | `trimEnd()`          |
+| SubstrRemoval                  | `substr()`           | ` `                  |
+| SubstringRemoval               | `substring()`        | ` `                  |
+| UpperCaseToLowerCase           | `toUpperCase()`      | `toLowerCase()`      |
+| LowerCaseToUpperCase           | `toLowerCase()`      | `toUpperCase()`      |
+| LocalLowerCaseToLocalUpperCase | `toLocalLowerCase()` | `toLocalUpperCase()` |
+| LocalUpperCaseToLocalLowerCase | `toLocalUpperCase()` | `toLocalLowerCase()` |
+| SortRemoval                    | `sort()`             | ` `                  |
+| SomeToEvery                    | `some()`             | `every()`            |
+| EveryToSome                    | `every()`            | `some()`             |
+| ReverseRemoval                 | `reverse()`          | ` `                  |
+| FilterRemoval                  | `filter()`           | ` `                  |
+| SliceRemoval                   | `slice()`            | ` `                  |
+| CharAtRemoval                  | `charAt()`           | ` `                  |
+| MinToMax                       | `min()`              | `max()`              |
+| MaxToMin                       | `max()`              | `min()`              |
 
 ### Stryker.NET
 
@@ -239,6 +239,8 @@ Due to differences in language syntax, method expressions are implemented differ
 [🔝 Back to Top](#)
 
 ## Optional chaining
+
+StrykerJS _specific mutator_
 
 | Mutant operator            | Original   | Mutated   |
 | -------------------------- | ---------- | --------- |
@@ -309,7 +311,7 @@ Strings and literals identified to a regex are mutated in the following way:
 | Mutant operator | Original | Mutated |
 | --------------- | -------- | ------- |
 | PlusNegation    | `+a`     | `-a`    |
-| MinNegation     | `-a`     | `+a`    |
+| MinusNegation   | `-a`     | `+a`    |
 
 [🔝 Back to Top](#)
 
