@@ -40,17 +40,17 @@
     "@stryker-mutator/vitest-runner": "7.3.0",
     "@types/chai": "4.3.12",
     "@types/mocha": "10.0.6",
-    "@types/node": "20.11.21",
+    "@types/node": "20.11.27",
     "@types/sinon": "17.0.3",
     "chai": "4.4.1",
     "json-schema-to-typescript": "13.1.2",
     "lerna": "8.1.2",
     "mocha": "10.3.0",
-    "nx": "18.0.5",
+    "nx": "18.0.8",
     "prettier": "3.2.5",
-    "prettier-plugin-tailwindcss": "0.5.11",
+    "prettier-plugin-tailwindcss": "0.5.12",
     "rimraf": "5.0.5",
     "sinon": "17.0.1",
-    "typescript": "5.3.3"
+    "typescript": "5.4.2"
   }
 }
