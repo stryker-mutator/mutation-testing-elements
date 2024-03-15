@@ -24,28 +24,36 @@ export class TestModel implements TestDefinition {
   public name!: string;
   public location?: OpenEndLocation | undefined;
 
+  #killedMutants?: MutantModel[];
   get killedMutants() {
-    if (this.#killedMutants.size) {
-      return Array.from(this.#killedMutants.values());
-    } else return undefined;
+    if (!this.#killedMutants && this.#killedMutantMyId.size) {
+      this.#killedMutants = Array.from(this.#killedMutantMyId.values());
+    }
+    return this.#killedMutants;
   }
 
+  #coveredMutants?: MutantModel[];
   get coveredMutants() {
-    if (this.#coveredMutants.size) {
-      return Array.from(this.#coveredMutants.values());
-    } else return undefined;
+    if (!this.#coveredMutants && this.#coveredMutantById.size) {
+      this.#coveredMutants = Array.from(this.#coveredMutantById.values());
+    }
+    return this.#coveredMutants;
   }
   public declare sourceFile: TestFileModel | undefined;
 
-  #killedMutants = new Map<string, MutantModel>();
-  #coveredMutants = new Map<string, MutantModel>();
+  #killedMutantMyId = new Map<string, MutantModel>();
+  #coveredMutantById = new Map<string, MutantModel>();
 
   public addCovered(mutant: MutantModel) {
-    this.#coveredMutants.set(mutant.id, mutant);
+    this.#coveredMutantById.set(mutant.id, mutant);
+    this.#coveredMutants = undefined; // invalidate cache
+    this.#invalidateMetrics();
   }
 
   public addKilled(mutant: MutantModel) {
-    this.#killedMutants.set(mutant.id, mutant);
+    this.#killedMutantMyId.set(mutant.id, mutant);
+    this.#killedMutants = undefined; // invalidate cache
+    this.#invalidateMetrics();
   }
 
   constructor(input: TestDefinition) {
@@ -75,19 +83,23 @@ export class TestModel implements TestDefinition {
   }
 
   public get status(): TestStatus {
-    if (this.#killedMutants.size) {
+    if (this.#killedMutantMyId.size) {
       return TestStatus.Killing;
-    } else if (this.#coveredMutants.size) {
+    } else if (this.#coveredMutantById.size) {
       return TestStatus.Covering;
     } else {
       return TestStatus.NotCovering;
     }
   }
 
-  public update(): void {
-    if (!this.sourceFile?.result?.file) {
-      return;
-    }
-    this.sourceFile.result.updateAllMetrics();
+  #invalidateMetrics() {
+    this.sourceFile?.result?.invalidate();
   }
+
+  // public update(): void {
+  //   if (!this.sourceFile?.result?.file) {
+  //     return;
+  //   }
+  //   this.sourceFile.result.updateAllMetrics();
+  // }
 }

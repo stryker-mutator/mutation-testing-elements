@@ -50,7 +50,16 @@
     "eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
     "typescript.tsdk": "./node_modules/typescript/lib",
     "task.autoDetect": "off",
-    "cSpell.words": ["autoloader", "bootswatch", "clazz", "clike", "prismjs", "templating", "Theming"],
+    "cSpell.words": [
+      "autoloader",
+      "bootswatch",
+      "clazz",
+      "clike",
+      "corge",
+      "prismjs",
+      "templating",
+      "Theming"
+    ],
     "[json]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode",
     },

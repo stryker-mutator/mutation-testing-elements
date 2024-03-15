@@ -7,7 +7,7 @@ import type { MetricsResult, MutantModel, TestModel } from 'mutation-testing-met
 import { calculateMutationTestMetrics } from 'mutation-testing-metrics';
 import { tailwind, globals } from '../../style/index.js';
 import { locationChange$, View } from '../../lib/router.js';
-import type { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { fromEvent, sampleTime } from 'rxjs';
 import theme from './theme.scss?inline';
 import { createCustomEvent } from '../../lib/custom-events.js';
@@ -133,9 +133,6 @@ export class MutationTestReportAppComponent extends RealTimeElement {
     }
   }
 
-  private mutants = new Map<string, MutantModel>();
-  private tests = new Map<string, TestModel>();
-
   public updated(changedProperties: PropertyValues) {
     if (changedProperties.has('theme') && this.theme) {
       this.dispatchEvent(
@@ -163,29 +160,6 @@ export class MutationTestReportAppComponent extends RealTimeElement {
 
   private updateModel(report: MutationTestResult) {
     this.rootModel = calculateMutationTestMetrics(report);
-    collectForEach<FileUnderTestModel, Metrics>((file, metric) => {
-      file.result = metric;
-      file.mutants.forEach((mutant) => this.mutants.set(mutant.id, mutant));
-    })(this.rootModel?.systemUnderTestMetrics);
-
-    collectForEach<TestFileModel, TestMetrics>((file, metric) => {
-      file.result = metric;
-      file.tests.forEach((test) => this.tests.set(test.id, test));
-    })(this.rootModel?.testMetrics);
-
-    this.rootModel.systemUnderTestMetrics.updateParent();
-    this.rootModel.testMetrics?.updateParent();
-
-    function collectForEach<TFile, TMetrics>(collect: (file: TFile, metrics: MetricsResult<TFile, TMetrics>) => void) {
-      return function forEachMetric(metrics: MetricsResult<TFile, TMetrics> | undefined): void {
-        if (metrics?.file) {
-          collect(metrics.file, metrics);
-        }
-        metrics?.childResults.forEach((child) => {
-          forEachMetric(child);
-        });
-      };
-    }
   }
 
   private updateContext() {
@@ -225,18 +199,16 @@ export class MutationTestReportAppComponent extends RealTimeElement {
 
   public static styles = [globals, unsafeCSS(theme), tailwind];
 
-  public readonly subscriptions: Subscription[] = [];
+  private readonly subscription = new Subscription();
+  private readonly sseSubscriptions = new Set<Subscription>();
 
   public connectedCallback() {
     super.connectedCallback();
-    this.subscriptions.push(locationChange$.subscribe((path) => (this.path = path)));
+    this.subscription.add(locationChange$.subscribe((path) => (this.path = path)));
     this.initializeSse();
   }
 
   private source: EventSource | undefined;
-  private sseSubscriptions = new Set<Subscription>();
-  private theMutant?: MutantModel;
-  private theTest?: TestModel;
 
   private initializeSse() {
     if (!this.sse) {
@@ -245,73 +217,34 @@ export class MutationTestReportAppComponent extends RealTimeElement {
 
     this.source = new EventSource(this.sse);
 
-    const modifySubscription = fromEvent<MessageEvent>(this.source, 'mutant-tested').subscribe((event) => {
-      const newMutantData = JSON.parse(event.data as string) as Partial<MutantResult> & Pick<MutantResult, 'id' | 'status'>;
-      if (!this.report) {
-        return;
-      }
+    this.sseSubscriptions.add(
+      fromEvent<MessageEvent>(this.source, 'mutant-tested').subscribe((event) => {
+        const newMutantData = JSON.parse(event.data as string) as Partial<MutantResult> & Pick<MutantResult, 'id' | 'status'>;
+        if (!this.report) {
+          return;
+        }
+        this.rootModel?.updateMutant(newMutantData);
+      }),
+    );
 
-      const mutant = this.mutants.get(newMutantData.id);
-      if (mutant === undefined) {
-        return;
-      }
-      this.theMutant = mutant;
-
-      for (const [prop, val] of Object.entries(newMutantData)) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        (this.theMutant as any)[prop] = val;
-      }
-
-      if (newMutantData.killedBy) {
-        newMutantData.killedBy.forEach((killedByTestId) => {
-          const test = this.tests.get(killedByTestId)!;
-          if (test === undefined) {
-            return;
-          }
-          this.theTest = test;
-          test.addKilled(this.theMutant!);
-          this.theMutant!.addKilledBy(test);
-        });
-      }
-
-      if (newMutantData.coveredBy) {
-        newMutantData.coveredBy.forEach((coveredByTestId) => {
-          const test = this.tests.get(coveredByTestId)!;
-          if (test === undefined) {
-            return;
-          }
-          this.theTest = test;
-          test.addCovered(this.theMutant!);
-          this.theMutant!.addCoveredBy(test);
-        });
-      }
-    });
-
-    const applySubscription = fromEvent(this.source, 'mutant-tested')
-      .pipe(sampleTime(UPDATE_CYCLE_TIME))
-      .subscribe(() => {
-        this.applyChanges();
-      });
-
-    this.sseSubscriptions.add(modifySubscription);
-    this.sseSubscriptions.add(applySubscription);
+    this.sseSubscriptions.add(
+      fromEvent(this.source, 'mutant-tested')
+        .pipe(sampleTime(UPDATE_CYCLE_TIME))
+        .subscribe(() => {
+          mutantChanges.next();
+        }),
+    );
 
     this.source.addEventListener('finished', () => {
       this.source?.close();
-      this.applyChanges();
       this.sseSubscriptions.forEach((s) => s.unsubscribe());
     });
   }
 
-  private applyChanges() {
-    this.theMutant?.update();
-    this.theTest?.update();
-    mutantChanges.next();
-  }
-
   public disconnectedCallback() {
     super.disconnectedCallback();
-    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+    this.subscription.unsubscribe();
+    this.sseSubscriptions.forEach((s) => s.unsubscribe());
   }
 
   private renderTitle() {
