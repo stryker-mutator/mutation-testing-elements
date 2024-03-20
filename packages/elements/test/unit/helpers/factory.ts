@@ -1,6 +1,7 @@
 import type { Metrics, TestMetrics } from 'mutation-testing-metrics';
 import { MetricsResult, TestFileModel } from 'mutation-testing-metrics';
 import type { FileResult, Location, MutantResult, MutationTestResult, TestDefinition, TestFile } from 'mutation-testing-report-schema/api';
+import { accumulateFileUnderTestMetrics, accumulateTestMetrics, countFileUnderTestMetrics, countTestFileMetrics } from '../../../../metrics/src/calculateMetrics.js';
 
 export function createMutantResult(overrides?: Partial<MutantResult>): MutantResult {
   const defaults: MutantResult = {
@@ -46,7 +47,7 @@ export function createFileResult(overrides?: Partial<FileResult>): FileResult {
 }
 
 export function createMetricsResult(overrides?: Partial<MetricsResult>): MetricsResult {
-  const result = new MetricsResult('foo', [], createMetrics());
+  const result = new MetricsResult('foo', [], accumulateFileUnderTestMetrics, countFileUnderTestMetrics);
   if (overrides?.file) {
     result.file = overrides.file;
   }
@@ -56,25 +57,18 @@ export function createMetricsResult(overrides?: Partial<MetricsResult>): Metrics
   if (overrides?.name) {
     result.name = overrides.name;
   }
-  if (overrides?.metrics) {
-    result.metrics = overrides.metrics;
-  }
 
   return result;
 }
 
 export function createTestMetricsResult(overrides?: Partial<MetricsResult<TestFileModel, TestMetrics>>): MetricsResult<TestFileModel, TestMetrics> {
-  const result = new MetricsResult('foo', [], createTestMetrics(), new TestFileModel(createTestFile(), ''));
+  const result = new MetricsResult('foo', [], accumulateTestMetrics, countTestFileMetrics, overrides?.file ?? new TestFileModel(createTestFile(), ''));
   if (overrides?.childResults) {
     result.childResults = overrides.childResults;
   }
   if (overrides?.name) {
     result.name = overrides.name;
   }
-  if (overrides?.metrics) {
-    result.metrics = overrides.metrics;
-  }
-
   return result;
 }
 

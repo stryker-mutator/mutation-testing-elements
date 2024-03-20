@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import type { FileResultDictionary } from 'mutation-testing-report-schema';
 import { calculateMetrics, calculateMutationTestMetrics } from '../../src/calculateMetrics.js';
-import type { FileUnderTestModel, Metrics, MetricsResult, TestMetrics } from '../../src/model/index.js';
+import type { MutationTestMetricsResult, TestMetrics } from '../../src/model/index.js';
 import { TestFileModel } from '../../src/model/index.js';
 import { createFileResult, createMutantResult, createMutationTestResult, createTestDefinition, createTestFile } from '../helpers/factories.js';
 
@@ -304,7 +304,13 @@ describe(calculateMutationTestMetrics.name, () => {
     const output = calculateMutationTestMetrics(input);
 
     // Assert
-    function collectFileNames(metricsResult: MetricsResult<FileUnderTestModel | TestFileModel, Metrics | TestMetrics>): string[] {
+
+    interface NamedResult {
+      file?: { name: string };
+      childResults: NamedResult[];
+    }
+
+    function collectFileNames(metricsResult: NamedResult): string[] {
       if (metricsResult.file) {
         return [metricsResult.file.name];
       } else {

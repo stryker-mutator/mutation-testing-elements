@@ -13,12 +13,9 @@ function assertSourceFileDefined(sourceFile: FileUnderTestModel | undefined): as
  */
 export class MutantModel implements MutantResult {
   // MutantResult properties
-
-  public coveredBy: string[] | undefined;
   public description: string | undefined;
   public duration: number | undefined;
   public id: string;
-  public killedBy: string[] | undefined;
   public location: Location;
   public mutatorName: string;
   public replacement: string | undefined;
@@ -27,35 +24,49 @@ export class MutantModel implements MutantResult {
   public statusReason: string | undefined;
   public testsCompleted: number | undefined;
 
-  // New fields
+  #coveredByTests?: TestModel[];
   get coveredByTests(): TestModel[] | undefined {
-    if (this.#coveredByTests.size) {
-      return Array.from(this.#coveredByTests.values());
-    } else return undefined;
-  }
-  set coveredByTests(tests: TestModel[]) {
-    this.#coveredByTests = new Map(tests.map((test) => [test.id, test]));
+    if (!this.#coveredByTests && this.#coveredByTestsById.size) {
+      this.#coveredByTests = Array.from(this.#coveredByTestsById.values());
+    }
+    return this.#coveredByTests;
   }
 
+  #killedByTests?: TestModel[];
   get killedByTests(): TestModel[] | undefined {
-    if (this.#killedByTests.size) {
-      return Array.from(this.#killedByTests.values());
-    } else return undefined;
+    if (!this.#killedByTests && this.#killedByTestsById.size) {
+      this.#killedByTests = Array.from(this.#killedByTestsById.values());
+    }
+    return this.#killedByTests;
   }
-  set killedByTests(tests: TestModel[]) {
-    this.#killedByTests = new Map(tests.map((test) => [test.id, test]));
+
+  #coveredBy?: string[];
+  public get coveredBy() {
+    if (!this.#coveredBy && this.#coveredByTestsById) {
+      this.#coveredBy = Array.from(this.#coveredByTestsById.keys());
+    }
+    return this.#coveredBy;
   }
+
+  #killedBy?: string[];
+  public get killedBy() {
+    if (!this.#killedBy && this.#killedByTestsById) {
+      this.#killedBy = Array.from(this.#killedByTestsById.keys());
+    }
+    return this.#killedBy;
+  }
+
   public declare sourceFile: FileUnderTestModel | undefined;
 
-  #coveredByTests = new Map<string, TestModel>();
-  #killedByTests = new Map<string, TestModel>();
+  #coveredByTestsById = new Map<string, TestModel>();
+  #killedByTestsById = new Map<string, TestModel>();
 
   constructor(input: MutantResult) {
-    this.coveredBy = input.coveredBy;
     this.description = input.description;
     this.duration = input.duration;
     this.id = input.id;
-    this.killedBy = input.killedBy;
+    this.#coveredBy = input.coveredBy;
+    this.#killedBy = input.killedBy;
     this.location = input.location;
     this.mutatorName = input.mutatorName;
     this.replacement = input.replacement;
@@ -66,11 +77,17 @@ export class MutantModel implements MutantResult {
   }
 
   public addCoveredBy(test: TestModel) {
-    this.#coveredByTests.set(test.id, test);
+    this.#coveredByTestsById.set(test.id, test);
+    // invalidate cache
+    this.#coveredBy = undefined; 
+    this.#coveredByTests = undefined;
   }
 
   public addKilledBy(test: TestModel) {
-    this.#killedByTests.set(test.id, test);
+    this.#killedByTestsById.set(test.id, test);
+    // invalidate cache
+    this.#killedBy = undefined;
+    this.#killedByTests = undefined;
   }
 
   /**
@@ -96,13 +113,5 @@ export class MutantModel implements MutantResult {
   public get fileName() {
     assertSourceFileDefined(this.sourceFile);
     return this.sourceFile.name;
-  }
-
-  // TODO: https://github.com/stryker-mutator/mutation-testing-elements/pull/2453#discussion_r1178769871
-  public update(): void {
-    if (!this.sourceFile?.result?.file) {
-      return;
-    }
-    this.sourceFile.result.updateAllMetrics();
   }
 }

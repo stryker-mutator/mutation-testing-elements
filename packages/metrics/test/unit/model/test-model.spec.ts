@@ -5,7 +5,7 @@ import { TestStatus } from '../../../src/model/test-model.js';
 import { createLocation, createMutantResult, createTestDefinition, createTestFileModel } from '../../helpers/factories.js';
 
 describe(TestModel.name, () => {
-  it('should copy over all values from mutant result', () => {
+  it('should copy over all values from test result', () => {
     const test: Required<TestDefinition> = {
       id: 'test1',
       location: createLocation(),

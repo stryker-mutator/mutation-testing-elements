@@ -58,7 +58,7 @@ export function createFileResult(overrides?: Partial<FileResult>): FileResult {
 export function createTestDefinition(overrides?: Partial<TestDefinition>): TestDefinition {
   return {
     id: '52',
-    name: 'foo should be bar',
+    name: overrides?.id ?? 'foo should be bar',
     ...overrides,
   };
 }

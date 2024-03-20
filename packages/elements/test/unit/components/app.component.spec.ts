@@ -371,49 +371,6 @@ describe(MutationTestReportAppComponent.name, () => {
       expect(file.mutants[0].status).to.be.equal('Killed');
     });
 
-    it('should update every mutant field when given in an SSE event', async () => {
-      // Arrange
-      const report = createReport();
-      const mutant = createMutantResult();
-      mutant.status = 'Pending';
-      report.files['foobar.js'].mutants = [mutant];
-      sut.element.report = report;
-      sut.element.sse = 'http://localhost:8080/sse';
-      sut.connect();
-      await sut.whenStable();
-
-      // Act
-      const newMutantData = JSON.stringify({
-        id: '1',
-        status: 'Killed',
-        description: 'test description',
-        coveredBy: ['test 1'],
-        duration: 100,
-        killedBy: ['test 1'],
-        replacement: 'test-r',
-        static: true,
-        statusReason: 'test reason',
-        testsCompleted: 12,
-        location: { start: { line: 12, column: 1 }, end: { line: 13, column: 2 } },
-        mutatorName: 'test mutator',
-      });
-      const message = new MessageEvent('mutant-tested', { data: newMutantData });
-      eventSource.dispatchEvent(message);
-
-      // Assert
-      const theMutant = sut.element.rootModel!.systemUnderTestMetrics.childResults[0].file!.mutants[0];
-      expect(theMutant.description).to.be.equal('test description');
-      expect(theMutant.coveredBy).to.have.same.members(['test 1']);
-      expect(theMutant.duration).to.be.equal(100);
-      expect(theMutant.killedBy).to.have.same.members(['test 1']);
-      expect(theMutant.replacement).to.be.equal('test-r');
-      expect(theMutant.static).to.be.true;
-      expect(theMutant.statusReason).to.be.equal('test reason');
-      expect(theMutant.testsCompleted).to.be.equal(12);
-      expect(theMutant.location).to.deep.equal({ start: { line: 12, column: 1 }, end: { line: 13, column: 2 } });
-      expect(theMutant.mutatorName).to.be.equal('test mutator');
-    });
-
     it('should close the SSE process when the final event comes in', async () => {
       // Arrange
       const message = new MessageEvent('finished', { data: '' });
