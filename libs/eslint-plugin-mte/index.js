@@ -14,12 +14,15 @@ module.exports = {
 
     // Not useful for a lot of stuff, but mainly `.shadowRoot`
     '@typescript-eslint/no-non-null-assertion': 'off',
+    'import/no-extraneous-dependencies': ['error', { devDependencies: ['test/**/*'], packageDir: [".", "../../"] }],
   },
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/stylistic-type-checked',
     'plugin:@typescript-eslint/recommended-type-checked',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
     'prettier',
   ],
   reportUnusedDisableDirectives: true,
@@ -39,4 +42,15 @@ module.exports = {
     'testResources',
     'target',
   ],
+  settings: {
+    'import/extensions': ['.js', '.ts'],
+    'import/resolver': {
+      typescript: true,
+      node: {
+        extensions: [
+          '.js', '.ts'
+        ]
+      }
+    }
+  },
 };
