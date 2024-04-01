@@ -14,7 +14,7 @@ module.exports = {
 
     // Not useful for a lot of stuff, but mainly `.shadowRoot`
     '@typescript-eslint/no-non-null-assertion': 'off',
-    'import/no-extraneous-dependencies': ['error', { devDependencies: ['test/**/*'], packageDir: [".", "../../"] }],
+    'import/no-extraneous-dependencies': ['error', { devDependencies: ['test/**/*'], packageDir: ['.', '../../'] }],
   },
   extends: [
     'eslint:recommended',
@@ -47,10 +47,8 @@ module.exports = {
     'import/resolver': {
       typescript: true,
       node: {
-        extensions: [
-          '.js', '.ts'
-        ]
-      }
-    }
+        extensions: ['.js', '.ts'],
+      },
+    },
   },
 };
