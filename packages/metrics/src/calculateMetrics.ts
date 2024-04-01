@@ -1,6 +1,5 @@
 import { compareNames, normalize, groupBy } from './helpers/index.js';
-import type { FileResult, MutationTestResult } from 'mutation-testing-report-schema';
-import type { MutantStatus } from 'mutation-testing-report-schema';
+import type { FileResult, MutationTestResult, MutantStatus } from 'mutation-testing-report-schema';
 import type { Metrics, MutantModel, MutationTestMetricsResult, TestMetrics, TestModel } from './model/index.js';
 import { FileUnderTestModel, MetricsResult, TestFileModel } from './model/index.js';
 import { TestStatus } from './model/test-model.js';
