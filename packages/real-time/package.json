@@ -17,6 +17,7 @@
     "middleware"
   ],
   "scripts": {
+    "test": "mocha --node-option enable-source-maps --forbid-only --forbid-pending dist/test/**/*.js",
     "lint": "eslint --ext .js,.ts .",
     "stryker": "stryker run"
   },

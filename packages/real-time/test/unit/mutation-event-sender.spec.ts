@@ -70,4 +70,15 @@ describe(MutationEventSender.name, () => {
     expect(responseMock.on.secondCall.args[0]).eq('error');
     sinon.assert.calledOnce(onCompleteStub);
   });
+
+  it('should call flush on each event, when available', () => {
+    const sut = new MutationEventSender(responseMock, onCompleteStub);
+    responseMock.flush = sinon.stub();
+
+    sut.sendMutantTested({ id: '1', status: 'Pending' });
+    sinon.assert.calledOnce(responseMock.flush);
+
+    sut.sendFinished();
+    sinon.assert.calledTwice(responseMock.flush);
+  });
 });

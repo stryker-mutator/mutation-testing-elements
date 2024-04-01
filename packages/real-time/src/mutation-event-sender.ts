@@ -35,5 +35,7 @@ export class MutationEventSender extends EventEmitter {
   #send<T>(event: string, payload: T): void {
     this.#response.write(`event: ${event}\n`);
     this.#response.write(`data: ${JSON.stringify(payload)}\n\n`);
+    // Flush the response buffer to ensure the client receives the event immediately
+    this.#response.flush?.();
   }
 }
