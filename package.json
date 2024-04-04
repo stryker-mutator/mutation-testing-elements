@@ -51,6 +51,6 @@
     "prettier-plugin-tailwindcss": "0.5.13",
     "rimraf": "5.0.5",
     "sinon": "17.0.1",
-    "typescript": "5.4.3"
+    "typescript": "5.4.4"
   }
 }
