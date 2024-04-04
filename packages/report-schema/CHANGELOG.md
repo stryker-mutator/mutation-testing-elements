@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.3](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.0.2...v3.0.3) (2024-04-04)
+
+
+### Features
+
+* **real-time:** add real-time package ([#3023](https://github.com/stryker-mutator/mutation-testing-elements/issues/3023)) ([c887bf9](https://github.com/stryker-mutator/mutation-testing-elements/commit/c887bf9c9345a2a9231dcd36fec63878c4ab7ac8))
+
+
+
+
+
 ## [3.0.2](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.0.1...v3.0.2) (2023-12-23)
 
 **Note:** Version bump only for package mutation-testing-report-schema

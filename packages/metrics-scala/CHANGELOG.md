@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.3](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.0.2...v3.0.3) (2024-04-04)
+
+
+### Reverts
+
+* Revert "build(deps-dev): update scala-library from 2.12.18 to 2.13.12 (#3029)" (#3030) ([202bfae](https://github.com/stryker-mutator/mutation-testing-elements/commit/202bfae8a1a5c923174196b7bb2222d94fc7564d)), closes [#3029](https://github.com/stryker-mutator/mutation-testing-elements/issues/3029) [#3030](https://github.com/stryker-mutator/mutation-testing-elements/issues/3030)
+
+
+
+
+
 ## [3.0.2](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.0.1...v3.0.2) (2023-12-23)
 
 **Note:** Version bump only for package mutation-testing-metrics-scala
