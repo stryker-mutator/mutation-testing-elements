@@ -28,6 +28,6 @@
     "typescript-eslint": "^7.6.0"
   },
   "devDependencies": {
-    "@types/eslint": "^8.56.7"
+    "@types/eslint": "8.56.7"
   }
 }
