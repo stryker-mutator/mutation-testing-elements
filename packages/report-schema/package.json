@@ -24,7 +24,7 @@
     "test": "mocha --node-option \"enable-source-maps\" --forbid-only --forbid-pending dist/test/**/*.js",
     "postpublish": "PUBLISH_SCHEMA=true ../metrics-scala/npmProjPublish.sh",
     "generate": "node ../../tasks/schema2ts.mjs src/mutation-testing-report-schema.json src-generated/schema.ts",
-    "lint": "eslint --ext .js,.ts ."
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
