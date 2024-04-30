@@ -37,7 +37,7 @@
   },
   "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/elements#readme",
   "devDependencies": {
-    "ajv": "8.12.0",
+    "ajv": "8.13.0",
     "eslint-config-mte": "*"
   }
 }
