@@ -1,6 +1,6 @@
 val Scala212 = "2.12.19"
 val Scala213 = "2.13.13"
-val Scala3   = "3.4.1"
+val Scala3   = "3.3.3"
 
 val CrossScalaVersions = Seq(Scala213, Scala212, Scala3)
 
@@ -58,6 +58,7 @@ lazy val docs = project
   )
   .dependsOn(circe.jvm(Scala3))
   .enablePlugins(MdocPlugin)
+  .disablePlugins(TpolecatPlugin)
 
 lazy val elements = project
   .in(file("elements"))
