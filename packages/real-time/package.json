@@ -18,7 +18,7 @@
   ],
   "scripts": {
     "test": "mocha --node-option enable-source-maps --forbid-only --forbid-pending dist/test/**/*.js",
-    "lint": "eslint --ext .js,.ts .",
+    "lint": "eslint .",
     "stryker": "stryker run"
   },
   "repository": {

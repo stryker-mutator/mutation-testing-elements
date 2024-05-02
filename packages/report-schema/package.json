@@ -24,7 +24,7 @@
     "test": "mocha --node-option \"enable-source-maps\" --forbid-only --forbid-pending dist/test/**/*.js",
     "postpublish": "PUBLISH_SCHEMA=true ../metrics-scala/npmProjPublish.sh",
     "generate": "node ../../tasks/schema2ts.mjs src/mutation-testing-report-schema.json src-generated/schema.ts",
-    "lint": "eslint --ext .js,.ts ."
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -37,7 +37,7 @@
   },
   "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/elements#readme",
   "devDependencies": {
-    "ajv": "8.12.0",
+    "ajv": "8.13.0",
     "eslint-config-mte": "*"
   }
 }

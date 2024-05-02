@@ -1,5 +1,5 @@
 val Scala212 = "2.12.19"
-val Scala213 = "2.13.13"
+val Scala213 = "2.13.14"
 val Scala3   = "3.3.3"
 
 val CrossScalaVersions = Seq(Scala213, Scala212, Scala3)
@@ -31,8 +31,8 @@ lazy val circe = projectMatrix
     sharedSettings,
     name := "mutation-testing-metrics-circe",
     libraryDependencies ++= Seq(
-      "io.circe" %%% "circe-core"   % "0.14.6",
-      "io.circe" %%% "circe-parser" % "0.14.6"
+      "io.circe" %%% "circe-core"   % "0.14.7",
+      "io.circe" %%% "circe-parser" % "0.14.7"
     )
   )
   .jvmPlatform(
