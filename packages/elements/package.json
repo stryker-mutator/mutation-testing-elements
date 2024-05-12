@@ -58,7 +58,7 @@
     "browserslist-to-esbuild": "2.1.1",
     "cross-env": "7.0.3",
     "cssnano": "7.0.1",
-    "esbuild": "0.21.1",
+    "esbuild": "0.21.2",
     "eslint-config-mte": "*",
     "express": "4.19.2",
     "lit": "3.1.3",
