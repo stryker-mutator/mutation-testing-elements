@@ -45,6 +45,8 @@ export function determineLanguage(fileName: string): ProgrammingLanguage | undef
     case 'cts': // New file extensions
     case 'mts': // https://devblogs.microsoft.com/typescript/announcing-typescript-4-5-beta/#new-file-extensions
       return ProgrammingLanguage.typescript;
+    case 'sc':
+    case 'sbt':
     case 'scala':
       return ProgrammingLanguage.scala;
     case 'php':
