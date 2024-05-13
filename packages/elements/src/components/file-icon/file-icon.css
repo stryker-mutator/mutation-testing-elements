@@ -37,6 +37,10 @@ svg.gherkin {
   fill: var(--mut-file-gherkin-color);
 }
 
+svg.rust {
+  fill: var(--mut-file-rust-color);
+}
+
 svg {
   width: 20px;
   vertical-align: middle;
