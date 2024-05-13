@@ -19,7 +19,7 @@ export default [
       },
     },
     linterOptions: {
-      reportUnusedDisableDirectives: true,
+      reportUnusedDisableDirectives: 'error',
     },
     rules: {
       '@typescript-eslint/no-use-before-define': 'off',
