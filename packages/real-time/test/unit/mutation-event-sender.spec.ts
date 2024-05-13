@@ -76,9 +76,11 @@ describe(MutationEventSender.name, () => {
     responseMock.flush = sinon.stub();
 
     sut.sendMutantTested({ id: '1', status: 'Pending' });
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     sinon.assert.calledOnce(responseMock.flush);
 
     sut.sendFinished();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     sinon.assert.calledTwice(responseMock.flush);
   });
 });

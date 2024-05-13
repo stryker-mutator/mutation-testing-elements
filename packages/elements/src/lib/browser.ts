@@ -7,6 +7,7 @@ export function isLocalStorageAvailable() {
     localStorage.setItem(test, test);
     localStorage.removeItem(test);
     return true;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     return false;
   }
