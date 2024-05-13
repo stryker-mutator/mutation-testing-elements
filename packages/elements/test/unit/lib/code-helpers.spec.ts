@@ -17,6 +17,8 @@ describe(highlightCode.name, () => {
     ['foo.html', ProgrammingLanguage.html, '<html></html>'],
     ['foo.vue', ProgrammingLanguage.html, '<script>Vue.component({})</script>'],
     ['foo.feature', ProgrammingLanguage.gherkin, 'Feature: foo'],
+    ['foo.scala', ProgrammingLanguage.scala, 'object Foo { def main(args: Array[String]) = println("Hello, world!") }'],
+    ['foo.rs', ProgrammingLanguage.rust, 'fn main() { println!("Hello, world!"); }']
   ])(`should parse %s as %s`, (fileName, language, code) => {
     const highlightSpy = vi.spyOn(prism, 'highlight');
     const highlightedCode = highlightCode(code, fileName);
