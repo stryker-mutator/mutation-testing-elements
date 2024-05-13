@@ -8,6 +8,7 @@ import 'prismjs/components/prism-csharp';
 import 'prismjs/components/prism-java';
 import 'prismjs/components/prism-scala';
 import 'prismjs/components/prism-gherkin';
+import 'prismjs/components/prism-rust';
 
 // Markup and markup-templating are needed for php
 import 'prismjs/components/prism-markup';

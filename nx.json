@@ -8,6 +8,7 @@
   },
   "targetDefaults": {
     "build:tsc": {
+      "inputs": ["default", "{projectRoot}/**/*.ts", "{workspaceRoot}/**/*.ts"],
       "dependsOn": ["report-schema:generate"],
       "outputs": ["{projectRoot}/packages/*/dist", "{projectRoot}/packages/*/dist-tsc"],
       "cache": true

@@ -108,6 +108,7 @@
   --mut-file-csharp-color: #498ba7;
   --mut-file-vue-color: #7fae42;
   --mut-file-gherkin-color: #00a818;
+  --mut-file-rust-color: #627379;
 }
 :host([theme='dark']) {
   --mut-file-ts-color: #519aba;
@@ -121,6 +122,7 @@
   --mut-file-csharp-color: #519aba;
   --mut-file-vue-color: #8dc149;
   --mut-file-gherkin-color: #10b828;
+  --mut-file-rust-color: #6d8086;
 }
 
 // Mutation testing elements custom theming ================================

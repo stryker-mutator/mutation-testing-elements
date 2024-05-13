@@ -48,6 +48,7 @@ describe(MutationTestReportFileIconComponent.name, () => {
     [ProgrammingLanguage.php, 'php'],
     [ProgrammingLanguage.vue, 'vue'],
     [ProgrammingLanguage.svelte, 'svelte'],
+    [ProgrammingLanguage.rust, 'rs'],
   ])(`should choose show a %s svg file for foo.%s`, async (expected, extension) => {
     // Arrange
     sut.element.setAttribute('file', '');
