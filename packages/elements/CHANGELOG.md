@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.0.4...v3.1.0) (2024-05-13)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint to v9 ([#3120](https://github.com/stryker-mutator/mutation-testing-elements/issues/3120)) ([0840404](https://github.com/stryker-mutator/mutation-testing-elements/commit/084040476f8e241457c704f24521d080b4d08017))
+* **elements:** use correct color for Svelte icon ([#3184](https://github.com/stryker-mutator/mutation-testing-elements/issues/3184)) ([caa01b4](https://github.com/stryker-mutator/mutation-testing-elements/commit/caa01b42ef2d8aeaf2ef89f716fa6e1d2a9065f5))
+
+
+### Features
+
+* **elements:** add highlighting for .sc and .sbt files ([#3183](https://github.com/stryker-mutator/mutation-testing-elements/issues/3183)) ([f131f47](https://github.com/stryker-mutator/mutation-testing-elements/commit/f131f474cd26d7acbbba21b4d3ef99198b63773d))
+* **elements:** add Rust syntax highlighting & icon ([#3181](https://github.com/stryker-mutator/mutation-testing-elements/issues/3181)) ([795b1d3](https://github.com/stryker-mutator/mutation-testing-elements/commit/795b1d34384e366cc9420f56c0afda676a46ba10))
+
+
+
+
+
 ## [3.0.4](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.0.3...v3.0.4) (2024-04-04)
 
 **Note:** Version bump only for package mutation-testing-elements

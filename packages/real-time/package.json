@@ -1,6 +1,6 @@
 {
   "name": "mutation-testing-real-time",
-  "version": "3.0.4",
+  "version": "3.1.0",
   "description": "Helpers to create a NodeJS server for real-time reporting for a mutation testing elements report",
   "module": "dist/src/index.js",
   "exports": {
