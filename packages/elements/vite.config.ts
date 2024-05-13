@@ -55,7 +55,6 @@ export default defineConfig(() => {
         name: 'chromium',
         enabled: true,
         provider: 'playwright',
-        // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
         headless: !!(process.env.CI || process.env.HEADLESS),
         slowHijackESM: true,
       },
