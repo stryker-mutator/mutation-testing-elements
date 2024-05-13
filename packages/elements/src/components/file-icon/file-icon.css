@@ -37,6 +37,10 @@ svg.gherkin {
   fill: var(--mut-file-gherkin-color);
 }
 
+svg.svelte {
+  fill: var(--mut-file-svelte-color);
+}
+
 svg.rust {
   fill: var(--mut-file-rust-color);
 }
