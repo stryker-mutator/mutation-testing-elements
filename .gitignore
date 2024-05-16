@@ -25,3 +25,10 @@ test-results/
 playwright-report/
 blob-report/
 playwright/.cache/
+/packages/metrics-dotnet/Mutation.Metrics.CLI/bin
+/packages/metrics-dotnet/Mutation.Metrics.CLI/obj
+/packages/metrics-dotnet/Mutation.Metrics.Tests/bin
+/packages/metrics-dotnet/Mutation.Metrics.Tests/obj
+/packages/metrics-dotnet/MutationMetrics/.vs
+/packages/metrics-dotnet/MutationMetrics/bin
+/packages/metrics-dotnet/MutationMetrics/obj
