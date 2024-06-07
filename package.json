@@ -48,7 +48,7 @@
     "mocha": "10.4.0",
     "nx": "19.2.1",
     "prettier": "3.3.1",
-    "prettier-plugin-tailwindcss": "0.6.1",
+    "prettier-plugin-tailwindcss": "0.6.2",
     "rimraf": "5.0.7",
     "sinon": "18.0.0",
     "typescript": "5.4.5"
