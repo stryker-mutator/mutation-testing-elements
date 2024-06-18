@@ -87,8 +87,8 @@ class SchemaTest extends munit.FunSuite {
   val invalidJsons = Map(
     "thresholds/threshold-too-high-report" -> "thresholds.high should be <= 100",
     "thresholds/threshold-too-low-report"  -> "thresholds.low should be > 0",
-    "missing-mutant-location-report"       -> "end",
-    "missing-test-name"                    -> "name",
+    "missing-mutant-location-report"       -> "Missing required field",
+    "missing-test-name"                    -> "Missing required field",
     "missing-framework-name"               -> "name",
     "missing-tests"                        -> "tests",
     "missing-system-ci"                    -> "ci",
