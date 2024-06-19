@@ -57,7 +57,7 @@
     "autoprefixer": "10.4.19",
     "browserslist-to-esbuild": "2.1.1",
     "cross-env": "7.0.3",
-    "cssnano": "7.0.2",
+    "cssnano": "7.0.3",
     "esbuild": "0.21.5",
     "eslint-config-mte": "*",
     "express": "4.19.2",
