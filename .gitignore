@@ -16,7 +16,7 @@ pom.xml.versionsBackup
 packages/*/mvn/resources/
 .scala-build/
 
-.nx/cache
+.nx/
 # pack files
 mutation-*.tgz
 
