@@ -39,7 +39,7 @@
     "@stryker-mutator/typescript-checker": "7.3.0",
     "@stryker-mutator/vitest-runner": "7.3.0",
     "@types/chai": "4.3.16",
-    "@types/mocha": "10.0.6",
+    "@types/mocha": "10.0.7",
     "@types/node": "20.14.8",
     "@types/sinon": "17.0.3",
     "chai": "4.4.1",
