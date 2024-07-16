@@ -49,6 +49,7 @@ export default defineConfig(() => {
       ...(process.env.CI ? { retry: 2 } : {}),
       setupFiles: ['./test/unit/setup.ts'],
       restoreMocks: true,
+      unstubGlobals: true,
       globals: true,
       include: ['test/unit/**/*.spec.ts'],
       browser: {
@@ -56,7 +57,6 @@ export default defineConfig(() => {
         enabled: true,
         provider: 'playwright',
         headless: !!(process.env.CI || process.env.HEADLESS),
-        slowHijackESM: true,
       },
     },
   } satisfies UserConfig;

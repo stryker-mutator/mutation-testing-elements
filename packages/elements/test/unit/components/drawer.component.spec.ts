@@ -51,7 +51,7 @@ describe(MutationTestReportDrawer.name, () => {
       sut.element.mode = 'half';
       await sut.whenStable();
       readMoreToggle().click();
-      expect(sut.element.mode).eq('open');
+      expect(sut.element).toHaveProperty('mode', 'open');
     });
 
     it('should change the label of the read-more toggle when fully expanded', async () => {

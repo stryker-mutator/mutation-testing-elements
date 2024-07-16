@@ -56,6 +56,7 @@ export default [
       'reports',
       'testResources',
       'target',
+      'playwright-report',
     ],
   },
 ];

@@ -2,8 +2,8 @@ import { isLocalStorageAvailable } from '../../../src/lib/browser.js';
 import type { MockInstance } from 'vitest';
 
 describe(isLocalStorageAvailable.name, () => {
-  let setItemStub: MockInstance<Parameters<Storage['setItem']>, ReturnType<Storage['setItem']>>;
-  let removeItemStub: MockInstance<Parameters<Storage['removeItem']>, ReturnType<Storage['removeItem']>>;
+  let setItemStub: MockInstance<typeof localStorage.setItem>;
+  let removeItemStub: MockInstance<typeof localStorage.removeItem>;
 
   beforeEach(() => {
     setItemStub = vi.spyOn(Storage.prototype, 'setItem');

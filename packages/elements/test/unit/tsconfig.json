@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.elements.settings.json",
   "compilerOptions": {
-    "types": ["vite/client", "vitest/globals", "vitest/importMeta", "vitest"],
+    "types": ["vite/client", "vitest/globals", "vitest/importMeta", "vitest", "@vitest/browser/providers/playwright"],
     "emitDeclarationOnly": true,
     "outDir": "../../dist-tsc/test/unit"
   },

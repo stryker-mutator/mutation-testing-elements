@@ -1,6 +1,5 @@
 import type { PositionWithOffset } from '../../../src/lib/code-helpers.js';
 import { determineLanguage, transformHighlightedLines, ProgrammingLanguage, findDiffIndices, highlightCode } from '../../../src/lib/code-helpers.js';
-import * as prism from 'prismjs/components/prism-core';
 
 describe(highlightCode.name, () => {
   it.each([
@@ -20,17 +19,13 @@ describe(highlightCode.name, () => {
     ['foo.scala', ProgrammingLanguage.scala, 'object Foo { def main(args: Array[String]) = println("Hello, world!") }'],
     ['foo.rs', ProgrammingLanguage.rust, 'fn main() { println!("Hello, world!"); }'],
   ])(`should parse %s as %s`, (fileName, language, code) => {
-    const highlightSpy = vi.spyOn(prism, 'highlight');
     const highlightedCode = highlightCode(code, fileName);
     expect(highlightedCode).contains('<span'); // actual highlighting is not tested, in prism we trust
-    expect(highlightSpy).toHaveBeenCalledWith(code, prism.languages[language], language);
   });
 
   it('should at least sanitize an unknown language', () => {
-    const highlightSpy = vi.spyOn(prism, 'highlight');
     const highlightedCode = highlightCode('const a = \'<script>alert("a")</script>\'; b & a', 'foo.bar');
     expect(highlightedCode).eq('const a = \'&lt;script>alert("a")&lt;/script>\'; b &amp; a');
-    expect(highlightSpy).toHaveBeenCalled();
   });
 });
 
