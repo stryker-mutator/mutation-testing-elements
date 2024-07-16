@@ -38,8 +38,7 @@ export class RealTimeReporter extends EventEmitter {
 
   emit(eventName: 'client-connected', client: MutationEventSender): boolean;
   emit(eventName: 'client-disconnected', client: MutationEventSender): boolean;
-  override emit(eventName: string | symbol, ...args: any[]): boolean {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  override emit(eventName: string | symbol, ...args: unknown[]): boolean {
     return super.emit(eventName, ...args);
   }
 
