@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ServerResponse } from 'http';
 import { EventEmitter } from 'events';
 import type { MutantResult } from 'mutation-testing-report-schema';
@@ -37,8 +38,7 @@ export class RealTimeReporter extends EventEmitter {
 
   emit(eventName: 'client-connected', client: MutationEventSender): boolean;
   emit(eventName: 'client-disconnected', client: MutationEventSender): boolean;
-  override emit(eventName: string | symbol, ...args: any[]): boolean {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  override emit(eventName: string | symbol, ...args: unknown[]): boolean {
     return super.emit(eventName, ...args);
   }
 

@@ -228,7 +228,9 @@ export class MutationTestReportAppComponent extends RealTimeElement {
   public themeSwitch = (event: CustomEvent<string>) => {
     this.theme = event.detail;
 
-    isLocalStorageAvailable() && localStorage.setItem('mutation-testing-elements-theme', this.theme);
+    if (isLocalStorageAvailable()) {
+      localStorage.setItem('mutation-testing-elements-theme', this.theme);
+    }
   };
 
   public static styles = [globals, unsafeCSS(theme), tailwind];
@@ -266,7 +268,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
       this.theMutant = mutant;
 
       for (const [prop, val] of Object.entries(newMutantData)) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
         (this.theMutant as any)[prop] = val;
       }
 
