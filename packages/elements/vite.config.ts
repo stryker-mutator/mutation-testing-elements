@@ -5,62 +5,73 @@ import { type UserConfig, defineConfig } from 'vitest/config';
 import { type Plugin } from 'vite';
 import { type MutationEventSender, RealTimeReporter } from 'mutation-testing-real-time';
 
-export default defineConfig(() => {
-  return {
-    optimizeDeps: {
-      include: ['mutation-testing-report-schema', 'mutation-testing-metrics'],
+const esbuildOptions = {
+  tsconfigRaw: {
+    compilerOptions: {
+      experimentalDecorators: true,
     },
-    resolve: {
-      alias: {
-        '/mutation-test-elements.js': '/src/index.ts',
+  },
+};
+
+export default defineConfig(
+  () =>
+    ({
+      optimizeDeps: {
+        esbuildOptions,
+        include: ['mutation-testing-report-schema', 'mutation-testing-metrics'],
       },
-    },
-    plugins: [realTimeResponderPlugin()],
-    server: {
-      open: process.env.CI ? undefined : '/testResources/',
-    },
-    build: {
-      target: browserslistToEsbuild(),
-      lib: {
-        entry: 'src/index.ts',
-        name: 'MutationTestElements',
-        fileName(format, entryName) {
-          switch (format) {
-            case 'iife':
-              return `mutation-test-elements.js`;
-            case 'cjs':
-              return `${entryName}.cjs`;
-            case 'es':
-              return `${entryName}.js`;
-            default:
-              throw new Error(`Unexpected format: ${format}`);
-          }
+      resolve: {
+        alias: {
+          '/mutation-test-elements.js': '/src/index.ts',
         },
-        formats: ['iife', 'cjs', 'es'],
       },
-    },
-    test: {
-      onConsoleLog(log) {
-        // ignore the dev mode warning in test logs
-        if (log.includes('Lit is in dev mode.')) return false;
-        if (log.includes('Multiple versions of Lit loaded.')) return;
-        return;
+      plugins: [realTimeResponderPlugin()],
+      server: {
+        open: process.env.CI ? undefined : '/testResources/',
       },
-      ...(process.env.CI ? { retry: 2 } : {}),
-      setupFiles: ['./test/unit/setup.ts'],
-      restoreMocks: true,
-      unstubGlobals: true,
-      globals: true,
-      include: ['test/unit/**/*.spec.ts'],
-      browser: {
-        name: 'chromium',
-        enabled: true,
-        provider: 'playwright',
-        headless: !!(process.env.CI || process.env.HEADLESS),
+      esbuild: esbuildOptions,
+      build: {
+        target: browserslistToEsbuild(),
+        lib: {
+          entry: 'src/index.ts',
+          name: 'MutationTestElements',
+          fileName(format, entryName) {
+            switch (format) {
+              case 'iife':
+                return `mutation-test-elements.js`;
+              case 'cjs':
+                return `${entryName}.cjs`;
+              case 'es':
+                return `${entryName}.js`;
+              default:
+                throw new Error(`Unexpected format: ${format}`);
+            }
+          },
+          formats: ['iife', 'cjs', 'es'],
+        },
       },
-    },
-  } satisfies UserConfig;
-});
+      test: {
+        onConsoleLog(log) {
+          // ignore the dev mode warning in test logs
+          if (log.includes('Lit is in dev mode.')) return false;
+          if (log.includes('Multiple versions of Lit loaded.')) return;
+          return;
+        },
+        ...(process.env.CI ? { retry: 2 } : {}),
+        setupFiles: ['./test/unit/setup.ts'],
+        restoreMocks: true,
+        unstubGlobals: true,
+        globals: true,
+        include: ['test/unit/**/*.spec.ts'],
+        browser: {
+          name: 'chromium',
+          enabled: true,
+          provider: 'playwright',
+          headless: !!(process.env.CI || process.env.HEADLESS),
+        },
+      },
+    }) satisfies UserConfig,
+);
 
 function realTimeResponderPlugin(): Plugin {
   const TOTAL_MUTANT_COUNT = 15;
