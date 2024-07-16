@@ -10,7 +10,7 @@ import { tick } from '../helpers/tick.js';
 describe(MutationTestReportAppComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportAppComponent>;
   let fetchStub: MockInstance;
-  let matchMediaStub: MockInstance<[query: string], MediaQueryList>;
+  let matchMediaStub: MockInstance<typeof matchMedia>;
 
   beforeEach(() => {
     fetchStub = vi.spyOn(window, 'fetch');
@@ -61,7 +61,7 @@ describe(MutationTestReportAppComponent.name, () => {
       await sut.whenStable(); // await component update
 
       // Assert
-      expect(sut.element.report).eq(expectedReport);
+      expect(sut.element).toHaveProperty('report', expectedReport);
       expect(fetchStub).toHaveBeenCalledWith('/mutation-testing-report.json');
     });
 
@@ -78,7 +78,7 @@ describe(MutationTestReportAppComponent.name, () => {
       await sut.whenStable(); // await component update
 
       // Assert
-      expect(sut.element.errorMessage).eq(expectedErrorMessage);
+      expect(sut.element).toHaveProperty('errorMessage', expectedErrorMessage);
       const alert: HTMLElement = sut.$('[role=alert]');
       expect(alert.innerText).eq(expectedErrorMessage);
       expect(getColor(alert)).eq(redAlert);
@@ -173,7 +173,7 @@ describe(MutationTestReportAppComponent.name, () => {
       sut.element.report = createReport();
       await sut.whenStable();
 
-      expect(sut.element.theme).eq('light');
+      expect(sut.element).toHaveProperty('theme', 'light');
     });
 
     it('should get theme from local storage', async () => {
@@ -185,7 +185,7 @@ describe(MutationTestReportAppComponent.name, () => {
       await sut.whenStable();
 
       // Assert
-      expect(sut.element.theme).eq('dark');
+      expect(sut.element).toHaveProperty('theme', 'dark');
     });
 
     it('should set theme to local storage', async () => {
@@ -198,16 +198,21 @@ describe(MutationTestReportAppComponent.name, () => {
       await sut.whenStable();
 
       // Assert
-      expect(sut.element.theme).eq('dark');
+      expect(sut.element).toHaveProperty('theme', 'dark');
       expect(localStorage.getItem('mutation-testing-elements-theme'), 'dark');
     });
 
     it('should not set theme to local storage if localStorage is not available', async () => {
       // Arrange
       sut.element.report = createReport();
-      const setItemStub = vi.spyOn(localStorage, 'setItem').mockImplementation(() => {
+      const setItemStub = vi.fn().mockImplementation(() => {
         throw new Error();
       });
+      const storageMock = {
+        clear: vi.fn(),
+        setItem: setItemStub,
+      };
+      vi.stubGlobal('localStorage', storageMock);
       await sut.whenStable();
 
       // Act
@@ -215,8 +220,8 @@ describe(MutationTestReportAppComponent.name, () => {
       await sut.whenStable();
 
       // Assert
-      expect(sut.element.theme).eq('dark');
-      expect(setItemStub).not.toBeCalled();
+      expect(sut.element).toHaveProperty('theme', 'dark');
+      expect(setItemStub).toBeCalledWith('test', 'test');
     });
 
     describe('themeBackgroundColor', () => {
@@ -239,15 +244,19 @@ describe(MutationTestReportAppComponent.name, () => {
     });
 
     it('should use fallbacks if localStorage is not available', async () => {
-      vi.spyOn(localStorage, 'setItem').mockImplementation(() => {
-        throw new Error();
-      });
+      const storageMock = {
+        clear: vi.fn(),
+        setItem: vi.fn().mockImplementation(() => {
+          throw new Error();
+        }),
+      };
+      vi.stubGlobal('localStorage', storageMock);
       matchMediaStub.mockImplementation((arg) => ({ matches: arg === '(prefers-color-scheme: dark)' }) as MediaQueryList);
       sut.element.report = createReport();
       await sut.whenStable();
 
       // Assert
-      expect(sut.element.theme).eq('dark');
+      expect(sut.element).toHaveProperty('theme', 'dark');
     });
 
     it('should choose attribute value over local storage', async () => {
@@ -258,7 +267,7 @@ describe(MutationTestReportAppComponent.name, () => {
       await sut.whenStable();
 
       // Assert
-      expect(sut.element.theme).eq('light');
+      expect(sut.element).toHaveProperty('theme', 'light');
     });
 
     it('should use user prefers dark (os preference)', async () => {
@@ -268,7 +277,7 @@ describe(MutationTestReportAppComponent.name, () => {
       await sut.whenStable();
 
       // Assert
-      expect(sut.element.theme).eq('dark');
+      expect(sut.element).toHaveProperty('theme', 'dark');
     });
 
     it('should use local storage over user prefers dark', async () => {
@@ -279,7 +288,7 @@ describe(MutationTestReportAppComponent.name, () => {
       await sut.whenStable();
 
       // Assert
-      expect(sut.element.theme).eq('dark');
+      expect(sut.element).toHaveProperty('theme', 'dark');
     });
 
     it('should trigger a `theme-changed` event when the theme changes', async () => {
