@@ -22,14 +22,19 @@ export default [
       reportUnusedDisableDirectives: 'error',
     },
     rules: {
-      '@typescript-eslint/no-use-before-define': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-unsafe-assignment': 'off',
       '@typescript-eslint/consistent-type-imports': 'error',
       // Not useful for a lot of stuff, but mainly `.shadowRoot`
       '@typescript-eslint/no-non-null-assertion': 'off',
+    },
+  },
+  {
+    // Test-specific rules
+    files: ['test/**/*.ts'],
+    rules: {
+      '@typescript-eslint/no-unused-expressions': 'off',
     },
   },
   {

@@ -1,5 +1,6 @@
-import colors from 'tailwindcss/colors.js';
+import tailwindForms from '@tailwindcss/forms';
 import type { Config } from 'tailwindcss';
+import colors from 'tailwindcss/colors.js';
 
 /**
  * hexcodes need to be converted to single r g b values
@@ -38,7 +39,7 @@ const generateRange = (color: string, defaultColors: Record<keyof (typeof colors
 
 const config: Config = {
   content: ['./src/**/*.ts'],
-  plugins: [require('@tailwindcss/forms')],
+  plugins: [tailwindForms],
   theme: {
     container: {
       center: true,

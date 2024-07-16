@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ServerResponse } from 'http';
 import { EventEmitter } from 'events';
 import type { MutantResult } from 'mutation-testing-report-schema';
