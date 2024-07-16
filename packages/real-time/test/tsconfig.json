@@ -1,7 +1,7 @@
 {
   "extends": "../../../tsconfig.settings.json",
   "compilerOptions": {
-    "types": ["mocha", "node"],
+    "types": ["mocha", "node", "../src/types.d.ts"],
     "outDir": "../dist/test"
   },
   "references": [{ "path": "../src" }]
