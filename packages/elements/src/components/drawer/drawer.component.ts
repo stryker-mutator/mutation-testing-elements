@@ -1,5 +1,7 @@
+import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 import { html, LitElement, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { styleMap } from 'lit/directives/style-map.js';
 import { renderIf } from '../../lib/html-helpers.js';
 import { tailwind } from '../../style/index.js';
 import { renderEmoji } from '../drawer-mutant/util.js';
@@ -30,10 +32,18 @@ export class MutationTestReportDrawer extends LitElement {
     }
   }
 
+  #drawerResizeObserver: ResizeController<Pick<DOMRectReadOnly, 'width' | 'height'>>;
+
   constructor() {
     super();
     this.mode = 'closed';
     this.hasDetail = false;
+    this.#drawerResizeObserver = new ResizeController(this, {
+      callback: (entries) => {
+        const contentRect = entries[0]?.contentRect;
+        return { width: contentRect?.width ?? 0, height: contentRect?.height ?? 0 };
+      },
+    });
   }
 
   public toggleReadMore = (event: MouseEvent) => {
@@ -47,23 +57,22 @@ export class MutationTestReportDrawer extends LitElement {
   };
 
   render() {
-    return html`<aside @click="${(event: Event) => event.stopPropagation()}">
-      <div class="mx-6">
-        <header class="w-full py-4">
-          <h2>
-            <slot name="header"></slot>
-            ${renderIf(
-              this.hasDetail,
-              html`<button data-testId="btnReadMoreToggle" class="ml-2 align-middle" @click="${this.toggleReadMore}"
-                >${this.toggleMoreLabel}</button
-              >`,
-            )}
-          </h2>
-        </header>
-        <div class="scrollable container fixed motion-safe:transition-max-width">
-          <slot name="summary"></slot>
-          ${renderIf(this.hasDetail && this.mode === 'open', html`<slot name="detail"></slot>`)}
-        </div>
+    const height = this.#drawerResizeObserver.value?.height;
+    const classes = styleMap({ [`height`]: height ? `${height}px` : undefined });
+
+    return html`<aside @click="${(event: Event) => event.stopPropagation()}" style="${classes}" class="ml-6 mr-3 mt-4 overflow-y-auto">
+      <header class="w-full pb-4">
+        <h2>
+          <slot name="header"></slot>
+          ${renderIf(
+            this.hasDetail,
+            html`<button data-testId="btnReadMoreToggle" class="ml-2 align-middle" @click="${this.toggleReadMore}">${this.toggleMoreLabel}</button>`,
+          )}
+        </h2>
+      </header>
+      <div class="motion-safe:transition-max-width">
+        <slot name="summary"></slot>
+        ${renderIf(this.hasDetail && this.mode === 'open', html`<slot name="detail"></slot>`)}
       </div>
     </aside>`;
   }

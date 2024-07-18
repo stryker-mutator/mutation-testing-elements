@@ -8,8 +8,4 @@
 }
 :host([mode='open']) {
   @apply h-1/2;
-
-  .scrollable {
-    @apply h-full overflow-y-auto overflow-x-hidden;
-  }
 }
