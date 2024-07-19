@@ -64,6 +64,12 @@ describe(MutationTestReportMutantViewComponent.name, () => {
           category: 'number',
         },
         {
+          key: 'mutationScoreBasedOnCoveredCode',
+          label: 'Test Strength',
+          tooltip: 'Mutation score based on only the code covered by tests',
+          category: 'percentage',
+        },
+        {
           key: 'runtimeErrors',
           label: 'Runtime errors',
           tooltip:

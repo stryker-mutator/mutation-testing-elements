@@ -29,6 +29,8 @@ test.describe('Directory report page', () => {
         expect(row.timeout()).toHaveText('0'),
         expect(row.noCoverage()).toHaveText('20'),
         expect(row.ignored()).toHaveText('0'),
+        row.testStrengthProgressBar().expectPercentage('66.67'),
+        expect(row.mutationScoreBasedOnCoveredCode()).toHaveText('66.67'),
         expect(row.runtimeErrors()).toHaveText('0'),
         expect(row.compileErrors()).toHaveText('3'),
         expect(row.totalDetected()).toHaveText('2'),

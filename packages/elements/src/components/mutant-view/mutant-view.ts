@@ -100,6 +100,12 @@ const COLUMNS: Column<Metrics>[] = [
     category: 'number',
   },
   {
+    key: 'mutationScoreBasedOnCoveredCode',
+    label: 'Test Strength',
+    tooltip: 'Mutation score based on only the code covered by tests',
+    category: 'percentage',
+  },
+  {
     key: 'runtimeErrors',
     label: 'Runtime errors',
     tooltip: 'Running tests when these mutants are active resulted in an error (rather than a failed test). For example: an out of memory error.',
