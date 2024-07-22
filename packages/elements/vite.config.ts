@@ -67,7 +67,7 @@ export default defineConfig(
           name: 'chromium',
           enabled: true,
           provider: 'playwright',
-          headless: !!(process.env.CI || process.env.HEADLESS),
+          headless: Boolean(process.env.CI || process.env.HEADLESS),
         },
       },
     }) satisfies UserConfig,

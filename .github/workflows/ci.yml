@@ -66,6 +66,8 @@ jobs:
           node-version: 20.x
           cache: 'npm'
       - run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install chromium --with-deps
       - run: npm run download-incremental-reports
       - name: Run Stryker incrementally
         run: |

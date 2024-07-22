@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for package in elements metrics 
+for package in elements metrics real-time
 do
     if [ "$BRANCH_NAME" ]
     then
