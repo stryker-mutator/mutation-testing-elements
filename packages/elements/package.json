@@ -34,7 +34,7 @@
     "test:integration:update": "playwright test --update-snapshots",
     "test:integration:headless": "cross-env HEADLESS=true playwright test",
     "postpublish": "PUBLISH_ELEMENTS=true ../metrics-scala/npmProjPublish.sh",
-    "stryker": "cross-env STRYKER=true echo 'FIXME: Stryker is not yet supported for this project'",
+    "stryker": "cross-env HEADLESS=true STRYKER=true stryker run",
     "lint": "eslint ."
   },
   "repository": {

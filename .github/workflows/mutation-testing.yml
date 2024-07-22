@@ -31,6 +31,8 @@ jobs:
           node-version: 20.x
           cache: 'npm'
       - run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install chromium --with-deps
       - name: Run Stryker
         run: npx nx run elements:stryker
         env:
