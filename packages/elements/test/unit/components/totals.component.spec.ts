@@ -10,7 +10,20 @@ describe(MutationTestReportTestMetricsTable.name, () => {
   beforeEach(async () => {
     sut = new CustomElementFixture('mte-metrics-table');
     sut.element.columns = [
-      { key: 'mutationScore', label: 'Mutation score', category: 'percentage' },
+      {
+        key: 'mutationScore',
+        label: 'Total',
+        tooltip: 'The percentage of mutants that were detected. The higher, the better!',
+        category: 'percentage',
+        group: 'Mutation score'
+      },
+      {
+        key: 'mutationScoreBasedOnCoveredCode',
+        label: 'Of covered',
+        tooltip: 'Mutation score based on only the code covered by tests',
+        category: 'percentage',
+        group: 'Mutation score'
+      },
       { key: 'killed', label: '# Killed', category: 'number' },
       { key: 'survived', label: '# Survived', category: 'number' },
       { key: 'timeout', label: '# Timeout', category: 'number' },
@@ -40,8 +53,8 @@ describe(MutationTestReportTestMetricsTable.name, () => {
     await sut.whenStable();
     const table = sut.$('table');
     expect(table).ok;
-    expect(table.querySelectorAll('thead th')).lengthOf(12);
-    expect(table.querySelectorAll('tbody th, tbody td')).lengthOf(13);
+    expect(table.querySelectorAll('thead th')).lengthOf(14);
+    expect(table.querySelectorAll('tbody th, tbody td')).lengthOf(15);
   });
 
   it('should show a table with a 3 rows for a directory result with 2 directories and one file', async () => {
