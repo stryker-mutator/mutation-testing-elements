@@ -101,7 +101,7 @@ const COLUMNS: Column<Metrics>[] = [
   },
   {
     key: 'mutationScoreBasedOnCoveredCode',
-    label: 'Test Strength',
+    label: 'Covered mutants kill %',
     tooltip: 'Mutation score based on only the code covered by tests',
     category: 'percentage',
   },
