@@ -65,7 +65,7 @@ export class MutationTestReportMutantViewComponent extends RealTimeElement {
 const COLUMNS: Column<Metrics>[] = [
   {
     key: 'mutationScore',
-    label: 'Total',
+    label: 'Of total',
     tooltip: 'The percentage of mutants that were detected. The higher, the better!',
     category: 'percentage',
     group: 'Mutation score'
