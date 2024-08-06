@@ -23,6 +23,7 @@ export interface Column<TMetric> {
   width?: TableWidth;
   category: ColumnCategory;
   isBold?: true;
+  group?: string;
 }
 
 @customElement('mte-metrics-table')
@@ -67,9 +68,11 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
   }
 
   private renderTableHeadRow() {
+    const nonMutationScoreColumns = this.columns.filter((column) => column.group !== 'Mutation score');
+    const mutationScoreColumns = this.columns.filter((column) => column.group === 'Mutation score');
     return html`<thead class="border-b border-gray-200 text-center text-sm">
       <tr>
-        <th scope="col" class="px-4 py-4">
+        <th rowspan="2" scope="col" class="px-4 py-4">
           <div class="flex items-center justify-around">
             <span>File / Directory</span
             ><a
@@ -81,8 +84,16 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
             >
           </div>
         </th>
+        ${mutationScoreColumns.length>0 ? html`<th colspan="4" class="px-2 even:bg-gray-100">Mutation Score</th>`:``}
         ${repeat(
-          this.columns,
+          nonMutationScoreColumns,
+          (column) => column.key,
+          (column) => this.renderTableHead(column),
+        )}
+      </tr>
+      <tr>
+       ${repeat(
+          mutationScoreColumns,
           (column) => column.key,
           (column) => this.renderTableHead(column),
         )}
@@ -95,10 +106,10 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
     const header = column.tooltip
       ? html`<mte-tooltip title="${column.tooltip}" id="${id}">${column.label}</mte-tooltip>`
       : html`<span id="${id}">${column.label}</span>`;
-    if (column.category === 'percentage') {
-      return html` <th colspan="2" class="px-2 even:bg-gray-100"> ${header} </th>`;
+    if (column.group) {
+      return html` <th colspan="2" class="px-2 bg-gray-200"> ${header} </th>`;
     }
-    return html`<th class="w-24 px-2 even:bg-gray-100 2xl:w-28">
+    return html`<th rowspan="2" class="w-24 px-2 even:bg-gray-100 2xl:w-28">
       <div class="inline-block">${header}</div>
     </th>`;
   }
