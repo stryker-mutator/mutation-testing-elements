@@ -68,14 +68,14 @@ const COLUMNS: Column<Metrics>[] = [
     label: 'Of total',
     tooltip: 'The percentage of mutants that were detected. The higher, the better!',
     category: 'percentage',
-    group: 'Mutation score'
+    group: 'Mutation score',
   },
   {
     key: 'mutationScoreBasedOnCoveredCode',
     label: 'Of covered',
     tooltip: 'Mutation score based on only the code covered by tests',
     category: 'percentage',
-    group: 'Mutation score'
+    group: 'Mutation score',
   },
   {
     key: 'killed',
@@ -106,7 +106,7 @@ const COLUMNS: Column<Metrics>[] = [
     label: 'Ignored',
     tooltip: "These mutants weren't tested because they are ignored. Either by user action, or for another reason.",
     category: 'number',
-  },  
+  },
   {
     key: 'runtimeErrors',
     label: 'Runtime errors',

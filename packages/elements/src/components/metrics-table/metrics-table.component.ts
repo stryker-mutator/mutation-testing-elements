@@ -84,7 +84,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
             >
           </div>
         </th>
-        ${mutationScoreColumns.length>0 ? html`<th colspan="4" class="px-2 even:bg-gray-100">Mutation Score</th>`:``}
+        ${mutationScoreColumns.length > 0 ? html`<th colspan="4" class="px-2 even:bg-gray-100">Mutation Score</th>` : ``}
         ${repeat(
           nonMutationScoreColumns,
           (column) => column.key,
@@ -92,7 +92,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
         )}
       </tr>
       <tr>
-       ${repeat(
+        ${repeat(
           mutationScoreColumns,
           (column) => column.key,
           (column) => this.renderTableHead(column),
@@ -107,7 +107,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
       ? html`<mte-tooltip title="${column.tooltip}" id="${id}">${column.label}</mte-tooltip>`
       : html`<span id="${id}">${column.label}</span>`;
     if (column.group) {
-      return html` <th colspan="2" class="px-2 bg-gray-200"> ${header} </th>`;
+      return html` <th colspan="2" class="bg-gray-200 px-2"> ${header} </th>`;
     }
     return html`<th rowspan="2" class="w-24 px-2 even:bg-gray-100 2xl:w-28">
       <div class="inline-block">${header}</div>

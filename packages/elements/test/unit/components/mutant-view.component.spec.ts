@@ -32,14 +32,14 @@ describe(MutationTestReportMutantViewComponent.name, () => {
           label: 'Of total',
           tooltip: 'The percentage of mutants that were detected. The higher, the better!',
           category: 'percentage',
-          group: 'Mutation score'
+          group: 'Mutation score',
         },
         {
           key: 'mutationScoreBasedOnCoveredCode',
           label: 'Of covered',
           tooltip: 'Mutation score based on only the code covered by tests',
           category: 'percentage',
-          group: 'Mutation score'
+          group: 'Mutation score',
         },
         {
           key: 'killed',
