@@ -13,7 +13,7 @@ export class ResultTableRow extends PageObject {
   public survived = () => this.$('td:nth-child(7)');
   public timeout = () => this.$('td:nth-child(8)');
   public noCoverage = () => this.$('td:nth-child(9)');
-  public ignored = () => this.$('td:nth-child(10)');  
+  public ignored = () => this.$('td:nth-child(10)');
   public runtimeErrors = () => this.$('td:nth-child(11)');
   public compileErrors = () => this.$('td:nth-child(12)');
   public totalDetected = () => this.$('td:nth-child(13)');

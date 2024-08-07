@@ -15,14 +15,14 @@ describe(MutationTestReportTestMetricsTable.name, () => {
         label: 'Total',
         tooltip: 'The percentage of mutants that were detected. The higher, the better!',
         category: 'percentage',
-        group: 'Mutation score'
+        group: 'Mutation score',
       },
       {
         key: 'mutationScoreBasedOnCoveredCode',
         label: 'Of covered',
         tooltip: 'Mutation score based on only the code covered by tests',
         category: 'percentage',
-        group: 'Mutation score'
+        group: 'Mutation score',
       },
       { key: 'killed', label: '# Killed', category: 'number' },
       { key: 'survived', label: '# Survived', category: 'number' },
