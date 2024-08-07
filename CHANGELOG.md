@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.2.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.1.1...v3.2.0) (2024-08-07)
+
+
+### Bug Fixes
+
+* **deps:** update dependency typescript-eslint to v8.0.0 ([5af7ab6](https://github.com/stryker-mutator/mutation-testing-elements/commit/5af7ab6e187ea09f206d77bd88b264453269821a))
+* **deps:** update dependency typescript-eslint to v8.0.0-alpha.45 ([01ddd21](https://github.com/stryker-mutator/mutation-testing-elements/commit/01ddd21e5f0c534eaaa306e6d9e0dd0c647d954e))
+* **deps:** update dependency typescript-eslint to v8.0.0-alpha.46 ([afdd494](https://github.com/stryker-mutator/mutation-testing-elements/commit/afdd4946930f52f34bf0e17d88c8917c093edd11))
+* **deps:** update dependency typescript-eslint to v8.0.0-alpha.47 ([89f553c](https://github.com/stryker-mutator/mutation-testing-elements/commit/89f553c1e3d9234d30308ed5d577aea75a7c02a5))
+* **deps:** update dependency typescript-eslint to v8.0.0-alpha.48 ([58aad91](https://github.com/stryker-mutator/mutation-testing-elements/commit/58aad91ab9e5356ce4a4775f4094f22f9cc2fc28))
+* **deps:** update dependency typescript-eslint to v8.0.0-alpha.49 ([4e1718d](https://github.com/stryker-mutator/mutation-testing-elements/commit/4e1718d979e1c85b1ff1754c83eb642ff9927a53))
+
+
+### Features
+
+* **report:** add Mutation Coverage based on Covered code column ([#3310](https://github.com/stryker-mutator/mutation-testing-elements/issues/3310)) ([d68d9c8](https://github.com/stryker-mutator/mutation-testing-elements/commit/d68d9c8d725358dadd4cc6a7ccaf8311fb64ece2))
+
+
+
+
+
 ## [3.1.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.1.0...v3.1.1) (2024-07-18)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.2.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.1.1...v3.2.0) (2024-08-07)
+
+
+### Features
+
+* **report:** add Mutation Coverage based on Covered code column ([#3310](https://github.com/stryker-mutator/mutation-testing-elements/issues/3310)) ([d68d9c8](https://github.com/stryker-mutator/mutation-testing-elements/commit/d68d9c8d725358dadd4cc6a7ccaf8311fb64ece2))
+
+
+
+
+
 ## [3.1.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.1.0...v3.1.1) (2024-07-18)
 
 
