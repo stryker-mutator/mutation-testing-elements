@@ -122,7 +122,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
     }
   }
 
-  public async willUpdate(changedProperties: PropertyValues) {
+  public willUpdate(changedProperties: PropertyValues) {
     if (this.report) {
       // Set the theme when no theme is selected (light vs dark)
       if (!this.theme) {
@@ -137,7 +137,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
       }
     }
     if (changedProperties.has('src')) {
-      await this.loadData();
+      void this.loadData();
     }
   }
 
