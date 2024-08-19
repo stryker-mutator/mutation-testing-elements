@@ -29,5 +29,6 @@
     }
   ],
   "automergeStrategy": "squash",
-  "platformAutomerge": true
+  "platformAutomerge": true,
+  "ignorePaths": ["**/*.sbt"]
 }
