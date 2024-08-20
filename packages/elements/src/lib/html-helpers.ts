@@ -1,5 +1,5 @@
 import type { TemplateResult } from 'lit';
-import { nothing } from 'lit';
+import { isServer, nothing } from 'lit';
 import { TestStatus } from 'mutation-testing-metrics';
 import type { MutantStatus, OpenEndLocation } from 'mutation-testing-report-schema/api';
 import { renderEmoji } from '../components/drawer-mutant/util.js';
@@ -97,9 +97,14 @@ export function escapeHtml(unsafe: string) {
 }
 
 export function toAbsoluteUrl(...fragments: string[]): string {
-  // Use absolute url because of https://github.com/stryker-mutator/mutation-testing-elements/issues/53
-  const url = new URL(window.location.href);
-  return new URL(`#${fragments.filter(Boolean).join('/')}`, url).href;
+  const joinedFragments = fragments.filter(Boolean).join('/');
+  if (isServer) {
+    return `#${joinedFragments}`;
+  } else {
+    // Use absolute url because of https://github.com/stryker-mutator/mutation-testing-elements/issues/53
+    const url = new URL(window.location.href);
+    return new URL(`#${joinedFragments}`, url).href;
+  }
 }
 
 export function plural(items: unknown[]): string {

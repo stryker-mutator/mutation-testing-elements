@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
 import type { PropertyValues } from 'lit';
-import { html, unsafeCSS, nothing } from 'lit';
+import { html, unsafeCSS, nothing, isServer } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import type { MutantResult, MutationTestResult } from 'mutation-testing-report-schema/api';
 import type {
@@ -161,7 +161,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
     if (theme) {
       return theme;
       // 2. check for user's OS preference
-    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)')?.matches) {
+    } else if (isServer || window.matchMedia?.('(prefers-color-scheme: dark)')?.matches) {
       return 'dark';
       // 3. default is light
     } else {
@@ -222,7 +222,8 @@ export class MutationTestReportAppComponent extends RealTimeElement {
   }
 
   private updateTitle() {
-    document.title = this.title;
+    if (isServer) return;
+    else document.title = this.title;
   }
 
   public themeSwitch = (event: CustomEvent<string>) => {

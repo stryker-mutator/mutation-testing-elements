@@ -17,17 +17,14 @@
       "types": "./dist-tsc/src/index.d.ts",
       "default": "./dist/mutation-test-elements.js"
     },
-    "./dist/mutation-test-elements.js": {
-      "types": "./dist-tsc/src/index.d.ts",
-      "default": "./dist/mutation-test-elements.js"
-    }
+    "./dist/*": "./dist/*"
   },
   "nx": {
     "name": "elements"
   },
   "scripts": {
     "start": "vite",
-    "build": "vite build",
+    "build": "vite build && cross-env IIFE_BUILD=true vite build",
     "test": "npm run test:unit && npm run test:integration",
     "test:unit": "vitest run",
     "test:integration": "playwright test",
@@ -39,7 +36,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/stryker-mutator/mutation-testing-elements.git",
+    "url": "git+https://github.com/stryker-mutator/mutation-testing-elements.git",
     "directory": "packages/elements"
   },
   "license": "Apache-2.0",
