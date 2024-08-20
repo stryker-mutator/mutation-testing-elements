@@ -1,9 +1,9 @@
 import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 import { html, LitElement, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import type { Ref } from 'lit/directives/ref.js';
 import { createRef, ref } from 'lit/directives/ref.js';
-import { styleMap } from 'lit/directives/style-map.js';
 import { renderIf } from '../../lib/html-helpers.js';
 import { tailwind } from '../../style/index.js';
 import { renderEmoji } from '../drawer-mutant/util.js';
@@ -63,9 +63,25 @@ export class MutationTestReportDrawer extends LitElement {
     event.stopImmediatePropagation();
   };
 
+  connectedCallback(): void {
+    super.connectedCallback();
+    window.addEventListener('keydown', this.#handleKeyDown);
+  }
+
+  disconnectedCallback(): void {
+    window.removeEventListener('keydown', this.#handleKeyDown);
+    super.disconnectedCallback();
+  }
+
+  #handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      this.mode = 'closed';
+    }
+  };
+
   render() {
-    const contentHeight = this.#contentHeightController.value;
-    const styles = styleMap({ height: contentHeight ? `${contentHeight}px` : undefined });
+    const isOpen = this.mode === 'open';
+    const height = this.#contentHeightController.value;
 
     return html`<aside @click="${(event: Event) => event.stopPropagation()}" class="ml-6 mr-4">
       <header class="w-full py-4" ${ref(this.#headerRef)}>
@@ -77,7 +93,10 @@ export class MutationTestReportDrawer extends LitElement {
           )}
         </h2>
       </header>
-      <div style="${styles}" class="mb-4 overflow-y-auto motion-safe:transition-max-width">
+      <div
+        style="${height && isOpen ? `height: ${height}px;` : nothing}"
+        class="${classMap({ ['mb-4 motion-safe:transition-max-width']: true, 'overflow-y-auto': isOpen })}"
+      >
         <slot name="summary"></slot>
         ${renderIf(this.hasDetail && this.mode === 'open', html`<slot name="detail"></slot>`)}
       </div>
