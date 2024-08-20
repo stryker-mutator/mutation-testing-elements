@@ -1,6 +1,8 @@
 import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 import { html, LitElement, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import type { Ref } from 'lit/directives/ref.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { renderIf } from '../../lib/html-helpers.js';
 import { tailwind } from '../../style/index.js';
@@ -32,16 +34,21 @@ export class MutationTestReportDrawer extends LitElement {
     }
   }
 
-  #drawerResizeObserver: ResizeController<Pick<DOMRectReadOnly, 'width' | 'height'>>;
+  #headerRef: Ref<HTMLElement>;
+
+  #contentHeightController: ResizeController<number>;
 
   constructor() {
     super();
     this.mode = 'closed';
     this.hasDetail = false;
-    this.#drawerResizeObserver = new ResizeController(this, {
+
+    this.#headerRef = createRef();
+    this.#contentHeightController = new ResizeController(this, {
       callback: (entries) => {
-        const contentRect = entries[0]?.contentRect;
-        return { width: contentRect?.width ?? 0, height: contentRect?.height ?? 0 };
+        const total = entries[0]?.contentRect.height ?? 0;
+        const header = this.#headerRef.value?.clientHeight ?? 0;
+        return total - header;
       },
     });
   }
@@ -57,11 +64,11 @@ export class MutationTestReportDrawer extends LitElement {
   };
 
   render() {
-    const height = this.#drawerResizeObserver.value?.height;
-    const classes = styleMap({ [`height`]: height ? `${height}px` : undefined });
+    const contentHeight = this.#contentHeightController.value;
+    const styles = styleMap({ height: contentHeight ? `${contentHeight}px` : undefined });
 
-    return html`<aside @click="${(event: Event) => event.stopPropagation()}" style="${classes}" class="ml-6 mr-3 mt-4 overflow-y-auto">
-      <header class="w-full pb-4">
+    return html`<aside @click="${(event: Event) => event.stopPropagation()}" class="ml-6 mr-4">
+      <header class="w-full py-4" ${ref(this.#headerRef)}>
         <h2>
           <slot name="header"></slot>
           ${renderIf(
@@ -70,7 +77,7 @@ export class MutationTestReportDrawer extends LitElement {
           )}
         </h2>
       </header>
-      <div class="motion-safe:transition-max-width">
+      <div style="${styles}" class="mb-4 overflow-y-auto motion-safe:transition-max-width">
         <slot name="summary"></slot>
         ${renderIf(this.hasDetail && this.mode === 'open', html`<slot name="detail"></slot>`)}
       </div>
