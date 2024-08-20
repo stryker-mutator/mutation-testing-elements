@@ -53,7 +53,7 @@ export class MutationTestReportBreadcrumbComponent extends LitElement {
 
   private renderActiveItem(title: string) {
     return html`<li aria-current="page">
-      <span class="ml-1 text-sm font-medium text-gray-800">${title}</span>
+      <span class="ml-1 text-sm font-medium text-gray-800 md:ml-2">${title}</span>
     </li> `;
   }
 
