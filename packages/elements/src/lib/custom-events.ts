@@ -1,10 +1,11 @@
 import type { MutantModel, TestModel } from 'mutation-testing-metrics';
+import type { Theme } from './theme.js';
 
 export interface CustomEventMap {
   'mutant-selected': { selected: boolean; mutant: MutantModel | undefined };
   'test-selected': { selected: boolean; test: TestModel | undefined };
-  'theme-changed': { theme: string; themeBackgroundColor: string };
-  'theme-switch': 'dark' | 'light';
+  'theme-changed': { theme: Theme; themeBackgroundColor: string };
+  'theme-switch': Theme;
   'filters-changed': string[];
   next: void;
   previous: void;
