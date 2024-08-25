@@ -1,29 +1,31 @@
 /* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
 import type { PropertyValues } from 'lit';
-import { html, unsafeCSS, nothing } from 'lit';
+import { html, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import type { MutantResult, MutationTestResult } from 'mutation-testing-report-schema/api';
 import type {
-  MetricsResult,
-  MutantModel,
-  TestModel,
   FileUnderTestModel,
   Metrics,
+  MetricsResult,
+  MutantModel,
   MutationTestMetricsResult,
   TestFileModel,
   TestMetrics,
+  TestModel,
 } from 'mutation-testing-metrics';
 import { calculateMutationTestMetrics } from 'mutation-testing-metrics';
-import { tailwind, globals } from '../../style/index.js';
-import { locationChange$, View } from '../../lib/router.js';
+import type { MutantResult, MutationTestResult } from 'mutation-testing-report-schema/api';
 import type { Subscription } from 'rxjs';
 import { fromEvent, sampleTime } from 'rxjs';
-import theme from './theme.scss?inline';
+import { isLocalStorageAvailable } from '../../lib/browser.js';
+import type { MteCustomEvent } from '../../lib/custom-events.js';
 import { createCustomEvent } from '../../lib/custom-events.js';
 import { toAbsoluteUrl } from '../../lib/html-helpers.js';
-import { isLocalStorageAvailable } from '../../lib/browser.js';
 import { mutantChanges } from '../../lib/mutant-changes.js';
+import { locationChange$, View } from '../../lib/router.js';
+import type { Theme } from '../../lib/theme.js';
+import { globals, tailwind } from '../../style/index.js';
 import { RealTimeElement } from '../real-time-element.js';
+import theme from './theme.scss?inline';
 
 interface BaseContext {
   path: string[];
@@ -70,14 +72,14 @@ export class MutationTestReportAppComponent extends RealTimeElement {
   @property({ attribute: false })
   public declare context: Context;
 
-  @property()
+  @property({ type: Array })
   public declare path: readonly string[];
 
   @property({ attribute: 'title-postfix' })
   public declare titlePostfix: string | undefined;
 
   @property({ reflect: true })
-  public declare theme?: string;
+  public declare theme?: Theme;
 
   @property({ attribute: false })
   public get themeBackgroundColor(): string {
@@ -155,11 +157,11 @@ export class MutationTestReportAppComponent extends RealTimeElement {
     }
   }
 
-  private getTheme(): string {
+  private getTheme(): Theme {
     // 1. check local storage
     const theme = isLocalStorageAvailable() && localStorage.getItem('mutation-testing-elements-theme');
     if (theme) {
-      return theme;
+      return theme as Theme;
       // 2. check for user's OS preference
     } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)')?.matches) {
       return 'dark';
@@ -225,7 +227,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
     document.title = this.title;
   }
 
-  public themeSwitch = (event: CustomEvent<string>) => {
+  public themeSwitch = (event: MteCustomEvent<'theme-switch'>) => {
     this.theme = event.detail;
 
     if (isLocalStorageAvailable()) {
