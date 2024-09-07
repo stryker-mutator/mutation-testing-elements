@@ -70,7 +70,7 @@
     "prism-svelte": "0.5.0",
     "prismjs": "1.29.0",
     "rxjs": "7.8.1",
-    "sass": "1.77.8",
+    "sass": "1.78.0",
     "tailwindcss": "3.4.10",
     "vite": "5.4.3",
     "vitest": "2.0.5"
