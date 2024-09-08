@@ -1,5 +1,6 @@
 import { MutationTestReportDrawer } from '../../../src/components/drawer/drawer.component.js';
 import { CustomElementFixture } from '../helpers/CustomElementFixture.js';
+import { userEvent } from '@vitest/browser/context';
 
 describe(MutationTestReportDrawer.name, () => {
   let sut: CustomElementFixture<MutationTestReportDrawer>;
@@ -71,6 +72,16 @@ describe(MutationTestReportDrawer.name, () => {
       await sut.whenStable();
       const event = await sut.catchNativeEvent('click', () => sut.$<HTMLElement>('header').click());
       expect(event).undefined;
+    });
+
+    it('should close when escape is pressed', async () => {
+      sut.element.mode = 'open';
+      await sut.whenStable();
+
+      await userEvent.keyboard('{Escape}');
+      await sut.whenStable();
+
+      expect(sut.element).toHaveProperty('mode', 'closed');
     });
   });
 

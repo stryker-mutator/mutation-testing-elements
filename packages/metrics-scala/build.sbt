@@ -1,4 +1,4 @@
-val Scala212 = "2.12.19"
+val Scala212 = "2.12.20"
 val Scala213 = "2.13.14"
 val Scala3   = "3.3.3"
 
@@ -31,8 +31,8 @@ lazy val circe = projectMatrix
     sharedSettings,
     name := "mutation-testing-metrics-circe",
     libraryDependencies ++= Seq(
-      "io.circe" %%% "circe-core"   % "0.14.9",
-      "io.circe" %%% "circe-parser" % "0.14.9"
+      "io.circe" %%% "circe-core"   % "0.14.10",
+      "io.circe" %%% "circe-parser" % "0.14.10"
     )
   )
   .jvmPlatform(

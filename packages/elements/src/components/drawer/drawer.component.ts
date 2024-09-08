@@ -1,7 +1,9 @@
 import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 import { html, LitElement, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { styleMap } from 'lit/directives/style-map.js';
+import { classMap } from 'lit/directives/class-map.js';
+import type { Ref } from 'lit/directives/ref.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { renderIf } from '../../lib/html-helpers.js';
 import { tailwind } from '../../style/index.js';
 import { renderEmoji } from '../drawer-mutant/util.js';
@@ -32,16 +34,21 @@ export class MutationTestReportDrawer extends LitElement {
     }
   }
 
-  #drawerResizeObserver: ResizeController<Pick<DOMRectReadOnly, 'width' | 'height'>>;
+  #headerRef: Ref<HTMLElement>;
+
+  #contentHeightController: ResizeController<number>;
 
   constructor() {
     super();
     this.mode = 'closed';
     this.hasDetail = false;
-    this.#drawerResizeObserver = new ResizeController(this, {
+
+    this.#headerRef = createRef();
+    this.#contentHeightController = new ResizeController(this, {
       callback: (entries) => {
-        const contentRect = entries[0]?.contentRect;
-        return { width: contentRect?.width ?? 0, height: contentRect?.height ?? 0 };
+        const total = entries[0]?.contentRect.height ?? 0;
+        const header = this.#headerRef.value?.clientHeight ?? 0;
+        return total - header;
       },
     });
   }
@@ -56,12 +63,28 @@ export class MutationTestReportDrawer extends LitElement {
     event.stopImmediatePropagation();
   };
 
-  render() {
-    const height = this.#drawerResizeObserver.value?.height;
-    const classes = styleMap({ [`height`]: height ? `${height}px` : undefined });
+  connectedCallback(): void {
+    super.connectedCallback();
+    window.addEventListener('keydown', this.#handleKeyDown);
+  }
 
-    return html`<aside @click="${(event: Event) => event.stopPropagation()}" style="${classes}" class="ml-6 mr-3 mt-4 overflow-y-auto">
-      <header class="w-full pb-4">
+  disconnectedCallback(): void {
+    window.removeEventListener('keydown', this.#handleKeyDown);
+    super.disconnectedCallback();
+  }
+
+  #handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      this.mode = 'closed';
+    }
+  };
+
+  render() {
+    const isOpen = this.mode === 'open';
+    const height = this.#contentHeightController.value;
+
+    return html`<aside @click="${(event: Event) => event.stopPropagation()}" class="ml-6 mr-4">
+      <header class="w-full py-4" ${ref(this.#headerRef)}>
         <h2>
           <slot name="header"></slot>
           ${renderIf(
@@ -70,7 +93,10 @@ export class MutationTestReportDrawer extends LitElement {
           )}
         </h2>
       </header>
-      <div class="motion-safe:transition-max-width">
+      <div
+        style="${height && isOpen ? `height: ${height}px;` : nothing}"
+        class="${classMap({ ['mb-4 motion-safe:transition-max-width']: true, 'overflow-y-auto': isOpen })}"
+      >
         <slot name="summary"></slot>
         ${renderIf(this.hasDetail && this.mode === 'open', html`<slot name="detail"></slot>`)}
       </div>
