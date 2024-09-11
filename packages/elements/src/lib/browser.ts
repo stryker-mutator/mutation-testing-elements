@@ -1,7 +1,10 @@
+import { isServer } from 'lit';
+
 /**
  * Test if localStorage exists and is enabled
  */
 export function isLocalStorageAvailable() {
+  if (isServer) return false;
   const test = 'test';
   try {
     localStorage.setItem(test, test);

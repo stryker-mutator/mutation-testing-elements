@@ -7,7 +7,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/stryker-mutator/mutation-testing-elements.git"
+    "url": "git+https://github.com/stryker-mutator/mutation-testing-elements.git"
   },
   "license": "Apache-2.0",
   "bugs": {

@@ -31,6 +31,11 @@ export default defineConfig(
       },
       esbuild: esbuildOptions,
       build: {
+        emptyOutDir: !process.env.IIFE_BUILD,
+        rollupOptions: {
+          // For library usage, we want to externalize lit. When included as a script on the page we want to bundle it.
+          external: process.env.IIFE_BUILD ? undefined : [/^lit/],
+        },
         target: browserslistToEsbuild(),
         lib: {
           entry: 'src/index.ts',
@@ -47,7 +52,7 @@ export default defineConfig(
                 throw new Error(`Unexpected format: ${format}`);
             }
           },
-          formats: ['iife', 'cjs', 'es'],
+          formats: process.env.IIFE_BUILD ? ['iife'] : ['cjs', 'es'],
         },
       },
       test: {
