@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.3.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.2.0...v3.3.0) (2024-09-11)
+
+
+### Bug Fixes
+
+* **deps:** update dependency typescript-eslint to v8.1.0 ([#3363](https://github.com/stryker-mutator/mutation-testing-elements/issues/3363)) ([e9c2030](https://github.com/stryker-mutator/mutation-testing-elements/commit/e9c2030ca12b25dacd1c7f7a07cf7283de10e1f1))
+* **elements:** fix breadcrumb margin for active item ([#3369](https://github.com/stryker-mutator/mutation-testing-elements/issues/3369)) ([35cc30f](https://github.com/stryker-mutator/mutation-testing-elements/commit/35cc30fb0809d90897b7362c2e0a3b5e7e8d89d4))
+* **elements:** improve usage as a library ([#3367](https://github.com/stryker-mutator/mutation-testing-elements/issues/3367)) ([a9d8ff8](https://github.com/stryker-mutator/mutation-testing-elements/commit/a9d8ff831d53a486f10bacadf2432ffc45a071f3))
+
+
+### Features
+
+* **elements:** close drawer when pressing Escape ([#3371](https://github.com/stryker-mutator/mutation-testing-elements/issues/3371)) ([7accac1](https://github.com/stryker-mutator/mutation-testing-elements/commit/7accac16cdce7c7f8d383eb60d5ae185067f9d62)), closes [#3370](https://github.com/stryker-mutator/mutation-testing-elements/issues/3370)
+* **elements:** export theme-changed event type ([#3372](https://github.com/stryker-mutator/mutation-testing-elements/issues/3372)) ([b2d2817](https://github.com/stryker-mutator/mutation-testing-elements/commit/b2d281798cb9680334f630d9f736e6b39aeade18))
+
+
+
+
+
 # [3.2.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.1.1...v3.2.0) (2024-08-07)
 
 
