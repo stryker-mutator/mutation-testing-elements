@@ -2,8 +2,7 @@ import { html, LitElement, nothing, } from "lit";
 import { map } from 'lit/directives/map.js';
 import { customElement, property, state } from "lit/decorators.js";
 import { tailwind } from "../../style/index.js";
-import { FileUnderTestModel, Metrics, MetricsResult, MutationTestMetricsResult, TestFileModel, TestMetrics } from "mutation-testing-metrics";
-import { calculateFileMetrics, calculateMutationTestMetrics } from "../../../../metrics/src/calculateMetrics.js";
+import type { FileUnderTestModel, Metrics, MetricsResult, MutationTestMetricsResult} from "mutation-testing-metrics";
 
 @customElement('mte-file-picker')
 export class MutationTestReportFilePickerComponent extends LitElement {
@@ -43,7 +42,7 @@ export class MutationTestReportFilePickerComponent extends LitElement {
     }
 
     return html`
-      <div @click="${this.#closePicker}" class="fixed flex justify-center items-center top-0 left-0 h-full w-full bg-black/50 backdrop-blur-lg z-50">
+      <div @click="${() => this.#closePicker()}" class="fixed flex justify-center items-center top-0 left-0 h-full w-full bg-black/50 backdrop-blur-lg z-50">
         <div @click="${(e: MouseEvent) => e.stopPropagation()}" role="dialog" id="picker" class="flex flex-col bg-gray-200/60 backdrop-blur-lg h-full md:h-3/4 w-full md:w-1/2 max-w-[40rem] rounded-lg p-4 m-4">
           <div class="flex items-center mb-2 p-2 rounded bg-gray-200/60 backdrop-blur-lg">
             <div class="h-full flex items-center mx-2 text-gray-800">
@@ -52,7 +51,7 @@ export class MutationTestReportFilePickerComponent extends LitElement {
               </svg>
             </div>
             <input 
-              @keyup="${this.#handleSearch}" 
+              @keyup="${(e: KeyboardEvent) => this.#handleSearch(e)}" 
               type="text"
               style="box-shadow: none"
               class="mr-2 w-full text-gray-800 bg-transparent border-transparent border-0 focus:shadow-none rounded" placeholder="Search for a file" />
@@ -72,8 +71,8 @@ export class MutationTestReportFilePickerComponent extends LitElement {
           return html`
             <li>
               <a 
-                @focusout="${this.#handleFocus}"
-                @click="${this.#closePicker}"
+                @focusout="${(e: KeyboardEvent) => this.#handleFocus(e)}"
+                @click="${() => this.#closePicker()}"
                 class="flex border-2 border-black bg-black rounded p-1 px-2 my-1 text-gray-800 focus-visible:border-primary-500 outline-none"  
                 href="#mutant/${name}"
               >
