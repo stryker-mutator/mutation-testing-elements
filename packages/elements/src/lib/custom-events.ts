@@ -2,6 +2,7 @@ import type { MutantModel, TestModel } from 'mutation-testing-metrics';
 import type { Theme } from './theme.js';
 
 export interface CustomEventMap {
+  'mte-file-picker-open': void;
   'mutant-selected': { selected: boolean; mutant: MutantModel | undefined };
   'test-selected': { selected: boolean; test: TestModel | undefined };
   'theme-changed': { theme: Theme; themeBackgroundColor: string };
