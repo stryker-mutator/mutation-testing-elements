@@ -28,9 +28,11 @@ runs:
         cache: 'sbt'
     - uses: actions/cache@v4
       with:
-        path: .nx
+        path: .nx/cache
         key: ${{ runner.os }}-nx-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-nx-
+    - run: echo "NX_REJECT_UNKNOWN_LOCAL_CACHE=0" >> $GITHUB_ENV
+      shell: bash
     - run: npm ci
       shell: bash
