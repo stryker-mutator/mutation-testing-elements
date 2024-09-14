@@ -58,7 +58,7 @@
     "cssnano": "7.0.6",
     "esbuild": "0.23.1",
     "eslint-config-mte": "*",
-    "express": "4.20.0",
+    "express": "4.21.0",
     "lit": "3.2.0",
     "mutation-testing-metrics": "3.3.0",
     "mutation-testing-real-time": "3.3.0",
