@@ -40,6 +40,7 @@ export class MutationTestReportFilePickerComponent extends LitElement {
 
     document.addEventListener('keydown', (e) => this.#handleKeyDown(e));
     document.addEventListener('keyup', (e) => this.#handleKeyUp(e));
+    document.addEventListener('mte-file-picker-open', () => this.#togglePicker());
   }
 
   render() {
@@ -48,7 +49,7 @@ export class MutationTestReportFilePickerComponent extends LitElement {
     }
 
     return html`
-      <div @click="${() => this.#closePicker()}" class="fixed flex justify-center top-0 left-0 h-full w-full bg-black/50 backdrop-blur-lg z-50">
+      <div id="backdrop" @click="${() => this.#closePicker()}" class="fixed flex justify-center top-0 left-0 h-full w-full bg-black/50 backdrop-blur-lg z-50">
         <div @click="${(e: MouseEvent) => e.stopPropagation()}" role="dialog" id="picker" class="flex flex-col bg-gray-200/60 backdrop-blur-lg h-full h-fit max-h-[500px] w-full md:w-1/2 max-w-[40rem] rounded-lg p-4 m-4">
           <div class="flex items-center mb-2 p-2 rounded bg-gray-200/60 backdrop-blur-lg">
             <div class="flex items-center mx-2 text-gray-800">
@@ -56,7 +57,8 @@ export class MutationTestReportFilePickerComponent extends LitElement {
                 <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
               </svg>
             </div>
-            <input 
+            <input
+              id="file-picker-input"
               @keyup="${(e: KeyboardEvent) => this.#handleSearch(e)}" 
               type="text"
               style="box-shadow: none"
@@ -98,6 +100,10 @@ export class MutationTestReportFilePickerComponent extends LitElement {
   }
 
   #prepareMap() {
+    if (this.rootModel == null) {
+      return;
+    }
+    
     const prepareFiles = (result: MetricsResult<FileUnderTestModel, Metrics>, parentPath: string | null = null) => {
       if (result.file != null) {
         this.#searchMap.set(parentPath == null ? result.name : `${parentPath}/${result.name}`, result.file);
@@ -185,9 +191,9 @@ export class MutationTestReportFilePickerComponent extends LitElement {
     this.#closePicker();
   }
 
-  #togglePicker(event: KeyboardEvent) {
-    event.preventDefault();
-    event.stopPropagation();
+  #togglePicker(event: KeyboardEvent | null = null) {
+    event?.preventDefault();
+    event?.stopPropagation();
 
     this.openPicker = !this.openPicker;
 
