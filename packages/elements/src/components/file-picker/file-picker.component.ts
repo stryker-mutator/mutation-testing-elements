@@ -1,10 +1,10 @@
-import { html, LitElement, nothing, } from "lit";
+import { html, LitElement, nothing } from 'lit';
 import { map } from 'lit/directives/map.js';
-import { customElement, property, state } from "lit/decorators.js";
-import { tailwind } from "../../style/index.js";
-import type { FileUnderTestModel, Metrics, MetricsResult, MutationTestMetricsResult} from "mutation-testing-metrics";
-import { classMap } from "lit/directives/class-map.js";
-import { renderIf } from "../../lib/html-helpers.js";
+import { customElement, property, state } from 'lit/decorators.js';
+import { tailwind } from '../../style/index.js';
+import type { FileUnderTestModel, Metrics, MetricsResult, MutationTestMetricsResult } from 'mutation-testing-metrics';
+import { classMap } from 'lit/directives/class-map.js';
+import { renderIf } from '../../lib/html-helpers.js';
 
 @customElement('mte-file-picker')
 export class MutationTestReportFilePickerComponent extends LitElement {
@@ -20,14 +20,14 @@ export class MutationTestReportFilePickerComponent extends LitElement {
   public declare openPicker: boolean;
 
   @state()
-  public declare filteredFiles: { name: string, file: FileUnderTestModel }[];
+  public declare filteredFiles: { name: string; file: FileUnderTestModel }[];
 
   @state()
   public declare fileIndex: number;
 
   constructor() {
     super();
-    
+
     this.openPicker = false;
     this.fileIndex = 0;
   }
@@ -49,24 +49,37 @@ export class MutationTestReportFilePickerComponent extends LitElement {
     }
 
     return html`
-      <div id="backdrop" @click="${() => this.#closePicker()}" class="fixed flex justify-center top-0 left-0 h-full w-full bg-black/50 backdrop-blur-lg z-50">
-        <div @click="${(e: MouseEvent) => e.stopPropagation()}" role="dialog" id="picker" class="flex flex-col bg-gray-200/60 backdrop-blur-lg h-full h-fit max-h-[500px] w-full md:w-1/2 max-w-[40rem] rounded-lg p-4 m-4">
-          <div class="flex items-center mb-2 p-2 rounded bg-gray-200/60 backdrop-blur-lg">
-            <div class="flex items-center mx-2 text-gray-800">
+      <div
+        id="backdrop"
+        @click="${() => this.#closePicker()}"
+        class="fixed left-0 top-0 z-50 flex h-full w-full justify-center bg-black/50 backdrop-blur-lg"
+      >
+        <div
+          @click="${(e: MouseEvent) => e.stopPropagation()}"
+          role="dialog"
+          id="picker"
+          class="m-4 flex h-fit h-full max-h-[500px] w-full max-w-[40rem] flex-col rounded-lg bg-gray-200/60 p-4 backdrop-blur-lg md:w-1/2"
+        >
+          <div class="mb-2 flex items-center rounded bg-gray-200/60 p-2 backdrop-blur-lg">
+            <div class="mx-2 flex items-center text-gray-800">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+                />
               </svg>
             </div>
             <input
               id="file-picker-input"
-              @keyup="${(e: KeyboardEvent) => this.#handleSearch(e)}" 
+              @keyup="${(e: KeyboardEvent) => this.#handleSearch(e)}"
               type="text"
               style="box-shadow: none"
-              class="mr-2 w-full text-gray-800 bg-transparent border-transparent border-0 focus:shadow-none rounded" placeholder="Search for a file" />
+              class="mr-2 w-full rounded border-0 border-transparent bg-transparent text-gray-800 focus:shadow-none"
+              placeholder="Search for a file"
+            />
           </div>
-          <div tabindex="-1" class="overflow-auto">
-            ${this.#renderFoundFiles()}
-          </div>
+          <div tabindex="-1" class="overflow-auto"> ${this.#renderFoundFiles()} </div>
         </div>
       </div>
     `;
@@ -77,19 +90,20 @@ export class MutationTestReportFilePickerComponent extends LitElement {
       <ul id="files" class="flex flex-col">
         ${renderIf(this.filteredFiles.length === 0, () => html`<li class="text-gray-800">No files found</li>`)}
         ${map(this.filteredFiles, ({ name, file }, index) => {
-          return html`
-            <li>
-              <a 
-                ?data-active="${index === this.fileIndex}"
-                tabindex="${index === this.fileIndex ? 0 : -1}"
-                @focusout="${() => this.#handleFocus()}"
-                @click="${() => this.#closePicker()}"
-                class="flex border-2 border-black bg-black rounded p-1 px-2 my-1 text-gray-800 focus-visible:border-primary-200 outline-none ${classMap({ 'border-primary-500': index === this.fileIndex })}"  
-                href="#mutant/${name}"
-              >
-                ${file.result?.name}<span class="mx-2">•</span><span class="text-gray-400">${name}</span>
-              </a>
-            </li>`
+          return html` <li>
+            <a
+              ?data-active="${index === this.fileIndex}"
+              tabindex="${index === this.fileIndex ? 0 : -1}"
+              @focusout="${() => this.#handleFocus()}"
+              @click="${() => this.#closePicker()}"
+              class="${classMap({
+                'border-primary-500': index === this.fileIndex,
+              })} my-1 flex rounded border-2 border-black bg-black p-1 px-2 text-gray-800 outline-none focus-visible:border-primary-200"
+              href="#mutant/${name}"
+            >
+              ${file.result?.name}<span class="mx-2">•</span><span class="text-gray-400">${name}</span>
+            </a>
+          </li>`;
         })}
       </ul>
     `;
@@ -103,24 +117,22 @@ export class MutationTestReportFilePickerComponent extends LitElement {
     if (this.rootModel == null) {
       return;
     }
-    
+
     const prepareFiles = (result: MetricsResult<FileUnderTestModel, Metrics>, parentPath: string | null = null) => {
       if (result.file != null) {
         this.#searchMap.set(parentPath == null ? result.name : `${parentPath}/${result.name}`, result.file);
       }
 
       result.childResults.forEach((child) => {
-        if ((parentPath !== 'All files' && parentPath !== null) && result.name !== null) {
+        if (parentPath !== 'All files' && parentPath !== null && result.name !== null) {
           prepareFiles(child, `${parentPath}/${result.name}`);
-        }
-        else if ((parentPath === 'All files' || parentPath === null) && result.name !== "All files") {
+        } else if ((parentPath === 'All files' || parentPath === null) && result.name !== 'All files') {
           prepareFiles(child, result.name);
-        }
-        else {
+        } else {
           prepareFiles(child);
         }
       });
-    }
+    };
 
     prepareFiles(this.rootModel.systemUnderTestMetrics);
   }
@@ -128,7 +140,7 @@ export class MutationTestReportFilePickerComponent extends LitElement {
   #handleKeyDown(event: KeyboardEvent) {
     this.#currentPressedKeys.add(event.key);
 
-    if ((this.#currentPressedKeys.has('Control') && this.#currentPressedKeys.has('k'))) {
+    if (this.#currentPressedKeys.has('Control') && this.#currentPressedKeys.has('k')) {
       this.#togglePicker(event);
     }
 
@@ -139,7 +151,6 @@ export class MutationTestReportFilePickerComponent extends LitElement {
     if (this.#currentPressedKeys.has('Escape')) {
       this.#closePicker();
     }
-
 
     if (this.#currentPressedKeys.has('ArrowUp')) {
       this.#handleArrowUp();
@@ -218,7 +229,7 @@ export class MutationTestReportFilePickerComponent extends LitElement {
     this.fileIndex = 0;
     this.#filter('');
   }
-  
+
   #handleKeyUp(event: KeyboardEvent) {
     this.#currentPressedKeys.delete(event.key);
   }
