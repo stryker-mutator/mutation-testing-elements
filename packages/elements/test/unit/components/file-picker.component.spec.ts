@@ -71,7 +71,8 @@ describe(MutationTestReportFilePickerComponent.name, () => {
 
     it('should close the picker when clicking outside the dialog', async () => {
       // Act
-      (sut.element.shadowRoot?.querySelector('#backdrop') as HTMLElement)?.click();
+      const backdrop = sut.element.shadowRoot?.querySelector('#backdrop');
+      (backdrop as HTMLElement).click();
       await sut.whenStable();
 
       // Assert
@@ -91,11 +92,11 @@ describe(MutationTestReportFilePickerComponent.name, () => {
     describe('when typing in the search box', () => {
       it('should select the first item when searching with the letter "i"', async () => {
         // Arrange
-        const input = sut.element.shadowRoot?.querySelector('#file-picker-input') as HTMLInputElement;
+        const input = sut.element.shadowRoot?.querySelector('#file-picker-input');
 
         // Act
-        input.value = 'i';
-        input.dispatchEvent(new KeyboardEvent('keydown', { key: 'i' }));
+        (input as HTMLInputElement).value = 'i';
+        input?.dispatchEvent(new KeyboardEvent('keydown', { key: 'i' }));
         input?.dispatchEvent(new KeyboardEvent('keyup', { key: 'i' }));
         await sut.whenStable();
 
@@ -105,9 +106,9 @@ describe(MutationTestReportFilePickerComponent.name, () => {
 
       it('should redirect to mutant when pressing enter', async () => {
         // Arrange
-        const input = sut.element.shadowRoot?.querySelector('#file-picker-input') as HTMLInputElement;
-        input.value = 'index.html';
-        input.dispatchEvent(new KeyboardEvent('keydown', { key: 'l' }));
+        const input = sut.element.shadowRoot?.querySelector('#file-picker-input');
+        (input as HTMLInputElement).value = 'index.html';
+        input?.dispatchEvent(new KeyboardEvent('keydown', { key: 'l' }));
         input?.dispatchEvent(new KeyboardEvent('keyup', { key: 'l' }));
         await sut.whenStable();
 
@@ -121,8 +122,9 @@ describe(MutationTestReportFilePickerComponent.name, () => {
     });
 
     describe('when pressing the arrow keys', () => {
-      beforeEach(async () => {
-        (sut.element.shadowRoot?.querySelector('#file-picker-input') as HTMLInputElement).value = '';
+      beforeEach(() => {
+        const input = sut.element.shadowRoot?.querySelector('#file-picker-input');
+        (input as HTMLInputElement).value = '';
       });
 
       it('should move active item to the next item when pressing down', async () => {
