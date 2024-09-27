@@ -1,6 +1,6 @@
 import { calculateMutationTestMetrics } from 'mutation-testing-metrics';
 import { MutationTestReportFilePickerComponent } from '../../../src/components/file-picker/file-picker.component.js';
-import { CustomElementFixture } from "../helpers/CustomElementFixture.js";
+import { CustomElementFixture } from '../helpers/CustomElementFixture.js';
 import { createReport } from '../helpers/factory.js';
 import { tick } from '../helpers/tick.js';
 
@@ -36,16 +36,16 @@ describe(MutationTestReportFilePickerComponent.name, () => {
     expect(sut.element.shadowRoot?.querySelector('#picker')).toBeVisible();
   });
 
-  describe('when the picker is open', async () => {
+  describe('when the picker is open', () => {
     beforeEach(async () => {
       sut.element.rootModel = calculateMutationTestMetrics(
-        createReport({ 
-          files: { 
+        createReport({
+          files: {
             'src/index.ts': { language: 'typescript', mutants: [], source: '' },
             'src/index.html': { language: 'html', mutants: [], source: '' },
-            'src/append.js': { language: 'javascript', mutants: [], source: '' }
-          }
-        })
+            'src/append.js': { language: 'javascript', mutants: [], source: '' },
+          },
+        }),
       );
       sut.connect();
       await sut.whenStable();
@@ -92,9 +92,8 @@ describe(MutationTestReportFilePickerComponent.name, () => {
       it('should select the first item when searching with the letter "i"', async () => {
         // Arrange
         const input = sut.element.shadowRoot?.querySelector('#file-picker-input') as HTMLInputElement;
-        
-        // Act
 
+        // Act
         input.value = 'i';
         input.dispatchEvent(new KeyboardEvent('keydown', { key: 'i' }));
         input?.dispatchEvent(new KeyboardEvent('keyup', { key: 'i' }));
@@ -117,7 +116,7 @@ describe(MutationTestReportFilePickerComponent.name, () => {
         await sut.whenStable();
 
         // Assert
-        expect(window.location.hash).to.eq("#mutant/index.html");
+        expect(window.location.hash).to.eq('#mutant/index.html');
       });
     });
 
@@ -165,17 +164,17 @@ describe(MutationTestReportFilePickerComponent.name, () => {
         expect(sut.element.shadowRoot?.querySelector('a[data-active]')?.textContent?.trim()).include('index.html');
       });
 
-      it('should move to the last item when pressing up on the first item', async () => {	
-        // Arrange	
+      it('should move to the last item when pressing up on the first item', async () => {
+        // Arrange
         document.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp' }));
         document.dispatchEvent(new KeyboardEvent('keyup', { key: 'ArrowUp' }));
         await sut.whenStable();
 
         // Act
-        await sut.whenStable();	
+        await sut.whenStable();
 
-        // Assert	
-        expect(sut.element.shadowRoot?.querySelector('a[data-active]')?.textContent?.trim()).include('index.ts');	
+        // Assert
+        expect(sut.element.shadowRoot?.querySelector('a[data-active]')?.textContent?.trim()).include('index.ts');
       });
     });
   });

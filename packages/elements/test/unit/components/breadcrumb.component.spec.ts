@@ -68,7 +68,7 @@ describe(MutationTestReportBreadcrumbComponent.name, () => {
 
     // Assert
     expect(spy).to.toHaveBeenCalledOnce();
-  })
+  });
 
   function href(fragment: string) {
     return `${window.location.toString().split('#')[0]}${fragment}`;
