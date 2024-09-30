@@ -1,7 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/nrwl/nx/master/packages/nx/schemas/nx-schema.json",
   "extends": "nx/presets/npm.json",
-  "nxCloudAccessToken": "ZWQ4NmEyMmYtYTcwZS00MmJlLTlmYzUtYTRjNWI1MmZiMDg1fHJlYWQ=",
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "{workspaceRoot}/package-lock.json", { "runtime": "node -v" }],
     "production": ["!{projectRoot}/test/**/*", "!{projectRoot}/.eslintrc", "!{projectRoot}/stryker.conf.js"]
