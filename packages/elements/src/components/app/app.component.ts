@@ -343,6 +343,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
   public render() {
     if (this.context.result ?? this.errorMessage) {
       return html`
+        <mte-file-picker .rootModel="${this.rootModel}"></mte-file-picker>
         <div class="container bg-white pb-4 font-sans text-gray-800 motion-safe:transition-max-width">
           <div class="space-y-4 transition-colors">
             ${this.renderErrorMessage()}

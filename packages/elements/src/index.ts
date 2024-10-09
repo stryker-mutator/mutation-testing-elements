@@ -1,5 +1,6 @@
 export * from './components/app/app.component.js';
 import './components/file/file.component.js';
+import './components/file-picker/file-picker.component.js';
 import './components/breadcrumb.js';
 import './components/state-filter/state-filter.component.js';
 import './components/theme-switch/theme-switch.component.js';
