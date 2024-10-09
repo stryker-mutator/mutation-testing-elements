@@ -142,7 +142,7 @@
 }
 
 @function hexToRGB($hexCode) {
-  @return red($hexCode) green($hexCode) blue($hexCode);
+  @return color.channel($hexCode, 'red', $space: rgb) color.channel($hexCode, 'green', $space: rgb) color.channel($hexCode, 'blue', $space: rgb);
 }
 
 :host(:not([theme='dark'])) {
