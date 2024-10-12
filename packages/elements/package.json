@@ -59,7 +59,7 @@
     "esbuild": "0.24.0",
     "eslint-config-mte": "*",
     "express": "4.21.1",
-    "lit": "3.2.0",
+    "lit": "3.2.1",
     "mutation-testing-metrics": "3.3.0",
     "mutation-testing-real-time": "3.3.0",
     "mutation-testing-report-schema": "3.3.0",
