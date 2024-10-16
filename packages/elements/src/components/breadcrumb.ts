@@ -7,7 +7,7 @@ import { tailwind } from '../style/index.js';
 
 @customElement('mte-breadcrumb')
 export class MutationTestReportBreadcrumbComponent extends LitElement {
-  @property()
+  @property({ type: Array })
   public declare path: string[] | undefined;
 
   @property()
@@ -27,13 +27,14 @@ export class MutationTestReportBreadcrumbComponent extends LitElement {
   public render() {
     return html`<nav class="my-4 flex rounded-md border border-primary-600 bg-primary-100 p-3 text-gray-700" aria-label="Breadcrumb">
       <ol class="inline-flex items-center">
-        ${this.path && this.path.length > 0 ? this.renderLink(this.rootName, []) : this.renderActiveItem(this.rootName)}
-        ${this.renderBreadcrumbItems()}
+        ${this.path && this.path.length > 0 ? this.#renderLink(this.rootName, []) : this.#renderActiveItem(this.rootName)}
+        ${this.#renderBreadcrumbItems()}
       </ol>
+      ${this.#renderSearchIcon()}
     </nav> `;
   }
 
-  private renderBreadcrumbItems() {
+  #renderBreadcrumbItems() {
     if (this.path) {
       const path = this.path;
       return repeat(
@@ -41,9 +42,9 @@ export class MutationTestReportBreadcrumbComponent extends LitElement {
         (item) => item,
         (item, index) => {
           if (index === path.length - 1) {
-            return this.renderActiveItem(item);
+            return this.#renderActiveItem(item);
           } else {
-            return this.renderLink(item, path.slice(0, index + 1));
+            return this.#renderLink(item, path.slice(0, index + 1));
           }
         },
       );
@@ -51,13 +52,13 @@ export class MutationTestReportBreadcrumbComponent extends LitElement {
     return undefined;
   }
 
-  private renderActiveItem(title: string) {
+  #renderActiveItem(title: string) {
     return html`<li aria-current="page">
       <span class="ml-1 text-sm font-medium text-gray-800 md:ml-2">${title}</span>
     </li> `;
   }
 
-  private renderLink(title: string, path: string[]) {
+  #renderLink(title: string, path: string[]) {
     return html`<li class="after:text-gray-800 after:content-['/'] md:after:pl-1">
       <a
         href="${toAbsoluteUrl(this.view, ...path)}"
@@ -65,5 +66,17 @@ export class MutationTestReportBreadcrumbComponent extends LitElement {
         >${title}</a
       >
     </li>`;
+  }
+
+  #renderSearchIcon() {
+    return html` <button @click="${() => this.#dispatchFilePickerOpenEvent()}" class="ml-auto" aria-label="open file picker">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+      </svg>
+    </button>`;
+  }
+
+  #dispatchFilePickerOpenEvent() {
+    document.dispatchEvent(new CustomEvent('mte-file-picker-open'));
   }
 }
