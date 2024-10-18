@@ -61,7 +61,7 @@ describe(MutationTestReportBreadcrumbComponent.name, () => {
 
   it('should dispatch open-file-picker event', () => {
     // Arrange
-    const spy = vi.spyOn(document, 'dispatchEvent');
+    const spy = vi.spyOn(sut.element, 'dispatchEvent');
 
     // Act
     sut.element.shadowRoot?.querySelector('button')?.click();
