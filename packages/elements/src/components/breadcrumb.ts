@@ -77,6 +77,6 @@ export class MutationTestReportBreadcrumbComponent extends LitElement {
   }
 
   #dispatchFilePickerOpenEvent() {
-    document.dispatchEvent(new CustomEvent('mte-file-picker-open'));
+    this.dispatchEvent(new CustomEvent('mte-file-picker-open'));
   }
 }

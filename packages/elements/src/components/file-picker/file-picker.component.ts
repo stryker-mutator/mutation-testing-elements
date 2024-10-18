@@ -43,6 +43,10 @@ export class MutationTestReportFilePickerComponent extends LitElement {
     document.addEventListener('mte-file-picker-open', () => this.#togglePicker());
   }
 
+  open() {
+    this.openPicker = true;
+  }
+
   render() {
     if (!this.openPicker) {
       return nothing;
