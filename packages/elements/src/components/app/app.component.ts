@@ -351,7 +351,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
             <mte-theme-switch @theme-switch="${this.themeSwitch}" class="sticky top-offset z-20 float-right pt-6" .theme="${this.theme}">
             </mte-theme-switch>
             ${this.renderTitle()} ${this.renderTabs()}
-            <mte-breadcrumb @mte-file-picker-open="${() => this.#openFilePicker}" .view="${this.context.view}" .path="${this.context.path}"></mte-breadcrumb>
+            <mte-breadcrumb @mte-file-picker-open="${() => this.#openFilePicker()}" .view="${this.context.view}" .path="${this.context.path}"></mte-breadcrumb>
             <mte-result-status-bar
               .detected="${this.rootModel?.systemUnderTestMetrics.metrics.totalDetected}"
               .noCoverage="${this.rootModel?.systemUnderTestMetrics.metrics.noCoverage}"
