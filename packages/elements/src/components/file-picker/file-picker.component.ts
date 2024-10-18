@@ -40,7 +40,6 @@ export class MutationTestReportFilePickerComponent extends LitElement {
 
     document.addEventListener('keydown', (e) => this.#handleKeyDown(e));
     document.addEventListener('keyup', (e) => this.#handleKeyUp(e));
-    document.addEventListener('mte-file-picker-open', () => this.#togglePicker());
   }
 
   open() {
