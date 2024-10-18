@@ -2,7 +2,7 @@ import { html, LitElement, nothing } from 'lit';
 import { map } from 'lit/directives/map.js';
 import { customElement, property, state } from 'lit/decorators.js';
 import { tailwind } from '../../style/index.js';
-import type { FileUnderTestModel, Metrics, MetricsResult, MutationTestMetricsResult } from 'mutation-testing-metrics';
+import type { FileUnderTestModel, Metrics, MetricsResult, MutationTestMetricsResult, TestFileModel, TestMetrics } from 'mutation-testing-metrics';
 import { classMap } from 'lit/directives/class-map.js';
 import { renderIf } from '../../lib/html-helpers.js';
 
@@ -11,7 +11,7 @@ export class MutationTestReportFilePickerComponent extends LitElement {
   static styles = [tailwind];
 
   #currentPressedKeys = new Set<string>();
-  #searchMap = new Map<string, FileUnderTestModel>();
+  #searchMap = new Map<string, FileUnderTestModel | TestFileModel>();
 
   @property({ type: Object })
   public declare rootModel: MutationTestMetricsResult;
@@ -20,7 +20,7 @@ export class MutationTestReportFilePickerComponent extends LitElement {
   public declare openPicker: boolean;
 
   @state()
-  public declare filteredFiles: { name: string; file: FileUnderTestModel }[];
+  public declare filteredFiles: { name: string; file: FileUnderTestModel | TestFileModel }[];
 
   @state()
   public declare fileIndex: number;
@@ -90,20 +90,21 @@ export class MutationTestReportFilePickerComponent extends LitElement {
       <ul id="files" class="flex flex-col">
         ${renderIf(this.filteredFiles.length === 0, () => html`<li class="text-gray-800">No files found</li>`)}
         ${map(this.filteredFiles, ({ name, file }, index) => {
-          return html` <li>
-            <a
-              ?data-active="${index === this.fileIndex}"
-              tabindex="${index === this.fileIndex ? 0 : -1}"
-              @focusout="${() => this.#handleFocus()}"
-              @click="${() => this.#closePicker()}"
-              class="${classMap({
-                'border-primary-500': index === this.fileIndex,
-              })} my-1 flex rounded border-2 border-black bg-black p-1 px-2 text-gray-800 outline-none focus-visible:border-primary-200"
-              href="#mutant/${name}"
-            >
-              ${file.result?.name}<span class="mx-2">•</span><span class="text-gray-400">${name}</span>
-            </a>
-          </li>`;
+          return html` 
+            <li>
+              <a
+                ?data-active="${index === this.fileIndex}"
+                tabindex="${index === this.fileIndex ? 0 : -1}"
+                @focusout="${() => this.#handleFocus()}"
+                @click="${() => this.#closePicker()}"
+                class="${classMap({
+                  'border-primary-500': index === this.fileIndex,
+                })} my-1 flex rounded border-2 border-black bg-black p-1 px-2 text-gray-800 outline-none focus-visible:border-primary-200"
+                href="${this.#getFragment(file)}/${name}"
+              >
+                ${file.result?.name}<span class="mx-2">•</span><span class="text-gray-400">${name}</span>
+              </a>
+            </li>`;
         })}
       </ul>
     `;
@@ -117,24 +118,36 @@ export class MutationTestReportFilePickerComponent extends LitElement {
     if (this.rootModel == null) {
       return;
     }
+    const prepareFiles = <T extends FileUnderTestModel | TestFileModel>(
+      result: MetricsResult<T, Metrics | TestMetrics> | undefined,
+      parentPath: string | null = null,
+      allFilesKey: string
+    ) => {
+      if (result === undefined) {
+        return;
+      }
 
-    const prepareFiles = (result: MetricsResult<FileUnderTestModel, Metrics>, parentPath: string | null = null) => {
-      if (result.file != null) {
+      if (result.file !== null && result.file !== undefined) {
         this.#searchMap.set(parentPath == null ? result.name : `${parentPath}/${result.name}`, result.file);
       }
 
+      if (result.childResults.length === 0) {
+        return;
+      }
+
       result.childResults.forEach((child) => {
-        if (parentPath !== 'All files' && parentPath !== null && result.name !== null) {
-          prepareFiles(child, `${parentPath}/${result.name}`);
-        } else if ((parentPath === 'All files' || parentPath === null) && result.name !== 'All files') {
-          prepareFiles(child, result.name);
+        if (parentPath !== allFilesKey && parentPath !== null && result.name !== null) {
+          prepareFiles(child, `${parentPath}/${result.name}`, allFilesKey);
+        } else if ((parentPath === allFilesKey || parentPath === null) && result.name !== allFilesKey) {
+          prepareFiles(child, result.name, allFilesKey);
         } else {
-          prepareFiles(child);
+          prepareFiles(child, null, allFilesKey);
         }
       });
     };
 
-    prepareFiles(this.rootModel.systemUnderTestMetrics);
+    prepareFiles(this.rootModel.systemUnderTestMetrics, null, 'All files');
+    prepareFiles(this.rootModel.testMetrics, null, 'All tests');
   }
 
   #handleKeyDown(event: KeyboardEvent) {
@@ -198,7 +211,12 @@ export class MutationTestReportFilePickerComponent extends LitElement {
   }
 
   #handleEnter() {
-    window.location.hash = `#mutant/${this.filteredFiles[this.fileIndex].name}`;
+    if (this.filteredFiles.length === 0) {
+      return;
+    }
+
+    const entry = this.filteredFiles[this.fileIndex];
+    window.location.hash = `${this.#getFragment(entry.file)}/${entry.name}`;
     this.#closePicker();
   }
 
@@ -251,5 +269,9 @@ export class MutationTestReportFilePickerComponent extends LitElement {
     this.filteredFiles = Array.from(this.#searchMap.keys())
       .filter((file) => file.includes(filterKey))
       .map((file) => ({ name: file, file: this.#searchMap.get(file)! }));
+  }
+
+  #getFragment(file: FileUnderTestModel | TestFileModel) {
+    return (file as TestFileModel).tests === undefined ? '#mutant' : '#test';
   }
 }
