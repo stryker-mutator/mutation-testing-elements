@@ -94,21 +94,20 @@ export class MutationTestReportFilePickerComponent extends LitElement {
       <ul id="files" class="flex flex-col">
         ${renderIf(this.filteredFiles.length === 0, () => html`<li class="text-gray-800">No files found</li>`)}
         ${map(this.filteredFiles, ({ name, file }, index) => {
-          return html` 
-            <li>
-              <a
-                ?data-active="${index === this.fileIndex}"
-                tabindex="${index === this.fileIndex ? 0 : -1}"
-                @focusout="${() => this.#handleFocus()}"
-                @click="${() => this.#closePicker()}"
-                class="${classMap({
-                  'border-primary-500': index === this.fileIndex,
-                })} my-1 flex rounded border-2 border-black bg-black p-1 px-2 text-gray-800 outline-none focus-visible:border-primary-200"
-                href="${this.#getFragment(file)}/${name}"
-              >
-                ${file.result?.name}<span class="mx-2">•</span><span class="text-gray-400">${name}</span>
-              </a>
-            </li>`;
+          return html` <li>
+            <a
+              ?data-active="${index === this.fileIndex}"
+              tabindex="${index === this.fileIndex ? 0 : -1}"
+              @focusout="${() => this.#handleFocus()}"
+              @click="${() => this.#closePicker()}"
+              class="${classMap({
+                'border-primary-500': index === this.fileIndex,
+              })} my-1 flex rounded border-2 border-black bg-black p-1 px-2 text-gray-800 outline-none focus-visible:border-primary-200"
+              href="${this.#getFragment(file)}/${name}"
+            >
+              ${file.result?.name}<span class="mx-2">•</span><span class="text-gray-400">${name}</span>
+            </a>
+          </li>`;
         })}
       </ul>
     `;
@@ -125,7 +124,7 @@ export class MutationTestReportFilePickerComponent extends LitElement {
     const prepareFiles = <T extends FileUnderTestModel | TestFileModel>(
       result: MetricsResult<T, Metrics | TestMetrics> | undefined,
       parentPath: string | null = null,
-      allFilesKey: string
+      allFilesKey: string,
     ) => {
       if (result === undefined) {
         return;
