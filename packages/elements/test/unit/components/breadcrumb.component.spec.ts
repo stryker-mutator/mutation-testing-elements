@@ -59,6 +59,17 @@ describe(MutationTestReportBreadcrumbComponent.name, () => {
     expect(elements[2].querySelector('a')).null;
   });
 
+  it('should dispatch open-file-picker event', () => {
+    // Arrange
+    const spy = vi.spyOn(sut.element, 'dispatchEvent');
+
+    // Act
+    sut.element.shadowRoot?.querySelector('button')?.click();
+
+    // Assert
+    expect(spy).to.toHaveBeenCalledOnce();
+  });
+
   function href(fragment: string) {
     return `${window.location.toString().split('#')[0]}${fragment}`;
   }
