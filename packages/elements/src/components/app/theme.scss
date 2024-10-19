@@ -41,6 +41,9 @@
   --prism-selector: #00009f;
   --prism-tag: var(--prism-selector);
   --prism-keyword: var(--prism-selector);
+
+  --mut-mutant-polygon-color: black;
+
 }
 :host([theme='dark']) {
   // From https://atelierbram.github.io/syntax-highlighting/prism/demo/assets/css/prism-atom-dark.css
@@ -92,6 +95,8 @@
   --prism-regex: #e9c062;
 
   --prism-important: #fd971f;
+
+  --mut-mutant-polygon-color: var(--mut-gray-800);
 }
 
 // File icon theming ================================

@@ -31,8 +31,8 @@ $mutant-squiggly: 'Survived', 'NoCoverage';
   }
 }
 
-svg.mutant-dot.selected {
-  @apply fill-sky-400;
+polygon.mutant-dot-polygon.selected {
+  @apply stroke-gray-800;
 }
 
 @each $status in $mutant-squiggly {
