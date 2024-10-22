@@ -26,6 +26,7 @@ import type { Theme } from '../../lib/theme.js';
 import { globals, tailwind } from '../../style/index.js';
 import { RealTimeElement } from '../real-time-element.js';
 import theme from './theme.scss?inline';
+import { type MutationTestReportFilePickerComponent } from '../file-picker/file-picker.component.js';
 
 interface BaseContext {
   path: string[];
@@ -343,13 +344,18 @@ export class MutationTestReportAppComponent extends RealTimeElement {
   public render() {
     if (this.context.result ?? this.errorMessage) {
       return html`
+        <mte-file-picker .rootModel="${this.rootModel}"></mte-file-picker>
         <div class="container bg-white pb-4 font-sans text-gray-800 motion-safe:transition-max-width">
           <div class="space-y-4 transition-colors">
             ${this.renderErrorMessage()}
             <mte-theme-switch @theme-switch="${this.themeSwitch}" class="sticky top-offset z-20 float-right pt-6" .theme="${this.theme}">
             </mte-theme-switch>
             ${this.renderTitle()} ${this.renderTabs()}
-            <mte-breadcrumb .view="${this.context.view}" .path="${this.context.path}"></mte-breadcrumb>
+            <mte-breadcrumb
+              @mte-file-picker-open="${() => this.#openFilePicker()}"
+              .view="${this.context.view}"
+              .path="${this.context.path}"
+            ></mte-breadcrumb>
             <mte-result-status-bar
               .detected="${this.rootModel?.systemUnderTestMetrics.metrics.totalDetected}"
               .noCoverage="${this.rootModel?.systemUnderTestMetrics.metrics.noCoverage}"
@@ -413,6 +419,13 @@ export class MutationTestReportAppComponent extends RealTimeElement {
       `;
     } else {
       return nothing;
+    }
+  }
+
+  #openFilePicker() {
+    const picker = this.shadowRoot?.querySelector('mte-file-picker');
+    if (picker) {
+      (picker as MutationTestReportFilePickerComponent).open();
     }
   }
 }
