@@ -1,3 +1,5 @@
+@use 'sass:map';
+@use 'sass:string';
 @use 'sass:color';
 
 // Prismjs theming (code highlighting) =====================================
@@ -134,9 +136,9 @@
   $stroke-color: '#{$stroke-color}';
 
   // Escape leading '#' (url encode %23)
-  $index: str-index($stroke-color, '#');
+  $index: string.index($stroke-color, '#');
   @if $index eq 1 {
-    $stroke-color: '%23' + str-slice($stroke-color, 2);
+    $stroke-color: '%23' + string.slice($stroke-color, 2);
   }
   @return url("data:image/svg+xml;charset=UTF8,<svg xmlns='http://www.w3.org/2000/svg' height='3' width='6'><g fill='#{$stroke-color}'><path d='m5.5 0-3 3H1.1l3-3z'/><path d='m4 0 2 2V.6L5.4 0zM0 2l1 1h1.4L0 .6z'/></g></svg>");
 }
@@ -206,7 +208,7 @@
     --mut-primary-#{$range}: #{hexToRGB($value)};
   }
 
-  --mut-body-bg: #{map-get($grayRanges, 50)};
+  --mut-body-bg: #{map.get($grayRanges, 50)};
 
   --mut-white: var(--mut-gray-50);
 

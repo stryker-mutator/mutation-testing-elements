@@ -36,7 +36,7 @@ $width: 2.9em;
 }
 
 @function rad($angle) {
-  $unit: unit($angle);
+  $unit: math.unit($angle);
   $unitless: math.div($angle, $angle * 0 + 1);
   // If the angle has 'deg' as unit, convert to radians.
   @if $unit == deg {
