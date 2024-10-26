@@ -42,7 +42,7 @@
     "@types/mocha": "10.0.9",
     "@types/node": "20.16.13",
     "@types/sinon": "17.0.3",
-    "chai": "5.1.1",
+    "chai": "5.1.2",
     "json-schema-to-typescript": "15.0.2",
     "lerna": "8.1.8",
     "mocha": "10.7.3",
