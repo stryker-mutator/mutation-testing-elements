@@ -46,7 +46,7 @@
     "json-schema-to-typescript": "15.0.2",
     "lerna": "8.1.8",
     "mocha": "10.7.3",
-    "nx": "20.0.3",
+    "nx": "20.0.6",
     "prettier": "3.3.3",
     "prettier-plugin-tailwindcss": "0.6.8",
     "rimraf": "6.0.1",
