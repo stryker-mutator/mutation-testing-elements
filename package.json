@@ -43,7 +43,7 @@
     "@types/node": "22.8.7",
     "@types/sinon": "17.0.3",
     "chai": "5.1.2",
-    "json-schema-to-typescript": "15.0.2",
+    "json-schema-to-typescript": "15.0.3",
     "lerna": "8.1.9",
     "mocha": "10.8.2",
     "nx": "20.0.12",
