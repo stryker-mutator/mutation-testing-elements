@@ -6,6 +6,7 @@ import type { TestFileModel, TestModel } from 'mutation-testing-metrics';
 import { TestStatus } from 'mutation-testing-metrics';
 import style from './test-file.scss?inline';
 
+import { map } from 'lit/directives/map.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { determineLanguage, gte, highlightCode, transformHighlightedLines } from '../../lib/code-helpers.js';
 import type { MteCustomEvent } from '../../lib/custom-events.js';
@@ -14,8 +15,8 @@ import { getContextClassForTestStatus, getEmojiForTestStatus, scrollToCodeFragme
 import { prismjs, tailwind } from '../../style/index.js';
 import '../../style/prism-plugins';
 import { renderDots, renderLine } from '../file/util.js';
-import type { StateFilter } from '../state-filter/state-filter.component.js';
 import { RealTimeElement } from '../real-time-element.js';
+import type { StateFilter } from '../state-filter/state-filter.component.js';
 
 @customElement('mte-test-file')
 export class TestFileComponent extends RealTimeElement {
@@ -143,7 +144,7 @@ export class TestFileComponent extends RealTimeElement {
         this.model.name,
       )}">
       <table>
-        ${this.lines.map((line, lineIndex) => {
+        ${map(this.lines, (line, lineIndex) => {
         const lineNr = lineIndex + 1;
         const testDots = this.renderTestDots(testsByLine.get(lineNr));
         const finalTests = this.lines.length === lineNr ? renderFinalTests(lineNr) : nothing;

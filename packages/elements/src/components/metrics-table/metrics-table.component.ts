@@ -2,6 +2,7 @@ import type { PropertyValues } from 'lit';
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { map } from 'lit/directives/map.js';
 import { repeat } from 'lit/directives/repeat.js';
 import type { MetricsResult } from 'mutation-testing-metrics';
 import type { Thresholds } from 'mutation-testing-report-schema/api';
@@ -119,7 +120,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
       if (model.file) {
         return nothing;
       } else {
-        return model.childResults.map((childResult) => {
+        return map(model.childResults, (childResult) => {
           const nameParts: string[] = [childResult.name];
           while (!childResult.file && childResult.childResults.length === 1) {
             childResult = childResult.childResults[0];
@@ -143,7 +144,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
             : html`<span class="py-4">${row.name}</span>`}
         </div>
       </td>
-      ${this.columns.map((column) => this.renderCell(column, row.metrics))}
+      ${map(this.columns, (column) => this.renderCell(column, row.metrics))}
     </tr>`;
   }
 
