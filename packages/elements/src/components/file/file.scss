@@ -57,7 +57,7 @@ $mutant-squiggly: 'Survived', 'NoCoverage';
 }
 
 .mutant-dot {
-  @apply cursor-pointer m-0.5;
+  @apply m-0.5 cursor-pointer;
 }
 
 .diff-old {
