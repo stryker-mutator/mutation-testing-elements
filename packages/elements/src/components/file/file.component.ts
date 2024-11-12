@@ -1,6 +1,7 @@
 import type { PropertyValues } from 'lit';
 import { html, nothing, svg, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { map } from 'lit/directives/map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import type { FileUnderTestModel, MutantModel } from 'mutation-testing-metrics';
@@ -139,7 +140,7 @@ export class FileComponent extends RealTimeElement {
           (mutant) =>
             svg`<svg
               mutant-id="${mutant.id}"
-              class="mutant-dot ${this.selectedMutant?.id === mutant.id ? 'selected' : mutant.status}"
+              class="${classMap({ selected: this.selectedMutant?.id === mutant.id })} ${mutant.status} mutant-dot "
               height="10"
               width="12"
             >

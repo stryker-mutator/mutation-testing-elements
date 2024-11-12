@@ -6,6 +6,7 @@ import type { TestFileModel, TestModel } from 'mutation-testing-metrics';
 import { TestStatus } from 'mutation-testing-metrics';
 import style from './test-file.scss?inline';
 
+import { classMap } from 'lit/directives/class-map.js';
 import { map } from 'lit/directives/map.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { determineLanguage, gte, highlightCode, transformHighlightedLines } from '../../lib/code-helpers.js';
@@ -161,7 +162,7 @@ export class TestFileComponent extends RealTimeElement {
           (test) =>
             svg`<svg
               test-id="${test.id}"
-              class="test-dot ${this.selectedTest === test ? 'selected' : test.status}"
+              class="${classMap({ selected: this.selectedTest?.id === test.id })} test-dot ${test.status}"
               @click=${(ev: MouseEvent) => {
                 ev.stopPropagation();
                 this.toggleTest(test);
@@ -170,11 +171,13 @@ export class TestFileComponent extends RealTimeElement {
               width="12"
             >
               <title>${title(test)}</title>
-              ${this.selectedTest === test
-                ? // Triangle pointing down
-                  svg`<path class="stroke-gray-800" d="M5,10 L0,0 L10,0 Z" />`
-                : // Circle
-                  svg`<circle cx="5" cy="5" r="5" />`}
+              ${
+                this.selectedTest === test
+                  ? // Triangle pointing down
+                    svg`<path class="stroke-gray-800" d="M5,10 L0,0 L10,0 Z" />`
+                  : // Circle
+                    svg`<circle cx="5" cy="5" r="5" />`
+              }
             </svg>`,
         )
       : nothing;
