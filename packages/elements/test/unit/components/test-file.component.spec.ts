@@ -159,7 +159,7 @@ describe(TestFileComponent.name, () => {
       await sut.whenStable();
 
       expect(sut.$('code tr.line:nth-child(2) .code').innerHTML).contains(
-        `<svg height="10" width="12" test-id="spec-1" class="test-dot NotCovering">`,
+        `<svg height="10" width="12" test-id="spec-1" class="test-dot  NotCovering">`,
       );
     });
 
