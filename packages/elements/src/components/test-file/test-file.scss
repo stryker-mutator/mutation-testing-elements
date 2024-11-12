@@ -11,3 +11,7 @@ $test-themes: (
     @apply #{$theme};
   }
 }
+
+.test-dot {
+  @apply m-0.5 cursor-pointer;
+}

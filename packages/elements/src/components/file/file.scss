@@ -55,6 +55,10 @@ $mutant-squiggly: 'Survived', 'NoCoverage';
   }
 }
 
+.mutant-dot {
+  @apply cursor-pointer m-0.5;
+}
+
 .diff-old {
   background-color: var(--mut-diff-del-bg);
 }

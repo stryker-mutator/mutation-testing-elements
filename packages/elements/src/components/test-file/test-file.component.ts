@@ -159,7 +159,7 @@ export class TestFileComponent extends RealTimeElement {
     return tests?.length
       ? tests.map(
           (test) =>
-            svg`<svg test-id="${test.id}" class="test-dot cursor-pointer m-0.5 ${test.status}" @click=${(ev: MouseEvent) => {
+            svg`<svg test-id="${test.id}" class="test-dot ${this.selectedTest === test ? 'selected' : test.status}" @click=${(ev: MouseEvent) => {
               ev.stopPropagation();
               this.toggleTest(test);
             }} height="10" width="12">
