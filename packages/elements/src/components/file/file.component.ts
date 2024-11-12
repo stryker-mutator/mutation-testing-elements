@@ -1,6 +1,7 @@
 import type { PropertyValues } from 'lit';
 import { html, nothing, svg, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { map } from 'lit/directives/map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import type { FileUnderTestModel, MutantModel } from 'mutation-testing-metrics';
 import type { MutantResult, MutantStatus } from 'mutation-testing-report-schema/api';
@@ -9,10 +10,10 @@ import type { MteCustomEvent } from '../../lib/custom-events.js';
 import { createCustomEvent } from '../../lib/custom-events.js';
 import { escapeHtml, getContextClassForStatus, getEmojiForStatus, scrollToCodeFragmentIfNeeded } from '../../lib/html-helpers.js';
 import { prismjs, tailwind } from '../../style/index.js';
+import { RealTimeElement } from '../real-time-element.js';
 import type { StateFilter } from '../state-filter/state-filter.component.js';
 import style from './file.scss?inline';
 import { renderDots, renderLine } from './util.js';
-import { RealTimeElement } from '../real-time-element.js';
 
 const diffOldClass = 'diff-old';
 const diffNewClass = 'diff-new';
@@ -105,7 +106,7 @@ export class FileComponent extends RealTimeElement {
         class="line-numbers ${this.selectedMutantStates.map((state) => `mte-selected-${state}`).join(' ')} flex rounded-md py-4"
       >
         <code ${ref(this.codeRef)} class="flex language-${this.model.language}">
-          <table>${this.lines.map((line, lineIndex) => {
+          <table>${map(this.lines, (line, lineIndex) => {
         const lineNr = lineIndex + 1;
         const mutantDots = this.renderMutantDots(mutantLineMap.get(lineNr));
         const finalMutants = this.lines.length === lineNr ? renderFinalMutants(lineNr) : nothing;
@@ -136,12 +137,16 @@ export class FileComponent extends RealTimeElement {
     return mutants?.length
       ? mutants.map(
           (mutant) =>
-            svg`<svg mutant-id="${mutant.id}" class="mutant-dot ${
-              this.selectedMutant?.id === mutant.id ? 'selected' : mutant.status
-            }" height="10" width="12">
-          <title>${title(mutant)}</title>
-          <circle cx="5" cy="5" r="5" />
-          </svg>`,
+            svg`<svg mutant-id="${mutant.id}" class="mutant-dot ${this.selectedMutant?.id === mutant.id ? 'selected' : ''} ${mutant.status}" height="10" width="12">
+              <title>${title(mutant)}</title>
+              ${
+                this.selectedMutant?.id === mutant.id
+                  ? // Triangle pointing down
+                    svg`<path class="stroke-gray-800" d="M5,10 L0,0 L10,0 Z" />`
+                  : // Circle
+                    svg`<circle cx="5" cy="5" r="5" />`
+              }
+            </svg>`,
         )
       : nothing;
   }

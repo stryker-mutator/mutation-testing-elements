@@ -32,10 +32,6 @@ $mutant-squiggly: 'Survived', 'NoCoverage';
   }
 }
 
-svg.mutant-dot.selected {
-  @apply fill-sky-400;
-}
-
 @each $status in $mutant-squiggly {
   .mte-selected-#{$status} .mutant.#{$status} {
     /*
@@ -61,11 +57,7 @@ svg.mutant-dot.selected {
 }
 
 .mutant-dot {
-  @apply cursor-pointer;
-}
-
-svg.mutant-dot {
-  @apply m-[2px];
+  @apply m-0.5 cursor-pointer;
 }
 
 .diff-old {

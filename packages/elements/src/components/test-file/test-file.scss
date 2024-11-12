@@ -12,10 +12,6 @@ $test-themes: (
   }
 }
 
-svg.test-dot.selected {
-  @apply fill-sky-400;
-}
-
-svg.test-dot {
-  @apply m-[2px];
+.test-dot {
+  @apply m-0.5 cursor-pointer;
 }

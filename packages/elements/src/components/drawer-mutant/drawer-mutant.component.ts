@@ -1,6 +1,7 @@
 import type { TemplateResult } from 'lit';
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { map } from 'lit/directives/map.js';
 import type { MutantModel, TestModel } from 'mutation-testing-metrics';
 import { describeLocation, getEmojiForStatus, plural, renderIf, renderIfPresent } from '../../lib/html-helpers.js';
 import { tailwind } from '../../style/index.js';
@@ -79,12 +80,13 @@ export class MutationTestReportDrawerMutant extends RealTimeElement {
 
   private renderDetail() {
     return html`<ul class="mb-6 mr-2">
-      ${this.mutant?.killedByTests?.map((test) =>
+      ${map(this.mutant?.killedByTests, (test) =>
         renderDetailLine('This mutant was killed by this test', html`${renderEmoji('🎯', 'killed')} ${describeTest(test)}`),
       )}
-      ${this.mutant?.coveredByTests
-        ?.filter((test) => !this.mutant?.killedByTests?.includes(test))
-        .map((test) => renderDetailLine('This mutant was covered by this test', html`${renderEmoji('☂️', 'umbrella')} ${describeTest(test)}`))}
+      ${map(
+        this.mutant?.coveredByTests?.filter((test) => !this.mutant?.killedByTests?.includes(test)),
+        (test) => renderDetailLine('This mutant was covered by this test', html`${renderEmoji('☂️', 'umbrella')} ${describeTest(test)}`),
+      )}
     </ul>`;
   }
 }
