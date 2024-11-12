@@ -137,18 +137,21 @@ export class FileComponent extends RealTimeElement {
     return mutants?.length
       ? mutants.map(
           (mutant) =>
-            svg`<svg mutant-id="${mutant.id}" class="mutant-dot ${
-              this.selectedMutant?.id === mutant.id ? 'selected' : mutant.status
-            }" height="10" width="12">
-            <title>${title(mutant)}</title>
-            ${
-              this.selectedMutant?.id === mutant.id
-                ? // Triangle pointing down
-                  svg`<path class="stroke-gray-800" d="M5,10 L0,0 L10,0 Z" />`
-                : // Circle
-                  svg`<circle cx="5" cy="5" r="5" />`
-            }
-          </svg>`,
+            svg`<svg
+              mutant-id="${mutant.id}"
+              class="mutant-dot ${this.selectedMutant?.id === mutant.id ? 'selected' : mutant.status}"
+              height="10"
+              width="12"
+            >
+              <title>${title(mutant)}</title>
+              ${
+                this.selectedMutant?.id === mutant.id
+                  ? // Triangle pointing down
+                    svg`<path class="stroke-gray-800" d="M5,10 L0,0 L10,0 Z" />`
+                  : // Circle
+                    svg`<circle cx="5" cy="5" r="5" />`
+              }
+            </svg>`,
         )
       : nothing;
   }
