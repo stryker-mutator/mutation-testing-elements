@@ -31,10 +31,6 @@ $mutant-squiggly: 'Survived', 'NoCoverage';
   }
 }
 
-polygon.mutant-dot-polygon {
-  @apply stroke-gray-800;
-}
-
 @each $status in $mutant-squiggly {
   .mte-selected-#{$status} .mutant.#{$status} {
     /*
@@ -57,14 +53,6 @@ polygon.mutant-dot-polygon {
       border-bottom-style: none;
     }
   }
-}
-
-.mutant-dot {
-  @apply cursor-pointer;
-}
-
-svg.mutant-dot {
-  @apply m-[2px];
 }
 
 .diff-old {

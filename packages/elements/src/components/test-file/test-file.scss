@@ -11,11 +11,3 @@ $test-themes: (
     @apply #{$theme};
   }
 }
-
-svg.test-dot.selected {
-  @apply fill-sky-400;
-}
-
-svg.test-dot {
-  @apply m-[2px];
-}
