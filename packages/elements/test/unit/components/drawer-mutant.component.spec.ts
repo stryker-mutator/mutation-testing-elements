@@ -39,6 +39,7 @@ describe(MutationTestReportDrawerMutant.name, () => {
       await sut.whenStable();
       const headerText = sut.$('[slot="header"]').textContent;
       expect(headerText).match(/👽\s*fooMutator\s*Survived\s*\(2:1\)\s*/);
+      expect(selectDrawer().hasDetail).false;
     });
 
     it('should render closed by default', () => {
@@ -50,6 +51,7 @@ describe(MutationTestReportDrawerMutant.name, () => {
         sut.element.mutant = mutant;
         await sut.whenStable();
         expect(summaryText()).eq('');
+        expect(selectDrawer().hasDetail).false;
       });
 
       it('should render the first killedBy test', async () => {
@@ -57,6 +59,7 @@ describe(MutationTestReportDrawerMutant.name, () => {
         sut.element.mutant = mutant;
         await sut.whenStable();
         expect(summaryText()).contain('🎯 Killed by: foo should bar');
+        expect(selectDrawer().hasDetail).true;
       });
 
       it('should mention more killedBy tests when they exist', async () => {
@@ -78,6 +81,7 @@ describe(MutationTestReportDrawerMutant.name, () => {
         expect(summary).contains('☂️ Covered by 1 test');
         expect(summary).not.contains('by 1 tests'); // not plural
         expect(summary).not.contains('yet still survived');
+        expect(selectDrawer().hasDetail).true;
       });
 
       it('should not mentioned that a killed mutant still survived', async () => {
@@ -112,6 +116,7 @@ describe(MutationTestReportDrawerMutant.name, () => {
         await sut.whenStable();
         const summary = summaryText();
         expect(summary).contains('🕵️ Hit limit reached (501 > 500)');
+        expect(selectDrawer().hasDetail).true;
       });
 
       it('should not render the status reason when it is empty', async () => {
