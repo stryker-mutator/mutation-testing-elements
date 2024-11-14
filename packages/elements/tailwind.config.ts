@@ -65,6 +65,7 @@ const config: Config = {
         'max-width': 'max-width',
         height: 'height',
         width: 'width',
+        'stroke-opacity': 'stroke-opacity',
       },
     },
   },
