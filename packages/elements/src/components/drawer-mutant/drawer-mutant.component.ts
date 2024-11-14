@@ -19,7 +19,7 @@ const whitespacePreserving = (content: string | TemplateResult) => html`<span cl
 
 @customElement('mte-drawer-mutant')
 export class MutationTestReportDrawerMutant extends RealTimeElement {
-  @property()
+  @property({ attribute: false })
   public declare mutant?: MutantModel;
 
   @property({ reflect: true })
@@ -35,7 +35,7 @@ export class MutationTestReportDrawerMutant extends RealTimeElement {
   public render() {
     return renderDrawer(
       // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- we want to coalesce on length 0
-      { hasDetail: Boolean(this.mutant?.killedByTests?.length || this.mutant?.coveredByTests?.length), mode: this.mode },
+      { hasDetail: Boolean(this.mutant?.killedByTests?.length || this.mutant?.coveredByTests?.length || this.mutant?.statusReason), mode: this.mode },
       renderIfPresent(
         this.mutant,
         (mutant) => html`
