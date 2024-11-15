@@ -63,7 +63,7 @@ export class TestFileComponent extends RealTimeElement {
 
   #handleKeyDown = (event: KeyboardEvent) => {
     if (event.key === 'Escape') {
-      this.#unSelectTest();
+      this.#deselectTest();
     }
   };
 
@@ -165,7 +165,7 @@ export class TestFileComponent extends RealTimeElement {
 
       return html`<pre
         id="report-code-block"
-        @click="${this.#unSelectTest}"
+        @click="${this.#deselectTest}"
         class="line-numbers flex rounded-md p-1"
       ><code class="flex language-${determineLanguage(this.model.name)}">
       <table>
@@ -180,7 +180,7 @@ export class TestFileComponent extends RealTimeElement {
     return nothing;
   }
 
-  #unSelectTest = () => {
+  #deselectTest = () => {
     if (this.selectedTest) {
       this.toggleTest(this.selectedTest);
     }
