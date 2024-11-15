@@ -14,7 +14,7 @@ import { createCustomEvent } from '../../lib/custom-events.js';
 import { getContextClassForTestStatus, getEmojiForTestStatus, scrollToCodeFragmentIfNeeded } from '../../lib/html-helpers.js';
 import { prismjs, tailwind } from '../../style/index.js';
 import '../../style/prism-plugins';
-import { renderDots, renderLine } from '../file/util.js';
+import { beginElementAnimation, circle, renderDots, renderLine, triangle } from '../file/util.js';
 import { RealTimeElement } from '../real-time-element.js';
 import type { StateFilter } from '../state-filter/state-filter.component.js';
 
@@ -40,13 +40,32 @@ export class TestFileComponent extends RealTimeElement {
   @state()
   private declare tests: TestModel[];
 
+  #abortController: AbortController;
+
   constructor() {
     super();
     this.filters = [];
     this.lines = [];
     this.enabledStates = [];
     this.tests = [];
+    this.#abortController = new AbortController();
   }
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    window.addEventListener('keydown', this.#handleKeyDown, { signal: this.#abortController.signal });
+  }
+
+  disconnectedCallback(): void {
+    this.#abortController.abort();
+    super.disconnectedCallback();
+  }
+
+  #handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      this.#deselectTest();
+    }
+  };
 
   private readonly filtersChanged = (event: MteCustomEvent<'filters-changed'>) => {
     this.enabledStates = event.detail as TestStatus[];
@@ -56,10 +75,14 @@ export class TestFileComponent extends RealTimeElement {
   };
 
   private toggleTest(test: TestModel) {
+    this.#animateTestToggle(test);
     if (this.selectedTest === test) {
       this.selectedTest = undefined;
       this.dispatchEvent(createCustomEvent('test-selected', { selected: false, test }));
     } else {
+      if (this.selectedTest) {
+        this.#animateTestToggle(this.selectedTest);
+      }
       this.selectedTest = test;
       this.dispatchEvent(createCustomEvent('test-selected', { selected: true, test }));
       scrollToCodeFragmentIfNeeded(this.shadowRoot!.querySelector(`[test-id="${test.id}"]`));
@@ -140,9 +163,11 @@ export class TestFileComponent extends RealTimeElement {
         return this.renderTestDots([...testsByLine.entries()].filter(([line]) => line > lastLine).flatMap(([, tests]) => tests));
       };
 
-      return html`<pre id="report-code-block" class="line-numbers flex rounded-md p-1"><code class="flex language-${determineLanguage(
-        this.model.name,
-      )}">
+      return html`<pre
+        id="report-code-block"
+        @click="${this.#deselectTest}"
+        class="line-numbers flex rounded-md p-1"
+      ><code class="flex language-${determineLanguage(this.model.name)}">
       <table>
         ${map(this.lines, (line, lineIndex) => {
         const lineNr = lineIndex + 1;
@@ -154,6 +179,12 @@ export class TestFileComponent extends RealTimeElement {
     }
     return nothing;
   }
+
+  #deselectTest = () => {
+    if (this.selectedTest) {
+      this.toggleTest(this.selectedTest);
+    }
+  };
 
   private renderTestDots(tests: TestModel[] | undefined) {
     return tests?.length
@@ -170,13 +201,7 @@ export class TestFileComponent extends RealTimeElement {
               width="12"
             >
               <title>${title(test)}</title>
-              ${
-                this.selectedTest === test
-                  ? // Triangle pointing down
-                    svg`<path class="stroke-gray-800" d="M5,10 L0,0 L10,0 Z" />`
-                  : // Circle
-                    svg`<circle cx="5" cy="5" r="5" />`
-              }
+              ${this.selectedTest === test ? triangle : circle}
             </svg>`,
         )
       : nothing;
@@ -225,6 +250,10 @@ export class TestFileComponent extends RealTimeElement {
     if (this.model.source) {
       this.lines = transformHighlightedLines(highlightCode(this.model.source, this.model.name));
     }
+  }
+
+  #animateTestToggle(test: TestModel) {
+    beginElementAnimation(this.shadowRoot!, 'test-id', test.id);
   }
 }
 function title(test: TestModel): string {

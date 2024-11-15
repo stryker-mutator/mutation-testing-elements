@@ -13,7 +13,7 @@ import { prismjs, tailwind } from '../../style/index.js';
 import { RealTimeElement } from '../real-time-element.js';
 import type { StateFilter } from '../state-filter/state-filter.component.js';
 import style from './file.scss?inline';
-import { renderDots, renderLine } from './util.js';
+import { beginElementAnimation, circle, renderDots, renderLine, triangle } from './util.js';
 
 const diffOldClass = 'diff-old';
 const diffNewClass = 'diff-new';
@@ -39,6 +39,8 @@ export class FileComponent extends RealTimeElement {
   @state()
   public declare mutants: MutantModel[];
 
+  #abortController: AbortController;
+
   private codeRef = createRef<HTMLElement>();
 
   public constructor() {
@@ -47,7 +49,24 @@ export class FileComponent extends RealTimeElement {
     this.selectedMutantStates = [];
     this.lines = [];
     this.mutants = [];
+    this.#abortController = new AbortController();
   }
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    window.addEventListener('keydown', this.#handleKeyDown, { signal: this.#abortController.signal });
+  }
+
+  disconnectedCallback(): void {
+    this.#abortController.abort();
+    super.disconnectedCallback();
+  }
+
+  #handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === 'Escape' && this.selectedMutant) {
+      this.toggleMutant(this.selectedMutant);
+    }
+  };
 
   private readonly filtersChanged = (event: MteCustomEvent<'filters-changed'>) => {
     // Pending is not filterable, but they should still be shown to the user.
@@ -139,14 +158,8 @@ export class FileComponent extends RealTimeElement {
           (mutant) =>
             svg`<svg mutant-id="${mutant.id}" class="mutant-dot ${this.selectedMutant?.id === mutant.id ? 'selected' : ''} ${mutant.status}" height="10" width="12">
               <title>${title(mutant)}</title>
-              ${
-                this.selectedMutant?.id === mutant.id
-                  ? // Triangle pointing down
-                    svg`<path class="stroke-gray-800" d="M5,10 L0,0 L10,0 Z" />`
-                  : // Circle
-                    svg`<circle cx="5" cy="5" r="5" />`
-              }
-            </svg>`,
+              ${this.selectedMutant?.id === mutant.id ? triangle : circle}
+          </svg>`,
         )
       : nothing;
   }
@@ -154,10 +167,16 @@ export class FileComponent extends RealTimeElement {
   private toggleMutant(mutant: MutantModel) {
     this.removeCurrentDiff();
 
+    // Animate (de)selection
+    this.#animateMutantToggle(mutant);
+
     if (this.selectedMutant === mutant) {
       this.selectedMutant = undefined;
       this.dispatchEvent(createCustomEvent('mutant-selected', { selected: false, mutant }));
       return;
+    } else if (this.selectedMutant) {
+      // Animate old selected mutant
+      this.#animateMutantToggle(this.selectedMutant);
     }
 
     this.selectedMutant = mutant;
@@ -273,6 +292,10 @@ export class FileComponent extends RealTimeElement {
     const lineStart = `<tr class="${diffNewClass}"><td class="empty-line-number"></td><td class="line-marker"></td><td class="code">`;
     const lineEnd = '</td></tr>';
     return lines.map((line) => `${lineStart}${line}${lineEnd}`).join('');
+  }
+
+  #animateMutantToggle(mutant: MutantModel) {
+    beginElementAnimation(this.codeRef.value, 'mutant-id', mutant.id);
   }
 }
 

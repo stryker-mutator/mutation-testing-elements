@@ -38,10 +38,13 @@ export class MutationTestReportDrawer extends LitElement {
 
   #contentHeightController: ResizeController<number>;
 
+  #abortController: AbortController;
+
   constructor() {
     super();
     this.mode = 'closed';
     this.hasDetail = false;
+    this.#abortController = new AbortController();
 
     this.#headerRef = createRef();
     this.#contentHeightController = new ResizeController(this, {
@@ -65,11 +68,11 @@ export class MutationTestReportDrawer extends LitElement {
 
   connectedCallback(): void {
     super.connectedCallback();
-    window.addEventListener('keydown', this.#handleKeyDown);
+    window.addEventListener('keydown', this.#handleKeyDown, { signal: this.#abortController.signal });
   }
 
   disconnectedCallback(): void {
-    window.removeEventListener('keydown', this.#handleKeyDown);
+    this.#abortController.abort();
     super.disconnectedCallback();
   }
 
