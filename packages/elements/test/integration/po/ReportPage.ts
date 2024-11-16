@@ -72,8 +72,4 @@ export class ReportPage extends ElementSelector {
   pageYOffset(): Promise<number> {
     return this.page.evaluate('window.pageYOffset');
   }
-
-  async openPicker(): Promise<void> {
-    await this.page.keyboard.press('Control+K');
-  }
 }

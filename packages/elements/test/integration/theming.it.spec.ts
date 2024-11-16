@@ -44,7 +44,7 @@ test.describe('Theming', () => {
 
     test.describe('when opening the file picker', () => {
       test('should show the file picker', async () => {
-        await page.openPicker();
+        await page.breadcrumb().clickOnSearchIcon();  
       });
 
       itShouldMatchScreenshot('should match the dark theme');
@@ -78,7 +78,7 @@ test.describe('Theming', () => {
 
     test.describe('when opening the file picker', () => {
       test('should match screenshot', async () => {
-        await page.openPicker();
+        await page.breadcrumb().clickOnSearchIcon();
       });
 
       itShouldMatchScreenshot('should match the light theme');
