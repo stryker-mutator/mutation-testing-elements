@@ -6,7 +6,7 @@ import { repeat } from 'lit/directives/repeat.js';
 import type { FileUnderTestModel, Metrics, MetricsResult, MutationTestMetricsResult, TestFileModel, TestMetrics } from 'mutation-testing-metrics';
 
 import { searchIcon } from '../../lib/svg-icons.js';
-import { renderIf } from '../../lib/html-helpers.js';
+import { renderIf, toAbsoluteUrl } from '../../lib/html-helpers.js';
 import { tailwind } from '../../style/index.js';
 
 @customElement('mte-file-picker')
@@ -116,7 +116,7 @@ export class MutationTestReportFilePickerComponent extends LitElement {
                 class="${classMap({
                   'border-primary-500': index === this.fileIndex,
                 })} my-1 flex rounded border-2 border-black bg-black p-1 px-2 text-gray-800 outline-none focus-visible:border-primary-200"
-                href="${this.#getFragment(file)}/${name}"
+                href="${toAbsoluteUrl(this.#getFragment(file), file.name)}"
               >
                 ${file.result?.name}<span class="mx-2">•</span><span class="text-gray-400">${name}</span>
               </a>
@@ -224,7 +224,7 @@ export class MutationTestReportFilePickerComponent extends LitElement {
     }
 
     const entry = this.filteredFiles[this.fileIndex];
-    window.location.hash = `${this.#getFragment(entry.file)}/${entry.name}`;
+    window.location.replace(toAbsoluteUrl(this.#getFragment(entry.file), entry.name));
     this.#closePicker();
   }
 
@@ -274,6 +274,6 @@ export class MutationTestReportFilePickerComponent extends LitElement {
   }
 
   #getFragment(file: FileUnderTestModel | TestFileModel) {
-    return (file as TestFileModel).tests === undefined ? '#mutant' : '#test';
+    return (file as TestFileModel).tests === undefined ? 'mutant' : 'test';
   }
 }
