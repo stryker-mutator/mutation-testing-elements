@@ -41,6 +41,13 @@ test.describe('Theming', () => {
 
       itShouldMatchScreenshot('should match the dark theme');
     });
+
+    test.describe('when opening the file picker', () => {
+      test('should show the file picker', async () => {
+        await page.openPicker();
+        itShouldMatchScreenshot('should match the dark theme');
+      });
+    });
   });
 
   test.describe('light theme', () => {
@@ -66,6 +73,13 @@ test.describe('Theming', () => {
       });
 
       itShouldMatchScreenshot('should match the light theme');
+    });
+
+    test.describe('when opening the file picker', () => {
+      test('should match screenshot', async () => {
+        await page.openPicker();
+        itShouldMatchScreenshot('should match the light theme');
+      });
     });
   });
 });
