@@ -38,6 +38,20 @@ describe(MutationTestReportFilePickerComponent.name, () => {
     expect(sut.element.shadowRoot?.querySelector('#picker')).toBeVisible();
   });
 
+  it('should show the picker when macos keycombo is pressed', async () => {
+    // Arrange
+    sut.element.rootModel = calculateMutationTestMetrics(createReport());
+
+    // Act
+    sut.connect();
+    await sut.whenStable();
+    await userEvent.keyboard('{Meta>}{k}');
+    await sut.whenStable();
+
+    // Assert
+    expect(sut.element.shadowRoot?.querySelector('#picker')).toBeVisible();
+  })
+
   describe('when the picker is open', () => {
     beforeEach(async () => {
       sut.element.rootModel = calculateMutationTestMetrics(

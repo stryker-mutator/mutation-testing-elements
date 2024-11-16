@@ -167,7 +167,7 @@ export class MutationTestReportFilePickerComponent extends LitElement {
   }
 
   #handleKeyDown(event: KeyboardEvent) {
-    if (event.ctrlKey && event.key === 'k') {
+    if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
       this.#togglePicker(event);
     } else if (!this.openPicker && event.key === '/') {
       this.#togglePicker(event);
