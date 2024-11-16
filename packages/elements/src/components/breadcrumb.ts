@@ -72,9 +72,7 @@ export class MutationTestReportBreadcrumbComponent extends LitElement {
   }
 
   #renderSearchIcon() {
-    return html`
-      <button @click="${() => this.#dispatchFilePickerOpenEvent()}" class="ml-auto" aria-label="open file picker">${searchIcon}</button>
-    `;
+    return html` <button @click="${() => this.#dispatchFilePickerOpenEvent()}" class="ml-auto" aria-label="open file picker">${searchIcon}</button> `;
   }
 
   #dispatchFilePickerOpenEvent() {

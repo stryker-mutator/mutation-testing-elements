@@ -60,7 +60,7 @@ export class MutationTestReportFilePickerComponent extends LitElement {
 
   open() {
     this.openPicker = true;
-    
+
     void this.updateComplete.then(() => this.#focusInput());
   }
 

@@ -74,6 +74,6 @@ export class ReportPage extends ElementSelector {
   }
 
   async openPicker(): Promise<void> {
-    await this.page.keyboard.press("Control+K")
+    await this.page.keyboard.press('Control+K');
   }
 }

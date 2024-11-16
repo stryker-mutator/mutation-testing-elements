@@ -50,7 +50,7 @@ describe(MutationTestReportFilePickerComponent.name, () => {
 
     // Assert
     expect(sut.element.shadowRoot?.querySelector('#picker')).toBeVisible();
-  })
+  });
 
   describe('when the picker is open', () => {
     beforeEach(async () => {
