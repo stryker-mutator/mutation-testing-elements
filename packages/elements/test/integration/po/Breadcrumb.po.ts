@@ -12,6 +12,7 @@ export default class Breadcrumb extends PageObject {
 
   public async clickOnSearchIcon(): Promise<void> {
     const button = this.$('button');
+    console.log(button);
     await button.click();
   }
 }
