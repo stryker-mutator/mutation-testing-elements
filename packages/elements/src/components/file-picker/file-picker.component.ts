@@ -115,7 +115,7 @@ export class MutationTestReportFilePickerComponent extends LitElement {
                 @click="${() => this.#closePicker()}"
                 class="${classMap({
                   'border-primary-500': index === this.fileIndex,
-                })} my-1 flex rounded border-2 border-black bg-black p-1 px-2 text-gray-800 outline-none focus-visible:border-primary-200"
+                })} my-1 flex rounded border-2 border-white bg-white p-1 px-2 text-gray-800 outline-none focus-visible:border-primary-200"
                 href="${toAbsoluteUrl(this.#getFragment(file), file.name)}"
               >
                 ${file.result?.name}<span class="mx-2">•</span><span class="text-gray-400">${name}</span>
