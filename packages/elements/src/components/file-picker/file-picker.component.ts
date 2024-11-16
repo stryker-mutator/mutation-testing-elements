@@ -267,7 +267,7 @@ export class MutationTestReportFilePickerComponent extends LitElement {
 
   #filter(filterKey: string) {
     this.filteredFiles = Array.from(this.#searchMap.keys())
-      .filter((file) => file.includes(filterKey.toLowerCase()))
+      .filter((file) => file.toLowerCase().includes(filterKey.toLowerCase()))
       .map((file) => ({ name: file, file: this.#searchMap.get(file)! }));
   }
 
