@@ -6,6 +6,7 @@ import { toAbsoluteUrl } from '../lib/html-helpers.js';
 import { View } from '../lib/router.js';
 import { searchIcon } from '../lib/svg-icons.js';
 import { tailwind } from '../style/index.js';
+import { createCustomEvent } from '../lib/custom-events.js';
 
 @customElement('mte-breadcrumb')
 export class MutationTestReportBreadcrumbComponent extends LitElement {
@@ -77,6 +78,6 @@ export class MutationTestReportBreadcrumbComponent extends LitElement {
   }
 
   #dispatchFilePickerOpenEvent() {
-    this.dispatchEvent(new CustomEvent('mte-file-picker-open'));
+    this.dispatchEvent(createCustomEvent('mte-file-picker-open', undefined));
   }
 }
