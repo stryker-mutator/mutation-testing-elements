@@ -24,7 +24,7 @@ export class FileComponent extends RealTimeElement {
   @state()
   public declare filters: StateFilter<MutantStatus>[];
 
-  @property()
+  @property({ attribute: false })
   public declare model: FileUnderTestModel;
 
   @state()
@@ -203,7 +203,7 @@ export class FileComponent extends RealTimeElement {
     this.updateFileRepresentation();
   }
 
-  public update(changes: PropertyValues<FileComponent>) {
+  public update(changes: PropertyValues<this>) {
     if (changes.has('model') && this.model) {
       this.updateFileRepresentation();
     }

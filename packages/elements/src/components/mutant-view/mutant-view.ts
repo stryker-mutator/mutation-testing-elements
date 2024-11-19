@@ -15,12 +15,12 @@ export class MutationTestReportMutantViewComponent extends RealTimeElement {
   @property()
   public declare drawerMode: DrawerMode;
 
-  @property()
+  @property({ attribute: false })
   private declare selectedMutant?: MutantModel;
 
   public static styles = [unsafeCSS(style), tailwind];
 
-  @property()
+  @property({ attribute: false })
   public declare result: MetricsResult<FileUnderTestModel, Metrics>;
 
   @property({ attribute: false, reflect: false })
@@ -44,7 +44,7 @@ export class MutationTestReportMutantViewComponent extends RealTimeElement {
     this.drawerMode = event.detail.selected ? 'half' : 'closed';
   };
 
-  updated(changes: PropertyValues) {
+  updated(changes: PropertyValues<this>) {
     if (changes.has('result') && !this.result.file) {
       this.drawerMode = 'closed';
     }

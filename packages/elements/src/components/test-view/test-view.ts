@@ -14,13 +14,13 @@ export class MutationTestReportTestViewComponent extends RealTimeElement {
   @property()
   public declare drawerMode: DrawerMode;
 
-  @property()
+  @property({ attribute: false })
   public declare result: MetricsResult<TestFileModel, TestMetrics>;
 
   @property({ attribute: false, reflect: false })
   public declare path: string[];
 
-  @property()
+  @property({ attribute: false })
   private declare selectedTest?: TestModel;
 
   public static styles = [unsafeCSS(style), tailwind];
@@ -40,7 +40,7 @@ export class MutationTestReportTestViewComponent extends RealTimeElement {
     this.drawerMode = event.detail.selected ? 'half' : 'closed';
   };
 
-  public updated(changes: PropertyValues) {
+  public updated(changes: PropertyValues<this>) {
     if (changes.has('result') && !this.result.file) {
       this.drawerMode = 'closed';
     }

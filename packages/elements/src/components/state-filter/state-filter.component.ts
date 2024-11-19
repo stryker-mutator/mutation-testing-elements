@@ -23,7 +23,7 @@ export class FileStateFilterComponent<TStatus extends string> extends RealTimeEl
   @property({ type: Array })
   public declare filters?: StateFilter<TStatus>[];
 
-  public updated(changedProperties: PropertyValues) {
+  public updated(changedProperties: PropertyValues<this>) {
     if (changedProperties.has('filters')) {
       this.dispatchFiltersChangedEvent();
     }

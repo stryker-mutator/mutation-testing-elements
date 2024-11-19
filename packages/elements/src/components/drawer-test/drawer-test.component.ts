@@ -14,7 +14,7 @@ const describeMutant = (mutant: MutantModel) => html`<code>${mutant.getMutatedLi
 
 @customElement('mte-drawer-test')
 export class MutationTestReportDrawerTestComponent extends RealTimeElement {
-  @property()
+  @property({ attribute: false })
   public declare test?: TestModel;
 
   @property({ reflect: true })

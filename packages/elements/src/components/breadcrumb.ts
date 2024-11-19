@@ -7,7 +7,7 @@ import { tailwind } from '../style/index.js';
 
 @customElement('mte-breadcrumb')
 export class MutationTestReportBreadcrumbComponent extends LitElement {
-  @property()
+  @property({ attribute: false })
   public declare path: string[] | undefined;
 
   @property()

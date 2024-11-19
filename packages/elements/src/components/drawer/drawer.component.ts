@@ -22,7 +22,7 @@ export class MutationTestReportDrawer extends LitElement {
   @property({ reflect: true, type: Boolean })
   public declare hasDetail;
 
-  @property()
+  @property({ attribute: false })
   public get toggleMoreLabel() {
     switch (this.mode) {
       case 'half':

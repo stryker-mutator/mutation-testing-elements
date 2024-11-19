@@ -22,7 +22,7 @@ import type { StateFilter } from '../state-filter/state-filter.component.js';
 export class TestFileComponent extends RealTimeElement {
   public static styles = [prismjs, tailwind, unsafeCSS(style)];
 
-  @property()
+  @property({ attribute: false })
   public declare model: TestFileModel | undefined;
 
   @state()
@@ -212,7 +212,7 @@ export class TestFileComponent extends RealTimeElement {
     this.updateFileRepresentation();
   }
 
-  override willUpdate(changes: PropertyValues<TestFileComponent>) {
+  override willUpdate(changes: PropertyValues<this>) {
     if (changes.has('model')) {
       this.updateFileRepresentation();
     }
@@ -229,7 +229,8 @@ export class TestFileComponent extends RealTimeElement {
           }
         });
     }
-    super.update(changes);
+
+    super.willUpdate(changes);
   }
 
   private updateFileRepresentation() {

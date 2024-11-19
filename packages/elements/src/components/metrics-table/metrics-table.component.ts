@@ -29,16 +29,16 @@ export interface Column<TMetric> {
 
 @customElement('mte-metrics-table')
 export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTimeElement {
-  @property()
+  @property({ attribute: false })
   public declare model?: MetricsResult<TFile, TMetric>;
 
-  @property()
+  @property({ type: Array })
   public declare currentPath: string[];
 
   @property({ type: Array })
   public declare columns: Column<TMetric>[];
 
-  @property()
+  @property({ attribute: false })
   public declare thresholds: Thresholds;
 
   public static styles = [tailwind];
@@ -54,7 +54,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
 
   private hasMultipleColspan = false;
 
-  public override willUpdate(changedProperties: PropertyValues) {
+  public override willUpdate(changedProperties: PropertyValues<this>) {
     if (changedProperties.has('columns')) {
       this.hasMultipleColspan = this.columns.some((column) => column.category === 'percentage');
     }
