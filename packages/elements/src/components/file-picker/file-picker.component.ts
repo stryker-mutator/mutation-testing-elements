@@ -1,13 +1,15 @@
-import { html, LitElement, nothing } from 'lit';
+import { html, LitElement, nothing, svg, type PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
 import { repeat } from 'lit/directives/repeat.js';
+import { when } from 'lit/directives/when.js';
 
-import type { FileUnderTestModel, Metrics, MetricsResult, MutationTestMetricsResult, TestFileModel, TestMetrics } from 'mutation-testing-metrics';
+import { TestFileModel } from 'mutation-testing-metrics';
+import type { FileUnderTestModel, Metrics, MetricsResult, MutationTestMetricsResult, TestMetrics } from 'mutation-testing-metrics';
 
 import { searchIcon } from '../../lib/svg-icons.js';
 import { renderIf, toAbsoluteUrl } from '../../lib/html-helpers.js';
 import { tailwind } from '../../style/index.js';
+import { View } from '../../lib/router.js';
 
 @customElement('mte-file-picker')
 export class MutationTestReportFilePickerComponent extends LitElement {
@@ -38,9 +40,6 @@ export class MutationTestReportFilePickerComponent extends LitElement {
   connectedCallback(): void {
     super.connectedCallback();
 
-    this.#prepareMap();
-    this.#filter('');
-
     window.addEventListener('keydown', (e) => this.#handleKeyDown(e), { signal: this.#abortController.signal });
   }
 
@@ -50,11 +49,12 @@ export class MutationTestReportFilePickerComponent extends LitElement {
     this.#abortController.abort();
   }
 
-  updated(changedProperties: Map<string | number | symbol, unknown>): void {
-    super.updated(changedProperties);
+  willUpdate(changedProperties: PropertyValues<this>): void {
+    super.willUpdate(changedProperties);
 
     if (changedProperties.has('rootModel')) {
       this.#prepareMap();
+      this.#filter('');
     }
   }
 
@@ -87,10 +87,10 @@ export class MutationTestReportFilePickerComponent extends LitElement {
             <input
               id="file-picker-input"
               @keyup="${(e: KeyboardEvent) => this.#handleSearch(e)}"
-              type="text"
+              type="search"
               style="box-shadow: none"
               class="mr-2 w-full rounded border-0 border-transparent bg-transparent text-gray-800 focus:shadow-none"
-              placeholder="Search for a file"
+              placeholder="Search for a file (Ctrl-K)"
             />
           </div>
           <div tabindex="-1" class="overflow-auto"> ${this.#renderFoundFiles()} </div>
@@ -107,23 +107,45 @@ export class MutationTestReportFilePickerComponent extends LitElement {
           this.filteredFiles,
           (item) => item.name,
           ({ name, file }, index) => {
-            return html` <li>
-              <a
-                ?data-active="${index === this.fileIndex}"
-                tabindex="${index === this.fileIndex ? 0 : -1}"
-                @focusout="${() => this.#handleFocus()}"
-                @click="${() => this.#closePicker()}"
-                class="${classMap({
-                  'border-primary-500': index === this.fileIndex,
-                })} my-1 flex rounded border-2 border-white bg-white p-1 px-2 text-gray-800 outline-none focus-visible:border-primary-200"
-                href="${toAbsoluteUrl(this.#getFragment(file), file.name)}"
-              >
-                ${file.result?.name}<span class="mx-2">•</span><span class="text-gray-400">${name}</span>
-              </a>
-            </li>`;
+            const view = this.#getView(file);
+            return html`
+              <li>
+                <a
+                  ?data-active="${index === this.fileIndex}"
+                  tabindex="${index === this.fileIndex ? 0 : -1}"
+                  @focusout="${() => this.#handleFocus()}"
+                  @click="${() => this.#closePicker()}"
+                  class="my-1 flex flex-wrap items-center rounded border-2 border-white bg-white p-1 px-2 text-gray-800 outline-none data-[active]:border-primary-500"
+                  href="${toAbsoluteUrl(view, name)}"
+                >
+                  <span class="inline-flex" title="File with ${view}s">${this.#renderTestOrMutantIndication(view)}</span>
+                  <span class="ms-1">${file.result?.name}</span>
+                  <span class="mx-2">•</span>
+                  <span class="text-gray-400">${name}</span>
+                </a>
+              </li>
+            `;
           },
         )}
       </ul>
+    `;
+  }
+
+  #renderTestOrMutantIndication(view: View) {
+    return html`
+      ${when(
+        view === View.mutant,
+        () => svg`
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+            <path fill-rule="evenodd" d="M2 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4Zm4.78 1.97a.75.75 0 0 1 0 1.06L5.81 8l.97.97a.75.75 0 1 1-1.06 1.06l-1.5-1.5a.75.75 0 0 1 0-1.06l1.5-1.5a.75.75 0 0 1 1.06 0Zm2.44 1.06a.75.75 0 0 1 1.06-1.06l1.5 1.5a.75.75 0 0 1 0 1.06l-1.5 1.5a.75.75 0 1 1-1.06-1.06l.97-.97-.97-.97Z" clip-rule="evenodd" />
+          </svg>
+        `,
+        () => svg`
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+            <path fill-rule="evenodd" d="M2 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4Zm2.22 1.97a.75.75 0 0 0 0 1.06l.97.97-.97.97a.75.75 0 1 0 1.06 1.06l1.5-1.5a.75.75 0 0 0 0-1.06l-1.5-1.5a.75.75 0 0 0-1.06 0ZM8.75 8.5a.75.75 0 0 0 0 1.5h2.5a.75.75 0 0 0 0-1.5h-2.5Z" clip-rule="evenodd" />
+          </svg>
+        `,
+      )}
     `;
   }
 
@@ -224,7 +246,7 @@ export class MutationTestReportFilePickerComponent extends LitElement {
     }
 
     const entry = this.filteredFiles[this.fileIndex];
-    window.location.replace(toAbsoluteUrl(this.#getFragment(entry.file), entry.name));
+    window.location.href = toAbsoluteUrl(this.#getView(entry.file), entry.name);
     this.#closePicker();
   }
 
@@ -273,7 +295,7 @@ export class MutationTestReportFilePickerComponent extends LitElement {
       .map((file) => ({ name: file, file: this.#searchMap.get(file)! }));
   }
 
-  #getFragment(file: FileUnderTestModel | TestFileModel) {
-    return (file as TestFileModel).tests === undefined ? 'mutant' : 'test';
+  #getView(file: FileUnderTestModel | TestFileModel): View {
+    return file instanceof TestFileModel ? View.test : View.mutant;
   }
 }
