@@ -59,9 +59,9 @@ describe(MutationTestReportBreadcrumbComponent.name, () => {
     expect(elements[2].querySelector('a')).null;
   });
 
-  it('should dispatch open-file-picker event', () => {
+  it('should dispatch open-file-picker event', async () => {
     // Act
-    const event = sut.catchCustomEvent('mte-file-picker-open', () => void sut.element.shadowRoot?.querySelector('button')?.click());
+    const event = await sut.catchCustomEvent('mte-file-picker-open', () => sut.element.shadowRoot?.querySelector('button')?.click());
 
     // Assert
     expect(event).ok;

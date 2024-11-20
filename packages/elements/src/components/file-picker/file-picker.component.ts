@@ -1,7 +1,6 @@
 import { html, LitElement, nothing, type PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
-import { when } from 'lit/directives/when.js';
 
 import { TestFileModel } from 'mutation-testing-metrics';
 import type { FileUnderTestModel, Metrics, MetricsResult, MutationTestMetricsResult, TestMetrics } from 'mutation-testing-metrics';
@@ -133,7 +132,7 @@ export class MutationTestReportFilePickerComponent extends LitElement {
 
   #renderTestOrMutantIndication(view: View) {
     return html`${view === View.mutant ? mutantFileIcon : testFileIcon}`;
-  } 
+  }
 
   #handleFocus() {
     this.shadowRoot?.querySelector('input')?.focus();
