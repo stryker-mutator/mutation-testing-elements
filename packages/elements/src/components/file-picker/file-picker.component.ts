@@ -132,12 +132,8 @@ export class MutationTestReportFilePickerComponent extends LitElement {
   }
 
   #renderTestOrMutantIndication(view: View) {
-    return html`${when(
-      view === View.mutant,
-      () => mutantFileIcon,
-      () => testFileIcon,
-    )}`;
-  }
+    return html`${view === View.mutant ? mutantFileIcon : testFileIcon}`;
+  } 
 
   #handleFocus() {
     this.shadowRoot?.querySelector('input')?.focus();
