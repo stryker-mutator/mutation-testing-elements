@@ -41,6 +41,14 @@ test.describe('Theming', () => {
 
       itShouldMatchScreenshot('should match the dark theme');
     });
+
+    test.describe('when opening the file picker', () => {
+      test.beforeEach(async () => {
+        await page.breadcrumb().clickOnSearchIcon();
+      });
+
+      itShouldMatchScreenshot('should match the dark theme');
+    });
   });
 
   test.describe('light theme', () => {
@@ -63,6 +71,14 @@ test.describe('Theming', () => {
       });
       test('should show a light code editor', async () => {
         expect(await page.mutantView.codeBackgroundColor()).toEqual('rgb(246, 248, 250)');
+      });
+
+      itShouldMatchScreenshot('should match the light theme');
+    });
+
+    test.describe('when opening the file picker', () => {
+      test.beforeEach(async () => {
+        await page.breadcrumb().clickOnSearchIcon();
       });
 
       itShouldMatchScreenshot('should match the light theme');

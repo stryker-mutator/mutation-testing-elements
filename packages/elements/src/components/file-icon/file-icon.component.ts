@@ -3,6 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { determineLanguage, ProgrammingLanguage } from '../../lib/code-helpers.js';
 import style from './file-icon.css?inline';
 import { classMap } from 'lit/directives/class-map.js';
+
 @customElement('mte-file-icon')
 export class MutationTestReportFileIconComponent extends LitElement {
   @property({ attribute: 'file-name' })
