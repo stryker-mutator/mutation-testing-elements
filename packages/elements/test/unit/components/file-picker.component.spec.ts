@@ -183,7 +183,6 @@ describe(MutationTestReportFilePickerComponent.name, () => {
         await sut.whenStable();
 
         // Assert
-        console.log(sut.element.shadowRoot?.querySelectorAll('a'));
         expect(sut.element.shadowRoot?.querySelector('a[data-active]')?.textContent?.trim()).include('index.ts');
       });
     });
