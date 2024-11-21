@@ -19,7 +19,7 @@ export class MutationTestReportThemeSwitchComponent extends LitElement {
   public render() {
     return html`
       <div class="check-box-container" @click="${(event: Event) => event.stopPropagation()}">
-        <input type="checkbox" @click="${this.dispatchThemeChangedEvent}" ?checked="${this.theme == 'dark'}" id="darkTheme" />
+        <input type="checkbox" @click="${this.dispatchThemeChangedEvent}" ?checked="${this.theme === 'dark'}" id="darkTheme" />
         <label for="darkTheme">Dark</label>
       </div>
     `;

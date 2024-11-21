@@ -61,14 +61,14 @@ export class CustomElementFixture<TCustomElement extends LitElement> {
 
   public $<TElement extends Element = HTMLElement>(selector: string, inShadow = true): TElement {
     if (inShadow) {
-      return this.element.shadowRoot!.querySelector(selector)!;
+      return this.element.renderRoot.querySelector(selector)!;
     } else {
       return this.element.querySelector(selector)!;
     }
   }
 
   public $$<TElement extends Element = HTMLElement>(selector: string): TElement[] {
-    return [...this.element.shadowRoot!.querySelectorAll<TElement>(selector)];
+    return [...this.element.renderRoot.querySelectorAll<TElement>(selector)];
   }
 
   public get style(): CSSStyleDeclaration {

@@ -18,7 +18,7 @@ describe(MutationTestReportBreadcrumbComponent.name, () => {
   it('should show the root item as "All files" for the "mutant" view', () => {
     const elements = sut.$$('li');
     expect(elements).lengthOf(1);
-    expect(elements[0].textContent?.trim()).eq('All files');
+    expect(elements[0]).toHaveTextContent('All files');
     expect(elements[0].querySelector('a')).eq(null);
   });
 
@@ -27,7 +27,7 @@ describe(MutationTestReportBreadcrumbComponent.name, () => {
     await sut.whenStable();
     const elements = sut.$$('li');
     expect(elements).lengthOf(1);
-    expect(elements[0].textContent?.trim()).eq('All tests');
+    expect(elements[0]).toHaveTextContent('All tests');
     expect(elements[0].querySelector('a')).eq(null);
   });
 
@@ -39,7 +39,7 @@ describe(MutationTestReportBreadcrumbComponent.name, () => {
     const anchor = elements[0].querySelector('a')!;
     expect(anchor).ok;
     expect(anchor.href).eq(href('#mutant'));
-    expect(elements[1].textContent?.trim()).eq('foo.js');
+    expect(elements[1]).toHaveTextContent('foo.js');
     expect(elements[1].querySelector('a')).null;
   });
 
@@ -51,17 +51,17 @@ describe(MutationTestReportBreadcrumbComponent.name, () => {
     const rootLink = elements[0].querySelector('a')!;
     expect(rootLink).ok;
     expect(rootLink.href).eq(href('#mutant'));
-    expect(elements[1].textContent?.trim()).eq('bar');
+    expect(elements[1]).toHaveTextContent('bar');
     const barAnchor = elements[1].querySelector('a')!;
     expect(barAnchor).ok;
     expect(barAnchor.href).eq(href('#mutant/bar'));
-    expect(elements[2].textContent?.trim()).eq('foo.js');
+    expect(elements[2]).toHaveTextContent('foo.js');
     expect(elements[2].querySelector('a')).null;
   });
 
   it('should dispatch open-file-picker event', async () => {
     // Act
-    const event = await sut.catchCustomEvent('mte-file-picker-open', () => sut.element.shadowRoot?.querySelector('button')?.click());
+    const event = await sut.catchCustomEvent('mte-file-picker-open', () => sut.element.renderRoot.querySelector('button')?.click());
 
     // Assert
     expect(event).ok;

@@ -2,6 +2,7 @@
 import type { PropertyValues } from 'lit';
 import { html, isServer, nothing, unsafeCSS } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import type {
   FileUnderTestModel,
   Metrics,
@@ -370,11 +371,11 @@ export class MutationTestReportAppComponent extends RealTimeElement {
               .path="${this.context.path}"
             ></mte-breadcrumb>
             <mte-result-status-bar
-              .detected="${this.rootModel?.systemUnderTestMetrics.metrics.totalDetected}"
-              .noCoverage="${this.rootModel?.systemUnderTestMetrics.metrics.noCoverage}"
-              .pending="${this.rootModel?.systemUnderTestMetrics.metrics.pending}"
-              .survived="${this.rootModel?.systemUnderTestMetrics.metrics.survived}"
-              .total="${this.rootModel?.systemUnderTestMetrics.metrics.totalValid}"
+              detected="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.totalDetected)}"
+              noCoverage="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.noCoverage)}"
+              pending="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.pending)}"
+              survived="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.survived)}"
+              total="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.totalValid)}"
             ></mte-result-status-bar>
             ${this.context.view === 'mutant' && this.context.result
               ? html`<mte-mutant-view

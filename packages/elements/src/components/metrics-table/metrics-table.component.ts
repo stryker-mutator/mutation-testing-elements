@@ -61,11 +61,11 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
   }
 
   public render() {
-    return html`${this.model
+    return this.model
       ? html`<div class="overflow-x-auto rounded-md border border-gray-200">
           <table class="w-full table-auto text-left text-sm">${this.renderTableHeadRow()}${this.renderTableBody(this.model)} </table>
         </div>`
-      : nothing}`;
+      : nothing;
   }
 
   private renderTableHeadRow() {

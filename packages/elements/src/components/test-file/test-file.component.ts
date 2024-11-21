@@ -85,7 +85,7 @@ export class TestFileComponent extends RealTimeElement {
       }
       this.selectedTest = test;
       this.dispatchEvent(createCustomEvent('test-selected', { selected: true, test }));
-      scrollToCodeFragmentIfNeeded(this.shadowRoot!.querySelector(`[test-id="${test.id}"]`));
+      scrollToCodeFragmentIfNeeded(this.renderRoot.querySelector(`[test-id="${test.id}"]`));
     }
   }
 
@@ -229,8 +229,6 @@ export class TestFileComponent extends RealTimeElement {
           }
         });
     }
-
-    super.willUpdate(changes);
   }
 
   private updateFileRepresentation() {
@@ -254,7 +252,7 @@ export class TestFileComponent extends RealTimeElement {
   }
 
   #animateTestToggle(test: TestModel) {
-    beginElementAnimation(this.shadowRoot!, 'test-id', test.id);
+    beginElementAnimation(this.renderRoot, 'test-id', test.id);
   }
 }
 function title(test: TestModel): string {
