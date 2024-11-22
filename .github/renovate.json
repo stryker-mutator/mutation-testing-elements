@@ -1,6 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base", "config:js-lib", "group:linters", "group:test"],
+  "extends": [
+    "config:recommended",
+    "config:js-lib",
+    "group:linters",
+    "group:test"
+  ],
   "timezone": "Europe/Amsterdam",
   "schedule": ["every weekend"],
   "lockFileMaintenance": {
@@ -16,16 +21,16 @@
       "automerge": true
     },
     {
-      "matchPackagePrefixes": ["@types/"],
-      "groupName": "Types"
+      "groupName": "Types",
+      "matchPackageNames": ["@types/{/,}**"]
     },
     {
-      "matchPackagePatterns": ["eslint", "prettier"],
-      "groupName": "linters"
+      "groupName": "linters",
+      "matchPackageNames": ["/eslint/", "/prettier/"]
     },
     {
-      "matchPackagePatterns": ["tailwindcss"],
-      "groupName": "Tailwind packages"
+      "groupName": "Tailwind packages",
+      "matchPackageNames": ["/tailwindcss/"]
     }
   ],
   "automergeStrategy": "squash",
