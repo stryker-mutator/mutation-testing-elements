@@ -1,6 +1,7 @@
-import { ReportPage } from './po/ReportPage.js';
+import { expect, test } from '@playwright/test';
 import { itShouldMatchScreenshot } from './lib/helpers.js';
-import { test, expect } from '@playwright/test';
+import type { FilePicker } from './po/FilePicker.po.js';
+import { ReportPage } from './po/ReportPage.js';
 
 test.describe('Theming', () => {
   let page: ReportPage;
@@ -43,11 +44,20 @@ test.describe('Theming', () => {
     });
 
     test.describe('when opening the file picker', () => {
+      let filePicker: FilePicker;
       test.beforeEach(async () => {
-        await page.breadcrumb().clickOnSearchIcon();
+        filePicker = await page.breadcrumb().openFilePicker();
       });
 
       itShouldMatchScreenshot('should match the dark theme');
+
+      test.describe('and typing in the search box', () => {
+        test.beforeEach(async () => {
+          await filePicker.search('in');
+        });
+
+        itShouldMatchScreenshot('should match the dark theme');
+      });
     });
   });
 
@@ -77,11 +87,20 @@ test.describe('Theming', () => {
     });
 
     test.describe('when opening the file picker', () => {
+      let filePicker: FilePicker;
       test.beforeEach(async () => {
-        await page.breadcrumb().clickOnSearchIcon();
+        filePicker = await page.breadcrumb().openFilePicker();
       });
 
       itShouldMatchScreenshot('should match the light theme');
+
+      test.describe('and typing in the search box', () => {
+        test.beforeEach(async () => {
+          await filePicker.search('in');
+        });
+
+        itShouldMatchScreenshot('should match the light theme');
+      });
     });
   });
 });

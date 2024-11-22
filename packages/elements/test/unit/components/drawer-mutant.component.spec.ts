@@ -149,9 +149,9 @@ describe(MutationTestReportDrawerMutant.name, () => {
         await sut.whenStable();
         const listItems = sut.$$('[slot="detail"] ul li');
         expect(listItems).lengthOf(3);
-        expect(listItems[0].textContent).eq('🎯 foo should bar');
-        expect(listItems[1].textContent).eq('🎯 baz should qux');
-        expect(listItems[2].textContent).eq('☂️ quux should corge');
+        expect(listItems[0]).toHaveTextContent('🎯 foo should bar');
+        expect(listItems[1]).toHaveTextContent('🎯 baz should qux');
+        expect(listItems[2]).toHaveTextContent('☂️ quux should corge');
       });
 
       function detailText() {

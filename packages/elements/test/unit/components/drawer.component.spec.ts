@@ -45,7 +45,7 @@ describe(MutationTestReportDrawer.name, () => {
     it('should render the read-more toggle', async () => {
       sut.element.mode = 'half';
       await sut.whenStable();
-      expect(readMoreToggle().textContent).eq('🔼 More');
+      expect(readMoreToggle()).toHaveTextContent('🔼 More');
     });
 
     it('should expand to full size when read-more is clicked', async () => {
@@ -58,7 +58,7 @@ describe(MutationTestReportDrawer.name, () => {
     it('should change the label of the read-more toggle when fully expanded', async () => {
       sut.element.mode = 'open';
       await sut.whenStable();
-      expect(readMoreToggle().textContent).eq('🔽 Less');
+      expect(readMoreToggle()).toHaveTextContent('🔽 Less');
     });
 
     it('should show the detail when opened', async () => {

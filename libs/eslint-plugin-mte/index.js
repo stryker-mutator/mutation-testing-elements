@@ -22,12 +22,11 @@ export default [
       reportUnusedDisableDirectives: 'error',
     },
     rules: {
+      eqeqeq: 'error',
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-unsafe-assignment': 'off',
       '@typescript-eslint/consistent-type-imports': 'error',
-      // Not useful for a lot of stuff, but mainly `.shadowRoot`
-      '@typescript-eslint/no-non-null-assertion': 'off',
     },
   },
   {

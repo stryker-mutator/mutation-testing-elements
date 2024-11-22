@@ -18,6 +18,29 @@
       "url": "http://localhost:5173",
       "webRoot": "${workspaceFolder}",
       "sourceMaps": true
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run unit tests",
+      "program": "${workspaceFolder:parent}/node_modules/vitest/vitest.mjs",
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"],
+      "args": ["--inspect-brk", "--browser", "--no-file-parallelism"]
+    },
+    {
+      "type": "chrome",
+      "request": "attach",
+      "name": "Attach to unit test browser",
+      "skipFiles": ["<node_internals>/**"],
+      "port": 9229
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Debug unit tests",
+      "configurations": ["Attach to unit test browser", "Run unit tests"],
+      "stopAll": true
     }
   ]
 }

@@ -1,3 +1,4 @@
+import { FilePicker } from './FilePicker.po.js';
 import { PageObject } from './PageObject.po.js';
 
 export default class Breadcrumb extends PageObject {
@@ -10,8 +11,10 @@ export default class Breadcrumb extends PageObject {
     await anchor.click();
   }
 
-  public async clickOnSearchIcon(): Promise<void> {
+  public async openFilePicker(): Promise<FilePicker> {
     const button = this.$('button');
     await button.click();
+
+    return new FilePicker(this.browser.locator('mutation-test-report-app >> mte-file-picker'), this.browser);
   }
 }
