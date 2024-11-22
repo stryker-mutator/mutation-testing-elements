@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
 import type { PropertyValues } from 'lit';
-import { html, nothing, unsafeCSS, isServer } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { html, isServer, nothing, unsafeCSS } from 'lit';
+import { customElement, property, query } from 'lit/decorators.js';
 import type {
   FileUnderTestModel,
   Metrics,
@@ -24,10 +24,9 @@ import { mutantChanges } from '../../lib/mutant-changes.js';
 import { locationChange$, View } from '../../lib/router.js';
 import type { Theme } from '../../lib/theme.js';
 import { globals, tailwind } from '../../style/index.js';
+import { type MutationTestReportFilePickerComponent } from '../file-picker/file-picker.component.js';
 import { RealTimeElement } from '../real-time-element.js';
 import theme from './theme.scss?inline';
-import { type MutationTestReportFilePickerComponent } from '../file-picker/file-picker.component.js';
-import { createRef, ref } from 'lit/directives/ref.js';
 
 interface BaseContext {
   path: string[];
@@ -88,7 +87,10 @@ export class MutationTestReportAppComponent extends RealTimeElement {
     return getComputedStyle(this).getPropertyValue('--mut-body-bg');
   }
 
-  #filePickerRef = createRef<MutationTestReportFilePickerComponent>();
+  @query('mte-file-picker')
+  private declare filePicker: MutationTestReportFilePickerComponent;
+
+  #abortController = new AbortController();
 
   @property()
   public get title(): string {
@@ -160,6 +162,10 @@ export class MutationTestReportAppComponent extends RealTimeElement {
       );
     }
   }
+
+  #handlePrefersColorScheme = () => {
+    this.theme = this.getTheme();
+  };
 
   private getTheme(): Theme {
     // 1. check local storage
@@ -246,6 +252,9 @@ export class MutationTestReportAppComponent extends RealTimeElement {
 
   public connectedCallback() {
     super.connectedCallback();
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addEventListener?.('change', this.#handlePrefersColorScheme, { signal: this.#abortController.signal });
     this.subscriptions.push(locationChange$.subscribe((path) => (this.path = path)));
     this.initializeSse();
   }
@@ -328,6 +337,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
 
   public disconnectedCallback() {
     super.disconnectedCallback();
+    this.#abortController.abort();
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
@@ -347,7 +357,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
   public render() {
     if (this.context.result ?? this.errorMessage) {
       return html`
-        <mte-file-picker ${ref(this.#filePickerRef)} .rootModel="${this.rootModel}"></mte-file-picker>
+        <mte-file-picker .rootModel="${this.rootModel}"></mte-file-picker>
         <div class="container bg-white pb-4 font-sans text-gray-800 motion-safe:transition-max-width">
           <div class="space-y-4 transition-colors">
             ${this.renderErrorMessage()}
@@ -355,7 +365,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
             </mte-theme-switch>
             ${this.renderTitle()} ${this.renderTabs()}
             <mte-breadcrumb
-              @mte-file-picker-open="${() => this.#filePickerRef.value?.open()}"
+              @mte-file-picker-open="${() => this.filePicker.open()}"
               .view="${this.context.view}"
               .path="${this.context.path}"
             ></mte-breadcrumb>
