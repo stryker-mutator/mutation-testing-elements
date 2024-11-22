@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.4.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.3.0...v3.4.0) (2024-11-22)
+
+
+### Bug Fixes
+
+* **elements:** consider statusReason for drawer detail ([#3508](https://github.com/stryker-mutator/mutation-testing-elements/issues/3508)) ([3ce9a0e](https://github.com/stryker-mutator/mutation-testing-elements/commit/3ce9a0e319e13c95a2e9c6f15c3ea8186aca86bd)), closes [#3481](https://github.com/stryker-mutator/mutation-testing-elements/issues/3481)
+
+
+### Features
+
+* **elements:** add file picker ([#3404](https://github.com/stryker-mutator/mutation-testing-elements/issues/3404)) ([8310717](https://github.com/stryker-mutator/mutation-testing-elements/commit/8310717021f4d431cf1eba509fbafaf6a1a1c88f))
+* **elements:** animate dot/triangle opening/closing ([#3507](https://github.com/stryker-mutator/mutation-testing-elements/issues/3507)) ([69127f9](https://github.com/stryker-mutator/mutation-testing-elements/commit/69127f9d5b64dab7270d96a2080ece465dee5119))
+* **elements:** listen to prefers-color-scheme event to switch theme ([#3518](https://github.com/stryker-mutator/mutation-testing-elements/issues/3518)) ([3c79cd1](https://github.com/stryker-mutator/mutation-testing-elements/commit/3c79cd100d42b4347142c05cf56c9d60d1667776))
+* **elements:** make mutant dots styling more clear ([#3475](https://github.com/stryker-mutator/mutation-testing-elements/issues/3475)) ([10638f4](https://github.com/stryker-mutator/mutation-testing-elements/commit/10638f45ab29edfe5dae24f7c478caa37c3b4643))
+* **file-picker:** add fuzzy search to file picker ([#3517](https://github.com/stryker-mutator/mutation-testing-elements/issues/3517)) ([577c6c1](https://github.com/stryker-mutator/mutation-testing-elements/commit/577c6c198a9d5f2789e9342dfcbbc83b73f14a75))
+
+
+
+
+
 # [3.3.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.2.0...v3.3.0) (2024-09-11)
 
 
