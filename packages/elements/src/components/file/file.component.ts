@@ -1,8 +1,7 @@
 import type { PropertyValues } from 'lit';
 import { html, nothing, svg, unsafeCSS } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property, query, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
-import { createRef, ref } from 'lit/directives/ref.js';
 import type { FileUnderTestModel, MutantModel } from 'mutation-testing-metrics';
 import type { MutantResult, MutantStatus } from 'mutation-testing-report-schema/api';
 import { findDiffIndices, gte, highlightCode, transformHighlightedLines } from '../../lib/code-helpers.js';
@@ -39,9 +38,10 @@ export class FileComponent extends RealTimeElement {
   @state()
   public declare mutants: MutantModel[];
 
-  #abortController: AbortController;
+  @query('code')
+  private declare code: HTMLElement;
 
-  private codeRef = createRef<HTMLElement>();
+  #abortController: AbortController;
 
   public constructor() {
     super();
@@ -124,7 +124,7 @@ export class FileComponent extends RealTimeElement {
         id="report-code-block"
         class="line-numbers ${this.selectedMutantStates.map((state) => `mte-selected-${state}`).join(' ')} flex rounded-md py-4"
       >
-        <code ${ref(this.codeRef)} class="flex language-${this.model.language}">
+        <code class="flex language-${this.model.language}">
           <table>${map(this.lines, (line, lineIndex) => {
         const lineNr = lineIndex + 1;
         const mutantDots = this.renderMutantDots(mutantLineMap.get(lineNr));
@@ -180,7 +180,7 @@ export class FileComponent extends RealTimeElement {
     }
 
     this.selectedMutant = mutant;
-    const lines = this.codeRef.value!.querySelectorAll('tr.line');
+    const lines = this.code.querySelectorAll('tr.line');
     for (let i = mutant.location.start.line - 1; i < mutant.location.end.line; i++) {
       lines.item(i).classList.add(diffOldClass);
     }
@@ -192,9 +192,10 @@ export class FileComponent extends RealTimeElement {
   }
 
   private removeCurrentDiff() {
-    const oldDiffLines = this.codeRef.value!.querySelectorAll(`.${diffOldClass}`);
+    const code = this.code;
+    const oldDiffLines = code.querySelectorAll(`.${diffOldClass}`);
     oldDiffLines.forEach((oldDiffLine) => oldDiffLine.classList.remove(diffOldClass));
-    const newDiffLines = this.codeRef.value!.querySelectorAll(`.${diffNewClass}`);
+    const newDiffLines = code.querySelectorAll(`.${diffNewClass}`);
     newDiffLines.forEach((newDiffLine) => newDiffLine.remove());
   }
 
@@ -295,7 +296,7 @@ export class FileComponent extends RealTimeElement {
   }
 
   #animateMutantToggle(mutant: MutantModel) {
-    beginElementAnimation(this.codeRef.value, 'mutant-id', mutant.id);
+    beginElementAnimation(this.code, 'mutant-id', mutant.id);
   }
 }
 

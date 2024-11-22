@@ -1,9 +1,7 @@
 import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 import { html, LitElement, nothing, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import type { Ref } from 'lit/directives/ref.js';
-import { createRef, ref } from 'lit/directives/ref.js';
 import { renderIf } from '../../lib/html-helpers.js';
 import { tailwind } from '../../style/index.js';
 import { renderEmoji } from '../drawer-mutant/util.js';
@@ -34,7 +32,8 @@ export class MutationTestReportDrawer extends LitElement {
     }
   }
 
-  #headerRef: Ref<HTMLElement>;
+  @query('header')
+  private declare header: HTMLElement | undefined;
 
   #contentHeightController: ResizeController<number>;
 
@@ -46,11 +45,10 @@ export class MutationTestReportDrawer extends LitElement {
     this.hasDetail = false;
     this.#abortController = new AbortController();
 
-    this.#headerRef = createRef();
     this.#contentHeightController = new ResizeController(this, {
       callback: (entries) => {
         const total = entries[0]?.contentRect.height ?? 0;
-        const header = this.#headerRef.value?.clientHeight ?? 0;
+        const header = this.header?.clientHeight ?? 0;
         return total - header;
       },
     });
@@ -87,7 +85,7 @@ export class MutationTestReportDrawer extends LitElement {
     const height = this.#contentHeightController.value;
 
     return html`<aside @click="${(event: Event) => event.stopPropagation()}" class="ml-6 mr-4">
-      <header class="w-full py-4" ${ref(this.#headerRef)}>
+      <header class="w-full py-4">
         <h2>
           <slot name="header"></slot>
           ${renderIf(
