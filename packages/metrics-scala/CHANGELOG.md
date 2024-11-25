@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.4.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.4.0...v3.4.1) (2024-11-25)
+
+
+### Bug Fixes
+
+* **metrics-scala:** compile to Scala 3 LTS version ([#3529](https://github.com/stryker-mutator/mutation-testing-elements/issues/3529)) ([ada0979](https://github.com/stryker-mutator/mutation-testing-elements/commit/ada097947f4e8fce47a6f290a824472b8585284e))
+
+
+
+
+
 # [3.4.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.3.0...v3.4.0) (2024-11-22)
 
 **Note:** Version bump only for package mutation-testing-metrics-scala
