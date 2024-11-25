@@ -3,6 +3,7 @@
   "version": "3.4.0",
   "description": "A suite of web components for a mutation testing report.",
   "unpkg": "dist/mutation-test-elements.js",
+  "browser": "dist/mutation-test-elements.js",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "types": "./dist-tsc/src/index.d.ts",

@@ -78,6 +78,11 @@ export class MutationTestReportBreadcrumbComponent extends LitElement {
   }
 
   #dispatchFilePickerOpenEvent() {
+    // Move focus out of the button to the dialog
+    // In Chrome we need to call on `this`, on Firefox we need to call on the button
+    this.blur();
+    this.renderRoot.querySelector('button')?.blur();
+
     this.dispatchEvent(createCustomEvent('mte-file-picker-open', undefined));
   }
 }

@@ -8,4 +8,8 @@ export class FilePicker extends PageObject {
   public async results() {
     return this.$$('#files li');
   }
+
+  public picker() {
+    return this.$('dialog');
+  }
 }

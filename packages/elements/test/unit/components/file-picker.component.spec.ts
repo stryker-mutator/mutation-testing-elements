@@ -21,7 +21,7 @@ describe(MutationTestReportFilePickerComponent.name, () => {
     await sut.whenStable();
 
     // Assert
-    expect(getPicker()).not.toBeInTheDocument();
+    expect(getPicker()).not.toBeVisible();
   });
 
   it('should show the picker when keycombo is pressed', async () => {
@@ -85,7 +85,7 @@ describe(MutationTestReportFilePickerComponent.name, () => {
       await openPicker();
 
       // Assert
-      expect(getPicker()).not.toBeInTheDocument();
+      expect(getPicker()).not.toBeVisible();
     });
 
     it('should close the picker when the escape key is pressed', async () => {
@@ -94,17 +94,17 @@ describe(MutationTestReportFilePickerComponent.name, () => {
       await sut.whenStable();
 
       // Assert
-      expect(getPicker()).not.toBeInTheDocument();
+      expect(getPicker()).not.toBeVisible();
     });
 
     it('should close the picker when clicking outside the dialog', async () => {
       // Act
-      const backdrop = sut.$('#backdrop');
+      const backdrop = sut.$('dialog');
       backdrop.click();
       await sut.whenStable();
 
       // Assert
-      expect(getPicker()).not.toBeInTheDocument();
+      expect(getPicker()).not.toBeVisible();
     });
 
     describe('when not typing in the search box', () => {
@@ -226,7 +226,7 @@ describe(MutationTestReportFilePickerComponent.name, () => {
   }
 
   function getPicker() {
-    return sut.$('#picker');
+    return sut.$<HTMLDialogElement>('dialog');
   }
 
   function getActiveItem() {
@@ -234,6 +234,6 @@ describe(MutationTestReportFilePickerComponent.name, () => {
   }
 
   function getFilePickerInput() {
-    return sut.$<HTMLInputElement>('#file-picker-input');
+    return sut.$<HTMLInputElement>('input');
   }
 });
