@@ -1,24 +1,21 @@
 import type { PropertyValues } from 'lit';
-import { html, nothing, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { html, nothing } from 'lit';
+import { customElement, property, state } from 'lit/decorators.js';
 import type { FileUnderTestModel, Metrics, MetricsResult } from 'mutation-testing-metrics';
 import type { MutantResult as MutantModel, Thresholds } from 'mutation-testing-report-schema/api';
+
 import type { MteCustomEvent } from '../../lib/custom-events.js';
-import { tailwind } from '../../style/index.js';
 import type { DrawerMode } from '../drawer/drawer.component.js';
 import type { Column } from '../metrics-table/metrics-table.component.js';
-import style from './mutant-view.css?inline';
 import { RealTimeElement } from '../real-time-element.js';
 
 @customElement('mte-mutant-view')
 export class MutationTestReportMutantViewComponent extends RealTimeElement {
-  @property()
+  @state()
   public declare drawerMode: DrawerMode;
 
   @property({ attribute: false })
   private declare selectedMutant?: MutantModel;
-
-  public static styles = [unsafeCSS(style), tailwind];
 
   @property({ attribute: false })
   public declare result: MetricsResult<FileUnderTestModel, Metrics>;
@@ -52,12 +49,12 @@ export class MutationTestReportMutantViewComponent extends RealTimeElement {
 
   public render() {
     return html`
-      <main @click="${this.handleClick}">
+      <main class="pb-drawer-half-open" @click="${this.handleClick}">
         <mte-metrics-table .columns="${COLUMNS}" .currentPath="${this.path}" .thresholds="${this.thresholds}" .model="${this.result}">
         </mte-metrics-table>
         ${this.result.file ? html`<mte-file @mutant-selected="${this.handleMutantSelected}" .model="${this.result.file}"></mte-file>` : nothing}
       </main>
-      <mte-drawer-mutant .mode="${this.drawerMode}" .mutant="${this.selectedMutant}"></mte-drawer-mutant>
+      <mte-drawer-mutant mode="${this.drawerMode}" .mutant="${this.selectedMutant}"></mte-drawer-mutant>
     `;
   }
 }

@@ -1,6 +1,6 @@
+import type { Server } from 'http';
 import { createServer } from 'http';
 import { RealTimeReporter } from 'mutation-testing-real-time';
-import type { Server } from 'http';
 import type { AddressInfo } from 'net';
 import { promisify } from 'util';
 

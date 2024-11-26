@@ -1,7 +1,9 @@
 import ajvModule from 'ajv';
 import { expect } from 'chai';
 import fs from 'fs/promises';
+
 import { schema } from '../../src/index.js';
+
 const Ajv = ajvModule.default;
 
 const SCHEMA_NAME = 'http://stryker-mutator.io/report.schema.json';

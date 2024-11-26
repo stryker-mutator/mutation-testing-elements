@@ -1,8 +1,9 @@
-import type { MutantDot } from './po/MutantDot.po.js';
-import type { Drawer } from './po/Drawer.po.js';
-import { ReportPage } from './po/ReportPage.js';
+import { expect, test } from '@playwright/test';
+
 import { actScreenshotMatch } from './lib/helpers.js';
-import { test, expect } from '@playwright/test';
+import type { Drawer } from './po/Drawer.po.js';
+import type { MutantDot } from './po/MutantDot.po.js';
+import { ReportPage } from './po/ReportPage.js';
 
 test.describe('Drawer mutant view', () => {
   let page: ReportPage;

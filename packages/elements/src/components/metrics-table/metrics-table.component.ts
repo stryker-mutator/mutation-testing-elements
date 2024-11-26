@@ -6,8 +6,8 @@ import { map } from 'lit/directives/map.js';
 import { repeat } from 'lit/directives/repeat.js';
 import type { MetricsResult } from 'mutation-testing-metrics';
 import type { Thresholds } from 'mutation-testing-report-schema/api';
+
 import { toAbsoluteUrl } from '../../lib/html-helpers.js';
-import { tailwind } from '../../style/index.js';
 import { renderEmoji } from '../drawer-mutant/util.js';
 import { RealTimeElement } from '../real-time-element.js';
 
@@ -32,7 +32,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
   @property({ attribute: false })
   public declare model?: MetricsResult<TFile, TMetric>;
 
-  @property({ type: Array })
+  @property({ attribute: false })
   public declare currentPath: string[];
 
   @property({ type: Array })
@@ -40,8 +40,6 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
 
   @property({ attribute: false })
   public declare thresholds: Thresholds;
-
-  public static styles = [tailwind];
 
   constructor() {
     super();

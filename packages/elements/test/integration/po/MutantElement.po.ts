@@ -1,4 +1,5 @@
 import type { MutantStatus } from 'mutation-testing-report-schema/api';
+
 import { PageObject } from './PageObject.po.js';
 
 const allMutantStates = Object.keys({

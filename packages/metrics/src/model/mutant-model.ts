@@ -1,4 +1,5 @@
 import type { Location, MutantResult, MutantStatus } from 'mutation-testing-report-schema';
+
 import type { FileUnderTestModel } from './file-under-test-model.js';
 import type { TestModel } from './test-model.js';
 

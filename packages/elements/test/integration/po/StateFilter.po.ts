@@ -1,6 +1,7 @@
-import { PageObject } from './PageObject.po.js';
-import type { MutantStatus } from 'mutation-testing-report-schema/api';
 import type { TestStatus } from 'mutation-testing-metrics';
+import type { MutantStatus } from 'mutation-testing-report-schema/api';
+
+import { PageObject } from './PageObject.po.js';
 import { StateFilterCheckbox } from './StateFilterCheckbox.po.js';
 
 export class StateFilter extends PageObject {

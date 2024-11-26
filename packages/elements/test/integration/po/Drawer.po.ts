@@ -1,5 +1,6 @@
-import { PageObject } from './PageObject.po.js';
 import { expect } from '@playwright/test';
+
+import { PageObject } from './PageObject.po.js';
 
 export const HALF_OPEN_SIZE = 120;
 const CLOSED_SIZE = 0;

@@ -1,6 +1,7 @@
-import { ReportPage } from './po/ReportPage.js';
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
+
 import type { NavTab } from './po/NavTab.po.js';
+import { ReportPage } from './po/ReportPage.js';
 
 test.describe('Navigation', () => {
   let page: ReportPage;

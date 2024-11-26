@@ -1,9 +1,10 @@
-import { StateFilter } from './StateFilter.po.js';
-import { MutantDot } from './MutantDot.po.js';
-import { Drawer } from './Drawer.po.js';
-import { View } from './View.po.js';
-import { MutantMarker } from './MutantMarker.po.js';
 import type { Locator } from '@playwright/test';
+
+import { Drawer } from './Drawer.po.js';
+import { MutantDot } from './MutantDot.po.js';
+import { MutantMarker } from './MutantMarker.po.js';
+import { StateFilter } from './StateFilter.po.js';
+import { View } from './View.po.js';
 
 export class MutantView extends View {
   protected codeElement(): Locator {

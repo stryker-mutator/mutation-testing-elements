@@ -1,4 +1,5 @@
 import type { MutationTestResult, TestFileDefinitionDictionary } from 'mutation-testing-report-schema';
+
 import { determineCommonBasePath, isNotNullish, normalizeFileNames } from './helpers/index.js';
 
 /**

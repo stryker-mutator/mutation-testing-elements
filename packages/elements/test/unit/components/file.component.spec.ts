@@ -1,10 +1,11 @@
-import { CustomElementFixture } from '../helpers/CustomElementFixture.js';
-import { FileComponent } from '../../../src/components/file/file.component.js';
-import type { FileResult, MutantStatus, MutantResult } from 'mutation-testing-report-schema/api';
-import type { FileStateFilterComponent } from '../../../src/components/state-filter/state-filter.component.js';
-import { createMutantResult, createFileResult } from '../helpers/factory.js';
-import { createCustomEvent } from '../../../src/lib/custom-events.js';
 import { FileUnderTestModel } from 'mutation-testing-metrics';
+import type { FileResult, MutantResult, MutantStatus } from 'mutation-testing-report-schema/api';
+
+import { FileComponent } from '../../../src/components/file/file.component.js';
+import type { FileStateFilterComponent } from '../../../src/components/state-filter/state-filter.component.js';
+import { createCustomEvent } from '../../../src/lib/custom-events.js';
+import { CustomElementFixture } from '../helpers/CustomElementFixture.js';
+import { createFileResult, createMutantResult } from '../helpers/factory.js';
 
 describe(FileComponent.name, () => {
   let sut: CustomElementFixture<FileComponent>;

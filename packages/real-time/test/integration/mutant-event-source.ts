@@ -1,6 +1,6 @@
 import EventSource from 'eventsource';
 import type { MutantResult } from 'mutation-testing-report-schema/api';
-import { fromEvent, shareReplay, ReplaySubject, takeUntil } from 'rxjs';
+import { fromEvent, ReplaySubject, shareReplay, takeUntil } from 'rxjs';
 
 export class MutantEventSource extends EventSource {
   constructor(port: number) {

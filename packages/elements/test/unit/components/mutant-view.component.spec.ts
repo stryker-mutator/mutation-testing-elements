@@ -1,11 +1,12 @@
 import type { Metrics, MetricsResult } from 'mutation-testing-metrics';
 import { FileUnderTestModel, MutantModel } from 'mutation-testing-metrics';
+
 import type { MutationTestReportDrawerMutant } from '../../../src/components/drawer-mutant/drawer-mutant.component.js';
 import type { Column, MutationTestReportTestMetricsTable } from '../../../src/components/metrics-table/metrics-table.component.js';
 import { MutationTestReportMutantViewComponent } from '../../../src/components/mutant-view/mutant-view.js';
 import { createCustomEvent } from '../../../src/lib/custom-events.js';
-import { createFileResult, createMetricsResult, createMutantResult } from '../helpers/factory.js';
 import { CustomElementFixture } from '../helpers/CustomElementFixture.js';
+import { createFileResult, createMetricsResult, createMutantResult } from '../helpers/factory.js';
 
 describe(MutationTestReportMutantViewComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportMutantViewComponent>;

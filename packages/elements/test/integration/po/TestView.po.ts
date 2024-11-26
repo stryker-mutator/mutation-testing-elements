@@ -1,9 +1,10 @@
-import { StateFilter } from './StateFilter.po.js';
+import type { Locator } from '@playwright/test';
+
 import { Drawer } from './Drawer.po.js';
-import { View } from './View.po.js';
+import { StateFilter } from './StateFilter.po.js';
 import { TestDot } from './TestDot.po.js';
 import { TestListItem } from './TestListItem.po.js';
-import type { Locator } from '@playwright/test';
+import { View } from './View.po.js';
 
 export class TestView extends View {
   protected codeElement(): Locator {

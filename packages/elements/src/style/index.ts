@@ -1,8 +1,10 @@
-import { unsafeCSS } from 'lit';
-import tailwindCss from './tailwind.css?inline';
-import prismjsCss from './prismjs.css?inline';
-import globalsCss from './globals.css?inline';
 import './prism-plugins';
+
+import { unsafeCSS } from 'lit';
+
+import globalsCss from './globals.css?inline';
+import prismjsCss from './prismjs.css?inline';
+import tailwindCss from './tailwind.css?inline';
 
 export const tailwind = unsafeCSS(tailwindCss);
 export const prismjs = unsafeCSS(prismjsCss);

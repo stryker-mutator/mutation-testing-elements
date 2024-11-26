@@ -1,5 +1,6 @@
 import type { Page, TestInfo } from '@playwright/test';
 import { expect, test } from '@playwright/test';
+
 import { isHeadless } from './browser.js';
 
 export function itShouldMatchScreenshot(title: string) {

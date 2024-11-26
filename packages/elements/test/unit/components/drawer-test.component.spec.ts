@@ -1,9 +1,10 @@
 import { FileUnderTestModel, MutantModel, TestModel } from 'mutation-testing-metrics';
 import type { MutantResult } from 'mutation-testing-report-schema/api';
-import { MutationTestReportDrawerTestComponent } from '../../../src/components/drawer-test/drawer-test.component.js';
+
 import type { MutationTestReportDrawer } from '../../../src/components/drawer/drawer.component.js';
-import { createFileResult, createLocation, createMutantResult, createTestDefinition } from '../helpers/factory.js';
+import { MutationTestReportDrawerTestComponent } from '../../../src/components/drawer-test/drawer-test.component.js';
 import { CustomElementFixture } from '../helpers/CustomElementFixture.js';
+import { createFileResult, createLocation, createMutantResult, createTestDefinition } from '../helpers/factory.js';
 
 function createMutantModel(overrides?: Partial<MutantResult> & { mutatedLines?: string }): MutantModel {
   const mutant = new MutantModel(createMutantResult(overrides));

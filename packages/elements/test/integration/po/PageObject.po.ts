@@ -1,6 +1,7 @@
-import { expect } from '@playwright/test';
-import { ElementSelector } from './ElementSelector.po.js';
 import type { Locator, Page } from '@playwright/test';
+import { expect } from '@playwright/test';
+
+import { ElementSelector } from './ElementSelector.po.js';
 
 export class PageObject extends ElementSelector {
   constructor(

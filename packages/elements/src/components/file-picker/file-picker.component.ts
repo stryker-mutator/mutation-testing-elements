@@ -1,6 +1,6 @@
 import fuzzysort from 'fuzzysort';
-import type { TemplateResult } from 'lit';
-import { html, LitElement, type PropertyValues } from 'lit';
+import type { PropertyValues, TemplateResult } from 'lit';
+import { html } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 import type { FileUnderTestModel, Metrics, MetricsResult, MutationTestMetricsResult, TestMetrics } from 'mutation-testing-metrics';
@@ -9,7 +9,7 @@ import { TestFileModel } from 'mutation-testing-metrics';
 import { renderIf, toAbsoluteUrl } from '../../lib/html-helpers.js';
 import { View } from '../../lib/router.js';
 import { mutantFileIcon, searchIcon, testFileIcon } from '../../lib/svg-icons.js';
-import { tailwind } from '../../style/index.js';
+import { BaseElement } from '../base-element.js';
 
 interface ModelEntry {
   name: string;
@@ -17,9 +17,7 @@ interface ModelEntry {
 }
 
 @customElement('mte-file-picker')
-export class MutationTestReportFilePickerComponent extends LitElement {
-  static styles = [tailwind];
-
+export class MutationTestReportFilePickerComponent extends BaseElement {
   #abortController = new AbortController();
   #searchTargets: (ModelEntry & { prepared: Fuzzysort.Prepared })[] = [];
   #originalDocumentOverflow = '';

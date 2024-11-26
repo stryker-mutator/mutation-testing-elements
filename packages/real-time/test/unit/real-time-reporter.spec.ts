@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import sinon from 'sinon';
 import { expect } from 'chai';
-import { Socket } from 'net';
 import { IncomingMessage, ServerResponse } from 'http';
-import { RealTimeReporter } from '../../src/real-time-reporter.js';
 import type { MutantResult } from 'mutation-testing-report-schema';
+import { Socket } from 'net';
+import sinon from 'sinon';
+
 import type { RealTimeOptions } from '../../src/real-time-options.js';
+import { RealTimeReporter } from '../../src/real-time-reporter.js';
 
 describe(RealTimeReporter.name, () => {
   const data: Partial<MutantResult> = {

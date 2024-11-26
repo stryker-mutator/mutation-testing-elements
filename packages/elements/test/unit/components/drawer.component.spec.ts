@@ -1,6 +1,7 @@
+import { userEvent } from '@vitest/browser/context';
+
 import { MutationTestReportDrawer } from '../../../src/components/drawer/drawer.component.js';
 import { CustomElementFixture } from '../helpers/CustomElementFixture.js';
-import { userEvent } from '@vitest/browser/context';
 
 describe(MutationTestReportDrawer.name, () => {
   let sut: CustomElementFixture<MutationTestReportDrawer>;

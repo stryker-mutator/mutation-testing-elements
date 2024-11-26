@@ -1,9 +1,9 @@
 /// <reference types="vitest" />
 
 import browserslistToEsbuild from 'browserslist-to-esbuild';
-import { type UserConfig, defineConfig } from 'vitest/config';
-import { type Plugin } from 'vite';
 import { type MutationEventSender, RealTimeReporter } from 'mutation-testing-real-time';
+import { type Plugin } from 'vite';
+import { defineConfig, type ViteUserConfig } from 'vitest/config';
 
 const esbuildOptions = {
   tsconfigRaw: {
@@ -13,78 +13,75 @@ const esbuildOptions = {
   },
 };
 
-export default defineConfig(
-  () =>
-    ({
-      css: {
-        preprocessorOptions: {
-          scss: {
-            // Until this is the default in vite 6
-            api: 'modern-compiler',
-          },
-        },
+export default defineConfig({
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // Until this is the default in vite 6
+        api: 'modern-compiler',
       },
-      optimizeDeps: {
-        esbuildOptions,
-        include: ['mutation-testing-report-schema', 'mutation-testing-metrics'],
+    },
+  },
+  optimizeDeps: {
+    esbuildOptions,
+    include: ['mutation-testing-report-schema', 'mutation-testing-metrics'],
+  },
+  resolve: {
+    alias: {
+      '/mutation-test-elements.js': '/src/index.ts',
+    },
+  },
+  plugins: [realTimeResponderPlugin()],
+  server: {
+    open: process.env.CI ? undefined : '/testResources/',
+  },
+  esbuild: esbuildOptions,
+  build: {
+    emptyOutDir: !process.env.IIFE_BUILD,
+    rollupOptions: {
+      // For library usage, we want to externalize lit. When included as a script on the page we want to bundle it.
+      external: process.env.IIFE_BUILD ? undefined : [/^lit/],
+    },
+    target: browserslistToEsbuild(),
+    lib: {
+      entry: 'src/index.ts',
+      name: 'MutationTestElements',
+      fileName(format, entryName) {
+        switch (format) {
+          case 'iife':
+            return `mutation-test-elements.js`;
+          case 'cjs':
+            return `${entryName}.cjs`;
+          case 'es':
+            return `${entryName}.js`;
+          default:
+            throw new Error(`Unexpected format: ${format}`);
+        }
       },
-      resolve: {
-        alias: {
-          '/mutation-test-elements.js': '/src/index.ts',
-        },
-      },
-      plugins: [realTimeResponderPlugin()],
-      server: {
-        open: process.env.CI ? undefined : '/testResources/',
-      },
-      esbuild: esbuildOptions,
-      build: {
-        emptyOutDir: !process.env.IIFE_BUILD,
-        rollupOptions: {
-          // For library usage, we want to externalize lit. When included as a script on the page we want to bundle it.
-          external: process.env.IIFE_BUILD ? undefined : [/^lit/],
-        },
-        target: browserslistToEsbuild(),
-        lib: {
-          entry: 'src/index.ts',
-          name: 'MutationTestElements',
-          fileName(format, entryName) {
-            switch (format) {
-              case 'iife':
-                return `mutation-test-elements.js`;
-              case 'cjs':
-                return `${entryName}.cjs`;
-              case 'es':
-                return `${entryName}.js`;
-              default:
-                throw new Error(`Unexpected format: ${format}`);
-            }
-          },
-          formats: process.env.IIFE_BUILD ? ['iife'] : ['cjs', 'es'],
-        },
-      },
-      test: {
-        onConsoleLog(log) {
-          // ignore the dev mode warning in test logs
-          if (log.includes('Lit is in dev mode.')) return false;
-          if (log.includes('Multiple versions of Lit loaded.')) return;
-          return;
-        },
-        ...(process.env.CI ? { retry: 2 } : {}),
-        setupFiles: ['./test/unit/setup.ts'],
-        restoreMocks: true,
-        unstubGlobals: true,
-        globals: true,
-        include: ['test/unit/**/*.spec.ts'],
-        browser: {
-          name: 'chromium',
-          enabled: true,
-          provider: 'playwright',
-          headless: Boolean(process.env.CI || process.env.HEADLESS),
-        },
-      },
-    }) satisfies UserConfig,
-);
+      formats: process.env.IIFE_BUILD ? ['iife'] : ['cjs', 'es'],
+    },
+  },
+  test: {
+    onConsoleLog(log) {
+      // ignore the dev mode warning in test logs
+      if (log.includes('Lit is in dev mode.')) return false;
+      if (log.includes('Multiple versions of Lit loaded.')) return;
+      return;
+    },
+    ...(process.env.CI ? { retry: 2 } : {}),
+    setupFiles: ['./test/unit/setup.ts'],
+    restoreMocks: true,
+    unstubGlobals: true,
+    globals: true,
+    include: ['test/unit/**/*.spec.ts'],
+    browser: {
+      name: 'chromium',
+      enabled: true,
+      provider: 'playwright',
+      headless: Boolean(process.env.CI || process.env.HEADLESS),
+    },
+  },
+} satisfies ViteUserConfig);
 
 function realTimeResponderPlugin(): Plugin {
   const TOTAL_MUTANT_COUNT = 15;

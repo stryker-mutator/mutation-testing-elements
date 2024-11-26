@@ -1,4 +1,5 @@
 import { expect } from '@playwright/test';
+
 import { PageObject } from './PageObject.po.js';
 
 export class ProgressBar extends PageObject {

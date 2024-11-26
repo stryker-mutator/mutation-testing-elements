@@ -1,4 +1,0 @@
-main {
-  /* Allow room for a half-open drawer */
-  padding-bottom: var(--mte-drawer-height-half-open);
-}

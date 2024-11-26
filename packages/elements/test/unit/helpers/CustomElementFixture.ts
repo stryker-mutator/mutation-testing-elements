@@ -1,4 +1,5 @@
 import type { LitElement } from 'lit';
+
 import type { CustomEventMap, MteCustomEvent } from '../../../src/lib/custom-events.js';
 
 interface CustomElementFixtureOptions {

@@ -1,4 +1,5 @@
 import type { OpenEndLocation } from 'mutation-testing-report-schema';
+
 import { computeLineStarts } from '../helpers/index.js';
 
 export function assertSourceDefined(source: string | undefined): asserts source {

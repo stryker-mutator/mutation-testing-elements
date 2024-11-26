@@ -17,6 +17,7 @@ import { calculateMutationTestMetrics } from 'mutation-testing-metrics';
 import type { MutantResult, MutationTestResult } from 'mutation-testing-report-schema/api';
 import type { Subscription } from 'rxjs';
 import { fromEvent, sampleTime } from 'rxjs';
+
 import { isLocalStorageAvailable } from '../../lib/browser.js';
 import type { MteCustomEvent } from '../../lib/custom-events.js';
 import { createCustomEvent } from '../../lib/custom-events.js';
@@ -372,7 +373,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
             ></mte-breadcrumb>
             <mte-result-status-bar
               detected="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.totalDetected)}"
-              noCoverage="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.noCoverage)}"
+              no-coverage="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.noCoverage)}"
               pending="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.pending)}"
               survived="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.survived)}"
               total="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.totalValid)}"
@@ -392,7 +393,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
         </div>
       `;
     } else {
-      return html``;
+      return nothing;
     }
   }
 

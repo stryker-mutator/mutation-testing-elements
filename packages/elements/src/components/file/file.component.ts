@@ -4,6 +4,7 @@ import { customElement, property, query, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import type { FileUnderTestModel, MutantModel } from 'mutation-testing-metrics';
 import type { MutantResult, MutantStatus } from 'mutation-testing-report-schema/api';
+
 import { findDiffIndices, gte, highlightCode, transformHighlightedLines } from '../../lib/code-helpers.js';
 import type { MteCustomEvent } from '../../lib/custom-events.js';
 import { createCustomEvent } from '../../lib/custom-events.js';

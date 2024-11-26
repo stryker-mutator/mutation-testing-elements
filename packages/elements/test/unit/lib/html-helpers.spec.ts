@@ -1,5 +1,6 @@
-import { escapeHtml, getContextClassForStatus, toAbsoluteUrl } from '../../../src/lib/html-helpers.js';
 import type { MutantStatus } from 'mutation-testing-report-schema/api';
+
+import { escapeHtml, getContextClassForStatus, toAbsoluteUrl } from '../../../src/lib/html-helpers.js';
 
 describe(getContextClassForStatus.name, () => {
   function actArrangeAssert(expected: string, input: MutantStatus) {

@@ -1,5 +1,5 @@
 import type { PositionWithOffset } from '../../../src/lib/code-helpers.js';
-import { determineLanguage, transformHighlightedLines, ProgrammingLanguage, findDiffIndices, highlightCode } from '../../../src/lib/code-helpers.js';
+import { determineLanguage, findDiffIndices, highlightCode, ProgrammingLanguage, transformHighlightedLines } from '../../../src/lib/code-helpers.js';
 
 describe(highlightCode.name, () => {
   it.each([

@@ -1,8 +1,9 @@
 import type { TestFile as TestFile } from 'mutation-testing-report-schema';
-import { SourceFile } from './source-file.js';
-import { TestModel } from './test-model.js';
+
 import type { MetricsResult } from './metrics-result.js';
+import { SourceFile } from './source-file.js';
 import type { TestMetrics } from './test-metrics.js';
+import { TestModel } from './test-model.js';
 
 /**
  * Represents a file that contains tests
