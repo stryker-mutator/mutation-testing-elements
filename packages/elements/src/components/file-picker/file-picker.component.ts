@@ -1,7 +1,7 @@
 import fuzzysort from 'fuzzysort';
 import type { TemplateResult } from 'lit';
-import { html, LitElement, nothing, type PropertyValues } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { html, LitElement, type PropertyValues } from 'lit';
+import { customElement, property, query, state } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 import type { FileUnderTestModel, Metrics, MetricsResult, MutationTestMetricsResult, TestMetrics } from 'mutation-testing-metrics';
 import { TestFileModel } from 'mutation-testing-metrics';
@@ -28,19 +28,23 @@ export class MutationTestReportFilePickerComponent extends LitElement {
   public declare rootModel: MutationTestMetricsResult | undefined;
 
   @state()
-  public declare openPicker: boolean;
-
-  @state()
   public declare filteredFiles: (ModelEntry & { template?: (string | TemplateResult)[] })[];
 
   @state()
   public declare fileIndex: number;
 
+  @query('dialog')
+  private declare dialog: HTMLDialogElement;
+
+  get isOpen() {
+    return this.dialog.open;
+  }
+
   constructor() {
     super();
 
-    this.openPicker = false;
     this.fileIndex = 0;
+    this.filteredFiles = [];
   }
 
   connectedCallback(): void {
@@ -64,38 +68,26 @@ export class MutationTestReportFilePickerComponent extends LitElement {
     }
   }
 
-  updated(changedProperties: PropertyValues<this>): void {
-    if (changedProperties.has('openPicker')) {
-      if (this.openPicker) {
-        document.body.style.overflow = 'hidden';
-        this.#focusInput();
-      } else {
-        document.body.style.overflow = this.#originalDocumentOverflow;
-      }
-    }
-  }
+  open = () => {
+    this.dialog.showModal();
+  };
 
-  open() {
-    this.openPicker = true;
-  }
+  close = () => {
+    this.dialog.close();
+  };
 
   render() {
-    if (!this.openPicker) {
-      return nothing;
-    }
-
     return html`
-      <div
-        id="backdrop"
-        @click="${this.#closePicker}"
-        class="fixed left-0 top-0 z-50 flex h-full w-full justify-center bg-gray-950/50 backdrop-blur-lg"
+      <dialog
+        @click="${this.close}"
+        @close="${this.#handleClose}"
+        @show="${this.#handleShow}"
+        aria-labelledby="file-picker-label"
+        class="my-4 max-w-[40rem] bg-transparent backdrop:bg-gray-950/50 backdrop:backdrop-blur-lg md:w-1/2"
       >
         <div
           @click="${(e: MouseEvent) => e.stopPropagation()}"
-          role="dialog"
-          aria-labelledby="file-picker-label"
-          id="picker"
-          class="m-4 flex h-fit max-h-[33rem] w-full max-w-[40rem] flex-col rounded-lg bg-gray-200/60 p-4 backdrop-blur-lg md:w-1/2"
+          class="mx-auto flex h-fit max-h-[33rem] flex-col rounded-lg bg-gray-200/60 p-4 backdrop-blur-lg"
         >
           <div class="mb-3 flex items-center rounded bg-gray-200/60 p-2 text-gray-800 shadow-lg">
             <div class="mx-2 flex items-center">${searchIcon}</div>
@@ -113,20 +105,13 @@ export class MutationTestReportFilePickerComponent extends LitElement {
           </div>
           ${this.#renderFoundFiles()}
         </div>
-      </div>
+      </dialog>
     `;
   }
 
   #renderFoundFiles() {
     return html`
-      <ul
-        id="files"
-        tabindex="-1"
-        class="flex snap-y flex-col gap-2 overflow-auto"
-        role="listbox"
-        @focusout="${this.#focusInput}"
-        aria-labelledby="file-picker-label"
-      >
+      <ul id="files" tabindex="-1" class="flex snap-y flex-col gap-2 overflow-auto" role="listbox" aria-labelledby="file-picker-label">
         ${renderIf(this.filteredFiles.length === 0, () => html`<li class="text-gray-800">No files found</li>`)}
         ${repeat(
           this.filteredFiles,
@@ -141,7 +126,7 @@ export class MutationTestReportFilePickerComponent extends LitElement {
               >
                 <a
                   tabindex="${index === this.fileIndex ? 0 : -1}"
-                  @click="${this.#closePicker}"
+                  @click="${this.close}"
                   class="flex h-full flex-wrap items-center p-2 outline-none"
                   @mousemove="${() => (this.fileIndex = index)}"
                   href="${toAbsoluteUrl(view, name)}"
@@ -200,13 +185,15 @@ export class MutationTestReportFilePickerComponent extends LitElement {
   }
 
   #handleKeyDown = (event: KeyboardEvent) => {
-    if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
+    if (((event.ctrlKey || event.metaKey) && event.key === 'k') || (!this.isOpen && event.key === '/')) {
       this.#togglePicker(event);
-    } else if (!this.openPicker && event.key === '/') {
-      this.#togglePicker(event);
-    } else if (event.key === 'Escape') {
-      this.#closePicker();
-    } else if (event.key === 'ArrowUp') {
+    }
+
+    if (!this.isOpen) {
+      return;
+    }
+
+    if (event.key === 'ArrowUp') {
       this.#handleArrowUp();
     } else if (event.key === 'ArrowDown') {
       this.#handleArrowDown();
@@ -253,28 +240,32 @@ export class MutationTestReportFilePickerComponent extends LitElement {
 
     const entry = this.filteredFiles[this.fileIndex];
     window.location.href = toAbsoluteUrl(this.#getView(entry.file), entry.name);
-    this.#closePicker();
+    this.close();
   }
 
   #togglePicker = (event: KeyboardEvent | null = null) => {
     event?.preventDefault();
     event?.stopPropagation();
 
-    this.openPicker = !this.openPicker;
+    if (this.isOpen) {
+      this.close();
+    } else {
+      this.open();
+    }
   };
 
-  #focusInput = () => {
-    this.renderRoot.querySelector('input')?.focus();
-  };
-
-  #closePicker = () => {
-    this.openPicker = false;
+  #handleClose = () => {
     this.fileIndex = 0;
     this.#filter('');
+    document.body.style.overflow = this.#originalDocumentOverflow;
+  };
+
+  #handleShow = () => {
+    document.body.style.overflow = 'hidden';
   };
 
   #handleSearch = (event: InputEvent) => {
-    if (!this.openPicker) {
+    if (!this.isOpen) {
       return;
     }
 
