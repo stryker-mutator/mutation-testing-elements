@@ -14,14 +14,6 @@ const esbuildOptions = {
 };
 
 export default defineConfig({
-  css: {
-    preprocessorOptions: {
-      scss: {
-        // Until this is the default in vite 6
-        api: 'modern-compiler',
-      },
-    },
-  },
   optimizeDeps: {
     esbuildOptions,
     include: ['mutation-testing-report-schema', 'mutation-testing-metrics'],
