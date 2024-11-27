@@ -1,7 +1,8 @@
 import { IntersectionController } from '@lit-labs/observers/intersection-controller.js';
-import { LitElement, html, nothing } from 'lit';
+import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { tailwind } from '../../style/index.js';
+
+import { BaseElement } from '../base-element.js';
 
 type ProgressType = 'detected' | 'survived' | 'no coverage' | 'pending';
 
@@ -12,13 +13,11 @@ interface ProgressMetric {
 }
 
 @customElement('mte-result-status-bar')
-export class ResultStatusBar extends LitElement {
-  public static styles = [tailwind];
-
+export class ResultStatusBar extends BaseElement {
   @property({ type: Number })
   public declare detected: number;
 
-  @property({ type: Number })
+  @property({ type: Number, attribute: 'no-coverage' })
   public declare noCoverage: number;
 
   @property({ type: Number })

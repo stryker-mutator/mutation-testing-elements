@@ -4,7 +4,7 @@
   @apply h-0;
 }
 :host([mode='half']) {
-  height: var(--mte-drawer-height-half-open);
+  @apply h-drawer-half-open;
 }
 :host([mode='open']) {
   @apply h-1/2;

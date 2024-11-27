@@ -1,10 +1,11 @@
+import { html } from 'lit';
+import type { MutantStatus } from 'mutation-testing-report-schema/api';
+
 import type { StateFilter } from '../../../src/components/state-filter/state-filter.component.js';
 import { FileStateFilterComponent } from '../../../src/components/state-filter/state-filter.component.js';
-import { CustomElementFixture } from '../helpers/CustomElementFixture.js';
-import type { MutantStatus } from 'mutation-testing-report-schema/api';
-import { normalizeWhitespace, expectedMutantColors } from '../helpers/helperFunctions.js';
 import { getContextClassForStatus, getEmojiForStatus } from '../../../src/lib/html-helpers.js';
-import { html } from 'lit';
+import { CustomElementFixture } from '../helpers/CustomElementFixture.js';
+import { expectedMutantColors, normalizeWhitespace } from '../helpers/helperFunctions.js';
 
 function createStateFilter(status: MutantStatus): StateFilter<MutantStatus> {
   return {

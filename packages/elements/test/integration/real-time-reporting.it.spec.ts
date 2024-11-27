@@ -1,7 +1,8 @@
 import { expect, test } from '@playwright/test';
+import type { MutantResult } from 'mutation-testing-report-schema';
+
 import { SseTestServer } from './lib/SseServer.js';
 import { ReportPage } from './po/ReportPage.js';
-import type { MutantResult } from 'mutation-testing-report-schema';
 
 test.describe('real-time reporting', () => {
   let server: SseTestServer;

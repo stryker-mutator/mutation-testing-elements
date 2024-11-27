@@ -1,22 +1,22 @@
+import '../../style/prism-plugins.js';
+
 import type { PropertyValues } from 'lit';
 import { html, nothing, svg, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-
-import type { TestFileModel, TestModel } from 'mutation-testing-metrics';
-import { TestStatus } from 'mutation-testing-metrics';
-import style from './test-file.scss?inline';
-
 import { map } from 'lit/directives/map.js';
 import { repeat } from 'lit/directives/repeat.js';
+import type { TestFileModel, TestModel } from 'mutation-testing-metrics';
+import { TestStatus } from 'mutation-testing-metrics';
+
 import { determineLanguage, gte, highlightCode, transformHighlightedLines } from '../../lib/code-helpers.js';
 import type { MteCustomEvent } from '../../lib/custom-events.js';
 import { createCustomEvent } from '../../lib/custom-events.js';
 import { getContextClassForTestStatus, getEmojiForTestStatus, scrollToCodeFragmentIfNeeded } from '../../lib/html-helpers.js';
 import { prismjs, tailwind } from '../../style/index.js';
-import '../../style/prism-plugins';
 import { beginElementAnimation, circle, renderDots, renderLine, triangle } from '../file/util.js';
 import { RealTimeElement } from '../real-time-element.js';
 import type { StateFilter } from '../state-filter/state-filter.component.js';
+import style from './test-file.scss?inline';
 
 @customElement('mte-test-file')
 export class TestFileComponent extends RealTimeElement {

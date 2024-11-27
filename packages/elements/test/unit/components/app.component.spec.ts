@@ -1,4 +1,5 @@
 import type { MockInstance } from 'vitest';
+
 import { MutationTestReportAppComponent } from '../../../src/components/app/app.component.js';
 import type { MutationTestReportMutantViewComponent } from '../../../src/components/mutant-view/mutant-view.js';
 import type { MutationTestReportTestViewComponent } from '../../../src/components/test-view/test-view.js';

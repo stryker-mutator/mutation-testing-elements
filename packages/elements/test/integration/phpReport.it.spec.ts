@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+
 import { ReportPage } from './po/ReportPage.js';
 
 test.describe('File report "infection-php-example/TextFileLogger.php"', () => {

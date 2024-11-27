@@ -1,8 +1,10 @@
-import { compareNames, normalize, groupBy } from './helpers/index.js';
-import type { FileResult, MutationTestResult, MutantStatus } from 'mutation-testing-report-schema';
+import type { FileResult, MutantStatus, MutationTestResult } from 'mutation-testing-report-schema';
+
+import { compareNames, groupBy, normalize } from './helpers/index.js';
 import type { Metrics, MutantModel, MutationTestMetricsResult, TestMetrics, TestModel } from './model/index.js';
 import { FileUnderTestModel, MetricsResult, TestFileModel } from './model/index.js';
 import { TestStatus } from './model/test-model.js';
+
 const DEFAULT_SCORE = NaN;
 const ROOT_NAME = 'All files';
 const ROOT_NAME_TESTS = 'All tests';

@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import type { FileResultDictionary } from 'mutation-testing-report-schema';
+
 import { calculateMetrics, calculateMutationTestMetrics } from '../../src/calculateMetrics.js';
 import type { FileUnderTestModel, Metrics, MetricsResult, TestMetrics } from '../../src/model/index.js';
 import { TestFileModel } from '../../src/model/index.js';

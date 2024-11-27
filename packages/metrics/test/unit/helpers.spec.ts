@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+
 import { normalizeFileNames } from '../../src/index.js';
 
 describe(normalizeFileNames.name, () => {

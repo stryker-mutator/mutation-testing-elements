@@ -1,8 +1,9 @@
 import type { Metrics } from 'mutation-testing-metrics';
 import { FileUnderTestModel } from 'mutation-testing-metrics';
+
 import { MutationTestReportTestMetricsTable } from '../../../src/components/metrics-table/metrics-table.component.js';
 import { CustomElementFixture } from '../helpers/CustomElementFixture.js';
-import { createMetricsResult, createFileResult } from '../helpers/factory.js';
+import { createFileResult, createMetricsResult } from '../helpers/factory.js';
 
 describe(MutationTestReportTestMetricsTable.name, () => {
   let sut: CustomElementFixture<MutationTestReportTestMetricsTable<FileUnderTestModel, Metrics>>;

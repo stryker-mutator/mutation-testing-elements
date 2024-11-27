@@ -1,11 +1,12 @@
 import { expect } from 'chai';
+import { createServer, type Server } from 'http';
+import type { MutantResult } from 'mutation-testing-report-schema';
 import type { AddressInfo } from 'net';
 import { firstValueFrom, lastValueFrom, toArray } from 'rxjs';
-import { RealTimeReporter } from '../../src/real-time-reporter.js';
-import { type Server, createServer } from 'http';
-import type { MutantResult } from 'mutation-testing-report-schema';
-import { MutantEventSource } from './mutant-event-source.js';
+
 import type { RealTimeOptions } from '../../src/real-time-options.js';
+import { RealTimeReporter } from '../../src/real-time-reporter.js';
+import { MutantEventSource } from './mutant-event-source.js';
 
 describe(`${RealTimeReporter.name} integration`, () => {
   let server: Server;

@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import type { MutantResult } from 'mutation-testing-report-schema';
+
 import { MutantModel, TestModel } from '../../../src/index.js';
 import { createFileUnderTestModel, createLocation, createMutantResult, createTestDefinition } from '../../helpers/factories.js';
 

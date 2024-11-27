@@ -1,4 +1,4 @@
-import type { Linter } from 'eslint';
+import type { config } from 'typescript-eslint';
 
-declare const configs: Linter.FlatConfig[];
+declare const configs: ReturnType<typeof config>;
 export default configs;

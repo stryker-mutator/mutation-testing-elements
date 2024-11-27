@@ -1,4 +1,5 @@
 import type { FileResult, Location, MutantResult, MutationTestResult, TestDefinition, TestFile } from 'mutation-testing-report-schema';
+
 import { FileUnderTestModel, TestFileModel } from '../../src/index.js';
 
 export function createTestFileModel(overrides?: Partial<TestFileModel>): TestFileModel {

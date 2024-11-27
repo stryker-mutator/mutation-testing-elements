@@ -1,32 +1,43 @@
 import eslint from '@eslint/js';
 import eslintConfigPrettier from 'eslint-config-prettier';
-import tseslint from 'typescript-eslint';
+import importX from 'eslint-plugin-import-x';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import globals from 'globals';
+import tseslint from 'typescript-eslint';
 
-/**
- * @type {import('eslint').Linter.FlatConfig[]}
- */
-export default [
+export default tseslint.config(
   eslint.configs.recommended,
   tseslint.configs.eslintRecommended,
   ...tseslint.configs.recommendedTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
   eslintConfigPrettier,
+  importX.flatConfigs.recommended,
+  importX.flatConfigs.typescript,
   {
     languageOptions: {
       parserOptions: {
         project: ['./tsconfig.json', './{src,test}/tsconfig.json', './test/{unit,integration}/tsconfig.json', '../../tsconfig.node.json'],
       },
     },
+    plugins: {
+      'simple-import-sort': simpleImportSort,
+    },
     linterOptions: {
       reportUnusedDisableDirectives: 'error',
     },
     rules: {
-      eqeqeq: 'error',
+      '@typescript-eslint/consistent-type-imports': 'error',
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-unsafe-assignment': 'off',
-      '@typescript-eslint/consistent-type-imports': 'error',
+
+      'import-x/newline-after-import': 'error',
+      'import-x/no-deprecated': 'error',
+
+      'simple-import-sort/exports': 'error',
+      'simple-import-sort/imports': 'error',
+
+      eqeqeq: 'error',
     },
   },
   {
@@ -63,4 +74,4 @@ export default [
       'playwright-report',
     ],
   },
-];
+);

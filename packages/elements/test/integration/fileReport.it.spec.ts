@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+
 import { itShouldMatchScreenshot, waitUntil } from './lib/helpers.js';
 import type { MutantDot } from './po/MutantDot.po.js';
 import type { MutantMarker } from './po/MutantMarker.po.js';

@@ -1,6 +1,8 @@
-import type { MutantResult } from 'mutation-testing-report-schema';
-import type { ServerResponse } from 'http';
 import { EventEmitter } from 'node:events';
+
+import type { ServerResponse } from 'http';
+import type { MutantResult } from 'mutation-testing-report-schema';
+
 import type { RealTimeOptions } from './real-time-options.js';
 
 export class MutationEventSender extends EventEmitter {

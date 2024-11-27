@@ -1,11 +1,13 @@
+/* eslint-disable lit/no-useless-template-literals */
+import { html } from 'lit';
 import { MutantModel, TestFileModel, TestStatus } from 'mutation-testing-metrics';
+
 import { renderEmoji } from '../../../src/components/drawer-mutant/util.js';
 import type { FileStateFilterComponent, StateFilter } from '../../../src/components/state-filter/state-filter.component.js';
 import { TestFileComponent } from '../../../src/components/test-file/test-file.component.js';
 import { createCustomEvent } from '../../../src/lib/custom-events.js';
-import { createMutantResult, createTestDefinition } from '../helpers/factory.js';
 import { CustomElementFixture } from '../helpers/CustomElementFixture.js';
-import { html } from 'lit';
+import { createMutantResult, createTestDefinition } from '../helpers/factory.js';
 
 describe(TestFileComponent.name, () => {
   let sut: CustomElementFixture<TestFileComponent>;

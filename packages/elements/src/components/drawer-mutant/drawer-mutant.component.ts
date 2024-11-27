@@ -3,8 +3,8 @@ import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import type { MutantModel, TestModel } from 'mutation-testing-metrics';
+
 import { describeLocation, getEmojiForStatus, plural, renderIf, renderIfPresent } from '../../lib/html-helpers.js';
-import { tailwind } from '../../style/index.js';
 import type { DrawerMode } from '../drawer/drawer.component.js';
 import { renderDrawer } from '../drawer/util.js';
 import { RealTimeElement } from '../real-time-element.js';
@@ -24,8 +24,6 @@ export class MutationTestReportDrawerMutant extends RealTimeElement {
 
   @property({ reflect: true })
   public declare mode: DrawerMode;
-
-  public static styles = [tailwind];
 
   constructor() {
     super();

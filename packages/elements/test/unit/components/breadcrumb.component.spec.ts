@@ -1,6 +1,6 @@
 import { MutationTestReportBreadcrumbComponent } from '../../../src/components/breadcrumb.js';
-import { CustomElementFixture } from '../helpers/CustomElementFixture.js';
 import { View } from '../../../src/lib/router.js';
+import { CustomElementFixture } from '../helpers/CustomElementFixture.js';
 
 describe(MutationTestReportBreadcrumbComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportBreadcrumbComponent>;

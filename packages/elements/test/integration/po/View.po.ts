@@ -1,6 +1,7 @@
+import type { Locator } from '@playwright/test';
+
 import { PageObject } from './PageObject.po.js';
 import { ResultTable } from './ResultTable.po.js';
-import type { Locator } from '@playwright/test';
 
 export abstract class View extends PageObject {
   public clickOnCode() {

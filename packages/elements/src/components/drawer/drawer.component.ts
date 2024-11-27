@@ -1,9 +1,11 @@
 import { ResizeController } from '@lit-labs/observers/resize-controller.js';
-import { html, LitElement, nothing, unsafeCSS } from 'lit';
+import { html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+
 import { renderIf } from '../../lib/html-helpers.js';
 import { tailwind } from '../../style/index.js';
+import { BaseElement } from '../base-element.js';
 import { renderEmoji } from '../drawer-mutant/util.js';
 import style from './drawer.component.css?inline';
 
@@ -11,13 +13,13 @@ export type DrawerMode = 'open' | 'half' | 'closed';
 export const DRAWER_HALF_OPEN_SIZE = 120;
 
 @customElement('mte-drawer')
-export class MutationTestReportDrawer extends LitElement {
-  public static styles = [unsafeCSS(style), tailwind];
+export class MutationTestReportDrawer extends BaseElement {
+  public static override styles = [unsafeCSS(style), tailwind];
 
   @property({ reflect: true })
   public declare mode: DrawerMode;
 
-  @property({ reflect: true, type: Boolean })
+  @property({ reflect: true, type: Boolean, attribute: 'has-detail' })
   public declare hasDetail;
 
   @property({ attribute: false })

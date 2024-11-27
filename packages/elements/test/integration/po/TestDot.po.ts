@@ -1,5 +1,6 @@
-import { PageObject } from './PageObject.po.js';
 import { TestStatus } from 'mutation-testing-metrics';
+
+import { PageObject } from './PageObject.po.js';
 
 const allTestStates = Object.values(TestStatus) as TestStatus[];
 

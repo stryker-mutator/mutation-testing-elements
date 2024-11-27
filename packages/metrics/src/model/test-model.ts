@@ -1,4 +1,5 @@
 import type { OpenEndLocation, TestDefinition } from 'mutation-testing-report-schema';
+
 import type { MutantModel } from './mutant-model.js';
 import type { TestFileModel } from './test-file-model.js';
 

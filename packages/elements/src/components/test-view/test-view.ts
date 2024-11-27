@@ -1,17 +1,16 @@
 import type { PropertyValues } from 'lit';
-import { html, nothing, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { html, nothing } from 'lit';
+import { customElement, property, state } from 'lit/decorators.js';
 import type { MetricsResult, TestFileModel, TestMetrics, TestModel } from 'mutation-testing-metrics';
+
 import type { MteCustomEvent } from '../../lib/custom-events.js';
-import { tailwind } from '../../style/index.js';
 import type { DrawerMode } from '../drawer/drawer.component.js';
 import type { Column } from '../metrics-table/metrics-table.component.js';
 import { RealTimeElement } from '../real-time-element.js';
-import style from './test-view.css?inline';
 
 @customElement('mte-test-view')
 export class MutationTestReportTestViewComponent extends RealTimeElement {
-  @property()
+  @state()
   public declare drawerMode: DrawerMode;
 
   @property({ attribute: false })
@@ -22,8 +21,6 @@ export class MutationTestReportTestViewComponent extends RealTimeElement {
 
   @property({ attribute: false })
   private declare selectedTest?: TestModel;
-
-  public static styles = [unsafeCSS(style), tailwind];
 
   constructor() {
     super();
@@ -48,11 +45,11 @@ export class MutationTestReportTestViewComponent extends RealTimeElement {
 
   public render() {
     return html`
-      <main @click="${this.handleClick}">
+      <main class="pb-drawer-half-open" @click="${this.handleClick}">
         <mte-metrics-table .columns="${COLUMNS}" .currentPath="${this.path}" .model="${this.result}"> </mte-metrics-table>
         ${this.result.file ? html`<mte-test-file @test-selected="${this.handleTestSelected}" .model="${this.result.file}"></mte-test-file>` : nothing}
       </main>
-      <mte-drawer-test .mode="${this.drawerMode}" .test="${this.selectedTest}"></mte-drawer-test>
+      <mte-drawer-test mode="${this.drawerMode}" .test="${this.selectedTest}"></mte-drawer-test>
     `;
   }
 }

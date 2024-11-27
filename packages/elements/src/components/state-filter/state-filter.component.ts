@@ -1,11 +1,11 @@
-import type { PropertyValues, TemplateResult } from 'lit';
-import { html, unsafeCSS } from 'lit';
+import type { PropertyValues, SVGTemplateResult, TemplateResult } from 'lit';
+import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
+
 import { createCustomEvent } from '../../lib/custom-events.js';
 import { renderIf } from '../../lib/html-helpers.js';
-import { tailwind } from '../../style/index.js';
-import style from './state-filter.css?inline';
+import { arrowLeft, arrowRight } from '../../lib/svg-icons.js';
 import { RealTimeElement } from '../real-time-element.js';
 
 export interface StateFilter<TStatus> {
@@ -18,8 +18,6 @@ export interface StateFilter<TStatus> {
 
 @customElement('mte-state-filter')
 export class FileStateFilterComponent<TStatus extends string> extends RealTimeElement {
-  static styles = [tailwind, unsafeCSS(style)];
-
   @property({ type: Array })
   public declare filters?: StateFilter<TStatus>[];
 
@@ -56,26 +54,8 @@ export class FileStateFilterComponent<TStatus extends string> extends RealTimeEl
     return html`
       <div class="sticky top-offset z-10 flex flex-row bg-white py-6">
         <div class="mr-3">
-          <button title="Previous" @click=${this.previous} type="button" class="step-button">
-            <svg aria-hidden="true" class="h-4 w-4 rotate-180" fill="white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path
-                fill-rule="evenodd"
-                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-            <span class="sr-only">Select previous mutant</span>
-          </button>
-          <button title="Next" @click=${this.next} type="button" class="step-button">
-            <svg aria-hidden="true" class="h-4 w-4" fill="white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path
-                fill-rule="evenodd"
-                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-            <span class="sr-only">Select next mutant</span>
-          </button>
+          ${this.#renderStepButton(this.previous, arrowLeft, 'Previous', 'Select previous mutant')}
+          ${this.#renderStepButton(this.next, arrowRight, 'Next', 'Select next mutant')}
         </div>
 
         ${renderIf(
@@ -92,7 +72,7 @@ export class FileStateFilterComponent<TStatus extends string> extends RealTimeEl
                   id="filter-${filter.status}"
                   aria-describedby="status-description"
                   type="checkbox"
-                  value="${filter.status}"
+                  .value="${filter.status}"
                   @input="${(el: Event) => this.checkboxChanged(filter, (el.target as HTMLInputElement).checked)}"
                   class="h-5 w-5 rounded border-gray-300 bg-gray-100 text-primary-on !ring-offset-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
                 />
@@ -109,6 +89,17 @@ export class FileStateFilterComponent<TStatus extends string> extends RealTimeEl
         )}
       </div>
     `;
+  }
+
+  #renderStepButton(handleClick: (ev: Event) => void, icon: SVGTemplateResult, title: string, srText: string) {
+    return html`<button
+      title="${title}"
+      @click=${handleClick}
+      type="button"
+      class="mr-2 inline-flex items-center rounded-md bg-primary-600 p-1 text-center text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500"
+      >${icon}
+      <span class="sr-only">${srText}</span>
+    </button>`;
   }
 
   private bgForContext(context: string) {

@@ -1,5 +1,6 @@
-import { locationChange$ } from '../../../src/lib/router.js';
 import { take } from 'rxjs/operators';
+
+import { locationChange$ } from '../../../src/lib/router.js';
 
 describe('locationChange$', () => {
   afterEach(() => {

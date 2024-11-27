@@ -2,8 +2,9 @@ import type { TemplateResult } from 'lit';
 import { isServer, nothing } from 'lit';
 import { TestStatus } from 'mutation-testing-metrics';
 import type { MutantStatus, OpenEndLocation } from 'mutation-testing-report-schema/api';
-import { renderEmoji } from '../components/drawer-mutant/util.js';
+
 import { DRAWER_HALF_OPEN_SIZE } from '../components/drawer/drawer.component.js';
+import { renderEmoji } from '../components/drawer-mutant/util.js';
 
 export function notNullish<T>(value: T | undefined | null): value is T {
   return value !== null && value !== undefined;

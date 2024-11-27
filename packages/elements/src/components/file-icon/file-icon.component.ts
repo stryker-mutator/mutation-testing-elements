@@ -1,18 +1,20 @@
-import { LitElement, svg, unsafeCSS } from 'lit';
+import { svg, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { determineLanguage, ProgrammingLanguage } from '../../lib/code-helpers.js';
-import style from './file-icon.css?inline';
 import { classMap } from 'lit/directives/class-map.js';
 
+import { determineLanguage, ProgrammingLanguage } from '../../lib/code-helpers.js';
+import { BaseElement } from '../base-element.js';
+import style from './file-icon.css?inline';
+
 @customElement('mte-file-icon')
-export class MutationTestReportFileIconComponent extends LitElement {
+export class MutationTestReportFileIconComponent extends BaseElement {
   @property({ attribute: 'file-name' })
   public declare fileName: string;
 
-  @property({ attribute: 'file', type: Boolean })
-  public declare isFile: boolean;
+  @property({ type: Boolean })
+  public declare file: boolean;
 
-  public static styles = [unsafeCSS(style)];
+  public static override styles = [unsafeCSS(style)];
 
   private get language(): undefined | ProgrammingLanguage {
     return determineLanguage(this.fileName);
@@ -24,12 +26,12 @@ export class MutationTestReportFileIconComponent extends LitElement {
   }
 
   private get cssClass() {
-    return classMap({ [this.language?.toString() ?? 'unknown']: this.isFile, test: this.isTestFile });
+    return classMap({ [this.language?.toString() ?? 'unknown']: this.file, test: this.isTestFile });
   }
 
   public render() {
     // Octicons - Github
-    if (!this.isFile) {
+    if (!this.file) {
       return svg`<svg aria-label="directory" class="octicon octicon-file-directory" viewBox="0 0 14 16" version="1.1" width="14" height="16" role="img"><path fill-rule="evenodd" d="M 13,2 H 7 V 1 C 7,0.34 6.69,0 6,0 H 1 C 0.45,0 0,0.45 0,1 v 10 c 0,0.55 0.45,1 1,1 h 12 c 0.55,0 1,-0.45 1,-1 V 3 C 14,2.45 13.55,2 13,2 Z M 6,2 H 1 V 1 h 5 z" id="path2" /></svg>`;
     }
     if (!this.language) {

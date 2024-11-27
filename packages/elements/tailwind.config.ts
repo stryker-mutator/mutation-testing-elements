@@ -37,7 +37,7 @@ const generateRange = (color: string, defaultColors: Record<keyof (typeof colors
     }),
   );
 
-const config: Config = {
+export default {
   content: ['./src/**/*.ts'],
   plugins: [tailwindForms],
   theme: {
@@ -50,6 +50,7 @@ const config: Config = {
       },
       spacing: {
         offset: 'var(--top-offset, 0)',
+        'drawer-half-open': 'var(--mte-drawer-height-half-open, 0)',
       },
       colors: {
         white: toVariable('--mut-white', '#ffffff'),
@@ -69,6 +70,4 @@ const config: Config = {
       },
     },
   },
-};
-
-export default config;
+} satisfies Config;

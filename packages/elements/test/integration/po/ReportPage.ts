@@ -1,11 +1,12 @@
+import type { Page } from '@playwright/test';
+
 import Breadcrumb from './Breadcrumb.po.js';
 import { ElementSelector } from './ElementSelector.po.js';
-import { ThemeSelector } from './ThemeSelector.po.js';
 import { MutantView } from './MutantView.po.js';
-import { TestView } from './TestView.po.js';
 import { NavTab } from './NavTab.po.js';
 import { RealTimeProgressBar } from './RealTimeProgressBar.po.js';
-import type { Page } from '@playwright/test';
+import { TestView } from './TestView.po.js';
+import { ThemeSelector } from './ThemeSelector.po.js';
 
 export class ReportPage extends ElementSelector {
   constructor(private readonly page: Page) {

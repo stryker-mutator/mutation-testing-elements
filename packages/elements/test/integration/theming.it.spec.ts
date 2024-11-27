@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+
 import { itShouldMatchScreenshot } from './lib/helpers.js';
 import type { FilePicker } from './po/FilePicker.po.js';
 import { ReportPage } from './po/ReportPage.js';

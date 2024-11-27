@@ -1,6 +1,6 @@
 import { MutationTestReportFileIconComponent } from '../../../src/components/file-icon/file-icon.component.js';
-import { CustomElementFixture } from '../helpers/CustomElementFixture.js';
 import { ProgrammingLanguage } from '../../../src/lib/code-helpers.js';
+import { CustomElementFixture } from '../helpers/CustomElementFixture.js';
 
 describe(MutationTestReportFileIconComponent.name, () => {
   let sut: CustomElementFixture<MutationTestReportFileIconComponent>;

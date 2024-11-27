@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import sinon from 'sinon';
+import { expect } from 'chai';
 import { ServerResponse } from 'http';
 import type { MutantResult } from 'mutation-testing-report-schema';
+import sinon from 'sinon';
 
 import { MutationEventSender } from '../../src/mutation-event-sender.js';
-import { expect } from 'chai';
 
 describe(MutationEventSender.name, () => {
   let responseMock: sinon.SinonStubbedInstance<ServerResponse>;

@@ -1,8 +1,9 @@
+import { expect, test } from '@playwright/test';
+
+import { actScreenshotMatch } from './lib/helpers.js';
 import type { Drawer } from './po/Drawer.po.js';
 import { ReportPage } from './po/ReportPage.js';
-import { actScreenshotMatch } from './lib/helpers.js';
 import type { TestDot } from './po/TestDot.po.js';
-import { test, expect } from '@playwright/test';
 
 test.describe('Drawer test view', () => {
   let page: ReportPage;

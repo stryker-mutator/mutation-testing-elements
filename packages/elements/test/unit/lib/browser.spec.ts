@@ -1,5 +1,6 @@
-import { isLocalStorageAvailable } from '../../../src/lib/browser.js';
 import type { MockInstance } from 'vitest';
+
+import { isLocalStorageAvailable } from '../../../src/lib/browser.js';
 
 describe(isLocalStorageAvailable.name, () => {
   let setItemStub: MockInstance<typeof localStorage.setItem>;

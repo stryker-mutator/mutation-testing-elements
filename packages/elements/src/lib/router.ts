@@ -1,6 +1,7 @@
-import { fromEvent, of, merge, EMPTY } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+/* eslint-disable import-x/no-deprecated */
 import { isServer } from 'lit';
+import { EMPTY, fromEvent, merge, of } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 /**
  * Observable for location changes on the hash part of the url

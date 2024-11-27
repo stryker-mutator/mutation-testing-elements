@@ -1,22 +1,20 @@
-import { LitElement, html } from 'lit';
+import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 
+import { createCustomEvent } from '../lib/custom-events.js';
 import { toAbsoluteUrl } from '../lib/html-helpers.js';
 import { View } from '../lib/router.js';
 import { searchIcon } from '../lib/svg-icons.js';
-import { tailwind } from '../style/index.js';
-import { createCustomEvent } from '../lib/custom-events.js';
+import { BaseElement } from './base-element.js';
 
 @customElement('mte-breadcrumb')
-export class MutationTestReportBreadcrumbComponent extends LitElement {
+export class MutationTestReportBreadcrumbComponent extends BaseElement {
   @property({ type: Array, attribute: false })
   public declare path: string[] | undefined;
 
   @property()
   public declare view: View;
-
-  public static styles = [tailwind];
 
   get rootName(): string {
     switch (this.view) {

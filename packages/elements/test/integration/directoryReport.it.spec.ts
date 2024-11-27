@@ -1,5 +1,6 @@
+import { expect, test } from '@playwright/test';
+
 import { ReportPage } from './po/ReportPage.js';
-import { test, expect } from '@playwright/test';
 
 test.describe('Directory report page', () => {
   let page: ReportPage;

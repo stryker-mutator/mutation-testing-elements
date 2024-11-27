@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { ServerResponse } from 'http';
 import { EventEmitter } from 'events';
+import type { ServerResponse } from 'http';
 import type { MutantResult } from 'mutation-testing-report-schema';
+
 import { MutationEventSender } from './mutation-event-sender.js';
 import type { RealTimeOptions } from './real-time-options.js';
 

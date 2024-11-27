@@ -1,5 +1,6 @@
+import { expect, test } from '@playwright/test';
 import { TestStatus } from 'mutation-testing-metrics';
-import { test, expect } from '@playwright/test';
+
 import { itShouldMatchScreenshot, waitUntil } from './lib/helpers.js';
 import { ReportPage } from './po/ReportPage.js';
 import type { TestListItem } from './po/TestListItem.po.js';

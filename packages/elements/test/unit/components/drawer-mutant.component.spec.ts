@@ -1,6 +1,7 @@
 import { MutantModel, TestModel } from 'mutation-testing-metrics';
-import { MutationTestReportDrawerMutant } from '../../../src/components/drawer-mutant/drawer-mutant.component.js';
+
 import type { MutationTestReportDrawer } from '../../../src/components/drawer/drawer.component.js';
+import { MutationTestReportDrawerMutant } from '../../../src/components/drawer-mutant/drawer-mutant.component.js';
 import { CustomElementFixture } from '../helpers/CustomElementFixture.js';
 import { createLocation, createMutantResult, createTestDefinition } from '../helpers/factory.js';
 

@@ -1,4 +1,5 @@
 import type { MutantModel, TestModel } from 'mutation-testing-metrics';
+
 import type { Theme } from './theme.js';
 
 export interface CustomEventMap {

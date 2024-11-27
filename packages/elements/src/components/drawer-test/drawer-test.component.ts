@@ -3,11 +3,11 @@ import { customElement, property } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import type { MutantModel, TestModel } from 'mutation-testing-metrics';
 import { TestStatus } from 'mutation-testing-metrics';
+
 import { describeLocation, getEmojiForTestStatus, plural, renderIfPresent } from '../../lib/html-helpers.js';
-import { tailwind } from '../../style/index.js';
-import { renderDetailLine, renderEmoji, renderSummaryContainer, renderSummaryLine } from '../drawer-mutant/util.js';
 import type { DrawerMode } from '../drawer/drawer.component.js';
 import { renderDrawer } from '../drawer/util.js';
+import { renderDetailLine, renderEmoji, renderSummaryContainer, renderSummaryLine } from '../drawer-mutant/util.js';
 import { RealTimeElement } from '../real-time-element.js';
 
 const describeMutant = (mutant: MutantModel) => html`<code>${mutant.getMutatedLines()}</code> (${describeLocation(mutant)})`;
@@ -19,8 +19,6 @@ export class MutationTestReportDrawerTestComponent extends RealTimeElement {
 
   @property({ reflect: true })
   public declare mode: DrawerMode;
-
-  public static styles = [tailwind];
 
   constructor() {
     super();
