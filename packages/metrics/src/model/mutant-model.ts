@@ -46,7 +46,7 @@ export class MutantModel implements MutantResult {
   set killedByTests(tests: TestModel[]) {
     this.#killedByTests = new Map(tests.map((test) => [test.id, test]));
   }
-  public declare sourceFile: FileUnderTestModel | undefined;
+  declare public sourceFile: FileUnderTestModel | undefined;
 
   #coveredByTests = new Map<string, TestModel>();
   #killedByTests = new Map<string, TestModel>();

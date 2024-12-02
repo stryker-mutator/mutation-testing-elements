@@ -19,7 +19,7 @@ export interface StateFilter<TStatus> {
 @customElement('mte-state-filter')
 export class FileStateFilterComponent<TStatus extends string> extends RealTimeElement {
   @property({ type: Array })
-  public declare filters?: StateFilter<TStatus>[];
+  declare public filters?: StateFilter<TStatus>[];
 
   public updated(changedProperties: PropertyValues<this>) {
     if (changedProperties.has('filters')) {

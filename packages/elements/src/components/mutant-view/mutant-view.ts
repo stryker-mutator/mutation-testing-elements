@@ -12,19 +12,19 @@ import { RealTimeElement } from '../real-time-element.js';
 @customElement('mte-mutant-view')
 export class MutationTestReportMutantViewComponent extends RealTimeElement {
   @state()
-  public declare drawerMode: DrawerMode;
+  declare public drawerMode: DrawerMode;
 
   @property({ attribute: false })
-  private declare selectedMutant?: MutantModel;
+  declare private selectedMutant?: MutantModel;
 
   @property({ attribute: false })
-  public declare result: MetricsResult<FileUnderTestModel, Metrics>;
+  declare public result: MetricsResult<FileUnderTestModel, Metrics>;
 
   @property({ attribute: false, reflect: false })
-  public declare thresholds: Thresholds;
+  declare public thresholds: Thresholds;
 
   @property({ attribute: false, reflect: false })
-  public declare path: string[];
+  declare public path: string[];
 
   constructor() {
     super();

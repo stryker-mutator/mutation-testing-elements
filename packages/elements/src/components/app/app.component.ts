@@ -58,31 +58,31 @@ type Context = MutantContext | TestContext;
 @customElement('mutation-test-report-app')
 export class MutationTestReportAppComponent extends RealTimeElement {
   @property({ attribute: false })
-  public declare report: MutationTestResult | undefined;
+  declare public report: MutationTestResult | undefined;
 
   @property({ attribute: false })
-  public declare rootModel: MutationTestMetricsResult | undefined;
+  declare public rootModel: MutationTestMetricsResult | undefined;
 
   @property()
-  public declare src: string | undefined;
+  declare public src: string | undefined;
 
   @property()
-  public declare sse: string | undefined;
+  declare public sse: string | undefined;
 
   @property({ attribute: false })
-  public declare errorMessage: string | undefined;
+  declare public errorMessage: string | undefined;
 
   @property({ attribute: false })
-  public declare context: Context;
+  declare public context: Context;
 
   @property({ type: Array })
-  public declare path: readonly string[];
+  declare public path: readonly string[];
 
   @property({ attribute: 'title-postfix' })
-  public declare titlePostfix: string | undefined;
+  declare public titlePostfix: string | undefined;
 
   @property({ reflect: true })
-  public declare theme?: Theme;
+  declare public theme?: Theme;
 
   @property({ attribute: false })
   public get themeBackgroundColor(): string {
@@ -90,7 +90,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
   }
 
   @query('mte-file-picker')
-  private declare filePicker: MutationTestReportFilePickerComponent;
+  declare private filePicker: MutationTestReportFilePickerComponent;
 
   #abortController = new AbortController();
 

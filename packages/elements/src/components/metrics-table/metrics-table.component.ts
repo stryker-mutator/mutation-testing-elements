@@ -30,16 +30,16 @@ export interface Column<TMetric> {
 @customElement('mte-metrics-table')
 export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTimeElement {
   @property({ attribute: false })
-  public declare model?: MetricsResult<TFile, TMetric>;
+  declare public model?: MetricsResult<TFile, TMetric>;
 
   @property({ attribute: false })
-  public declare currentPath: string[];
+  declare public currentPath: string[];
 
   @property({ type: Array })
-  public declare columns: Column<TMetric>[];
+  declare public columns: Column<TMetric>[];
 
   @property({ attribute: false })
-  public declare thresholds: Thresholds;
+  declare public thresholds: Thresholds;
 
   constructor() {
     super();

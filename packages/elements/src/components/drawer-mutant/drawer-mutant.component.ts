@@ -20,10 +20,10 @@ const whitespacePreserving = (content: string | TemplateResult) => html`<span cl
 @customElement('mte-drawer-mutant')
 export class MutationTestReportDrawerMutant extends RealTimeElement {
   @property({ attribute: false })
-  public declare mutant?: MutantModel;
+  declare public mutant?: MutantModel;
 
   @property({ reflect: true })
-  public declare mode: DrawerMode;
+  declare public mode: DrawerMode;
 
   constructor() {
     super();

@@ -17,10 +17,10 @@ export class MutationTestReportDrawer extends BaseElement {
   public static override styles = [unsafeCSS(style), tailwind];
 
   @property({ reflect: true })
-  public declare mode: DrawerMode;
+  declare public mode: DrawerMode;
 
   @property({ reflect: true, type: Boolean, attribute: 'has-detail' })
-  public declare hasDetail;
+  declare public hasDetail;
 
   @property({ attribute: false })
   public get toggleMoreLabel() {
@@ -35,7 +35,7 @@ export class MutationTestReportDrawer extends BaseElement {
   }
 
   @query('header')
-  private declare header: HTMLElement | undefined;
+  declare private header: HTMLElement | undefined;
 
   #contentHeightController: ResizeController<number>;
 
