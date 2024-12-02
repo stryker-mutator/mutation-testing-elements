@@ -9,10 +9,10 @@ import style from './file-icon.css?inline';
 @customElement('mte-file-icon')
 export class MutationTestReportFileIconComponent extends BaseElement {
   @property({ attribute: 'file-name' })
-  public declare fileName: string;
+  declare public fileName: string;
 
   @property({ type: Boolean })
-  public declare file: boolean;
+  declare public file: boolean;
 
   public static override styles = [unsafeCSS(style)];
 

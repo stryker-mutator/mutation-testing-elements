@@ -15,10 +15,10 @@ const describeMutant = (mutant: MutantModel) => html`<code>${mutant.getMutatedLi
 @customElement('mte-drawer-test')
 export class MutationTestReportDrawerTestComponent extends RealTimeElement {
   @property({ attribute: false })
-  public declare test?: TestModel;
+  declare public test?: TestModel;
 
   @property({ reflect: true })
-  public declare mode: DrawerMode;
+  declare public mode: DrawerMode;
 
   constructor() {
     super();

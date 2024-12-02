@@ -15,19 +15,19 @@ interface ProgressMetric {
 @customElement('mte-result-status-bar')
 export class ResultStatusBar extends BaseElement {
   @property({ type: Number })
-  public declare detected: number;
+  declare public detected: number;
 
   @property({ type: Number, attribute: 'no-coverage' })
-  public declare noCoverage: number;
+  declare public noCoverage: number;
 
   @property({ type: Number })
-  public declare pending: number;
+  declare public pending: number;
 
   @property({ type: Number })
-  public declare survived: number;
+  declare public survived: number;
 
   @property({ type: Number })
-  public declare total: number;
+  declare public total: number;
 
   #shouldBeSmallController: IntersectionController<boolean>;
 

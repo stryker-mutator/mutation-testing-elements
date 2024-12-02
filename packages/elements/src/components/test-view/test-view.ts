@@ -11,16 +11,16 @@ import { RealTimeElement } from '../real-time-element.js';
 @customElement('mte-test-view')
 export class MutationTestReportTestViewComponent extends RealTimeElement {
   @state()
-  public declare drawerMode: DrawerMode;
+  declare public drawerMode: DrawerMode;
 
   @property({ attribute: false })
-  public declare result: MetricsResult<TestFileModel, TestMetrics>;
+  declare public result: MetricsResult<TestFileModel, TestMetrics>;
 
   @property({ attribute: false, reflect: false })
-  public declare path: string[];
+  declare public path: string[];
 
   @property({ attribute: false })
-  private declare selectedTest?: TestModel;
+  declare private selectedTest?: TestModel;
 
   constructor() {
     super();

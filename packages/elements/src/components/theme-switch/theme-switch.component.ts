@@ -9,7 +9,7 @@ import style from './theme-switch.scss?inline';
 @customElement('mte-theme-switch')
 export class MutationTestReportThemeSwitchComponent extends BaseElement {
   @property()
-  public declare theme: string | undefined;
+  declare public theme: string | undefined;
 
   private readonly dispatchThemeChangedEvent = (e: MouseEvent) => {
     const checked = (e.target as HTMLInputElement).checked;

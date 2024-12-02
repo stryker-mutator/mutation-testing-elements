@@ -22,25 +22,25 @@ export class FileComponent extends RealTimeElement {
   static styles = [prismjs, tailwind, unsafeCSS(style)];
 
   @state()
-  public declare filters: StateFilter<MutantStatus>[];
+  declare public filters: StateFilter<MutantStatus>[];
 
   @property({ attribute: false })
-  public declare model: FileUnderTestModel;
+  declare public model: FileUnderTestModel;
 
   @state()
-  public declare selectedMutantStates: MutantStatus[];
+  declare public selectedMutantStates: MutantStatus[];
 
   @state()
-  private declare selectedMutant?: MutantModel;
+  declare private selectedMutant?: MutantModel;
 
   @state()
-  private declare lines: string[];
+  declare private lines: string[];
 
   @state()
-  public declare mutants: MutantModel[];
+  declare public mutants: MutantModel[];
 
   @query('code')
-  private declare code: HTMLElement;
+  declare private code: HTMLElement;
 
   #abortController: AbortController;
 

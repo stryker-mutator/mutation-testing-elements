@@ -11,10 +11,10 @@ import { BaseElement } from './base-element.js';
 @customElement('mte-breadcrumb')
 export class MutationTestReportBreadcrumbComponent extends BaseElement {
   @property({ type: Array, attribute: false })
-  public declare path: string[] | undefined;
+  declare public path: string[] | undefined;
 
   @property()
-  public declare view: View;
+  declare public view: View;
 
   get rootName(): string {
     switch (this.view) {

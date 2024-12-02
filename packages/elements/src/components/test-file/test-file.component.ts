@@ -23,22 +23,22 @@ export class TestFileComponent extends RealTimeElement {
   public static styles = [prismjs, tailwind, unsafeCSS(style)];
 
   @property({ attribute: false })
-  public declare model: TestFileModel | undefined;
+  declare public model: TestFileModel | undefined;
 
   @state()
-  private declare filters: StateFilter<TestStatus>[];
+  declare private filters: StateFilter<TestStatus>[];
 
   @state()
-  private declare lines: string[];
+  declare private lines: string[];
 
   @state()
-  public declare enabledStates: TestStatus[];
+  declare public enabledStates: TestStatus[];
 
   @state()
-  private declare selectedTest: TestModel | undefined;
+  declare private selectedTest: TestModel | undefined;
 
   @state()
-  private declare tests: TestModel[];
+  declare private tests: TestModel[];
 
   #abortController: AbortController;
 

@@ -23,16 +23,16 @@ export class MutationTestReportFilePickerComponent extends BaseElement {
   #originalDocumentOverflow = '';
 
   @property({ attribute: false })
-  public declare rootModel: MutationTestMetricsResult | undefined;
+  declare public rootModel: MutationTestMetricsResult | undefined;
 
   @state()
-  public declare filteredFiles: (ModelEntry & { template?: (string | TemplateResult)[] })[];
+  declare public filteredFiles: (ModelEntry & { template?: (string | TemplateResult)[] })[];
 
   @state()
-  public declare fileIndex: number;
+  declare public fileIndex: number;
 
   @query('dialog')
-  private declare dialog: HTMLDialogElement;
+  declare private dialog: HTMLDialogElement;
 
   get isOpen() {
     return this.dialog.open;

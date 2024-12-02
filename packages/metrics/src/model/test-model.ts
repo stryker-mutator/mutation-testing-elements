@@ -36,7 +36,7 @@ export class TestModel implements TestDefinition {
       return Array.from(this.#coveredMutants.values());
     } else return undefined;
   }
-  public declare sourceFile: TestFileModel | undefined;
+  declare public sourceFile: TestFileModel | undefined;
 
   #killedMutants = new Map<string, MutantModel>();
   #coveredMutants = new Map<string, MutantModel>();
