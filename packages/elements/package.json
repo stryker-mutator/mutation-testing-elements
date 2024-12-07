@@ -59,7 +59,7 @@
     "cssnano": "7.0.6",
     "esbuild": "0.24.0",
     "eslint-config-mte": "*",
-    "express": "4.21.1",
+    "express": "4.21.2",
     "fuzzysort": "3.1.0",
     "lit": "3.2.1",
     "mutation-testing-metrics": "3.3.0",
