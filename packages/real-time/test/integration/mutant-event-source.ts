@@ -1,4 +1,4 @@
-import EventSource from 'eventsource';
+import { EventSource } from 'eventsource';
 import type { MutantResult } from 'mutation-testing-report-schema/api';
 import { fromEvent, ReplaySubject, shareReplay, takeUntil } from 'rxjs';
 
@@ -8,7 +8,7 @@ export class MutantEventSource extends EventSource {
   }
 
   #closedSubject = new ReplaySubject<void>();
-  mutantResult$ = fromEvent(this, 'mutant-tested', (event) => JSON.parse(event.data as string) as Partial<MutantResult>).pipe(
+  mutantResult$ = fromEvent(this, 'mutant-tested', (event: { data: string }) => JSON.parse(event.data) as Partial<MutantResult>).pipe(
     takeUntil(this.#closedSubject),
     shareReplay(),
   );
