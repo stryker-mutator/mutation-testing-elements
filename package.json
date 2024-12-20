@@ -2,7 +2,7 @@
   "name": "root",
   "private": true,
   "version": "0.0.6",
-  "packageManager": "npm@10.9.2",
+  "packageManager": "npm@11.0.0",
   "description": "A suite of web components for a mutation testing report.",
   "workspaces": [
     "packages/*",
