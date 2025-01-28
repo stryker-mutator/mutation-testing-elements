@@ -2,75 +2,16 @@
  * This injects Tailwind's base styles and any base styles registered by
  * plugins.
  */
-@import 'tailwindcss';
+@tailwind base;
 
 /**
  * This injects Tailwind's component classes and any component classes
  * registered by plugins.
  */
+@tailwind components;
 
 /**
  * This injects Tailwind's utility classes and any utility classes registered
  * by plugins.
  */
-
-@theme {
-  --breakpoint-3xl: 2000px;
-
-  --spacing-offset: var(--top-offset, 0);
-  --spacing-drawer-half-open: var(--mte-drawer-height-half-open, 0);
-
-  --color-white: rgb(var(--mut-white, 255 255 255));
-
-  --color-gray-50: rgb(var(--mut-gray-50, 250 250 250));
-  --color-gray-100: rgb(var(--mut-gray-100, 244 244 245));
-  --color-gray-200: rgb(var(--mut-gray-200, 228 228 231));
-  --color-gray-300: rgb(var(--mut-gray-300, 212 212 216));
-  --color-gray-400: rgb(var(--mut-gray-400, 161 161 170));
-  --color-gray-500: rgb(var(--mut-gray-500, 113 113 122));
-  --color-gray-600: rgb(var(--mut-gray-600, 82 82 91));
-  --color-gray-700: rgb(var(--mut-gray-700, 63 63 70));
-  --color-gray-800: rgb(var(--mut-gray-800, 39 39 42));
-  --color-gray-900: rgb(var(--mut-gray-900, 24 24 27));
-  --color-gray: rgb(var(--mut-gray, 113 113 122));
-
-  --color-primary-50: rgb(var(--mut-primary-50, 240 249 255));
-  --color-primary-100: rgb(var(--mut-primary-100, 224 242 254));
-  --color-primary-200: rgb(var(--mut-primary-200, 186 230 253));
-  --color-primary-300: rgb(var(--mut-primary-300, 125 211 252));
-  --color-primary-400: rgb(var(--mut-primary-400, 56 189 248));
-  --color-primary-500: rgb(var(--mut-primary-500, 14 165 233));
-  --color-primary-600: rgb(var(--mut-primary-600, 2 132 199));
-  --color-primary-700: rgb(var(--mut-primary-700, 3 105 161));
-  --color-primary-800: rgb(var(--mut-primary-800, 7 89 133));
-  --color-primary-900: rgb(var(--mut-primary-900, 12 74 110));
-  --color-primary: rgb(var(--mut-primary, 14 165 233));
-  --color-primary-on: rgb(var(--mut-primary-on, 3 105 161));
-
-  --transition-property-max-width: max-width;
-  --transition-property-height: height;
-  --transition-property-width: width;
-  --transition-property-stroke-opacity: stroke-opacity;
-}
-
-@utility container {
-  margin-inline: auto;
-}
-
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
-}
+@tailwind utilities;
