@@ -4,14 +4,14 @@
 @import '../../style/code.css';
 
 $mutant-themes: (
-  'Pending': theme('colors.neutral.400'),
-  'Killed': theme('colors.green.600'),
-  'NoCoverage': theme('colors.orange.500'),
-  'Survived': theme('colors.red.500'),
-  'Timeout': theme('colors.amber.400'),
-  'CompileError': theme('colors.neutral.400'),
-  'RuntimeError': theme('colors.neutral.400'),
-  'Ignored': theme('colors.neutral.400'),
+  'Pending': var(--color-neutral-400),
+  'Killed': var(--color-green-600),
+  'NoCoverage': var(--color-orange-500),
+  'Survived': var(--color-red-500),
+  'Timeout': var(--color-amber-400),
+  'CompileError': var(--color-neutral-400),
+  'RuntimeError': var(--color-neutral-400),
+  'Ignored': var(--color-neutral-400),
 );
 
 // These 2 themes get underlined with a squiggly (wavy) for extra emphasis
@@ -20,9 +20,9 @@ $mutant-squiggly: 'Survived', 'NoCoverage';
 @each $status, $theme in $mutant-themes {
   @if (list.index($mutant-squiggly, $status) == null) {
     .mte-selected-#{$status} .mutant.#{$status} {
-      border-color: #{$theme};
-      border-bottom-width: 2px;
-      border-bottom-style: solid;
+      text-decoration: solid underline #{$theme} 2px;
+      text-decoration-skip-ink: none;
+      text-underline-offset: 3px;
       cursor: pointer;
     }
   }
@@ -52,12 +52,9 @@ $mutant-squiggly: 'Survived', 'NoCoverage';
     .mutant.NoCoverage {
       border-image: none;
       border-bottom-style: none;
+      text-decoration-line: none;
     }
   }
-}
-
-.mutant-dot {
-  @apply mx-0.5 cursor-pointer;
 }
 
 .diff-old {

@@ -2,16 +2,64 @@
  * This injects Tailwind's base styles and any base styles registered by
  * plugins.
  */
-@tailwind base;
+@import 'tailwindcss';
+@plugin "@tailwindcss/forms";
 
-/**
- * This injects Tailwind's component classes and any component classes
- * registered by plugins.
- */
-@tailwind components;
+@theme {
+  --breakpoint-3xl: 2000px;
 
-/**
- * This injects Tailwind's utility classes and any utility classes registered
- * by plugins.
- */
-@tailwind utilities;
+  --transition-property-max-width: max-width;
+  --transition-property-height: height;
+  --transition-property-width: width;
+  --transition-property-stroke-opacity: stroke-opacity;
+
+  /* Remove some unused colours */
+  --color-stone-*: initial;
+  --color-slate-*: initial;
+}
+
+@theme inline {
+  --spacing-offset: var(--top-offset, 0);
+  --spacing-drawer-half-open: var(--mte-drawer-height-half-open, 120px);
+
+  /* Custom colors as css variables */
+  /* Defaults are light theme colors, dark mode colors are defined in theme.scss */
+  --color-white: var(--mut-white, #fff);
+
+  --color-gray-50: var(--mut-gray-50, var(--color-zinc-50));
+  --color-gray-100: var(--mut-gray-100, var(--color-zinc-100));
+  --color-gray-200: var(--mut-gray-200, var(--color-zinc-200));
+  --color-gray-300: var(--mut-gray-300, var(--color-zinc-300));
+  --color-gray-400: var(--mut-gray-400, var(--color-zinc-400));
+  --color-gray-500: var(--mut-gray-500, var(--color-zinc-500));
+  --color-gray-600: var(--mut-gray-600, var(--color-zinc-600));
+  --color-gray-700: var(--mut-gray-700, var(--color-zinc-700));
+  --color-gray-800: var(--mut-gray-800, var(--color-zinc-800));
+  --color-gray-900: var(--mut-gray-900, var(--color-zinc-900));
+  --color-gray-950: var(--mut-gray-950, var(--color-zinc-950));
+  --color-gray: var(--mut-gray, var(--color-zinc-500));
+
+  --color-primary-50: var(--mut-primary-50, var(--color-sky-50));
+  --color-primary-100: var(--mut-primary-100, var(--color-sky-100));
+  --color-primary-200: var(--mut-primary-200, var(--color-sky-200));
+  --color-primary-300: var(--mut-primary-300, var(--color-sky-300));
+  --color-primary-400: var(--mut-primary-400, var(--color-sky-400));
+  --color-primary-500: var(--mut-primary-500, var(--color-sky-500));
+  --color-primary-600: var(--mut-primary-600, var(--color-sky-600));
+  --color-primary-700: var(--mut-primary-700, var(--color-sky-700));
+  --color-primary-800: var(--mut-primary-800, var(--color-sky-800));
+  --color-primary-900: var(--mut-primary-900, var(--color-sky-900));
+  --color-primary-950: var(--mut-primary-950, var(--color-sky-950));
+  --color-primary: var(--mut-primary, var(--color-sky-500));
+  --color-primary-on: var(--mut-primary-on, var(--color-sky-700));
+}
+
+@layer theme {
+  :host {
+    --mte-drawer-height-half-open: 120px;
+  }
+}
+
+@utility container {
+  margin-inline: auto;
+}

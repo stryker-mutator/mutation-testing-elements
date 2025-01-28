@@ -48,7 +48,7 @@
   // From https://atelierbram.github.io/syntax-highlighting/prism/demo/assets/css/prism-atom-dark.css
   --prism-maintext: #d3d0c8;
   --prism-background: #1d1f21;
-  --prism-border: rgb(var(--mut-gray-200));
+  --prism-border: var(--mut-gray-200);
 
   --prism-cdata: #7c7c7c;
   --prism-comment: var(--prism-cdata);
@@ -143,12 +143,7 @@
   @return url("data:image/svg+xml;charset=UTF8,<svg xmlns='http://www.w3.org/2000/svg' height='3' width='6'><g fill='#{$stroke-color}'><path d='m5.5 0-3 3H1.1l3-3z'/><path d='m4 0 2 2V.6L5.4 0zM0 2l1 1h1.4L0 .6z'/></g></svg>");
 }
 
-@function hexToRGB($hexCode) {
-  @return color.channel($hexCode, 'red', $space: rgb) color.channel($hexCode, 'green', $space: rgb) color.channel($hexCode, 'blue', $space: rgb);
-}
-
 :host(:not([theme='dark'])) {
-  --mut-gray-bg: theme('colors.white');
   --mut-octicon-icon-color: #498ba7;
   --mut-line-number: #6e7781;
   --mut-diff-add-bg: #e6ffec;
@@ -163,54 +158,9 @@
 
   --mut-squiggly-Survived: #{squiggly-svg-factory(#ef4444)};
   --mut-squiggly-NoCoverage: #{squiggly-svg-factory(#fb923c)};
-
-  --mut-body-bg: #fff;
 }
 :host([theme='dark']) {
   color-scheme: dark;
-  // Manually copied over from tailwind slate range
-  // https://tailwindcss.com/docs/customizing-colors#default-color-palette
-  // Tailwind Zinc
-  $grayRanges: (
-    50: #18181b,
-    100: #27272a,
-    200: #3f3f46,
-    300: #52525b,
-    400: #71717a,
-    500: #a1a1aa,
-    600: #d4d4d8,
-    700: #e4e4e7,
-    800: #f4f4f5,
-    900: #fafafa,
-  );
-
-  // Tailwind Sky
-  $primaryRanges: (
-    // 50: #0c4a6e,
-    100: #075985,
-    // 200: #0369a1,
-    // 300: #0284c7,
-    // 400: #0ea5e9,
-    // 500: #38bdf8,
-    // 600: #7dd3fc,
-    // 700: #bae6fd,
-    800: #e0f2fe,
-    900: #f0f9ff,
-    // color for 'on' background
-    on: #0ea5e9
-  );
-
-  @each $range, $value in $grayRanges {
-    --mut-gray-#{$range}: #{hexToRGB($value)};
-  }
-
-  @each $range, $value in $primaryRanges {
-    --mut-primary-#{$range}: #{hexToRGB($value)};
-  }
-
-  --mut-body-bg: #{map.get($grayRanges, 50)};
-
-  --mut-white: var(--mut-gray-50);
 
   --mut-octicon-icon-color: #519aba;
   --mut-line-number: #484f58;
@@ -226,4 +176,34 @@
 
   --mut-squiggly-Survived: #{squiggly-svg-factory(#ef4444)};
   --mut-squiggly-NoCoverage: #{squiggly-svg-factory(#fb923c)};
+}
+
+/* Dark mode colors */
+:host([theme='dark']) {
+  --mut-white: var(--color-zinc-900);
+
+  --mut-gray-50: var(--color-zinc-900);
+  --mut-gray-100: var(--color-zinc-800);
+  --mut-gray-200: var(--color-zinc-700);
+  --mut-gray-300: var(--color-zinc-600);
+  --mut-gray-400: var(--color-zinc-500);
+  --mut-gray-500: var(--color-zinc-400);
+  --mut-gray-600: var(--color-zinc-300);
+  --mut-gray-700: var(--color-zinc-200);
+  --mut-gray-800: var(--color-zinc-100);
+  --mut-gray-900: var(--color-zinc-50);
+  // --mut-gray: var(--color-zinc-500);
+
+  // --mut-primary-50: var(--color-sky-900);
+  --mut-primary-100: var(--color-sky-800);
+  // --mut-primary-200: var(--color-sky-700);
+  // --mut-primary-300: var(--color-sky-600);
+  // --mut-primary-400: var(--color-sky-500);
+  // --mut-primary-500: var(--color-sky-400);
+  // --mut-primary-600: var(--color-sky-300);
+  // --mut-primary-700: var(--color-sky-200);
+  --mut-primary-800: var(--color-sky-100);
+  --mut-primary-900: var(--color-sky-50);
+  // --mut-primary: var(--color-sky-500);
+  --mut-primary-on: var(--color-sky-500);
 }

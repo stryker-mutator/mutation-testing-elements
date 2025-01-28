@@ -136,7 +136,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
       <td class="font-semibold">
         <div class="flex items-center justify-start">
           <mte-file-icon file-name="${row.name}" ?file="${row.file}" class="mx-1"></mte-file-icon> ${path.length > 0
-            ? html`<a class="mr-auto inline-block w-full py-4 pr-2 hover:text-primary-on hover:underline" href="${toAbsoluteUrl(...path)}"
+            ? html`<a class="hover:text-primary-on mr-auto inline-block w-full py-4 pr-2 hover:underline" href="${toAbsoluteUrl(...path)}"
                 >${name}</a
               >`
             : html`<span class="py-4">${row.name}</span>`}
@@ -157,7 +157,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
       const mutationScoreRounded = value.toFixed(2);
       const progressBarStyle = `width: ${value}%`;
 
-      return html`<td class="bg-gray-100 px-4 py-4 group-hover:bg-gray-200">
+      return html`<td class="bg-gray-100 px-4 py-4 group-hover:bg-gray-200!">
           ${valueIsPresent
             ? html`<div class="h-3 w-full min-w-[24px] rounded-full bg-gray-300">
                 <div
@@ -173,12 +173,12 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
               </div>`
             : html` <span class="text-light-muted font-bold">N/A</span> `}
         </td>
-        <td class="${textColoringClass} ${backgroundColoringClass} w-12 pr-2 text-center font-bold group-hover:bg-gray-200"
+        <td class="${textColoringClass} ${backgroundColoringClass} w-12 pr-2 text-center font-bold group-hover:bg-gray-200!"
           >${valueIsPresent ? html`<span class="transition-colors">${mutationScoreRounded}</span>` : nothing}</td
         >`;
     }
     return html`<td
-      class="${classMap({ 'font-bold': column.isBold ?? false, [backgroundColoringClass]: true })} py-4 text-center group-hover:bg-gray-200"
+      class="${classMap({ 'font-bold': column.isBold ?? false, [backgroundColoringClass]: true })} py-4 text-center group-hover:bg-gray-200!"
       aria-describedby="${`tooltip-${column.key.toString()}`}"
       >${value}</td
     >`;

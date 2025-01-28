@@ -1,5 +1,0 @@
-/* Global variables loaded in mutation-test-report-app */
-
-:host {
-  --mte-drawer-height-half-open: 120px; /* Leave room for 2 lines of text */
-}

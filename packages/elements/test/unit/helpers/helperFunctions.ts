@@ -1,16 +1,17 @@
 import type { MutantStatus } from 'mutation-testing-report-schema/api';
+import colors from 'tailwindcss/colors.js';
 
 export function normalizeWhitespace(pseudoHtml: string) {
   return pseudoHtml.replace(/\s+/g, ' ').trim();
 }
 
 export const expectedMutantColors = Object.freeze({
-  Killed: 'rgb(220, 252, 231)',
-  Survived: 'rgb(254, 226, 226)',
-  NoCoverage: 'rgb(255, 237, 213)',
-  Timeout: 'rgb(254, 249, 195)',
-  CompileError: 'rgb(244, 244, 245)',
-  RuntimeError: 'rgb(244, 244, 245)',
-  Ignored: 'rgb(244, 244, 245)',
-  Pending: 'rgb(244, 244, 245)',
+  Killed: colors.green['100'],
+  Survived: colors.red['100'],
+  NoCoverage: colors.orange['100'],
+  Timeout: colors.yellow['100'],
+  CompileError: colors.zinc['100'],
+  RuntimeError: colors.zinc['100'],
+  Ignored: colors.zinc['100'],
+  Pending: colors.zinc['100'],
 } satisfies Record<MutantStatus, string>);
