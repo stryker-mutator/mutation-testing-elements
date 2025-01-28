@@ -87,7 +87,7 @@ export class MutationTestReportFilePickerComponent extends BaseElement {
           @click="${(e: MouseEvent) => e.stopPropagation()}"
           class="mx-auto flex h-fit max-h-[33rem] flex-col rounded-lg bg-gray-200/60 p-4 backdrop-blur-lg"
         >
-          <div class="mb-3 flex items-center rounded bg-gray-200/60 p-2 text-gray-800 shadow-lg">
+          <div class="mb-3 flex items-center rounded-sm bg-gray-200/60 p-2 text-gray-800 shadow-lg">
             <div class="mx-2 flex items-center">${searchIcon}</div>
             <label id="file-picker-label" for="file-picker-input" class="sr-only">Search for a file</label>
             <input
@@ -118,14 +118,14 @@ export class MutationTestReportFilePickerComponent extends BaseElement {
             const view = this.#getView(file);
             return html`
               <li
-                class="group snap-start rounded bg-gray-200 text-gray-900 transition-shadow aria-selected:bg-primary-500 aria-selected:text-gray-50 aria-selected:shadow-lg"
+                class="group snap-start rounded-sm bg-gray-200 text-gray-900 transition-shadow aria-selected:bg-primary-500 aria-selected:text-gray-50 aria-selected:shadow-lg"
                 role="option"
                 aria-selected="${index === this.fileIndex}"
               >
                 <a
                   tabindex="${index === this.fileIndex ? 0 : -1}"
                   @click="${this.close}"
-                  class="flex h-full flex-wrap items-center p-2 outline-none"
+                  class="flex h-full flex-wrap items-center p-2 outline-hidden"
                   @mousemove="${() => (this.fileIndex = index)}"
                   href="${toAbsoluteUrl(view, name)}"
                 >

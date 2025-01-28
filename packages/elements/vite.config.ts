@@ -1,5 +1,6 @@
 /// <reference types="vitest" />
 
+import tailwindcss from '@tailwindcss/vite';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
 import { type MutationEventSender, RealTimeReporter } from 'mutation-testing-real-time';
 import { type Plugin } from 'vite';
@@ -23,7 +24,7 @@ export default defineConfig({
       '/mutation-test-elements.js': '/src/index.ts',
     },
   },
-  plugins: [realTimeResponderPlugin()],
+  plugins: [tailwindcss(), realTimeResponderPlugin()],
   server: {
     open: process.env.CI ? undefined : '/testResources/',
   },

@@ -128,7 +128,7 @@ export class TestFileComponent extends RealTimeElement {
           (test) =>
             html`<li class="my-3">
               <button
-                class="w-full rounded p-3 text-left hover:bg-gray-100 active:bg-gray-200"
+                class="w-full rounded-sm p-3 text-left hover:bg-gray-100 active:bg-gray-200"
                 type="button"
                 data-active="${this.selectedTest === test}"
                 test-id="${test.id}"

@@ -2,7 +2,7 @@ import type { TemplateResult } from 'lit';
 import { html, nothing } from 'lit';
 
 export const renderDetailLine = (title: string, content: string | TemplateResult) =>
-  html`<li title=${title || nothing} class="my-3 rounded bg-white px-2 py-3 shadow">${content}</li>`;
+  html`<li title=${title || nothing} class="my-3 rounded-sm bg-white px-2 py-3 shadow-sm">${content}</li>`;
 
 // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- we want to coalesce on empty string
 export const renderSummaryLine = (content: string | TemplateResult, title?: string) => html`<p title=${title || nothing}>${content}</p>`;

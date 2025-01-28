@@ -74,12 +74,12 @@ export class FileStateFilterComponent<TStatus extends string> extends RealTimeEl
                   type="checkbox"
                   .value="${filter.status}"
                   @input="${(el: Event) => this.checkboxChanged(filter, (el.target as HTMLInputElement).checked)}"
-                  class="h-5 w-5 rounded border-gray-300 bg-gray-100 text-primary-on !ring-offset-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  class="h-5 w-5 rounded-sm border-gray-300 bg-gray-100 text-primary-on ring-offset-gray-200! focus:outline-hidden focus:ring-2 focus:ring-primary-500"
                 />
 
                 <label
                   for="filter-${filter.status}"
-                  class="${this.bgForContext(filter.context)} mx-2 rounded px-2.5 py-0.5 text-sm font-medium hover:cursor-pointer"
+                  class="${this.bgForContext(filter.context)} mx-2 rounded-sm px-2.5 py-0.5 text-sm font-medium hover:cursor-pointer"
                 >
                   ${filter.label} (${filter.count})
                 </label>
@@ -96,7 +96,7 @@ export class FileStateFilterComponent<TStatus extends string> extends RealTimeEl
       title="${title}"
       @click=${handleClick}
       type="button"
-      class="mr-2 inline-flex items-center rounded-md bg-primary-600 p-1 text-center text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500"
+      class="mr-2 inline-flex items-center rounded-md bg-primary-600 p-1 text-center text-white hover:bg-primary-700 focus:outline-hidden focus:ring-2 focus:ring-primary-500"
       >${icon}
       <span class="sr-only">${srText}</span>
     </button>`;
