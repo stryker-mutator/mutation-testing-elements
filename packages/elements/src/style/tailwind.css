@@ -23,7 +23,7 @@
   --spacing-drawer-half-open: var(--mte-drawer-height-half-open, 120px);
 
   /* Custom colors as css variables */
-  /* Defaults are light theme colors, dark mode colors are defined in theme.scss */
+  /* Defaults are light theme colors, dark mode colors are defined in theme.css */
   --color-white: var(--mut-white, #fff);
 
   --color-gray-50: var(--mut-gray-50, var(--color-zinc-50));

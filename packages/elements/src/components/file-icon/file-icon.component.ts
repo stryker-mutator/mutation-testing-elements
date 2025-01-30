@@ -39,7 +39,7 @@ export class MutationTestReportFileIconComponent extends BaseElement {
     }
 
     // For new icons, look at https://github.com/jesseweed/seti-ui/tree/master/icons
-    // Custom colors can be added by adding a fill for a css variable and updating the variable in `theme.scss` and `file-icon.css`
+    // Custom colors can be added by adding a fill for a css variable and updating the variable in `theme.css` and `file-icon.css`
     // Exhaustiveness checking is active here. Adding a new language in the enum will automatically result in a compile error here. That's why its missing a `default` case
     switch (this.language) {
       case ProgrammingLanguage.csharp:
