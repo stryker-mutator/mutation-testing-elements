@@ -26,7 +26,7 @@ export class MutationTestReportBreadcrumbComponent extends BaseElement {
   }
 
   public render() {
-    return html`<nav class="my-4 flex rounded-md border border-primary-600 bg-primary-100 p-3 text-gray-700" aria-label="Breadcrumb">
+    return html`<nav class="border-primary-600 bg-primary-100 my-4 flex rounded-md border p-3 text-gray-700" aria-label="Breadcrumb">
       <ol class="inline-flex items-center">
         ${this.path && this.path.length > 0 ? this.#renderLink(this.rootName, []) : this.#renderActiveItem(this.rootName)}
         ${this.#renderBreadcrumbItems()}
@@ -63,7 +63,7 @@ export class MutationTestReportBreadcrumbComponent extends BaseElement {
     return html`<li class="after:text-gray-800 after:content-['/'] md:after:pl-1">
       <a
         href="${toAbsoluteUrl(this.view, ...path)}"
-        class="ml-1 text-sm font-medium text-primary-800 underline hover:text-gray-900 hover:underline md:ml-2"
+        class="text-primary-800 ml-1 text-sm font-medium underline hover:text-gray-900 hover:underline md:ml-2"
         >${title}</a
       >
     </li>`;

@@ -1,11 +1,9 @@
-@import '../../style/globals.css';
-
 :host([mode='closed']) {
-  @apply h-0;
+  height: 0;
 }
 :host([mode='half']) {
-  @apply h-drawer-half-open;
+  height: var(--spacing-drawer-half-open);
 }
 :host([mode='open']) {
-  @apply h-1/2;
+  height: 50%;
 }

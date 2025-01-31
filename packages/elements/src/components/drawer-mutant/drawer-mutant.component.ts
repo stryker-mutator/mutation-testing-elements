@@ -77,7 +77,7 @@ export class MutationTestReportDrawerMutant extends RealTimeElement {
   }
 
   private renderDetail() {
-    return html`<ul class="mb-6 mr-2">
+    return html`<ul class="mr-2 mb-6">
       ${map(this.mutant?.killedByTests, (test) =>
         renderDetailLine('This mutant was killed by this test', html`${renderEmoji('🎯', 'killed')} ${describeTest(test)}`),
       )}

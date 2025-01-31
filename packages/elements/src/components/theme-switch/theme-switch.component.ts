@@ -4,7 +4,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { createCustomEvent } from '../../lib/custom-events.js';
 import { tailwind } from '../../style/index.js';
 import { BaseElement } from '../base-element.js';
-import style from './theme-switch.scss?inline';
+import style from './theme-switch.css?inline';
 
 @customElement('mte-theme-switch')
 export class MutationTestReportThemeSwitchComponent extends BaseElement {

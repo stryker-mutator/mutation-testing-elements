@@ -54,7 +54,7 @@ export class ResultStatusBar extends BaseElement {
     return html`
       ${this.#renderSmallParts()}
       <div class="my-4 rounded-md border border-gray-200 bg-white transition-all">
-        <div class="parts flex h-8 w-full overflow-hidden rounded bg-gray-200">${this.#renderParts()}</div>
+        <div class="parts flex h-8 w-full overflow-hidden rounded-sm bg-gray-200">${this.#renderParts()}</div>
       </div>
     `;
   }
@@ -62,11 +62,11 @@ export class ResultStatusBar extends BaseElement {
   #renderSmallParts() {
     return html`<div
       class="${this.#shouldBeSmallController.value
-        ? 'opacity-1'
-        : 'opacity-0'} pointer-events-none fixed left-0 top-offset z-20 flex w-full justify-center transition-all"
+        ? 'opacity-100'
+        : 'opacity-0'} top-offset pointer-events-none fixed left-0 z-20 flex w-full justify-center transition-all"
     >
       <div class="container w-full bg-white py-2">
-        <div class="flex h-2 overflow-hidden rounded bg-gray-200">${this.#getMetrics().map((metric) => this.#renderPart(metric, true))}</div>
+        <div class="flex h-2 overflow-hidden rounded-sm bg-gray-200">${this.#getMetrics().map((metric) => this.#renderPart(metric, true))}</div>
       </div>
     </div>`;
   }
@@ -79,7 +79,7 @@ export class ResultStatusBar extends BaseElement {
     return html`<div
       title="${shouldBeSmall ? nothing : metric.tooltip}"
       style="width: ${this.#calculatePercentage(metric.amount)}%"
-      class="${this.#colorFromMetric(metric.type)} ${metric.amount === 0 ? 'opacity-0' : 'opacity-1'} relative flex items-center overflow-hidden"
+      class="${this.#colorFromMetric(metric.type)} ${metric.amount === 0 ? 'opacity-0' : 'opacity-100'} relative flex items-center overflow-hidden"
       >${shouldBeSmall ? nothing : html`<span class="ms-3 font-bold text-gray-800">${metric.amount}</span>`}
     </div>`;
   }

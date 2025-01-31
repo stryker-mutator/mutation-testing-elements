@@ -157,7 +157,7 @@ export class FileComponent extends RealTimeElement {
     return mutants?.length
       ? mutants.map(
           (mutant) =>
-            svg`<svg mutant-id="${mutant.id}" class="mutant-dot ${this.selectedMutant?.id === mutant.id ? 'selected' : ''} ${mutant.status}" height="10" width="12">
+            svg`<svg mutant-id="${mutant.id}" class="mutant-dot mx-0.5 cursor-pointer ${this.selectedMutant?.id === mutant.id ? 'selected' : ''} ${mutant.status}" height="10" width="12">
               <title>${title(mutant)}</title>
               ${this.selectedMutant?.id === mutant.id ? triangle : circle}
           </svg>`,

@@ -2,14 +2,19 @@ import { MutantElement } from './MutantElement.po.js';
 
 export class MutantMarker extends MutantElement {
   async underlineIsVisible() {
-    const underlineStyle = await this.host.evaluate<string>((el) => window.getComputedStyle(el).borderBottomStyle);
-    switch (underlineStyle) {
-      case 'solid':
+    // First try text-decoration, then border-bottom
+    return (await this.#styleMatches('textDecorationLine', 'underline')) || (await this.#styleMatches('borderBottomStyle', 'solid'));
+  }
+
+  async #styleMatches(property: keyof CSSStyleDeclaration & string, trueCase: string, falseCase = 'none') {
+    const style = (await this.host.evaluate((el, property) => window.getComputedStyle(el)[property], property)) as string;
+    switch (style) {
+      case trueCase:
         return true;
-      case 'none':
+      case falseCase:
         return false;
       default:
-        throw new Error(`Underline style "${underlineStyle}" is not supported`);
+        throw new Error(`${property} style "${style}" is not supported`);
     }
   }
 }

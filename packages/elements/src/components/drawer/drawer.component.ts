@@ -86,13 +86,15 @@ export class MutationTestReportDrawer extends BaseElement {
     const isOpen = this.mode === 'open';
     const height = this.#contentHeightController.value;
 
-    return html`<aside @click="${(event: Event) => event.stopPropagation()}" class="ml-6 mr-4">
+    return html`<aside @click="${(event: Event) => event.stopPropagation()}" class="mr-4 ml-6">
       <header class="w-full py-4">
         <h2>
           <slot name="header"></slot>
           ${renderIf(
             this.hasDetail,
-            html`<button data-testId="btnReadMoreToggle" class="ml-2 align-middle" @click="${this.toggleReadMore}">${this.toggleMoreLabel}</button>`,
+            html`<button data-testId="btnReadMoreToggle" class="ml-2 cursor-pointer align-middle" @click="${this.toggleReadMore}">
+              ${this.toggleMoreLabel}
+            </button>`,
           )}
         </h2>
       </header>

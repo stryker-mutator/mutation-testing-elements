@@ -16,7 +16,7 @@ import { prismjs, tailwind } from '../../style/index.js';
 import { beginElementAnimation, circle, renderDots, renderLine, triangle } from '../file/util.js';
 import { RealTimeElement } from '../real-time-element.js';
 import type { StateFilter } from '../state-filter/state-filter.component.js';
-import style from './test-file.scss?inline';
+import style from './test-file.css?inline';
 
 @customElement('mte-test-file')
 export class TestFileComponent extends RealTimeElement {
@@ -128,7 +128,7 @@ export class TestFileComponent extends RealTimeElement {
           (test) =>
             html`<li class="my-3">
               <button
-                class="w-full rounded p-3 text-left hover:bg-gray-100 active:bg-gray-200"
+                class="w-full rounded-sm p-3 text-left hover:bg-gray-100 active:bg-gray-200"
                 type="button"
                 data-active="${this.selectedTest === test}"
                 test-id="${test.id}"
@@ -192,7 +192,7 @@ export class TestFileComponent extends RealTimeElement {
           (test) =>
             svg`<svg
               test-id="${test.id}"
-              class="test-dot ${this.selectedTest?.id === test.id ? 'selected' : ''} ${test.status}"
+              class="test-dot mx-0.5 cursor-pointer ${this.selectedTest?.id === test.id ? 'selected' : ''} ${test.status}"
               @click=${(ev: MouseEvent) => {
                 ev.stopPropagation();
                 this.toggleTest(test);

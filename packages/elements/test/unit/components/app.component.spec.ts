@@ -1,3 +1,4 @@
+import colors from 'tailwindcss/colors.js';
 import type { MockInstance } from 'vitest';
 
 import { MutationTestReportAppComponent } from '../../../src/components/app/app.component.js';
@@ -68,7 +69,7 @@ describe(MutationTestReportAppComponent.name, () => {
 
     it('should report error when fetch fails', async () => {
       // Arrange
-      const redAlert = 'rgb(185, 28, 28)';
+      const redAlert = colors.red['700'];
       const expectedError = new Error('report did not exist - 404');
       const expectedErrorMessage = 'Error: report did not exist - 404';
       fetchStub.mockRejectedValue(expectedError);
@@ -240,7 +241,7 @@ describe(MutationTestReportAppComponent.name, () => {
         sut.element.theme = 'dark';
         await sut.whenStable();
 
-        expect(sut.element.themeBackgroundColor.trim()).eq('#18181b');
+        expect(sut.element.themeBackgroundColor.trim()).eq(colors.zinc['900']);
       });
     });
 
@@ -299,7 +300,7 @@ describe(MutationTestReportAppComponent.name, () => {
         sut.$('mte-theme-switch').dispatchEvent(createCustomEvent('theme-switch', 'dark'));
       });
       expect(event?.detail.theme).eq('dark');
-      expect(event?.detail.themeBackgroundColor.trim()).eq('#18181b');
+      expect(event?.detail.themeBackgroundColor.trim()).eq(colors.zinc['900']);
     });
 
     it('should trigger a `theme-changed` event when the theme changes during init', async () => {
@@ -310,7 +311,7 @@ describe(MutationTestReportAppComponent.name, () => {
         await sut.whenStable();
       });
       expect(event?.detail.theme).eq('dark');
-      expect(event?.detail.themeBackgroundColor.trim()).eq('#18181b');
+      expect(event?.detail.themeBackgroundColor.trim()).eq(colors.zinc['900']);
     });
   });
 

@@ -25,10 +25,10 @@ import { toAbsoluteUrl } from '../../lib/html-helpers.js';
 import { mutantChanges } from '../../lib/mutant-changes.js';
 import { locationChange$, View } from '../../lib/router.js';
 import type { Theme } from '../../lib/theme.js';
-import { globals, tailwind } from '../../style/index.js';
+import { tailwind } from '../../style/index.js';
 import { type MutationTestReportFilePickerComponent } from '../file-picker/file-picker.component.js';
 import { RealTimeElement } from '../real-time-element.js';
-import theme from './theme.scss?inline';
+import theme from './theme.css?inline';
 
 interface BaseContext {
   path: string[];
@@ -86,7 +86,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
 
   @property({ attribute: false })
   public get themeBackgroundColor(): string {
-    return getComputedStyle(this).getPropertyValue('--mut-body-bg');
+    return getComputedStyle(this).getPropertyValue('--color-white');
   }
 
   @query('mte-file-picker')
@@ -248,7 +248,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
     }
   };
 
-  public static styles = [globals, unsafeCSS(theme), tailwind];
+  public static styles = [unsafeCSS(theme), tailwind];
 
   public readonly subscriptions: Subscription[] = [];
 
@@ -346,7 +346,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
   private renderTitle() {
     if (this.context.result) {
       return html`
-        <h1 class="text-5xl font-bold tracking-tight">
+        <h1 class="mt-4 text-5xl font-bold tracking-tight">
           ${this.context.result.name}${this.titlePostfix
             ? html`<small class="text-light-muted ml-4 font-light">${this.titlePostfix}</small>`
             : nothing}
@@ -360,36 +360,34 @@ export class MutationTestReportAppComponent extends RealTimeElement {
     if (this.context.result ?? this.errorMessage) {
       return html`
         <mte-file-picker .rootModel="${this.rootModel}"></mte-file-picker>
-        <div class="container bg-white pb-4 font-sans text-gray-800 motion-safe:transition-max-width">
-          <div class="space-y-4 transition-colors">
-            ${this.renderErrorMessage()}
-            <mte-theme-switch @theme-switch="${this.themeSwitch}" class="sticky top-offset z-20 float-right pt-6" .theme="${this.theme}">
-            </mte-theme-switch>
-            ${this.renderTitle()} ${this.renderTabs()}
-            <mte-breadcrumb
-              @mte-file-picker-open="${() => this.filePicker.open()}"
-              .view="${this.context.view}"
-              .path="${this.context.path}"
-            ></mte-breadcrumb>
-            <mte-result-status-bar
-              detected="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.totalDetected)}"
-              no-coverage="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.noCoverage)}"
-              pending="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.pending)}"
-              survived="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.survived)}"
-              total="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.totalValid)}"
-            ></mte-result-status-bar>
-            ${this.context.view === 'mutant' && this.context.result
-              ? html`<mte-mutant-view
-                  id="mte-mutant-view"
-                  .result="${this.context.result}"
-                  .thresholds="${this.report!.thresholds}"
-                  .path="${this.path}"
-                ></mte-mutant-view>`
-              : nothing}
-            ${this.context.view === 'test' && this.context.result
-              ? html`<mte-test-view id="mte-test-view" .result="${this.context.result}" .path="${this.path}"></mte-test-view>`
-              : nothing}
-          </div>
+        <div class="motion-safe:transition-max-width container space-y-4 bg-white pb-4 font-sans text-gray-800 transition-colors">
+          ${this.renderErrorMessage()}
+          <mte-theme-switch @theme-switch="${this.themeSwitch}" class="top-offset sticky z-20 float-right mb-0 pt-7" .theme="${this.theme}">
+          </mte-theme-switch>
+          ${this.renderTitle()} ${this.renderTabs()}
+          <mte-breadcrumb
+            @mte-file-picker-open="${() => this.filePicker.open()}"
+            .view="${this.context.view}"
+            .path="${this.context.path}"
+          ></mte-breadcrumb>
+          <mte-result-status-bar
+            detected="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.totalDetected)}"
+            no-coverage="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.noCoverage)}"
+            pending="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.pending)}"
+            survived="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.survived)}"
+            total="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.totalValid)}"
+          ></mte-result-status-bar>
+          ${this.context.view === 'mutant' && this.context.result
+            ? html`<mte-mutant-view
+                id="mte-mutant-view"
+                .result="${this.context.result}"
+                .thresholds="${this.report!.thresholds}"
+                .path="${this.path}"
+              ></mte-mutant-view>`
+            : nothing}
+          ${this.context.view === 'test' && this.context.result
+            ? html`<mte-test-view id="mte-test-view" .result="${this.context.result}" .path="${this.path}"></mte-test-view>`
+            : nothing}
         </div>
       `;
     } else {
@@ -420,7 +418,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
               ({ type, isActive, text }) =>
                 html`<li class="mr-2" role="presentation">
                   <a
-                    class="inline-block rounded-t-lg border-b-2 border-transparent p-4 transition-colors hover:border-gray-300 hover:bg-gray-200 hover:text-gray-700 aria-selected:border-b-[3px] aria-selected:border-primary-700 aria-selected:text-primary-on"
+                    class="aria-selected:border-primary-700 aria-selected:text-primary-on inline-block rounded-t-lg border-b-2 border-transparent p-4 transition-colors hover:border-gray-300 hover:bg-gray-200 hover:text-gray-700 aria-selected:border-b-[3px] aria-selected:border-solid"
                     role="tab"
                     href="${toAbsoluteUrl(type)}"
                     aria-selected="${isActive}"

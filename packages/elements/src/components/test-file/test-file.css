@@ -1,0 +1,14 @@
+@import '../../style/code.css';
+
+.Killing {
+  --mut-test-dot-color: var(--color-green-700);
+}
+.Covering {
+  --mut-test-dot-color: var(--color-amber-400);
+}
+.NotCovering {
+  --mut-test-dot-color: var(--color-orange-500);
+}
+svg.test-dot {
+  fill: var(--mut-test-dot-color);
+}
