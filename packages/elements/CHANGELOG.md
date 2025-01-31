@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.5.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.4.1...v3.5.0) (2025-01-31)
+
+
+### Features
+
+* **deps:** update dependency tailwindcss to v4 ([#3605](https://github.com/stryker-mutator/mutation-testing-elements/issues/3605)) ([b282842](https://github.com/stryker-mutator/mutation-testing-elements/commit/b2828429fc69676068a8c8d57c4f15257266116f))
+
+
+### Reverts
+
+* Revert "WIP" ([b23d88b](https://github.com/stryker-mutator/mutation-testing-elements/commit/b23d88bf729a793347b1897647b73ab26b40e027))
+
+
+
+
+
 # [3.4.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.3.0...v3.4.0) (2024-11-22)
 
 

@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.5.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.4.1...v3.5.0) (2025-01-31)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint-config-prettier to v10 ([#3592](https://github.com/stryker-mutator/mutation-testing-elements/issues/3592)) ([4be1b70](https://github.com/stryker-mutator/mutation-testing-elements/commit/4be1b703ad0ce735a9486e83bf5c7f216c6587b0))
+* **deps:** update dependency typescript-eslint to v8.18.0 ([#3562](https://github.com/stryker-mutator/mutation-testing-elements/issues/3562)) ([c3d2a60](https://github.com/stryker-mutator/mutation-testing-elements/commit/c3d2a600474651aff222fd02e8717f0b1cd41f9c))
+* **deps:** update dependency typescript-eslint to v8.18.1 ([#3568](https://github.com/stryker-mutator/mutation-testing-elements/issues/3568)) ([810e2d2](https://github.com/stryker-mutator/mutation-testing-elements/commit/810e2d2e71dc06394e601e0d98563fab1f402a68))
+* **deps:** update dependency typescript-eslint to v8.18.2 ([#3573](https://github.com/stryker-mutator/mutation-testing-elements/issues/3573)) ([b5e350a](https://github.com/stryker-mutator/mutation-testing-elements/commit/b5e350aa90a53334bb01fb1e457147ec05a9a944))
+* **deps:** update dependency typescript-eslint to v8.19.1 ([#3581](https://github.com/stryker-mutator/mutation-testing-elements/issues/3581)) ([2f15e4a](https://github.com/stryker-mutator/mutation-testing-elements/commit/2f15e4a811c67eb796e35b696bb0531b8b0b3418))
+* **deps:** update dependency typescript-eslint to v8.20.0 ([#3591](https://github.com/stryker-mutator/mutation-testing-elements/issues/3591)) ([df9c4bd](https://github.com/stryker-mutator/mutation-testing-elements/commit/df9c4bd3daa9d0f2e6700291819450bde0dc3eda))
+* **deps:** update dependency typescript-eslint to v8.22.0 ([#3604](https://github.com/stryker-mutator/mutation-testing-elements/issues/3604)) ([2708d39](https://github.com/stryker-mutator/mutation-testing-elements/commit/2708d39c996aaed7faf092fa7afaa844f140814b))
+
+
+### Features
+
+* **deps:** update dependency tailwindcss to v4 ([#3605](https://github.com/stryker-mutator/mutation-testing-elements/issues/3605)) ([b282842](https://github.com/stryker-mutator/mutation-testing-elements/commit/b2828429fc69676068a8c8d57c4f15257266116f))
+
+
+### Reverts
+
+* Revert "WIP" ([b23d88b](https://github.com/stryker-mutator/mutation-testing-elements/commit/b23d88bf729a793347b1897647b73ab26b40e027))
+
+
+
+
+
 ## [3.4.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.4.0...v3.4.1) (2024-11-25)
 
 
