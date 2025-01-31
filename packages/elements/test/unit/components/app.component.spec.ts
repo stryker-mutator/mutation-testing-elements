@@ -241,7 +241,7 @@ describe(MutationTestReportAppComponent.name, () => {
         sut.element.theme = 'dark';
         await sut.whenStable();
 
-        expect(sut.element.themeBackgroundColor.trim()).eq(colors.zinc['900']);
+        expect(sut.element.themeBackgroundColor.trim()).eq(colors.zinc['900'].replaceAll('0.', '.'));
       });
     });
 
@@ -300,7 +300,7 @@ describe(MutationTestReportAppComponent.name, () => {
         sut.$('mte-theme-switch').dispatchEvent(createCustomEvent('theme-switch', 'dark'));
       });
       expect(event?.detail.theme).eq('dark');
-      expect(event?.detail.themeBackgroundColor.trim()).eq(colors.zinc['900']);
+      expect(event?.detail.themeBackgroundColor.trim()).eq(colors.zinc['900'].replaceAll('0.', '.'));
     });
 
     it('should trigger a `theme-changed` event when the theme changes during init', async () => {
@@ -311,7 +311,7 @@ describe(MutationTestReportAppComponent.name, () => {
         await sut.whenStable();
       });
       expect(event?.detail.theme).eq('dark');
-      expect(event?.detail.themeBackgroundColor.trim()).eq(colors.zinc['900']);
+      expect(event?.detail.themeBackgroundColor.trim()).eq(colors.zinc['900'].replaceAll('0.', '.'));
     });
   });
 

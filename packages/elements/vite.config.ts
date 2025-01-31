@@ -1,7 +1,9 @@
 /// <reference types="vitest" />
 
 import tailwindcss from '@tailwindcss/vite';
+import browserslist from 'browserslist';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
+import { browserslistToTargets } from 'lightningcss';
 import { type MutationEventSender, RealTimeReporter } from 'mutation-testing-real-time';
 import { type Plugin } from 'vite';
 import { defineConfig, type ViteUserConfig } from 'vitest/config';
@@ -29,7 +31,14 @@ export default defineConfig({
     open: process.env.CI ? undefined : '/testResources/',
   },
   esbuild: esbuildOptions,
+  css: {
+    transformer: 'lightningcss',
+    lightningcss: {
+      targets: browserslistToTargets(browserslist()),
+    },
+  },
   build: {
+    cssMinify: 'lightningcss',
     emptyOutDir: !process.env.IIFE_BUILD,
     rollupOptions: {
       // For library usage, we want to externalize lit. When included as a script on the page we want to bundle it.

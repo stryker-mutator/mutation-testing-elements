@@ -1,0 +1,100 @@
+@import '../../style/code.css';
+
+.NoCoverage {
+  --mut-status-color: var(--color-orange-500);
+  --mut-squiggly-line: var(--mut-squiggly-NoCoverage);
+}
+.Survived {
+  --mut-status-color: var(--color-red-500);
+  --mut-squiggly-line: var(--mut-squiggly-Survived);
+}
+.Pending {
+  --mut-status-color: var(--color-neutral-400);
+}
+.Killed {
+  --mut-status-color: var(--color-green-600);
+}
+.Timeout {
+  --mut-status-color: var(--color-amber-400);
+}
+.CompileError {
+  --mut-status-color: var(--color-neutral-400);
+}
+.RuntimeError {
+  --mut-status-color: var(--color-neutral-400);
+}
+.Ignored {
+  --mut-status-color: var(--color-neutral-400);
+}
+
+svg.mutant-dot {
+  fill: var(--mut-status-color);
+}
+
+/* Everything except NoCoverage and Survived gets a solid underline */
+.mte-selected-Pending .mutant.Pending,
+.mte-selected-Killed .mutant.Killed,
+.mte-selected-Timeout .mutant.Timeout,
+.mte-selected-CompileError .mutant.CompileError,
+.mte-selected-RuntimeError .mutant.RuntimeError,
+.mte-selected-Ignored .mutant.Ignored {
+  text-decoration: solid underline var(--mut-status-color) 2px;
+  text-decoration-skip-ink: none;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+/* These 2 themes get underlined with a squiggly (wavy) for extra emphasis */
+.mte-selected-Survived .mutant.Survived,
+.mte-selected-NoCoverage .mutant.NoCoverage {
+  /*
+  We want the underline of survived and no-coverage to be 'wavy'.
+  Don't use `text-decoration-style: wavy`, because chrome doesn't extend to all characters: https://stackoverflow.com/questions/57559588/how-to-make-the-wavy-underline-extend-cover-all-the-characters-in-chrome
+  Use border-image instead.
+  */
+  border-image-slice: 0 0 4 0;
+  border-image-width: 4px;
+  border-image-outset: 6px;
+  border-bottom-style: solid;
+  border-image-repeat: repeat;
+  border-image-source: var(--mut-squiggly-line);
+  cursor: pointer;
+
+  /* Mutant in mutant, don't start another wavy thingy */
+  .mutant.Survived,
+  .mutant.NoCoverage {
+    border-image-source: none;
+    border-bottom-style: none;
+    text-decoration-line: none;
+  }
+}
+
+.diff-old {
+  background-color: var(--mut-diff-del-bg);
+}
+
+.diff-focus {
+  background-color: var(--mut-diff-add-bg-line-number);
+}
+
+.diff-old .line-number {
+  background-color: var(--mut-diff-del-bg-line-number);
+  color: var(--mut-diff-del-line-number);
+}
+
+.diff-old .line-marker::before {
+  content: '-';
+}
+
+.diff-new {
+  background-color: var(--mut-diff-add-bg);
+}
+
+.diff-new .empty-line-number {
+  background-color: var(--mut-diff-add-bg-line-number);
+  color: var(--mut-diff-add-line-number);
+}
+
+.diff-new .line-marker::before {
+  content: '+';
+}
