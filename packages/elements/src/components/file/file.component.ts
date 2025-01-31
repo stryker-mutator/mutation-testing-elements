@@ -12,7 +12,7 @@ import { escapeHtml, getContextClassForStatus, getEmojiForStatus, scrollToCodeFr
 import { prismjs, tailwind } from '../../style/index.js';
 import { RealTimeElement } from '../real-time-element.js';
 import type { StateFilter } from '../state-filter/state-filter.component.js';
-import style from './file.scss?inline';
+import style from './file.css?inline';
 import { beginElementAnimation, circle, renderDots, renderLine, triangle } from './util.js';
 
 const diffOldClass = 'diff-old';
