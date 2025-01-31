@@ -68,10 +68,17 @@ export default defineConfig({
     globals: true,
     include: ['test/unit/**/*.spec.ts'],
     browser: {
-      name: 'chromium',
       enabled: true,
       provider: 'playwright',
+      name: 'chromium',
       headless: Boolean(process.env.CI || process.env.HEADLESS),
+      instances: [
+        {
+          name: 'chromium',
+          browser: 'chromium',
+          headless: Boolean(process.env.CI || process.env.HEADLESS),
+        },
+      ],
     },
   },
 } satisfies ViteUserConfig);
