@@ -1,7 +1,7 @@
 addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "3.12.2")
 addSbtPlugin("com.github.sbt" % "sbt-pgp"      % "2.3.1")
 
-addSbtPlugin("org.scalameta" % "sbt-mdoc" % "2.6.2")
+addSbtPlugin("org.scalameta" % "sbt-mdoc" % "2.6.3")
 
 addSbtPlugin("org.typelevel" % "sbt-tpolecat" % "0.5.2")
 
