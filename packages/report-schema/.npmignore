@@ -1,5 +1,5 @@
 **/*
 !README.md
 !dist/{src,src-generated}/**/*
-!src/**/*.ts
+!{src,src-generated}/**/*.{ts,json}
 tsconfig.tsbuildinfo
