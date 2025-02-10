@@ -1,5 +1,6 @@
 name: 'Setup CI'
 description: 'Set up npm, Java, and cache for CI'
+
 inputs:
   node-version:
     description: 'The Node.js version to use'
@@ -9,6 +10,9 @@ inputs:
     description: 'Whether to set up Java'
     default: 'false'
     required: false
+  powerpack-license:
+    description: 'The license for the Nx Powerpack'
+    required: true
 runs:
   using: 'composite'
   steps:
@@ -30,10 +34,13 @@ runs:
     - uses: actions/cache@v4
       with:
         path: .nx/cache
-        key: ${{ runner.os }}-nx-${{ hashFiles('**/package-lock.json') }}
+        key: ${{ runner.os }}-nx-${{ inputs.node-version }}-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
+          ${{ runner.os }}-nx-${{ inputs.node-version }}-
           ${{ runner.os }}-nx-
-    - run: echo "NX_REJECT_UNKNOWN_LOCAL_CACHE=0" >> $GITHUB_ENV
+    - run: echo "NX_POWERPACK_LICENSE=${{ inputs.powerpack-license }}" >> $GITHUB_ENV
       shell: bash
     - run: npm ci
+      shell: bash
+    - run: npx nx activate-powerpack "${{ inputs.powerpack-license }}"
       shell: bash

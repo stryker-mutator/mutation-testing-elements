@@ -35,6 +35,8 @@
   },
   "homepage": "https://github.com/stryker-mutator/mutation-testing-elements#readme",
   "devDependencies": {
+    "@nx/powerpack-license": "1.2.3",
+    "@nx/powerpack-shared-fs-cache": "1.2.3",
     "@stryker-mutator/core": "8.7.1",
     "@stryker-mutator/mocha-runner": "8.7.1",
     "@stryker-mutator/typescript-checker": "8.7.1",

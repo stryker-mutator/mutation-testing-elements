@@ -23,6 +23,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           setup-java: true
+          powerpack-license: ${{ secrets.NX_POWERPACK_LICENSE }}
       # Only install playwright if elements project is affected
       - name: affected
         id: affected
@@ -48,6 +49,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/setup
+        with:
+          powerpack-license: ${{ secrets.NX_POWERPACK_LICENSE }}
       - name: Install Playwright Browsers
         run: npx playwright install chromium --with-deps
       - run: npm run download-incremental-reports

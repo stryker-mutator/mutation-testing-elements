@@ -19,6 +19,8 @@ jobs:
         with:
           token: ${{ steps.generate-token.outputs.token }}
       - uses: ./.github/setup
+        with:
+          powerpack-license: ${{ secrets.NX_POWERPACK_LICENSE }}
       - run: npx playwright install chromium firefox --with-deps
       - run: npx nx run-many --target=build
       - run: npx nx run elements:test:integration:update

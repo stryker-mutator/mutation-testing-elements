@@ -12,6 +12,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/setup
+        with:
+          powerpack-license: ${{ secrets.NX_POWERPACK_LICENSE }}
       - run: npx nx run metrics:stryker
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
@@ -23,6 +25,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/setup
+        with:
+          powerpack-license: ${{ secrets.NX_POWERPACK_LICENSE }}
       - name: Install Playwright Browsers
         run: npx playwright install chromium --with-deps
       - name: Run Stryker
@@ -37,6 +41,7 @@ jobs:
       - uses: ./.github/setup
         with:
           setup-java: true
+          powerpack-license: ${{ secrets.NX_POWERPACK_LICENSE }}
       - name: Run Stryker
         run: npx nx run metrics-scala:stryker
         env:
