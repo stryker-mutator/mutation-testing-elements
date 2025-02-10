@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.5.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.5.0...v3.5.1) (2025-02-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency typescript-eslint to v8.23.0 ([#3621](https://github.com/stryker-mutator/mutation-testing-elements/issues/3621)) ([674ec18](https://github.com/stryker-mutator/mutation-testing-elements/commit/674ec182ad3258fd249eb1105bd735d5ce6b947d))
+* publish schema source to npm ([#3623](https://github.com/stryker-mutator/mutation-testing-elements/issues/3623)) ([0b7e557](https://github.com/stryker-mutator/mutation-testing-elements/commit/0b7e5579db5764a167b45ee51986da943c929c75))
+
+
+
+
+
 # [3.5.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.4.1...v3.5.0) (2025-01-31)
 
 

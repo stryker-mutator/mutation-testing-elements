@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.5.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.5.0...v3.5.1) (2025-02-10)
+
+
+### Bug Fixes
+
+* publish schema source to npm ([#3623](https://github.com/stryker-mutator/mutation-testing-elements/issues/3623)) ([0b7e557](https://github.com/stryker-mutator/mutation-testing-elements/commit/0b7e5579db5764a167b45ee51986da943c929c75))
+
+
+
+
+
 # [3.5.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.4.1...v3.5.0) (2025-01-31)
 
 **Note:** Version bump only for package mutation-testing-report-schema
