@@ -5,6 +5,9 @@
 @import 'tailwindcss';
 @plugin "@tailwindcss/forms";
 
+/* Include these css files for class (and css variable) usage scanning */
+@source "../components/**/*.css";
+
 @theme {
   --breakpoint-3xl: 2000px;
 
@@ -12,10 +15,6 @@
   --transition-property-height: height;
   --transition-property-width: width;
   --transition-property-stroke-opacity: stroke-opacity;
-
-  /* Remove some unused colours */
-  --color-stone-*: initial;
-  --color-slate-*: initial;
 }
 
 @theme inline {
