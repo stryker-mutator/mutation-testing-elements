@@ -32,15 +32,17 @@ runs:
         cache: 'sbt'
     - uses: sbt/setup-sbt@v1
     - uses: actions/cache@v4
+      if: ${{ github.actor == 'stryker-mutator' }}
       with:
         path: .nx/cache
         key: ${{ runner.os }}-nx-${{ inputs.node-version }}-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-nx-${{ inputs.node-version }}-
           ${{ runner.os }}-nx-
-    - run: echo "NX_POWERPACK_LICENSE=${{ inputs.powerpack-license }}" >> $GITHUB_ENV
-      shell: bash
     - run: npm ci
       shell: bash
-    - run: npx nx activate-powerpack "${{ inputs.powerpack-license }}"
+    - run: |
+        echo "NX_POWERPACK_LICENSE=${{ inputs.powerpack-license }}" >> $GITHUB_ENV
+        npx nx activate-powerpack "${{ inputs.powerpack-license }}"
+      if: ${{ github.actor == 'stryker-mutator' }}
       shell: bash
