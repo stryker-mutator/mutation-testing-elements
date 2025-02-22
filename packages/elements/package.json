@@ -64,7 +64,7 @@
     "mutation-testing-report-schema": "3.5.1",
     "prism-svelte": "0.5.0",
     "prismjs": "1.29.0",
-    "rxjs": "7.8.1",
+    "rxjs": "7.8.2",
     "tailwindcss": "4.0.6",
     "vite": "6.1.0",
     "vitest": "3.0.5"
