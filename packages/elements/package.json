@@ -51,7 +51,7 @@
     "@tailwindcss/forms": "0.5.10",
     "@tailwindcss/vite": "4.0.9",
     "@types/prismjs": "1.26.5",
-    "@vitest/browser": "3.0.6",
+    "@vitest/browser": "3.0.7",
     "browserslist-to-esbuild": "2.1.1",
     "cross-env": "7.0.3",
     "eslint-config-mte": "*",
@@ -67,6 +67,6 @@
     "rxjs": "7.8.2",
     "tailwindcss": "4.0.9",
     "vite": "6.1.1",
-    "vitest": "3.0.6"
+    "vitest": "3.0.7"
   }
 }
