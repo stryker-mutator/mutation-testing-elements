@@ -360,9 +360,9 @@ export class MutationTestReportAppComponent extends RealTimeElement {
     if (this.context.result ?? this.errorMessage) {
       return html`
         <mte-file-picker .rootModel="${this.rootModel}"></mte-file-picker>
-        <div class="motion-safe:transition-max-width container space-y-4 bg-white pb-4 font-sans text-gray-800 transition-colors">
+        <div class="container space-y-4 bg-white pb-4 font-sans text-gray-800 transition-colors motion-safe:transition-max-width">
           ${this.renderErrorMessage()}
-          <mte-theme-switch @theme-switch="${this.themeSwitch}" class="top-offset sticky z-20 float-right mb-0 pt-7" .theme="${this.theme}">
+          <mte-theme-switch @theme-switch="${this.themeSwitch}" class="sticky top-offset z-20 float-right mb-0 pt-7" .theme="${this.theme}">
           </mte-theme-switch>
           ${this.renderTitle()} ${this.renderTabs()}
           <mte-breadcrumb
@@ -418,7 +418,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
               ({ type, isActive, text }) =>
                 html`<li class="mr-2" role="presentation">
                   <a
-                    class="aria-selected:border-primary-700 aria-selected:text-primary-on inline-block rounded-t-lg border-b-2 border-transparent p-4 transition-colors hover:border-gray-300 hover:bg-gray-200 hover:text-gray-700 aria-selected:border-b-[3px] aria-selected:border-solid"
+                    class="inline-block rounded-t-lg border-b-2 border-transparent p-4 transition-colors hover:border-gray-300 hover:bg-gray-200 hover:text-gray-700 aria-selected:border-b-[3px] aria-selected:border-solid aria-selected:border-primary-700 aria-selected:text-primary-on"
                     role="tab"
                     href="${toAbsoluteUrl(type)}"
                     aria-selected="${isActive}"

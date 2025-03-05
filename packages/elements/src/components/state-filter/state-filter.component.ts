@@ -52,7 +52,7 @@ export class FileStateFilterComponent<TStatus extends string> extends RealTimeEl
 
   public render() {
     return html`
-      <div class="top-offset sticky z-10 mb-1 flex flex-row gap-5 bg-white py-6 pt-7">
+      <div class="sticky top-offset z-10 mb-1 flex flex-row gap-5 bg-white py-6 pt-7">
         <div class="flex items-center gap-2">
           ${this.#renderStepButton(this.previous, arrowLeft, 'Previous', 'Select previous mutant')}
           ${this.#renderStepButton(this.next, arrowRight, 'Next', 'Select next mutant')}
@@ -74,7 +74,7 @@ export class FileStateFilterComponent<TStatus extends string> extends RealTimeEl
                   type="checkbox"
                   .value="${filter.status.toString()}"
                   @input="${(el: Event) => this.checkboxChanged(filter, (el.target as HTMLInputElement).checked)}"
-                  class="focus:ring-primary-500 checked:bg-primary-600 h-5 w-5 shrink-0 rounded-sm bg-gray-100 ring-offset-gray-200! transition-colors focus:ring-2 focus:outline-hidden"
+                  class="h-5 w-5 shrink-0 rounded-sm bg-gray-100 ring-offset-gray-200! transition-colors checked:bg-primary-600 focus:ring-2 focus:ring-primary-500 focus:outline-hidden"
                 />
 
                 <label
@@ -96,7 +96,7 @@ export class FileStateFilterComponent<TStatus extends string> extends RealTimeEl
       title="${title}"
       @click=${handleClick}
       type="button"
-      class="bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 inline-flex items-center rounded-sm p-1 text-center text-white focus:ring-2 focus:outline-hidden"
+      class="inline-flex items-center rounded-sm bg-primary-600 p-1 text-center text-white hover:bg-primary-700 focus:ring-2 focus:ring-primary-500 focus:outline-hidden"
       >${icon}
       <span class="sr-only">${srText}</span>
     </button>`;

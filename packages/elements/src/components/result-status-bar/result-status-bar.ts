@@ -63,7 +63,7 @@ export class ResultStatusBar extends BaseElement {
     return html`<div
       class="${this.#shouldBeSmallController.value
         ? 'opacity-100'
-        : 'opacity-0'} top-offset pointer-events-none fixed left-0 z-20 flex w-full justify-center transition-all"
+        : 'opacity-0'} pointer-events-none fixed top-offset left-0 z-20 flex w-full justify-center transition-all"
     >
       <div class="container w-full bg-white py-2">
         <div class="flex h-2 overflow-hidden rounded-sm bg-gray-200">${this.#getMetrics().map((metric) => this.#renderPart(metric, true))}</div>

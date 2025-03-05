@@ -118,7 +118,7 @@ export class MutationTestReportFilePickerComponent extends BaseElement {
             const view = this.#getView(file);
             return html`
               <li
-                class="group aria-selected:bg-primary-500 snap-start rounded-sm bg-gray-200 text-gray-900 transition-shadow aria-selected:text-gray-50 aria-selected:shadow-lg"
+                class="group snap-start rounded-sm bg-gray-200 text-gray-900 transition-shadow aria-selected:bg-primary-500 aria-selected:text-gray-50 aria-selected:shadow-lg"
                 role="option"
                 aria-selected="${index === this.fileIndex}"
               >
@@ -279,7 +279,7 @@ export class MutationTestReportFilePickerComponent extends BaseElement {
         file: result.obj.file,
         name: result.obj.name,
         template: result.highlight(
-          (m) => html`<mark class="text-primary-500 group-aria-selected:text-primary-50 bg-inherit group-aria-selected:underline">${m}</mark>`,
+          (m) => html`<mark class="bg-inherit text-primary-500 group-aria-selected:text-primary-50 group-aria-selected:underline">${m}</mark>`,
         ),
       }));
     }
