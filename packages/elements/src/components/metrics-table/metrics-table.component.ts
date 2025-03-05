@@ -136,7 +136,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
       <td class="font-semibold">
         <div class="flex items-center justify-start">
           <mte-file-icon file-name="${row.name}" ?file="${row.file}" class="mx-1"></mte-file-icon> ${path.length > 0
-            ? html`<a class="hover:text-primary-on mr-auto inline-block w-full py-4 pr-2 hover:underline" href="${toAbsoluteUrl(...path)}"
+            ? html`<a class="mr-auto inline-block w-full py-4 pr-2 hover:text-primary-on hover:underline" href="${toAbsoluteUrl(...path)}"
                 >${name}</a
               >`
             : html`<span class="py-4">${row.name}</span>`}
