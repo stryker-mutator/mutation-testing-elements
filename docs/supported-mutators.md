@@ -49,19 +49,22 @@ All Stryker versions support a variety of different mutators. We've aligned on a
 
 ## Assignment Expression
 
-| Mutant operator                               | Original             | Mutated              |
-| --------------------------------------------- | -------------------- | -------------------- |
-| AdditionAssignmentNegation                    | `+=`                 | `-=`                 |
-| SubtractionAssignmentNegation                 | `-=`                 | `+=`                 |
-| MultiplicationAssignmentNegation              | `*=`                 | `/=`                 |
-| DivisionAssignmentNegation                    | `/=`                 | `*=`                 |
-| RemainderAssignmentToMultiplicationAssignment | `%=`                 | `*=`                 |
-| LeftShiftAssignmentNegation                   | `<<=`                | `>>=`, `>>>=`²       |
-| RightShiftAssignmentNegation                  | `>>=`                | `<<=`, `>>>=`²       |
-| UnsignedRightShiftAssignmentNegation²         | `>>>=`               | `<<=`, `>>=`         |
-| BitwiseAndAssignmentNegation                  | `&=`                 | <code>&#124;=</code> |
-| BitwiseOrAssignmentNegation                   | <code>&#124;=</code> | `&=`                 |
-| NullCoalescingAssignmentToAndAssignment       | `??=`                | `&&=`¹               |
+| Mutant operator                                    | Original             | Mutated              |
+| -------------------------------------------------- | -------------------- | -------------------- |
+| AdditionAssignmentNegation                         | `+=`                 | `-=`                 |
+| SubtractionAssignmentNegation                      | `-=`                 | `+=`                 |
+| MultiplicationAssignmentNegation                   | `*=`                 | `/=`                 |
+| DivisionAssignmentNegation                         | `/=`                 | `*=`                 |
+| RemainderAssignmentToMultiplicationAssignment      | `%=`                 | `*=`                 |
+| LeftShiftAssignmentToRightShiftAssignment          | `<<=`                | `>>=`                |
+| LeftShiftAssignmentToUnsignedRightShiftAssignment  | `<<=`                | `>>>=`²              |
+| RightShiftAssignmentToLeftShiftAssignment          | `>>=`                | `<<=`                |
+| RightShiftAssignmentToUnsignedRightShiftAssignment | `>>=`                | `>>>=`²              |
+| UnsignedRightShiftAssignmentToLeftShiftAssignment  | `>>>=`               | `<<=`²               |
+| UnsignedRightShiftAssignmentToRightShiftAssignment | `>>>=`               | `>>=`²               |
+| BitwiseAndAssignmentNegation                       | `&=`                 | <code>&#124;=</code> |
+| BitwiseOrAssignmentNegation                        | <code>&#124;=</code> | `&=`                 |
+| NullCoalescingAssignmentToAndAssignment            | `??=`                | `&&=`¹               |
 
 - ¹: Only supported by Stryker-JS
 - ²: Only supported by Stryker.NET
@@ -206,8 +209,8 @@ Due to differences in language syntax, method expressions are implemented differ
 | MaxToMin                        | `Max()`               | `Min()`             |
 | SumToCount                      | `Sum()`               | `Count()`           |
 | CountToSum                      | `Count()`             | `Sum()`             |
-| Append                          | `Append()`            | `Prepend()`         |
-| Prepend                         | `Prepend()`           | `Append()`          |
+| AppendToPrepend                 | `Append()`            | `Prepend()`         |
+| PrependToAppend                 | `Prepend()`           | `Append()`          |
 
 ### Stryker4s
 
