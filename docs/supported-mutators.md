@@ -56,13 +56,15 @@ All Stryker versions support a variety of different mutators. We've aligned on a
 | MultiplicationAssignmentNegation              | `*=`                 | `/=`                 |
 | DivisionAssignmentNegation                    | `/=`                 | `*=`                 |
 | RemainderAssignmentToMultiplicationAssignment | `%=`                 | `*=`                 |
-| LeftShiftAssignmentNegation                   | `<<=`                | `>>=`                |
-| RightShiftAssignmentNegation                  | `>>=`                | `<<=`                |
+| LeftShiftAssignmentNegation                   | `<<=`                | `>>=`, `>>>=`²       |
+| RightShiftAssignmentNegation                  | `>>=`                | `<<=`, `>>>=`²       |
+| UnsignedRightShiftAssignmentNegation²         | `>>>=`               | `<<=`, `>>=`         |
 | BitwiseAndAssignmentNegation                  | `&=`                 | <code>&#124;=</code> |
 | BitwiseOrAssignmentNegation                   | <code>&#124;=</code> | `&=`                 |
 | NullCoalescingAssignmentToAndAssignment       | `??=`                | `&&=`¹               |
 
 - ¹: Only supported by Stryker-JS
+- ²: Only supported by Stryker.NET
 
 [🔝 Back to Top](#)
 
@@ -204,6 +206,8 @@ Due to differences in language syntax, method expressions are implemented differ
 | MaxToMin                        | `Max()`               | `Min()`             |
 | SumToCount                      | `Sum()`               | `Count()`           |
 | CountToSum                      | `Count()`             | `Sum()`             |
+| Append                          | `Append()`            | `Prepend()`         |
+| Prepend                         | `Prepend()`           | `Append()`          |
 
 ### Stryker4s
 
