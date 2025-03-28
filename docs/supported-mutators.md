@@ -56,9 +56,9 @@ All Stryker versions support a variety of different mutators. We've aligned on a
 | MultiplicationAssignmentNegation                   | `*=`                 | `/=`                 |
 | DivisionAssignmentNegation                         | `/=`                 | `*=`                 |
 | RemainderAssignmentToMultiplicationAssignment      | `%=`                 | `*=`                 |
-| LeftShiftAssignmentToRightShiftAssignment          | `<<=`                | `>>=`                |
+| LeftShiftAssignmentNegation                        | `<<=`                | `>>=`                |
+| RightShiftAssignmentNegation                       | `>>=`                | `<<=`                |
 | LeftShiftAssignmentToUnsignedRightShiftAssignment  | `<<=`                | `>>>=`²              |
-| RightShiftAssignmentToLeftShiftAssignment          | `>>=`                | `<<=`                |
 | RightShiftAssignmentToUnsignedRightShiftAssignment | `>>=`                | `>>>=`²              |
 | UnsignedRightShiftAssignmentToLeftShiftAssignment  | `>>>=`               | `<<=`²               |
 | UnsignedRightShiftAssignmentToRightShiftAssignment | `>>>=`               | `>>=`²               |
