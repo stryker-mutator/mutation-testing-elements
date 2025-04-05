@@ -55,7 +55,7 @@
     "browserslist-to-esbuild": "2.1.1",
     "cross-env": "7.0.3",
     "eslint-config-mte": "*",
-    "express": "4.21.2",
+    "express": "5.1.0",
     "fuzzysort": "3.1.0",
     "lightningcss": "1.29.3",
     "lit": "3.2.1",
