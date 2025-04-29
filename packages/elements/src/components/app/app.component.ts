@@ -135,9 +135,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
   public willUpdate(changedProperties: PropertyValues<this>) {
     if (this.report) {
       // Set the theme when no theme is selected (light vs dark)
-      if (!this.theme) {
-        this.theme = this.getTheme();
-      }
+      this.theme ??= this.getTheme();
       if (changedProperties.has('report')) {
         this.updateModel(this.report);
       }
