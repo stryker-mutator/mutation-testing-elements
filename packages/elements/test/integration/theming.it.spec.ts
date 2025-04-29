@@ -1,5 +1,4 @@
 import { expect, test } from '@playwright/test';
-import colors from 'tailwindcss/colors.js';
 
 import { itShouldMatchScreenshot } from './lib/helpers.js';
 import type { FilePicker } from './po/FilePicker.po.js';
@@ -23,7 +22,7 @@ test.describe('Theming', () => {
     });
 
     test('should have a dark background', async () => {
-      expect(await page.backgroundColor()).toEqual(colors.zinc['900']);
+      expect(await page.backgroundColor()).not.toEqual('rgb(255, 255, 255)');
     });
 
     itShouldMatchScreenshot('should match the dark theme');

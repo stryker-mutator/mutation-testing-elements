@@ -7,6 +7,7 @@ import type { MutationTestReportTestViewComponent } from '../../../src/component
 import { createCustomEvent } from '../../../src/lib/custom-events.js';
 import { CustomElementFixture } from '../helpers/CustomElementFixture.js';
 import { createMutantResult, createReport } from '../helpers/factory.js';
+import { fixCssVarPercentage } from '../helpers/helperFunctions.js';
 import { tick } from '../helpers/tick.js';
 
 describe(MutationTestReportAppComponent.name, () => {
@@ -69,7 +70,7 @@ describe(MutationTestReportAppComponent.name, () => {
 
     it('should report error when fetch fails', async () => {
       // Arrange
-      const redAlert = colors.red['700'];
+      const redAlert = fixCssVarPercentage(colors.red['700']);
       const expectedError = new Error('report did not exist - 404');
       const expectedErrorMessage = 'Error: report did not exist - 404';
       fetchStub.mockRejectedValue(expectedError);
