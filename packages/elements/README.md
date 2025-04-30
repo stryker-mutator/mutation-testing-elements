@@ -8,16 +8,16 @@ A suite of elements designed to display a mutation testing report.
 <table>
 <tbody>
 <tr>
-  <td><img width="300" alt="overview (light mode)" src="https://user-images.githubusercontent.com/10114577/217476452-888786b4-76cc-4901-bdf6-c86ced788fcf.png"></td>
-  <td><img width="300" alt="overview (dark mode)" src="https://user-images.githubusercontent.com/10114577/217476446-51029c3d-a53a-49da-a981-9a8a7bfa2c99.png"></td>
+  <td><img width="300" alt="overview (light mode)" src="https://github.com/user-attachments/assets/e7b6cc11-d7b6-4664-9328-223abd2362f4"></td>
+  <td><img width="300" alt="overview (dark mode)" src="https://github.com/user-attachments/assets/f49cef52-7952-4685-90e3-1fed96e719a3"></td>
 </tr>
 <tr>
-  <td><img width="300" alt="mutant view (light mode)" src="https://user-images.githubusercontent.com/10114577/217476439-6a533270-7438-429b-b8f6-f715654a9bda.png"></td>
-  <td><img width="300" alt="mutant view (dark mode)" src="https://user-images.githubusercontent.com/10114577/217476442-f98e6498-0665-4c5f-a740-68af6ad43f86.png"></td>
+  <td><img width="300" alt="mutant view (light mode)" src="https://github.com/user-attachments/assets/fdf51911-249a-44f8-8889-ae4bcb7939f1"></td>
+  <td><img width="300" alt="mutant view (dark mode)" src="https://github.com/user-attachments/assets/76cee40c-ce5a-4f23-8beb-17ac8bd3b693"></td>
 </tr>
 <tr>
-  <td><img width="300" alt="test view (light mode)" src="https://user-images.githubusercontent.com/10114577/217476461-f1cab2d0-6614-48e7-a0ea-664d3a2bfad9.png"></td>
-  <td><img width="300" alt="test view (dark mode)" src="https://user-images.githubusercontent.com/10114577/217476457-ed5c705b-f718-41e8-8891-51dd6392a356.png"></td>
+  <td><img width="300" alt="test view (light mode)" src="https://github.com/user-attachments/assets/015cd14d-1a1a-489f-94ff-720f71cd6856"></td>
+  <td><img width="300" alt="test view (dark mode)" src="https://github.com/user-attachments/assets/e8e11e6d-45d9-4bde-826d-176a65979062"></td>
 </tr>
 </tbody>
 </table>
