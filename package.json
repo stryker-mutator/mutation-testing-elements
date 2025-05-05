@@ -43,7 +43,7 @@
     "@stryker-mutator/vitest-runner": "8.7.1",
     "@types/chai": "5.2.1",
     "@types/mocha": "10.0.10",
-    "@types/node": "22.15.2",
+    "@types/node": "22.15.3",
     "@types/sinon": "17.0.4",
     "chai": "5.2.0",
     "json-schema-to-typescript": "15.0.4",
