@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.5.2](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.5.1...v3.5.2) (2025-05-10)
+
+
+### Bug Fixes
+
+* **deps:** update linters ([#3675](https://github.com/stryker-mutator/mutation-testing-elements/issues/3675)) ([2faaceb](https://github.com/stryker-mutator/mutation-testing-elements/commit/2faaceb16dc90a133dc663417f4d064a0ea8db08))
+* **deps:** update linters ([#3690](https://github.com/stryker-mutator/mutation-testing-elements/issues/3690)) ([3ddcecc](https://github.com/stryker-mutator/mutation-testing-elements/commit/3ddceccb07bc23c1e686ca7f563379f4dc6d6c58))
+
+
+
+
+
 ## [3.5.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.5.0...v3.5.1) (2025-02-10)
 
 
