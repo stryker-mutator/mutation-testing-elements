@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/real-time#readme",
   "devDependencies": {
-    "eventsource": "3.0.6",
+    "eventsource": "3.0.7",
     "rxjs": "7.8.2"
   }
 }
