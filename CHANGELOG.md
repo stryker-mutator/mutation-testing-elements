@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.5.4](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.5.3...v3.5.4) (2025-05-27)
+
+
+### Bug Fixes
+
+* sbt sonatype publishing configuration ([#3780](https://github.com/stryker-mutator/mutation-testing-elements/issues/3780)) ([b0e18dd](https://github.com/stryker-mutator/mutation-testing-elements/commit/b0e18ddc88f1b41251606b0340c0930d344226d6))
+
+
+
+
+
 ## [3.5.3](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.5.2...v3.5.3) (2025-05-27)
 
 **Note:** Version bump only for package root
