@@ -1,6 +1,6 @@
 {
   "name": "mutation-testing-elements",
-  "version": "3.5.2",
+  "version": "3.5.3",
   "description": "A suite of web components for a mutation testing report.",
   "unpkg": "dist/mutation-test-elements.js",
   "browser": "dist/mutation-test-elements.js",
@@ -60,7 +60,7 @@
     "lightningcss": "1.30.1",
     "lit": "3.3.0",
     "mutation-testing-metrics": "3.5.1",
-    "mutation-testing-real-time": "3.5.2",
+    "mutation-testing-real-time": "3.5.3",
     "mutation-testing-report-schema": "3.5.1",
     "prism-svelte": "0.5.0",
     "prismjs": "1.30.0",

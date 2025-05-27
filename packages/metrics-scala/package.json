@@ -1,6 +1,6 @@
 {
   "name": "mutation-testing-metrics-scala",
-  "version": "3.5.2",
+  "version": "3.5.3",
   "description": "Zero-dependency library to calculate mutation testing metrics in Scala.",
   "nx": {
     "name": "metrics-scala",
