@@ -7,10 +7,10 @@ val CrossScalaVersions = Seq(Scala213, Scala212, Scala3)
 scalaVersion := Scala213
 
 // Separate session name to prevent conflicts during publishing
-sonatypeSessionName := ((skipElementsPublish, skipSchemaPublish) match {
-  case (false, true) => s"[sbt-sonatype] npm-elements-${name.value}-${version.value}" // Elements only
-  case (true, false) => s"[sbt-sonatype] npm-schema-${name.value}-${version.value}"   // Schema only
-  case _             => sonatypeSessionName.value                                     // Original
+sonaDeploymentName := ((skipElementsPublish, skipSchemaPublish) match {
+  case (false, true) => sonaDeploymentName.value + "npm-elements" // Elements only
+  case (true, false) => sonaDeploymentName.value + "npm-schema"   // Schema only
+  case _             => sonaDeploymentName.value                  // Original
 })
 
 lazy val metrics = projectMatrix
@@ -20,9 +20,7 @@ lazy val metrics = projectMatrix
     name := "mutation-testing-metrics"
   )
   .jvmPlatform(scalaVersions = CrossScalaVersions)
-  .jsPlatform(
-    scalaVersions = CrossScalaVersions
-  )
+  .jsPlatform(scalaVersions = CrossScalaVersions)
 
 lazy val circe = projectMatrix
   .in(file("circe"))
@@ -45,9 +43,7 @@ lazy val circe = projectMatrix
       )
     )
   )
-  .jsPlatform(
-    scalaVersions = CrossScalaVersions
-  )
+  .jsPlatform(scalaVersions = CrossScalaVersions)
 
 lazy val docs = project
   .in(file("metrics-docs")) // important: it must not be docs/
@@ -83,16 +79,16 @@ lazy val schema = project
 lazy val sharedSettings = Seq(
   libraryDependencies += "org.scalameta" %%% "munit" % "1.1.1" % Test,
   publish / skip                          := skipNormalProjectPublish,
-  publishTo                               := sonatypePublishToBundle.value
+  publishTo                               := sonatypeCentralPublishToBundle.value
 )
 
 lazy val npmProjectSettings = Seq(
   // These are not used, but prevent the project from being published twice
   scalaVersion       := Scala213,
   crossScalaVersions := Seq(Scala213),
-  publishTo          := sonatypePublishToBundle.value,
+  publishTo          := sonatypeCentralPublishToBundle.value,
   // Avoid conflicts with parallel publishing
-  sonatypeSessionName := s"[sbt-sonatype] npm-${name.value}-${version.value}",
+  sonaDeploymentName := sonaDeploymentName.value + "-npm",
   // drop off Scala suffix from artifact names.
   crossPaths := false,
   // exclude scala-library from dependencies
@@ -124,9 +120,27 @@ inThisBuild(
         "hugo.v.rijswijk@gmail.com",
         url("https://github.com/hugo-vrijswijk")
       )
-    )
+    ),
+    credentials ++= {
+      val env = sys.env.get(_)
+      (for {
+        username <- env("SONATYPE_USERNAME")
+        password <- env("SONATYPE_PASSWORD")
+      } yield Credentials(
+        "Sonatype Central",
+        "central.sonatype.com",
+        username,
+        password
+      )).toSeq
+    }
   )
 )
+
+lazy val sonatypeCentralPublishToBundle = Def.setting {
+  val centralSnapshots = "https://central.sonatype.com/repository/maven-snapshots/"
+  if (isSnapshot.value) Some("central-snapshots" at centralSnapshots)
+  else localStaging.value
+}
 
 def envVarIsTrue(envVar: String): Boolean =
   sys.env

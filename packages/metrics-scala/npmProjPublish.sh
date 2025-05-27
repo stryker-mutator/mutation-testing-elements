@@ -18,4 +18,4 @@ mkdir -p $SBT_RESOURCES_DIR
 echo "Copying $DIST_BASE files to resources"
 cp -r $DIST_DIR $SBT_RESOURCES_DIR/$PROJ_BASE
 
-sbt "sonatypeBundleClean; publishSigned; sonatypeBundleRelease"
+sbt "publishSigned; sonaRelease"
