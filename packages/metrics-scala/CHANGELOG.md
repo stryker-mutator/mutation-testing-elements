@@ -8,6 +8,18 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
+* sbt sonatype publishing configuration ([4e0a8b5](https://github.com/stryker-mutator/mutation-testing-elements/commit/4e0a8b5268a3eda7f268c10de054e606ed5fd8ac))
+* sbt sonatype publishing configuration ([#3780](https://github.com/stryker-mutator/mutation-testing-elements/issues/3780)) ([b0e18dd](https://github.com/stryker-mutator/mutation-testing-elements/commit/b0e18ddc88f1b41251606b0340c0930d344226d6))
+
+
+
+
+
+## [3.5.4](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.5.3...v3.5.4) (2025-05-27)
+
+
+### Bug Fixes
+
 * sbt sonatype publishing configuration ([#3780](https://github.com/stryker-mutator/mutation-testing-elements/issues/3780)) ([b0e18dd](https://github.com/stryker-mutator/mutation-testing-elements/commit/b0e18ddc88f1b41251606b0340c0930d344226d6))
 
 
