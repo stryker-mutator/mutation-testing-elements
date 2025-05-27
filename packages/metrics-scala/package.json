@@ -22,7 +22,7 @@
   },
   "scripts": {
     "test": "sbt \"compile; metrics/test; circe/test; docs/mdoc --check\"",
-    "publish": "sbt \"sonatypeBundleClean; publishSigned; sonatypeBundleRelease;\"",
+    "publish": "sbt \"publishSigned; sonaRelease;\"",
     "get-version": "echo $npm_package_version",
     "stryker": "sbt 'project metrics; stryker'"
   },
