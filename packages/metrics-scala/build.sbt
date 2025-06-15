@@ -29,8 +29,8 @@ lazy val circe = projectMatrix
     sharedSettings,
     name := "mutation-testing-metrics-circe",
     libraryDependencies ++= Seq(
-      "io.circe" %%% "circe-core"   % "0.14.13",
-      "io.circe" %%% "circe-parser" % "0.14.13"
+      "io.circe" %%% "circe-core"   % "0.14.14",
+      "io.circe" %%% "circe-parser" % "0.14.14"
     )
   )
   .jvmPlatform(
@@ -98,11 +98,11 @@ lazy val npmProjectSettings = Seq(
 inThisBuild(
   Seq(
     // Don't publish root project
-    publish / skip := true,
-    version        := packageVersion(file(".")),
-    organization   := "io.stryker-mutator",
-    versionScheme  := Some("semver-spec"),
-    homepage       := Some(url("https://stryker-mutator.io/")),
+    publish / skip           := true,
+    version                  := packageVersion(file(".")),
+    organization             := "io.stryker-mutator",
+    versionScheme            := Some("semver-spec"),
+    homepage                 := Some(url("https://stryker-mutator.io/")),
     licenses += "Apache-2.0" -> url(
       "https://www.apache.org/licenses/LICENSE-2.0"
     ),
@@ -159,8 +159,8 @@ lazy val skipNormalProjectPublish = !skipElementsPublish || !skipSchemaPublish
 def packageVersion(packageJsonDir: File): String = {
   import scala.sys.process._
 
-  val command = Seq("node", "-p", "require('./package.json').version")
-  val os      = sys.props("os.name").toLowerCase
+  val command         = Seq("node", "-p", "require('./package.json').version")
+  val os              = sys.props("os.name").toLowerCase
   val panderToWindows = os match {
     case n if n contains "windows" => Seq("cmd", "/C") ++ command
     case _                         => command
