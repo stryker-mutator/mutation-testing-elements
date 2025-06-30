@@ -47,7 +47,7 @@
     "@types/sinon": "17.0.4",
     "chai": "5.2.0",
     "json-schema-to-typescript": "15.0.4",
-    "lerna": "8.2.2",
+    "lerna": "8.2.3",
     "mocha": "11.7.1",
     "nx": "21.2.1",
     "prettier": "3.6.2",
