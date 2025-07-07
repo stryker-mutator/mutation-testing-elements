@@ -36,10 +36,6 @@ export class ReportPage extends ElementSelector {
       .evaluate((el) => getComputedStyle(el).backgroundColor);
   }
 
-  public title() {
-    return this.page.title();
-  }
-
   public currentUrl() {
     return this.page.url();
   }

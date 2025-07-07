@@ -17,7 +17,6 @@ jobs:
       - uses: ./.github/setup
         with:
           setup-java: true
-          powerpack-license: ${{ secrets.NX_POWERPACK_LICENSE }}
       - name: Set Release Env
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc

@@ -10,9 +10,6 @@ inputs:
     description: 'Whether to set up Java'
     default: 'false'
     required: false
-  powerpack-license:
-    description: 'The license for the Nx Powerpack'
-    required: true
 runs:
   using: 'composite'
   steps:
@@ -40,9 +37,4 @@ runs:
           ${{ runner.os }}-nx-${{ inputs.node-version }}-
           ${{ runner.os }}-nx-
     - run: npm ci
-      shell: bash
-    - run: |
-        echo "NX_POWERPACK_LICENSE=${{ inputs.powerpack-license }}" >> $GITHUB_ENV
-        npx nx activate-powerpack "${{ inputs.powerpack-license }}"
-      if: ${{ github.actor == 'stryker-mutator' }}
       shell: bash
