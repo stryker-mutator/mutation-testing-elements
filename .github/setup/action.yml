@@ -4,7 +4,7 @@ description: 'Set up npm, Java, and cache for CI'
 inputs:
   node-version:
     description: 'The Node.js version to use'
-    default: '22.x'
+    default: '24.x'
     required: false
   setup-java:
     description: 'Whether to set up Java'

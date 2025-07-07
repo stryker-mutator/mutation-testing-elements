@@ -2,10 +2,10 @@ pull_request_rules:
   - name: automatic merge for Dependabot devDependencies pull requests
     conditions:
       - author~=^(dependabot\[bot\]|scala-steward)$
-      - check-success=build_and_test (18.x, ubuntu-latest)
-      - check-success=build_and_test (18.x, windows-latest)
-      - check-success=build_and_test (20.x, ubuntu-latest)
-      - check-success=build_and_test (20.x, windows-latest)
+      - check-success=build_and_test (22.x, ubuntu-latest)
+      - check-success=build_and_test (22.x, windows-latest)
+      - check-success=build_and_test (24.x, ubuntu-latest)
+      - check-success=build_and_test (24.x, windows-latest)
       - title~=^build\(deps-dev\)
     actions:
       merge:
