@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [20.x, 22.x]
+        node-version: [22.x, 24.x]
         os: [ubuntu-latest, windows-latest]
 
     steps:
@@ -34,7 +34,7 @@ jobs:
       - name: Lint & Build & Test
         run: npm run all
       - name: Bundlemon
-        if: ${{ contains(fromJson(steps.affected.outputs.affected), 'elements') && matrix.os == 'ubuntu-latest' && matrix.node-version == '22.x' }}
+        if: ${{ contains(fromJson(steps.affected.outputs.affected), 'elements') && matrix.os == 'ubuntu-latest' && matrix.node-version == '24.x' }}
         uses: lironer/bundlemon-action@v1
         with:
           working-directory: packages/elements
