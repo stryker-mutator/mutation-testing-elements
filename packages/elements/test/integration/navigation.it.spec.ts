@@ -14,8 +14,8 @@ test.describe('Navigation', () => {
     test.beforeEach(() => {
       return page.navigateTo('scala-example/');
     });
-    test('should show "all files"', async () => {
-      expect(await page.title()).toEqual('All files - Stryker report');
+    test('should show "all files"', async ({ page: p }) => {
+      await expect(p).toHaveTitle('All files - Stryker report');
     });
     test("shouldn't show the navigation tabs if there are no test details", async () => {
       const tabs = await page.navigationTabs();
@@ -27,9 +27,8 @@ test.describe('Navigation', () => {
         await page.mutantView.resultTable().row('config').navigate();
       });
 
-      test('should show "config" page', async () => {
-        const title = await page.title();
-        expect(title).toEqual('config - Stryker report');
+      test('should show "config" page', async ({ page: p }) => {
+        await expect(p).toHaveTitle('config - Stryker report');
       });
 
       test('should show breadcrumb "All files - config"', async () => {
@@ -46,8 +45,8 @@ test.describe('Navigation', () => {
           return page.breadcrumb().navigate('All files');
         });
 
-        test('should show "all files"', async () => {
-          expect(await page.title()).toEqual('All files - Stryker report');
+        test('should show "all files"', async ({ page: p }) => {
+          await expect(p).toHaveTitle('All files - Stryker report');
         });
       });
     });
@@ -67,8 +66,8 @@ test.describe('Navigation', () => {
       expect(labels).toEqual(['👽 Mutants', '🧪 Tests']);
     });
 
-    test('should show the mutant view by default', async () => {
-      expect(await page.title()).toEqual('All files');
+    test('should show the mutant view by default', async ({ page: p }) => {
+      await expect(p).toHaveTitle('All files');
       expect(page.currentUrl()).toContain('#mutant');
       expect(await tabs[0].isActive()).toEqual(true);
       expect(await tabs[1].isActive()).toEqual(false);
@@ -79,8 +78,8 @@ test.describe('Navigation', () => {
         await tabs[1].navigate();
       });
 
-      test('should show the tests view', async () => {
-        await expect.poll(() => page.title()).toEqual('All tests');
+      test('should show the tests view', async ({ page: p }) => {
+        await expect(p).toHaveTitle('All tests');
         expect(page.currentUrl()).toContain('#test');
         expect(await tabs[0].isActive()).toEqual(false);
         expect(await tabs[1].isActive()).toEqual(true);
@@ -91,9 +90,8 @@ test.describe('Navigation', () => {
           await page.testView.resultTable().row('metrics').navigate();
         });
 
-        test('should show "metrics" page', async () => {
-          const title = await page.title();
-          expect(title).toEqual('metrics');
+        test('should show "metrics" page', async ({ page: p }) => {
+          await expect(p).toHaveTitle('metrics');
         });
 
         test('should show breadcrumb "All tests - metrics"', async () => {
@@ -110,8 +108,8 @@ test.describe('Navigation', () => {
             return page.breadcrumb().navigate('All tests');
           });
 
-          test('should show "all tests"', async () => {
-            expect(await page.title()).toEqual('All tests');
+          test('should show "all tests"', async ({ page: p }) => {
+            await expect(p).toHaveTitle('All tests');
           });
         });
       });
