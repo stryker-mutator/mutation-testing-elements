@@ -1,6 +1,6 @@
-addSbtPlugin("com.github.sbt" % "sbt-pgp"      % "2.3.1")
+addSbtPlugin("com.github.sbt" % "sbt-pgp" % "2.3.1")
 
-addSbtPlugin("org.scalameta" % "sbt-mdoc" % "2.7.1")
+addSbtPlugin("org.scalameta" % "sbt-mdoc" % "2.7.2")
 
 addSbtPlugin("org.typelevel" % "sbt-tpolecat" % "0.5.2")
 
