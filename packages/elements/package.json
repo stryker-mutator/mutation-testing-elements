@@ -46,7 +46,7 @@
   },
   "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/elements#readme",
   "devDependencies": {
-    "@lit-labs/observers": "2.0.5",
+    "@lit-labs/observers": "2.0.6",
     "@playwright/test": "1.53.2",
     "@tailwindcss/forms": "0.5.10",
     "@tailwindcss/vite": "4.1.11",
