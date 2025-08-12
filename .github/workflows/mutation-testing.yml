@@ -10,7 +10,7 @@ jobs:
   nodejs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: ./.github/setup
       - run: npx nx run metrics:stryker
         env:
@@ -21,7 +21,7 @@ jobs:
   elements:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: ./.github/setup
       - name: Install Playwright Browsers
         run: npx playwright install chromium --with-deps
@@ -33,7 +33,7 @@ jobs:
   metrics-scala:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: ./.github/setup
         with:
           setup-java: true

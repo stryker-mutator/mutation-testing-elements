@@ -16,7 +16,7 @@ jobs:
         os: [ubuntu-latest, windows-latest]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - uses: ./.github/setup
@@ -46,7 +46,7 @@ jobs:
   incremental_mutation_testing:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: ./.github/setup
       - name: Install Playwright Browsers
         run: npx playwright install chromium --with-deps
