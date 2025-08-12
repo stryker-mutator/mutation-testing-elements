@@ -14,6 +14,7 @@ export enum ProgrammingLanguage {
   gherkin = 'gherkin',
   svelte = 'svelte',
   rust = 'rust',
+  python = 'python'
 }
 
 /**
@@ -59,6 +60,8 @@ export function determineLanguage(fileName: string): ProgrammingLanguage | undef
       return ProgrammingLanguage.svelte;
     case 'rs':
       return ProgrammingLanguage.rust;
+    case 'py':
+      return ProgrammingLanguage.python;
     default:
       return undefined;
   }
