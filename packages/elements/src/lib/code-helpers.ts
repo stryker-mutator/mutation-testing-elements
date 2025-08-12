@@ -14,7 +14,7 @@ export enum ProgrammingLanguage {
   gherkin = 'gherkin',
   svelte = 'svelte',
   rust = 'rust',
-  python = 'python'
+  python = 'python',
 }
 
 /**
