@@ -18,6 +18,7 @@ describe(highlightCode.name, () => {
     ['foo.feature', ProgrammingLanguage.gherkin, 'Feature: foo'],
     ['foo.scala', ProgrammingLanguage.scala, 'object Foo { def main(args: Array[String]) = println("Hello, world!") }'],
     ['foo.rs', ProgrammingLanguage.rust, 'fn main() { println!("Hello, world!"); }'],
+    ['foo.py', ProgrammingLanguage.python, 'a = 10']
   ])(`should parse %s as %s`, (fileName, language, code) => {
     const highlightedCode = highlightCode(code, fileName);
     expect(highlightedCode).contains('<span'); // actual highlighting is not tested, in prism we trust
@@ -197,6 +198,7 @@ describe(determineLanguage.name, () => {
     ['php', ProgrammingLanguage.php],
     ['vue', ProgrammingLanguage.vue],
     ['feature', ProgrammingLanguage.gherkin],
+    ['py', ProgrammingLanguage.python]
   ] as const)(`should recognize file.%s as language %s`, (extension, expected) => {
     expect(determineLanguage(`file.${extension}`)).eq(expected);
   });
