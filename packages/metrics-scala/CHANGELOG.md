@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.6.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.5.4...v3.6.0) (2025-08-13)
+
+**Note:** Version bump only for package mutation-testing-metrics-scala
+
+
+
+
+
 ## [3.5.4](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.5.3...v3.5.4) (2025-05-27)
 
 

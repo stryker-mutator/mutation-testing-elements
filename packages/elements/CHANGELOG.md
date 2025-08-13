@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.6.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.5.4...v3.6.0) (2025-08-13)
+
+
+### Features
+
+* **elements:** python code highlighting support ([#3860](https://github.com/stryker-mutator/mutation-testing-elements/issues/3860)) ([88f7292](https://github.com/stryker-mutator/mutation-testing-elements/commit/88f72923f7e2eb6388b5ade0c79993946d15ddaf))
+
+
+
+
+
 ## [3.5.3](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.5.2...v3.5.3) (2025-05-27)
 
 **Note:** Version bump only for package mutation-testing-elements
