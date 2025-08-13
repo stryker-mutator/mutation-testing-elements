@@ -44,6 +44,9 @@ svg.svelte {
 svg.rust {
   fill: var(--mut-file-rust-color);
 }
+svg.python {
+  fill: var(--mut-file-python-color);
+}
 
 svg {
   width: 20px;
