@@ -38,7 +38,6 @@
     "@stryker-mutator/core": "9.0.1",
     "@stryker-mutator/mocha-runner": "9.0.1",
     "@stryker-mutator/typescript-checker": "9.0.1",
-    "@stryker-mutator/vitest-runner": "9.0.1",
     "@types/chai": "5.2.2",
     "@types/mocha": "10.0.10",
     "@types/node": "22.17.1",
