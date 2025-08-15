@@ -46,7 +46,7 @@ describe(FileStateFilterComponent.name, () => {
       // Assert
       const actualCheckboxes = sut.$$('input[type=checkbox]');
       expect(actualCheckboxes).lengthOf(7);
-      const checkboxTexts = sut.$$('input[type=checkbox] + label').map((checkbox) => normalizeWhitespace(checkbox.textContent!));
+      const checkboxTexts = sut.$$('input[type=checkbox] + label').map((checkbox) => normalizeWhitespace(checkbox.textContent));
       expect(checkboxTexts).deep.eq([
         '✅ Killed (1)',
         '👽 Survived (1)',
