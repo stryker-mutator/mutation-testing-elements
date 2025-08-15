@@ -5,8 +5,7 @@
   "packageManager": "npm@11.5.2",
   "description": "A suite of web components for a mutation testing report.",
   "workspaces": [
-    "packages/*",
-    "libs/*"
+    "packages/*"
   ],
   "nx": {},
   "scripts": {

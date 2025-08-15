@@ -3,7 +3,7 @@
   "extends": "nx/presets/npm.json",
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "{workspaceRoot}/package-lock.json", { "runtime": "node -v" }],
-    "production": ["!{projectRoot}/test/**/*", "!{projectRoot}/.eslintrc", "!{projectRoot}/stryker.conf.js"]
+    "production": ["!{projectRoot}/test/**/*", "!{projectRoot}/eslint.config.js", "!{projectRoot}/stryker.conf.js"]
   },
   "targetDefaults": {
     "build:tsc": {
