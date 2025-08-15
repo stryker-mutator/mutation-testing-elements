@@ -21,6 +21,10 @@
       "name": "real-time",
     },
     {
+      "path": "packages/eslint-plugin-mte",
+      "name": "eslint-plugin-mte",
+    },
+    {
       "path": ".",
       "name": "parent",
     },
