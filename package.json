@@ -39,7 +39,7 @@
     "@stryker-mutator/typescript-checker": "9.0.1",
     "@types/chai": "5.2.2",
     "@types/mocha": "10.0.10",
-    "@types/node": "22.17.1",
+    "@types/node": "22.17.2",
     "@types/sinon": "17.0.4",
     "chai": "5.2.1",
     "json-schema-to-typescript": "15.0.4",
