@@ -1,4 +1,5 @@
-import fuzzysort from 'fuzzysort';
+import type { Prepared } from 'fuzziersort';
+import { cleanup as cleanupSearch, go as goSearch, prepare as prepareSearch } from 'fuzziersort';
 import type { PropertyValues, TemplateResult } from 'lit';
 import { html } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
@@ -19,7 +20,7 @@ interface ModelEntry {
 @customElement('mte-file-picker')
 export class MutationTestReportFilePickerComponent extends BaseElement {
   #abortController = new AbortController();
-  #searchTargets: (ModelEntry & { prepared: Fuzzysort.Prepared })[] = [];
+  #searchTargets: (ModelEntry & { prepared: Prepared })[] = [];
   #originalDocumentOverflow = '';
 
   @property({ attribute: false })
@@ -55,7 +56,7 @@ export class MutationTestReportFilePickerComponent extends BaseElement {
   disconnectedCallback(): void {
     super.disconnectedCallback();
 
-    fuzzysort.cleanup();
+    cleanupSearch();
     this.#abortController.abort();
   }
 
@@ -164,7 +165,7 @@ export class MutationTestReportFilePickerComponent extends BaseElement {
 
       if (result.file && result.name !== allFilesKey) {
         const name = !parentPath ? result.name : `${parentPath}/${result.name}`;
-        this.#searchTargets.push({ name, file: result.file, prepared: fuzzysort.prepare(name) });
+        this.#searchTargets.push({ name, file: result.file, prepared: prepareSearch(name) });
       }
 
       result.childResults.forEach((child) => {
@@ -275,7 +276,7 @@ export class MutationTestReportFilePickerComponent extends BaseElement {
     if (!filterKey) {
       this.filteredFiles = this.#searchTargets;
     } else {
-      this.filteredFiles = fuzzysort.go(filterKey, this.#searchTargets, { key: 'prepared', threshold: 0.3, limit: 500 }).map((result) => ({
+      this.filteredFiles = goSearch(filterKey, this.#searchTargets, { key: 'prepared', threshold: 0.3, limit: 500 }).map((result) => ({
         file: result.obj.file,
         name: result.obj.name,
         template: result.highlight(
