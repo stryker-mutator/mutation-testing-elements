@@ -35,14 +35,14 @@ export class Drawer extends PageObject {
   }
 
   public async whenOpen() {
-    await expect.poll(async () => this.height()).toBeGreaterThan(HALF_OPEN_SIZE);
+    await expect.poll(() => this.height()).toBeGreaterThan(HALF_OPEN_SIZE);
   }
 
   public whenHalfOpen() {
-    return expect.poll(async () => this.height()).toBe(HALF_OPEN_SIZE);
+    return expect.poll(() => this.height()).toBe(HALF_OPEN_SIZE);
   }
 
   public whenClosed() {
-    return expect.poll(async () => this.height()).toBe(CLOSED_SIZE);
+    return expect.poll(() => this.height()).toBe(CLOSED_SIZE);
   }
 }
