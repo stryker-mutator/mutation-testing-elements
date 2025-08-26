@@ -52,7 +52,7 @@ test.describe('real-time reporting', () => {
       expect(await progressBar.smallProgressBarVisible()).toEqual(false);
       await page.mutantView.resultTable().row('WrappitContext.cs').navigate();
       await page.scrollDown();
-      await expect.poll(async () => await progressBar.smallProgressBarVisible()).toEqual(true);
+      await expect.poll(() => progressBar.smallProgressBarVisible()).toEqual(true);
     });
 
     test('should update the progress-bar when the report is updated', async () => {
@@ -63,7 +63,7 @@ test.describe('real-time reporting', () => {
       await expect(page.realTimeProgressBar.killedCount()).not.toBeVisible();
       server.sse.sendMutantTested(defaultEvent);
 
-      await expect.poll(async () => await page.realTimeProgressBar.progressBarWidth()).not.toEqual(0);
+      await expect.poll(() => page.realTimeProgressBar.progressBarWidth()).not.toEqual(0);
       await expect(page.realTimeProgressBar.killedCount()).toHaveText('1');
     });
   });
