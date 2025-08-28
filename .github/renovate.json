@@ -30,6 +30,10 @@
     {
       "groupName": "Tailwind packages",
       "matchPackageNames": ["/tailwindcss/"]
+    },
+    {
+      "groupName": "TSConfig base packages",
+      "matchPackageNames": ["@tsconfig{/,}**"]
     }
   ],
   "automergeStrategy": "squash",
