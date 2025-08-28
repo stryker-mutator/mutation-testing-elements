@@ -19,7 +19,7 @@ describe(highlightCode.name, () => {
     ['foo.scala', ProgrammingLanguage.scala, 'object Foo { def main(args: Array[String]) = println("Hello, world!") }'],
     ['foo.rs', ProgrammingLanguage.rust, 'fn main() { println!("Hello, world!"); }'],
     ['foo.py', ProgrammingLanguage.python, 'a = 10'],
-  ])(`should parse %s as %s`, (fileName, language, code) => {
+  ])(`should parse %s as %s`, (fileName, _language, code) => {
     const highlightedCode = highlightCode(code, fileName);
     expect(highlightedCode).contains('<span'); // actual highlighting is not tested, in prism we trust
   });

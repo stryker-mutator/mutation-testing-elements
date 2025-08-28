@@ -1,20 +1,14 @@
 {
+  "extends": ["@tsconfig/recommended/tsconfig.json", "@tsconfig/node-lts/tsconfig.json", "@tsconfig/strictest/tsconfig"],
   "compilerOptions": {
-    "target": "es2022",
-    "module": "node16",
-    "moduleResolution": "node16",
-    "lib": ["es2022"],
-    "strict": true,
     "composite": true,
     "declaration": true,
     "declarationMap": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "forceConsistentCasingInFileNames": true,
     "experimentalDecorators": true,
     "sourceMap": true,
-    "skipLibCheck": true
+    "noPropertyAccessFromIndexSignature": false,
+    "exactOptionalPropertyTypes": false,
+    "noUncheckedIndexedAccess": false,
+    "noImplicitOverride": false
   }
 }
