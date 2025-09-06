@@ -4,13 +4,15 @@ import importX from 'eslint-plugin-import-x';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
+import { defineConfig } from 'eslint/config';
 
-export default tseslint.config(
+export default defineConfig(
   eslint.configs.recommended,
   tseslint.configs.eslintRecommended,
   ...tseslint.configs.recommendedTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
   eslintConfigPrettier,
+  // @ts-expect-error - incorrect type
   importX.flatConfigs.recommended,
   importX.flatConfigs.typescript,
   {

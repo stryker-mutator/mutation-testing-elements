@@ -3,12 +3,12 @@
   "private": true,
   "version": "1.0.0",
   "description": "Shared ESLint config",
-  "main": "index.js",
+  "main": "index.ts",
   "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/stryker-mutator/mutation-testing-elements.git",
-    "directory": "packages/eslint-plugin-mte"
+    "directory": "packages/eslint-config-mte"
   },
   "license": "Apache-2.0",
   "bugs": {
@@ -20,15 +20,15 @@
   },
   "author": "",
   "dependencies": {
-    "@eslint/js": "^9.33.0",
-    "eslint": "^9.33.0",
+    "@eslint/js": "^9.34.0",
+    "eslint": "^9.34.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import-x": "^4.16.1",
     "eslint-plugin-lit": "^2.1.1",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-wc": "^3.0.1",
-    "typescript-eslint": "^8.39.1"
+    "typescript-eslint": "^8.42.0"
   },
   "devDependencies": {}
 }

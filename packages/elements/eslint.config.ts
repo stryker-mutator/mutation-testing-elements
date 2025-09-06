@@ -1,9 +1,9 @@
+import { defineConfig } from 'eslint/config';
 import mte from 'eslint-config-mte';
 import { configs as litConfigs } from 'eslint-plugin-lit';
 import { configs as wcConfigs } from 'eslint-plugin-wc';
-import { config } from 'typescript-eslint';
 
-export default config(
+export default defineConfig(
   wcConfigs['flat/best-practice'],
   litConfigs['flat/recommended'],
   {
