@@ -11,6 +11,7 @@
     "packages/*/*.config.ts",
     "packages/*/*.config.js",
     "packages/*/*.conf.js",
-    "stryker.parent.json"
+    "stryker.parent.json",
+    "packages/eslint-config-mte/index.ts"
   ]
 }
