@@ -77,7 +77,7 @@ lazy val schema = project
   )
 
 lazy val sharedSettings = Seq(
-  libraryDependencies += "org.scalameta" %%% "munit" % "1.1.1" % Test,
+  libraryDependencies += "org.scalameta" %%% "munit" % "1.1.2" % Test,
   publish / skip                          := skipNormalProjectPublish,
   publishTo                               := sonatypeCentralPublishToBundle.value
 )
