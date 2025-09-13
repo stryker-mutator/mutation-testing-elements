@@ -57,7 +57,7 @@
     "cross-env": "10.0.0",
     "eslint-config-mte": "*",
     "express": "5.1.0",
-    "fuzziersort": "4.0.0",
+    "fuzziersort": "4.0.1",
     "lightningcss": "1.30.1",
     "lit": "3.3.1",
     "mutation-testing-metrics": "3.5.1",
