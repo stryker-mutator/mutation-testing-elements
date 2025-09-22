@@ -1,0 +1,1378 @@
+{
+  "schemaVersion": "2",
+  "thresholds": {
+    "high": 80,
+    "low": 60
+  },
+  "projectRoot": "/home/user/src/project/",
+  "files": {
+    "/home/user/src/project/1/SomeFile0.cs": {
+      "language": "cs",
+      "source": "void M(){ int i = 0 \u002B 8; }",
+      "mutants": [
+        {
+          "id": "1",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "2",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "3",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "4",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "5",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Survived",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "6",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Survived",
+          "static": false,
+          "killedBy": []
+        }
+      ]
+    },
+    "/home/user/src/project/1/SomeFile1.cs": {
+      "language": "cs",
+      "source": "void M(){ int i = 0 \u002B 8; }",
+      "mutants": [
+        {
+          "id": "7",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "8",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "9",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "10",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "11",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Survived",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "12",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Survived",
+          "static": false,
+          "killedBy": []
+        }
+      ]
+    },
+    "/home/user/src/project/1/SomeFile2.cs": {
+      "language": "cs",
+      "source": "void M(){ int i = 0 \u002B 8; }",
+      "mutants": [
+        {
+          "id": "13",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "14",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "15",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "16",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "17",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Survived",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "18",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Survived",
+          "static": false,
+          "killedBy": []
+        }
+      ]
+    },
+    "/home/user/src/project/1/SomeFile3.cs": {
+      "language": "cs",
+      "source": "void M(){ int i = 0 \u002B 8; }",
+      "mutants": [
+        {
+          "id": "19",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "20",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "21",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "22",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "23",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Survived",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "24",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Survived",
+          "static": false,
+          "killedBy": []
+        }
+      ]
+    },
+    "/home/user/src/project/1/SomeFile4.cs": {
+      "language": "cs",
+      "source": "void M(){ int i = 0 \u002B 8; }",
+      "mutants": [
+        {
+          "id": "25",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "26",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "27",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "28",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "29",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Survived",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "30",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Survived",
+          "static": false,
+          "killedBy": []
+        }
+      ]
+    },
+    "/home/user/src/project/1/SomeFile5.cs": {
+      "language": "cs",
+      "source": "void M(){ int i = 0 \u002B 8; }",
+      "mutants": [
+        {
+          "id": "31",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "32",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "33",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "34",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "35",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Survived",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "36",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Survived",
+          "static": false,
+          "killedBy": []
+        }
+      ]
+    },
+    "/home/user/src/project/2/SomeFile0.cs": {
+      "language": "cs",
+      "source": "void M(){ int i = 0 \u002B 8; }",
+      "mutants": [
+        {
+          "id": "37",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "38",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "39",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "40",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "41",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Survived",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "42",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Survived",
+          "static": false,
+          "killedBy": []
+        }
+      ]
+    },
+    "/home/user/src/project/2/SomeFile1.cs": {
+      "language": "cs",
+      "source": "void M(){ int i = 0 \u002B 8; }",
+      "mutants": [
+        {
+          "id": "43",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "44",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "45",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "46",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "47",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Survived",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "48",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Survived",
+          "static": false,
+          "killedBy": []
+        }
+      ]
+    },
+    "/home/user/src/project/2/SomeFile2.cs": {
+      "language": "cs",
+      "source": "void M(){ int i = 0 \u002B 8; }",
+      "mutants": [
+        {
+          "id": "49",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "50",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "51",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "52",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "53",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Survived",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "54",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Survived",
+          "static": false,
+          "killedBy": []
+        }
+      ]
+    },
+    "/home/user/src/project/2/SomeFile3.cs": {
+      "language": "cs",
+      "source": "void M(){ int i = 0 \u002B 8; }",
+      "mutants": [
+        {
+          "id": "55",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "56",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "57",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "58",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "59",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Survived",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "60",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Survived",
+          "static": false,
+          "killedBy": []
+        }
+      ]
+    },
+    "/home/user/src/project/2/SomeFile4.cs": {
+      "language": "cs",
+      "source": "void M(){ int i = 0 \u002B 8; }",
+      "mutants": [
+        {
+          "id": "61",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "62",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "63",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "64",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "65",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Survived",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "66",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Survived",
+          "static": false,
+          "killedBy": []
+        }
+      ]
+    },
+    "/home/user/src/project/2/SomeFile5.cs": {
+      "language": "cs",
+      "source": "void M(){ int i = 0 \u002B 8; }",
+      "mutants": [
+        {
+          "id": "67",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "68",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "69",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "70",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Killed",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "71",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Survived",
+          "static": false,
+          "killedBy": []
+        },
+        {
+          "id": "72",
+          "mutatorName": "This name should display",
+          "replacement": "0 -8",
+          "location": {
+            "start": {
+              "line": 1,
+              "column": 19
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          },
+          "status": "Survived",
+          "static": false,
+          "killedBy": []
+        }
+      ]
+    }
+  }
+}
