@@ -2,7 +2,13 @@
   "$schema": "https://raw.githubusercontent.com/nrwl/nx/master/packages/nx/schemas/nx-schema.json",
   "extends": "nx/presets/npm.json",
   "namedInputs": {
-    "default": ["{projectRoot}/**/*", "{workspaceRoot}/package-lock.json", { "runtime": "node -v" }],
+    "default": [
+      "{projectRoot}/**/*",
+      "{workspaceRoot}/package-lock.json",
+      {
+        "runtime": "node -v"
+      }
+    ],
     "production": ["!{projectRoot}/test/**/*", "!{projectRoot}/eslint.config.js", "!{projectRoot}/stryker.conf.js"]
   },
   "targetDefaults": {
@@ -19,7 +25,13 @@
       "cache": true
     },
     "generate": {
-      "inputs": ["{projectRoot}/src/*.json", "{workspaceRoot}/tasks/schema2ts.mjs", { "externalDependencies": ["json-schema-to-typescript"] }],
+      "inputs": [
+        "{projectRoot}/src/*.json",
+        "{workspaceRoot}/tasks/schema2ts.mjs",
+        {
+          "externalDependencies": ["json-schema-to-typescript"]
+        }
+      ],
       "outputs": ["{projectRoot}/src-generated"],
       "cache": true
     },
@@ -29,7 +41,13 @@
       "cache": true
     },
     "stryker": {
-      "inputs": ["default", "^production", { "env": "GITHUB_REF" }],
+      "inputs": [
+        "default",
+        "^production",
+        {
+          "env": "GITHUB_REF"
+        }
+      ],
       "dependsOn": ["generate", "root:build:tsc", "^build"],
       "outputs": ["{projectRoot}/reports", "{projectRoot}/target/stryker4s-report-*/"],
       "cache": true
