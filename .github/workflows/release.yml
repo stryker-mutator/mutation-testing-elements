@@ -19,7 +19,6 @@ jobs:
           setup-java: true
       - name: Set Release Env
         run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
           echo ${{ secrets.PGP_SECRET }} | base64 --decode | gpg --batch --import
       - run: npx nx run-many --target=build
       - name: Release
@@ -28,4 +27,3 @@ jobs:
           PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-          NPM_CONFIG_PROVENANCE: true

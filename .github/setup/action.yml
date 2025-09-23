@@ -21,6 +21,7 @@ runs:
       with:
         node-version: ${{ inputs.node-version }}
         cache: 'npm'
+        registry-url: 'https://registry.npmjs.org'
     - uses: actions/setup-java@v5
       if: ${{ inputs.setup-java == 'true' }}
       with:
