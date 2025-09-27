@@ -39,7 +39,7 @@
     "@stryker-mutator/typescript-checker": "9.1.1",
     "@tsconfig/node-lts": "22.0.2",
     "@tsconfig/recommended": "1.0.10",
-    "@tsconfig/strictest": "2.0.5",
+    "@tsconfig/strictest": "2.0.6",
     "@types/chai": "5.2.2",
     "@types/mocha": "10.0.10",
     "@types/node": "22.18.6",
