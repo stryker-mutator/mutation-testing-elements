@@ -54,7 +54,7 @@
     "@types/prismjs": "1.26.5",
     "@vitest/browser": "3.2.4",
     "browserslist-to-esbuild": "2.1.1",
-    "cross-env": "10.0.0",
+    "cross-env": "10.1.0",
     "eslint-config-mte": "*",
     "express": "5.1.0",
     "fuzziersort": "4.0.1",
