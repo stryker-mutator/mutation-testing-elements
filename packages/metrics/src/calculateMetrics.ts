@@ -1,6 +1,6 @@
 import type { FileResult, MutantStatus, MutationTestResult } from 'mutation-testing-report-schema';
 
-import { compareNames, groupBy, normalize } from './helpers/index.js';
+import { compareNames, normalize } from './helpers/index.js';
 import type { Metrics, MutantModel, MutationTestMetricsResult, TestMetrics, TestModel } from './model/index.js';
 import { FileUnderTestModel, MetricsResult, TestFileModel } from './model/index.js';
 import { TestStatus } from './model/test-model.js';
@@ -83,12 +83,17 @@ function toChildModels<TFileModel, TMetrics>(
   files: Record<string, TFileModel>,
   calculateMetrics: (files: TFileModel[]) => TMetrics,
 ): MetricsResult<TFileModel, TMetrics>[] {
-  const filesByDirectory = groupBy(Object.entries(files), (namedFile) => namedFile[0].split('/')[0]);
+  const filesByDirectory = Object.groupBy(Object.entries(files), (namedFile) => namedFile[0].split('/')[0]);
   return Object.keys(filesByDirectory)
     .map((directoryName) => {
-      if (filesByDirectory[directoryName].length > 1 || filesByDirectory[directoryName][0][0] !== directoryName) {
-        const directoryFiles: Record<string, TFileModel> = {};
-        filesByDirectory[directoryName].forEach((file) => (directoryFiles[file[0].substr(directoryName.length + 1)] = file[1]));
+      if (filesByDirectory[directoryName]!.length > 1 || filesByDirectory[directoryName]?.[0][0] !== directoryName) {
+        const directoryFiles = filesByDirectory[directoryName]!.reduce(
+          (directoryFiles, [fileName, file]) => {
+            directoryFiles[fileName.substr(directoryName.length + 1)] = file;
+            return directoryFiles;
+          },
+          {} as Record<string, TFileModel>,
+        );
         return calculateDirectoryMetrics(directoryName, directoryFiles, calculateMetrics);
       } else {
         const [fileName, file] = filesByDirectory[directoryName][0];

@@ -6,7 +6,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { repeat } from 'lit/directives/repeat.js';
 import type { TestFileModel, TestModel } from 'mutation-testing-metrics';
-import { TestStatus } from 'mutation-testing-metrics';
+import { isNotNullish, TestStatus } from 'mutation-testing-metrics';
 
 import { determineLanguage, gte, highlightCode, transformHighlightedLines } from '../../lib/code-helpers.js';
 import type { MteCustomEvent } from '../../lib/custom-events.js';
@@ -147,17 +147,10 @@ export class TestFileComponent extends RealTimeElement {
 
   private renderCode() {
     if (this.model?.source) {
-      const testsByLine = new Map<number, TestModel[]>();
-      for (const test of this.tests) {
-        if (test.location) {
-          let tests = testsByLine.get(test.location.start.line);
-          if (!tests) {
-            tests = [];
-            testsByLine.set(test.location.start.line, tests);
-          }
-          tests.push(test);
-        }
-      }
+      const testsByLine = Map.groupBy(
+        this.tests.filter((t) => isNotNullish(t.location)),
+        (test) => test.location!.start.line,
+      );
 
       const renderFinalTests = (lastLine: number) => {
         return this.renderTestDots([...testsByLine.entries()].filter(([line]) => line > lastLine).flatMap(([, tests]) => tests));

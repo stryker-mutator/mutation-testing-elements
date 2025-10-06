@@ -99,15 +99,7 @@ export class FileComponent extends RealTimeElement {
   };
 
   public render() {
-    const mutantLineMap = new Map<number, MutantModel[]>();
-    for (const mutant of this.mutants) {
-      let mutants = mutantLineMap.get(mutant.location.start.line);
-      if (!mutants) {
-        mutants = [];
-        mutantLineMap.set(mutant.location.start.line, mutants);
-      }
-      mutants.push(mutant);
-    }
+    const mutantLineMap = Map.groupBy(this.mutants, (mutant) => mutant.location.start.line);
     const renderFinalMutants = (lastLine: number) => {
       return this.renderMutantDots([...mutantLineMap.entries()].filter(([line]) => line > lastLine).flatMap(([, mutants]) => mutants));
     };
