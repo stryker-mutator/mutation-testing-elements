@@ -15,12 +15,14 @@ export function normalize<TIn, TOut>(
 ): Record<string, TOut> {
   const fileNames = Object.keys(input);
   const commonBasePath = determineCommonBasePath(fileNames);
-  const output: Record<string, TOut> = Object.create(null);
-  fileNames.forEach((fileName) => {
-    const relativeFileName = normalizeName(fileName.startsWith(projectRoot) ? fileName.substr(projectRoot.length) : fileName);
-    output[normalizeName(fileName.substr(commonBasePath.length))] = factory(input[fileName], relativeFileName);
-  });
-  return output;
+  return fileNames.reduce(
+    (output, fileName) => {
+      const relativeFileName = normalizeName(fileName.startsWith(projectRoot) ? fileName.substr(projectRoot.length) : fileName);
+      output[normalizeName(fileName.substr(commonBasePath.length))] = factory(input[fileName], relativeFileName);
+      return output;
+    },
+    Object.create(null) as Record<string, TOut>,
+  );
 }
 
 function normalizeName(fileName: string) {
