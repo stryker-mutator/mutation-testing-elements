@@ -3,10 +3,10 @@
  * plugins.
  */
 @import 'tailwindcss';
-@plugin "@tailwindcss/forms";
+@plugin '@tailwindcss/forms';
 
 /* Include these css files for class (and css variable) usage scanning */
-@source "../components/**/*.css";
+@source '../components/**/*.css';
 
 @theme {
   --breakpoint-3xl: 2000px;
