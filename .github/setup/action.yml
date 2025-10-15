@@ -17,7 +17,7 @@ runs:
       with:
         main-branch-name: master
     - name: Use Node.js ${{ inputs.node-version }}
-      uses: actions/setup-node@v5
+      uses: actions/setup-node@v6
       with:
         node-version: ${{ inputs.node-version }}
         cache: 'npm'
