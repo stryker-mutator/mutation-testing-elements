@@ -1,5 +1,5 @@
-import { userEvent } from '@vitest/browser/context';
 import { calculateMutationTestMetrics } from 'mutation-testing-metrics';
+import { userEvent } from 'vitest/browser';
 
 import { MutationTestReportFilePickerComponent } from '../../../src/components/file-picker/file-picker.component.js';
 import { CustomElementFixture } from '../helpers/CustomElementFixture.js';

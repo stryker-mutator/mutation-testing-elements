@@ -319,7 +319,7 @@ describe(MutationTestReportAppComponent.name, () => {
   describe('the `sse` property', () => {
     const defaultMessage = new MessageEvent('mutant-tested', { data: JSON.stringify({ id: '1', status: 'Killed' }) });
 
-    let eventSourceConstructorStub: MockInstance;
+    let eventSourceConstructorStub: MockInstance<typeof EventSource>;
     let eventSource: EventSource;
 
     beforeEach(() => {
@@ -329,7 +329,15 @@ describe(MutationTestReportAppComponent.name, () => {
         // noop
       }
 
-      eventSourceConstructorStub = vi.spyOn(window, 'EventSource').mockReturnValue(eventSource);
+      eventSourceConstructorStub = vi.spyOn(window, 'EventSource').mockImplementation(
+        class MockEventSource extends EventSource {
+          // @ts-expect-error - we are mocking the constructor
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          constructor(url: string | URL) {
+            return eventSource;
+          }
+        },
+      );
       sut = new CustomElementFixture('mutation-test-report-app', { autoConnect: false });
     });
 

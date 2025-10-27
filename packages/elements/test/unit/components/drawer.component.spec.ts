@@ -1,4 +1,4 @@
-import { userEvent } from '@vitest/browser/context';
+import { userEvent } from 'vitest/browser';
 
 import { MutationTestReportDrawer } from '../../../src/components/drawer/drawer.component.js';
 import { CustomElementFixture } from '../helpers/CustomElementFixture.js';
