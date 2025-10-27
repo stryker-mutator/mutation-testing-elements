@@ -1,6 +1,7 @@
 /// <reference types="vitest" />
 
 import tailwindcss from '@tailwindcss/vite';
+import { playwright } from '@vitest/browser-playwright';
 import browserslist from 'browserslist';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
 import { browserslistToTargets, Features } from 'lightningcss';
@@ -82,8 +83,7 @@ export default defineConfig(
         include: ['test/unit/**/*.spec.ts'],
         browser: {
           enabled: true,
-          provider: 'playwright',
-          name: 'chromium',
+          provider: playwright({}),
           headless: Boolean(process.env.CI || process.env.HEADLESS),
           instances: [
             {
