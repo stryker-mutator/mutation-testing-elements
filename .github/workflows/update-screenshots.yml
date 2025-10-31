@@ -11,13 +11,14 @@ jobs:
     steps:
       - name: Generate token
         id: generate-token
-        uses: tibdex/github-app-token@v2
+        uses: actions/create-github-app-token@v2
         with:
-          app_id: ${{ vars.STRYKER_MUTATOR_APP_ID }}
-          private_key: ${{ secrets.STRYKER_MUTATOR_NPA_KEY }}
+          app-id: ${{ vars.STRYKER_MUTATOR_APP_ID }}
+          private-key: ${{ secrets.STRYKER_MUTATOR_NPA_KEY }}
       - uses: actions/checkout@v5
         with:
           token: ${{ steps.generate-token.outputs.token }}
+          persist-credentials: false
       - uses: ./.github/setup
       - run: npx playwright install chromium firefox --with-deps
       - run: npx nx run-many --target=build
