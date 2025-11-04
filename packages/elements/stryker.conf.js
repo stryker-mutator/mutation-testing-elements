@@ -1,13 +1,7 @@
-import fs from 'fs/promises';
+// @ts-nocheck
+import config from '../../stryker.parent.json' with { type: 'json' };
 
-/**
- * @type {import('@stryker-mutator/api/core').PartialStrykerOptions & typeof import('../../stryker.parent.json')}
- */
-const config = JSON.parse(await fs.readFile('../../stryker.parent.json', 'utf-8'));
-
-// @ts-expect-error removing gives error from parent.json type
 delete config.buildCommand;
-// @ts-expect-error removing gives error from parent.json type
 delete config.mochaOptions;
 
 config.dashboard = { module: 'elements' };

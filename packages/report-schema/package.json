@@ -4,18 +4,10 @@
   "description": "The json schema for a mutation testing report.",
   "main": "dist/src/index.js",
   "type": "module",
-  "typings": "dist/src/index.d.ts",
   "exports": {
     ".": "./dist/src/index.js",
     "./api": "./dist/src-generated/schema.js",
     "./mutation-testing-report-schema.json": "./dist/src/mutation-testing-report-schema.json"
-  },
-  "typesVersions": {
-    "*": {
-      "api": [
-        "dist/src-generated/schema.d.ts"
-      ]
-    }
   },
   "nx": {
     "name": "report-schema"
