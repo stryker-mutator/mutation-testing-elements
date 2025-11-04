@@ -84,10 +84,7 @@ export class MutationTestReportFilePickerComponent extends BaseElement {
         aria-labelledby="file-picker-label"
         class="mx-auto my-4 max-w-160 bg-transparent backdrop:bg-gray-950/50 backdrop:backdrop-blur-lg md:w-1/2"
       >
-        <div
-          @click="${(e: MouseEvent) => e.stopPropagation()}"
-          class="flex h-fit max-h-132 flex-col rounded-lg bg-gray-200/60 p-4 backdrop-blur-lg"
-        >
+        <div @click="${(e: MouseEvent) => e.stopPropagation()}" class="flex h-fit max-h-132 flex-col rounded-lg bg-gray-200/60 p-4 backdrop-blur-lg">
           <div class="mb-3 flex items-center rounded-sm bg-gray-200/60 p-2 text-gray-800 shadow-lg">
             <div class="mx-2 flex items-center">${searchIcon}</div>
             <label id="file-picker-label" for="file-picker-input" class="sr-only">Search for a file</label>
