@@ -60,6 +60,9 @@ export default defineConfig(
         ...globals.node,
       },
     },
+    rules: {
+      '@typescript-eslint/ban-ts-comment': 'off',
+    },
   },
   {
     ignores: [

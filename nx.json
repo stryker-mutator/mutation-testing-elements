@@ -62,5 +62,6 @@
     "start": {
       "dependsOn": ["root:build:tsc"]
     }
-  }
+  },
+  "tui": { "autoExit": true }
 }
