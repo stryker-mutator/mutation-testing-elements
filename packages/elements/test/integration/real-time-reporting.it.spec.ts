@@ -49,10 +49,10 @@ test.describe('real-time reporting', () => {
       await arrangeNavigate();
 
       const progressBar = page.realTimeProgressBar;
-      expect(await progressBar.smallProgressBarVisible()).toEqual(false);
+      await expect.poll(() => progressBar.smallProgressBarVisible()).toEqual(false);
       await page.mutantView.resultTable().row('WrappitContext.cs').navigate();
       await page.scrollDown();
-      await expect.poll(() => progressBar.smallProgressBarVisible()).toEqual(true);
+      await expect(progressBar.smallProgressBar).toBeVisible();
     });
 
     test('should update the progress-bar when the report is updated', async () => {

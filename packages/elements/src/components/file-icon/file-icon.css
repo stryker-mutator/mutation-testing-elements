@@ -1,54 +1,53 @@
-svg.cs {
-  fill: var(--mut-file-csharp-color);
-}
-svg.html {
-  fill: var(--mut-file-html-color);
-}
-svg.java {
-  fill: var(--mut-file-java-color);
-}
-svg.javascript {
-  fill: var(--mut-file-js-color);
-}
-svg.scala {
-  fill: var(--mut-file-scala-color);
-}
-svg.typescript {
-  fill: var(--mut-file-ts-color);
-}
-svg.php {
-  fill: var(--mut-file-php-color);
-}
-svg.vue {
-  fill: var(--mut-file-vue-color);
-}
-svg.octicon {
-  fill: var(--mut-octicon-icon-color);
-}
-
-svg.javascript.test {
-  fill: var(--mut-file-js-test-color);
-}
-svg.typescript.test {
-  fill: var(--mut-file-js-test-color);
-}
-
-svg.gherkin {
-  fill: var(--mut-file-gherkin-color);
-}
-
-svg.svelte {
-  fill: var(--mut-file-svelte-color);
-}
-
-svg.rust {
-  fill: var(--mut-file-rust-color);
-}
-svg.python {
-  fill: var(--mut-file-python-color);
-}
-
 svg {
   width: 20px;
-  vertical-align: middle;
+
+  &.cs {
+    fill: var(--mut-file-csharp-color);
+  }
+  &.html {
+    fill: var(--mut-file-html-color);
+  }
+  &.java {
+    fill: var(--mut-file-java-color);
+  }
+  &.javascript {
+    fill: var(--mut-file-js-color);
+  }
+  &.scala {
+    fill: var(--mut-file-scala-color);
+  }
+  &.typescript {
+    fill: var(--mut-file-ts-color);
+  }
+  &.php {
+    fill: var(--mut-file-php-color);
+  }
+  &.vue {
+    fill: var(--mut-file-vue-color);
+  }
+  &.octicon {
+    fill: var(--mut-octicon-icon-color);
+  }
+
+  &.javascript.test {
+    fill: var(--mut-file-js-test-color);
+  }
+  &.typescript.test {
+    fill: var(--mut-file-ts-test-color);
+  }
+
+  &.gherkin {
+    fill: var(--mut-file-gherkin-color);
+  }
+
+  &.svelte {
+    fill: var(--mut-file-svelte-color);
+  }
+
+  &.rust {
+    fill: var(--mut-file-rust-color);
+  }
+  &.python {
+    fill: var(--mut-file-python-color);
+  }
 }

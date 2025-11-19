@@ -1,7 +1,8 @@
-import type { PropertyValues } from 'lit';
+import type { HTMLTemplateResult, PropertyValues } from 'lit';
 import { html, nothing, svg, unsafeCSS } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
+import { repeat } from 'lit/directives/repeat.js';
 import type { FileUnderTestModel, MutantModel } from 'mutation-testing-metrics';
 import type { MutantResult, MutantStatus } from 'mutation-testing-report-schema/api';
 
@@ -81,7 +82,7 @@ export class FileComponent extends RealTimeElement {
       let maybeMutantTarget: Element | null = ev.target;
       const mutantsInScope: MutantModel[] = [];
       for (; maybeMutantTarget instanceof Element; maybeMutantTarget = maybeMutantTarget.parentElement) {
-        const mutantId = maybeMutantTarget.getAttribute('mutant-id');
+        const mutantId = maybeMutantTarget.getAttribute('data-mutant-id');
         const mutant = this.mutants.find(({ id }) => id.toString() === mutantId);
         if (mutant) {
           mutantsInScope.push(mutant);
@@ -145,18 +146,24 @@ export class FileComponent extends RealTimeElement {
     }
   };
 
-  private renderMutantDots(mutants: MutantModel[] | undefined) {
+  private renderMutantDots(mutants: MutantModel[] | undefined): HTMLTemplateResult | typeof nothing {
     return mutants?.length
-      ? mutants.map(
+      ? (repeat(
+          mutants,
+          (mutant) => mutant.id,
           (mutant) =>
-            svg`<svg mutant-id="${mutant.id}" class="mutant-dot mx-0.5 cursor-pointer ${this.selectedMutant?.id === mutant.id ? 'selected' : ''} ${mutant.status}" height="10" width="12">
+            svg`<svg
+              data-mutant-id="${mutant.id}"
+              class="mutant-dot ${this.selectedMutant?.id === mutant.id ? 'selected' : ''} ${mutant.status} mx-0.5 cursor-pointer"
+              height="11"
+              width="11"
+            >
               <title>${title(mutant)}</title>
               ${this.selectedMutant?.id === mutant.id ? triangle : circle}
-          </svg>`,
-        )
+            </svg>`,
+        ) as HTMLTemplateResult)
       : nothing;
   }
-
   private toggleMutant(mutant: MutantModel) {
     this.removeCurrentDiff();
 
@@ -253,7 +260,7 @@ export class FileComponent extends RealTimeElement {
             attributes: {
               class: escapeHtml(`mutant border-none ${mutant.status}`),
               title: escapeHtml(title(mutant)),
-              'mutant-id': escapeHtml(mutant.id.toString()),
+              'data-mutant-id': escapeHtml(mutant.id.toString()),
             },
           };
         }
@@ -289,7 +296,7 @@ export class FileComponent extends RealTimeElement {
   }
 
   #animateMutantToggle(mutant: MutantModel) {
-    beginElementAnimation(this.code, 'mutant-id', mutant.id);
+    beginElementAnimation(this.code, 'data-mutant-id', mutant.id);
   }
 }
 

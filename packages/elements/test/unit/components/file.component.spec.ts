@@ -63,8 +63,8 @@ describe(FileComponent.name, () => {
       // Assert
       expect(queryMutantText('1')).eq('+');
       expect(queryMutantText('2')).eq('{return a + b;}');
-      expect(sut.$('.mutant[mutant-id="1"]').title).eq('ArithmeticOperator NoCoverage');
-      expect(sut.$('.mutant[mutant-id="2"]').title).eq('BlockStatement Survived');
+      expect(sut.$('.mutant[data-mutant-id="1"]').title).eq('ArithmeticOperator NoCoverage');
+      expect(sut.$('.mutant[data-mutant-id="2"]').title).eq('BlockStatement Survived');
     });
 
     it('should escape html inside mutant attributes', async () => {
@@ -88,7 +88,7 @@ describe(FileComponent.name, () => {
 
       // Assert
       const mutant = sut.$('.mutant');
-      expect(mutant.getAttribute('mutant-id')).eq('"&test');
+      expect(mutant.getAttribute('data-mutant-id')).eq('"&test');
       expect(mutant.className).eq('mutant border-none "&test');
       expect(mutant.title).eq('ArithmeticOperator"&<script>alert</script> "&test');
     });
@@ -129,7 +129,7 @@ describe(FileComponent.name, () => {
       await sut.whenStable();
 
       // Assert
-      const mutantIds = [...sut.$$('.mutant-dot')].map((mutantDot) => mutantDot.getAttribute('mutant-id'));
+      const mutantIds = [...sut.$$('.mutant-dot')].map((mutantDot) => mutantDot.getAttribute('data-mutant-id'));
       expect(mutantIds).deep.eq(['3', '2', '1']);
     });
 
@@ -169,9 +169,9 @@ function add(a, b) {
       );
       sut.element.model = input;
       await sut.whenStable();
-      const mutant1 = sut.$('code tr:nth-child(3) svg[mutant-id="1"]');
-      const mutant2 = sut.$('code tr:nth-child(4) svg[mutant-id="2"]');
-      const mutant3 = sut.$('code tr:nth-child(5) svg[mutant-id="3"]');
+      const mutant1 = sut.$('code tr:nth-child(3) svg[data-mutant-id="1"]');
+      const mutant2 = sut.$('code tr:nth-child(4) svg[data-mutant-id="2"]');
+      const mutant3 = sut.$('code tr:nth-child(5) svg[data-mutant-id="3"]');
       expect(mutant1).ok;
       expect(mutant2).ok;
       expect(mutant3).ok;
@@ -194,7 +194,7 @@ function add(a, b) {
       );
       sut.element.model = input;
       await sut.whenStable();
-      const title = sut.$('svg[mutant-id] title').textContent;
+      const title = sut.$('svg[data-mutant-id] title').textContent;
       expect(title).eq('MethodReplacement NoCoverage');
     });
 
@@ -271,7 +271,7 @@ function add(a, b) {
     describe('using the mutant dots', () => {
       it('should show a diff', async () => {
         // Arrange
-        const mutantDot = sut.$<SVGElement>('.mutant-dot[mutant-id="2"]');
+        const mutantDot = sut.$<SVGElement>('.mutant-dot[data-mutant-id="2"]');
         const tr = mutantDot.closest('tr')!;
 
         // Act
@@ -291,7 +291,7 @@ function add(a, b) {
 
       it('should add the correct focus in the mutated part', async () => {
         // Arrange
-        const mutantDot = sut.$<SVGElement>('.mutant-dot[mutant-id="1"]');
+        const mutantDot = sut.$<SVGElement>('.mutant-dot[data-mutant-id="1"]');
 
         // Act
         mutantDot.dispatchEvent(new Event('click', { bubbles: true }));
@@ -307,7 +307,7 @@ function add(a, b) {
         // Act
         const event = await sut.catchCustomEvent(
           'mutant-selected',
-          () => void sut.$('.mutant-dot[mutant-id="2"]').dispatchEvent(new Event('click', { bubbles: true })),
+          () => void sut.$('.mutant-dot[data-mutant-id="2"]').dispatchEvent(new Event('click', { bubbles: true })),
         );
 
         // Assert
@@ -318,7 +318,7 @@ function add(a, b) {
 
       it('should emit a mutantSelected with selected = false when deselecting', async () => {
         // Arrange
-        const mutantDot = sut.$('.mutant-dot[mutant-id="2"]');
+        const mutantDot = sut.$('.mutant-dot[data-mutant-id="2"]');
         await sut.catchCustomEvent('mutant-selected', () => void mutantDot.dispatchEvent(new Event('click', { bubbles: true })));
 
         // Act
@@ -332,7 +332,7 @@ function add(a, b) {
 
       it('should remove a diff when deselecting', async () => {
         // Arrange
-        const mutantDot = sut.$<SVGElement>('.mutant-dot[mutant-id="2"]');
+        const mutantDot = sut.$<SVGElement>('.mutant-dot[data-mutant-id="2"]');
         const tr = mutantDot.closest('tr')!;
         mutantDot.dispatchEvent(new Event('click', { bubbles: true }));
         await sut.whenStable();
@@ -348,7 +348,7 @@ function add(a, b) {
 
       it('should deselect the mutant when on filterChanged and filtered out', async () => {
         // Arrange
-        const mutant = sut.$<SVGElement>('svg[mutant-id="1"]');
+        const mutant = sut.$<SVGElement>('svg[data-mutant-id="1"]');
         mutant.dispatchEvent(new Event('click', { bubbles: true }));
         await sut.whenStable();
 
@@ -364,7 +364,7 @@ function add(a, b) {
     describe('by clicking on the code directly', () => {
       it('should show the diff', async () => {
         // Arrange
-        const mutant = sut.$('span.mutant[mutant-id="1"]');
+        const mutant = sut.$('span.mutant[data-mutant-id="1"]');
 
         // Act
         mutant.click();
@@ -378,7 +378,7 @@ function add(a, b) {
         // Arrange
         filterComponent.dispatchEvent(createCustomEvent('filters-changed', ['Survived']));
         await sut.whenStable();
-        const mutant = sut.$('span.mutant[mutant-id="1"]');
+        const mutant = sut.$('span.mutant[data-mutant-id="1"]');
 
         // Act
         mutant.click();
@@ -402,7 +402,7 @@ function add(a, b) {
         const getSelectionStub = vi.spyOn(window, 'getSelection');
         const selectionMock = { removeAllRanges: vi.fn() };
         getSelectionStub.mockReturnValue(selectionMock as unknown as Selection);
-        const mutant = sut.$('span.mutant[mutant-id="1"]');
+        const mutant = sut.$('span.mutant[data-mutant-id="1"]');
 
         // Act
         mutant.click();
@@ -424,7 +424,7 @@ function add(a, b) {
 
       it('should show the next diff when another mutant is in scope', async () => {
         // Arrange
-        const mutant = sut.$('span.mutant[mutant-id="1"]');
+        const mutant = sut.$('span.mutant[data-mutant-id="1"]');
         mutant.click();
         await sut.whenStable();
 
@@ -438,7 +438,7 @@ function add(a, b) {
 
       it('should deselect the mutant when it is the last mutant in scope', async () => {
         // Arrange
-        const mutant = sut.$('span.mutant[mutant-id="1"]');
+        const mutant = sut.$('span.mutant[data-mutant-id="1"]');
         mutant.click();
         await sut.whenStable();
         mutant.click();
@@ -459,7 +459,7 @@ function add(a, b) {
         sut.element.model.mutants[0].id = 1;
 
         // Act
-        const mutant = sut.$('span.mutant[mutant-id="1"]');
+        const mutant = sut.$('span.mutant[data-mutant-id="1"]');
         mutant.click();
         await sut.whenStable();
 
@@ -471,7 +471,7 @@ function add(a, b) {
         // Arrange
         sut.element.model.mutants[0].status = 'Killed';
         filterComponent.dispatchEvent(createCustomEvent('filters-changed', ['Killed']));
-        const mutant = sut.$('span.mutant[mutant-id="1"]');
+        const mutant = sut.$('span.mutant[data-mutant-id="1"]');
         mutant.click();
         sut.element.requestUpdate('model');
         await sut.whenStable();
@@ -495,12 +495,12 @@ function add(a, b) {
         // Assert
         const selectedMutants = sut.$$('.mutant-dot.selected');
         expect(selectedMutants).lengthOf(1);
-        expect(selectedMutants[0].getAttribute('mutant-id')).eq('2');
+        expect(selectedMutants[0].getAttribute('data-mutant-id')).eq('2');
       });
 
       it('should select the second mutant when the first mutant is selected', async () => {
         // Arrange
-        sut.$<SVGElement>('.mutant-dot[mutant-id="2"]').dispatchEvent(new Event('click', { bubbles: true }));
+        sut.$<SVGElement>('.mutant-dot[data-mutant-id="2"]').dispatchEvent(new Event('click', { bubbles: true }));
         await sut.whenStable();
 
         // Act
@@ -510,12 +510,12 @@ function add(a, b) {
         // Assert
         const selectedMutants = sut.$$('.mutant-dot.selected');
         expect(selectedMutants).lengthOf(1);
-        expect(selectedMutants[0].getAttribute('mutant-id')).eq('1');
+        expect(selectedMutants[0].getAttribute('data-mutant-id')).eq('1');
       });
 
       it('should select the first mutant when the last mutant is selected', async () => {
         // Arrange
-        sut.$<SVGElement>('.mutant-dot[mutant-id="1"]').dispatchEvent(new Event('click', { bubbles: true }));
+        sut.$<SVGElement>('.mutant-dot[data-mutant-id="1"]').dispatchEvent(new Event('click', { bubbles: true }));
         await sut.whenStable();
 
         // Act
@@ -525,7 +525,7 @@ function add(a, b) {
         // Assert
         const selectedMutants = sut.$$('.mutant-dot.selected');
         expect(selectedMutants).lengthOf(1);
-        expect(selectedMutants[0].getAttribute('mutant-id')).eq('2');
+        expect(selectedMutants[0].getAttribute('data-mutant-id')).eq('2');
       });
 
       it('should not do anything when there are no mutants', async () => {
@@ -552,12 +552,12 @@ function add(a, b) {
         // Assert
         const selectedMutants = sut.$$('.mutant-dot.selected');
         expect(selectedMutants).lengthOf(1);
-        expect(selectedMutants[0].getAttribute('mutant-id')).eq('1');
+        expect(selectedMutants[0].getAttribute('data-mutant-id')).eq('1');
       });
 
       it('should select the second mutant when the first mutant is selected', async () => {
         // Arrange
-        sut.$<SVGElement>('.mutant-dot[mutant-id="2"]').dispatchEvent(new Event('click', { bubbles: true }));
+        sut.$<SVGElement>('.mutant-dot[data-mutant-id="2"]').dispatchEvent(new Event('click', { bubbles: true }));
         await sut.whenStable();
 
         // Act
@@ -567,12 +567,12 @@ function add(a, b) {
         // Assert
         const selectedMutants = sut.$$('.mutant-dot.selected');
         expect(selectedMutants).lengthOf(1);
-        expect(selectedMutants[0].getAttribute('mutant-id')).eq('1');
+        expect(selectedMutants[0].getAttribute('data-mutant-id')).eq('1');
       });
 
       it('should select the first mutant when the last mutant is selected', async () => {
         // Arrange
-        sut.$<SVGElement>('.mutant-dot[mutant-id="1"]').dispatchEvent(new Event('click', { bubbles: true }));
+        sut.$<SVGElement>('.mutant-dot[data-mutant-id="1"]').dispatchEvent(new Event('click', { bubbles: true }));
         await sut.whenStable();
 
         // Act
@@ -582,7 +582,7 @@ function add(a, b) {
         // Assert
         const selectedMutants = sut.$$('.mutant-dot.selected');
         expect(selectedMutants).lengthOf(1);
-        expect(selectedMutants[0].getAttribute('mutant-id')).eq('2');
+        expect(selectedMutants[0].getAttribute('data-mutant-id')).eq('2');
       });
 
       it('should not do anything when there are no mutants', async () => {
@@ -602,6 +602,6 @@ function add(a, b) {
   });
 
   function queryMutantText(mutantId: string) {
-    return [...sut.$$(`.mutant[mutant-id="${mutantId}"]`)].map((mutant) => mutant.innerText).join('');
+    return [...sut.$$(`.mutant[data-mutant-id="${mutantId}"]`)].map((mutant) => mutant.innerText).join('');
   }
 });

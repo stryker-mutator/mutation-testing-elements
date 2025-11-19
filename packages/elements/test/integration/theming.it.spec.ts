@@ -38,7 +38,7 @@ test.describe('Theming', () => {
       });
 
       test('should show a dark code editor', async () => {
-        expect(await page.mutantView.codeBackgroundColor()).toEqual('rgb(29, 31, 33)');
+        await expect.poll(() => page.mutantView.codeBackgroundColor()).toMatch(/^lab\(8\.30603/);
       });
 
       itShouldMatchScreenshot('should match the dark theme');
@@ -81,7 +81,7 @@ test.describe('Theming', () => {
         await page.mutantView.resultTable().row('helpers.ts').navigate();
       });
       test('should show a light code editor', async () => {
-        expect(await page.mutantView.codeBackgroundColor()).toEqual('rgb(246, 248, 250)');
+        await expect.poll(() => page.mutantView.codeBackgroundColor()).toMatch(/^lab\(98\.26/);
       });
 
       itShouldMatchScreenshot('should match the light theme');

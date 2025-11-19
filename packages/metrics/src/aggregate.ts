@@ -24,14 +24,12 @@ export function aggregateResultsByModule(resultsByModule: Record<string, Mutatio
     Object.entries(normalizeFileNames(report.files)).forEach(([fileName, fileResult]) => {
       aggregatedResult.files[`${moduleName}/${fileName}`] = {
         ...fileResult,
-        mutants: [
-          ...fileResult.mutants.map(({ id, coveredBy, killedBy, ...mutantData }) => ({
-            ...mutantData,
-            id: toUniqueId(moduleName, id),
-            killedBy: toUniqueIds(moduleName, killedBy),
-            coveredBy: toUniqueIds(moduleName, coveredBy),
-          })),
-        ],
+        mutants: fileResult.mutants.map(({ id, coveredBy, killedBy, ...mutantData }) => ({
+          ...mutantData,
+          id: toUniqueId(moduleName, id),
+          killedBy: toUniqueIds(moduleName, killedBy),
+          coveredBy: toUniqueIds(moduleName, coveredBy),
+        })),
       };
     });
     if (report.testFiles) {

@@ -135,7 +135,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
     return html`<tr title="${row.name}" class="group hover:bg-gray-200">
       <td class="font-semibold">
         <div class="flex items-center justify-start">
-          <mte-file-icon file-name="${row.name}" ?file="${row.file}" class="mx-1"></mte-file-icon> ${path.length > 0
+          <mte-file-icon file-name="${row.name}" ?file="${row.file}" class="mx-1 flex items-center"></mte-file-icon> ${path.length > 0
             ? html`<a class="mr-auto inline-block w-full py-4 pr-2 hover:text-primary-on hover:underline" href="${toAbsoluteUrl(...path)}"
                 >${name}</a
               >`
@@ -193,7 +193,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
         return 'bg-green-600 text-gray-200';
       }
     } else {
-      return 'bg-blue-600';
+      return 'bg-cyan-600';
     }
   }
   private determineTextColoringClass(mutationScore: number) {
