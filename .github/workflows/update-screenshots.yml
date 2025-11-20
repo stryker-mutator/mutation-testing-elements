@@ -15,7 +15,7 @@ jobs:
         with:
           app-id: ${{ vars.STRYKER_MUTATOR_APP_ID }}
           private-key: ${{ secrets.STRYKER_MUTATOR_NPA_KEY }}
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           token: ${{ steps.generate-token.outputs.token }}
           persist-credentials: false
