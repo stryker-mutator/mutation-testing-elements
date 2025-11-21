@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.7.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.6.0...v3.7.0) (2025-11-21)
+
+
+### Features
+
+* **elements:** refresh some icons and colours ([#3978](https://github.com/stryker-mutator/mutation-testing-elements/issues/3978)) ([5cf987e](https://github.com/stryker-mutator/mutation-testing-elements/commit/5cf987e4012fd4367d492a61551af41fe9446ac7))
+
+
+
+
+
 ## [3.5.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.5.0...v3.5.1) (2025-02-10)
 
 **Note:** Version bump only for package mutation-testing-metrics

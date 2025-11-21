@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.7.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.6.0...v3.7.0) (2025-11-21)
+
+
+### Bug Fixes
+
+* **elements:** respect reduced motion preferences ([#3980](https://github.com/stryker-mutator/mutation-testing-elements/issues/3980)) ([98a1c4c](https://github.com/stryker-mutator/mutation-testing-elements/commit/98a1c4ce7f4271169043f4f95c0136f3d1fc4d38))
+
+
+### Features
+
+* **elements:** refresh some icons and colours ([#3978](https://github.com/stryker-mutator/mutation-testing-elements/issues/3978)) ([5cf987e](https://github.com/stryker-mutator/mutation-testing-elements/commit/5cf987e4012fd4367d492a61551af41fe9446ac7))
+
+
+
+
+
 # [3.6.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.5.4...v3.6.0) (2025-08-13)
 
 

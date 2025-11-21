@@ -1,6 +1,6 @@
 {
   "name": "mutation-testing-report-schema",
-  "version": "3.5.1",
+  "version": "3.7.0",
   "description": "The json schema for a mutation testing report.",
   "main": "dist/src/index.js",
   "type": "module",
@@ -30,6 +30,6 @@
   "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/elements#readme",
   "devDependencies": {
     "ajv": "8.17.1",
-    "eslint-config-mte": "*"
+    "eslint-config-mte": "3.7.0"
   }
 }

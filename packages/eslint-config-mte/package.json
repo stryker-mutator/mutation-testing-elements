@@ -1,7 +1,7 @@
 {
   "name": "eslint-config-mte",
   "private": true,
-  "version": "1.0.0",
+  "version": "3.7.0",
   "description": "Shared ESLint config",
   "main": "index.ts",
   "type": "module",
@@ -29,6 +29,5 @@
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-wc": "^3.0.1",
     "typescript-eslint": "^8.42.0"
-  },
-  "devDependencies": {}
+  }
 }

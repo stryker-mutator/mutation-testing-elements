@@ -1,6 +1,6 @@
 {
   "name": "mutation-testing-metrics",
-  "version": "3.5.1",
+  "version": "3.7.0",
   "description": "Utility functions to calculate mutation testing metrics.",
   "type": "module",
   "main": "dist/src/index.js",
@@ -26,9 +26,9 @@
   },
   "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/metrics#readme",
   "dependencies": {
-    "mutation-testing-report-schema": "3.5.1"
+    "mutation-testing-report-schema": "3.7.0"
   },
   "devDependencies": {
-    "eslint-config-mte": "*"
+    "eslint-config-mte": "3.7.0"
   }
 }
