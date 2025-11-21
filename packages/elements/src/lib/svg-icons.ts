@@ -1,36 +1,20 @@
 import { svg } from 'lit';
 
-export const mutantFileIcon = svg`
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
-    <path fill-rule="evenodd" d="M2 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4Zm4.78 1.97a.75.75 0 0 1 0 1.06L5.81 8l.97.97a.75.75 0 1 1-1.06 1.06l-1.5-1.5a.75.75 0 0 1 0-1.06l1.5-1.5a.75.75 0 0 1 1.06 0Zm2.44 1.06a.75.75 0 0 1 1.06-1.06l1.5 1.5a.75.75 0 0 1 0 1.06l-1.5 1.5a.75.75 0 1 1-1.06-1.06l.97-.97-.97-.97Z" clip-rule="evenodd" />
-  </svg>
-`;
+// Octicons - Github
+// https://github.com/primer/octicons/tree/main/icons
 
-export const searchIcon = svg`
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-    <path
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-    />
-  </svg>
-`;
+export const fileDirectoryIcon = svg`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" aria-label="directory" class="octicon octicon-file-directory"><path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1z"/></svg>`;
 
-export const testFileIcon = svg`
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
-    <path fill-rule="evenodd" d="M2 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4Zm2.22 1.97a.75.75 0 0 0 0 1.06l.97.97-.97.97a.75.75 0 1 0 1.06 1.06l1.5-1.5a.75.75 0 0 0 0-1.06l-1.5-1.5a.75.75 0 0 0-1.06 0ZM8.75 8.5a.75.75 0 0 0 0 1.5h2.5a.75.75 0 0 0 0-1.5h-2.5Z" clip-rule="evenodd" />
-  </svg>
-`;
+export const fileIcon = svg`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" aria-label="file" class="octicon octicon-file"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914z"/></svg>`;
 
-const arrow = (
-  classes?: string,
-) => svg`<svg aria-hidden="true" class="${classes} h-4 w-4" fill="white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-  <path
-    fill-rule="evenodd"
-    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-    clip-rule="evenodd"
-  ></path>
-</svg>`;
+export const searchIcon = svg`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"><path d="M10.25 2a8.25 8.25 0 0 1 6.34 13.53l5.69 5.69a.749.749 0 0 1-.326 1.275.75.75 0 0 1-.734-.215l-5.69-5.69A8.25 8.25 0 1 1 10.25 2M3.5 10.25a6.75 6.75 0 1 0 13.5 0 6.75 6.75 0 0 0-13.5 0"/></svg>`;
+
+export const mutantFileIcon = svg`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"><path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2.5a.75.75 0 0 1-1.5 0Zm1.72 4.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.75.75 0 0 1 .215-.734l1.47-1.47-1.47-1.47a.75.75 0 0 1 0-1.06M3.28 7.78 1.81 9.25l1.47 1.47a.75.75 0 0 1-.018 1.042.75.75 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.75.75 0 0 1 1.042.018.75.75 0 0 1 .018 1.042m8.22-6.218V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914z"/></svg>`;
+
+export const testFileIcon = svg`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"><path d="M10.336 0c.464 0 .91.184 1.237.513l2.914 2.914c.33.328.513.773.513 1.237v3.587c0 .199-.079.39-.22.53a.747.747 0 0 1-1.06 0 .75.75 0 0 1-.22-.53V6h-2.75c-.464 0-.909-.184-1.237-.513A1.75 1.75 0 0 1 9 4.25V1.5H3.75a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25H7c.199 0 .39.079.53.22a.747.747 0 0 1 0 1.06A.75.75 0 0 1 7 16H3.75c-.464 0-.909-.184-1.237-.513A1.75 1.75 0 0 1 2 14.25V1.75C2 .784 2.784 0 3.75 0Zm.164 4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"/><path d="M15.259 10a.75.75 0 0 1 .686.472.75.75 0 0 1-.171.815l-4.557 4.45a.75.75 0 0 1-1.055-.01L8.22 13.778a.754.754 0 0 1 .04-1.02.75.75 0 0 1 1.02-.038l1.42 1.425 4.025-3.932a.75.75 0 0 1 .534-.213"/></svg>`;
+
+const arrow = (classes?: string) =>
+  svg`<svg xmlns="http://www.w3.org/2000/svg" fill="#fff" aria-hidden="true" class="${classes} h-4 w-4" viewBox="0 0 16 16"><path d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l2.97-2.97H3.75a.75.75 0 0 1 0-1.5h7.44L8.22 4.03a.75.75 0 0 1 0-1.06"/></svg>`;
 
 export const arrowLeft = arrow('rotate-180');
 export const arrowRight = arrow();

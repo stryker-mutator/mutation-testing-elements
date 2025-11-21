@@ -1,8 +1,8 @@
 /* Prismjs theming (code highlighting) ===================================== */
 :host(:not([theme='dark'])) {
-  --prism-maintext: #393a34;
-  --prism-background: #f6f8fa;
-  --prism-border: #ddd;
+  --prism-maintext: var(--color-gray-700);
+  --prism-background: var(--color-gray-50);
+  --prism-border: var(--color-gray-200);
 
   /* from https://github.com/FormidableLabs/prism-react-renderer/blob/master/src/themes/github.js */
   --prism-cdata: #999988;
@@ -42,8 +42,8 @@
 }
 :host([theme='dark']) {
   /* From https://atelierbram.github.io/syntax-highlighting/prism/demo/assets/css/prism-atom-dark.css */
-  --prism-maintext: #d3d0c8;
-  --prism-background: #1d1f21;
+  --prism-maintext: var(--mut-gray-700);
+  --prism-background: var(--mut-gray-50);
   --prism-border: var(--mut-gray-200);
 
   --prism-cdata: #7c7c7c;
@@ -96,13 +96,13 @@
 /* @see https://github.com/microsoft/vscode/blob/master/extensions/theme-seti/icons/vs-seti-icon-theme.json */
 :host(:not([theme='dark'])) {
   --mut-file-ts-color: #498ba7;
-  --mut-file-ts-test-color: #b7b73b;
+  --mut-file-ts-test-color: #cc6d2e;
   --mut-file-scala-color: #b8383d;
   --mut-file-java-color: #b8383d;
   --mut-file-js-color: #b7b73b;
   --mut-file-js-test-color: #cc6d2e;
   --mut-file-php-color: #9068b0;
-  --mut-file-html-color: #498ba7;
+  --mut-file-html-color: #cc6d2e;
   --mut-file-csharp-color: #498ba7;
   --mut-file-vue-color: #7fae42;
   --mut-file-gherkin-color: #00a818;
@@ -112,13 +112,13 @@
 }
 :host([theme='dark']) {
   --mut-file-ts-color: #519aba;
-  --mut-file-ts-test-color: #cbcb41;
+  --mut-file-ts-test-color: #e37933;
   --mut-file-scala-color: #cc3e44;
   --mut-file-java-color: #cc3e44;
   --mut-file-js-color: #cbcb41;
   --mut-file-js-test-color: #e37933;
   --mut-file-php-color: #a074c4;
-  --mut-file-html-color: #519aba;
+  --mut-file-html-color: #e37933;
   --mut-file-csharp-color: #519aba;
   --mut-file-vue-color: #8dc149;
   --mut-file-gherkin-color: #10b828;
@@ -138,32 +138,32 @@
 }
 
 :host(:not([theme='dark'])) {
-  --mut-octicon-icon-color: #498ba7;
-  --mut-line-number: #6e7781;
-  --mut-diff-add-bg: #e6ffec;
-  --mut-diff-add-bg-line-number: #ccffd8;
-  --mut-diff-add-line-number: #24292f;
-  --mut-diff-del-bg: #ffebe9;
-  --mut-diff-del-bg-line-number: #ffd7d5;
+  --mut-octicon-icon-color: var(--color-primary-600);
+  --mut-line-number: var(--color-gray-400);
+
+  --mut-diff-add-bg: oklch(from var(--color-green-300) l c h / 0.3);
+  --mut-diff-add-bg-line-number: oklch(from var(--color-green-300) l c h / 0.5);
+  --mut-diff-add-line-number: var(--color-gray-600);
+
+  --mut-diff-del-bg: oklch(from var(--color-red-300) l c h / 0.3);
+  --mut-diff-del-bg-line-number: oklch(from var(--color-red-300) l c h / 0.5);
+
   --mut-diff-del-line-number: var(--mut-diff-add-line-number);
-  --mut-badge-info-bg: #54c6ec;
-  --mut-badge-info: #212529;
-  --mut-code-lense: #919191;
 }
 :host([theme='dark']) {
   color-scheme: dark;
 
-  --mut-octicon-icon-color: #519aba;
-  --mut-line-number: #484f58;
-  --mut-diff-add-bg: rgba(46, 160, 67, 0.15);
-  --mut-diff-add-bg-line-number: rgba(63, 185, 80, 0.3);
-  --mut-diff-add-line-number: #c9d1d9;
-  --mut-diff-del-bg: rgba(248, 81, 73, 0.15);
-  --mut-diff-del-bg-line-number: rgba(248, 81, 73, 0.3);
-  --mut-diff-del-line-number: #c9d1d9;
-  --mut-badge-info-bg: #17a3b8;
-  --mut-badge-info: #fff;
-  --mut-code-lense: #999;
+  --mut-octicon-icon-color: var(--color-primary-500);
+  --mut-line-number: var(--color-gray-400);
+
+  --mut-diff-add-bg: oklch(from var(--color-green-600) l c h / 0.15);
+  --mut-diff-add-bg-line-number: oklch(from var(--color-green-600) l c h / 0.3);
+  --mut-diff-add-line-number: var(--color-gray-700);
+
+  --mut-diff-del-bg: oklch(from var(--color-red-600) l c h / 0.15);
+  --mut-diff-del-bg-line-number: oklch(from var(--color-red-600) l c h / 0.3);
+
+  --mut-diff-del-line-number: var(--mut-diff-add-line-number);
 }
 
 /* Dark mode colors */
@@ -184,7 +184,7 @@
 
   /* --mut-primary-50: var(--color-sky-900); */
   --mut-primary-100: var(--color-sky-800);
-  /* --mut-primary-200: var(--color-sky-700); */
+  --mut-primary-200: var(--color-sky-700);
   /* --mut-primary-300: var(--color-sky-600); */
   /* --mut-primary-400: var(--color-sky-500); */
   /* --mut-primary-500: var(--color-sky-400); */

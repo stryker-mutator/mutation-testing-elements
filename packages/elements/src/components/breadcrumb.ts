@@ -26,7 +26,7 @@ export class MutationTestReportBreadcrumbComponent extends BaseElement {
   }
 
   public render() {
-    return html`<nav class="my-4 flex rounded-md border border-primary-600 bg-primary-100 p-3 text-gray-700" aria-label="Breadcrumb">
+    return html`<nav class="my-4 flex rounded-md bg-primary-100 p-3 text-gray-700" aria-label="Breadcrumb">
       <ol class="inline-flex items-center">
         ${this.path && this.path.length > 0 ? this.#renderLink(this.rootName, []) : this.#renderActiveItem(this.rootName)}
         ${this.#renderBreadcrumbItems()}
@@ -71,7 +71,9 @@ export class MutationTestReportBreadcrumbComponent extends BaseElement {
 
   #renderSearchIcon() {
     return html`
-      <button @click="${() => this.#dispatchFilePickerOpenEvent()}" class="ml-auto" title="Open file picker (Ctrl-K)">${searchIcon}</button>
+      <button @click="${() => this.#dispatchFilePickerOpenEvent()}" class="ml-auto cursor-pointer" title="Open file picker (Ctrl-K)"
+        >${searchIcon}</button
+      >
     `;
   }
 

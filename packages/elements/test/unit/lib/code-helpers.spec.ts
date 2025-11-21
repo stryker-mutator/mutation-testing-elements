@@ -138,13 +138,13 @@ describe(transformHighlightedLines.name, () => {
     it('should support falsy attribute values', () => {
       const result = transformHighlightedLines('const foo = bar;', function* ({ offset }) {
         if (offset === 6) {
-          yield { elementName: 'span', id: 0, attributes: { 'mutant-id': 0 } };
+          yield { elementName: 'span', id: 0, attributes: { 'data-mutant-id': 0 } };
         }
         if (offset === 9) {
           yield { elementName: 'span', id: 0, isClosing: true };
         }
       });
-      expect(result).deep.eq(['const <span mutant-id="0">foo</span> = bar;']);
+      expect(result).deep.eq(['const <span data-mutant-id="0">foo</span> = bar;']);
     });
   });
 

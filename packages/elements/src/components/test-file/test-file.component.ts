@@ -1,6 +1,6 @@
 import '../../style/prism-plugins.js';
 
-import type { PropertyValues } from 'lit';
+import type { HTMLTemplateResult, PropertyValues } from 'lit';
 import { html, nothing, svg, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
@@ -85,7 +85,7 @@ export class TestFileComponent extends RealTimeElement {
       }
       this.selectedTest = test;
       this.dispatchEvent(createCustomEvent('test-selected', { selected: true, test }));
-      scrollToCodeFragmentIfNeeded(this.renderRoot.querySelector(`[test-id="${test.id}"]`));
+      scrollToCodeFragmentIfNeeded(this.renderRoot.querySelector(`[data-test-id="${test.id}"]`));
     }
   }
 
@@ -131,7 +131,7 @@ export class TestFileComponent extends RealTimeElement {
                 class="w-full rounded-sm p-3 text-left hover:bg-gray-100 active:bg-gray-200"
                 type="button"
                 data-active="${this.selectedTest === test}"
-                test-id="${test.id}"
+                data-test-id="${test.id}"
                 @click=${(ev: MouseEvent) => {
                   ev.stopPropagation();
                   this.toggleTest(test);
@@ -181,22 +181,24 @@ export class TestFileComponent extends RealTimeElement {
 
   private renderTestDots(tests: TestModel[] | undefined) {
     return tests?.length
-      ? tests.map(
+      ? (repeat(
+          tests,
+          (test) => test.id,
           (test) =>
             svg`<svg
-              test-id="${test.id}"
-              class="test-dot mx-0.5 cursor-pointer ${this.selectedTest?.id === test.id ? 'selected' : ''} ${test.status}"
+              data-test-id="${test.id}"
+              class="test-dot ${this.selectedTest?.id === test.id ? 'selected' : ''} ${test.status} mx-0.5 cursor-pointer"
               @click=${(ev: MouseEvent) => {
                 ev.stopPropagation();
                 this.toggleTest(test);
               }}
-              height="10"
-              width="12"
+              height="11"
+              width="11"
             >
               <title>${title(test)}</title>
               ${this.selectedTest === test ? triangle : circle}
             </svg>`,
-        )
+        ) as HTMLTemplateResult)
       : nothing;
   }
 
@@ -245,7 +247,7 @@ export class TestFileComponent extends RealTimeElement {
   }
 
   #animateTestToggle(test: TestModel) {
-    beginElementAnimation(this.renderRoot, 'test-id', test.id);
+    beginElementAnimation(this.renderRoot, 'data-test-id', test.id);
   }
 }
 function title(test: TestModel): string {

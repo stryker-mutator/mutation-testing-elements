@@ -161,7 +161,7 @@ describe(TestFileComponent.name, () => {
       await sut.whenStable();
 
       expect(sut.$('code tr.line:nth-child(2) .code').innerHTML).contains(
-        `<svg height="10" width="12" test-id="spec-1" class="test-dot mx-0.5 cursor-pointer  NotCovering">`,
+        `<svg height="11" width="11" data-test-id="spec-1" class="test-dot  NotCovering mx-0.5 cursor-pointer">`,
       );
     });
 
@@ -191,7 +191,7 @@ describe(TestFileComponent.name, () => {
       sut.element.model = model;
       await sut.whenStable();
 
-      expect(sut.$('code tr.line:nth-child(2) .code').innerHTML).include('test-id="spec-1"');
+      expect(sut.$('code tr.line:nth-child(2) .code').innerHTML).include('data-test-id="spec-1"');
     });
   });
 
@@ -215,10 +215,10 @@ describe(TestFileComponent.name, () => {
       filterComponent = sut.$('mte-state-filter');
     });
 
-    it('should set the test-id attribute', () => {
+    it('should set the data-test-id attribute', () => {
       const tests = sut.$$('.test-dot');
-      expect(tests[0].getAttribute('test-id')).eq('1');
-      expect(tests[1].getAttribute('test-id')).eq('2');
+      expect(tests[0].getAttribute('data-test-id')).eq('1');
+      expect(tests[1].getAttribute('data-test-id')).eq('2');
     });
 
     it('should hide the "Killing" tests when "Killing" tests are filtered out', async () => {
@@ -226,12 +226,12 @@ describe(TestFileComponent.name, () => {
       await sut.whenStable();
       const tests = sut.$$('.test-dot');
       expect(tests).lengthOf(1);
-      expect(tests[0].getAttribute('test-id')).eq('2');
+      expect(tests[0].getAttribute('data-test-id')).eq('2');
     });
 
     it('should select the test when a test is clicked', async () => {
       // Arrange
-      const testDot = sut.$<SVGElement>('.test-dot[test-id="1"]');
+      const testDot = sut.$<SVGElement>('.test-dot[data-test-id="1"]');
 
       // Act
       testDot.dispatchEvent(new Event('click', { bubbles: true }));
@@ -243,7 +243,7 @@ describe(TestFileComponent.name, () => {
 
     it('should emit a test selected event when a test is clicked', async () => {
       // Arrange
-      const testDot = sut.$<SVGElement>('.test-dot[test-id="1"]');
+      const testDot = sut.$<SVGElement>('.test-dot[data-test-id="1"]');
       const expectedTest = sut.element.model!.tests.find((test) => test.id === '1');
 
       // Act
@@ -259,7 +259,7 @@ describe(TestFileComponent.name, () => {
 
     it('should emit a test deselected event when a test is clicked', async () => {
       // Arrange
-      const testDot = sut.$<SVGElement>('.test-dot[test-id="1"]');
+      const testDot = sut.$<SVGElement>('.test-dot[data-test-id="1"]');
       const expectedTest = sut.element.model!.tests.find((test) => test.id === '1');
       testDot.dispatchEvent(new Event('click', { bubbles: true }));
       await sut.whenStable();
@@ -281,7 +281,7 @@ describe(TestFileComponent.name, () => {
       await sut.whenStable();
 
       // Assert
-      const test = sut.$<SVGElement>('.test-dot[test-id="1"]');
+      const test = sut.$<SVGElement>('.test-dot[data-test-id="1"]');
       expect([...test.classList]).contains('selected');
     });
     it('should select the last test on "Previous"', async () => {
@@ -290,7 +290,7 @@ describe(TestFileComponent.name, () => {
       await sut.whenStable();
 
       // Assert
-      const test = sut.$<SVGElement>('.test-dot[test-id="2"]');
+      const test = sut.$<SVGElement>('.test-dot[data-test-id="2"]');
       expect([...test.classList]).contains('selected');
     });
     it('should select the second test when the first test was selected test on "Next"', async () => {
@@ -302,7 +302,7 @@ describe(TestFileComponent.name, () => {
       await sut.whenStable();
 
       // Assert
-      const test = sut.$<SVGElement>('.test-dot[test-id="2"]');
+      const test = sut.$<SVGElement>('.test-dot[data-test-id="2"]');
       expect([...test.classList]).contains('selected');
     });
     it('should select the first test when the second test was selected test on "Previous"', async () => {
@@ -314,7 +314,7 @@ describe(TestFileComponent.name, () => {
       await sut.whenStable();
 
       // Assert
-      const test = sut.$<SVGElement>('.test-dot[test-id="1"]');
+      const test = sut.$<SVGElement>('.test-dot[data-test-id="1"]');
       expect([...test.classList]).contains('selected');
     });
 
@@ -344,7 +344,7 @@ describe(TestFileComponent.name, () => {
       expect(sut.$<SVGElement>('.test-dot.selected')).null;
     });
     async function selectTest(testId: string) {
-      sut.$<SVGElement>(`.test-dot[test-id="${testId}"]`).dispatchEvent(new Event('click', { bubbles: true }));
+      sut.$<SVGElement>(`.test-dot[data-test-id="${testId}"]`).dispatchEvent(new Event('click', { bubbles: true }));
       await sut.whenStable();
     }
   });
@@ -369,15 +369,15 @@ describe(TestFileComponent.name, () => {
     });
 
     it('should render the tests in a list', () => {
-      const tests = sut.$$('li [test-id]');
+      const tests = sut.$$('li [data-test-id]');
       expect(tests).lengthOf(2);
-      expect(tests.map((test) => test.getAttribute('test-id'))).deep.eq(['1', '2']);
+      expect(tests.map((test) => test.getAttribute('data-test-id'))).deep.eq(['1', '2']);
       expect(tests.map((test) => test.innerText)).deep.eq(['✅ should foo into bar [Killing]', '🌧 should baz into qux [NotCovering]']);
     });
 
     it('should select a test on click', async () => {
       // Arrange
-      const testButton = sut.$(`li [test-id="1"]`);
+      const testButton = sut.$(`li [data-test-id="1"]`);
       const expectedTest = sut.element.model!.tests.find((test) => test.id === '1');
 
       // Act
@@ -410,12 +410,12 @@ describe(TestFileComponent.name, () => {
     });
 
     async function selectTest(testId: string) {
-      sut.$(`li [test-id="${testId}"]`).click();
+      sut.$(`li [data-test-id="${testId}"]`).click();
       await sut.whenStable();
     }
 
     function isSelected(testId: string) {
-      return Boolean(sut.$(`li [test-id="${testId}"][data-active=true]`));
+      return Boolean(sut.$(`li [data-test-id="${testId}"][data-active=true]`));
     }
   });
 });

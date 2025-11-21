@@ -2,12 +2,15 @@ import { PageObject } from './PageObject.po.js';
 
 export class RealTimeProgressBar extends PageObject {
   public async smallProgressBarVisible() {
-    const smallProgressBar = this.$('div.pointer-events-none');
-    return (await smallProgressBar.evaluate((el) => getComputedStyle(el).opacity)) === '1';
+    return this.smallProgressBar.evaluate((el) => getComputedStyle(el).opacity === '1');
   }
 
   get progressBar() {
-    return this.$('div.my-4');
+    return this.$('div[data-test-id="progress-bar"]');
+  }
+
+  get smallProgressBar() {
+    return this.$('div[data-test-id="small-progress-bar"]');
   }
 
   public async progressBarWidth() {

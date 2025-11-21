@@ -16,11 +16,11 @@ export class TestView extends View {
   }
 
   public async testListItems(): Promise<TestListItem[]> {
-    return (await this.$$('mte-test-file >> button[test-id]')).map((host) => new TestListItem(host, this.browser));
+    return (await this.$$('mte-test-file >> button[data-test-id]')).map((host) => new TestListItem(host, this.browser));
   }
 
   public testDot(testId: number | string) {
-    const el = this.$(`mte-test-file >> svg.test-dot[test-id="${testId}"]`);
+    const el = this.$(`mte-test-file >> svg.test-dot[data-test-id="${testId}"]`);
     return new TestDot(el, this.browser);
   }
 

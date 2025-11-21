@@ -17,14 +17,14 @@ export class MutantView extends View {
   }
 
   public mutantDot(mutantId: number | string) {
-    return new MutantDot(this.$(`mte-file >> svg.mutant-dot[mutant-id="${mutantId}"]`).first(), this.browser);
+    return new MutantDot(this.$(`mte-file >> svg.mutant-dot[data-mutant-id="${mutantId}"]`).first(), this.browser);
   }
 
   public mutantMarker(mutantId: number | string) {
-    return new MutantMarker(this.$(`mte-file >> span.mutant[mutant-id="${mutantId}"]`).first(), this.browser);
+    return new MutantMarker(this.$(`mte-file >> span.mutant[data-mutant-id="${mutantId}"]`).first(), this.browser);
   }
   public async mutantMarkers() {
-    const spans = await this.$$(`mte-file >> span.mutant[mutant-id]`);
+    const spans = await this.$$(`mte-file >> span.mutant[data-mutant-id]`);
     return spans.map((span) => new MutantMarker(span, this.browser));
   }
 

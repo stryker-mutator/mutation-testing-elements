@@ -32,8 +32,14 @@ export class MutationTestReportFilePickerComponent extends BaseElement {
   @state()
   declare public fileIndex: number;
 
-  @query('dialog')
+  @query('dialog', true)
   declare private dialog: HTMLDialogElement;
+
+  @query('#file-picker-input', true)
+  declare private filePickerInput: HTMLInputElement;
+
+  @query('[aria-selected="true"] a')
+  declare private activeLink: HTMLAnchorElement | null;
 
   get isOpen() {
     return this.dialog.open;
@@ -67,6 +73,12 @@ export class MutationTestReportFilePickerComponent extends BaseElement {
     }
   }
 
+  public updated(changedProperties: PropertyValues<this>) {
+    if (changedProperties.has('fileIndex') || changedProperties.has('filteredFiles')) {
+      this.#scrollActiveLinkInView();
+    }
+  }
+
   open = () => {
     this.dialog.showModal();
   };
@@ -79,8 +91,7 @@ export class MutationTestReportFilePickerComponent extends BaseElement {
     return html`
       <dialog
         @click="${this.close}"
-        @close="${this.#handleClose}"
-        @show="${this.#handleShow}"
+        @toggle="${this.#handleToggle}"
         aria-labelledby="file-picker-label"
         class="mx-auto my-4 max-w-160 bg-transparent backdrop:bg-gray-950/50 backdrop:backdrop-blur-lg md:w-1/2"
       >
@@ -195,20 +206,13 @@ export class MutationTestReportFilePickerComponent extends BaseElement {
       this.#handleArrowDown();
     }
 
-    if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-      void this.updateComplete.then(() => {
-        this.#scrollActiveLinkInView();
-      });
-    }
-
     if (event.key === 'Enter') {
       this.#handleEnter();
     }
   };
 
   #scrollActiveLinkInView() {
-    const activeLink = this.renderRoot.querySelector('[aria-selected="true"] a');
-    activeLink?.scrollIntoView({ block: 'nearest' });
+    this.activeLink?.scrollIntoView({ block: 'nearest' });
   }
 
   #handleArrowDown() {
@@ -250,14 +254,16 @@ export class MutationTestReportFilePickerComponent extends BaseElement {
     }
   };
 
-  #handleClose = () => {
-    this.fileIndex = 0;
-    this.#filter('');
-    document.body.style.overflow = this.#originalDocumentOverflow;
-  };
-
-  #handleShow = () => {
-    document.body.style.overflow = 'hidden';
+  #handleToggle = (e: ToggleEvent) => {
+    if (e.newState === 'closed') {
+      this.#filter('');
+      this.filePickerInput.value = '';
+      document.body.style.overflow = this.#originalDocumentOverflow;
+    } else if (e.newState === 'open') {
+      document.body.style.overflow = 'hidden';
+    } else {
+      console.warn('Unknown toggle state in file-picker:', e.newState);
+    }
   };
 
   #handleSearch = (event: InputEvent) => {
@@ -266,7 +272,6 @@ export class MutationTestReportFilePickerComponent extends BaseElement {
     }
 
     this.#filter((event.target as HTMLInputElement).value);
-    this.fileIndex = 0;
   };
 
   #filter(filterKey: string) {
@@ -281,6 +286,7 @@ export class MutationTestReportFilePickerComponent extends BaseElement {
         ),
       }));
     }
+    this.fileIndex = 0;
   }
 
   #getView(file: FileUnderTestModel | TestFileModel): View {

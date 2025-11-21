@@ -1,6 +1,7 @@
 import { IntersectionController } from '@lit-labs/observers/intersection-controller.js';
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { repeat } from 'lit/directives/repeat.js';
 
 import { BaseElement } from '../base-element.js';
 
@@ -53,35 +54,39 @@ export class ResultStatusBar extends BaseElement {
   public render() {
     return html`
       ${this.#renderSmallParts()}
-      <div class="my-4 rounded-md border border-gray-200 bg-white transition-all">
-        <div class="parts flex h-8 w-full overflow-hidden rounded-sm bg-gray-200">${this.#renderParts()}</div>
+      <div data-test-id="progress-bar" class="my-4 rounded-md bg-white transition-all">
+        <div class="parts flex h-8 w-full overflow-hidden rounded-sm bg-gray-200">${this.#renderParts(false)}</div>
       </div>
     `;
   }
 
   #renderSmallParts() {
     return html`<div
+      data-test-id="small-progress-bar"
       class="${this.#shouldBeSmallController.value
         ? 'opacity-100'
         : 'opacity-0'} pointer-events-none fixed top-offset left-0 z-20 flex w-full justify-center transition-all"
     >
       <div class="container w-full bg-white py-2">
-        <div class="flex h-2 overflow-hidden rounded-sm bg-gray-200">${this.#getMetrics().map((metric) => this.#renderPart(metric, true))}</div>
+        <div class="flex h-2 overflow-hidden rounded-sm bg-gray-200">${this.#renderParts(true)}</div>
       </div>
     </div>`;
   }
 
-  #renderParts() {
-    return this.#getMetrics().map((metric) => this.#renderPart(metric, false));
-  }
-
-  #renderPart(metric: ProgressMetric, shouldBeSmall: boolean) {
-    return html`<div
-      title="${shouldBeSmall ? nothing : metric.tooltip}"
-      style="width: ${this.#calculatePercentage(metric.amount)}%"
-      class="${this.#colorFromMetric(metric.type)} ${metric.amount === 0 ? 'opacity-0' : 'opacity-100'} relative flex items-center overflow-hidden"
-      >${shouldBeSmall ? nothing : html`<span class="ms-3 font-bold text-gray-800">${metric.amount}</span>`}
-    </div>`;
+  #renderParts(shouldBeSmall: boolean) {
+    return repeat(
+      this.#getMetrics(),
+      (metric) => metric.type,
+      (metric) =>
+        html`<div
+          title="${shouldBeSmall ? nothing : metric.tooltip}"
+          style="width: ${this.#calculatePercentage(metric.amount)}%"
+          class="${this.#colorFromMetric(metric.type)} ${metric.amount === 0
+            ? 'opacity-0'
+            : 'opacity-100'} relative flex items-center overflow-hidden transition-width"
+          >${shouldBeSmall ? nothing : html`<span class="ms-3 font-bold text-gray-800">${metric.amount}</span>`}
+        </div>`,
+    );
   }
 
   #getMetrics(): ProgressMetric[] {

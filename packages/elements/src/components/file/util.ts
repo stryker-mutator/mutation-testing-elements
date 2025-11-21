@@ -2,7 +2,7 @@ import type { TemplateResult } from 'lit';
 import { html, nothing, svg } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
-export function renderDots(dots: typeof nothing | TemplateResult[], finalDots: typeof nothing | TemplateResult[]) {
+export function renderDots(dots: typeof nothing | TemplateResult, finalDots: typeof nothing | TemplateResult) {
   if (dots === nothing && finalDots === nothing) {
     return nothing;
   } else {
@@ -24,7 +24,7 @@ const triangleSvgPath = 'M 0,0 C 0,0 10,0 10,0 10,0 5,10 5,10 5,10 0,0 0,0 Z';
 const animationCurve = '0.4 0 0.2 1';
 
 const pathF = (from: string, to: string, strokeOpacity: number) =>
-  svg`<path stroke-opacity="${strokeOpacity}" class="transition-stroke-opacity stroke-gray-800" d="${to}">
+  svg`<path stroke-opacity="${strokeOpacity}" class="stroke-gray-800 transition-stroke-opacity" d="${to}">
     <animate values="${from};${to}" attributeName="d" dur="0.2s" begin="indefinite" calcMode="spline" keySplines="${animationCurve}" />
   </path>`;
 
