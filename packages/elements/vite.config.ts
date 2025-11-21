@@ -119,11 +119,8 @@ function realTimeResponderPlugin(): Plugin {
     name: 'real-time-responder',
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
-        if (req.url === '/testResources/realtime-reporting-example/sse') {
-          realTimeResponder.add(res);
-        } else {
-          next();
-        }
+        if (req.url === '/testResources/realtime-reporting-example/sse') realTimeResponder.add(res);
+        else next();
       });
     },
   };

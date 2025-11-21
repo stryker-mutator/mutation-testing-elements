@@ -30,7 +30,7 @@ jobs:
         run: echo "affected=$(npx nx show projects --affected --json)" >> "$GITHUB_OUTPUT"
       - name: Install Playwright Browsers
         if: ${{ contains(fromJson(steps.affected.outputs.affected), 'elements') }}
-        run: npx playwright install chromium firefox --with-deps
+        run: npm run install-browsers
       - name: Lint & Build & Test
         run: npm run all
       - name: Bundlemon
@@ -48,8 +48,8 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: ./.github/setup
-      - name: Install Playwright Browsers
-        run: npx playwright install chromium --with-deps
+        with:
+          setup-playwright: true
       - run: npm run download-incremental-reports
       - name: Run Stryker incrementally
         run: |
