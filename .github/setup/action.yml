@@ -10,6 +10,10 @@ inputs:
     description: 'Whether to set up Java'
     default: 'false'
     required: false
+  setup-playwright:
+    description: 'Whether to install Playwright browsers'
+    default: 'false'
+    required: false
 runs:
   using: 'composite'
   steps:
@@ -39,3 +43,7 @@ runs:
           ${{ runner.os }}-nx-
     - run: npm ci
       shell: bash
+    - name: Install Playwright Browsers
+      if: ${{ inputs.setup-playwright == 'true' }}
+      shell: bash
+      run: npm run install-browsers

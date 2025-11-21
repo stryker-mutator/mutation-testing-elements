@@ -22,7 +22,8 @@
     "lerna:version:minor": "lerna version minor",
     "lerna:version:major": "lerna version major",
     "lerna:publish": "lerna publish from-git --yes --no-verify-access",
-    "generate": "nx run report-schema:generate"
+    "generate": "nx run report-schema:generate",
+    "install-browsers": "playwright install chromium firefox"
   },
   "repository": {
     "type": "git",

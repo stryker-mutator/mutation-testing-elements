@@ -23,8 +23,8 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: ./.github/setup
-      - name: Install Playwright Browsers
-        run: npx playwright install chromium --with-deps
+        with:
+          setup-playwright: true
       - name: Run Stryker
         run: npx nx run elements:stryker
         env:
