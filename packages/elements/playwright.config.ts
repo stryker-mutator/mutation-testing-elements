@@ -31,9 +31,22 @@ export default defineConfig({
   },
   /* Configure projects for major browsers */
   projects: [
-    { name: 'chromium', use: { ...devices['Desktop Chrome'], viewport: { width: 1400, height: 1000 } } },
+    {
+      name: 'chromium',
+      use: {
+        ...devices['Desktop Chrome'],
+        viewport: { width: 1400, height: 1000 },
+        contextOptions: { reducedMotion: 'reduce' },
+      },
+    },
 
-    { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
+    {
+      name: 'firefox',
+      use: {
+        ...devices['Desktop Firefox'],
+        contextOptions: { reducedMotion: 'reduce' },
+      },
+    },
 
     // {
     //   name: 'webkit',

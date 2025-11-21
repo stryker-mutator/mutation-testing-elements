@@ -81,7 +81,7 @@ export default defineConfig(
         include: ['test/unit/**/*.spec.ts'],
         browser: {
           enabled: true,
-          provider: playwright({}),
+          provider: playwright({ contextOptions: { reducedMotion: 'reduce' } }),
           headless: Boolean(process.env.CI || process.env.HEADLESS),
           instances: [
             {

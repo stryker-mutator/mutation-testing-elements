@@ -83,7 +83,7 @@ export class ResultStatusBar extends BaseElement {
           style="width: ${this.#calculatePercentage(metric.amount)}%"
           class="${this.#colorFromMetric(metric.type)} ${metric.amount === 0
             ? 'opacity-0'
-            : 'opacity-100'} relative flex items-center overflow-hidden transition-width"
+            : 'opacity-100'} relative flex items-center overflow-hidden motion-safe:transition-width"
           >${shouldBeSmall ? nothing : html`<span class="ms-3 font-bold text-gray-800">${metric.amount}</span>`}
         </div>`,
     );

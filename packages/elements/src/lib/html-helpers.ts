@@ -121,7 +121,10 @@ export function describeLocation({ fileName, location }: { fileName: string; loc
 
 export function scrollToCodeFragmentIfNeeded(el: Element | null) {
   if (el && !isElementInViewport(el)) {
-    el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    el.scrollIntoView({
+      block: 'center',
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+    });
   }
 }
 
