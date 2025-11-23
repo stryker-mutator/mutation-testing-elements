@@ -35,9 +35,9 @@
   },
   "homepage": "https://github.com/stryker-mutator/mutation-testing-elements#readme",
   "devDependencies": {
-    "@stryker-mutator/core": "9.3.0",
-    "@stryker-mutator/mocha-runner": "9.3.0",
-    "@stryker-mutator/typescript-checker": "9.3.0",
+    "@stryker-mutator/core": "9.4.0",
+    "@stryker-mutator/mocha-runner": "9.4.0",
+    "@stryker-mutator/typescript-checker": "9.4.0",
     "@tsconfig/node-lts": "24.0.0",
     "@tsconfig/recommended": "1.0.13",
     "@tsconfig/strictest": "2.0.8",
