@@ -83,7 +83,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
             >
           </div>
         </th>
-        ${mutationScoreColumns.length > 0 ? html`<th colspan="4" class="px-2 even:bg-gray-100">Mutation Score</th>` : ``}
+        ${mutationScoreColumns.length > 0 ? html`<th colspan="4" class="px-2 even:bg-gray-100">Mutation Score</th>` : ''}
         ${repeat(
           nonMutationScoreColumns,
           (column) => column.key,
@@ -106,7 +106,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
       ? html`<mte-tooltip title="${column.tooltip}" id="${id}">${column.label}</mte-tooltip>`
       : html`<span id="${id}">${column.label}</span>`;
     if (column.group) {
-      return html` <th colspan="2" class="bg-gray-200 px-2"> ${header} </th>`;
+      return html`<th colspan="2" class="bg-gray-200 px-2"> ${header} </th>`;
     }
     return html`<th rowspan="2" class="w-24 px-2 even:bg-gray-100 2xl:w-28">
       <div class="inline-block">${header}</div>
@@ -171,7 +171,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
                   style="${progressBarStyle}"
                 ></div>
               </div>`
-            : html` <span class="text-light-muted font-bold">N/A</span> `}
+            : html`<span class="text-light-muted font-bold">N/A</span>`}
         </td>
         <td class="${textColoringClass} ${backgroundColoringClass} w-12 pr-2 text-center font-bold group-hover:bg-gray-200!"
           >${valueIsPresent ? html`<span class="transition-colors">${mutationScoreRounded}</span>` : nothing}</td

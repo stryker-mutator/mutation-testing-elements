@@ -48,14 +48,12 @@ export class MutationTestReportMutantViewComponent extends RealTimeElement {
   }
 
   public render() {
-    return html`
-      <main class="pb-drawer-half-open" @click="${this.#handleClick}">
+    return html`<main class="pb-drawer-half-open" @click="${this.#handleClick}">
         <mte-metrics-table .columns="${COLUMNS}" .currentPath="${this.path}" .thresholds="${this.thresholds}" .model="${this.result}">
         </mte-metrics-table>
         ${this.result.file ? html`<mte-file @mutant-selected="${this.#handleMutantSelected}" .model="${this.result.file}"></mte-file>` : nothing}
       </main>
-      <mte-drawer-mutant mode="${this.drawerMode}" .mutant="${this.selectedMutant}"></mte-drawer-mutant>
-    `;
+      <mte-drawer-mutant mode="${this.drawerMode}" .mutant="${this.selectedMutant}"></mte-drawer-mutant>`;
   }
 }
 

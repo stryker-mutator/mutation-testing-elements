@@ -19,11 +19,9 @@ export class MutationTestReportThemeSwitchComponent extends BaseElement {
   public static override styles = [tailwind, unsafeCSS(style)];
 
   public render() {
-    return html`
-      <div class="check-box-container" @click="${(event: Event) => event.stopPropagation()}">
-        <input type="checkbox" @click="${this.#dispatchThemeChangedEvent}" ?checked="${this.theme === 'dark'}" id="darkTheme" />
-        <label for="darkTheme">Dark</label>
-      </div>
-    `;
+    return html`<div class="check-box-container" @click="${(event: Event) => event.stopPropagation()}">
+      <input type="checkbox" @click="${this.#dispatchThemeChangedEvent}" ?checked="${this.theme === 'dark'}" id="darkTheme" />
+      <label for="darkTheme">Dark</label>
+    </div>`;
   }
 }

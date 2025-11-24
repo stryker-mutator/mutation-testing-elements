@@ -32,7 +32,7 @@ export class MutationTestReportBreadcrumbComponent extends BaseElement {
         ${this.#renderBreadcrumbItems()}
       </ol>
       ${this.#renderSearchIcon()}
-    </nav> `;
+    </nav>`;
   }
 
   #renderBreadcrumbItems() {
@@ -56,7 +56,7 @@ export class MutationTestReportBreadcrumbComponent extends BaseElement {
   #renderActiveItem(title: string) {
     return html`<li aria-current="page">
       <span class="ml-1 text-sm font-medium text-gray-800 md:ml-2">${title}</span>
-    </li> `;
+    </li>`;
   }
 
   #renderLink(title: string, path: string[]) {
@@ -70,11 +70,9 @@ export class MutationTestReportBreadcrumbComponent extends BaseElement {
   }
 
   #renderSearchIcon() {
-    return html`
-      <button @click="${() => this.#dispatchFilePickerOpenEvent()}" class="ml-auto cursor-pointer" title="Open file picker (Ctrl-K)"
-        >${searchIcon}</button
-      >
-    `;
+    return html`<button @click="${() => this.#dispatchFilePickerOpenEvent()}" class="ml-auto cursor-pointer" title="Open file picker (Ctrl-K)"
+      >${searchIcon}</button
+    >`;
   }
 
   #dispatchFilePickerOpenEvent() {

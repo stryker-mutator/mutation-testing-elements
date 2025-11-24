@@ -343,21 +343,16 @@ export class MutationTestReportAppComponent extends RealTimeElement {
 
   #renderTitle() {
     if (this.context.result) {
-      return html`
-        <h1 class="mt-4 text-5xl font-bold tracking-tight">
-          ${this.context.result.name}${this.titlePostfix
-            ? html`<small class="text-light-muted ml-4 font-light">${this.titlePostfix}</small>`
-            : nothing}
-        </h1>
-      `;
+      return html`<h1 class="mt-4 text-5xl font-bold tracking-tight">
+        ${this.context.result.name}${this.titlePostfix ? html`<small class="text-light-muted ml-4 font-light">${this.titlePostfix}</small>` : nothing}
+      </h1>`;
     }
     return nothing;
   }
 
   public render() {
     if (this.context.result ?? this.errorMessage) {
-      return html`
-        <mte-file-picker .rootModel="${this.rootModel}"></mte-file-picker>
+      return html`<mte-file-picker .rootModel="${this.rootModel}"></mte-file-picker>
         <div class="container space-y-4 bg-white pb-4 font-sans text-gray-800 transition-colors motion-safe:transition-max-width">
           ${this.#renderErrorMessage()}
           <mte-theme-switch @theme-switch="${this.themeSwitch}" class="sticky top-offset z-20 float-right mb-0 pt-7" .theme="${this.theme}">
@@ -386,8 +381,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
           ${this.context.view === 'test' && this.context.result
             ? html`<mte-test-view id="mte-test-view" .result="${this.context.result}" .path="${this.path}"></mte-test-view>`
             : nothing}
-        </div>
-      `;
+        </div>`;
     } else {
       return nothing;
     }
@@ -406,28 +400,26 @@ export class MutationTestReportAppComponent extends RealTimeElement {
       const mutantsActive = this.context.view === 'mutant';
       const testsActive = this.context.view === 'test';
 
-      return html`
-        <nav class="border-b border-gray-200 text-center text-sm font-medium text-gray-600">
-          <ul class="-mb-px flex flex-wrap" role="tablist">
-            ${[
-              { type: 'mutant', isActive: mutantsActive, text: '👽 Mutants' },
-              { type: 'test', isActive: testsActive, text: '🧪 Tests' },
-            ].map(
-              ({ type, isActive, text }) =>
-                html`<li class="mr-2" role="presentation">
-                  <a
-                    class="inline-block rounded-t-lg border-b-2 border-transparent p-4 transition-colors hover:border-gray-300 hover:bg-gray-200 hover:text-gray-700 aria-selected:border-b-[3px] aria-selected:border-solid aria-selected:border-primary-700 aria-selected:text-primary-on"
-                    role="tab"
-                    href="${toAbsoluteUrl(type)}"
-                    aria-selected="${isActive}"
-                    aria-controls="mte-${type}-view"
-                    >${text}</a
-                  >
-                </li>`,
-            )}
-          </ul>
-        </nav>
-      `;
+      return html`<nav class="border-b border-gray-200 text-center text-sm font-medium text-gray-600">
+        <ul class="-mb-px flex flex-wrap" role="tablist">
+          ${[
+            { type: 'mutant', isActive: mutantsActive, text: '👽 Mutants' },
+            { type: 'test', isActive: testsActive, text: '🧪 Tests' },
+          ].map(
+            ({ type, isActive, text }) =>
+              html`<li class="mr-2" role="presentation">
+                <a
+                  class="inline-block rounded-t-lg border-b-2 border-transparent p-4 transition-colors hover:border-gray-300 hover:bg-gray-200 hover:text-gray-700 aria-selected:border-b-[3px] aria-selected:border-solid aria-selected:border-primary-700 aria-selected:text-primary-on"
+                  role="tab"
+                  href="${toAbsoluteUrl(type)}"
+                  aria-selected="${isActive}"
+                  aria-controls="mte-${type}-view"
+                  >${text}</a
+                >
+              </li>`,
+          )}
+        </ul>
+      </nav>`;
     } else {
       return nothing;
     }

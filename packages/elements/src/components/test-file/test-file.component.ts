@@ -107,15 +107,13 @@ export class TestFileComponent extends RealTimeElement {
   }
 
   public render() {
-    return html`
-      <mte-state-filter
+    return html`<mte-state-filter
         @next=${this.#nextTest}
         @previous=${this.#previousTest}
         .filters="${this.filters}"
         @filters-changed="${this.#filtersChanged}"
       ></mte-state-filter>
-      ${this.#renderTestList()} ${this.#renderCode()}
-    `;
+      ${this.#renderTestList()} ${this.#renderCode()}`;
   }
 
   #renderTestList() {

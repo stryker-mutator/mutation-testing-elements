@@ -51,44 +51,41 @@ export class FileStateFilterComponent<TStatus extends string> extends RealTimeEl
   };
 
   public render() {
-    return html`
-      <div class="sticky top-offset z-10 mb-1 flex flex-row gap-5 bg-white py-6 pt-7">
-        <div class="flex items-center gap-2">
-          ${this.#renderStepButton(this.#previous, arrowLeft, 'Previous', 'Select previous mutant')}
-          ${this.#renderStepButton(this.#next, arrowRight, 'Next', 'Select next mutant')}
-        </div>
-
-        ${renderIf(
-          this.filters?.length,
-          repeat(
-            this.filters!,
-            // Key function. I super duper want that all properties are weighed here,
-            // see https://lit-html.polymer-project.org/guide/writing-templates#repeating-templates-with-the-repeat-directive
-            (filter) => filter.status,
-            (filter) => html`
-              <div class="flex items-center gap-2 last:mr-12" data-status="${filter.status.toString()}">
-                <input
-                  ?checked="${filter.enabled}"
-                  id="filter-${filter.status}"
-                  aria-describedby="status-description"
-                  type="checkbox"
-                  .value="${filter.status.toString()}"
-                  @input="${(el: Event) => this.#checkboxChanged(filter, (el.target as HTMLInputElement).checked)}"
-                  class="h-5 w-5 shrink-0 rounded-sm bg-gray-100 ring-offset-gray-200! transition-colors checked:bg-primary-600 focus:ring-2 focus:ring-primary-500 focus:outline-hidden"
-                />
-
-                <label
-                  for="filter-${filter.status}"
-                  class="${this.#bgForContext(filter.context)} rounded-md px-2.5 py-0.5 text-sm font-medium hover:cursor-pointer"
-                >
-                  ${filter.label} (${filter.count})
-                </label>
-              </div>
-            `,
-          ) as TemplateResult,
-        )}
+    return html`<div class="sticky top-offset z-10 mb-1 flex flex-row gap-5 bg-white py-6 pt-7">
+      <div class="flex items-center gap-2">
+        ${this.#renderStepButton(this.#previous, arrowLeft, 'Previous', 'Select previous mutant')}
+        ${this.#renderStepButton(this.#next, arrowRight, 'Next', 'Select next mutant')}
       </div>
-    `;
+
+      ${renderIf(
+        this.filters?.length,
+        repeat(
+          this.filters!,
+          // Key function. I super duper want that all properties are weighed here,
+          // see https://lit-html.polymer-project.org/guide/writing-templates#repeating-templates-with-the-repeat-directive
+          (filter) => filter.status,
+          (filter) =>
+            html`<div class="flex items-center gap-2 last:mr-12" data-status="${filter.status.toString()}">
+              <input
+                ?checked="${filter.enabled}"
+                id="filter-${filter.status}"
+                aria-describedby="status-description"
+                type="checkbox"
+                .value="${filter.status.toString()}"
+                @input="${(el: Event) => this.#checkboxChanged(filter, (el.target as HTMLInputElement).checked)}"
+                class="h-5 w-5 shrink-0 rounded-sm bg-gray-100 ring-offset-gray-200! transition-colors checked:bg-primary-600 focus:ring-2 focus:ring-primary-500 focus:outline-hidden"
+              />
+
+              <label
+                for="filter-${filter.status}"
+                class="${this.#bgForContext(filter.context)} rounded-md px-2.5 py-0.5 text-sm font-medium hover:cursor-pointer"
+              >
+                ${filter.label} (${filter.count})
+              </label>
+            </div>`,
+        ) as TemplateResult,
+      )}
+    </div>`;
   }
 
   #renderStepButton(handleClick: (ev: Event) => void, icon: SVGTemplateResult, title: string, srText: string) {

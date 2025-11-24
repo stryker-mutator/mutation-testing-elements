@@ -127,7 +127,7 @@ export class FileComponent extends RealTimeElement {
         return renderLine(line, renderDots(mutantDots, this.lines.length === lineNr ? finalMutants : nothing));
       })}</table>
           </code>
-          </pre> `;
+          </pre>`;
   }
 
   #nextMutant = () => {

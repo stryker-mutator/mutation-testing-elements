@@ -31,14 +31,13 @@ export class MutationTestReportDrawerTestComponent extends RealTimeElement {
       { hasDetail: Boolean(this.test?.killedMutants?.length || this.test?.coveredMutants?.length), mode: this.mode },
       renderIfPresent(
         this.test,
-        (test) => html`
-          <span class="align-middle text-lg" slot="header"
-            >${getEmojiForTestStatus(test.status)} ${test.name} [${test.status}]
-            ${test.location ? html`(${test.location.start.line}:${test.location.start.column})` : nothing}</span
-          >
-          <span slot="summary">${this.#renderSummary()}</span>
-          <span class="block" slot="detail">${this.#renderDetail()}</span>
-        `,
+        (test) =>
+          html`<span class="align-middle text-lg" slot="header"
+              >${getEmojiForTestStatus(test.status)} ${test.name} [${test.status}]
+              ${test.location ? html`(${test.location.start.line}:${test.location.start.column})` : nothing}</span
+            >
+            <span slot="summary">${this.#renderSummary()}</span>
+            <span class="block" slot="detail">${this.#renderDetail()}</span>`,
       ),
     );
   }

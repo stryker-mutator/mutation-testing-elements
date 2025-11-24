@@ -52,12 +52,10 @@ export class ResultStatusBar extends BaseElement {
   }
 
   public render() {
-    return html`
-      ${this.#renderSmallParts()}
+    return html`${this.#renderSmallParts()}
       <div data-test-id="progress-bar" class="my-4 rounded-md bg-white transition-all">
         <div class="parts flex h-8 w-full overflow-hidden rounded-sm bg-gray-200">${this.#renderParts(false)}</div>
-      </div>
-    `;
+      </div>`;
   }
 
   #renderSmallParts() {
