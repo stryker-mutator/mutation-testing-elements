@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.7.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.7.0...v3.7.1) (2025-11-24)
+
+
+### Bug Fixes
+
+* **metrics:** compatibility with Node 20 ([#3994](https://github.com/stryker-mutator/mutation-testing-elements/issues/3994)) ([d73703c](https://github.com/stryker-mutator/mutation-testing-elements/commit/d73703cfe7676047b45b75ad2fb457d508abd859))
+
+
+
+
+
 # [3.7.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.6.0...v3.7.0) (2025-11-21)
 
 
