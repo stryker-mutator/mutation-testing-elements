@@ -67,14 +67,14 @@ export class TestFileComponent extends RealTimeElement {
     }
   };
 
-  private readonly filtersChanged = (event: MteCustomEvent<'filters-changed'>) => {
+  readonly #filtersChanged = (event: MteCustomEvent<'filters-changed'>) => {
     this.enabledStates = event.detail as TestStatus[];
     if (this.selectedTest && !this.enabledStates.includes(this.selectedTest.status)) {
-      this.toggleTest(this.selectedTest);
+      this.#toggleTest(this.selectedTest);
     }
   };
 
-  private toggleTest(test: TestModel) {
+  #toggleTest(test: TestModel) {
     this.#animateTestToggle(test);
     if (this.selectedTest === test) {
       this.selectedTest = undefined;
@@ -89,36 +89,36 @@ export class TestFileComponent extends RealTimeElement {
     }
   }
 
-  private readonly nextTest = () => {
+  readonly #nextTest = () => {
     const index = this.selectedTest ? (this.tests.findIndex(({ id }) => id === this.selectedTest!.id) + 1) % this.tests.length : 0;
-    this.selectTest(this.tests[index]);
+    this.#selectTest(this.tests[index]);
   };
-  private readonly previousTest = () => {
+  readonly #previousTest = () => {
     const index = this.selectedTest
       ? (this.tests.findIndex(({ id }) => id === this.selectedTest!.id) + this.tests.length - 1) % this.tests.length
       : this.tests.length - 1;
-    this.selectTest(this.tests[index]);
+    this.#selectTest(this.tests[index]);
   };
 
-  private selectTest(test: TestModel | undefined) {
+  #selectTest(test: TestModel | undefined) {
     if (test) {
-      this.toggleTest(test);
+      this.#toggleTest(test);
     }
   }
 
   public render() {
     return html`
       <mte-state-filter
-        @next=${this.nextTest}
-        @previous=${this.previousTest}
+        @next=${this.#nextTest}
+        @previous=${this.#previousTest}
         .filters="${this.filters}"
-        @filters-changed="${this.filtersChanged}"
+        @filters-changed="${this.#filtersChanged}"
       ></mte-state-filter>
-      ${this.renderTestList()} ${this.renderCode()}
+      ${this.#renderTestList()} ${this.#renderCode()}
     `;
   }
 
-  private renderTestList() {
+  #renderTestList() {
     const testsToRenderInTheList = this.tests.filter((test) => !test.location);
     if (testsToRenderInTheList.length) {
       return html`<ul class="max-w-6xl">
@@ -134,7 +134,7 @@ export class TestFileComponent extends RealTimeElement {
                 data-test-id="${test.id}"
                 @click=${(ev: MouseEvent) => {
                   ev.stopPropagation();
-                  this.toggleTest(test);
+                  this.#toggleTest(test);
                 }}
                 >${getEmojiForTestStatus(test.status)} ${test.name} [${test.status}]
               </button>
@@ -145,16 +145,17 @@ export class TestFileComponent extends RealTimeElement {
     return nothing;
   }
 
-  private renderCode() {
+  #renderCode() {
     if (this.model?.source) {
       const testsByLine = Map.groupBy(
         this.tests.filter((t) => isNotNullish(t.location)),
         (test) => test.location!.start.line,
       );
-
-      const renderFinalTests = (lastLine: number) => {
-        return this.renderTestDots([...testsByLine.entries()].filter(([line]) => line > lastLine).flatMap(([, tests]) => tests));
-      };
+      const finalTests = this.#renderTestDots(
+        Array.from(testsByLine.entries())
+          .filter(([line]) => line > this.lines.length)
+          .flatMap(([, tests]) => tests),
+      );
 
       return html`<pre
         id="report-code-block"
@@ -164,10 +165,9 @@ export class TestFileComponent extends RealTimeElement {
       <table>
         ${map(this.lines, (line, lineIndex) => {
         const lineNr = lineIndex + 1;
-        const testDots = this.renderTestDots(testsByLine.get(lineNr));
-        const finalTests = this.lines.length === lineNr ? renderFinalTests(lineNr) : nothing;
+        const testDots = this.#renderTestDots(testsByLine.get(lineNr));
 
-        return renderLine(line, renderDots(testDots, finalTests));
+        return renderLine(line, renderDots(testDots, this.lines.length === lineNr ? finalTests : nothing));
       })}</table></code></pre>`;
     }
     return nothing;
@@ -175,11 +175,11 @@ export class TestFileComponent extends RealTimeElement {
 
   #deselectTest = () => {
     if (this.selectedTest) {
-      this.toggleTest(this.selectedTest);
+      this.#toggleTest(this.selectedTest);
     }
   };
 
-  private renderTestDots(tests: TestModel[] | undefined) {
+  #renderTestDots(tests: TestModel[] | undefined) {
     return tests?.length
       ? (repeat(
           tests,
@@ -190,7 +190,7 @@ export class TestFileComponent extends RealTimeElement {
               class="test-dot ${this.selectedTest?.id === test.id ? 'selected' : ''} ${test.status} mx-0.5 cursor-pointer"
               @click=${(ev: MouseEvent) => {
                 ev.stopPropagation();
-                this.toggleTest(test);
+                this.#toggleTest(test);
               }}
               height="11"
               width="11"
@@ -204,12 +204,12 @@ export class TestFileComponent extends RealTimeElement {
 
   public override reactivate(): void {
     super.reactivate();
-    this.updateFileRepresentation();
+    this.#updateFileRepresentation();
   }
 
   override willUpdate(changes: PropertyValues<this>) {
     if (changes.has('model')) {
-      this.updateFileRepresentation();
+      this.#updateFileRepresentation();
     }
 
     if ((changes.has('model') || changes.has('enabledStates')) && this.model) {
@@ -226,7 +226,7 @@ export class TestFileComponent extends RealTimeElement {
     }
   }
 
-  private updateFileRepresentation() {
+  #updateFileRepresentation() {
     if (!this.model) {
       return;
     }

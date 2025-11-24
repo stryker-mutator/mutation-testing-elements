@@ -10,12 +10,12 @@ export class Drawer extends PageObject {
     return this.$('[slot="header"]');
   }
 
-  private get readMoreToggle() {
+  get #readMoreToggle() {
     return this.$('mte-drawer >> [data-testId="btnReadMoreToggle"]');
   }
 
   public toggleReadMore() {
-    return this.readMoreToggle.click();
+    return this.#readMoreToggle.click();
   }
 
   public details() {

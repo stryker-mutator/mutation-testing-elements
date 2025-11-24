@@ -23,16 +23,16 @@ export class FileStateFilterComponent<TStatus extends string> extends RealTimeEl
 
   public updated(changedProperties: PropertyValues<this>) {
     if (changedProperties.has('filters')) {
-      this.dispatchFiltersChangedEvent();
+      this.#dispatchFiltersChangedEvent();
     }
   }
 
-  private checkboxChanged(filter: StateFilter<TStatus>, enabled: boolean) {
+  #checkboxChanged(filter: StateFilter<TStatus>, enabled: boolean) {
     filter.enabled = enabled;
-    this.dispatchFiltersChangedEvent();
+    this.#dispatchFiltersChangedEvent();
   }
 
-  private dispatchFiltersChangedEvent() {
+  #dispatchFiltersChangedEvent() {
     this.dispatchEvent(
       createCustomEvent(
         'filters-changed',
@@ -41,11 +41,11 @@ export class FileStateFilterComponent<TStatus extends string> extends RealTimeEl
     );
   }
 
-  private readonly next = (ev: Event) => {
+  readonly #next = (ev: Event) => {
     ev.stopPropagation();
     this.dispatchEvent(createCustomEvent('next', undefined, { bubbles: true, composed: true }));
   };
-  private readonly previous = (ev: Event) => {
+  readonly #previous = (ev: Event) => {
     ev.stopPropagation();
     this.dispatchEvent(createCustomEvent('previous', undefined, { bubbles: true, composed: true }));
   };
@@ -54,8 +54,8 @@ export class FileStateFilterComponent<TStatus extends string> extends RealTimeEl
     return html`
       <div class="sticky top-offset z-10 mb-1 flex flex-row gap-5 bg-white py-6 pt-7">
         <div class="flex items-center gap-2">
-          ${this.#renderStepButton(this.previous, arrowLeft, 'Previous', 'Select previous mutant')}
-          ${this.#renderStepButton(this.next, arrowRight, 'Next', 'Select next mutant')}
+          ${this.#renderStepButton(this.#previous, arrowLeft, 'Previous', 'Select previous mutant')}
+          ${this.#renderStepButton(this.#next, arrowRight, 'Next', 'Select next mutant')}
         </div>
 
         ${renderIf(
@@ -73,13 +73,13 @@ export class FileStateFilterComponent<TStatus extends string> extends RealTimeEl
                   aria-describedby="status-description"
                   type="checkbox"
                   .value="${filter.status.toString()}"
-                  @input="${(el: Event) => this.checkboxChanged(filter, (el.target as HTMLInputElement).checked)}"
+                  @input="${(el: Event) => this.#checkboxChanged(filter, (el.target as HTMLInputElement).checked)}"
                   class="h-5 w-5 shrink-0 rounded-sm bg-gray-100 ring-offset-gray-200! transition-colors checked:bg-primary-600 focus:ring-2 focus:ring-primary-500 focus:outline-hidden"
                 />
 
                 <label
                   for="filter-${filter.status}"
-                  class="${this.bgForContext(filter.context)} rounded-md px-2.5 py-0.5 text-sm font-medium hover:cursor-pointer"
+                  class="${this.#bgForContext(filter.context)} rounded-md px-2.5 py-0.5 text-sm font-medium hover:cursor-pointer"
                 >
                   ${filter.label} (${filter.count})
                 </label>
@@ -102,7 +102,7 @@ export class FileStateFilterComponent<TStatus extends string> extends RealTimeEl
     </button>`;
   }
 
-  private bgForContext(context: string) {
+  #bgForContext(context: string) {
     switch (context) {
       case 'success':
         return 'bg-green-100 text-green-800';

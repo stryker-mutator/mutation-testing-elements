@@ -27,12 +27,12 @@ export class MutationTestReportTestViewComponent extends RealTimeElement {
     this.drawerMode = 'closed';
   }
 
-  private handleClick = () => {
+  #handleClick = () => {
     // Close the drawer if the user clicks anywhere in the report (that didn't handle the click already)
     this.drawerMode = 'closed';
   };
 
-  private handleTestSelected = (event: MteCustomEvent<'test-selected'>) => {
+  #handleTestSelected = (event: MteCustomEvent<'test-selected'>) => {
     this.selectedTest = event.detail.test;
     this.drawerMode = event.detail.selected ? 'half' : 'closed';
   };
@@ -45,9 +45,11 @@ export class MutationTestReportTestViewComponent extends RealTimeElement {
 
   public render() {
     return html`
-      <main class="pb-drawer-half-open" @click="${this.handleClick}">
+      <main class="pb-drawer-half-open" @click="${this.#handleClick}">
         <mte-metrics-table .columns="${COLUMNS}" .currentPath="${this.path}" .model="${this.result}"> </mte-metrics-table>
-        ${this.result.file ? html`<mte-test-file @test-selected="${this.handleTestSelected}" .model="${this.result.file}"></mte-test-file>` : nothing}
+        ${this.result.file
+          ? html`<mte-test-file @test-selected="${this.#handleTestSelected}" .model="${this.result.file}"></mte-test-file>`
+          : nothing}
       </main>
       <mte-drawer-test mode="${this.drawerMode}" .test="${this.selectedTest}"></mte-drawer-test>
     `;

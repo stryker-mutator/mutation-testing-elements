@@ -11,7 +11,7 @@ export class MutationTestReportThemeSwitchComponent extends BaseElement {
   @property()
   declare public theme: string | undefined;
 
-  private readonly dispatchThemeChangedEvent = (e: MouseEvent) => {
+  readonly #dispatchThemeChangedEvent = (e: MouseEvent) => {
     const checked = (e.target as HTMLInputElement).checked;
     this.dispatchEvent(createCustomEvent('theme-switch', checked ? 'dark' : 'light'));
   };
@@ -21,7 +21,7 @@ export class MutationTestReportThemeSwitchComponent extends BaseElement {
   public render() {
     return html`
       <div class="check-box-container" @click="${(event: Event) => event.stopPropagation()}">
-        <input type="checkbox" @click="${this.dispatchThemeChangedEvent}" ?checked="${this.theme === 'dark'}" id="darkTheme" />
+        <input type="checkbox" @click="${this.#dispatchThemeChangedEvent}" ?checked="${this.theme === 'dark'}" id="darkTheme" />
         <label for="darkTheme">Dark</label>
       </div>
     `;

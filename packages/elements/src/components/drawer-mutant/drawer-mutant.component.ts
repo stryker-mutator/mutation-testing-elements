@@ -41,14 +41,14 @@ export class MutationTestReportDrawerMutant extends RealTimeElement {
             >${getEmojiForStatus(mutant.status)} ${mutant.mutatorName} ${mutant.status}
             (${mutant.location.start.line}:${mutant.location.start.column})</span
           >
-          <span slot="summary">${this.renderSummary()}</span>
-          <span slot="detail" class="block">${this.renderDetail()}</span>
+          <span slot="summary">${this.#renderSummary()}</span>
+          <span slot="detail" class="block">${this.#renderDetail()}</span>
         `,
       ),
     );
   }
 
-  private renderSummary() {
+  #renderSummary() {
     return renderSummaryContainer(
       html`${this.mutant?.killedByTests?.[0]
         ? renderSummaryLine(
@@ -76,7 +76,7 @@ export class MutationTestReportDrawerMutant extends RealTimeElement {
     );
   }
 
-  private renderDetail() {
+  #renderDetail() {
     return html`<ul class="mr-2 mb-6">
       ${map(this.mutant?.killedByTests, (test) =>
         renderDetailLine('This mutant was killed by this test', html`${renderEmoji('🎯', 'killed')} ${describeTest(test)}`),
