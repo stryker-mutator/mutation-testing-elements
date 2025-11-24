@@ -38,6 +38,7 @@
     "@stryker-mutator/core": "9.4.0",
     "@stryker-mutator/mocha-runner": "9.4.0",
     "@stryker-mutator/typescript-checker": "9.4.0",
+    "@stryker-mutator/vitest-runner": "9.4.0",
     "@tsconfig/node-lts": "24.0.0",
     "@tsconfig/recommended": "1.0.13",
     "@tsconfig/strictest": "2.0.8",
@@ -45,6 +46,7 @@
     "@types/mocha": "10.0.10",
     "@types/node": "24.10.1",
     "@types/sinon": "21.0.0",
+    "@vitest/browser-playwright": "4.0.13",
     "chai": "6.2.1",
     "json-schema-to-typescript": "15.0.4",
     "lerna": "9.0.1",
@@ -54,6 +56,7 @@
     "prettier-plugin-tailwindcss": "0.7.1",
     "rimraf": "6.1.2",
     "sinon": "21.0.0",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "vitest": "4.0.13"
   }
 }
