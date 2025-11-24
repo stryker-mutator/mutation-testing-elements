@@ -12,12 +12,11 @@ const defaultOptions: Readonly<CustomElementFixtureOptions> = Object.freeze({
 
 export class CustomElementFixture<TCustomElement extends LitElement> {
   public readonly element: TCustomElement;
-  private isConnected = false;
+  #isConnected = false;
+  #customElementName: string;
 
-  constructor(
-    private customElementName: string,
-    options?: Partial<CustomElementFixtureOptions>,
-  ) {
+  constructor(customElementName: string, options?: Partial<CustomElementFixtureOptions>) {
+    this.#customElementName = customElementName;
     if (!customElements.get(customElementName)) {
       throw new Error(`Custom element "${customElementName}" is not defined. Is it a typo on your end?`);
     }
@@ -33,11 +32,11 @@ export class CustomElementFixture<TCustomElement extends LitElement> {
    * Only call this manually if you construct the fixture with `{ autoConnect: false }`
    */
   public connect() {
-    if (this.isConnected) {
-      throw new Error(`Element ${this.customElementName} is already connected to the DOM. Cannot connect a second time.`);
+    if (this.#isConnected) {
+      throw new Error(`Element ${this.#customElementName} is already connected to the DOM. Cannot connect a second time.`);
     }
     document.body.appendChild(this.element);
-    this.isConnected = true;
+    this.#isConnected = true;
   }
 
   public async whenStable(): Promise<void> {
@@ -84,14 +83,14 @@ export class CustomElementFixture<TCustomElement extends LitElement> {
     eventType: TEvent,
     act: () => Promise<void> | void,
   ): Promise<MteCustomEvent<TEvent> | undefined> {
-    return this.catchEvent(eventType, act);
+    return this.#catchEvent(eventType, act);
   }
 
   public async catchNativeEvent(eventType: string, act: () => Promise<void> | void): Promise<Event | undefined> {
-    return this.catchEvent(eventType, act);
+    return this.#catchEvent(eventType, act);
   }
 
-  private async catchEvent<TEvent extends Event = Event>(eventType: string, act: () => Promise<void> | void): Promise<TEvent | undefined> {
+  async #catchEvent<TEvent extends Event = Event>(eventType: string, act: () => Promise<void> | void): Promise<TEvent | undefined> {
     let actual: Event | undefined;
     const eventListener = (evt: Event) => (actual = evt);
     this.element.addEventListener(eventType, eventListener);

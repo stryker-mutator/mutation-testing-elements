@@ -9,12 +9,12 @@ export class TestDot extends PageObject {
     return this.host.click();
   }
 
-  private async classes(): Promise<string[]> {
+  async #classes(): Promise<string[]> {
     return (await this.host.getAttribute('class'))?.split(' ') ?? [];
   }
 
   public async getStatus(): Promise<TestStatus | undefined> {
-    return (await this.classes()).find((clazz) => {
+    return (await this.#classes()).find((clazz) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
       const testState = allTestStates.find((state) => state === clazz);
       if (testState) {
@@ -25,7 +25,7 @@ export class TestDot extends PageObject {
   }
 
   public async isActive(): Promise<boolean> {
-    const classes = await this.classes();
+    const classes = await this.#classes();
     return classes.includes('selected');
   }
 }

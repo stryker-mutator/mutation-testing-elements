@@ -2,7 +2,7 @@ import { PageObject } from './PageObject.po.js';
 
 export class NavTab extends PageObject {
   async isActive() {
-    const link = this.anchorLink();
+    const link = this.#anchorLink();
     const cssClasses = await link.getAttribute('aria-selected');
     return cssClasses === 'true';
   }
@@ -12,11 +12,11 @@ export class NavTab extends PageObject {
   }
 
   async navigate() {
-    const link = this.anchorLink();
+    const link = this.#anchorLink();
     return link.click();
   }
 
-  private anchorLink() {
+  #anchorLink() {
     return this.$('a');
   }
 }

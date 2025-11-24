@@ -1,6 +1,7 @@
 import type { PropertyValues } from 'lit';
-import { html, nothing } from 'lit';
+import { html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { when } from 'lit/directives/when.js';
 import type { FileUnderTestModel, Metrics, MetricsResult } from 'mutation-testing-metrics';
 import type { MutantResult as MutantModel, Thresholds } from 'mutation-testing-report-schema/api';
 
@@ -31,12 +32,12 @@ export class MutationTestReportMutantViewComponent extends RealTimeElement {
     this.drawerMode = 'closed';
   }
 
-  private handleClick = () => {
+  #handleClick = () => {
     // Close the drawer if the user clicks anywhere in the report (that didn't handle the click already)
     this.drawerMode = 'closed';
   };
 
-  private handleMutantSelected = (event: MteCustomEvent<'mutant-selected'>) => {
+  #handleMutantSelected = (event: MteCustomEvent<'mutant-selected'>) => {
     this.selectedMutant = event.detail.mutant;
     this.drawerMode = event.detail.selected ? 'half' : 'closed';
   };
@@ -48,14 +49,12 @@ export class MutationTestReportMutantViewComponent extends RealTimeElement {
   }
 
   public render() {
-    return html`
-      <main class="pb-drawer-half-open" @click="${this.handleClick}">
+    return html`<main class="pb-drawer-half-open" @click="${this.#handleClick}">
         <mte-metrics-table .columns="${COLUMNS}" .currentPath="${this.path}" .thresholds="${this.thresholds}" .model="${this.result}">
         </mte-metrics-table>
-        ${this.result.file ? html`<mte-file @mutant-selected="${this.handleMutantSelected}" .model="${this.result.file}"></mte-file>` : nothing}
+        ${when(this.result.file, (file) => html`<mte-file @mutant-selected="${this.#handleMutantSelected}" .model="${file}"></mte-file>`)}
       </main>
-      <mte-drawer-mutant mode="${this.drawerMode}" .mutant="${this.selectedMutant}"></mte-drawer-mutant>
-    `;
+      <mte-drawer-mutant mode="${this.drawerMode}" .mutant="${this.selectedMutant}"></mte-drawer-mutant>`;
   }
 }
 

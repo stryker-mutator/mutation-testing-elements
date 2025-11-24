@@ -1,6 +1,7 @@
 import type { PropertyValues } from 'lit';
-import { html, nothing } from 'lit';
+import { html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { when } from 'lit/directives/when.js';
 import type { MetricsResult, TestFileModel, TestMetrics, TestModel } from 'mutation-testing-metrics';
 
 import type { MteCustomEvent } from '../../lib/custom-events.js';
@@ -27,12 +28,12 @@ export class MutationTestReportTestViewComponent extends RealTimeElement {
     this.drawerMode = 'closed';
   }
 
-  private handleClick = () => {
+  #handleClick = () => {
     // Close the drawer if the user clicks anywhere in the report (that didn't handle the click already)
     this.drawerMode = 'closed';
   };
 
-  private handleTestSelected = (event: MteCustomEvent<'test-selected'>) => {
+  #handleTestSelected = (event: MteCustomEvent<'test-selected'>) => {
     this.selectedTest = event.detail.test;
     this.drawerMode = event.detail.selected ? 'half' : 'closed';
   };
@@ -44,13 +45,11 @@ export class MutationTestReportTestViewComponent extends RealTimeElement {
   }
 
   public render() {
-    return html`
-      <main class="pb-drawer-half-open" @click="${this.handleClick}">
+    return html`<main class="pb-drawer-half-open" @click="${this.#handleClick}">
         <mte-metrics-table .columns="${COLUMNS}" .currentPath="${this.path}" .model="${this.result}"> </mte-metrics-table>
-        ${this.result.file ? html`<mte-test-file @test-selected="${this.handleTestSelected}" .model="${this.result.file}"></mte-test-file>` : nothing}
+        ${when(this.result.file, (file) => html`<mte-test-file @test-selected="${this.#handleTestSelected}" .model="${file}"></mte-test-file>`)}
       </main>
-      <mte-drawer-test mode="${this.drawerMode}" .test="${this.selectedTest}"></mte-drawer-test>
-    `;
+      <mte-drawer-test mode="${this.drawerMode}" .test="${this.selectedTest}"></mte-drawer-test>`;
   }
 }
 

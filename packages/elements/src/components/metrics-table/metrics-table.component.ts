@@ -1,9 +1,9 @@
 import type { PropertyValues } from 'lit';
-import { html, nothing } from 'lit';
+import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { map } from 'lit/directives/map.js';
 import { repeat } from 'lit/directives/repeat.js';
+import { when } from 'lit/directives/when.js';
 import type { MetricsResult } from 'mutation-testing-metrics';
 import type { Thresholds } from 'mutation-testing-report-schema/api';
 
@@ -50,23 +50,25 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
     };
   }
 
-  private hasMultipleColspan = false;
+  #hasMultipleColspan = false;
 
   public override willUpdate(changedProperties: PropertyValues<this>) {
     if (changedProperties.has('columns')) {
-      this.hasMultipleColspan = this.columns.some((column) => column.category === 'percentage');
+      this.#hasMultipleColspan = this.columns.some((column) => column.category === 'percentage');
     }
   }
 
   public render() {
-    return this.model
-      ? html`<div class="overflow-x-auto rounded-md border border-gray-200">
-          <table class="w-full table-auto text-left text-sm">${this.renderTableHeadRow()}${this.renderTableBody(this.model)} </table>
-        </div>`
-      : nothing;
+    return when(
+      this.model,
+      (model) =>
+        html`<div class="overflow-x-auto rounded-md border border-gray-200">
+          <table class="w-full table-auto text-left text-sm">${this.#renderTableHeadRow()}${this.#renderTableBody(model)} </table>
+        </div>`,
+    );
   }
 
-  private renderTableHeadRow() {
+  #renderTableHeadRow() {
     const nonMutationScoreColumns = this.columns.filter((column) => column.group !== 'Mutation score');
     const mutationScoreColumns = this.columns.filter((column) => column.group === 'Mutation score');
     return html`<thead class="border-b border-gray-200 text-center text-sm">
@@ -83,55 +85,57 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
             >
           </div>
         </th>
-        ${mutationScoreColumns.length > 0 ? html`<th colspan="4" class="px-2 even:bg-gray-100">Mutation Score</th>` : ``}
+        ${mutationScoreColumns.length > 0 ? html`<th colspan="4" class="px-2 even:bg-gray-100">Mutation Score</th>` : ''}
         ${repeat(
           nonMutationScoreColumns,
           (column) => column.key,
-          (column) => this.renderTableHead(column),
+          (column) => this.#renderTableHead(column),
         )}
       </tr>
       <tr>
         ${repeat(
           mutationScoreColumns,
           (column) => column.key,
-          (column) => this.renderTableHead(column),
+          (column) => this.#renderTableHead(column),
         )}
       </tr>
     </thead>`;
   }
 
-  private renderTableHead(column: Column<TMetric>) {
+  #renderTableHead(column: Column<TMetric>) {
     const id = `tooltip-${column.key.toString()}`;
     const header = column.tooltip
       ? html`<mte-tooltip title="${column.tooltip}" id="${id}">${column.label}</mte-tooltip>`
       : html`<span id="${id}">${column.label}</span>`;
     if (column.group) {
-      return html` <th colspan="2" class="bg-gray-200 px-2"> ${header} </th>`;
+      return html`<th colspan="2" class="bg-gray-200 px-2"> ${header} </th>`;
     }
     return html`<th rowspan="2" class="w-24 px-2 even:bg-gray-100 2xl:w-28">
       <div class="inline-block">${header}</div>
     </th>`;
   }
 
-  private renderTableBody(model: MetricsResult<TFile, TMetric>) {
-    const renderChildren = () => {
-      if (model.file) {
-        return nothing;
-      } else {
-        return map(model.childResults, (childResult) => {
-          const nameParts: string[] = [childResult.name];
-          while (!childResult.file && childResult.childResults.length === 1) {
-            childResult = childResult.childResults[0];
-            nameParts.push(childResult.name);
-          }
-          return this.renderRow(nameParts.join('/'), childResult, ...this.currentPath, ...nameParts);
-        });
-      }
-    };
-    return html`<tbody class="divide-y divide-gray-200">${this.renderRow(model.name, model)} ${renderChildren()}</tbody>`;
+  #renderTableBody(model: MetricsResult<TFile, TMetric>) {
+    const renderChildren = () =>
+      when(!model.file, () =>
+        repeat(
+          model.childResults,
+          (childResult) => childResult.name,
+          (childResult) => {
+            const nameParts: string[] = [childResult.name];
+            while (!childResult.file && childResult.childResults.length === 1) {
+              childResult = childResult.childResults[0];
+              nameParts.push(childResult.name);
+            }
+            return this.#renderRow(nameParts.join('/'), childResult, ...this.currentPath, ...nameParts);
+          },
+        ),
+      );
+
+    return html`<tbody class="divide-y divide-gray-200">${this.#renderRow(model.name, model)} ${renderChildren()}</tbody>`;
   }
 
-  private renderRow(name: string, row: MetricsResult<TFile, TMetric>, ...path: string[]) {
+  #renderRow(name: string, row: MetricsResult<TFile, TMetric>, ...path: string[]) {
     return html`<tr title="${row.name}" class="group hover:bg-gray-200">
       <td class="font-semibold">
         <div class="flex items-center justify-start">
@@ -142,18 +146,22 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
             : html`<span class="py-4">${row.name}</span>`}
         </div>
       </td>
-      ${map(this.columns, (column) => this.renderCell(column, row.metrics))}
+      ${repeat(
+        this.columns,
+        (column) => column.key,
+        (column) => this.#renderCell(column, row.metrics),
+      )}
     </tr>`;
   }
 
-  private renderCell(column: Column<TMetric>, metrics: TMetric) {
+  #renderCell(column: Column<TMetric>, metrics: TMetric) {
     const value = metrics[column.key] as unknown as number;
-    const backgroundColoringClass = this.hasMultipleColspan ? 'odd:bg-gray-100' : 'even:bg-gray-100';
+    const backgroundColoringClass = this.#hasMultipleColspan ? 'odd:bg-gray-100' : 'even:bg-gray-100';
 
     if (column.category === 'percentage') {
       const valueIsPresent = !isNaN(value);
-      const bgColoringClass = this.determineBgColoringClass(value);
-      const textColoringClass = this.determineTextColoringClass(value);
+      const bgColoringClass = this.#determineBgColoringClass(value);
+      const textColoringClass = this.#determineTextColoringClass(value);
       const mutationScoreRounded = value.toFixed(2);
       const progressBarStyle = `width: ${value}%`;
 
@@ -171,10 +179,10 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
                   style="${progressBarStyle}"
                 ></div>
               </div>`
-            : html` <span class="text-light-muted font-bold">N/A</span> `}
+            : html`<span class="text-light-muted font-bold">N/A</span>`}
         </td>
         <td class="${textColoringClass} ${backgroundColoringClass} w-12 pr-2 text-center font-bold group-hover:bg-gray-200!"
-          >${valueIsPresent ? html`<span class="transition-colors">${mutationScoreRounded}</span>` : nothing}</td
+          >${when(valueIsPresent, () => html`<span class="transition-colors">${mutationScoreRounded}</span>`)}</td
         >`;
     }
     return html`<td
@@ -183,7 +191,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
       >${value}</td
     >`;
   }
-  private determineBgColoringClass(mutationScore: number) {
+  #determineBgColoringClass(mutationScore: number) {
     if (!isNaN(mutationScore) && this.thresholds) {
       if (mutationScore < this.thresholds.low) {
         return 'bg-red-600 text-gray-200';
@@ -196,7 +204,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
       return 'bg-cyan-600';
     }
   }
-  private determineTextColoringClass(mutationScore: number) {
+  #determineTextColoringClass(mutationScore: number) {
     if (!isNaN(mutationScore) && this.thresholds) {
       if (mutationScore < this.thresholds.low) {
         return 'text-red-700';

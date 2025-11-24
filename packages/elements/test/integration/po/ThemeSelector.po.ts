@@ -11,11 +11,11 @@ export class ThemeSelector extends PageObject {
   }
 
   async selectedTheme(): Promise<Theme> {
-    const darkModeSelected = await this.darkModeCheckbox.isChecked();
+    const darkModeSelected = await this.#darkModeCheckbox.isChecked();
     return darkModeSelected ? 'dark' : 'light';
   }
 
-  private get darkModeCheckbox() {
+  get #darkModeCheckbox() {
     return this.$('input[type="checkbox"]');
   }
 }

@@ -3,6 +3,7 @@ import { html, nothing, svg, unsafeCSS } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { repeat } from 'lit/directives/repeat.js';
+import { when } from 'lit/directives/when.js';
 import type { FileUnderTestModel, MutantModel } from 'mutation-testing-metrics';
 import type { MutantResult, MutantStatus } from 'mutation-testing-report-schema/api';
 
@@ -66,16 +67,16 @@ export class FileComponent extends RealTimeElement {
 
   #handleKeyDown = (event: KeyboardEvent) => {
     if (event.key === 'Escape' && this.selectedMutant) {
-      this.toggleMutant(this.selectedMutant);
+      this.#toggleMutant(this.selectedMutant);
     }
   };
 
-  private readonly filtersChanged = (event: MteCustomEvent<'filters-changed'>) => {
+  readonly #filtersChanged = (event: MteCustomEvent<'filters-changed'>) => {
     // Pending is not filterable, but they should still be shown to the user.
     this.selectedMutantStates = (event.detail as MutantStatus[]).concat(['Pending']);
   };
 
-  private codeClicked = (ev: MouseEvent) => {
+  #codeClicked = (ev: MouseEvent) => {
     ev.stopPropagation();
 
     if (ev.target instanceof Element) {
@@ -90,10 +91,10 @@ export class FileComponent extends RealTimeElement {
       }
       const index = (this.selectedMutant ? mutantsInScope.indexOf(this.selectedMutant) : -1) + 1;
       if (mutantsInScope[index]) {
-        this.toggleMutant(mutantsInScope[index]);
+        this.#toggleMutant(mutantsInScope[index]);
         clearSelection();
       } else if (this.selectedMutant) {
-        this.toggleMutant(this.selectedMutant);
+        this.#toggleMutant(this.selectedMutant);
         clearSelection();
       }
     }
@@ -101,55 +102,56 @@ export class FileComponent extends RealTimeElement {
 
   public render() {
     const mutantLineMap = Map.groupBy(this.mutants, (mutant) => mutant.location.start.line);
-    const renderFinalMutants = (lastLine: number) => {
-      return this.renderMutantDots([...mutantLineMap.entries()].filter(([line]) => line > lastLine).flatMap(([, mutants]) => mutants));
-    };
+    const finalMutants = this.#renderMutantDots(
+      Array.from(mutantLineMap.entries())
+        .filter(([line]) => line > this.lines.length)
+        .flatMap(([, mutants]) => mutants),
+    );
 
-    return html`
-      <mte-state-filter
+    return html`<mte-state-filter
         allow-toggle-all
         .filters="${this.filters}"
-        @filters-changed="${this.filtersChanged}"
-        @next=${this.nextMutant}
-        @previous=${this.previousMutant}
+        @filters-changed="${this.#filtersChanged}"
+        @next=${this.#nextMutant}
+        @previous=${this.#previousMutant}
       ></mte-state-filter>
       <pre
-        @click="${this.codeClicked}"
+        @click="${this.#codeClicked}"
         id="report-code-block"
         class="line-numbers ${this.selectedMutantStates.map((state) => `mte-selected-${state}`).join(' ')} flex rounded-md py-4"
       >
         <code class="flex language-${this.model.language}">
           <table>${map(this.lines, (line, lineIndex) => {
         const lineNr = lineIndex + 1;
-        const mutantDots = this.renderMutantDots(mutantLineMap.get(lineNr));
-        const finalMutants = this.lines.length === lineNr ? renderFinalMutants(lineNr) : nothing;
+        const mutantDots = this.#renderMutantDots(mutantLineMap.get(lineNr));
 
-        return renderLine(line, renderDots(mutantDots, finalMutants));
+        return renderLine(line, renderDots(mutantDots, this.lines.length === lineNr ? finalMutants : nothing));
       })}</table>
           </code>
-          </pre>
-    `;
+          </pre>`;
   }
 
-  private nextMutant = () => {
+  #nextMutant = () => {
     const index = this.selectedMutant ? (this.mutants.indexOf(this.selectedMutant) + 1) % this.mutants.length : 0;
     if (this.mutants[index]) {
-      this.toggleMutant(this.mutants[index]);
+      this.#toggleMutant(this.mutants[index]);
     }
   };
-  private previousMutant = () => {
+  #previousMutant = () => {
     const index = this.selectedMutant
       ? (this.mutants.indexOf(this.selectedMutant) + this.mutants.length - 1) % this.mutants.length
       : this.mutants.length - 1;
     if (this.mutants[index]) {
-      this.toggleMutant(this.mutants[index]);
+      this.#toggleMutant(this.mutants[index]);
     }
   };
 
-  private renderMutantDots(mutants: MutantModel[] | undefined): HTMLTemplateResult | typeof nothing {
-    return mutants?.length
-      ? (repeat(
-          mutants,
+  #renderMutantDots(mutants: MutantModel[] | undefined): HTMLTemplateResult | typeof nothing {
+    return when(
+      mutants?.length,
+      () =>
+        repeat(
+          mutants!,
           (mutant) => mutant.id,
           (mutant) =>
             svg`<svg
@@ -161,11 +163,12 @@ export class FileComponent extends RealTimeElement {
               <title>${title(mutant)}</title>
               ${this.selectedMutant?.id === mutant.id ? triangle : circle}
             </svg>`,
-        ) as HTMLTemplateResult)
-      : nothing;
+        ) as HTMLTemplateResult,
+      () => nothing,
+    );
   }
-  private toggleMutant(mutant: MutantModel) {
-    this.removeCurrentDiff();
+  #toggleMutant(mutant: MutantModel) {
+    this.#removeCurrentDiff();
 
     // Animate (de)selection
     this.#animateMutantToggle(mutant);
@@ -184,14 +187,14 @@ export class FileComponent extends RealTimeElement {
     for (let i = mutant.location.start.line - 1; i < mutant.location.end.line; i++) {
       lines.item(i).classList.add(diffOldClass);
     }
-    const mutatedLines = this.highlightedReplacementRows(mutant);
+    const mutatedLines = this.#highlightedReplacementRows(mutant);
     const mutantEndRow = lines.item(mutant.location.end.line - 1);
     mutantEndRow.insertAdjacentHTML('afterend', mutatedLines);
     scrollToCodeFragmentIfNeeded(mutantEndRow);
     this.dispatchEvent(createCustomEvent('mutant-selected', { selected: true, mutant }));
   }
 
-  private removeCurrentDiff() {
+  #removeCurrentDiff() {
     const code = this.code;
     const oldDiffLines = code.querySelectorAll(`.${diffOldClass}`);
     oldDiffLines.forEach((oldDiffLine) => oldDiffLine.classList.remove(diffOldClass));
@@ -201,12 +204,12 @@ export class FileComponent extends RealTimeElement {
 
   public override reactivate(): void {
     super.reactivate();
-    this.updateFileRepresentation();
+    this.#updateFileRepresentation();
   }
 
   public update(changes: PropertyValues<this>) {
     if (changes.has('model') && this.model) {
-      this.updateFileRepresentation();
+      this.#updateFileRepresentation();
     }
     if ((changes.has('model') && this.model) || changes.has('selectedMutantStates')) {
       this.mutants = this.model.mutants
@@ -218,15 +221,15 @@ export class FileComponent extends RealTimeElement {
         !this.mutants.includes(this.selectedMutant) &&
         changes.has('selectedMutantStates') &&
         // This extra check is to allow mutants that have been opened before, to stay open when a realtime update comes through
-        this.selectedMutantsHaveChanged(changes.get('selectedMutantStates') ?? [])
+        this.#selectedMutantsHaveChanged(changes.get('selectedMutantStates') ?? [])
       ) {
-        this.toggleMutant(this.selectedMutant);
+        this.#toggleMutant(this.selectedMutant);
       }
     }
     super.update(changes);
   }
 
-  private updateFileRepresentation() {
+  #updateFileRepresentation() {
     this.filters = (['Killed', 'Survived', 'NoCoverage', 'Ignored', 'Timeout', 'CompileError', 'RuntimeError'] satisfies MutantStatus[])
       .filter((status) => this.model.mutants.some((mutant) => mutant.status === status))
       .map((status) => ({
@@ -268,7 +271,7 @@ export class FileComponent extends RealTimeElement {
     });
   }
 
-  private selectedMutantsHaveChanged(changedMutantStates: MutantStatus[]): boolean {
+  #selectedMutantsHaveChanged(changedMutantStates: MutantStatus[]): boolean {
     if (changedMutantStates.length !== this.selectedMutantStates.length) {
       return true;
     }
@@ -276,7 +279,7 @@ export class FileComponent extends RealTimeElement {
     return !changedMutantStates.every((state, index) => this.selectedMutantStates[index] === state);
   }
 
-  private highlightedReplacementRows(mutant: MutantModel): string {
+  #highlightedReplacementRows(mutant: MutantModel): string {
     const mutatedLines = mutant.getMutatedLines().trimEnd();
     const originalLines = mutant.getOriginalLines().trimEnd();
 

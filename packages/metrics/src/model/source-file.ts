@@ -10,11 +10,11 @@ export function assertSourceDefined(source: string | undefined): asserts source 
 
 export abstract class SourceFile {
   public abstract source: string | undefined;
-  private lineMap?: number[];
+  #lineMap?: number[];
 
   public getLineMap(): number[] {
     assertSourceDefined(this.source);
-    return this.lineMap ?? (this.lineMap = computeLineStarts(this.source));
+    return this.#lineMap ?? (this.#lineMap = computeLineStarts(this.source));
   }
 
   /**

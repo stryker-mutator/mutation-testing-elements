@@ -1,37 +1,9 @@
-import type { TemplateResult } from 'lit';
-import { isServer, nothing } from 'lit';
+import { isServer } from 'lit';
 import { TestStatus } from 'mutation-testing-metrics';
 import type { MutantStatus, OpenEndLocation } from 'mutation-testing-report-schema/api';
 
 import { DRAWER_HALF_OPEN_SIZE } from '../components/drawer/drawer.component.js';
 import { renderEmoji } from '../components/drawer-mutant/util.js';
-
-export function notNullish<T>(value: T | undefined | null): value is T {
-  return value !== null && value !== undefined;
-}
-
-export function renderIf(
-  condition: unknown,
-  consequence: (() => TemplateResult) | TemplateResult | string,
-): string | TemplateResult | typeof nothing {
-  if (condition) {
-    if (typeof consequence === 'function') {
-      return consequence();
-    } else {
-      return consequence;
-    }
-  } else {
-    return nothing;
-  }
-}
-
-export function renderIfPresent<T>(value: T | undefined | null, factory: (value: T) => TemplateResult): TemplateResult | typeof nothing {
-  if (value === null || value === undefined) {
-    return nothing;
-  } else {
-    return factory(value);
-  }
-}
 
 export function getContextClassForStatus(status: MutantStatus) {
   switch (status) {

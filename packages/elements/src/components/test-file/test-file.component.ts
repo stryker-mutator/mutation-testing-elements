@@ -5,6 +5,7 @@ import { html, nothing, svg, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { repeat } from 'lit/directives/repeat.js';
+import { when } from 'lit/directives/when.js';
 import type { TestFileModel, TestModel } from 'mutation-testing-metrics';
 import { isNotNullish, TestStatus } from 'mutation-testing-metrics';
 
@@ -67,14 +68,14 @@ export class TestFileComponent extends RealTimeElement {
     }
   };
 
-  private readonly filtersChanged = (event: MteCustomEvent<'filters-changed'>) => {
+  readonly #filtersChanged = (event: MteCustomEvent<'filters-changed'>) => {
     this.enabledStates = event.detail as TestStatus[];
     if (this.selectedTest && !this.enabledStates.includes(this.selectedTest.status)) {
-      this.toggleTest(this.selectedTest);
+      this.#toggleTest(this.selectedTest);
     }
   };
 
-  private toggleTest(test: TestModel) {
+  #toggleTest(test: TestModel) {
     this.#animateTestToggle(test);
     if (this.selectedTest === test) {
       this.selectedTest = undefined;
@@ -89,127 +90,133 @@ export class TestFileComponent extends RealTimeElement {
     }
   }
 
-  private readonly nextTest = () => {
+  readonly #nextTest = () => {
     const index = this.selectedTest ? (this.tests.findIndex(({ id }) => id === this.selectedTest!.id) + 1) % this.tests.length : 0;
-    this.selectTest(this.tests[index]);
+    this.#selectTest(this.tests[index]);
   };
-  private readonly previousTest = () => {
+  readonly #previousTest = () => {
     const index = this.selectedTest
       ? (this.tests.findIndex(({ id }) => id === this.selectedTest!.id) + this.tests.length - 1) % this.tests.length
       : this.tests.length - 1;
-    this.selectTest(this.tests[index]);
+    this.#selectTest(this.tests[index]);
   };
 
-  private selectTest(test: TestModel | undefined) {
+  #selectTest(test: TestModel | undefined) {
     if (test) {
-      this.toggleTest(test);
+      this.#toggleTest(test);
     }
   }
 
   public render() {
-    return html`
-      <mte-state-filter
-        @next=${this.nextTest}
-        @previous=${this.previousTest}
+    return html`<mte-state-filter
+        @next=${this.#nextTest}
+        @previous=${this.#previousTest}
         .filters="${this.filters}"
-        @filters-changed="${this.filtersChanged}"
+        @filters-changed="${this.#filtersChanged}"
       ></mte-state-filter>
-      ${this.renderTestList()} ${this.renderCode()}
-    `;
+      ${this.#renderTestList()} ${this.#renderCode()}`;
   }
 
-  private renderTestList() {
+  #renderTestList() {
     const testsToRenderInTheList = this.tests.filter((test) => !test.location);
-    if (testsToRenderInTheList.length) {
-      return html`<ul class="max-w-6xl">
-        ${repeat(
-          testsToRenderInTheList,
-          (test) => test.id,
-          (test) =>
-            html`<li class="my-3">
-              <button
-                class="w-full rounded-sm p-3 text-left hover:bg-gray-100 active:bg-gray-200"
-                type="button"
-                data-active="${this.selectedTest === test}"
-                data-test-id="${test.id}"
-                @click=${(ev: MouseEvent) => {
-                  ev.stopPropagation();
-                  this.toggleTest(test);
-                }}
-                >${getEmojiForTestStatus(test.status)} ${test.name} [${test.status}]
-              </button>
-            </li>`,
-        )}
-      </ul>`;
-    }
-    return nothing;
+    return when(
+      testsToRenderInTheList.length,
+      () =>
+        html`<ul class="max-w-6xl">
+          ${repeat(
+            testsToRenderInTheList,
+            (test) => test.id,
+            (test) =>
+              html`<li class="my-3">
+                <button
+                  class="w-full rounded-sm p-3 text-left hover:bg-gray-100 active:bg-gray-200"
+                  type="button"
+                  data-active="${this.selectedTest === test}"
+                  data-test-id="${test.id}"
+                  @click=${(ev: MouseEvent) => {
+                    ev.stopPropagation();
+                    this.#toggleTest(test);
+                  }}
+                  >${getEmojiForTestStatus(test.status)} ${test.name} [${test.status}]
+                </button>
+              </li>`,
+          )}
+        </ul>`,
+      () => nothing,
+    );
   }
 
-  private renderCode() {
-    if (this.model?.source) {
-      const testsByLine = Map.groupBy(
-        this.tests.filter((t) => isNotNullish(t.location)),
-        (test) => test.location!.start.line,
-      );
+  #renderCode() {
+    return when(
+      this.model?.source,
+      () => {
+        const testsByLine = Map.groupBy(
+          this.tests.filter((t) => isNotNullish(t.location)),
+          (test) => test.location!.start.line,
+        );
+        const finalTests = this.#renderTestDots(
+          Array.from(testsByLine.entries())
+            .filter(([line]) => line > this.lines.length)
+            .flatMap(([, tests]) => tests),
+        );
 
-      const renderFinalTests = (lastLine: number) => {
-        return this.renderTestDots([...testsByLine.entries()].filter(([line]) => line > lastLine).flatMap(([, tests]) => tests));
-      };
-
-      return html`<pre
-        id="report-code-block"
-        @click="${this.#deselectTest}"
-        class="line-numbers flex rounded-md p-1"
-      ><code class="flex language-${determineLanguage(this.model.name)}">
+        return html`<pre
+          id="report-code-block"
+          @click="${this.#deselectTest}"
+          class="line-numbers flex rounded-md p-1"
+        ><code class="flex language-${determineLanguage(this.model!.name)}">
       <table>
         ${map(this.lines, (line, lineIndex) => {
-        const lineNr = lineIndex + 1;
-        const testDots = this.renderTestDots(testsByLine.get(lineNr));
-        const finalTests = this.lines.length === lineNr ? renderFinalTests(lineNr) : nothing;
+          const lineNr = lineIndex + 1;
+          const testDots = this.#renderTestDots(testsByLine.get(lineNr));
 
-        return renderLine(line, renderDots(testDots, finalTests));
-      })}</table></code></pre>`;
-    }
-    return nothing;
+          return renderLine(line, renderDots(testDots, this.lines.length === lineNr ? finalTests : nothing));
+        })}</table></code></pre>`;
+      },
+      () => nothing,
+    );
   }
 
   #deselectTest = () => {
     if (this.selectedTest) {
-      this.toggleTest(this.selectedTest);
+      this.#toggleTest(this.selectedTest);
     }
   };
 
-  private renderTestDots(tests: TestModel[] | undefined) {
-    return tests?.length
-      ? (repeat(
-          tests,
+  #renderTestDots(tests: TestModel[] | undefined): HTMLTemplateResult | typeof nothing {
+    return when(
+      tests?.length,
+      () =>
+        repeat(
+          tests!,
           (test) => test.id,
           (test) =>
             svg`<svg
               data-test-id="${test.id}"
               class="test-dot ${this.selectedTest?.id === test.id ? 'selected' : ''} ${test.status} mx-0.5 cursor-pointer"
-              @click=${(ev: MouseEvent) => {
+              @click="${(ev: MouseEvent) => {
                 ev.stopPropagation();
-                this.toggleTest(test);
-              }}
+                this.#toggleTest(test);
+              }}"
               height="11"
               width="11"
             >
               <title>${title(test)}</title>
               ${this.selectedTest === test ? triangle : circle}
             </svg>`,
-        ) as HTMLTemplateResult)
-      : nothing;
+        ) as HTMLTemplateResult,
+      () => nothing,
+    );
   }
 
   public override reactivate(): void {
     super.reactivate();
-    this.updateFileRepresentation();
+    this.#updateFileRepresentation();
   }
 
   override willUpdate(changes: PropertyValues<this>) {
     if (changes.has('model')) {
-      this.updateFileRepresentation();
+      this.#updateFileRepresentation();
     }
 
     if ((changes.has('model') || changes.has('enabledStates')) && this.model) {
@@ -226,7 +233,7 @@ export class TestFileComponent extends RealTimeElement {
     }
   }
 
-  private updateFileRepresentation() {
+  #updateFileRepresentation() {
     if (!this.model) {
       return;
     }
