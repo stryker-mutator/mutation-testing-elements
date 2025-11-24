@@ -1,5 +1,6 @@
 import type { FileResult, MutantStatus, MutationTestResult } from 'mutation-testing-report-schema';
 
+import { groupBy } from './helpers/group-by.js';
 import { compareNames, normalize } from './helpers/index.js';
 import type { Metrics, MutantModel, MutationTestMetricsResult, TestMetrics, TestModel } from './model/index.js';
 import { FileUnderTestModel, MetricsResult, TestFileModel } from './model/index.js';
@@ -83,7 +84,7 @@ function toChildModels<TFileModel, TMetrics>(
   files: Record<string, TFileModel>,
   calculateMetrics: (files: TFileModel[]) => TMetrics,
 ): MetricsResult<TFileModel, TMetrics>[] {
-  const filesByDirectory = Object.groupBy(Object.entries(files), (namedFile) => namedFile[0].split('/')[0]);
+  const filesByDirectory = groupBy(Object.entries(files), (namedFile) => namedFile[0].split('/')[0]);
   return Object.keys(filesByDirectory)
     .map((directoryName) => {
       if (filesByDirectory[directoryName]!.length > 1 || filesByDirectory[directoryName]?.[0][0] !== directoryName) {
