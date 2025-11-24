@@ -1,9 +1,9 @@
 import type { PropertyValues } from 'lit';
-import { html, nothing } from 'lit';
+import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { map } from 'lit/directives/map.js';
 import { repeat } from 'lit/directives/repeat.js';
+import { when } from 'lit/directives/when.js';
 import type { MetricsResult } from 'mutation-testing-metrics';
 import type { Thresholds } from 'mutation-testing-report-schema/api';
 
@@ -59,11 +59,13 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
   }
 
   public render() {
-    return this.model
-      ? html`<div class="overflow-x-auto rounded-md border border-gray-200">
-          <table class="w-full table-auto text-left text-sm">${this.#renderTableHeadRow()}${this.#renderTableBody(this.model)} </table>
-        </div>`
-      : nothing;
+    return when(
+      this.model,
+      (model) =>
+        html`<div class="overflow-x-auto rounded-md border border-gray-200">
+          <table class="w-full table-auto text-left text-sm">${this.#renderTableHeadRow()}${this.#renderTableBody(model)} </table>
+        </div>`,
+    );
   }
 
   #renderTableHeadRow() {
@@ -114,20 +116,22 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
   }
 
   #renderTableBody(model: MetricsResult<TFile, TMetric>) {
-    const renderChildren = () => {
-      if (model.file) {
-        return nothing;
-      } else {
-        return map(model.childResults, (childResult) => {
-          const nameParts: string[] = [childResult.name];
-          while (!childResult.file && childResult.childResults.length === 1) {
-            childResult = childResult.childResults[0];
-            nameParts.push(childResult.name);
-          }
-          return this.#renderRow(nameParts.join('/'), childResult, ...this.currentPath, ...nameParts);
-        });
-      }
-    };
+    const renderChildren = () =>
+      when(!model.file, () =>
+        repeat(
+          model.childResults,
+          (childResult) => childResult.name,
+          (childResult) => {
+            const nameParts: string[] = [childResult.name];
+            while (!childResult.file && childResult.childResults.length === 1) {
+              childResult = childResult.childResults[0];
+              nameParts.push(childResult.name);
+            }
+            return this.#renderRow(nameParts.join('/'), childResult, ...this.currentPath, ...nameParts);
+          },
+        ),
+      );
+
     return html`<tbody class="divide-y divide-gray-200">${this.#renderRow(model.name, model)} ${renderChildren()}</tbody>`;
   }
 
@@ -142,7 +146,11 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
             : html`<span class="py-4">${row.name}</span>`}
         </div>
       </td>
-      ${map(this.columns, (column) => this.#renderCell(column, row.metrics))}
+      ${repeat(
+        this.columns,
+        (column) => column.key,
+        (column) => this.#renderCell(column, row.metrics),
+      )}
     </tr>`;
   }
 
@@ -174,7 +182,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
             : html`<span class="text-light-muted font-bold">N/A</span>`}
         </td>
         <td class="${textColoringClass} ${backgroundColoringClass} w-12 pr-2 text-center font-bold group-hover:bg-gray-200!"
-          >${valueIsPresent ? html`<span class="transition-colors">${mutationScoreRounded}</span>` : nothing}</td
+          >${when(valueIsPresent, () => html`<span class="transition-colors">${mutationScoreRounded}</span>`)}</td
         >`;
     }
     return html`<td

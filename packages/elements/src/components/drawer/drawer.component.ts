@@ -2,8 +2,8 @@ import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 import { html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { when } from 'lit/directives/when.js';
 
-import { renderIf } from '../../lib/html-helpers.js';
 import { tailwind } from '../../style/index.js';
 import { BaseElement } from '../base-element.js';
 import { renderEmoji } from '../drawer-mutant/util.js';
@@ -90,11 +90,12 @@ export class MutationTestReportDrawer extends BaseElement {
       <header class="w-full py-4">
         <h2>
           <slot name="header"></slot>
-          ${renderIf(
+          ${when(
             this.hasDetail,
-            html`<button data-testId="btnReadMoreToggle" class="ml-2 cursor-pointer align-middle" @click="${this.toggleReadMore}">
-              ${this.toggleMoreLabel}
-            </button>`,
+            () =>
+              html`<button data-testId="btnReadMoreToggle" class="ml-2 cursor-pointer align-middle" @click="${this.toggleReadMore}">
+                ${this.toggleMoreLabel}
+              </button>`,
           )}
         </h2>
       </header>
@@ -103,7 +104,7 @@ export class MutationTestReportDrawer extends BaseElement {
         class="${classMap({ ['mb-4 motion-safe:transition-max-width']: true, 'overflow-y-auto': isOpen })}"
       >
         <slot name="summary"></slot>
-        ${renderIf(this.hasDetail && this.mode === 'open', html`<slot name="detail"></slot>`)}
+        ${when(this.hasDetail && this.mode === 'open', () => html`<slot name="detail"></slot>`)}
       </div>
     </aside>`;
   }

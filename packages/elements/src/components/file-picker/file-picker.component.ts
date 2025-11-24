@@ -7,7 +7,7 @@ import { repeat } from 'lit/directives/repeat.js';
 import type { FileUnderTestModel, Metrics, MetricsResult, MutationTestMetricsResult, TestMetrics } from 'mutation-testing-metrics';
 import { TestFileModel } from 'mutation-testing-metrics';
 
-import { renderIf, toAbsoluteUrl } from '../../lib/html-helpers.js';
+import { toAbsoluteUrl } from '../../lib/html-helpers.js';
 import { View } from '../../lib/router.js';
 import { mutantFileIcon, searchIcon, testFileIcon } from '../../lib/svg-icons.js';
 import { BaseElement } from '../base-element.js';
@@ -116,32 +116,33 @@ export class MutationTestReportFilePickerComponent extends BaseElement {
 
   #renderFoundFiles() {
     return html`<ul id="files" tabindex="-1" class="flex snap-y flex-col gap-2 overflow-auto" role="listbox" aria-labelledby="file-picker-label">
-      ${renderIf(this.filteredFiles.length === 0, () => html`<li class="text-gray-800">No files found</li>`)}
-      ${repeat(
-        this.filteredFiles,
-        (item) => item.name,
-        ({ name, file, template }, index) => {
-          const view = this.#getView(file);
-          return html`<li
-            class="group snap-start rounded-sm bg-gray-200 text-gray-900 transition-shadow aria-selected:bg-primary-500 aria-selected:text-gray-50 aria-selected:shadow-lg"
-            role="option"
-            aria-selected="${index === this.fileIndex}"
-          >
-            <a
-              tabindex="${index === this.fileIndex ? 0 : -1}"
-              @click="${this.close}"
-              class="flex h-full flex-wrap items-center p-2 outline-hidden"
-              @mousemove="${() => (this.fileIndex = index)}"
-              href="${toAbsoluteUrl(view, name)}"
-            >
-              <span class="inline-flex" title="File with ${view}s">${this.#renderTestOrMutantIndication(view)}</span>
-              <span class="ms-1">${file.result?.name}</span>
-              <span class="mx-2">•</span>
-              <span class="text-gray-400 group-aria-selected:text-gray-200">${template ?? name}</span>
-            </a>
-          </li>`;
-        },
-      )}
+      ${this.filteredFiles.length === 0
+        ? html`<li class="text-gray-800">No files found</li>`
+        : repeat(
+            this.filteredFiles,
+            (item) => item.name,
+            ({ name, file, template }, index) => {
+              const view = this.#getView(file);
+              return html`<li
+                class="group snap-start rounded-sm bg-gray-200 text-gray-900 transition-shadow aria-selected:bg-primary-500 aria-selected:text-gray-50 aria-selected:shadow-lg"
+                role="option"
+                aria-selected="${index === this.fileIndex}"
+              >
+                <a
+                  tabindex="${index === this.fileIndex ? 0 : -1}"
+                  @click="${this.close}"
+                  class="flex h-full flex-wrap items-center p-2 outline-hidden"
+                  @mousemove="${() => (this.fileIndex = index)}"
+                  href="${toAbsoluteUrl(view, name)}"
+                >
+                  <span class="inline-flex" title="File with ${view}s">${this.#renderTestOrMutantIndication(view)}</span>
+                  <span class="ms-1">${file.result?.name}</span>
+                  <span class="mx-2">•</span>
+                  <span class="text-gray-400 group-aria-selected:text-gray-200">${template ?? name}</span>
+                </a>
+              </li>`;
+            },
+          )}
     </ul>`;
   }
 

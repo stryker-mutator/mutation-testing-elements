@@ -3,6 +3,7 @@ import { html, nothing, svg, unsafeCSS } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { repeat } from 'lit/directives/repeat.js';
+import { when } from 'lit/directives/when.js';
 import type { FileUnderTestModel, MutantModel } from 'mutation-testing-metrics';
 import type { MutantResult, MutantStatus } from 'mutation-testing-report-schema/api';
 
@@ -146,9 +147,11 @@ export class FileComponent extends RealTimeElement {
   };
 
   #renderMutantDots(mutants: MutantModel[] | undefined): HTMLTemplateResult | typeof nothing {
-    return mutants?.length
-      ? (repeat(
-          mutants,
+    return when(
+      mutants?.length,
+      () =>
+        repeat(
+          mutants!,
           (mutant) => mutant.id,
           (mutant) =>
             svg`<svg
@@ -160,8 +163,9 @@ export class FileComponent extends RealTimeElement {
               <title>${title(mutant)}</title>
               ${this.selectedMutant?.id === mutant.id ? triangle : circle}
             </svg>`,
-        ) as HTMLTemplateResult)
-      : nothing;
+        ) as HTMLTemplateResult,
+      () => nothing,
+    );
   }
   #toggleMutant(mutant: MutantModel) {
     this.#removeCurrentDiff();

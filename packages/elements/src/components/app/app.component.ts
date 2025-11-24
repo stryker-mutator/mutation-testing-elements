@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
 import type { PropertyValues } from 'lit';
-import { html, isServer, nothing, unsafeCSS } from 'lit';
+import { html, isServer, unsafeCSS } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { when } from 'lit/directives/when.js';
 import type {
   FileUnderTestModel,
   Metrics,
@@ -342,61 +343,64 @@ export class MutationTestReportAppComponent extends RealTimeElement {
   }
 
   #renderTitle() {
-    if (this.context.result) {
-      return html`<h1 class="mt-4 text-5xl font-bold tracking-tight">
-        ${this.context.result.name}${this.titlePostfix ? html`<small class="text-light-muted ml-4 font-light">${this.titlePostfix}</small>` : nothing}
-      </h1>`;
-    }
-    return nothing;
+    return when(
+      this.context.result,
+      (result) =>
+        html`<h1 class="mt-4 text-5xl font-bold tracking-tight">
+          ${result.name}${when(this.titlePostfix, (postfix) => html`<small class="text-light-muted ml-4 font-light">${postfix}</small>`)}
+        </h1>`,
+    );
   }
 
   public render() {
-    if (this.context.result ?? this.errorMessage) {
-      return html`<mte-file-picker .rootModel="${this.rootModel}"></mte-file-picker>
-        <div class="container space-y-4 bg-white pb-4 font-sans text-gray-800 transition-colors motion-safe:transition-max-width">
-          ${this.#renderErrorMessage()}
-          <mte-theme-switch @theme-switch="${this.themeSwitch}" class="sticky top-offset z-20 float-right mb-0 pt-7" .theme="${this.theme}">
-          </mte-theme-switch>
-          ${this.#renderTitle()} ${this.#renderTabs()}
-          <mte-breadcrumb
-            @mte-file-picker-open="${() => this.filePicker.open()}"
-            .view="${this.context.view}"
-            .path="${this.context.path}"
-          ></mte-breadcrumb>
-          <mte-result-status-bar
-            detected="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.totalDetected)}"
-            no-coverage="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.noCoverage)}"
-            pending="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.pending)}"
-            survived="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.survived)}"
-            total="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.totalValid)}"
-          ></mte-result-status-bar>
-          ${this.context.view === 'mutant' && this.context.result
-            ? html`<mte-mutant-view
-                id="mte-mutant-view"
-                .result="${this.context.result}"
-                .thresholds="${this.report!.thresholds}"
-                .path="${this.path}"
-              ></mte-mutant-view>`
-            : nothing}
-          ${this.context.view === 'test' && this.context.result
-            ? html`<mte-test-view id="mte-test-view" .result="${this.context.result}" .path="${this.path}"></mte-test-view>`
-            : nothing}
-        </div>`;
-    } else {
-      return nothing;
-    }
+    return when(
+      this.context.result ?? this.errorMessage,
+      () =>
+        html`<mte-file-picker .rootModel="${this.rootModel}"></mte-file-picker>
+          <div class="container space-y-4 bg-white pb-4 font-sans text-gray-800 transition-colors motion-safe:transition-max-width">
+            ${this.#renderErrorMessage()}
+            <mte-theme-switch @theme-switch="${this.themeSwitch}" class="sticky top-offset z-20 float-right mb-0 pt-7" .theme="${this.theme}">
+            </mte-theme-switch>
+            ${this.#renderTitle()} ${this.#renderTabs()}
+            <mte-breadcrumb
+              @mte-file-picker-open="${() => this.filePicker.open()}"
+              .view="${this.context.view}"
+              .path="${this.context.path}"
+            ></mte-breadcrumb>
+            <mte-result-status-bar
+              detected="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.totalDetected)}"
+              no-coverage="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.noCoverage)}"
+              pending="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.pending)}"
+              survived="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.survived)}"
+              total="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.totalValid)}"
+            ></mte-result-status-bar>
+            ${when(
+              this.context.view === 'mutant' && this.context.result,
+              () =>
+                html`<mte-mutant-view
+                  id="mte-mutant-view"
+                  .result="${this.context.result}"
+                  .thresholds="${this.report!.thresholds}"
+                  .path="${this.path}"
+                ></mte-mutant-view>`,
+            )}
+            ${when(
+              this.context.view === 'test' && this.context.result,
+              () => html`<mte-test-view id="mte-test-view" .result="${this.context.result}" .path="${this.path}"></mte-test-view>`,
+            )}
+          </div>`,
+    );
   }
 
   #renderErrorMessage() {
-    if (this.errorMessage) {
-      return html`<div class="my-4 rounded-lg bg-red-100 p-4 text-sm text-red-700" role="alert">${this.errorMessage}</div>`;
-    } else {
-      return nothing;
-    }
+    return when(
+      this.errorMessage,
+      (errorMessage) => html`<div class="my-4 rounded-lg bg-red-100 p-4 text-sm text-red-700" role="alert">${errorMessage}</div>`,
+    );
   }
 
   #renderTabs() {
-    if (this.rootModel?.testMetrics) {
+    return when(this.rootModel?.testMetrics, () => {
       const mutantsActive = this.context.view === 'mutant';
       const testsActive = this.context.view === 'test';
 
@@ -420,9 +424,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
           )}
         </ul>
       </nav>`;
-    } else {
-      return nothing;
-    }
+    });
   }
 }
 
