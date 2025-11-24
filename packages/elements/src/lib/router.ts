@@ -15,7 +15,8 @@ export const locationChange$ = isServer
       map(() => window.location.hash.substr(1).split('/').filter(Boolean).map(decodeURIComponent)),
     );
 
-export enum View {
-  mutant = 'mutant',
-  test = 'test',
-}
+export const View = {
+  mutant: 'mutant',
+  test: 'test',
+} as const;
+export type View = (typeof View)[keyof typeof View];

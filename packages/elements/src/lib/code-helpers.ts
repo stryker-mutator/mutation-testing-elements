@@ -1,21 +1,21 @@
-/* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
 import type { Position } from 'mutation-testing-report-schema/api';
 import { highlight, languages } from 'prismjs/components/prism-core';
 
-export enum ProgrammingLanguage {
-  csharp = 'cs',
-  java = 'java',
-  javascript = 'javascript',
-  html = 'html',
-  php = 'php',
-  scala = 'scala',
-  typescript = 'typescript',
-  vue = 'vue',
-  gherkin = 'gherkin',
-  svelte = 'svelte',
-  rust = 'rust',
-  python = 'python',
-}
+export const ProgrammingLanguage = {
+  csharp: 'cs',
+  java: 'java',
+  javascript: 'javascript',
+  html: 'html',
+  php: 'php',
+  scala: 'scala',
+  typescript: 'typescript',
+  vue: 'vue',
+  gherkin: 'gherkin',
+  svelte: 'svelte',
+  rust: 'rust',
+  python: 'python',
+} as const;
+export type ProgrammingLanguage = (typeof ProgrammingLanguage)[keyof typeof ProgrammingLanguage];
 
 /**
  * Returns the lower case extension without the `.`.
@@ -318,16 +318,16 @@ export function isWhitespace(char: string) {
 
 export const COLUMN_START_INDEX = 1;
 export const LINE_START_INDEX = 1;
-enum Characters {
-  CarriageReturn = '\r',
-  NewLine = '\n',
-  Space = ' ',
-  Amp = '&',
-  Semicolon = ';',
-  LT = '<',
-  GT = '>',
-  Tab = '\t',
-}
+const Characters = {
+  CarriageReturn: '\r',
+  NewLine: '\n',
+  Space: ' ',
+  Amp: '&',
+  Semicolon: ';',
+  LT: '<',
+  GT: '>',
+  Tab: '\t',
+} as const;
 
 export function findDiffIndices(original: string, mutated: string) {
   let focusFrom = 0,

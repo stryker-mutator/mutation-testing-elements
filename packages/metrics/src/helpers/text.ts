@@ -1,13 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
 // The implementation of this file is grabbed and modified from TypeScript source code
 
-const enum CharacterCodes {
-  maxAsciiCharacter = 0x7f,
-  lineFeed = 0x0a, // \n
-  carriageReturn = 0x0d, // \r
-  lineSeparator = 0x2028,
-  paragraphSeparator = 0x2029,
-}
+const CharacterCodes = {
+  maxAsciiCharacter: 0x7f,
+  lineFeed: 0x0a, // \n
+  carriageReturn: 0x0d, // \r
+  lineSeparator: 0x2028,
+  paragraphSeparator: 0x2029,
+} as const;
 
 function isLineBreak(ch: number): boolean {
   // ES5 7.3:

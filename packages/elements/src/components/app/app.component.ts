@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
 import type { PropertyValues } from 'lit';
 import { html, isServer, unsafeCSS } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
@@ -32,16 +31,17 @@ import { RealTimeElement } from '../real-time-element.js';
 import theme from './theme.css?inline';
 
 interface BaseContext {
+  view: View;
   path: string[];
 }
 
 interface MutantContext extends BaseContext {
-  view: View.mutant;
+  view: 'mutant';
   result?: MetricsResult<FileUnderTestModel, Metrics>;
 }
 
 interface TestContext extends BaseContext {
-  view: View.test;
+  view: 'test';
   result?: MetricsResult<TestFileModel, TestMetrics>;
 }
 
@@ -218,7 +218,7 @@ export class MutationTestReportAppComponent extends RealTimeElement {
         );
       };
       const path = this.path.slice(1);
-      if (this.path[0] === (View.test as string) && this.rootModel.testMetrics) {
+      if (this.path[0] === View.test && this.rootModel.testMetrics) {
         this.context = {
           view: View.test,
           path,
