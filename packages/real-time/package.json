@@ -28,7 +28,13 @@
   },
   "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/real-time#readme",
   "devDependencies": {
+    "@stryker-mutator/core": "catalog:",
+    "@stryker-mutator/mocha-runner": "catalog:",
+    "@stryker-mutator/typescript-checker": "catalog:",
+    "eslint": "catalog:",
+    "eslint-config-mte": "workspace:*",
     "eventsource": "4.1.0",
+    "mutation-testing-report-schema": "workspace:*",
     "rxjs": "7.8.2"
   }
 }

@@ -1,5 +1,5 @@
 # Handled via npm
-package-lock.json
+pnpm-lock.yaml
 # Handled by lerna
 CHANGELOG.md
 

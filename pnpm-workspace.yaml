@@ -1,0 +1,22 @@
+packages:
+  - packages/*
+
+catalog:
+  '@eslint/js': ^9.39.1
+  '@stryker-mutator/core': 9.4.0
+  '@stryker-mutator/mocha-runner': 9.4.0
+  '@stryker-mutator/typescript-checker': 9.4.0
+  '@stryker-mutator/vitest-runner': 9.4.0
+  eslint: ^9.39.1
+
+# 2 days, in minutes
+minimumReleaseAge: 2880
+
+trustPolicy: no-downgrade
+
+ignoredBuiltDependencies:
+  - unrs-resolver
+
+onlyBuiltDependencies:
+  - esbuild
+  - nx

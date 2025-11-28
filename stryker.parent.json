@@ -1,6 +1,6 @@
 {
-  "$schema": "./node_modules/@stryker-mutator/core/schema/stryker-schema.json",
-  "packageManager": "npm",
+  "$schema": "./packages/elements/node_modules/@stryker-mutator/core/schema/stryker-schema.json",
+  "packageManager": "pnpm",
   "reporters": ["html", "clear-text", "progress", "dashboard"],
   "testRunner": "mocha",
   "buildCommand": "tsc -b",
@@ -9,5 +9,6 @@
   "mochaOptions": {
     "spec": ["dist/test/unit/**/*.js"]
   },
-  "concurrency": 2
+  "concurrency": 2,
+  "plugins": ["@stryker-mutator/*", "@stryker-mutator/mocha-runner", "@stryker-mutator/typescript-checker"]
 }

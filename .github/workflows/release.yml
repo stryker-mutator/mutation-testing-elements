@@ -20,9 +20,9 @@ jobs:
       - name: Set Release Env
         run: |
           echo ${{ secrets.PGP_SECRET }} | base64 --decode | gpg --batch --import
-      - run: npx nx run-many --target=build
+      - run: pnpm nx run-many --target=build
       - name: Release
-        run: npm run lerna:publish
+        run: pnpm run lerna:publish
         env:
           PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}

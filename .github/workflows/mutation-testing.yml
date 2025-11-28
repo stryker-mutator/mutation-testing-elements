@@ -12,10 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: ./.github/setup
-      - run: npx nx run metrics:stryker
+      - run: pnpm nx run metrics:stryker
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
-      - run: npx nx run real-time:stryker
+      - run: pnpm nx run real-time:stryker
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
   elements:
@@ -26,7 +26,7 @@ jobs:
         with:
           setup-playwright: true
       - name: Run Stryker
-        run: npx nx run elements:stryker
+        run: pnpm nx run elements:stryker
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
 
@@ -38,6 +38,6 @@ jobs:
         with:
           setup-java: true
       - name: Run Stryker
-        run: npx nx run metrics-scala:stryker
+        run: pnpm nx run metrics-scala:stryker
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}

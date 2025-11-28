@@ -1,10 +1,11 @@
 {
   "$schema": "https://raw.githubusercontent.com/nrwl/nx/master/packages/nx/schemas/nx-schema.json",
   "extends": "nx/presets/npm.json",
+  "defaultBase": "master",
   "namedInputs": {
     "default": [
       "{projectRoot}/**/*",
-      "{workspaceRoot}/package-lock.json",
+      "{workspaceRoot}/pnpm-lock.yaml",
       {
         "runtime": "node -v"
       }

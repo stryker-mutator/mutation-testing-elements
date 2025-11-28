@@ -1,5 +1,5 @@
 name: 'Setup CI'
-description: 'Set up npm, Java, and cache for CI'
+description: 'Set up Node, Java, and cache for CI'
 
 inputs:
   node-version:
@@ -20,11 +20,12 @@ runs:
     - uses: nrwl/nx-set-shas@v4
       with:
         main-branch-name: master
+    - uses: pnpm/action-setup@v4
     - name: Use Node.js ${{ inputs.node-version }}
       uses: actions/setup-node@v6
       with:
         node-version: ${{ inputs.node-version }}
-        cache: 'npm'
+        cache: 'pnpm'
         registry-url: 'https://registry.npmjs.org'
     - uses: actions/setup-java@v5
       if: ${{ inputs.setup-java == 'true' }}
@@ -33,17 +34,18 @@ runs:
         java-version: 21
         cache: 'sbt'
     - uses: sbt/setup-sbt@v1
+      if: ${{ inputs.setup-java == 'true' }}
     - uses: actions/cache@v4
       if: ${{ github.actor == 'stryker-mutator' }}
       with:
         path: .nx/cache
-        key: ${{ runner.os }}-nx-${{ inputs.node-version }}-${{ hashFiles('**/package-lock.json') }}
+        key: ${{ runner.os }}-nx-${{ inputs.node-version }}-${{ hashFiles('**/pnpm-lock.yaml') }}
         restore-keys: |
           ${{ runner.os }}-nx-${{ inputs.node-version }}-
           ${{ runner.os }}-nx-
-    - run: npm ci
+    - run: pnpm install --prefer-offline --frozen-lockfile
       shell: bash
     - name: Install Playwright Browsers
       if: ${{ inputs.setup-playwright == 'true' }}
       shell: bash
-      run: npm run install-browsers
+      run: pnpm install-browsers

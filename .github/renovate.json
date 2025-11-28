@@ -4,6 +4,8 @@
   "timezone": "Europe/Amsterdam",
   "schedule": ["every weekend"],
   "configMigration": true,
+  "minimumReleaseAge": "2 days",
+  "prCreation": "not-pending",
   "lockFileMaintenance": {
     "enabled": true
   },
