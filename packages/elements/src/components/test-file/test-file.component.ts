@@ -111,8 +111,8 @@ export class TestFileComponent extends RealTimeElement {
     return html`<mte-state-filter
         @next=${this.#nextTest}
         @previous=${this.#previousTest}
-        .filters="${this.filters}"
-        @filters-changed="${this.#filtersChanged}"
+        .filters=${this.filters}
+        @filters-changed=${this.#filtersChanged}
       ></mte-state-filter>
       ${this.#renderTestList()} ${this.#renderCode()}`;
   }
@@ -131,8 +131,8 @@ export class TestFileComponent extends RealTimeElement {
                 <button
                   class="w-full rounded-sm p-3 text-left hover:bg-gray-100 active:bg-gray-200"
                   type="button"
-                  data-active="${this.selectedTest === test}"
-                  data-test-id="${test.id}"
+                  data-active=${this.selectedTest === test}
+                  data-test-id=${test.id}
                   @click=${(ev: MouseEvent) => {
                     ev.stopPropagation();
                     this.#toggleTest(test);
@@ -162,7 +162,7 @@ export class TestFileComponent extends RealTimeElement {
 
         return html`<pre
           id="report-code-block"
-          @click="${this.#deselectTest}"
+          @click=${this.#deselectTest}
           class="line-numbers flex rounded-md p-1"
         ><code class="flex language-${determineLanguage(this.model!.name)}">
       <table>

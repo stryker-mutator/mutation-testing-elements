@@ -12,4 +12,4 @@ export const renderSummaryContainer = (content: TemplateResult) => html`<div cla
 /**
  * Wrap the given emoji in an accessible-friendly span
  */
-export const renderEmoji = (emoji: string, label: string) => html`<span role="img" aria-label="${label}">${emoji}</span>`;
+export const renderEmoji = (emoji: string, label: string) => html`<span role="img" aria-label=${label}>${emoji}</span>`;

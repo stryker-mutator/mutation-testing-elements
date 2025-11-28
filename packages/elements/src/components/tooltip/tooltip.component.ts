@@ -9,6 +9,6 @@ export class MutationTestReportThemeSwitchComponent extends BaseElement {
   declare title: string;
 
   render() {
-    return html`<span class="cursor-help underline decoration-dotted" title="${this.title}"><slot></slot></span>`;
+    return html`<span class="cursor-help underline decoration-dotted" title=${this.title}><slot></slot></span>`;
   }
 }

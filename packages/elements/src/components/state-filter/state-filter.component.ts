@@ -62,14 +62,14 @@ export class FileStateFilterComponent<TStatus extends string> extends RealTimeEl
         // see https://lit-html.polymer-project.org/guide/writing-templates#repeating-templates-with-the-repeat-directive
         (filter) => filter.status,
         (filter) =>
-          html`<div class="flex items-center gap-2 last:mr-12" data-status="${filter.status.toString()}">
+          html`<div class="flex items-center gap-2 last:mr-12" data-status=${filter.status.toString()}>
             <input
-              ?checked="${filter.enabled}"
+              ?checked=${filter.enabled}
               id="filter-${filter.status}"
               aria-describedby="status-description"
               type="checkbox"
-              .value="${filter.status.toString()}"
-              @input="${(el: Event) => this.#checkboxChanged(filter, (el.target as HTMLInputElement).checked)}"
+              .value=${filter.status.toString()}
+              @input=${(el: Event) => this.#checkboxChanged(filter, (el.target as HTMLInputElement).checked)}
               class="h-5 w-5 shrink-0 rounded-sm bg-gray-100 ring-offset-gray-200! transition-colors checked:bg-primary-600 focus:ring-2 focus:ring-primary-500 focus:outline-hidden"
             />
 
@@ -86,7 +86,7 @@ export class FileStateFilterComponent<TStatus extends string> extends RealTimeEl
 
   #renderStepButton(handleClick: (ev: Event) => void, icon: SVGTemplateResult, title: string, srText: string) {
     return html`<button
-      title="${title}"
+      title=${title}
       @click=${handleClick}
       type="button"
       class="inline-flex items-center rounded-sm bg-primary-600 p-1 text-center text-white hover:bg-primary-700 focus:ring-2 focus:ring-primary-500 focus:outline-hidden"

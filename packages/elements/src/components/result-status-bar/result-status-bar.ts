@@ -77,7 +77,7 @@ export class ResultStatusBar extends BaseElement {
       (metric) => metric.type,
       (metric) =>
         html`<div
-          title="${shouldBeSmall ? nothing : metric.tooltip}"
+          title=${shouldBeSmall ? nothing : metric.tooltip}
           style="width: ${this.#calculatePercentage(metric.amount)}%"
           class="${this.#colorFromMetric(metric.type)} ${metric.amount === 0
             ? 'opacity-0'

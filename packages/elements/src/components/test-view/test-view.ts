@@ -45,11 +45,11 @@ export class MutationTestReportTestViewComponent extends RealTimeElement {
   }
 
   public render() {
-    return html`<main class="pb-drawer-half-open" @click="${this.#handleClick}">
-        <mte-metrics-table .columns="${COLUMNS}" .currentPath="${this.path}" .model="${this.result}"> </mte-metrics-table>
-        ${when(this.result.file, (file) => html`<mte-test-file @test-selected="${this.#handleTestSelected}" .model="${file}"></mte-test-file>`)}
+    return html`<main class="pb-drawer-half-open" @click=${this.#handleClick}>
+        <mte-metrics-table .columns=${COLUMNS} .currentPath=${this.path} .model=${this.result}> </mte-metrics-table>
+        ${when(this.result.file, (file) => html`<mte-test-file @test-selected=${this.#handleTestSelected} .model=${file}></mte-test-file>`)}
       </main>
-      <mte-drawer-test mode="${this.drawerMode}" .test="${this.selectedTest}"></mte-drawer-test>`;
+      <mte-drawer-test mode=${this.drawerMode} .test=${this.selectedTest}></mte-drawer-test>`;
   }
 }
 
