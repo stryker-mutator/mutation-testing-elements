@@ -15,8 +15,7 @@ import type {
 } from 'mutation-testing-metrics';
 import { calculateMutationTestMetrics } from 'mutation-testing-metrics';
 import type { MutantResult, MutationTestResult } from 'mutation-testing-report-schema/api';
-import { Subscription } from 'rxjs';
-import { fromEvent, sampleTime } from 'rxjs';
+import { fromEvent, sampleTime, Subscription } from 'rxjs';
 
 import { isLocalStorageAvailable } from '../../lib/browser.js';
 import type { MteCustomEvent } from '../../lib/custom-events.js';

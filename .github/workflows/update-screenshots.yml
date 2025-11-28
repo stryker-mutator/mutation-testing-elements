@@ -19,8 +19,8 @@ jobs:
       - uses: ./.github/setup
         with:
           setup-playwright: true
-      - run: npx nx run-many -t generate,build:tsc
-      - run: npx nx run elements:test:integration:update
+      - run: pnpm nx run-many -t generate,build:tsc
+      - run: pnpm nx run elements:test:integration:update
       - name: Get GitHub App User ID
         id: get-user-id
         shell: bash

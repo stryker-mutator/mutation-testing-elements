@@ -18,7 +18,7 @@ export type ColumnCategory = 'percentage' | 'number';
 export type Numbers<TMetrics> = { [Prop in keyof TMetrics as TMetrics[Prop] extends number ? Prop : never]: TMetrics[Prop] };
 
 export interface Column<TMetric> {
-  key: keyof Numbers<TMetric> & keyof TMetric;
+  key: keyof Numbers<TMetric>;
   label: string;
   tooltip?: string;
   width?: TableWidth;

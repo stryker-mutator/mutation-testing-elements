@@ -26,9 +26,13 @@
   },
   "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/metrics#readme",
   "dependencies": {
-    "mutation-testing-report-schema": "3.7.1"
+    "mutation-testing-report-schema": "workspace:*"
   },
   "devDependencies": {
-    "eslint-config-mte": "3.7.0"
+    "@stryker-mutator/core": "catalog:",
+    "@stryker-mutator/mocha-runner": "catalog:",
+    "@stryker-mutator/typescript-checker": "catalog:",
+    "eslint": "catalog:",
+    "eslint-config-mte": "workspace:*"
   }
 }

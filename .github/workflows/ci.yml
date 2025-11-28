@@ -27,12 +27,12 @@ jobs:
       - name: affected
         id: affected
         shell: bash
-        run: echo "affected=$(npx nx show projects --affected --json)" >> "$GITHUB_OUTPUT"
+        run: echo "affected=$(pnpm nx show projects --affected --json)" >> "$GITHUB_OUTPUT"
       - name: Install Playwright Browsers
         if: ${{ contains(fromJson(steps.affected.outputs.affected), 'elements') }}
-        run: npm run install-browsers
+        run: pnpm install-browsers
       - name: Lint & Build & Test
-        run: npm run all
+        run: pnpm run all
       - name: Bundlemon
         if: ${{ contains(fromJson(steps.affected.outputs.affected), 'elements') && matrix.os == 'ubuntu-latest' && matrix.node-version == '24.x' }}
         uses: lironer/bundlemon-action@v1
@@ -50,9 +50,9 @@ jobs:
       - uses: ./.github/setup
         with:
           setup-playwright: true
-      - run: npm run download-incremental-reports
+      - run: pnpm run download-incremental-reports
       - name: Run Stryker incrementally
         run: |
-          npx nx run-many --target=stryker --projects=metrics,elements,real-time -- --incremental
+          pnpm nx run-many --target=stryker --projects=metrics,elements,real-time -- --incremental
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}

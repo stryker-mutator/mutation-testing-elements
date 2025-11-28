@@ -1,8 +1,6 @@
 import tailwindcss from '@tailwindcss/vite';
 import { playwright } from '@vitest/browser-playwright';
-import browserslist from 'browserslist';
-import browserslistToEsbuild from 'browserslist-to-esbuild';
-import { browserslistToTargets, Features } from 'lightningcss';
+import { Features } from 'lightningcss';
 import { type MutationEventSender, RealTimeReporter } from 'mutation-testing-real-time';
 import { type Plugin } from 'vite';
 import { defineConfig, type ViteUserConfig } from 'vitest/config';
@@ -37,7 +35,6 @@ export default defineConfig(
         lightningcss: {
           // Disable Oklab color transformation for tests, as we assert on color values
           exclude: mode === 'test' ? Features.OklabColors : 0,
-          targets: browserslistToTargets(browserslist()),
         },
       },
       build: {
@@ -47,7 +44,6 @@ export default defineConfig(
           // For library usage, we want to externalize lit. When included as a script on the page we want to bundle it.
           external: process.env.IIFE_BUILD ? undefined : [/^lit/],
         },
-        target: browserslistToEsbuild(),
         lib: {
           entry: 'src/index.ts',
           name: 'MutationTestElements',
