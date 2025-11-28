@@ -363,37 +363,37 @@ export class MutationTestReportAppComponent extends RealTimeElement {
     return when(
       this.context.result ?? this.errorMessage,
       () =>
-        html`<mte-file-picker .rootModel="${this.rootModel}"></mte-file-picker>
+        html`<mte-file-picker .rootModel=${this.rootModel}></mte-file-picker>
           <div class="container space-y-4 bg-white pb-4 font-sans text-gray-800 transition-colors motion-safe:transition-max-width">
             ${this.#renderErrorMessage()}
-            <mte-theme-switch @theme-switch="${this.themeSwitch}" class="sticky top-offset z-20 float-right mb-0 pt-7" .theme="${this.theme}">
+            <mte-theme-switch @theme-switch=${this.themeSwitch} class="sticky top-offset z-20 float-right mb-0 pt-7" .theme=${this.theme}>
             </mte-theme-switch>
             ${this.#renderTitle()} ${this.#renderTabs()}
             <mte-breadcrumb
-              @mte-file-picker-open="${() => this.filePicker.open()}"
-              .view="${this.context.view}"
-              .path="${this.context.path}"
+              @mte-file-picker-open=${() => this.filePicker.open()}
+              .view=${this.context.view}
+              .path=${this.context.path}
             ></mte-breadcrumb>
             <mte-result-status-bar
-              detected="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.totalDetected)}"
-              no-coverage="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.noCoverage)}"
-              pending="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.pending)}"
-              survived="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.survived)}"
-              total="${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.totalValid)}"
+              detected=${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.totalDetected)}
+              no-coverage=${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.noCoverage)}
+              pending=${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.pending)}
+              survived=${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.survived)}
+              total=${ifDefined(this.rootModel?.systemUnderTestMetrics.metrics.totalValid)}
             ></mte-result-status-bar>
             ${when(
               this.context.view === 'mutant' && this.context.result,
               () =>
                 html`<mte-mutant-view
                   id="mte-mutant-view"
-                  .result="${this.context.result}"
-                  .thresholds="${this.report!.thresholds}"
-                  .path="${this.path}"
+                  .result=${this.context.result}
+                  .thresholds=${this.report!.thresholds}
+                  .path=${this.path}
                 ></mte-mutant-view>`,
             )}
             ${when(
               this.context.view === 'test' && this.context.result,
-              () => html`<mte-test-view id="mte-test-view" .result="${this.context.result}" .path="${this.path}"></mte-test-view>`,
+              () => html`<mte-test-view id="mte-test-view" .result=${this.context.result} .path=${this.path}></mte-test-view>`,
             )}
           </div>`,
     );
@@ -422,8 +422,8 @@ export class MutationTestReportAppComponent extends RealTimeElement {
                 <a
                   class="inline-block rounded-t-lg border-b-2 border-transparent p-4 transition-colors hover:border-gray-300 hover:bg-gray-200 hover:text-gray-700 aria-selected:border-b-[3px] aria-selected:border-solid aria-selected:border-primary-700 aria-selected:text-primary-on"
                   role="tab"
-                  href="${toAbsoluteUrl(type)}"
-                  aria-selected="${isActive}"
+                  href=${toAbsoluteUrl(type)}
+                  aria-selected=${isActive}
                   aria-controls="mte-${type}-view"
                   >${text}</a
                 >

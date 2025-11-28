@@ -89,19 +89,19 @@ export class MutationTestReportFilePickerComponent extends BaseElement {
 
   render() {
     return html`<dialog
-      @click="${this.close}"
-      @toggle="${this.#handleToggle}"
+      @click=${this.close}
+      @toggle=${this.#handleToggle}
       aria-labelledby="file-picker-label"
       class="mx-auto my-4 max-w-160 bg-transparent backdrop:bg-gray-950/50 backdrop:backdrop-blur-lg md:w-1/2"
     >
-      <div @click="${(e: MouseEvent) => e.stopPropagation()}" class="flex h-fit max-h-132 flex-col rounded-lg bg-gray-200/60 p-4 backdrop-blur-lg">
+      <div @click=${(e: MouseEvent) => e.stopPropagation()} class="flex h-fit max-h-132 flex-col rounded-lg bg-gray-200/60 p-4 backdrop-blur-lg">
         <div class="mb-3 flex items-center rounded-sm bg-gray-200/60 p-2 text-gray-800 shadow-lg">
           <div class="mx-2 flex items-center">${searchIcon}</div>
           <label id="file-picker-label" for="file-picker-input" class="sr-only">Search for a file</label>
           <input
             autocomplete="off"
             id="file-picker-input"
-            @input="${this.#handleSearch}"
+            @input=${this.#handleSearch}
             type="search"
             style="box-shadow: none"
             class="mr-2 w-full border-0 border-transparent bg-transparent focus:shadow-none"
@@ -126,14 +126,14 @@ export class MutationTestReportFilePickerComponent extends BaseElement {
               return html`<li
                 class="group snap-start rounded-sm bg-gray-200 text-gray-900 transition-shadow aria-selected:bg-primary-500 aria-selected:text-gray-50 aria-selected:shadow-lg"
                 role="option"
-                aria-selected="${index === this.fileIndex}"
+                aria-selected=${index === this.fileIndex}
               >
                 <a
-                  tabindex="${index === this.fileIndex ? 0 : -1}"
-                  @click="${this.close}"
+                  tabindex=${index === this.fileIndex ? 0 : -1}
+                  @click=${this.close}
                   class="flex h-full flex-wrap items-center p-2 outline-hidden"
-                  @mousemove="${() => (this.fileIndex = index)}"
-                  href="${toAbsoluteUrl(view, name)}"
+                  @mousemove=${() => (this.fileIndex = index)}
+                  href=${toAbsoluteUrl(view, name)}
                 >
                   <span class="inline-flex" title="File with ${view}s">${this.#renderTestOrMutantIndication(view)}</span>
                   <span class="ms-1">${file.result?.name}</span>

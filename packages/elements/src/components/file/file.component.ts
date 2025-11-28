@@ -110,13 +110,13 @@ export class FileComponent extends RealTimeElement {
 
     return html`<mte-state-filter
         allow-toggle-all
-        .filters="${this.filters}"
-        @filters-changed="${this.#filtersChanged}"
+        .filters=${this.filters}
+        @filters-changed=${this.#filtersChanged}
         @next=${this.#nextMutant}
         @previous=${this.#previousMutant}
       ></mte-state-filter>
       <pre
-        @click="${this.#codeClicked}"
+        @click=${this.#codeClicked}
         id="report-code-block"
         class="line-numbers ${this.selectedMutantStates.map((state) => `mte-selected-${state}`).join(' ')} flex rounded-md py-4"
       >

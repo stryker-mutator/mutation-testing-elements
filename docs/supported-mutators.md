@@ -13,7 +13,7 @@ All Stryker versions support a variety of different mutators. We've aligned on a
 | [Array Declaration](#array-declaration)           |                     ✅                     |                        ✅                        |                      ❌                      |
 | [Assignment Expression](#assignment-expression)   |                     ❌                     |                        ✅                        |                     n/a                      |
 | [Block Statement](#block-statement)               |                     ✅                     |                        ✅                        |                      ❌                      |
-| [Boolean Literal](#boolean-literal)               |                     ✅                     |                        ✅                        |                     ️✅                      |
+| [Boolean Literal](#boolean-literal)               |                     ✅                     |                        ✅                        |                      ️✅                      |
 | [Checked Statement](#checked-statement)           |                    n/a                     |                        ✅                        |                     n/a                      |
 | [Conditional Expression](#conditional-expression) |                     ✅                     |                        ✅                        |                      ✅                      |
 | [Equality Operator](#equality-operator)           |                     ✅                     |                        ✅                        |                      ✅                      |

@@ -105,8 +105,8 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
   #renderTableHead(column: Column<TMetric>) {
     const id = `tooltip-${column.key.toString()}`;
     const header = column.tooltip
-      ? html`<mte-tooltip title="${column.tooltip}" id="${id}">${column.label}</mte-tooltip>`
-      : html`<span id="${id}">${column.label}</span>`;
+      ? html`<mte-tooltip title=${column.tooltip} id=${id}>${column.label}</mte-tooltip>`
+      : html`<span id=${id}>${column.label}</span>`;
     if (column.group) {
       return html`<th colspan="2" class="bg-gray-200 px-2"> ${header} </th>`;
     }
@@ -136,13 +136,11 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
   }
 
   #renderRow(name: string, row: MetricsResult<TFile, TMetric>, ...path: string[]) {
-    return html`<tr title="${row.name}" class="group hover:bg-gray-200">
+    return html`<tr title=${row.name} class="group hover:bg-gray-200">
       <td class="font-semibold">
         <div class="flex items-center justify-start">
-          <mte-file-icon file-name="${row.name}" ?file="${row.file}" class="mx-1 flex items-center"></mte-file-icon> ${path.length > 0
-            ? html`<a class="mr-auto inline-block w-full py-4 pr-2 hover:text-primary-on hover:underline" href="${toAbsoluteUrl(...path)}"
-                >${name}</a
-              >`
+          <mte-file-icon file-name=${row.name} ?file=${row.file} class="mx-1 flex items-center"></mte-file-icon> ${path.length > 0
+            ? html`<a class="mr-auto inline-block w-full py-4 pr-2 hover:text-primary-on hover:underline" href=${toAbsoluteUrl(...path)}>${name}</a>`
             : html`<span class="py-4">${row.name}</span>`}
         </div>
       </td>
@@ -171,12 +169,12 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
                 <div
                   class="${bgColoringClass} h-3 rounded-full pl-1 transition-all"
                   role="progressbar"
-                  aria-valuenow="${mutationScoreRounded}"
+                  aria-valuenow=${mutationScoreRounded}
                   aria-valuemin="0"
                   aria-valuemax="100"
                   aria-describedby="tooltip-mutationScore"
-                  title="${column.label}"
-                  style="${progressBarStyle}"
+                  title=${column.label}
+                  style=${progressBarStyle}
                 ></div>
               </div>`
             : html`<span class="text-light-muted font-bold">N/A</span>`}
@@ -187,7 +185,7 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
     }
     return html`<td
       class="${classMap({ 'font-bold': column.isBold ?? false, [backgroundColoringClass]: true })} py-4 text-center group-hover:bg-gray-200!"
-      aria-describedby="${`tooltip-${column.key.toString()}`}"
+      aria-describedby=${`tooltip-${column.key.toString()}`}
       >${value}</td
     >`;
   }
