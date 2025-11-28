@@ -15,7 +15,7 @@ import type {
 } from 'mutation-testing-metrics';
 import { calculateMutationTestMetrics } from 'mutation-testing-metrics';
 import type { MutantResult, MutationTestResult } from 'mutation-testing-report-schema/api';
-import type { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { fromEvent, sampleTime } from 'rxjs';
 
 import { isLocalStorageAvailable } from '../../lib/browser.js';
@@ -112,6 +112,9 @@ export class MutationTestReportAppComponent extends RealTimeElement {
     super();
     this.context = { view: View.mutant, path: [] };
     this.path = [];
+    this.#subscription = new Subscription();
+    this.#sseSubscription = new Subscription();
+    this.#subscription.add(this.#sseSubscription);
   }
 
   public firstUpdated(): void {
@@ -249,19 +252,18 @@ export class MutationTestReportAppComponent extends RealTimeElement {
 
   public static styles = [unsafeCSS(theme), tailwind];
 
-  public readonly subscriptions: Subscription[] = [];
-
   public connectedCallback() {
     super.connectedCallback();
     window
       .matchMedia('(prefers-color-scheme: dark)')
       .addEventListener?.('change', this.#handlePrefersColorScheme, { signal: this.#abortController.signal });
-    this.subscriptions.push(locationChange$.subscribe((path) => (this.path = path)));
+    this.#subscription.add(locationChange$.subscribe((path) => (this.path = path)));
     this.#initializeSse();
   }
 
   #source: EventSource | undefined;
-  #sseSubscriptions = new Set<Subscription>();
+  readonly #subscription: Subscription;
+  readonly #sseSubscription: Subscription;
   #theMutant?: MutantModel;
   #theTest?: TestModel;
 
@@ -320,14 +322,18 @@ export class MutationTestReportAppComponent extends RealTimeElement {
         this.#applyChanges();
       });
 
-    this.#sseSubscriptions.add(modifySubscription);
-    this.#sseSubscriptions.add(applySubscription);
+    this.#sseSubscription.add(modifySubscription);
+    this.#sseSubscription.add(applySubscription);
 
-    this.#source.addEventListener('finished', () => {
-      this.#source?.close();
-      this.#applyChanges();
-      this.#sseSubscriptions.forEach((s) => s.unsubscribe());
-    });
+    this.#source.addEventListener(
+      'finished',
+      () => {
+        this.#source?.close();
+        this.#applyChanges();
+        this.#sseSubscription.unsubscribe();
+      },
+      { signal: this.#abortController.signal },
+    );
   }
 
   #applyChanges() {
@@ -339,7 +345,8 @@ export class MutationTestReportAppComponent extends RealTimeElement {
   public disconnectedCallback() {
     super.disconnectedCallback();
     this.#abortController.abort();
-    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+    this.#subscription.unsubscribe();
+    this.#source?.close();
   }
 
   #renderTitle() {
