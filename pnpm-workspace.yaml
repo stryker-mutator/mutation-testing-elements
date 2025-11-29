@@ -13,6 +13,8 @@ catalog:
 minimumReleaseAge: 2880
 
 trustPolicy: no-downgrade
+trustPolicyExclude:
+  - semver
 
 ignoredBuiltDependencies:
   - unrs-resolver
