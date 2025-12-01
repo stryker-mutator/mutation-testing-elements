@@ -16,6 +16,7 @@ trustPolicy: no-downgrade
 trustPolicyExclude:
   - semver
   - chokidar
+  - '@octokit/endpoint'
 
 ignoredBuiltDependencies:
   - unrs-resolver
