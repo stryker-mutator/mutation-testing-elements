@@ -35,7 +35,7 @@ runs:
         cache: 'sbt'
     - uses: sbt/setup-sbt@v1
       if: ${{ inputs.setup-java == 'true' }}
-    - uses: actions/cache@v4
+    - uses: actions/cache@v5
       if: ${{ github.actor == 'stryker-mutator' }}
       with:
         path: .nx/cache
