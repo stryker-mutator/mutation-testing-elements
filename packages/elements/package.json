@@ -46,7 +46,7 @@
   },
   "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/elements#readme",
   "devDependencies": {
-    "@lit-labs/observers": "2.0.6",
+    "@lit-labs/observers": "2.1.0",
     "@playwright/test": "1.57.0",
     "@stryker-mutator/core": "catalog:",
     "@stryker-mutator/typescript-checker": "catalog:",
