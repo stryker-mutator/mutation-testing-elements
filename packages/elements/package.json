@@ -62,7 +62,7 @@
     "eslint-plugin-wc": "3.0.2",
     "fuzziersort": "4.0.1",
     "lightningcss": "1.30.2",
-    "lit": "3.3.1",
+    "lit": "3.3.2",
     "mutation-testing-metrics": "workspace:*",
     "mutation-testing-real-time": "workspace:*",
     "mutation-testing-report-schema": "workspace:*",
