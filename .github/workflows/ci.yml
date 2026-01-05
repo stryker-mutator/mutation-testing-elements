@@ -6,6 +6,10 @@ on:
   pull_request:
     types: [synchronize, opened, reopened]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build_and_test:
     runs-on: ${{ matrix.os }}
