@@ -84,8 +84,8 @@ importers:
   packages/elements:
     devDependencies:
       '@lit-labs/observers':
-        specifier: 2.0.6
-        version: 2.0.6
+        specifier: 2.1.0
+        version: 2.1.0
       '@playwright/test':
         specifier: 1.57.0
         version: 1.57.0
@@ -962,8 +962,8 @@ packages:
     resolution: {integrity: sha512-hUTEWrR8zH+/Z3bp/R1aLm6DW8vB/BB7KH7Yeg4fMfrvSwxegiLVW9uJFAzWkK4mzEagmj/Dti85Yg9MN13t0g==}
     engines: {node: ^20.19.0 || ^22.12.0 || >=24.0.0}
 
-  '@lit-labs/observers@2.0.6':
-    resolution: {integrity: sha512-m+fSQ0twckagzw7SG7DPvGO4qMfKqItIUREXwC7GTo4TWk2H4oz4ozAab5tdMtMqch3M9z4uIx3oPy9x/Ut2Ow==}
+  '@lit-labs/observers@2.1.0':
+    resolution: {integrity: sha512-oeQ2tvi/ygq7S+VgnXIInMKHHFPFqvIV9j2zBzpCwl33cWviT2ltuxNpbd11etwtUVsM8woKQzfVnrc80PKhKA==}
 
   '@lit-labs/ssr-dom-shim@1.4.0':
     resolution: {integrity: sha512-ficsEARKnmmW5njugNYKipTm4SFnbik7CXtoencDZzmzo/dQ+2Q0bgkzJuoJP20Aj0F+izzJjOqsnkd6F/o1bw==}
@@ -5315,10 +5315,9 @@ snapshots:
       - supports-color
       - typescript
 
-  '@lit-labs/observers@2.0.6':
+  '@lit-labs/observers@2.1.0':
     dependencies:
       '@lit/reactive-element': 2.1.1
-      lit-html: 3.3.1
 
   '@lit-labs/ssr-dom-shim@1.4.0': {}
 
