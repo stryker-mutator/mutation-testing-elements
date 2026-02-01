@@ -47,7 +47,7 @@
   "homepage": "https://github.com/stryker-mutator/mutation-testing-elements/tree/master/packages/elements#readme",
   "devDependencies": {
     "@lit-labs/observers": "2.1.0",
-    "@playwright/test": "1.58.0",
+    "@playwright/test": "1.58.1",
     "@stryker-mutator/core": "catalog:",
     "@stryker-mutator/typescript-checker": "catalog:",
     "@stryker-mutator/vitest-runner": "catalog:",
@@ -66,7 +66,7 @@
     "mutation-testing-metrics": "workspace:*",
     "mutation-testing-real-time": "workspace:*",
     "mutation-testing-report-schema": "workspace:*",
-    "playwright": "1.58.0",
+    "playwright": "1.58.1",
     "prism-svelte": "0.5.0",
     "prismjs": "1.30.0",
     "rxjs": "7.8.2",
