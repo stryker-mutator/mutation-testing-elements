@@ -3,10 +3,10 @@ packages:
 
 catalog:
   '@eslint/js': ^9.39.1
-  '@stryker-mutator/core': 9.5.0
-  '@stryker-mutator/mocha-runner': 9.5.0
-  '@stryker-mutator/typescript-checker': 9.5.0
-  '@stryker-mutator/vitest-runner': 9.5.0
+  '@stryker-mutator/core': 9.5.1
+  '@stryker-mutator/mocha-runner': 9.5.1
+  '@stryker-mutator/typescript-checker': 9.5.1
+  '@stryker-mutator/vitest-runner': 9.5.1
   eslint: ^9.39.1
 
 # 2 days, in minutes
