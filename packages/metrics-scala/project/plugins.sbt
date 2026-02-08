@@ -2,7 +2,7 @@ addSbtPlugin("com.github.sbt" % "sbt-pgp" % "2.3.1")
 
 addSbtPlugin("org.scalameta" % "sbt-mdoc" % "2.8.2")
 
-addSbtPlugin("org.typelevel" % "sbt-tpolecat" % "0.5.2")
+addSbtPlugin("org.typelevel" % "sbt-tpolecat" % "0.5.3")
 
 addSbtPlugin("io.stryker-mutator" % "sbt-stryker4s" % "0.19.1")
 
