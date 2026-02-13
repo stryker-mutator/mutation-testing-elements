@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.7.2](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.7.1...v3.7.2) (2026-02-13)
+
+
+### Bug Fixes
+
+* **metrics:** fix groupBy function ([#4060](https://github.com/stryker-mutator/mutation-testing-elements/issues/4060)) ([e7a089a](https://github.com/stryker-mutator/mutation-testing-elements/commit/e7a089a81b6b461481dcf454115053a3de32f74f)), closes [#4059](https://github.com/stryker-mutator/mutation-testing-elements/issues/4059)
+
+
+
+
+
 ## [3.7.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.7.0...v3.7.1) (2025-11-24)
 
 
