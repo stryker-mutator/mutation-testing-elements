@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 
+import { groupBy } from '../../src/helpers/group-by.js';
 import { normalizeFileNames } from '../../src/index.js';
 
 describe(normalizeFileNames.name, () => {
@@ -31,5 +32,13 @@ describe(normalizeFileNames.name, () => {
       'test/components/foo.spec.js': 5,
     };
     expect(out).deep.eq(expected);
+  });
+});
+
+describe('group-by', () => {
+  it('groupBy handles proto accessors safely', () => {
+    const result = groupBy(['x'], () => '__proto__');
+
+    expect(result.__proto__).deep.eq(['x']);
   });
 });
