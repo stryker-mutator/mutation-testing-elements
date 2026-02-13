@@ -10,17 +10,17 @@ catalogs:
       specifier: ^9.39.1
       version: 9.39.2
     '@stryker-mutator/core':
-      specifier: 9.5.0
-      version: 9.5.0
+      specifier: 9.5.1
+      version: 9.5.1
     '@stryker-mutator/mocha-runner':
-      specifier: 9.5.0
-      version: 9.5.0
+      specifier: 9.5.1
+      version: 9.5.1
     '@stryker-mutator/typescript-checker':
-      specifier: 9.5.0
-      version: 9.5.0
+      specifier: 9.5.1
+      version: 9.5.1
     '@stryker-mutator/vitest-runner':
-      specifier: 9.5.0
-      version: 9.5.0
+      specifier: 9.5.1
+      version: 9.5.1
     eslint:
       specifier: ^9.39.1
       version: 9.39.2
@@ -91,13 +91,13 @@ importers:
         version: 1.58.1
       '@stryker-mutator/core':
         specifier: 'catalog:'
-        version: 9.5.0(@types/node@24.10.11)
+        version: 9.5.1(@types/node@24.10.11)
       '@stryker-mutator/typescript-checker':
         specifier: 'catalog:'
-        version: 9.5.0(@stryker-mutator/core@9.5.0(@types/node@24.10.11))(typescript@5.9.3)
+        version: 9.5.1(@stryker-mutator/core@9.5.1(@types/node@24.10.11))(typescript@5.9.3)
       '@stryker-mutator/vitest-runner':
         specifier: 'catalog:'
-        version: 9.5.0(@stryker-mutator/core@9.5.0(@types/node@24.10.11))(vitest@4.0.18)
+        version: 9.5.1(@stryker-mutator/core@9.5.1(@types/node@24.10.11))(vitest@4.0.18)
       '@tailwindcss/forms':
         specifier: 0.5.11
         version: 0.5.11(tailwindcss@4.1.18)
@@ -200,13 +200,13 @@ importers:
     devDependencies:
       '@stryker-mutator/core':
         specifier: 'catalog:'
-        version: 9.5.0(@types/node@24.10.11)
+        version: 9.5.1(@types/node@24.10.11)
       '@stryker-mutator/mocha-runner':
         specifier: 'catalog:'
-        version: 9.5.0(@stryker-mutator/core@9.5.0(@types/node@24.10.11))(mocha@11.7.5)
+        version: 9.5.1(@stryker-mutator/core@9.5.1(@types/node@24.10.11))(mocha@11.7.5)
       '@stryker-mutator/typescript-checker':
         specifier: 'catalog:'
-        version: 9.5.0(@stryker-mutator/core@9.5.0(@types/node@24.10.11))(typescript@5.9.3)
+        version: 9.5.1(@stryker-mutator/core@9.5.1(@types/node@24.10.11))(typescript@5.9.3)
       eslint:
         specifier: 'catalog:'
         version: 9.39.2(jiti@2.6.1)
@@ -220,13 +220,13 @@ importers:
     devDependencies:
       '@stryker-mutator/core':
         specifier: 'catalog:'
-        version: 9.5.0(@types/node@24.10.11)
+        version: 9.5.1(@types/node@24.10.11)
       '@stryker-mutator/mocha-runner':
         specifier: 'catalog:'
-        version: 9.5.0(@stryker-mutator/core@9.5.0(@types/node@24.10.11))(mocha@11.7.5)
+        version: 9.5.1(@stryker-mutator/core@9.5.1(@types/node@24.10.11))(mocha@11.7.5)
       '@stryker-mutator/typescript-checker':
         specifier: 'catalog:'
-        version: 9.5.0(@stryker-mutator/core@9.5.0(@types/node@24.10.11))(typescript@5.9.3)
+        version: 9.5.1(@stryker-mutator/core@9.5.1(@types/node@24.10.11))(typescript@5.9.3)
       eslint:
         specifier: 'catalog:'
         version: 9.39.2(jiti@2.6.1)
@@ -1387,41 +1387,41 @@ packages:
   '@standard-schema/spec@1.1.0':
     resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
 
-  '@stryker-mutator/api@9.5.0':
-    resolution: {integrity: sha512-cDJiHI1LgBmJWKqnww/9hfAs7is3aevOw5gnWEttb4KH4dmMwA0icNEy6pB6ftZPa0QofBb99a/q/3zWN+4rcw==}
+  '@stryker-mutator/api@9.5.1':
+    resolution: {integrity: sha512-Z8Waw3v9XfqouOKnRjPv0ePnu7UfYfErJaNE2+al2bqquFaTuONYaeED55A4gzupjmfdGCfBdnMdmiuH4zww5g==}
     engines: {node: '>=20.0.0'}
 
-  '@stryker-mutator/core@9.5.0':
-    resolution: {integrity: sha512-PldEhZWnLjPxm6rFo1zXBjuwiRPJOgY+2xSHfG6MxbsHZU1TldopdBUlYK0qCjaVhr/zI4bCUAM3WlCu3JBe7Q==}
+  '@stryker-mutator/core@9.5.1':
+    resolution: {integrity: sha512-dudpdpxfWaoYcFE9XIYm+z0La2WMPh8M0DHQYuAT+zZ9VTaFd0L92DmzAuqc7oJgR9DX66nYoU7i0GQ5+5oOIQ==}
     engines: {node: '>=20.0.0'}
     hasBin: true
 
-  '@stryker-mutator/instrumenter@9.5.0':
-    resolution: {integrity: sha512-zZhxc5netQPrXZqK7QIsmRqC8h+dxWkDLeZqHqv9fVhIRWr8dtJHw3FQDehN36CQB9nbLmsJ+NCiF+M15QcvTg==}
+  '@stryker-mutator/instrumenter@9.5.1':
+    resolution: {integrity: sha512-WjuqwJOmiftTGCzhtWhyXqMd5+TVMVsoAWDonvp4uVf5/1HPN/dVcDYILTrfK/sfiOvtLCK30byRBhoaUnOs4A==}
     engines: {node: '>=20.0.0'}
 
-  '@stryker-mutator/mocha-runner@9.5.0':
-    resolution: {integrity: sha512-H5pBpUHwSvN0xPJHyeYGRA08hsr6FOwwwkai/xf0dqj8k6lsvpSqEnIi8QR6foe6sV/bIqE2m9xXlgvdKfgDBg==}
+  '@stryker-mutator/mocha-runner@9.5.1':
+    resolution: {integrity: sha512-I1kfAcBdF0rNa5rVRmm1J0fJ+/n1IQpwYJCvhI+d2xRTQWvEOaZQgeS+l5hAOjhzS9bofZO4v2LWlxZDJEQ56Q==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
-      '@stryker-mutator/core': 9.5.0
+      '@stryker-mutator/core': 9.5.1
       mocha: '>= 7.2 < 12'
 
-  '@stryker-mutator/typescript-checker@9.5.0':
-    resolution: {integrity: sha512-OlveNVvw9GSzKoyEBH2o14ozJ8R6MdoadECOvdf5UH+zkY0U0SdTKZpBLFRQoO7TsaY5nk//HObAw7a0R5k1Rw==}
+  '@stryker-mutator/typescript-checker@9.5.1':
+    resolution: {integrity: sha512-VEcpCvg7wl4FxCxhx3u5VjKpMTHiSB2iW/0gejZGli/m5BSmW3ERhV3eRPEjXAeg7eq7wp5FXYhTbRjO8mWzwA==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
-      '@stryker-mutator/core': 9.5.0
+      '@stryker-mutator/core': 9.5.1
       typescript: '>=3.6'
 
-  '@stryker-mutator/util@9.5.0':
-    resolution: {integrity: sha512-K2TBOzuoNwzPvXAWn+x5S/gItxmJLs8MwsQ8amqB+Zsam8Go90THFO1iM5Kh7tATmfboU1meAyJ8SmrZWW+koQ==}
+  '@stryker-mutator/util@9.5.1':
+    resolution: {integrity: sha512-KXmbEeXF3Z20P+9W8i/f1j+U5nWSm9oeb1VNV6j5/RfzhnMKWZCrvojJqRfnxdkCiMIFWMAHSlM9K0mfFZLNXQ==}
 
-  '@stryker-mutator/vitest-runner@9.5.0':
-    resolution: {integrity: sha512-C1Z0B3vGtBzkkOTaAaGcB62YW/WON30Vov4cyUvtfsupfqiHnVFuoXKiPAeDfAUuRb9sw6LKaSZQ4TxUDMrdhg==}
+  '@stryker-mutator/vitest-runner@9.5.1':
+    resolution: {integrity: sha512-4aMnwJ7p6RKraoHt34fY/tP/8PfxbxqKJNQxZ7cSC9Plq3hf9Ec++67x+IVZnHD7UjrAd7qWJqIzUTwKB1Kc9g==}
     engines: {node: '>=14.18.0'}
     peerDependencies:
-      '@stryker-mutator/core': 9.5.0
+      '@stryker-mutator/core': 9.5.1
       vitest: '>=2.0.0'
 
   '@tailwindcss/forms@0.5.11':
@@ -4703,11 +4703,11 @@ snapshots:
   '@babel/core@7.28.6':
     dependencies:
       '@babel/code-frame': 7.29.0
-      '@babel/generator': 7.28.6
+      '@babel/generator': 7.29.1
       '@babel/helper-compilation-targets': 7.28.6
       '@babel/helper-module-transforms': 7.28.6(@babel/core@7.28.6)
       '@babel/helpers': 7.28.6
-      '@babel/parser': 7.28.6
+      '@babel/parser': 7.29.0
       '@babel/template': 7.28.6
       '@babel/traverse': 7.29.0
       '@babel/types': 7.29.0
@@ -4722,7 +4722,7 @@ snapshots:
 
   '@babel/generator@7.28.6':
     dependencies:
-      '@babel/parser': 7.28.6
+      '@babel/parser': 7.29.0
       '@babel/types': 7.29.0
       '@jridgewell/gen-mapping': 0.3.13
       '@jridgewell/trace-mapping': 0.3.31
@@ -4900,7 +4900,7 @@ snapshots:
   '@babel/template@7.28.6':
     dependencies:
       '@babel/code-frame': 7.29.0
-      '@babel/parser': 7.28.6
+      '@babel/parser': 7.29.0
       '@babel/types': 7.29.0
 
   '@babel/traverse@7.29.0':
@@ -5520,7 +5520,7 @@ snapshots:
       proggy: 3.0.0
       promise-all-reject-late: 1.0.1
       promise-call-limit: 3.0.2
-      semver: 7.7.2
+      semver: 7.7.4
       ssri: 12.0.0
       treeverse: 3.0.0
       walk-up-path: 4.0.0
@@ -5529,11 +5529,11 @@ snapshots:
 
   '@npmcli/fs@4.0.0':
     dependencies:
-      semver: 7.7.2
+      semver: 7.7.4
 
   '@npmcli/fs@5.0.0':
     dependencies:
-      semver: 7.7.2
+      semver: 7.7.4
 
   '@npmcli/git@6.0.3':
     dependencies:
@@ -5543,7 +5543,7 @@ snapshots:
       npm-pick-manifest: 10.0.0
       proc-log: 5.0.0
       promise-retry: 2.0.1
-      semver: 7.7.2
+      semver: 7.7.4
       which: 5.0.0
 
   '@npmcli/git@7.0.1':
@@ -5554,7 +5554,7 @@ snapshots:
       npm-pick-manifest: 11.0.3
       proc-log: 6.1.0
       promise-retry: 2.0.1
-      semver: 7.7.2
+      semver: 7.7.4
       which: 6.0.0
 
   '@npmcli/installed-package-contents@3.0.0':
@@ -5580,7 +5580,7 @@ snapshots:
       json-parse-even-better-errors: 5.0.0
       pacote: 21.2.0
       proc-log: 6.1.0
-      semver: 7.7.2
+      semver: 7.7.4
     transitivePeerDependencies:
       - supports-color
 
@@ -5599,7 +5599,7 @@ snapshots:
       hosted-git-info: 9.0.2
       json-parse-even-better-errors: 5.0.0
       proc-log: 6.1.0
-      semver: 7.7.2
+      semver: 7.7.4
       validate-npm-package-license: 3.0.4
 
   '@npmcli/promise-spawn@8.0.3':
@@ -5634,7 +5634,7 @@ snapshots:
       enquirer: 2.3.6
       minimatch: 10.1.1
       nx: 22.4.5
-      semver: 7.7.2
+      semver: 7.7.4
       tslib: 2.8.1
       yargs-parser: 21.1.1
 
@@ -5870,19 +5870,19 @@ snapshots:
 
   '@standard-schema/spec@1.1.0': {}
 
-  '@stryker-mutator/api@9.5.0':
+  '@stryker-mutator/api@9.5.1':
     dependencies:
       mutation-testing-metrics: 3.7.1
       mutation-testing-report-schema: 3.7.1
       tslib: 2.8.1
       typed-inject: 5.0.0
 
-  '@stryker-mutator/core@9.5.0(@types/node@24.10.11)':
+  '@stryker-mutator/core@9.5.1(@types/node@24.10.11)':
     dependencies:
       '@inquirer/prompts': 8.2.0(@types/node@24.10.11)
-      '@stryker-mutator/api': 9.5.0
-      '@stryker-mutator/instrumenter': 9.5.0
-      '@stryker-mutator/util': 9.5.0
+      '@stryker-mutator/api': 9.5.1
+      '@stryker-mutator/instrumenter': 9.5.1
+      '@stryker-mutator/util': 9.5.1
       ajv: 8.17.1
       chalk: 5.6.2
       commander: 14.0.3
@@ -5909,7 +5909,7 @@ snapshots:
       - '@types/node'
       - supports-color
 
-  '@stryker-mutator/instrumenter@9.5.0':
+  '@stryker-mutator/instrumenter@9.5.1':
     dependencies:
       '@babel/core': 7.28.6
       '@babel/generator': 7.28.6
@@ -5917,8 +5917,8 @@ snapshots:
       '@babel/plugin-proposal-decorators': 7.28.6(@babel/core@7.28.6)
       '@babel/plugin-transform-explicit-resource-management': 7.28.6(@babel/core@7.28.6)
       '@babel/preset-typescript': 7.28.5(@babel/core@7.28.6)
-      '@stryker-mutator/api': 9.5.0
-      '@stryker-mutator/util': 9.5.0
+      '@stryker-mutator/api': 9.5.1
+      '@stryker-mutator/util': 9.5.1
       angular-html-parser: 10.4.0
       semver: 7.7.4
       tslib: 2.8.1
@@ -5926,29 +5926,29 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@stryker-mutator/mocha-runner@9.5.0(@stryker-mutator/core@9.5.0(@types/node@24.10.11))(mocha@11.7.5)':
+  '@stryker-mutator/mocha-runner@9.5.1(@stryker-mutator/core@9.5.1(@types/node@24.10.11))(mocha@11.7.5)':
     dependencies:
-      '@stryker-mutator/api': 9.5.0
-      '@stryker-mutator/core': 9.5.0(@types/node@24.10.11)
-      '@stryker-mutator/util': 9.5.0
+      '@stryker-mutator/api': 9.5.1
+      '@stryker-mutator/core': 9.5.1(@types/node@24.10.11)
+      '@stryker-mutator/util': 9.5.1
       mocha: 11.7.5
       tslib: 2.8.1
 
-  '@stryker-mutator/typescript-checker@9.5.0(@stryker-mutator/core@9.5.0(@types/node@24.10.11))(typescript@5.9.3)':
+  '@stryker-mutator/typescript-checker@9.5.1(@stryker-mutator/core@9.5.1(@types/node@24.10.11))(typescript@5.9.3)':
     dependencies:
-      '@stryker-mutator/api': 9.5.0
-      '@stryker-mutator/core': 9.5.0(@types/node@24.10.11)
-      '@stryker-mutator/util': 9.5.0
+      '@stryker-mutator/api': 9.5.1
+      '@stryker-mutator/core': 9.5.1(@types/node@24.10.11)
+      '@stryker-mutator/util': 9.5.1
       semver: 7.7.4
       typescript: 5.9.3
 
-  '@stryker-mutator/util@9.5.0': {}
+  '@stryker-mutator/util@9.5.1': {}
 
-  '@stryker-mutator/vitest-runner@9.5.0(@stryker-mutator/core@9.5.0(@types/node@24.10.11))(vitest@4.0.18)':
+  '@stryker-mutator/vitest-runner@9.5.1(@stryker-mutator/core@9.5.1(@types/node@24.10.11))(vitest@4.0.18)':
     dependencies:
-      '@stryker-mutator/api': 9.5.0
-      '@stryker-mutator/core': 9.5.0(@types/node@24.10.11)
-      '@stryker-mutator/util': 9.5.0
+      '@stryker-mutator/api': 9.5.1
+      '@stryker-mutator/core': 9.5.1(@types/node@24.10.11)
+      '@stryker-mutator/util': 9.5.1
       tslib: 2.8.1
       vitest: 4.0.18(@types/node@24.10.11)(@vitest/browser-playwright@4.0.18)(jiti@2.6.1)(lightningcss@1.31.1)(yaml@2.8.2)
 
@@ -6621,7 +6621,7 @@ snapshots:
       handlebars: 4.7.8
       json-stringify-safe: 5.0.1
       meow: 8.1.2
-      semver: 7.7.2
+      semver: 7.7.4
       split: 1.0.1
 
   conventional-commits-filter@3.0.0:
@@ -7158,7 +7158,7 @@ snapshots:
   git-semver-tags@5.0.1:
     dependencies:
       meow: 8.1.2
-      semver: 7.7.2
+      semver: 7.7.4
 
   git-up@7.0.0:
     dependencies:
@@ -7324,7 +7324,7 @@ snapshots:
       npm-package-arg: 13.0.1
       promzard: 2.0.0
       read: 4.1.0
-      semver: 7.7.2
+      semver: 7.7.4
       validate-npm-package-license: 3.0.4
       validate-npm-package-name: 6.0.2
 
@@ -7614,7 +7614,7 @@ snapshots:
       npm-package-arg: 13.0.1
       npm-registry-fetch: 19.1.0
       proc-log: 5.0.0
-      semver: 7.7.2
+      semver: 7.7.4
       sigstore: 4.1.0
       ssri: 12.0.0
     transitivePeerDependencies:
@@ -7801,7 +7801,7 @@ snapshots:
 
   make-dir@4.0.0:
     dependencies:
-      semver: 7.7.2
+      semver: 7.7.4
 
   make-fetch-happen@14.0.3:
     dependencies:
@@ -8016,7 +8016,7 @@ snapshots:
       array-differ: 3.0.0
       array-union: 2.1.0
       arrify: 2.0.1
-      minimatch: 3.0.5
+      minimatch: 3.1.2
 
   mutation-server-protocol@0.4.1:
     dependencies:
@@ -8052,7 +8052,7 @@ snapshots:
       make-fetch-happen: 14.0.3
       nopt: 8.1.0
       proc-log: 5.0.0
-      semver: 7.7.2
+      semver: 7.7.4
       tar: 7.5.7
       tinyglobby: 0.2.12
       which: 5.0.0
@@ -8078,7 +8078,7 @@ snapshots:
     dependencies:
       hosted-git-info: 4.1.0
       is-core-module: 2.16.1
-      semver: 7.7.2
+      semver: 7.7.4
       validate-npm-package-license: 3.0.4
 
   npm-bundled@4.0.0:
@@ -8091,11 +8091,11 @@ snapshots:
 
   npm-install-checks@7.1.2:
     dependencies:
-      semver: 7.7.2
+      semver: 7.7.4
 
   npm-install-checks@8.0.0:
     dependencies:
-      semver: 7.7.2
+      semver: 7.7.4
 
   npm-normalize-package-bin@4.0.0: {}
 
@@ -8105,14 +8105,14 @@ snapshots:
     dependencies:
       hosted-git-info: 8.1.0
       proc-log: 5.0.0
-      semver: 7.7.2
+      semver: 7.7.4
       validate-npm-package-name: 6.0.2
 
   npm-package-arg@13.0.1:
     dependencies:
       hosted-git-info: 9.0.2
       proc-log: 5.0.0
-      semver: 7.7.2
+      semver: 7.7.4
       validate-npm-package-name: 6.0.2
 
   npm-packlist@10.0.3:
@@ -8125,14 +8125,14 @@ snapshots:
       npm-install-checks: 7.1.2
       npm-normalize-package-bin: 4.0.0
       npm-package-arg: 12.0.2
-      semver: 7.7.2
+      semver: 7.7.4
 
   npm-pick-manifest@11.0.3:
     dependencies:
       npm-install-checks: 8.0.0
       npm-normalize-package-bin: 5.0.0
       npm-package-arg: 13.0.1
-      semver: 7.7.2
+      semver: 7.7.4
 
   npm-registry-fetch@19.1.0:
     dependencies:
