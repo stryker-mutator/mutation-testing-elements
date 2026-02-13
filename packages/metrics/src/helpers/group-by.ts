@@ -1,4 +1,10 @@
 export function groupBy<K extends PropertyKey, T>(arr: T[], criteria: (element: T) => K): Partial<Record<K, T[]>> {
+  // @ts-expect-error -- groupBy exists in Node 22+
+  if (Object.groupBy) {
+    // @ts-expect-error -- groupBy exists in Node 22+
+    return Object.groupBy(arr, criteria);
+  }
+
   return arr.reduce(
     (acc: Partial<Record<K, T[]>>, item) => {
       const key = criteria(item);
