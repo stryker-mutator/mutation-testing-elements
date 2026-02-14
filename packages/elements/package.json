@@ -53,7 +53,7 @@
     "@stryker-mutator/vitest-runner": "catalog:",
     "@tailwindcss/forms": "0.5.11",
     "@tailwindcss/vite": "4.1.18",
-    "@types/prismjs": "1.26.5",
+    "@types/prismjs": "1.26.6",
     "@vitest/browser-playwright": "4.0.18",
     "cross-env": "10.1.0",
     "eslint": "catalog:",
