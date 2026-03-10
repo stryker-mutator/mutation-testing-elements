@@ -25,7 +25,7 @@ import { mutantChanges } from '../../lib/mutant-changes.js';
 import { locationChange$, View } from '../../lib/router.js';
 import type { Theme } from '../../lib/theme.js';
 import { tailwind } from '../../style/index.js';
-import { type MutationTestReportFilePickerComponent } from '../file-picker/file-picker.component.js';
+import type { MutationTestReportFilePickerComponent } from '../file-picker/file-picker.component.js';
 import { RealTimeElement } from '../real-time-element.js';
 import theme from './theme.css?inline';
 

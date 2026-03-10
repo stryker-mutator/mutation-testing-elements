@@ -2,7 +2,7 @@ import tailwindcss from '@tailwindcss/vite';
 import { playwright } from '@vitest/browser-playwright';
 import { Features } from 'lightningcss';
 import { type MutationEventSender, RealTimeReporter } from 'mutation-testing-real-time';
-import { type Plugin } from 'vite';
+import type { Plugin } from 'vite';
 import { defineConfig, type ViteUserConfig } from 'vitest/config';
 
 const esbuildOptions = {

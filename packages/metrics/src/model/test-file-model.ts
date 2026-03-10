@@ -16,15 +16,15 @@ export class TestFileModel extends SourceFile implements TestFile {
    */
   result?: MetricsResult<TestFileModel, TestMetrics>;
 
+  name: string;
+
   /**
    * @param input the test file content
    * @param name the file name
    */
-  constructor(
-    input: TestFile,
-    public name: string,
-  ) {
+  constructor(input: TestFile, name: string) {
     super();
+    this.name = name;
     this.source = input.source;
     this.tests = input.tests.map((testDefinition) => {
       const test = new TestModel(testDefinition);
