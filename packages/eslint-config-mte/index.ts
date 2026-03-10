@@ -4,7 +4,7 @@ import importX from 'eslint-plugin-import-x';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
-import { defineConfig } from 'eslint/config';
+import { defineConfig, globalIgnores } from 'eslint/config';
 
 export default defineConfig(
   eslint.configs.recommended,
@@ -29,6 +29,7 @@ export default defineConfig(
     },
     rules: {
       '@typescript-eslint/consistent-type-imports': 'error',
+      '@typescript-eslint/no-import-type-side-effects': 'error',
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-unsafe-assignment': 'off',
@@ -64,19 +65,17 @@ export default defineConfig(
       '@typescript-eslint/ban-ts-comment': 'off',
     },
   },
-  {
-    ignores: [
-      'trace/',
-      'tsconfig-transpiler.js',
-      'node_modules',
-      'dist',
-      'dist-tsc',
-      'src-generated',
-      '.stryker-tmp',
-      'reports',
-      'testResources',
-      'target',
-      'playwright-report',
-    ],
-  },
+  globalIgnores([
+    'trace/',
+    'tsconfig-transpiler.js',
+    'node_modules',
+    'dist',
+    'dist-tsc',
+    'src-generated',
+    '.stryker-tmp',
+    'reports',
+    'testResources',
+    'target',
+    'playwright-report',
+  ]),
 );

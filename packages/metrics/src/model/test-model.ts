@@ -14,11 +14,12 @@ function assertLocationDefined(location: OpenEndLocation | undefined): asserts l
   }
 }
 
-export enum TestStatus {
-  Killing = 'Killing',
-  Covering = 'Covering',
-  NotCovering = 'NotCovering',
-}
+export const TestStatus = {
+  Killing: 'Killing',
+  Covering: 'Covering',
+  NotCovering: 'NotCovering',
+} as const;
+export type TestStatus = keyof typeof TestStatus;
 
 export class TestModel implements TestDefinition {
   public id!: string;

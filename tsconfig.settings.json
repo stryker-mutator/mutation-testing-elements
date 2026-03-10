@@ -9,6 +9,8 @@
     "noPropertyAccessFromIndexSignature": false,
     "exactOptionalPropertyTypes": false,
     "noUncheckedIndexedAccess": false,
-    "noImplicitOverride": false
+    "noImplicitOverride": false,
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true
   }
 }

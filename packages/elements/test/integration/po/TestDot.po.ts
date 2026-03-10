@@ -2,7 +2,7 @@ import { TestStatus } from 'mutation-testing-metrics';
 
 import { PageObject } from './PageObject.po.js';
 
-const allTestStates = Object.values(TestStatus) as TestStatus[];
+const allTestStates = Object.values(TestStatus);
 
 export class TestDot extends PageObject {
   public toggle() {
@@ -15,7 +15,6 @@ export class TestDot extends PageObject {
 
   public async getStatus(): Promise<TestStatus | undefined> {
     return (await this.#classes()).find((clazz) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
       const testState = allTestStates.find((state) => state === clazz);
       if (testState) {
         return testState;

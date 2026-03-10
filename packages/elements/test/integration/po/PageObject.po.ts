@@ -4,11 +4,12 @@ import { expect } from '@playwright/test';
 import { ElementSelector } from './ElementSelector.po.js';
 
 export class PageObject extends ElementSelector {
-  constructor(
-    protected readonly host: Locator,
-    protected readonly browser: Page,
-  ) {
+  protected readonly host: Locator;
+  protected readonly browser: Page;
+  constructor(host: Locator, browser: Page) {
     super(host);
+    this.host = host;
+    this.browser = browser;
   }
 
   public waitForVisible() {
