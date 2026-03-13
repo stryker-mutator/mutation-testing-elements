@@ -1,7 +1,7 @@
 /* eslint-disable import-x/no-deprecated */
 import { isServer } from 'lit';
 import { EMPTY, fromEvent, merge, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 
 /**
  * Observable for location changes on the hash part of the url
@@ -11,8 +11,16 @@ import { map, tap } from 'rxjs/operators';
  */
 export const locationChange$ = isServer
   ? EMPTY
-  : merge(of(1), fromEvent(window, 'hashchange').pipe(tap((event) => event.preventDefault()))).pipe(
-      map(() => window.location.hash.substr(1).split('/').filter(Boolean).map(decodeURIComponent)),
+  : merge(
+      of(1),
+      // @ts-expect-error - navigation is not yet supported in typescript, but it is supported in browsers
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      window.navigation ? fromEvent(window.navigation, 'navigatesuccess') : EMPTY,
+      fromEvent(window, 'hashchange').pipe(tap((event) => event.preventDefault())),
+    ).pipe(
+      map(() => window.location.hash.slice(1)),
+      distinctUntilChanged(),
+      map((hash) => hash.split('/').filter(Boolean).map(decodeURIComponent)),
     );
 
 export const View = {
