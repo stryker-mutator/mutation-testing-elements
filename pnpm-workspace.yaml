@@ -22,5 +22,4 @@ ignoredBuiltDependencies:
   - unrs-resolver
 
 onlyBuiltDependencies:
-  - esbuild
   - nx

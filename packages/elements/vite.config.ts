@@ -5,21 +5,9 @@ import { type MutationEventSender, RealTimeReporter } from 'mutation-testing-rea
 import type { Plugin } from 'vite';
 import { defineConfig, type ViteUserConfig } from 'vitest/config';
 
-const esbuildOptions = {
-  tsconfigRaw: {
-    compilerOptions: {
-      experimentalDecorators: true,
-    },
-  },
-};
-
 export default defineConfig(
   ({ mode }) =>
     ({
-      optimizeDeps: {
-        esbuildOptions,
-        include: ['mutation-testing-report-schema', 'mutation-testing-metrics'],
-      },
       resolve: {
         alias: {
           '/mutation-test-elements.js': '/src/index.ts',
@@ -29,7 +17,6 @@ export default defineConfig(
       server: {
         open: process.env.CI ? undefined : '/testResources/',
       },
-      esbuild: esbuildOptions,
       css: {
         transformer: 'lightningcss',
         lightningcss: {
@@ -38,7 +25,6 @@ export default defineConfig(
         },
       },
       build: {
-        cssMinify: 'lightningcss',
         emptyOutDir: !process.env.IIFE_BUILD,
         rollupOptions: {
           // For library usage, we want to externalize lit. When included as a script on the page we want to bundle it.
