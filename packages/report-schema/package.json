@@ -1,6 +1,6 @@
 {
   "name": "mutation-testing-report-schema",
-  "version": "3.7.2",
+  "version": "3.7.3",
   "description": "The json schema for a mutation testing report.",
   "main": "dist/src/index.js",
   "type": "module",

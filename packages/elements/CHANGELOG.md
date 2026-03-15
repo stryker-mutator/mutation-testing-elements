@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.7.3](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.7.2...v3.7.3) (2026-03-15)
+
+
+### Bug Fixes
+
+* **elements:** compatibility with `History` routers ([#4099](https://github.com/stryker-mutator/mutation-testing-elements/issues/4099)) ([6eb2a76](https://github.com/stryker-mutator/mutation-testing-elements/commit/6eb2a76a345bad077b1f1599ae55ba378df4a691))
+
+
+
+
+
 ## [3.7.2](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.7.1...v3.7.2) (2026-02-13)
 
 **Note:** Version bump only for package mutation-testing-elements
