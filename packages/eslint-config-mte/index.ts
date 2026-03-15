@@ -1,10 +1,12 @@
+import path from 'node:path';
+
 import eslint from '@eslint/js';
+import { defineConfig, globalIgnores } from 'eslint/config';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import importX from 'eslint-plugin-import-x';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
-import { defineConfig, globalIgnores } from 'eslint/config';
 
 export default defineConfig(
   eslint.configs.recommended,
@@ -18,7 +20,8 @@ export default defineConfig(
   {
     languageOptions: {
       parserOptions: {
-        project: ['./tsconfig.json', './{src,test}/tsconfig.json', './test/{unit,integration}/tsconfig.json', '../../tsconfig.node.json'],
+        projectService: true,
+        tsconfigRootDir: path.resolve(path.dirname(new URL(import.meta.url).pathname), '../../'),
       },
     },
     plugins: {
@@ -36,6 +39,8 @@ export default defineConfig(
 
       'import-x/newline-after-import': 'error',
       'import-x/no-deprecated': 'error',
+      'import-x/no-named-as-default-member': 'off',
+      'import-x/no-named-as-default': 'off',
 
       'simple-import-sort/exports': 'error',
       'simple-import-sort/imports': 'error',
