@@ -1,4 +1,4 @@
-export * from '../src-generated/schema.js';
+export type * from '../src-generated/schema.js';
 
 import schema from './mutation-testing-report-schema.json' with { type: 'json' };
 
