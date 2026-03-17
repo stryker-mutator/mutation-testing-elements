@@ -278,7 +278,7 @@ export function transformHighlightedLines(source: string, visitor?: (pos: Positi
       }
       pos++;
     }
-    throw new Error(`Missing closing tag near ${source.slice(pos - 10)}`);
+    throw new Error(`Missing closing tag near ${source.substring(Math.max(0, pos - 10))}`);
   }
 
   function parseAttribute() {
