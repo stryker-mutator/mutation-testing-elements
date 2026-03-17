@@ -17,8 +17,8 @@ export function normalize<TIn, TOut>(
   const commonBasePath = determineCommonBasePath(fileNames);
   return fileNames.reduce(
     (output, fileName) => {
-      const relativeFileName = normalizeName(fileName.startsWith(projectRoot) ? fileName.substr(projectRoot.length) : fileName);
-      output[normalizeName(fileName.substr(commonBasePath.length))] = factory(input[fileName], relativeFileName);
+      const relativeFileName = normalizeName(fileName.startsWith(projectRoot) ? fileName.slice(projectRoot.length) : fileName);
+      output[normalizeName(fileName.slice(commonBasePath.length))] = factory(input[fileName], relativeFileName);
       return output;
     },
     Object.create(null) as Record<string, TOut>,

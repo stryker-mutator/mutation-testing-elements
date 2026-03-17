@@ -1,4 +1,3 @@
-/* eslint-disable import-x/no-deprecated */
 import { isServer } from 'lit';
 import { EMPTY, fromEvent, merge, of } from 'rxjs';
 import { distinctUntilChanged, map, tap } from 'rxjs/operators';

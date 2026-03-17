@@ -51,7 +51,7 @@ export class FileUnderTestModel extends SourceFile implements FileResult {
     const start = lineMap[mutant.location.start.line];
     const startOfEndLine = lineMap[mutant.location.end.line];
     const end = lineMap[mutant.location.end.line + 1];
-    return `${this.source.substr(start, mutant.location.start.column - 1)}${
+    return `${this.source.substring(start, start + mutant.location.start.column - 1)}${
       mutant.replacement ?? mutant.description ?? mutant.mutatorName
     }${this.source.substring(startOfEndLine + mutant.location.end.column - 1, end)}`;
   }

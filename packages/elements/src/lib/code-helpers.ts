@@ -23,7 +23,7 @@ export type ProgrammingLanguage = (typeof ProgrammingLanguage)[keyof typeof Prog
  * @returns File extension
  */
 export function getExtension(fileName: string): string {
-  return fileName.substr(fileName.lastIndexOf('.') + 1).toLocaleLowerCase();
+  return fileName.slice(fileName.lastIndexOf('.') + 1).toLocaleLowerCase();
 }
 
 /**
@@ -278,7 +278,7 @@ export function transformHighlightedLines(source: string, visitor?: (pos: Positi
       }
       pos++;
     }
-    throw new Error(`Missing closing tag near ${source.substr(pos - 10)}`);
+    throw new Error(`Missing closing tag near ${source.slice(pos - 10)}`);
   }
 
   function parseAttribute() {
@@ -352,10 +352,10 @@ export function findDiffIndices(original: string, mutated: string) {
   // Make an exception for `true` and `false` (end in same character 🤷‍♀️)
   const mutatedPart = mutated.substring(focusFrom, focusTo);
   ['true', 'false'].forEach((keyword) => {
-    if (mutatedPart === keyword.substr(0, keyword.length - 1) && keyword.endsWith(mutated[focusTo])) {
+    if (mutatedPart === keyword.slice(0, keyword.length - 1) && keyword.endsWith(mutated[focusTo])) {
       focusTo++;
     }
-    if (mutatedPart === keyword.substr(1, keyword.length) && keyword.startsWith(mutated[focusFrom - 1])) {
+    if (mutatedPart === keyword.slice(1) && keyword.startsWith(mutated[focusFrom - 1])) {
       focusFrom--;
     }
   });

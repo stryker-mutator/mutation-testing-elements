@@ -22,7 +22,7 @@ export class MutationTestReportFileIconComponent extends BaseElement {
   }
 
   get #isTestFile() {
-    const baseName = this.fileName.substr(0, this.fileName.lastIndexOf('.')).toLowerCase();
+    const baseName = this.fileName.substring(0, this.fileName.lastIndexOf('.')).toLowerCase();
     return baseName.endsWith('spec') || baseName.endsWith('test') || baseName.endsWith('unit');
   }
 

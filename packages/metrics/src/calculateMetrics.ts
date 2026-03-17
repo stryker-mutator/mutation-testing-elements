@@ -90,7 +90,7 @@ function toChildModels<TFileModel, TMetrics>(
       if (filesByDirectory[directoryName]!.length > 1 || filesByDirectory[directoryName]?.[0][0] !== directoryName) {
         const directoryFiles = filesByDirectory[directoryName]!.reduce(
           (directoryFiles, [fileName, file]) => {
-            directoryFiles[fileName.substr(directoryName.length + 1)] = file;
+            directoryFiles[fileName.slice(directoryName.length + 1)] = file;
             return directoryFiles;
           },
           {} as Record<string, TFileModel>,

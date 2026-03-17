@@ -224,7 +224,7 @@ describe(MutationTestReportAppComponent.name, () => {
 
       // Assert
       expect(sut.element).toHaveProperty('theme', 'dark');
-      expect(setItemStub).toBeCalledWith('test', 'test');
+      expect(setItemStub).toHaveBeenCalledWith('test', 'test');
     });
 
     describe('themeBackgroundColor', () => {
