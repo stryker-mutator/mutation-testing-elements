@@ -17,7 +17,7 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - uses: nrwl/nx-set-shas@v4
+    - uses: nrwl/nx-set-shas@v5
       with:
         main-branch-name: master
     - uses: pnpm/action-setup@v4
