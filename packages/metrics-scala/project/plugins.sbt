@@ -4,7 +4,7 @@ addSbtPlugin("org.scalameta" % "sbt-mdoc" % "2.8.2")
 
 addSbtPlugin("org.typelevel" % "sbt-tpolecat" % "0.5.3")
 
-addSbtPlugin("io.stryker-mutator" % "sbt-stryker4s" % "0.20.2")
+addSbtPlugin("io.stryker-mutator" % "sbt-stryker4s" % "0.20.3")
 
 addSbtPlugin("com.eed3si9n" % "sbt-projectmatrix" % "0.11.0")
 addSbtPlugin("org.scala-js" % "sbt-scalajs"       % "1.20.2")
