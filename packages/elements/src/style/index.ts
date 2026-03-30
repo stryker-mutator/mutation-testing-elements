@@ -1,4 +1,4 @@
-import './prism-plugins';
+import './prism-plugins.js';
 
 import { unsafeCSS } from 'lit';
 

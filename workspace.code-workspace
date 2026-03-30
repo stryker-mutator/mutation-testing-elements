@@ -52,7 +52,7 @@
       "source.fixAll.eslint": "explicit",
     },
     "eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
-    "typescript.tsdk": "./node_modules/typescript/lib",
+    "js/ts.tsdk.path": "parent/node_modules/typescript/lib",
     "task.autoDetect": "off",
     "cSpell.words": ["autoloader", "bootswatch", "clazz", "clike", "prismjs", "templating", "Theming"],
     "[json]": {

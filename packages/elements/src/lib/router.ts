@@ -12,8 +12,6 @@ export const locationChange$ = isServer
   ? EMPTY
   : merge(
       of(1),
-      // @ts-expect-error - navigation is not yet supported in typescript, but it is supported in browsers
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       window.navigation ? fromEvent(window.navigation, 'navigatesuccess') : EMPTY,
       fromEvent(window, 'hashchange').pipe(tap((event) => event.preventDefault())),
     ).pipe(
