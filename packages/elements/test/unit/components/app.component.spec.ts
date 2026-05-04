@@ -56,7 +56,7 @@ describe(MutationTestReportAppComponent.name, () => {
       };
 
       const expectedReport = createReport();
-      fetchStub.mockResolvedValue(response as Response);
+      fetchStub.mockResolvedValue(response);
 
       // Act
       sut.element.setAttribute('src', '/mutation-testing-report.json');

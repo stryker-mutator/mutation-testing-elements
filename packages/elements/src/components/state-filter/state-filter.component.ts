@@ -80,7 +80,7 @@ export class FileStateFilterComponent<TStatus extends string> extends RealTimeEl
               ${filter.label} (${filter.count})
             </label>
           </div>`,
-      ) as TemplateResult}
+      )}
     </div>`;
   }
 
