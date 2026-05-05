@@ -20,7 +20,7 @@ runs:
     - uses: nrwl/nx-set-shas@v5
       with:
         main-branch-name: master
-    - uses: pnpm/action-setup@v5
+    - uses: pnpm/action-setup@v6
     - name: Use Node.js ${{ inputs.node-version }}
       uses: actions/setup-node@v6
       with:
