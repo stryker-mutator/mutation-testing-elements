@@ -43,7 +43,7 @@ runs:
         restore-keys: |
           ${{ runner.os }}-nx-${{ inputs.node-version }}-
           ${{ runner.os }}-nx-
-    - run: pnpm install --prefer-offline --frozen-lockfile
+    - run: pnpm ci --prefer-offline
       shell: bash
     - name: Install Playwright Browsers
       if: ${{ inputs.setup-playwright == 'true' }}

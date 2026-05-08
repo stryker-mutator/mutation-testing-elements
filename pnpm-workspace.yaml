@@ -18,11 +18,10 @@ trustPolicyExclude:
   - chokidar
   - '@octokit/endpoint'
 
-ignoredBuiltDependencies:
-  - unrs-resolver
-
-onlyBuiltDependencies:
-  - nx
 minimumReleaseAgeExclude:
   # Renovate security update: vite@8.0.5
   - vite@8.0.5
+
+allowBuilds:
+  nx: true
+  unrs-resolver: false
