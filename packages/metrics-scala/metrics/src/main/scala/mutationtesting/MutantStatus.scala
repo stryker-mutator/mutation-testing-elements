@@ -1,7 +1,7 @@
 package mutationtesting
 
 /** Result of the mutation. */
-sealed trait MutantStatus extends Product with Serializable
+sealed trait MutantStatus
 
 object MutantStatus {
 

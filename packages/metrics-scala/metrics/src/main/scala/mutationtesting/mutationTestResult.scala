@@ -133,7 +133,13 @@ final case class MutantResult(
   * @param end
   *   End location (exclusive).
   */
-final case class Location(start: Position, end: Position)
+final case class Location(start: Position, end: Position) {
+  require(
+    end.line > start.line || (end.line == start.line && end.column >= start.column),
+    s"Location end ${end.show} must be >= start ${start.show}"
+  )
+  def show: String = s"[${start.show}, ${end.show})"
+}
 
 /** A [[mutationtesting.Location]] where `end` is not required. Start is inclusive, end is exclusive.
   *
@@ -142,11 +148,18 @@ final case class Location(start: Position, end: Position)
   * @param end
   *   End location (exclusive).
   */
-final case class OpenEndLocation(start: Position, end: Option[Position] = None)
+final case class OpenEndLocation(start: Position, end: Option[Position] = None) {
+  def show: String = end match {
+    case Some(end) => s"[${start.show}, ${end.show})"
+    case None      => s"[${start.show}, ?)"
+  }
+}
 
 /** Position of a mutation. Both line and column start at one.
   */
-final case class Position(line: Int, column: Int)
+final case class Position(line: Int, column: Int) {
+  def show: String = s"$line:$column"
+}
 
 /** The performance statistics per phase. Total time should be roughly equal to the sum of all these.
   *

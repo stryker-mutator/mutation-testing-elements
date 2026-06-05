@@ -1,9 +1,9 @@
 package mutationtesting
 
 import io.circe.parser.decode
-import io.circe.syntax._
+import io.circe.syntax.*
 import io.circe.{Codec, Encoder, JsonObject}
-import mutationtesting.circe._
+import mutationtesting.circe.*
 
 class EncoderTest extends munit.FunSuite {
   test("encoded JSON should be valid") {
@@ -30,7 +30,7 @@ class EncoderTest extends munit.FunSuite {
     implicit val reportEncoder: Encoder[MutationTestResult[CustomConfig]] =
       mutationTestResultEncoder[CustomConfig]
 
-    val customConfig = CustomConfig("foovalue", 42)
+    val customConfig                          = CustomConfig("foovalue", 42)
     val sut: MutationTestResult[CustomConfig] =
       MutationTestResult(
         thresholds = Thresholds(80, 60),
@@ -50,7 +50,7 @@ class EncoderTest extends munit.FunSuite {
     val report =
       """{"thresholds":{"high":80,"low":10},"files":{},"schemaVersion":"2","config":{"foo":"foovalue","bar":42}}"""
     decode[MutationTestResult[CustomConfig]](report) match {
-      case Left(value) => fail(s"Expected valid decoding, got: $value")
+      case Left(value)  => fail(s"Expected valid decoding, got: $value")
       case Right(value) =>
         assertEquals(value.config.get, CustomConfig("foovalue", 42))
     }

@@ -1,14 +1,13 @@
 package mutationtesting
 
-import java.io.ByteArrayInputStream
-import java.nio.file.Paths
-
-import scala.io.Source
-
 import io.circe.JsonObject
 import io.circe.parser.decode
-import mutationtesting.circe._
+import mutationtesting.circe.*
 import org.leadpony.justify.api.JsonValidationService
+
+import java.io.ByteArrayInputStream
+import java.nio.file.Paths
+import scala.io.Source
 
 class SchemaTest extends munit.FunSuite {
 
@@ -49,7 +48,7 @@ class SchemaTest extends munit.FunSuite {
         .mkString
 
     decode[JsonConfigMutationTestResult](report) match {
-      case Left(err) => throw err
+      case Left(err)     => throw err
       case Right(report) =>
         assert(report.`$schema`.isEmpty)
         assertEquals(report.schemaVersion, "1")
@@ -74,7 +73,7 @@ class SchemaTest extends munit.FunSuite {
   validJsons.foreach { fileName =>
     test(s"json $fileName should be valid according to schema") {
       decodeReport(fileName) match {
-        case Left(value) => throw value
+        case Left(value)   => throw value
         case Right(report) =>
           val jsonString = toJsonString(report)
           val reader     = createJsonReader(jsonString)
@@ -122,13 +121,13 @@ class SchemaTest extends munit.FunSuite {
   }
 
   def toJsonString(report: JsonConfigMutationTestResult) = {
-    import io.circe.syntax._
+    import io.circe.syntax.*
     report.asJson.noSpaces
   }
 
   def createJsonReader(jsonString: String) = {
     val service = JsonValidationService.newInstance();
-    val schema = service.readSchema(
+    val schema  = service.readSchema(
       Paths.get("../report-schema/src/mutation-testing-report-schema.json")
     )
     val byteStream = new ByteArrayInputStream(jsonString.getBytes())
