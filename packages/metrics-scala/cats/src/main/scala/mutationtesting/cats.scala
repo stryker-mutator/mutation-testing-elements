@@ -11,11 +11,7 @@ object cats {
   implicit lazy val showPosition: Show[Position]                = Show.show(_.show)
   implicit lazy val orderPosition: Order[Position]              = Order.by(p => (p.line, p.column))
   implicit lazy val monoidPosition: CommutativeMonoid[Position] =
-    CommutativeMonoid.instance(
-      Position(1, 1),
-      // - 1 because position is 1-based, not 0-based
-      (a, b) => Position(line = a.line + b.line - 1, column = a.column + b.column - 1)
-    )
+    CommutativeMonoid.instance(Position(0, 0), (a, b) => Position(line = a.line + b.line, column = a.column + b.column))
 
   implicit lazy val showLocation: Show[Location]                = Show.show(_.show)
   implicit lazy val orderLocation: Order[Location]              = Order.by(l => (l.start, l.end))
