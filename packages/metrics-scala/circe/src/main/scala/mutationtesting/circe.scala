@@ -1,7 +1,7 @@
 package mutationtesting
 
-import io.circe._
-import mutationtesting.CodecOps._
+import io.circe.*
+import mutationtesting.CodecOps.*
 
 /** Circe codecs for encoding and decoding `mutationtesting` report values
   */

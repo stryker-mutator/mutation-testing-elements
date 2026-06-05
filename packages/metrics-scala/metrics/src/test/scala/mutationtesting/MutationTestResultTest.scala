@@ -31,7 +31,7 @@ class MutationTestResultTest extends munit.FunSuite {
   validThresholds.foreach { case (high, low) =>
     test(s"Threshold should be valid for high $high low $low") {
       Thresholds.create(high, low) match {
-        case Left(value) => fail(s"Expected valid threshold, got error $value")
+        case Left(value)  => fail(s"Expected valid threshold, got error $value")
         case Right(value) =>
           assertEquals(value, Thresholds(high = high, low = low))
       }

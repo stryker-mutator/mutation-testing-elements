@@ -1,6 +1,6 @@
 package mutationtesting
 
-import mutationtesting.MutantStatus._
+import mutationtesting.MutantStatus.*
 
 class MetricsTest extends munit.FunSuite {
   test("FileResultDictionary is split into tree structure") {
@@ -25,7 +25,7 @@ class MetricsTest extends munit.FunSuite {
   }
 
   test("FileResultDictionary split into more complex tree structure") {
-    val iter = Iterator.from(0)
+    val iter                      = Iterator.from(0)
     def rndMutation: MutantResult = {
       val id     = iter.next()
       val isEven = id % 2 == 0

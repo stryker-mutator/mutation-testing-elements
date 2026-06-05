@@ -1,6 +1,7 @@
 package mutationtesting
 
 sealed trait MetricsResult {
+
   /** The total number of mutants that are pending, meaning that they have been generated but not yet run.
     */
   def pending: Int

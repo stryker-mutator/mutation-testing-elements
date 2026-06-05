@@ -19,7 +19,8 @@ lazy val metrics = projectMatrix
   .in(file("metrics"))
   .settings(
     sharedSettings,
-    name := "mutation-testing-metrics"
+    name        := "mutation-testing-metrics",
+    description := "Core data structures and utilities for mutation testing metrics."
   )
   .jvmPlatform(scalaVersions = CrossScalaVersions)
   .jsPlatform(scalaVersions = CrossScalaVersions)
@@ -29,7 +30,8 @@ lazy val circe = projectMatrix
   .dependsOn(metrics)
   .settings(
     sharedSettings,
-    name := "mutation-testing-metrics-circe",
+    name        := "mutation-testing-metrics-circe",
+    description := "Circe encoders and decoders for mutation testing metrics.",
     libraryDependencies ++= Seq(
       "io.circe" %%% "circe-core"   % "0.14.15",
       "io.circe" %%% "circe-parser" % "0.14.15"
@@ -45,6 +47,22 @@ lazy val circe = projectMatrix
       )
     )
   )
+  .jsPlatform(scalaVersions = CrossScalaVersions)
+
+lazy val cats = projectMatrix
+  .in(file("cats"))
+  .dependsOn(metrics)
+  .settings(
+    sharedSettings,
+    name        := "mutation-testing-metrics-cats",
+    description := "Cats type class instances for mutation testing metrics.",
+    libraryDependencies ++= Seq(
+      "org.typelevel" %%% "cats-core"        % "2.13.0",
+      "org.typelevel" %%% "cats-laws"        % "2.13.0" % Test,
+      "org.typelevel" %%% "discipline-munit" % "2.0.0"  % Test
+    )
+  )
+  .jvmPlatform(scalaVersions = CrossScalaVersions)
   .jsPlatform(scalaVersions = CrossScalaVersions)
 
 lazy val docs = project
