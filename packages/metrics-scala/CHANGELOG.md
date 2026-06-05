@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.8.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.7.3...v3.8.0) (2026-06-05)
+
+
+### Features
+
+* **metrics-scala:** Add Cats type class instances module ([#4199](https://github.com/stryker-mutator/mutation-testing-elements/issues/4199)) ([da2a4d1](https://github.com/stryker-mutator/mutation-testing-elements/commit/da2a4d186b9a9bbd9708c13d1f9174c5017b8697))
+
+
+
+
+
 ## [3.7.3](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.7.2...v3.7.3) (2026-03-15)
 
 **Note:** Version bump only for package mutation-testing-metrics-scala
