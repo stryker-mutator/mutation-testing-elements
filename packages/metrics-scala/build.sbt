@@ -1,3 +1,5 @@
+import org.typelevel.scalacoptions.{ScalaVersion, ScalacOptions}
+
 val Scala212 = "2.12.21"
 val Scala213 = "2.13.18"
 val Scala3   = "3.3.7"
@@ -77,6 +79,10 @@ lazy val schema = project
   )
 
 lazy val sharedSettings = Seq(
+  tpolecatScalacOptions ++= Set(
+    ScalacOptions.source("3", version => version.isBetween(ScalaVersion.V2_12_0, ScalaVersion.V2_13_0)),
+    ScalacOptions.source("3-cross", version => version.isBetween(ScalaVersion.V2_13_0, ScalaVersion.V3_0_0))
+  ),
   libraryDependencies += "org.scalameta" %%% "munit" % "1.3.2" % Test,
   publish / skip                          := skipNormalProjectPublish,
   publishTo                               := sonatypeCentralPublishToBundle.value
