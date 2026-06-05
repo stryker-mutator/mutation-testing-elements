@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.8.1](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.8.0...v3.8.1) (2026-06-05)
+
+
+### Features
+
+* **metrics-scala:** add Monoid instances for Position and Location ([#4201](https://github.com/stryker-mutator/mutation-testing-elements/issues/4201)) ([9376bc7](https://github.com/stryker-mutator/mutation-testing-elements/commit/9376bc7f40a8d315b34d6a8cdefd497d942022cd))
+
+
+
+
+
 # [3.8.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.7.3...v3.8.0) (2026-06-05)
 
 
