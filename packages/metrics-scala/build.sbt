@@ -33,8 +33,8 @@ lazy val circe = projectMatrix
     name        := "mutation-testing-metrics-circe",
     description := "Circe encoders and decoders for mutation testing metrics.",
     libraryDependencies ++= Seq(
-      "io.circe" %%% "circe-core"   % "0.14.15",
-      "io.circe" %%% "circe-parser" % "0.14.15"
+      "io.circe" %% "circe-core"   % "0.14.15",
+      "io.circe" %% "circe-parser" % "0.14.15"
     )
   )
   .jvmPlatform(
@@ -57,9 +57,9 @@ lazy val cats = projectMatrix
     name        := "mutation-testing-metrics-cats",
     description := "Cats type class instances for mutation testing metrics.",
     libraryDependencies ++= Seq(
-      "org.typelevel" %%% "cats-core"        % "2.13.0",
-      "org.typelevel" %%% "cats-laws"        % "2.13.0" % Test,
-      "org.typelevel" %%% "discipline-munit" % "2.0.0"  % Test
+      "org.typelevel" %% "cats-core"        % "2.13.0",
+      "org.typelevel" %% "cats-laws"        % "2.13.0" % Test,
+      "org.typelevel" %% "discipline-munit" % "2.0.0"  % Test
     )
   )
   .jvmPlatform(scalaVersions = CrossScalaVersions)
@@ -70,7 +70,8 @@ lazy val docs = project
   .settings(
     scalaVersion := Scala3,
     mdocOut      := file("."),
-    mdocExtraArguments += "--no-link-hygiene"
+    mdocExtraArguments += "--no-link-hygiene",
+    Compile / run / baseDirectory := (LocalRootProject / baseDirectory).value
   )
   .dependsOn(circe.jvm(Scala3))
   .enablePlugins(MdocPlugin)
@@ -101,9 +102,9 @@ lazy val sharedSettings = Seq(
     ScalacOptions.source("3", version => version.isBetween(ScalaVersion.V2_12_0, ScalaVersion.V2_13_0)),
     ScalacOptions.source("3-cross", version => version.isBetween(ScalaVersion.V2_13_0, ScalaVersion.V3_0_0))
   ),
-  libraryDependencies += "org.scalameta" %%% "munit" % "1.3.3" % Test,
-  publish / skip                          := skipNormalProjectPublish,
-  publishTo                               := sonatypeCentralPublishToBundle.value
+  libraryDependencies += "org.scalameta" %% "munit" % "1.3.3" % Test,
+  publish / skip                         := skipNormalProjectPublish,
+  publishTo                              := sonatypeCentralPublishToBundle.value
 )
 
 lazy val npmProjectSettings = Seq(
@@ -119,46 +120,37 @@ lazy val npmProjectSettings = Seq(
   autoScalaLibrary := false
 )
 
-inThisBuild(
-  Seq(
-    // Don't publish root project
-    publish / skip           := true,
-    version                  := packageVersion(file(".")),
-    organization             := "io.stryker-mutator",
-    versionScheme            := Some("semver-spec"),
-    homepage                 := Some(url("https://stryker-mutator.io/")),
-    licenses += "Apache-2.0" -> url(
-      "https://www.apache.org/licenses/LICENSE-2.0"
-    ),
-    scmInfo := Some(
-      ScmInfo(
-        url("https://github.com/stryker-mutator/mutation-testing-elements"),
-        "scm:git:https://github.com/stryker-mutator/mutation-testing-elements.git",
-        "scm:git:git@github.com:stryker-mutator/mutation-testing-elements.git"
-      )
-    ),
-    developers := List(
-      Developer(
-        "hugo-vrijswijk",
-        "Hugo van Rijswijk",
-        "hugo.v.rijswijk@gmail.com",
-        url("https://github.com/hugo-vrijswijk")
-      )
-    ),
-    credentials ++= {
-      val env = sys.env.get(_)
-      (for {
-        username <- env("SONATYPE_USERNAME")
-        password <- env("SONATYPE_PASSWORD")
-      } yield Credentials(
-        "Sonatype Central",
-        "central.sonatype.com",
-        username,
-        password
-      )).toSeq
-    }
+// Don't publish root project; subprojects override via sharedSettings/npmProjectSettings
+publish / skip           := true
+version                  := packageVersion(file("."))
+organization             := "io.stryker-mutator"
+versionScheme            := Some("semver-spec")
+homepage                 := Some(url("https://stryker-mutator.io/"))
+licenses += "Apache-2.0" -> url(
+  "https://www.apache.org/licenses/LICENSE-2.0"
+)
+scmInfo := Some(
+  ScmInfo(
+    url("https://github.com/stryker-mutator/mutation-testing-elements"),
+    "scm:git:https://github.com/stryker-mutator/mutation-testing-elements.git",
+    "scm:git:git@github.com:stryker-mutator/mutation-testing-elements.git"
   )
 )
+developers := List(
+  Developer("hugo-vrijswijk", "Hugo", "", url("https://github.com/hugo-vrijswijk"))
+)
+credentials ++= {
+  val env = sys.env.get(_)
+  (for {
+    username <- env("SONATYPE_USERNAME")
+    password <- env("SONATYPE_PASSWORD")
+  } yield Credentials(
+    "Sonatype Central",
+    "central.sonatype.com",
+    username,
+    password
+  )).toSeq
+}
 
 lazy val sonatypeCentralPublishToBundle = Def.setting {
   val centralSnapshots = "https://central.sonatype.com/repository/maven-snapshots/"
@@ -186,12 +178,12 @@ def packageVersion(packageJsonDir: File): String = {
   val command         = Seq("node", "-p", "require('./package.json').version")
   val os              = sys.props("os.name").toLowerCase
   val panderToWindows = os match {
-    case n if n contains "windows" => Seq("cmd", "/C") ++ command
-    case _                         => command
+    case n if n.contains("windows") => Seq("cmd", "/C") ++ command
+    case _                          => command
   }
   scala.util
     .Try(
-      Process(panderToWindows, packageJsonDir).!!.linesIterator.toIterable.last
+      Process(panderToWindows, packageJsonDir).!!.linesIterator.toSeq.last
     )
     .getOrElse("0.0.0-NO-NODE-SNAPSHOT")
 }
