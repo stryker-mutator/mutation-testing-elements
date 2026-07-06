@@ -4,6 +4,7 @@ import type { PropertyValues, TemplateResult } from 'lit';
 import { html } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
+import { when } from 'lit/directives/when.js';
 import type { FileUnderTestModel, Metrics, MetricsResult, MutationTestMetricsResult, TestMetrics } from 'mutation-testing-metrics';
 import { TestFileModel } from 'mutation-testing-metrics';
 
@@ -16,6 +17,12 @@ interface ModelEntry {
   name: string;
   file: FileUnderTestModel | TestFileModel;
 }
+
+/**
+ * The maximum number of files to show in the picker.
+ * Rendering more list items makes opening/typing sluggish for large reports, narrowing the search is faster.
+ */
+const MAX_FILES_SHOWN = 150;
 
 @customElement('mte-file-picker')
 export class MutationTestReportFilePickerComponent extends BaseElement {
@@ -31,6 +38,9 @@ export class MutationTestReportFilePickerComponent extends BaseElement {
 
   @state()
   declare public fileIndex: number;
+
+  @state()
+  declare private moreFilesMessage: string | undefined;
 
   @query('dialog', true)
   declare private dialog: HTMLDialogElement;
@@ -145,6 +155,7 @@ export class MutationTestReportFilePickerComponent extends BaseElement {
               },
             )
       }
+      ${when(this.moreFilesMessage, (message) => html`<li class="p-2 text-sm text-gray-800" role="presentation">${message}</li>`)}
     </ul>`;
   }
 
@@ -273,9 +284,19 @@ export class MutationTestReportFilePickerComponent extends BaseElement {
 
   #filter(filterKey: string) {
     if (!filterKey) {
-      this.filteredFiles = this.#searchTargets;
+      if (this.#searchTargets.length > MAX_FILES_SHOWN) {
+        this.filteredFiles = this.#searchTargets.slice(0, MAX_FILES_SHOWN);
+        this.moreFilesMessage = `…and ${this.#searchTargets.length - MAX_FILES_SHOWN} more files — type to search`;
+      } else {
+        this.filteredFiles = this.#searchTargets;
+        this.moreFilesMessage = undefined;
+      }
     } else {
-      this.filteredFiles = goSearch(filterKey, this.#searchTargets, { key: 'prepared', threshold: 0.3, limit: 500 }).map((result) => ({
+      // Search for one more result than we show, to know whether the results were cut off
+      const results = goSearch(filterKey, this.#searchTargets, { key: 'prepared', threshold: 0.3, limit: MAX_FILES_SHOWN + 1 });
+
+      this.moreFilesMessage = results.length > MAX_FILES_SHOWN ? 'More matches available — refine your search' : undefined;
+      this.filteredFiles = results.slice(0, MAX_FILES_SHOWN).map((result) => ({
         file: result.obj.file,
         name: result.obj.name,
         template: result.highlight(
