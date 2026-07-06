@@ -15,9 +15,7 @@ See the below example (uses TypeScript):
 import { MetricsResult, calculateMutationTestMetrics } from 'mutation-testing-metrics';
 import { MutationTestResult } from 'mutation-testing-report-schema';
 
-const mutationTestReport: MutationTestResult = {
-  /*... Get a holds of mutation test results somehow */
-};
+const mutationTestReport: MutationTestResult = {/*... Get a holds of mutation test results somehow */};
 
 const result: MetricsResult = calculateMutationTestMetrics(mutationTestReport);
 

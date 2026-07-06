@@ -73,9 +73,7 @@ Alternatively, you can use property binding directly:
 ```html
 <mutation-test-report-app></mutation-test-report-app>
 <script>
-  document.getElementsByTagName('mutation-test-report-app').item(0).report = {
-    /* ... */
-  };
+  document.getElementsByTagName('mutation-test-report-app').item(0).report = {/* ... */};
 </script>
 ```
 
