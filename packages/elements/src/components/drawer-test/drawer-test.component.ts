@@ -27,9 +27,12 @@ export class MutationTestReportDrawerTestComponent extends RealTimeElement {
   }
 
   public render() {
+    // Cache the computed mutant relations, `killedMutants`/`coveredMutants` create new arrays on each call
+    const killedMutants = this.test?.killedMutants;
+    const coveredMutants = this.test?.coveredMutants;
     return renderDrawer(
       // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- we want to coalesce on length 0
-      { hasDetail: Boolean(this.test?.killedMutants?.length || this.test?.coveredMutants?.length), mode: this.mode },
+      { hasDetail: Boolean(killedMutants?.length || coveredMutants?.length), mode: this.mode },
       when(
         this.test,
         (test) =>
@@ -37,35 +40,36 @@ export class MutationTestReportDrawerTestComponent extends RealTimeElement {
               >${getEmojiForTestStatus(test.status)} ${test.name} [${test.status}]
               ${when(test.location, (location) => html`(${location.start.line}:${location.start.column})`)}</span
             >
-            <span slot="summary">${this.#renderSummary()}</span>
-            <span class="block" slot="detail">${this.#renderDetail()}</span>`,
+            <span slot="summary">${this.#renderSummary(killedMutants, coveredMutants)}</span>
+            <span class="block" slot="detail">${this.#renderDetail(killedMutants, coveredMutants)}</span>`,
       ),
     );
   }
 
-  #renderSummary() {
+  #renderSummary(killedMutants: MutantModel[] | undefined, coveredMutants: MutantModel[] | undefined) {
     return renderSummaryContainer(
-      html`${when(this.test?.killedMutants?.[0], (firstKilled) =>
+      html`${when(killedMutants?.[0], (firstKilled) =>
         renderSummaryLine(
           html`${renderEmoji('🎯', 'killed')} Killed:
-          ${describeMutant(firstKilled)}${this.test!.killedMutants!.length > 1 ? html` (and ${this.test!.killedMutants!.length - 1} more)` : ''}`,
+          ${describeMutant(firstKilled)}${killedMutants!.length > 1 ? html` (and ${killedMutants!.length - 1} more)` : ''}`,
         ),
       )}
-      ${when(this.test?.coveredMutants, (coveredMutants) =>
+      ${when(coveredMutants, (covered) =>
         renderSummaryLine(
-          html`${renderEmoji('☂️', 'umbrella')} Covered ${coveredMutants.length}
-          mutant${plural(coveredMutants)}${this.test?.status === TestStatus.Covering ? " (yet didn't kill any of them)" : ''}`,
+          html`${renderEmoji('☂️', 'umbrella')} Covered ${covered.length}
+          mutant${plural(covered)}${this.test?.status === TestStatus.Covering ? " (yet didn't kill any of them)" : ''}`,
         ),
       )}`,
     );
   }
-  #renderDetail() {
+  #renderDetail(killedMutants: MutantModel[] | undefined, coveredMutants: MutantModel[] | undefined) {
+    const killedSet = new Set(killedMutants);
     return html`<ul class="mr-2 mb-6">
-      ${map(this.test?.killedMutants, (mutant) =>
+      ${map(killedMutants, (mutant) =>
         renderDetailLine('This test killed this mutant', html`${renderEmoji('🎯', 'killed')} ${describeMutant(mutant)}`),
       )}
       ${map(
-        this.test?.coveredMutants?.filter((mutant) => !this.test?.killedMutants?.includes(mutant)),
+        coveredMutants?.filter((mutant) => !killedSet.has(mutant)),
         (mutant) => renderDetailLine('This test covered this mutant', html`${renderEmoji('☂️', 'umbrella')} ${describeMutant(mutant)}`),
       )}
     </ul>`;
