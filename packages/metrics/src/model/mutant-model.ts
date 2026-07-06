@@ -30,26 +30,27 @@ export class MutantModel implements MutantResult {
 
   // New fields
   get coveredByTests(): TestModel[] | undefined {
-    if (this.#coveredByTests.size) {
-      return Array.from(this.#coveredByTests.values());
-    } else return undefined;
+    return this.#resolveTests(this.coveredBy);
   }
   set coveredByTests(tests: TestModel[]) {
-    this.#coveredByTests = new Map(tests.map((test) => [test.id, test]));
+    this.coveredBy = tests.map((test) => test.id);
+    tests.forEach((test) => this.#relateTest(test));
   }
 
   get killedByTests(): TestModel[] | undefined {
-    if (this.#killedByTests.size) {
-      return Array.from(this.#killedByTests.values());
-    } else return undefined;
+    return this.#resolveTests(this.killedBy);
   }
   set killedByTests(tests: TestModel[]) {
-    this.#killedByTests = new Map(tests.map((test) => [test.id, test]));
+    this.killedBy = tests.map((test) => test.id);
+    tests.forEach((test) => this.#relateTest(test));
   }
   declare public sourceFile: FileUnderTestModel | undefined;
 
-  #coveredByTests = new Map<string, TestModel>();
-  #killedByTests = new Map<string, TestModel>();
+  /**
+   * The tests of the report, keyed by id, used to resolve `coveredByTests`/`killedByTests` lazily.
+   * This map is shared with the other mutants in the report.
+   */
+  #relatedTests: Map<string, TestModel> | undefined;
 
   constructor(input: MutantResult) {
     this.coveredBy = input.coveredBy;
@@ -66,12 +67,53 @@ export class MutantModel implements MutantResult {
     this.testsCompleted = input.testsCompleted;
   }
 
+  /**
+   * Relates this mutant to the tests in the report (by id).
+   * @internal Called by `relate()` during `calculateMutationTestMetrics`. The tests are resolved
+   * lazily from `coveredBy`/`killedBy`, so the (potentially millions of) mutant-test relationships
+   * don't have to be stored in memory for large reports. The map is shared between all mutants of
+   * the report.
+   */
+  public relateTests(tests: Map<string, TestModel>) {
+    this.#relatedTests = tests;
+  }
+
   public addCoveredBy(test: TestModel) {
-    this.#coveredByTests.set(test.id, test);
+    this.#relateTest(test);
+    this.coveredBy ??= [];
+    if (!this.coveredBy.includes(test.id)) {
+      this.coveredBy.push(test.id);
+    }
   }
 
   public addKilledBy(test: TestModel) {
-    this.#killedByTests.set(test.id, test);
+    this.#relateTest(test);
+    this.killedBy ??= [];
+    if (!this.killedBy.includes(test.id)) {
+      this.killedBy.push(test.id);
+    }
+  }
+
+  #relateTest(test: TestModel) {
+    (this.#relatedTests ??= new Map()).set(test.id, test);
+  }
+
+  #resolveTests(ids: string[] | undefined): TestModel[] | undefined {
+    if (!ids?.length || !this.#relatedTests?.size) {
+      return undefined;
+    }
+    const tests: TestModel[] = [];
+    const seen = new Set<string>();
+    for (const id of ids) {
+      if (!seen.has(id)) {
+        seen.add(id);
+        const test = this.#relatedTests.get(id);
+        if (test) {
+          tests.push(test);
+        }
+      }
+    }
+    return tests.length ? tests : undefined;
   }
 
   /**

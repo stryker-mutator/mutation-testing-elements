@@ -109,20 +109,26 @@ function relate(mutants: MutantModel[], tests: TestModel[]) {
   const testMap = new Map<string, TestModel>(tests.map((test) => [test.id, test]));
 
   for (const mutant of mutants) {
-    const coveringTestIds = mutant.coveredBy ?? [];
-    for (const testId of coveringTestIds) {
-      const test = testMap.get(testId);
-      if (test) {
-        mutant.addCoveredBy(test);
-        test.addCovered(mutant);
+    mutant.relateTests(testMap);
+    const { coveredBy, killedBy } = mutant;
+    if (coveredBy) {
+      for (let i = 0; i < coveredBy.length; i++) {
+        const test = testMap.get(coveredBy[i]);
+        if (test) {
+          // Reuse the canonical test id string. JSON.parse allocates a new string for each
+          // occurrence, which wastes hundreds of MB on large reports.
+          coveredBy[i] = test.id;
+          test.addCoveredUnchecked(mutant);
+        }
       }
     }
-    const killingTestIds = mutant.killedBy ?? [];
-    for (const testId of killingTestIds) {
-      const test = testMap.get(testId);
-      if (test) {
-        mutant.addKilledBy(test);
-        test.addKilled(mutant);
+    if (killedBy) {
+      for (let i = 0; i < killedBy.length; i++) {
+        const test = testMap.get(killedBy[i]);
+        if (test) {
+          killedBy[i] = test.id;
+          test.addKilledUnchecked(mutant);
+        }
       }
     }
   }

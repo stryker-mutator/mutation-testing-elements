@@ -26,28 +26,53 @@ export class TestModel implements TestDefinition {
   public name!: string;
   public location?: OpenEndLocation | undefined;
 
-  get killedMutants() {
-    if (this.#killedMutants.size) {
-      return Array.from(this.#killedMutants.values());
+  get killedMutants(): MutantModel[] | undefined {
+    if (this.#killedMutants?.length) {
+      return [...this.#killedMutants];
     } else return undefined;
   }
 
-  get coveredMutants() {
-    if (this.#coveredMutants.size) {
-      return Array.from(this.#coveredMutants.values());
+  get coveredMutants(): MutantModel[] | undefined {
+    if (this.#coveredMutants?.length) {
+      return [...this.#coveredMutants];
     } else return undefined;
   }
   declare public sourceFile: TestFileModel | undefined;
 
-  #killedMutants = new Map<string, MutantModel>();
-  #coveredMutants = new Map<string, MutantModel>();
+  #killedMutants: MutantModel[] | undefined;
+  #coveredMutants: MutantModel[] | undefined;
 
   public addCovered(mutant: MutantModel) {
-    this.#coveredMutants.set(mutant.id, mutant);
+    this.#coveredMutants ??= [];
+    if (!this.#coveredMutants.some(({ id }) => id === mutant.id)) {
+      this.#coveredMutants.push(mutant);
+    }
+  }
+
+  /**
+   * Adds a covered mutant without checking whether it was already added.
+   * @internal Fast path for `relate()`, which skips the duplicate check: the relationships in a
+   * report are unique already, and checking for duplicates is too expensive when relating millions
+   * of mutant-test pairs. Use {@link addCovered} instead, which is safe to call more than once
+   * with the same mutant.
+   */
+  public addCoveredUnchecked(mutant: MutantModel) {
+    (this.#coveredMutants ??= []).push(mutant);
   }
 
   public addKilled(mutant: MutantModel) {
-    this.#killedMutants.set(mutant.id, mutant);
+    this.#killedMutants ??= [];
+    if (!this.#killedMutants.some(({ id }) => id === mutant.id)) {
+      this.#killedMutants.push(mutant);
+    }
+  }
+
+  /**
+   * Adds a killed mutant without checking whether it was already added.
+   * @internal Fast path for `relate()`, see {@link addCoveredUnchecked}.
+   */
+  public addKilledUnchecked(mutant: MutantModel) {
+    (this.#killedMutants ??= []).push(mutant);
   }
 
   constructor(input: TestDefinition) {
@@ -77,9 +102,9 @@ export class TestModel implements TestDefinition {
   }
 
   public get status(): TestStatus {
-    if (this.#killedMutants.size) {
+    if (this.#killedMutants?.length) {
       return TestStatus.Killing;
-    } else if (this.#coveredMutants.size) {
+    } else if (this.#coveredMutants?.length) {
       return TestStatus.Covering;
     } else {
       return TestStatus.NotCovering;
