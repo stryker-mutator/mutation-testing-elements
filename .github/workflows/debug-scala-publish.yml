@@ -1,0 +1,59 @@
+name: Debug Scala Publish
+
+# Manually re-runs the "npm project" Scala bundle publish (the elements/schema
+# artifacts pushed to Sonatype Central) *outside* of lerna, so that the full sbt
+# output — including any `publishSigned`/`sonaRelease` error — is streamed live
+# into the job log instead of being swallowed by lerna's postpublish lifecycle.
+#
+# It reuses the exact same script as the real release (packages/metrics-scala/
+# npmProjPublish.sh), so a successful run here also completes the missing bundle.
+on:
+  # Temporary: lets this branch run without the workflow being on the default
+  # branch yet. Remove before merging.
+  push:
+    branches:
+      - test-publishing
+  workflow_dispatch:
+    inputs:
+      project:
+        description: Which npm-project Scala bundle to publish
+        type: choice
+        options:
+          - elements
+          - schema
+          - both
+        default: elements
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: ./.github/setup
+        with:
+          setup-java: true
+      - name: Set Release Env
+        run: |
+          echo ${{ secrets.PGP_SECRET }} | base64 --decode | gpg --batch --import
+      - run: pnpm run build
+      - name: Publish elements Scala bundle
+        # On push (no inputs) default to elements, the bundle that fails to publish.
+        if: ${{ inputs.project == 'elements' || inputs.project == 'both' || github.event_name == 'push' }}
+        working-directory: packages/elements
+        run: PUBLISH_ELEMENTS=true ../metrics-scala/npmProjPublish.sh
+        env:
+          PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+      - name: Publish schema Scala bundle
+        if: ${{ inputs.project == 'schema' || inputs.project == 'both' }}
+        working-directory: packages/report-schema
+        run: PUBLISH_SCHEMA=true ../metrics-scala/npmProjPublish.sh
+        env:
+          PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
