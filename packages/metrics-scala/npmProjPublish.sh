@@ -18,4 +18,13 @@ mkdir -p $SBT_RESOURCES_DIR
 echo "Copying $DIST_BASE files to resources"
 cp -r $DIST_DIR $SBT_RESOURCES_DIR/$PROJ_BASE
 
-sbt "publishSigned; sonaRelease"
+# Start from a clean local staging bundle
+rm -rf target/sona-staging
+
+# Stream sbt output live via `tee`
+SBT_LOG="$(mktemp)"
+set -o pipefail
+sbt_status=0
+sbt "publishSigned; sonaRelease" 2>&1 | tee "$SBT_LOG" || sbt_status=$?
+
+exit "$sbt_status"
