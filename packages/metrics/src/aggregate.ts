@@ -21,14 +21,27 @@ export function aggregateResultsByModule(resultsByModule: Record<string, Mutatio
   };
 
   return Object.entries(resultsByModule).reduce((acc, [moduleName, report]) => {
+    // Cache the unique ids per module. Test ids repeat in the `coveredBy`/`killedBy` lists of many mutants,
+    // reusing the same string instance saves a lot of memory on large reports.
+    const uniqueIds = new Map<string, string>();
+    const toUniqueId = (localId: string) => {
+      let uniqueId = uniqueIds.get(localId);
+      if (uniqueId === undefined) {
+        uniqueId = `${moduleName}_${localId}`;
+        uniqueIds.set(localId, uniqueId);
+      }
+      return uniqueId;
+    };
+    const toUniqueIds = (localIds: string[] | undefined) => localIds?.map(toUniqueId);
+
     Object.entries(normalizeFileNames(report.files)).forEach(([fileName, fileResult]) => {
       aggregatedResult.files[`${moduleName}/${fileName}`] = {
         ...fileResult,
         mutants: fileResult.mutants.map(({ id, coveredBy, killedBy, ...mutantData }) => ({
           ...mutantData,
-          id: toUniqueId(moduleName, id),
-          killedBy: toUniqueIds(moduleName, killedBy),
-          coveredBy: toUniqueIds(moduleName, coveredBy),
+          id: toUniqueId(id),
+          killedBy: toUniqueIds(killedBy),
+          coveredBy: toUniqueIds(coveredBy),
         })),
       };
     });
@@ -37,23 +50,11 @@ export function aggregateResultsByModule(resultsByModule: Record<string, Mutatio
       Object.entries(normalizeFileNames(report.testFiles)).forEach(([fileName, testFileResult]) => {
         aggregatedTestFiles[`${moduleName}/${fileName}`] = {
           ...testFileResult,
-          tests: testFileResult.tests.map(({ id, ...testData }) => ({ ...testData, id: toUniqueId(moduleName, id) })),
+          tests: testFileResult.tests.map(({ id, ...testData }) => ({ ...testData, id: toUniqueId(id) })),
         };
       });
     }
 
     return acc;
   }, aggregatedResult);
-}
-
-function toUniqueIds(moduleName: string, localIds: string[] | undefined): string[] | undefined {
-  if (localIds) {
-    const toUniqueIdForModule = toUniqueId.bind(undefined, moduleName);
-    return localIds.map(toUniqueIdForModule);
-  }
-  return;
-}
-
-function toUniqueId(moduleName: string, localId: string) {
-  return `${moduleName}_${localId}`;
 }
