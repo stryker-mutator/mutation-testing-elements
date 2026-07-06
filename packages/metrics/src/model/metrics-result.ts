@@ -1,7 +1,12 @@
-import { countFileMetrics, countTestFileMetrics } from '../calculateMetrics.js';
+import { countFileMetrics, countTestFileMetrics, sumFileMetrics, sumTestFileMetrics } from '../calculateMetrics.js';
 import type { FileUnderTestModel } from './file-under-test-model.js';
 import type { Metrics } from './metrics.js';
 import type { TestFileModel } from './test-file-model.js';
+import type { TestMetrics } from './test-metrics.js';
+
+function isTestMetrics(metrics: unknown): metrics is TestMetrics {
+  return typeof metrics === 'object' && metrics !== null && 'notCovering' in metrics;
+}
 
 /**
  * A metrics result of T for a directory or file
@@ -53,18 +58,20 @@ export class MetricsResult<TFile = FileUnderTestModel, TMetrics = Metrics> {
 
   public updateMetrics() {
     if (this.file === undefined) {
+      if (this.childResults.length === 0) {
+        return;
+      }
       this.childResults.forEach((childResult) => {
         childResult.updateMetrics();
       });
 
-      const files = this.#getFileModelsRecursively(this.childResults);
-      if (files.length === 0) {
-        return;
-      }
-      if ((files[0] as TestFileModel).tests) {
-        this.metrics = countTestFileMetrics(files as TestFileModel[]) as TMetrics;
+      // The metrics of a directory are the sum of the metrics of its children,
+      // no need to recount all descendant files at every level
+      const childMetrics = this.childResults.map((childResult) => childResult.metrics);
+      if (isTestMetrics(childMetrics[0])) {
+        this.metrics = sumTestFileMetrics(childMetrics as TestMetrics[]) as TMetrics;
       } else {
-        this.metrics = countFileMetrics(files as FileUnderTestModel[]) as TMetrics;
+        this.metrics = sumFileMetrics(childMetrics as Metrics[]) as TMetrics;
       }
 
       return;
@@ -75,22 +82,5 @@ export class MetricsResult<TFile = FileUnderTestModel, TMetrics = Metrics> {
     } else {
       this.metrics = countFileMetrics([this.file as FileUnderTestModel]) as TMetrics;
     }
-  }
-
-  #getFileModelsRecursively(childResults: MetricsResult<TFile, TMetrics>[]): TFile[] {
-    const flattenedFiles: TFile[] = [];
-    if (childResults.length === 0) {
-      return flattenedFiles;
-    }
-
-    childResults.forEach((child) => {
-      if (child.file) {
-        flattenedFiles.push(child.file);
-        return;
-      }
-      flattenedFiles.push(...this.#getFileModelsRecursively(child.childResults));
-    });
-
-    return flattenedFiles;
   }
 }
