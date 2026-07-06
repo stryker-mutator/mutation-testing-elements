@@ -161,8 +161,7 @@ lazy val sonatypeCentralPublishToBundle = Def.setting {
 def envVarIsTrue(envVar: String): Boolean =
   sys.env
     .get(envVar)
-    .map(_.toLowerCase == "true")
-    .isDefined
+    .exists(_.toLowerCase == "true")
 
 // Only publish if PUBLISH_ELEMENTS env var is true
 lazy val skipElementsPublish = !envVarIsTrue("PUBLISH_ELEMENTS")
