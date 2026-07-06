@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.8.4](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.8.3...v3.8.4) (2026-07-06)
+
+
+### Performance Improvements
+
+* multiple performance improvements to rendering and calculating scores ([#4246](https://github.com/stryker-mutator/mutation-testing-elements/issues/4246)) ([083117c](https://github.com/stryker-mutator/mutation-testing-elements/commit/083117c6ca047b114683ae86cf05b13fac9af9c2))
+
+
+
+
+
 ## [3.8.3](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.8.2...v3.8.3) (2026-06-05)
 
 **Note:** Version bump only for package root
