@@ -25,9 +25,7 @@ For example, use [AJV](https://github.com/epoberezkin/ajv#ajv-another-json-schem
 ```ts
 const schemaValidator = new Ajv();
 schemaValidator.addSchema(schema, 'mutation-testing-report-schema');
-schemaValidator.validate('mutation-testing-report-schema', {
-  /*.. report as json ...*/
-});
+schemaValidator.validate('mutation-testing-report-schema', {/*.. report as json ...*/});
 ```
 
 ## Other languages

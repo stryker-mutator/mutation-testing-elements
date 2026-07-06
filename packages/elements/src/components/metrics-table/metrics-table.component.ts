@@ -139,9 +139,13 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
     return html`<tr title=${row.name} class="group hover:bg-gray-200">
       <td class="font-semibold">
         <div class="flex items-center justify-start">
-          <mte-file-icon file-name=${row.name} ?file=${row.file} class="mx-1 flex items-center"></mte-file-icon> ${path.length > 0
-            ? html`<a class="mr-auto inline-block w-full py-4 pr-2 hover:text-primary-on hover:underline" href=${toAbsoluteUrl(...path)}>${name}</a>`
-            : html`<span class="py-4">${row.name}</span>`}
+          <mte-file-icon file-name=${row.name} ?file=${row.file} class="mx-1 flex items-center"></mte-file-icon> ${
+            path.length > 0
+              ? html`<a class="mr-auto inline-block w-full py-4 pr-2 hover:text-primary-on hover:underline" href=${toAbsoluteUrl(...path)}
+                  >${name}</a
+                >`
+              : html`<span class="py-4">${row.name}</span>`
+          }
         </div>
       </td>
       ${repeat(
@@ -164,20 +168,22 @@ export class MutationTestReportTestMetricsTable<TFile, TMetric> extends RealTime
       const progressBarStyle = `width: ${value}%`;
 
       return html`<td class="bg-gray-100 px-4 py-4 group-hover:bg-gray-200!">
-          ${valueIsPresent
-            ? html`<div class="h-3 w-full min-w-[24px] rounded-full bg-gray-300">
-                <div
-                  class="${bgColoringClass} h-3 rounded-full pl-1 transition-all"
-                  role="progressbar"
-                  aria-valuenow=${mutationScoreRounded}
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                  aria-describedby="tooltip-mutationScore"
-                  title=${column.label}
-                  style=${progressBarStyle}
-                ></div>
-              </div>`
-            : html`<span class="text-light-muted font-bold">N/A</span>`}
+          ${
+            valueIsPresent
+              ? html`<div class="h-3 w-full min-w-[24px] rounded-full bg-gray-300">
+                  <div
+                    class="${bgColoringClass} h-3 rounded-full pl-1 transition-all"
+                    role="progressbar"
+                    aria-valuenow=${mutationScoreRounded}
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    aria-describedby="tooltip-mutationScore"
+                    title=${column.label}
+                    style=${progressBarStyle}
+                  ></div>
+                </div>`
+              : html`<span class="text-light-muted font-bold">N/A</span>`
+          }
         </td>
         <td class="${textColoringClass} ${backgroundColoringClass} w-12 pr-2 text-center font-bold group-hover:bg-gray-200!"
           >${when(valueIsPresent, () => html`<span class="transition-colors">${mutationScoreRounded}</span>`)}</td

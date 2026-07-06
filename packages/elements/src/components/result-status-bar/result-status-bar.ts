@@ -61,9 +61,9 @@ export class ResultStatusBar extends BaseElement {
   #renderSmallParts() {
     return html`<div
       data-test-id="small-progress-bar"
-      class="${this.#shouldBeSmallController.value
-        ? 'opacity-100'
-        : 'opacity-0'} pointer-events-none fixed top-offset left-0 z-20 flex w-full justify-center transition-all"
+      class="${
+        this.#shouldBeSmallController.value ? 'opacity-100' : 'opacity-0'
+      } pointer-events-none fixed top-offset left-0 z-20 flex w-full justify-center transition-all"
     >
       <div class="container w-full bg-white py-2">
         <div class="flex h-2 overflow-hidden rounded-sm bg-gray-200">${this.#renderParts(true)}</div>
@@ -79,9 +79,9 @@ export class ResultStatusBar extends BaseElement {
         html`<div
           title=${shouldBeSmall ? nothing : metric.tooltip}
           style="width: ${this.#calculatePercentage(metric.amount)}%"
-          class="${this.#colorFromMetric(metric.type)} ${metric.amount === 0
-            ? 'opacity-0'
-            : 'opacity-100'} relative flex items-center overflow-hidden motion-safe:transition-width"
+          class="${this.#colorFromMetric(metric.type)} ${
+            metric.amount === 0 ? 'opacity-0' : 'opacity-100'
+          } relative flex items-center overflow-hidden motion-safe:transition-width"
           >${shouldBeSmall ? nothing : html`<span class="ms-3 font-bold text-gray-800">${metric.amount}</span>`}
         </div>`,
     );

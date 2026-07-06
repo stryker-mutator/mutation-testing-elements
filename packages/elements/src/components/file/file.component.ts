@@ -122,11 +122,11 @@ export class FileComponent extends RealTimeElement {
       >
         <code class="flex language-${this.model.language}">
           <table>${map(this.lines, (line, lineIndex) => {
-        const lineNr = lineIndex + 1;
-        const mutantDots = this.#renderMutantDots(mutantLineMap.get(lineNr));
+            const lineNr = lineIndex + 1;
+            const mutantDots = this.#renderMutantDots(mutantLineMap.get(lineNr));
 
-        return renderLine(line, renderDots(mutantDots, this.lines.length === lineNr ? finalMutants : nothing));
-      })}</table>
+            return renderLine(line, renderDots(mutantDots, this.lines.length === lineNr ? finalMutants : nothing));
+          })}</table>
           </code>
           </pre>`;
   }
