@@ -102,7 +102,7 @@ lazy val sharedSettings = Seq(
     ScalacOptions.source("3", version => version.isBetween(ScalaVersion.V2_12_0, ScalaVersion.V2_13_0)),
     ScalacOptions.source("3-cross", version => version.isBetween(ScalaVersion.V2_13_0, ScalaVersion.V3_0_0))
   ),
-  libraryDependencies += "org.scalameta" %% "munit" % "1.3.3" % Test,
+  libraryDependencies += "org.scalameta" %% "munit" % "1.3.4" % Test,
   publish / skip                         := skipNormalProjectPublish,
   publishTo                              := sonatypeCentralPublishToBundle.value
 )
