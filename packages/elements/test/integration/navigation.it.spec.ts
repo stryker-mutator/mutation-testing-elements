@@ -17,10 +17,6 @@ test.describe('Navigation', () => {
     test('should show "all files"', async ({ page: p }) => {
       await expect(p).toHaveTitle('All files - Stryker report');
     });
-    test("shouldn't show the navigation tabs if there are no test details", async () => {
-      const tabs = await page.navigationTabs();
-      expect(tabs).toHaveLength(0);
-    });
 
     test.describe('-> "config"', () => {
       test.beforeEach(async () => {
@@ -49,6 +45,17 @@ test.describe('Navigation', () => {
           await expect(p).toHaveTitle('All files - Stryker report');
         });
       });
+    });
+  });
+
+  test.describe('when starting at a report without test details', () => {
+    test.beforeEach(() => {
+      return page.navigateTo('install-local-example/');
+    });
+
+    test("shouldn't show the navigation tabs", async () => {
+      const tabs = await page.navigationTabs();
+      expect(tabs).toHaveLength(0);
     });
   });
 

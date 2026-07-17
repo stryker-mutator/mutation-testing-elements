@@ -1,5 +1,6 @@
 import { MutantModel, TestModel } from 'mutation-testing-metrics';
 
+import type { AnsiTextComponent } from '../../../src/components/ansi-text/ansi-text.component.js';
 import type { MutationTestReportDrawer } from '../../../src/components/drawer/drawer.component.js';
 import { MutationTestReportDrawerMutant } from '../../../src/components/drawer-mutant/drawer-mutant.component.js';
 import { CustomElementFixture } from '../helpers/CustomElementFixture.js';
@@ -130,7 +131,7 @@ describe(MutationTestReportDrawerMutant.name, () => {
       });
 
       function summaryText() {
-        return sut.$<HTMLElement>('[slot="summary"]').innerText;
+        return sut.$<HTMLElement>('[slot="summary"]').innerText + (sut.$<AnsiTextComponent>('[slot="summary"] mte-ansi-text')?.text ?? '');
       }
     });
 

@@ -13,6 +13,7 @@ import './components/test-file/test-file.component.js';
 import './components/drawer-test/drawer-test.component.js';
 import './components/file-icon/file-icon.component.js';
 import './components/tooltip/tooltip.component.js';
+import './components/ansi-text/ansi-text.component.js';
 import './components/result-status-bar/result-status-bar.js';
 
 import type { MteCustomEvent } from './lib/custom-events.js';
