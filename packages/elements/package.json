@@ -55,6 +55,7 @@
     "@tailwindcss/vite": "4.3.2",
     "@types/prismjs": "1.26.6",
     "@vitest/browser-playwright": "4.1.10",
+    "anser": "2.3.5",
     "cross-env": "10.1.0",
     "eslint": "catalog:",
     "eslint-config-mte": "workspace:*",
