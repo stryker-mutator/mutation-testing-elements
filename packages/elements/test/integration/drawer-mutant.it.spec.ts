@@ -92,3 +92,24 @@ test.describe('Drawer mutant view', () => {
     });
   });
 });
+
+test.describe('Drawer mutant view with ANSI escape codes', () => {
+  let page: ReportPage;
+
+  test.beforeEach(async ({ page: p }) => {
+    page = new ReportPage(p);
+    await page.navigateTo('scala-example/#mutant/files/Glob.scala');
+    await page.mutantView.stateFilter().state('Killed').click();
+
+    await page.mutantView.mutantDot(535).toggle();
+    const drawer = page.mutantView.mutantDrawer();
+    await drawer.whenHalfOpen();
+    await drawer.toggleReadMore();
+    await drawer.whenOpen();
+    await page.mutantView.scrollToCode();
+  });
+
+  test('should render the ANSI escape codes as styling', async ({ page: p }, testInfo) => {
+    await actScreenshotMatch(p, testInfo);
+  });
+});
