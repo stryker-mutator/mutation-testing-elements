@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import { MutantElement } from './MutantElement.po.js';
 
 export class MutantMarker extends MutantElement {
