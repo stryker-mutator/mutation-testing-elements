@@ -4,5 +4,5 @@
     "types": ["mocha", "node", "../src/types.d.ts"],
     "outDir": "../dist/test"
   },
-  "references": [{ "path": "../src" }]
+  "references": [{ "path": "../src/tsconfig.json" }]
 }

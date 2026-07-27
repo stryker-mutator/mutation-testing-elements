@@ -125,19 +125,19 @@ publish / skip           := true
 version                  := packageVersion(file("."))
 organization             := "io.stryker-mutator"
 versionScheme            := Some("semver-spec")
-homepage                 := Some(url("https://stryker-mutator.io/"))
+homepage                 := Some(uri("https://stryker-mutator.io/"))
 licenses += "Apache-2.0" -> url(
   "https://www.apache.org/licenses/LICENSE-2.0"
 )
 scmInfo := Some(
   ScmInfo(
-    url("https://github.com/stryker-mutator/mutation-testing-elements"),
+    uri("https://github.com/stryker-mutator/mutation-testing-elements"),
     "scm:git:https://github.com/stryker-mutator/mutation-testing-elements.git",
     "scm:git:git@github.com:stryker-mutator/mutation-testing-elements.git"
   )
 )
 developers := List(
-  Developer("hugo-vrijswijk", "Hugo", "", url("https://github.com/hugo-vrijswijk"))
+  Developer("hugo-vrijswijk", "Hugo", "", uri("https://github.com/hugo-vrijswijk"))
 )
 credentials ++= {
   val env = sys.env.get(_)
