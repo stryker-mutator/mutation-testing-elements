@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.9.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.8.4...v3.9.0) (2026-07-27)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint-plugin-simple-import-sort to v14 ([#4271](https://github.com/stryker-mutator/mutation-testing-elements/issues/4271)) ([25c52f5](https://github.com/stryker-mutator/mutation-testing-elements/commit/25c52f5298ee03f5de1c287a9710057440292c63))
+
+
+### Features
+
+* **elements:** render ANSI escape codes in the mutant drawer ([#4264](https://github.com/stryker-mutator/mutation-testing-elements/issues/4264)) ([0c93866](https://github.com/stryker-mutator/mutation-testing-elements/commit/0c93866a1a6106aba43affc9c220e259ec6347d4)), closes [#2925](https://github.com/stryker-mutator/mutation-testing-elements/issues/2925)
+
+
+
+
+
 ## [3.8.4](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.8.3...v3.8.4) (2026-07-06)
 
 

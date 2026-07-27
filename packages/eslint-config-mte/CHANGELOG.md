@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.9.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.8.4...v3.9.0) (2026-07-27)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint-plugin-simple-import-sort to v14 ([#4271](https://github.com/stryker-mutator/mutation-testing-elements/issues/4271)) ([25c52f5](https://github.com/stryker-mutator/mutation-testing-elements/commit/25c52f5298ee03f5de1c287a9710057440292c63))
+
+
+
+
+
 # [3.8.0](https://github.com/stryker-mutator/mutation-testing-elements/compare/v3.7.3...v3.8.0) (2026-06-05)
 
 
