@@ -7,10 +7,10 @@
   },
   "references": [
     {
-      "path": "../../report-schema/src"
+      "path": "../../report-schema/src/tsconfig.json"
     },
     {
-      "path": "../../metrics/src"
+      "path": "../../metrics/src/tsconfig.json"
     }
   ]
 }

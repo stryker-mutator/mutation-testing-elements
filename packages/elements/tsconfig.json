@@ -2,13 +2,13 @@
   "files": [],
   "references": [
     {
-      "path": "./src"
+      "path": "./src/tsconfig.json"
     },
     {
-      "path": "./test/unit"
+      "path": "./test/unit/tsconfig.json"
     },
     {
-      "path": "./test/integration"
+      "path": "./test/integration/tsconfig.json"
     }
   ]
 }
