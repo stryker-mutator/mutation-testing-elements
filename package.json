@@ -45,7 +45,7 @@
     "chai": "6.2.2",
     "json-schema-to-typescript": "15.0.4",
     "lerna": "10.0.0",
-    "mocha": "11.7.6",
+    "mocha": "11.8.0",
     "nx": "23.1.1",
     "prettier": "3.9.6",
     "prettier-plugin-tailwindcss": "0.8.1",
