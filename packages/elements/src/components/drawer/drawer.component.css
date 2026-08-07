@@ -1,3 +1,6 @@
+:host {
+  display: block;
+}
 :host([mode='closed']) {
   height: 0;
 }

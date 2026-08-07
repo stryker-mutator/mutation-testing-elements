@@ -1,6 +1,5 @@
-import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 import { html, nothing, unsafeCSS } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { when } from 'lit/directives/when.js';
 
@@ -34,11 +33,6 @@ export class MutationTestReportDrawer extends BaseElement {
     }
   }
 
-  @query('header')
-  declare private header: HTMLElement | undefined;
-
-  #contentHeightController: ResizeController<number>;
-
   #abortController: AbortController;
 
   constructor() {
@@ -46,14 +40,6 @@ export class MutationTestReportDrawer extends BaseElement {
     this.mode = 'closed';
     this.hasDetail = false;
     this.#abortController = new AbortController();
-
-    this.#contentHeightController = new ResizeController(this, {
-      callback: (entries) => {
-        const total = entries[0]?.contentRect.height ?? 0;
-        const header = this.header?.clientHeight ?? 0;
-        return total - header;
-      },
-    });
   }
 
   public toggleReadMore = (event: MouseEvent) => {
@@ -84,10 +70,9 @@ export class MutationTestReportDrawer extends BaseElement {
 
   render() {
     const isOpen = this.mode === 'open';
-    const height = this.#contentHeightController.value;
 
-    return html`<aside @click=${(event: Event) => event.stopPropagation()} class="mr-4 ml-6">
-      <header class="w-full py-4">
+    return html`<aside @click=${(event: Event) => event.stopPropagation()} class="mr-4 ml-6 flex h-full flex-col">
+      <header class="w-full shrink-0 py-4">
         <h2>
           <slot name="header"></slot>
           ${when(
@@ -99,10 +84,7 @@ export class MutationTestReportDrawer extends BaseElement {
           )}
         </h2>
       </header>
-      <div
-        style=${height && isOpen ? `height: ${height}px;` : nothing}
-        class=${classMap({ ['mb-4 motion-safe:transition-max-width']: true, 'overflow-y-auto': isOpen })}
-      >
+      <div class=${classMap({ ['min-h-0 flex-1 motion-safe:transition-max-width']: true, 'overflow-y-auto': isOpen })}>
         <slot name="summary"></slot>
         ${when(this.hasDetail && this.mode === 'open', () => html`<slot name="detail"></slot>`)}
       </div>
