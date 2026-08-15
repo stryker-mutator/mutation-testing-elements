@@ -240,8 +240,8 @@ importers:
         specifier: workspace:*
         version: link:../eslint-config-mte
       eventsource:
-        specifier: 4.1.1
-        version: 4.1.1
+        specifier: 5.0.0
+        version: 5.0.0
       mutation-testing-report-schema:
         specifier: workspace:*
         version: link:../report-schema
@@ -2344,13 +2344,13 @@ packages:
   eventemitter3@4.0.7:
     resolution: {integrity: sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==}
 
-  eventsource-parser@3.1.0:
-    resolution: {integrity: sha512-kJezFj9YFAMLeORyi7aCLxLbD5/qWMQnoMVlVPyHIll7lgRJCc3JVln9Vgl9nwQi0YkMnhdGTMNn7CkRRAptMg==}
-    engines: {node: '>=18.0.0'}
+  eventsource-parser@4.0.0:
+    resolution: {integrity: sha512-aIpvYxbqTx4KYWw73KpCt1Rh22tEAJ144F1qR76CT3Ex+LNMEPKf5HFrK5Yz9fMP1EVT0GrfA35VZvWQhMPuSQ==}
+    engines: {node: '>=22.12'}
 
-  eventsource@4.1.1:
-    resolution: {integrity: sha512-D6bTRWh6KahHTK/m4WnjPQyEinNPf9eFLEZSEoj7d6fTibspnAVYfzHvirL7u/aoX5d9YYfIkBVAhmigUELk9w==}
-    engines: {node: '>=20.0.0'}
+  eventsource@5.0.0:
+    resolution: {integrity: sha512-iNd5IgeR56Om1Aje0ACZTd5oRQ+u5i6RfRkKdIuhlykeH3o+f0vIiiT0i9t1SXABfTnsfxVPadAB2T4cLS32Sw==}
+    engines: {node: '>=22.12.0'}
 
   execa@5.0.0:
     resolution: {integrity: sha512-ov6w/2LCiuyO4RLYGdpFGjkcs0wMTgGE8PrkTHikeUy5iJekXyPIKUjifk5CsE0pt7sMCrMZ3YNqoCj6idQOnQ==}
@@ -6283,11 +6283,11 @@ snapshots:
 
   eventemitter3@4.0.7: {}
 
-  eventsource-parser@3.1.0: {}
+  eventsource-parser@4.0.0: {}
 
-  eventsource@4.1.1:
+  eventsource@5.0.0:
     dependencies:
-      eventsource-parser: 3.1.0
+      eventsource-parser: 4.0.0
 
   execa@5.0.0:
     dependencies:
