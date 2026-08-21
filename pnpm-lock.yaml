@@ -30,8 +30,8 @@ importers:
   .:
     devDependencies:
       '@tsconfig/node-lts':
-        specifier: 24.0.0
-        version: 24.0.0
+        specifier: 24.0.1
+        version: 24.0.1
       '@tsconfig/recommended':
         specifier: 1.0.13
         version: 1.0.13
@@ -1392,8 +1392,8 @@ packages:
     peerDependencies:
       vite: ^5.2.0 || ^6 || ^7 || ^8
 
-  '@tsconfig/node-lts@24.0.0':
-    resolution: {integrity: sha512-8mSTqWwCd6aQpvxSrpQlMoA9RiUZSs7bYhL5qsLXIIaN9HQaINeoydrRu/Y7/fws4bvfuyhs0BRnW9/NI8tySg==}
+  '@tsconfig/node-lts@24.0.1':
+    resolution: {integrity: sha512-xo+1KtV5zVb90fyyeglG1n5cqg3cQXLlCkEpLptYlZUNk28xmwhuD5GmxoXwmrVtUTvaMyclun9kAd0TK7H+Pg==}
 
   '@tsconfig/recommended@1.0.13':
     resolution: {integrity: sha512-sySRuBfMKyKO/j2ZAhR8kSembhjuPEV4Ra3AHtmWLq51+iGaudr45crPSzNC5b7/Ctrh9dfUpBuTlYrH6rM58Q==}
@@ -5429,7 +5429,7 @@ snapshots:
       tailwindcss: 4.3.3
       vite: 8.2.1(@types/node@24.13.3)(jiti@2.7.0)(yaml@2.9.0)
 
-  '@tsconfig/node-lts@24.0.0': {}
+  '@tsconfig/node-lts@24.0.1': {}
 
   '@tsconfig/recommended@1.0.13': {}
 
