@@ -33,7 +33,7 @@
     "@stryker-mutator/typescript-checker": "catalog:",
     "eslint": "catalog:",
     "eslint-config-mte": "workspace:*",
-    "eventsource": "5.1.0",
+    "eventsource": "5.1.1",
     "mutation-testing-report-schema": "workspace:*",
     "rxjs": "7.8.2"
   }
