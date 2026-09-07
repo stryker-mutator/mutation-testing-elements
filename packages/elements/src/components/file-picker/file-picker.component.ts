@@ -1,5 +1,4 @@
-import type { Prepared } from 'fuzziersort';
-import { cleanup as cleanupSearch, go as goSearch, prepare as prepareSearch } from 'fuzziersort';
+import { cleanup as cleanupSearch, go as goSearch, snapshot as snapshotSearch } from 'fuzzysort';
 import type { PropertyValues, TemplateResult } from 'lit';
 import { html } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
@@ -27,7 +26,8 @@ const MAX_FILES_SHOWN = 150;
 @customElement('mte-file-picker')
 export class MutationTestReportFilePickerComponent extends BaseElement {
   #abortController = new AbortController();
-  #searchTargets: (ModelEntry & { prepared: Prepared })[] = [];
+  #searchTargets: ModelEntry[] = [];
+  #searchSnapshot = snapshotSearch<ModelEntry>([], { key: 'name' });
   #originalDocumentOverflow = '';
 
   @property({ attribute: false })
@@ -164,9 +164,6 @@ export class MutationTestReportFilePickerComponent extends BaseElement {
   }
 
   #prepareMap() {
-    if (!this.rootModel) {
-      return;
-    }
     // Clear previous search targets
     this.#searchTargets = [];
 
@@ -181,7 +178,7 @@ export class MutationTestReportFilePickerComponent extends BaseElement {
 
       if (result.file && result.name !== allFilesKey) {
         const name = !parentPath ? result.name : `${parentPath}/${result.name}`;
-        this.#searchTargets.push({ name, file: result.file, prepared: prepareSearch(name) });
+        this.#searchTargets.push({ name, file: result.file });
       }
 
       result.childResults.forEach((child) => {
@@ -195,8 +192,10 @@ export class MutationTestReportFilePickerComponent extends BaseElement {
       });
     };
 
-    prepareFiles(this.rootModel.systemUnderTestMetrics, null, 'All files');
-    prepareFiles(this.rootModel.testMetrics, null, 'All tests');
+    prepareFiles(this.rootModel?.systemUnderTestMetrics, null, 'All files');
+    prepareFiles(this.rootModel?.testMetrics, null, 'All tests');
+
+    this.#searchSnapshot = snapshotSearch<ModelEntry>(this.#searchTargets, { key: 'name' });
   }
 
   #handleKeyDown = (event: KeyboardEvent) => {
@@ -293,7 +292,7 @@ export class MutationTestReportFilePickerComponent extends BaseElement {
       }
     } else {
       // Search for one more result than we show, to know whether the results were cut off
-      const results = goSearch(filterKey, this.#searchTargets, { key: 'prepared', threshold: 0.3, limit: MAX_FILES_SHOWN + 1 });
+      const results = goSearch(filterKey, this.#searchSnapshot, { threshold: 0.3, limit: MAX_FILES_SHOWN + 1 });
 
       this.moreFilesMessage = results.length > MAX_FILES_SHOWN ? 'More matches available — refine your search' : undefined;
       this.filteredFiles = results.slice(0, MAX_FILES_SHOWN).map((result) => ({
