@@ -329,15 +329,16 @@ describe(MutationTestReportAppComponent.name, () => {
         // noop
       }
 
-      eventSourceConstructorStub = vi.spyOn(window, 'EventSource').mockImplementation(
-        class MockEventSource extends EventSource {
-          // @ts-expect-error - we are mocking the constructor
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          constructor(url: string | URL) {
-            return eventSource;
-          }
-        },
-      );
+      // Capture the real constructor before spying, otherwise the mock would extend itself
+      const OriginalEventSource = window.EventSource;
+      class MockEventSource extends OriginalEventSource {
+        // @ts-expect-error - we are mocking the constructor
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        constructor(url: string | URL) {
+          return eventSource;
+        }
+      }
+      eventSourceConstructorStub = vi.spyOn(window, 'EventSource').mockImplementation(MockEventSource);
       sut = new CustomElementFixture('mutation-test-report-app', { autoConnect: false });
     });
 

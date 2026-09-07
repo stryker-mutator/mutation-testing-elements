@@ -48,7 +48,7 @@ describe(MutationTestReportDrawerTestComponent.name, () => {
     it('should render the header correctly', async () => {
       sut.element.test = test;
       await sut.whenStable();
-      expect(sut.$('[slot="header"]')).toHaveTextContent('🌧 foo should bar [NotCovering]');
+      expect(sut.$('[slot="header"]')).toHaveTextContent('🌧 foo should bar [NotCovering] (2:1)');
     });
 
     it('should render closed by default', () => {
@@ -131,9 +131,9 @@ describe(MutationTestReportDrawerTestComponent.name, () => {
         await sut.whenStable();
         const listItems = sut.$$('[slot="detail"] ul li');
         expect(listItems).lengthOf(3);
-        expect(listItems[0]).toHaveTextContent('🎯 const a = false');
-        expect(listItems[1]).toHaveTextContent('🎯 const b = true');
-        expect(listItems[2]).toHaveTextContent('☂️ if(1 <= 5)');
+        expect(listItems[0]).toHaveTextContent('🎯 const a = false (foo.js:1:1)');
+        expect(listItems[1]).toHaveTextContent('🎯 const b = true (foo.js:1:1)');
+        expect(listItems[2]).toHaveTextContent('☂️ if(1 <= 5) (foo.js:1:1)');
       });
 
       function detailText() {

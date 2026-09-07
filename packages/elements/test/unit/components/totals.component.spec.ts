@@ -125,7 +125,7 @@ describe(MutationTestReportTestMetricsTable.name, () => {
     const table = sut.$('table');
     expect(table).ok;
     expect(table.querySelector('[role=progressbar]')!.getAttribute('aria-valuenow')).contains(mutationScore);
-    expect(table.querySelector('.text-red-700')!).toHaveTextContent(mutationScore.toString());
+    expect(table.querySelector('.text-red-700')!).toHaveTextContent(mutationScore.toFixed(2));
   });
 
   it('should show no progress bar when score is NaN', async () => {

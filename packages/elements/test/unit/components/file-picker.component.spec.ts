@@ -113,7 +113,7 @@ describe(MutationTestReportFilePickerComponent.name, () => {
         await sut.whenStable();
 
         // Assert
-        expect(getActiveItem()).toHaveTextContent('append.js');
+        expect(getActiveItem()).toHaveTextContent('• append.js');
         expect(sut.$$('#files li')).toHaveLength(3);
         expect(sut.$('#files')).not.toHaveTextContent('No files found');
       });
@@ -129,7 +129,7 @@ describe(MutationTestReportFilePickerComponent.name, () => {
         await sut.whenStable();
 
         // Assert
-        expect(getActiveItem()).toHaveTextContent('index.ts');
+        expect(getActiveItem()).toHaveTextContent('• index.ts');
       });
 
       it('should redirect to mutant when pressing enter', async () => {
@@ -155,7 +155,7 @@ describe(MutationTestReportFilePickerComponent.name, () => {
         await sut.whenStable();
 
         // Assert
-        expect(getActiveItem()).toHaveTextContent('index.html');
+        expect(getActiveItem()).toHaveTextContent('• index.html');
       });
 
       it('should show when no files are found', async () => {
@@ -180,7 +180,7 @@ describe(MutationTestReportFilePickerComponent.name, () => {
         await sut.whenStable();
 
         // Assert
-        expect(getActiveItem()).toHaveTextContent('index.html');
+        expect(getActiveItem()).toHaveTextContent('• index.html');
       });
 
       it('should move to the first item when pressing down on the last item', async () => {
@@ -191,7 +191,7 @@ describe(MutationTestReportFilePickerComponent.name, () => {
         await sut.whenStable();
 
         // Assert
-        expect(getActiveItem()).toHaveTextContent('append.js');
+        expect(getActiveItem()).toHaveTextContent('• append.js');
       });
 
       it('should move active item to the previous item when pressing up', async () => {
@@ -203,7 +203,7 @@ describe(MutationTestReportFilePickerComponent.name, () => {
         await sut.whenStable();
 
         // Assert
-        expect(getActiveItem()).toHaveTextContent('index.html');
+        expect(getActiveItem()).toHaveTextContent('• index.html');
       });
 
       it('should move to the last item when pressing up on the first item', async () => {
@@ -215,7 +215,7 @@ describe(MutationTestReportFilePickerComponent.name, () => {
         await sut.whenStable();
 
         // Assert
-        expect(getActiveItem()).toHaveTextContent('index.ts');
+        expect(getActiveItem()).toHaveTextContent('• index.ts');
       });
     });
   });

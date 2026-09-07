@@ -17,6 +17,9 @@ packages/*/mvn/resources/
 .scala-build/
 
 .nx/
+
+# Vitest artifacts (reports, attachments, failure screenshots)
+.vitest/
 # pack files
 mutation-*.tgz
 
