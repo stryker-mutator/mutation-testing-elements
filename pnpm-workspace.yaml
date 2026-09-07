@@ -18,11 +18,6 @@ trustPolicyExclude:
   - chokidar
   - '@octokit/endpoint'
 
-minimumReleaseAgeExclude:
-  # Renovate security update: vite@8.0.5
-  - vite@8.0.5
-  - fuzziersort@4.0.2
-
 allowBuilds:
   nx: true
   unrs-resolver: false
