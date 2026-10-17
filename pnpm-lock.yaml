@@ -218,8 +218,8 @@ importers:
         specifier: 16.0.0
         version: 16.0.0
       lerna:
-        specifier: 10.1.0
-        version: 10.1.0(@types/node@24.19.2)(@typescript/typescript6@6.0.2)(supports-color@8.1.1)
+        specifier: 10.1.1
+        version: 10.1.1(@types/node@24.19.2)(@typescript/typescript6@6.0.2)(supports-color@8.1.1)
       mocha:
         specifier: 11.8.0
         version: 11.8.0
@@ -2834,8 +2834,8 @@ packages:
   keyv@5.6.0:
     resolution: {integrity: sha512-CYDD3SOtsHtyXeEORYRx2qBtpDJFjRTGXUtmNEMGyzYOKj1TE3tycdlho7kA1Ufx9OYWZzg52QFBGALTirzDSw==}
 
-  lerna@10.1.0:
-    resolution: {integrity: sha512-hGxvsNh8wFY6Gj/Ei7R/Ux2eDXJRZZ4CVVmGryjtdLXgTn2VO7fKHZySHb0K8u7SfIrdaeaP1Zn1HbIjC7f6Pg==}
+  lerna@10.1.1:
+    resolution: {integrity: sha512-WDGaMGDGj5jV0n6Yx2zuBDWH0ym6toUE6w+maaPLqeMd3ncDRN+NJMcVWImVdUKCIHRk2Xk+X7QQkFXdHKsscA==}
     engines: {node: ^22.22.2 || ^24.15.0 || ^26.0.0}
     hasBin: true
 
@@ -6456,7 +6456,7 @@ snapshots:
     dependencies:
       '@keyv/serialize': 1.1.1
 
-  lerna@10.1.0(@types/node@24.19.2)(@typescript/typescript6@6.0.2)(supports-color@8.1.1):
+  lerna@10.1.1(@types/node@24.19.2)(@typescript/typescript6@6.0.2)(supports-color@8.1.1):
     dependencies:
       '@npmcli/arborist': 10.0.3(supports-color@8.1.1)
       '@npmcli/package-json': 8.0.0
