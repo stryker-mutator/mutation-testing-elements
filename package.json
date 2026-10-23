@@ -41,7 +41,7 @@
     "@types/chai": "5.2.3",
     "@types/mocha": "10.0.10",
     "@types/node": "24.19.2",
-    "@types/sinon": "22.0.0",
+    "@types/sinon": "22.0.1",
     "chai": "6.3.0",
     "json-schema-to-typescript": "16.0.0",
     "lerna": "10.1.1",
