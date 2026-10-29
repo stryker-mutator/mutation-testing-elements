@@ -601,6 +601,72 @@ function add(a, b) {
     });
   });
 
+  describe('selecting a mutant whose replacement differs at a line break', () => {
+    beforeEach(async () => {
+      sut.element.model = new FileUnderTestModel(
+        {
+          language: 'javascript',
+          mutants: [
+            createMutantResult({
+              id: '1',
+              mutatorName: 'EqualityOperator',
+              replacement: 'fn({\n  a: 1\n}) !== b',
+              status: 'Survived',
+              location: { start: { line: 2, column: 10 }, end: { line: 2, column: 28 } },
+            }),
+          ],
+          source: 'export function check(fn, b) {\n  return fn({ a: 1 }) === b;\n}\n',
+        },
+        'check.js',
+      );
+      await sut.whenStable();
+    });
+
+    it('should show the diff', async () => {
+      // Act
+      sut.$<SVGElement>('.mutant-dot[data-mutant-id="1"]').dispatchEvent(new Event('click', { bubbles: true }));
+      await sut.whenStable();
+
+      // Assert
+      expect(sut.$$('tr.diff-new td.code').map((code) => code.textContent)).deep.eq(['  return fn({', '  a: 1', '}) !== b;']);
+      expect(sut.$$('tr.diff-new .diff-focus').map((focus) => focus.textContent)).deep.eq(['a: 1', '}) !']);
+    });
+  });
+
+  describe('selecting a mutant whose replacement stops differing at a line break', () => {
+    beforeEach(async () => {
+      sut.element.model = new FileUnderTestModel(
+        {
+          language: 'javascript',
+          mutants: [
+            createMutantResult({
+              id: '1',
+              mutatorName: 'ArithmeticOperator',
+              replacement: 'a -\n    b',
+              status: 'Survived',
+              location: { start: { line: 2, column: 10 }, end: { line: 3, column: 6 } },
+            }),
+          ],
+          source: 'export function sum(a, b) {\n  return a +\n    b;\n}\n',
+        },
+        'sum.js',
+      );
+      await sut.whenStable();
+    });
+
+    it('should only focus the changed part', async () => {
+      // Act
+      sut.$<SVGElement>('.mutant-dot[data-mutant-id="1"]').dispatchEvent(new Event('click', { bubbles: true }));
+      await sut.whenStable();
+
+      // Assert
+      expect(sut.$$('tr.diff-new td.code').map((code) => code.textContent)).deep.eq(['  return a -', '    b;']);
+      expect(
+        sut.$$('tr.diff-new td.code').map((code) => [...code.querySelectorAll('.diff-focus')].map((focus) => focus.textContent).join('')),
+      ).deep.eq(['-', '']);
+    });
+  });
+
   function queryMutantText(mutantId: string) {
     return [...sut.$$(`.mutant[data-mutant-id="${mutantId}"]`)].map((mutant) => mutant.innerText).join('');
   }
