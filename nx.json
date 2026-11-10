@@ -10,7 +10,7 @@
         "runtime": "node -v"
       }
     ],
-    "production": ["!{projectRoot}/test/**/*", "!{projectRoot}/eslint.config.js", "!{projectRoot}/stryker.conf.js"]
+    "production": ["default", "!{projectRoot}/test/**/*", "!{projectRoot}/eslint.config.js", "!{projectRoot}/stryker.conf.js"]
   },
   "targetDefaults": {
     "build:tsc": {
