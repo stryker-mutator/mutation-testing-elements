@@ -1,4 +1,4 @@
-declare module 'http' {
+declare module 'node:http' {
   interface ServerResponse {
     /**
      * Forces the partially-compressed response to be flushed to the client.
