@@ -2,6 +2,9 @@
   "$schema": "https://raw.githubusercontent.com/nrwl/nx/master/packages/nx/schemas/nx-schema.json",
   "extends": "nx/presets/npm.json",
   "defaultBase": "master",
+  "affected": {
+    "legacy": true
+  },
   "namedInputs": {
     "default": [
       "{projectRoot}/**/*",

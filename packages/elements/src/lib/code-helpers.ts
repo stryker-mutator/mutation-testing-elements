@@ -192,7 +192,10 @@ export function transformHighlightedLines(source: string, visitor?: (pos: Positi
   }
 
   function endLine() {
-    closeActiveTags();
+    // A line with only whitespace never printed its tags
+    if (!tagsNeedOpening) {
+      closeActiveTags();
+    }
     lines.push(currentLineParts.join(''));
     currentLineParts = [];
   }
@@ -202,7 +205,14 @@ export function transformHighlightedLines(source: string, visitor?: (pos: Positi
     currentPosition.offset++;
     if (visitor) {
       for (const tag of visitor(currentPosition)) {
-        if (tag.isClosing) {
+        if (tagsNeedOpening) {
+          // No tags are printed on this line yet, the active tags are printed at its first non-whitespace character
+          if (tag.isClosing) {
+            currentlyActiveTags.splice(indexOfActiveTag(tag), 1);
+          } else {
+            currentlyActiveTags.push(tag);
+          }
+        } else if (tag.isClosing) {
           closeTag(tag);
         } else {
           emit(printTag(tag));
@@ -264,6 +274,14 @@ export function transformHighlightedLines(source: string, visitor?: (pos: Positi
     if (tagIndex === -1) {
       throw new Error(`Cannot find corresponding opening tag for ${printTag(tag)}`);
     }
+  }
+
+  function indexOfActiveTag(tag: HtmlTag) {
+    const tagIndex = currentlyActiveTags.findLastIndex((activeTag) => tag.elementName === activeTag.elementName && activeTag.id === tag.id);
+    if (tagIndex === -1) {
+      throw new Error(`Cannot find corresponding opening tag for ${printTag(tag)}`);
+    }
+    return tagIndex;
   }
 
   function parseAttributes() {
