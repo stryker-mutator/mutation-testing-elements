@@ -36,8 +36,8 @@
   "homepage": "https://github.com/stryker-mutator/mutation-testing-elements#readme",
   "devDependencies": {
     "@tsconfig/node-lts": "24.0.1",
-    "@tsconfig/recommended": "1.0.13",
-    "@tsconfig/strictest": "2.0.8",
+    "@tsconfig/recommended": "1.0.14",
+    "@tsconfig/strictest": "2.0.9",
     "@types/chai": "5.2.3",
     "@types/mocha": "10.0.10",
     "@types/node": "26.6.6",
