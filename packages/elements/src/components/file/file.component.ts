@@ -285,10 +285,16 @@ export class FileComponent extends RealTimeElement {
 
     const [focusFrom, focusTo] = findDiffIndices(originalLines, mutatedLines);
 
+    // Line breaks aren't visited, so the focus can start or end on an offset that never comes by
+    let focusOpened = false;
+    let focusClosed = false;
     const lines = transformHighlightedLines(highlightCode(mutatedLines, this.model.name), function* ({ offset }) {
-      if (offset === focusFrom) {
+      if (!focusOpened && offset >= focusFrom) {
+        focusOpened = true;
         yield { elementName: 'span', id: 'diff-focus', attributes: { class: 'diff-focus' } };
-      } else if (offset === focusTo) {
+      }
+      if (focusOpened && !focusClosed && offset >= focusTo) {
+        focusClosed = true;
         yield { elementName: 'span', id: 'diff-focus', isClosing: true };
       }
       return;
