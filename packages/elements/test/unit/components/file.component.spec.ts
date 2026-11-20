@@ -233,6 +233,22 @@ function add(a, b) {
         expect(mutant.innerText).eq('foo');
       });
     });
+
+    it('should only enable Survived and NoCoverage filters by default', async () => {
+      // Arrange
+      const allStates: MutantStatus[] = ['CompileError', 'Ignored', 'Killed', 'NoCoverage', 'RuntimeError', 'Survived', 'Timeout'];
+      const fileResult = createFileResult({
+        mutants: allStates.map((status, i) => createMutantResult({ id: String(i), status })),
+      });
+
+      // Act
+      sut.element.model = new FileUnderTestModel(fileResult, 'foo.js');
+      await sut.whenStable();
+
+      // Assert
+      expect(filterComponent.filters?.filter((f) => f.enabled).map((f) => f.status)).deep.eq(['Survived', 'NoCoverage']);
+      expect(sut.$$('.mutant-dot')).lengthOf(2);
+    });
   });
 
   describe('selecting mutants', () => {
