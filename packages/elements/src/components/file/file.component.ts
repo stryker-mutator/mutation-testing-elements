@@ -233,7 +233,7 @@ export class FileComponent extends RealTimeElement {
     this.filters = (['Killed', 'Survived', 'NoCoverage', 'Ignored', 'Timeout', 'CompileError', 'RuntimeError'] satisfies MutantStatus[])
       .filter((status) => this.model.mutants.some((mutant) => mutant.status === status))
       .map((status) => ({
-        enabled: [...this.selectedMutantStates, 'Survived', 'NoCoverage', 'Timeout'].includes(status),
+        enabled: [...this.selectedMutantStates, 'Survived', 'NoCoverage'].includes(status),
         count: this.model.mutants.filter((m) => m.status === status).length,
         status,
         label: html`${getEmojiForStatus(status)} ${status}`,
