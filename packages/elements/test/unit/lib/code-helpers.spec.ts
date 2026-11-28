@@ -135,6 +135,42 @@ describe(transformHighlightedLines.name, () => {
       ]);
     });
 
+    it('should open an inserted html tag in the indentation of a line once, at the first non-whitespace character', () => {
+      const result = transformHighlightedLines('const foo =\n  bar;', function* ({ offset }) {
+        if (offset === 12) {
+          yield { elementName: 'span', attributes: { class: 'token' } };
+        }
+        if (offset === 17) {
+          yield { elementName: 'span', isClosing: true };
+        }
+      });
+      expect(result).deep.eq(['const foo =', '  <span class="token">bar</span>;']);
+    });
+
+    it('should close an inserted html tag in the indentation of a line without printing it', () => {
+      const result = transformHighlightedLines('const foo\n  = bar', function* ({ offset }) {
+        if (offset === 6) {
+          yield { elementName: 'span', attributes: { class: 'token' } };
+        }
+        if (offset === 10) {
+          yield { elementName: 'span', isClosing: true };
+        }
+      });
+      expect(result).deep.eq(['const <span class="token">foo</span>', '  = bar']);
+    });
+
+    it('should not print the tags of a line with only whitespace', () => {
+      const result = transformHighlightedLines('<span class="comment">/*\n\n*/</span>\n  \nfoo', function* ({ offset }) {
+        if (offset === 7) {
+          yield { elementName: 'span', attributes: { class: 'token' } };
+        }
+        if (offset === 11) {
+          yield { elementName: 'span', isClosing: true };
+        }
+      });
+      expect(result).deep.eq(['<span class="comment">/*</span>', '', '<span class="comment">*/</span>', '  ', '<span class="token">f</span>oo']);
+    });
+
     it('should support falsy attribute values', () => {
       const result = transformHighlightedLines('const foo = bar;', function* ({ offset }) {
         if (offset === 6) {
